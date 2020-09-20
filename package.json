@@ -1,0 +1,17 @@
+{
+  "name": "igbo-dictionary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parse.js",
+  "scripts": {
+    "columbia": "cd columbia && node -r esm parse.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "lodash": "^4.17.20",
+    "node-html-parser": "^1.2.20"
+  }
+}
