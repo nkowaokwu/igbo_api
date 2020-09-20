@@ -19,8 +19,8 @@ npm run columbia
 This will produce three different files in the columbia directory:
 
 
-[columbia/dictionary.txt](./columbia/dictionary.text)
+[files/dictionary.txt](./columbia/files/dictionary.txt)
 
-[columbia/dictionary_compressed.json](./columbia/dictionary_compressed.json)
+[files/dictionary_compressed.json](./columbia/files/dictionary_compressed.json)
 
-[columbia/dictionary_expanded.json](./columbia/dictionary_expanded.json)
+[files/dictionary_expanded.json](./columbia/files/dictionary_expanded.json)
