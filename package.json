@@ -12,6 +12,7 @@
   "dependencies": {
     "esm": "^3.2.25",
     "lodash": "^4.17.20",
-    "node-html-parser": "^1.2.20"
+    "node-html-parser": "^1.2.20",
+    "unicharadata": "^9.0.0-alpha.6"
   }
 }
