@@ -13,7 +13,47 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
-### Build a Dictionary
+### Usage
+
+To search for a term, use the following route structure"
+
+```
+/api/v1/search/words?keyword=<keyword>
+```
+
+The response will be a plain JSON object
+
+For example:
+
+```
+http://localhost:8080/api/v1/search/words?keyword=agụū
+```
+
+returns:
+
+```
+{
+    "wordClass": "n.",
+    "definition": "hunger; desire; eagerness",
+    "examples": [],
+    "phrases": {
+        "(agụū) -gụ": {
+            "definition": "be hungry",
+            "examples": []
+        },
+        "agụū mmīli": {
+            "definition": "thirst",
+            "examples": []
+        },
+        "-gụ agụū": {
+            "definition": "hunger; desire; long for ( -gụ 2. desire)",
+            "examples": []
+        }
+    }
+}
+```
+
+## Build a Dictionary
 
 Even though the Igbo dictionary files are already available in this repo, you can still run the script that's responsible for parsing the Columbia paper and creating the `.json` and `.txt` files.
 

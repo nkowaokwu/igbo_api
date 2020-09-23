@@ -1,4 +1,5 @@
 import express from 'express';
+import { getWordData } from './controllers/words';
 
 const app = express();
 const router = express.Router();
@@ -12,11 +13,9 @@ router.get('/', (_, res) => {
     res.send('Welcome to the Igbo English Dictionary API');
 });
 
-router.get('/search', (_, res) => {
-    res.send('🚧 Work in progress 🚧');
-});
+router.get('/words', getWordData);
 
-app.use('/api/v1', router);
+app.use('/api/v1/search', router);
 
 app.listen(port, () => {
     console.log(`🟢 Server started on port ${port}`);
