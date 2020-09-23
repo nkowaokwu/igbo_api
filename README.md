@@ -28,5 +28,7 @@ yarn build
 This will produce three different files in the `ig` directory:
 
 [dictionaries/dictionary.txt](./ig/dictionaries/dictionary.txt)
+
 [dictionaries/dictionary_compressed.json](./ig/dictionaries/dictionary_compressed.json)
+
 [dictionaries/dictionary_expanded.json](./ig/dictionaries/dictionary_expanded.json)

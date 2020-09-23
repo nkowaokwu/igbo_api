@@ -117,9 +117,9 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
 
     
     const writeFileConfigs = [
-        [`${dictionariesDir}/dictionary.txt`, JSON.stringify(dictionary)],
-        [`${dictionariesDir}/dictionary_compressed.json`, JSON.stringify(dictionary)],
-        [`${dictionariesDir}/dictionary_expanded.json`, JSON.stringify(dictionary, null, 4)],
+        [`${dictionariesDir}/ig-en.txt`, JSON.stringify(dictionary)],
+        [`${dictionariesDir}/ig-en_compressed.json`, JSON.stringify(dictionary)],
+        [`${dictionariesDir}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
     ];
 
     writeFileConfigs.forEach((config) => {
