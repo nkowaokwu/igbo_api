@@ -4,7 +4,7 @@ import { flatten } from 'lodash';
 
 // TODO: check the case àgìgò
 
-const READ_FILE = './dictionary.html';
+const READ_FILE = `${__dirname}/dictionary.html`;
 const READ_FILE_FORMAT = 'utf8';
 
 const LEFT_COLUMN = '57.60px';
@@ -94,15 +94,15 @@ const buildDictionary = (span) => {
         }
 }
 
-const filesDir = './files';
+const dictionariesDir = `${__dirname}/dictionaries`;
 const dictionary = {};
 let currentWord = '';
 let currentPhrase = '';
 let prevColumn = null;
 let centerCount = 0;
 
-if (!fs.existsSync(filesDir)){
-    fs.mkdirSync(filesDir);
+if (!fs.existsSync(dictionariesDir)){
+    fs.mkdirSync(dictionariesDir);
 }
 
 fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
@@ -117,9 +117,9 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
 
     
     const writeFileConfigs = [
-        ['./files/dictionary.txt', JSON.stringify(dictionary)],
-        ['./files/dictionary_compressed.json', JSON.stringify(dictionary)],
-        ['./files/dictionary_expanded.json', JSON.stringify(dictionary, null, 4)],
+        [`${dictionariesDir}/dictionary.txt`, JSON.stringify(dictionary)],
+        [`${dictionariesDir}/dictionary_compressed.json`, JSON.stringify(dictionary)],
+        [`${dictionariesDir}/dictionary_expanded.json`, JSON.stringify(dictionary, null, 4)],
     ];
 
     writeFileConfigs.forEach((config) => {
