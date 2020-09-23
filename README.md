@@ -3,17 +3,26 @@
 
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
-## Usage
+## Start the API
+
+To start the dev API server run the following command:
+
+```
+yarn dev
+```
+
+Navigate to [localhost:8080](http://localhost:8080/) to see the API
+
+### Build a Dictionary
+
 Even though the Igbo dictionary files are already available in this repo, you can still run the script that's responsible for parsing the Columbia paper and creating the `.json` and `.txt` files.
 
 `dictionary.html` is an HTML representation of the Columbia PDF.
 
-### Build a Dictionary
-
 To parse `dictionary.html` and build a dictionary, run the following command:
 
 ```
-npm run build
+yarn build
 ```
 
 This will produce three different files in the `ig` directory:
