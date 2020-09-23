@@ -13,14 +13,11 @@ Even though the Igbo dictionary files are already available in this repo, you ca
 To parse `dictionary.html` and build a dictionary, run the following command:
 
 ```
-npm run columbia
+npm run build
 ```
 
-This will produce three different files in the columbia directory:
+This will produce three different files in the `ig` directory:
 
-
-[files/dictionary.txt](./columbia/files/dictionary.txt)
-
-[files/dictionary_compressed.json](./columbia/files/dictionary_compressed.json)
-
-[files/dictionary_expanded.json](./columbia/files/dictionary_expanded.json)
+[dictionaries/dictionary.txt](./ig/dictionaries/dictionary.txt)
+[dictionaries/dictionary_compressed.json](./ig/dictionaries/dictionary_compressed.json)
+[dictionaries/dictionary_expanded.json](./ig/dictionaries/dictionary_expanded.json)

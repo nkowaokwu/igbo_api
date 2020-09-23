@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --exec babel-node -- ./server.js",
-    "columbia": "cd columbia && node -r esm parse.js",
+    "build": "cd ig && node -r esm parse.js",
     "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
   },
   "author": "",
