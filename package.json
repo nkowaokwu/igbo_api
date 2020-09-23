@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon --exec babel-node -- ./server.js",
-    "columbia": "cd columbia && node -r esm parse.js",
+    "build": "cd ig && node -r esm parse.js",
     "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
   },
   "author": "",
@@ -21,6 +21,7 @@
     "@babel/core": "^7.11.6",
     "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.11.5",
-    "eslint-config-airbnb": "^18.2.0"
+    "eslint-config-airbnb": "^18.2.0",
+    "esm": "^3.2.25"
   }
 }
