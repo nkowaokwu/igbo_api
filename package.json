@@ -10,7 +10,10 @@
     "test:watch": "yarn test --watch",
     "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
   },
-  "author": "",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "author": "Ijemma Onwuzulike",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
