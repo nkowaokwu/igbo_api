@@ -1,10 +1,17 @@
 /* Code inspired by goodyduru/igbo-text: https://github.com/goodyduru/igbo-text */
 
 import unicharadata from 'unicharadata';
+/* Removes all periods and numbers */
+const clean = (text) => {
+    if (!text) {
+        throw new Error('No text provided. Enter text to clean')
+    }
+    return text.replace(/[0-9+\.,]/g, '').trim();
+}
 
 const normalize = (text, convertToLower = true, removeAbbreviations = true) => {
     if (!text) {
-        throw new Error('Text is invalid');
+        throw new Error('Not text provided. Enter text to normalize');
     }
 
     if (convertToLower) {
@@ -70,7 +77,8 @@ const splitCombinedWords = (text, keySymbols = true) => {
     if (keySymbols) {
         updatedText = updatedText.replace(/([-’'])/, /\1 /);
     } else {
-        updatedText = updatedText.replace(/([-’'])/, ' ');
+        /* Removes prefixed '-' that denotes the current term is a suffix */
+        //updatedText = updatedText.replace(/([-’'])/, ' ');
     }
     return updatedText;
 }
@@ -87,4 +95,10 @@ const spaceOutSymbols = (text) => {
 const normalizedText = normalize('N’ụlọ Akwụkwọà');
 const tokenizedText = tokenize(normalizedText);
 
-console.log({ normalizedText, tokenizedText });
+// console.log({ normalizedText, tokenizedText });
+
+export {
+    clean,
+    normalize,
+    tokenize,
+};

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { parse } from 'node-html-parser';
 import { flatten } from 'lodash';
+import { clean, normalize } from '../utils/normalization';
 
 // TODO: check the case àgìgò
 
