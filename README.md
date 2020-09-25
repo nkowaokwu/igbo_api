@@ -67,8 +67,12 @@ yarn build
 
 This will produce three different files in the `ig` directory:
 
-[dictionaries/dictionary.txt](./ig/dictionaries/dictionary.txt)
+[dictionaries/ig-en.txt](./ig/dictionaries/ig-en.txt)
 
-[dictionaries/dictionary_compressed.json](./ig/dictionaries/dictionary_compressed.json)
+[dictionaries/ig-en.json](./ig/dictionaries/ig-en.json)
 
-[dictionaries/dictionary_expanded.json](./ig/dictionaries/dictionary_expanded.json)
+[dictionaries/ig-en_expanded.json](./ig/dictionaries/ig-en_expanded.json)
+
+[dictionaries/ig-en_normalized.json](./ig/dictionaries/ig-en_normalized.json)
+
+[dictionaries/ig-en_normalized_expanded.json](./ig/dictionaries/ig-en_normalized_expanded.json)
