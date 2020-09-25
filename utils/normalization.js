@@ -4,14 +4,14 @@ import unicharadata from 'unicharadata';
 /* Removes all periods and numbers */
 const clean = (text) => {
     if (!text) {
-        throw new Error('No text provided. Enter text to clean')
+        return '';
     }
     return text.replace(/[0-9+\.,]/g, '').trim();
 }
 
 const normalize = (text, convertToLower = true, removeAbbreviations = true) => {
     if (!text) {
-        throw new Error('Not text provided. Enter text to normalize');
+        return '';
     }
 
     if (convertToLower) {
@@ -49,7 +49,6 @@ const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
     const wordTokens = updatedText.split(' ');
     const validWords = [];
     for (const wordToken of wordTokens) {
-        console.log(wordToken)
         const matches = wordToken.match(regExp);
         if (matches && matches.length) {
             matches.forEach((match) => validWords.push(match));

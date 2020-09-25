@@ -16,6 +16,11 @@ const columnMap = {
     [RIGHT_COLUMN]: 'right',
 };
 
+let currentWord = '';
+let currentPhrase = '';
+let prevColumn = null;
+let centerCount = 0;
+
 const getLeftStyle = (element) => {
     const styles = element.getAttribute('style');
     const leftStyle = styles.split(';')[1];
@@ -32,12 +37,12 @@ const getChildrenText = (element) => {
     return childrenText.join('');
 }
 
-const buildDictionary = (span) => {
+const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = columnMap[getLeftStyle(span)];
-    const childrenText = getChildrenText(span);
+    const childrenText = options.normalize ? normalize(getChildrenText(span)) : getChildrenText(span);
     switch (currentColumn) {
         case 'left':
-            currentWord = childrenText;
+            currentWord = clean(childrenText);
             dictionary[currentWord] = dictionary[currentWord] || [];
             dictionary[currentWord].push({
                 wordClass: '',
@@ -90,12 +95,24 @@ const buildDictionary = (span) => {
     }
 }
 
+const buildDictionaries = (root, dictionary, options) => {
+    resetTrackers();
+    Array.from(root.querySelectorAll('div')).forEach((span) => {
+        buildDictionary(span, dictionary, options);
+    });
+}
+
+const resetTrackers = () => {
+    currentWord = '';
+    currentPhrase = '';
+    prevColumn = null;
+    centerCount = 0;
+}
+
 const dictionariesDir = `${__dirname}/dictionaries`;
-const dictionary = {};
-let currentWord = '';
-let currentPhrase = '';
-let prevColumn = null;
-let centerCount = 0;
+const caseSensitiveDictionary = {};
+const caseSensitiveNormalizedDictionary = {};
+
 
 if (!fs.existsSync(dictionariesDir)){
     fs.mkdirSync(dictionariesDir);
@@ -107,19 +124,23 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
         return;
     }
     const root = parse(data);
-    Array.from(root.querySelectorAll('div')).forEach((span) => {
-        buildDictionary(span);
-    })
 
-    
+    buildDictionaries(root, caseSensitiveDictionary);
+    buildDictionaries(root, caseSensitiveNormalizedDictionary, { normalize: true });
+
     const writeFileConfigs = [
-        [`${dictionariesDir}/ig-en.txt`, JSON.stringify(dictionary)],
-        [`${dictionariesDir}/ig-en_compressed.json`, JSON.stringify(dictionary)],
-        [`${dictionariesDir}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
+        [`${dictionariesDir}/ig-en.txt`, JSON.stringify(caseSensitiveDictionary)],
+        [`${dictionariesDir}/ig-en_compressed.json`, JSON.stringify(caseSensitiveDictionary)],
+        [`${dictionariesDir}/ig-en_expanded.json`, JSON.stringify(caseSensitiveDictionary, null, 4)],
+        [`${dictionariesDir}/ig-en_normalized_compressed.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
+        [`${dictionariesDir}/ig-en_normalized_expanded.json`, JSON.stringify(caseSensitiveNormalizedDictionary, null, 4)],
     ];
 
     writeFileConfigs.forEach((config) => {
-        fs.writeFile(...config, (err) => {
+        fs.writeFile(...config, () => {
+            if (err) {
+                console.error('An error occurred during writing the dictionary', err);
+            }
             console.log(`${config[0]} has been saved`);
         });
     })
