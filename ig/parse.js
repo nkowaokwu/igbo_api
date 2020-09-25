@@ -121,7 +121,7 @@ if (!fs.existsSync(dictionariesDir)){
 
 fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
     if (err) {
-        console.log(err);
+        throw new Error('Unable to read file', err);
         return;
     }
     const root = parse(data);
@@ -139,7 +139,7 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
     writeFileConfigs.forEach((config) => {
         fs.writeFile(...config, () => {
             if (err) {
-                console.error('An error occurred during writing the dictionary', err);
+                throw new Error('An error occurred during writing the dictionary');
             }
             console.log(`${config[0]} has been saved`);
         });

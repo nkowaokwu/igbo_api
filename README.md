@@ -55,7 +55,7 @@ returns:
 
 ## Build a Dictionary
 
-Even though the Igbo dictionary files are already available in this repo, you can still run the script that's responsible for parsing the Columbia paper and creating the `.json` and `.txt` files.
+Even though the Igbo dictionary files are already available in this repo, you can still run the script that's responsible for parsing the Columbia paper and creating the `.json` files.
 
 `dictionary.html` is an HTML representation of the Columbia PDF.
 
@@ -66,8 +66,6 @@ yarn build
 ```
 
 This will produce three different files in the `ig` directory:
-
-[dictionaries/ig-en.txt](./ig/dictionaries/ig-en.txt)
 
 [dictionaries/ig-en.json](./ig/dictionaries/ig-en.json)
 
