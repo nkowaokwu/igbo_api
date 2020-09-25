@@ -109,7 +109,8 @@ const resetTrackers = () => {
     centerCount = 0;
 }
 
-const dictionariesDir = `${__dirname}/dictionaries`;
+const dirPath = process.env.NODE_ENV === 'test' ? `${__dirname}/../tests/__mocks__`: __dirname;
+const dictionariesDir = `${dirPath}/dictionaries`;
 const caseSensitiveDictionary = {};
 const caseSensitiveNormalizedDictionary = {};
 
@@ -129,11 +130,10 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
     buildDictionaries(root, caseSensitiveNormalizedDictionary, { normalize: true });
 
     const writeFileConfigs = [
-        [`${dictionariesDir}/ig-en.txt`, JSON.stringify(caseSensitiveDictionary)],
-        [`${dictionariesDir}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
         [`${dictionariesDir}/ig-en_expanded.json`, JSON.stringify(caseSensitiveDictionary, null, 4)],
-        [`${dictionariesDir}/ig-en_normalized.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
         [`${dictionariesDir}/ig-en_normalized_expanded.json`, JSON.stringify(caseSensitiveNormalizedDictionary, null, 4)],
+        [`${dictionariesDir}/ig-en_normalized.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
+        [`${dictionariesDir}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
     ];
 
     writeFileConfigs.forEach((config) => {

@@ -21,8 +21,8 @@ app.use((err, req, res, next) => {
     res.send(err.message);
 })
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`🟢 Server started on port ${port}`);
 });
 
-export default app;
+export default server;
