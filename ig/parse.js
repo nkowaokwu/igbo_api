@@ -130,9 +130,9 @@ fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
 
     const writeFileConfigs = [
         [`${dictionariesDir}/ig-en.txt`, JSON.stringify(caseSensitiveDictionary)],
-        [`${dictionariesDir}/ig-en_compressed.json`, JSON.stringify(caseSensitiveDictionary)],
+        [`${dictionariesDir}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
         [`${dictionariesDir}/ig-en_expanded.json`, JSON.stringify(caseSensitiveDictionary, null, 4)],
-        [`${dictionariesDir}/ig-en_normalized_compressed.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
+        [`${dictionariesDir}/ig-en_normalized.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
         [`${dictionariesDir}/ig-en_normalized_expanded.json`, JSON.stringify(caseSensitiveNormalizedDictionary, null, 4)],
     ];
 
