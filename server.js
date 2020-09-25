@@ -21,11 +21,8 @@ app.use((err, req, res, next) => {
     res.send(err.message);
 })
 
-// If statement enables mocha --watch
-if (!module.children) {
-    app.listen(port, () => {
-        console.log(`🟢 Server started on port ${port}`);
-    });
-}
+app.listen(port, () => {
+    console.log(`🟢 Server started on port ${port}`);
+});
 
 export default app;
