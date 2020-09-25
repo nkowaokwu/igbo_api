@@ -1,9 +1,7 @@
 import fs from 'fs';
 import { parse } from 'node-html-parser';
-import { flatten } from 'lodash';
+import { flatten, last } from 'lodash';
 import { clean, normalize } from '../utils/normalization';
-
-// TODO: check the case àgìgò
 
 const READ_FILE = `${__dirname}/dictionary.html`;
 const READ_FILE_FORMAT = 'utf8';
@@ -36,63 +34,60 @@ const getChildrenText = (element) => {
 
 const buildDictionary = (span) => {
     const currentColumn = columnMap[getLeftStyle(span)];
-        const childrenText = getChildrenText(span);
-        switch (currentColumn) {
-            case 'left':
-                currentWord = childrenText;
-                dictionary[currentWord] = {
-                    wordClass: '',
-                    definition: '',
-                    examples: [],
-                    phrases: {}
-                };
-                centerCount = 0; // reset the center count for a new word
-                currentPhrase = '';
-                // TODO place this in a better spot
-                prevColumn = currentColumn;
-                break;
-            case 'center':
-                // centerCount keeps track of how many times you are in the center column
-                // great for identifying word classes vs phrases
-                centerCount += 1;
-                if (prevColumn === 'left') {
-                    // word class
-                    dictionary[currentWord].wordClass = childrenText;
-                } else if (prevColumn === 'right') {
-                    // recursive opportunity
-                    currentPhrase = childrenText;
-                    if (!!currentPhrase) {
-                        dictionary[currentWord].phrases = {
-                            ...dictionary[currentWord].phrases,
-                            [currentPhrase]: { definition: '', examples: [] }, // TODO: move the first element out of example to definition
-                        };
-                    }
+    const childrenText = getChildrenText(span);
+    switch (currentColumn) {
+        case 'left':
+            currentWord = childrenText;
+            dictionary[currentWord] = dictionary[currentWord] || [];
+            dictionary[currentWord].push({
+                wordClass: '',
+                definition: '',
+                examples: [],
+                phrases: {}
+            });
+            centerCount = 0; // Reset the center count for a new word
+            currentPhrase = '';
+            prevColumn = currentColumn;
+            break;
+        case 'center':
+            // enterCount keeps track of how many times you are in the center column
+            // Great for identifying word classes vs phrases
+            centerCount += 1;
+            if (prevColumn === 'left') {
+                // Word class
+                last(dictionary[currentWord]).wordClass = childrenText;
+            } else if (prevColumn === 'right') {
+                currentPhrase = childrenText;
+                if (!!currentPhrase) {
+                    last(dictionary[currentWord]).phrases = {
+                        ...last(dictionary[currentWord]).phrases,
+                        [currentPhrase]: { definition: '', examples: [] },
+                    };
                 }
-                prevColumn = currentColumn;
-                break;
-            case 'right':
-                if (prevColumn === 'center' && centerCount < 2) {
-                    dictionary[currentWord].definition = childrenText;
-                } else if (prevColumn === 'right' && centerCount < 2) {
-                    dictionary[currentWord].examples.push(childrenText)
-                } else if (prevColumn === 'center' && centerCount >= 2) {
-                    // grab the current phrase and then add to definition
-                    // recursive opportunity
-                    if (!!currentPhrase) {
-                        dictionary[currentWord].phrases[currentPhrase].definition = childrenText;
-                    }
-                } else if (prevColumn === 'right' && centerCount >= 2) {
-                    // append the current example to the currentPhrase
-                    if (!!currentPhrase) {
-                        dictionary[currentWord].phrases[currentPhrase].examples.push(childrenText);
-                    }
+            }
+            prevColumn = currentColumn;
+            break;
+        case 'right':
+            if (prevColumn === 'center' && centerCount < 2) {
+                last(dictionary[currentWord]).definition = childrenText;
+            } else if (prevColumn === 'right' && centerCount < 2) {
+                last(dictionary[currentWord]).examples.push(childrenText)
+            } else if (prevColumn === 'center' && centerCount >= 2) {
+                // Grab the current phrase and then add to definition
+                if (!!currentPhrase) {
+                    last(dictionary[currentWord]).phrases[currentPhrase].definition = childrenText;
                 }
-                prevColumn = currentColumn;
-                break;
-            default:
-                //console.log('Invalid option', getLeftStyle(span));
-                break;
-        }
+            } else if (prevColumn === 'right' && centerCount >= 2) {
+                // Append the current example to the currentPhrase
+                if (!!currentPhrase) {
+                    last(dictionary[currentWord]).phrases[currentPhrase].examples.push(childrenText);
+                }
+            }
+            prevColumn = currentColumn;
+            break;
+        default:
+            break;
+    }
 }
 
 const dictionariesDir = `${__dirname}/dictionaries`;
