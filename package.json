@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec babel-node -- ./server.js",
     "build": "cd ig && node -r esm parse.js",
-    "test": "mocha --require esm ./tests",
+    "test": "NODE_ENV=test mocha -r esm ./tests",
     "test:watch": "yarn test --watch",
     "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
   },

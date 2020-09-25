@@ -4,7 +4,7 @@ import server from '../server';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
 
 process.env.NODE_ENV = 'test';
-const { expect, should } = chai;
+const { expect } = chai;
 
 chai.use(chaiHttp);
 
@@ -17,8 +17,9 @@ describe('Words', () => {
                 .end((_, res) => {
                     const keys = ['wordClass', 'definition', 'examples', 'phrases'];
                     expect(res.status).to.equal(200);
-                    expect(res.body).to.be.a('object');
-                    expect(res.body).to.have.keys(...keys);
+                    expect(res.body).to.be.a('array');
+                    expect(res.body.length).to.be.equal(1);
+                    expect(res.body[0]).to.have.keys(...keys);
                     done();
                 })
         });
@@ -35,3 +36,5 @@ describe('Words', () => {
         })
     })
 })
+
+after(() => server.close())
