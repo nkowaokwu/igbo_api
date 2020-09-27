@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node -- ./server.js",
+    "dev": "NODE_ENV=dev nodemon --exec babel-node -- ./server.js",
     "build": "cd ig && node -r esm parseAndBuild.js",
     "test": "NODE_ENV=test mocha -r esm ./tests",
     "test:watch": "yarn test --watch",

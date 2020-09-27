@@ -15,6 +15,12 @@ router.get('/', (_, res) => {
 
 router.get('/words', getWordData);
 
+app.use('*', (req, res, next) => {
+    if (process.env.NODE_ENV === 'dev') {
+        console.log(req.query);
+    }
+    next();
+})
 app.use('/api/v1/search', router);
 
 app.use((err, req, res, next) => {
