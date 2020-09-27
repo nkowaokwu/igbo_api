@@ -25,18 +25,15 @@ const normalize = (text, convertToLower = true, removeAbbreviations = true) => {
 }
 
 const removeTonalMarks = (text) => {
-    const textCharacters = [];
-    for (const letter of text) {
-        if (unicharadata.category(letter) === 'Mn') {
-            continue;
-        } else if (letter.charCodeAt() > 128 && letter.charCodeAt() < 300) {
+    return [...text].reduce((textCharacters, letter) => {
+        if (letter.charCodeAt() > 128 && letter.charCodeAt() < 300) {
             const normalizedLetter = letter.normalize('NFD').replace(/[\u0300-\u036f]/, '');
-            textCharacters.push(normalizedLetter);
-        } else {
-            textCharacters.push(letter)
+            return `${textCharacters}${normalizedLetter}`;
+        } else if (unicharadata.category(letter) !== 'Mn') {
+            return `${textCharacters}${letter}`;
         }
-    }
-    return textCharacters.join('');
+        return textCharacters;
+    }, '');
 }
 
 const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
