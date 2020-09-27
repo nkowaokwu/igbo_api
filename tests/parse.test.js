@@ -1,7 +1,5 @@
 import fs from 'fs';
-import chai from 'chai';
-
-const { expect } = chai;
+import { LONG_TIMEOUT } from './shared/constants';
 
 const mocksDir = `${__dirname}/../tests/__mocks__`;
 if (!fs.existsSync(mocksDir)){
@@ -9,9 +7,10 @@ if (!fs.existsSync(mocksDir)){
 }
 
 describe('Parse', () => {
-    describe('Dictionaries', () => {
+    describe('Dictionaries', function() {
+        this.timeout(LONG_TIMEOUT);
         it('should create dictionaries', (done) => {
-            import('../ig/parse').then(() => {
+            import('../ig/parseAndBuild').then(() => {
                 done();
             }).catch((err) => {
                 throw err;
