@@ -1,13 +1,6 @@
 import { keys } from 'lodash';
+import removePrefix from '../shared/utils/removePrefix';
 import dictionary from '../ig/dictionaries/ig-en_expanded.json';
-
-/* Removes the verb prefix character '-' */
-const removePrefix = (term) => {
-    if (term.charAt(0) === '-') {
-        return term.substring(1);
-    }
-    return term;
-}
 
 export const findSearchWord = (regexWord, word) => {
     const results = keys(dictionary).reduce((matchedResults, key) => {

@@ -23,7 +23,7 @@ describe('Words', () => {
             });
         });
 
-        it('should return an error for searching no word', (done) => {
+        it.only('should return an error for searching no word', (done) => {
             searchTerm()
             .end((_, res) => {
                 expect(res.status).to.equal(400);

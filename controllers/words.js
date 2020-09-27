@@ -1,10 +1,11 @@
+import removePrefix from '../shared/utils/removePrefix';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
-import diacriticCodes from '../shared/diacriticCodes';
+import diacriticCodes from '../shared/constants/diacriticCodes';
 
 const getWordData = (_, res) => {
     const { req: { query }} = res;
-    const searchWord = query.keyword;
+    const searchWord = removePrefix(query.keyword);
     if (!searchWord) {
         res.status(400);
         throw new Error(NO_PROVIDED_TERM);
