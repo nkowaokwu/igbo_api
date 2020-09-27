@@ -29,8 +29,6 @@ export default ({
             [`${DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
         ];
     
-        console.log({ normalizationMap });
-    
         writeFileConfigs.forEach((config) => {
             fs.writeFile(...config, () => {
                 if (err) {
