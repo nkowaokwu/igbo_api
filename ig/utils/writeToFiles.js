@@ -4,7 +4,6 @@ import { READ_FILE, READ_FILE_FORMAT, DICTIONARIES_DIR } from '../../shared/cons
 
 export default ({
     buildDictionaries,
-    normalizationMap,
 }) => {
     const caseSensitiveDictionary = {};
     const caseSensitiveNormalizedDictionary = {};
@@ -30,11 +29,11 @@ export default ({
         ];
     
         writeFileConfigs.forEach((config) => {
-            fs.writeFile(...config, () => {
+            fs.writeFileSync(...config, () => {
                 if (err) {
                     throw new Error('An error occurred during writing the dictionary');
                 }
-                console.log(`${config[0]} has been saved`);
+                process.env.NODE_ENV !== 'test' && console.log(`${config[0]} has been saved`);
             });
         })
     });

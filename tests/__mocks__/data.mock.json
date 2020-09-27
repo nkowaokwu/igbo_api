@@ -1,0 +1,259 @@
+{
+    "agụū": [
+        {
+            "wordClass": "n.",
+            "definition": "hunger; desire; eagerness",
+            "examples": [],
+            "phrases": {
+                "(agụū) -gụ": {
+                    "definition": "be hungry",
+                    "examples": []
+                },
+                "agụū mmīli": {
+                    "definition": "thirst",
+                    "examples": []
+                },
+                "-gụ agụū": {
+                    "definition": "hunger; desire; long for ( -gụ 2. desire)",
+                    "examples": []
+                }
+            }
+        }
+    ],
+    "n'oge": [
+        {
+            "wordClass": "tester",
+            "definition": "tester",
+            "examples": ["tester"],
+            "phrases": {}
+        }
+    ],
+    "-zu-zu": [
+        {
+            "wordClass": "tester",
+            "definition": "tester",
+            "examples": ["tester"],
+            "phrases": {}
+        }
+    ],
+    "-bịa": [
+        {
+            "wordClass": "v.",
+            "definition": "come",
+            "examples": [],
+            "phrases": {
+                "òbịbịa": {
+                    "definition": "coming; advent",
+                    "examples": []
+                },
+                "Òbịbịaā Kraìst": {
+                    "definition": "Advent",
+                    "examples": []
+                },
+                "-bịachi anya": {
+                    "definition": "come regularly",
+                    "examples": []
+                },
+                "-bịachìgha": {
+                    "definition": "come; return",
+                    "examples": []
+                },
+                "bịadị(lì)": {
+                    "definition": "by the way, ...",
+                    "examples": []
+                },
+                "-bịakèta": {
+                    "definition": "come nearer",
+                    "examples": []
+                },
+                "-bịakwute": {
+                    "definition": "come near to (a person)",
+                    "examples": []
+                },
+                "-bịalu": {
+                    "definition": "arrive at; reach",
+                    "examples": []
+                },
+                "-bịa ǹso": {
+                    "definition": "approach",
+                    "examples": []
+                },
+                "-bịa(sò) n’àzụ": {
+                    "definition": "come after",
+                    "examples": []
+                },
+                "arō nā-abịa": {
+                    "definition": "A. next year (cf. arō òzọ)",
+                    "examples": [
+                        "B. coming year(s)"
+                    ]
+                },
+                "-sibịa": {
+                    "definition": "come from; come (by way of)",
+                    "examples": []
+                }
+            }
+        }
+    ],
+    "ndị ndi": [
+        {
+            "wordClass": "n.",
+            "definition": "nation; people, those (plural of onye)",
+            "examples": [],
+            "phrases": {
+                "ndị à": {
+                    "definition": "these:",
+                    "examples": [
+                        "Akwà ndị à bụ òke ǹkè m These clothes are my share"
+                    ]
+                },
+                "ndị afù": {
+                    "definition": "those",
+                    "examples": []
+                },
+                "ndị aghā": {
+                    "definition": "soldiers; warriors",
+                    "examples": []
+                },
+                "ndi be": {
+                    "definition": "household; people of the house; fellow townsfolk",
+                    "examples": []
+                },
+                "ndi gboo": {
+                    "definition": "the ancients",
+                    "examples": []
+                },
+                "ndị īchiè": {
+                    "definition": "chiefs, titled persons (alive or departed)",
+                    "examples": []
+                },
+                "ndi ikènyà": {
+                    "definition": "elders; grown men; principal men",
+                    "examples": []
+                },
+                "ndị ikpē": {
+                    "definition": "the judges",
+                    "examples": []
+                },
+                "ndi isī": {
+                    "definition": "chiefs, headmen",
+                    "examples": []
+                },
+                "Ndi Isi Ōji": {
+                    "definition": "the Africans",
+                    "examples": []
+                },
+                "ndi ìsì": {
+                    "definition": "blind people",
+                    "examples": []
+                },
+                "ndị kọtùma": {
+                    "definition": "court-messengers",
+                    "examples": []
+                },
+                "ndị mbụ nà ndị": {
+                    "definition": "the ancestors",
+                    "examples": []
+                },
+                "àbò": {
+                    "definition": "dead people (spirits)",
+                    "examples": []
+                },
+                "ndị mpùm": {
+                    "definition": "highwaymen; robbers; bandits",
+                    "examples": []
+                },
+                "ndị mūlụ": {
+                    "definition": "parents",
+                    "examples": []
+                },
+                "ndị nche atụlū": {
+                    "definition": "shepherds",
+                    "examples": []
+                },
+                "ndị ǹkè nya": {
+                    "definition": "his own people",
+                    "examples": []
+                },
+                "ndị nkịtị": {
+                    "definition": "common people",
+                    "examples": []
+                },
+                "ndị ntā": {
+                    "definition": "hunters",
+                    "examples": []
+                },
+                "ndị nwufù": {
+                    "definition": "those yonder",
+                    "examples": []
+                },
+                "ndinyom": {
+                    "definition": "women; females",
+                    "examples": []
+                },
+                "ndi ochiè": {
+                    "definition": "the ancients",
+                    "examples": []
+                },
+                "Ndi ōji": {
+                    "definition": "Africans; black people",
+                    "examples": []
+                },
+                "ndị okènyè": {
+                    "definition": "elders",
+                    "examples": []
+                },
+                "ndi orī": {
+                    "definition": "rogues; highwaymen",
+                    "examples": []
+                },
+                "ndi orù": {
+                    "definition": "slaves",
+                    "examples": []
+                },
+                "ndi ōsu": {
+                    "definition": "people owned by deities; outcasts",
+                    "examples": []
+                },
+                "ndị ozī": {
+                    "definition": "messengers; the apostles",
+                    "examples": []
+                },
+                "ndị ọkù": {
+                    "definition": "fishermen",
+                    "examples": []
+                },
+                "ndị ọnwò": {
+                    "definition": "some people",
+                    "examples": []
+                },
+                "ndi ōta ōjị": {
+                    "definition": "nickname used only by the Igbo to describe the Yoruba",
+                    "examples": []
+                },
+                "ndị òyì": {
+                    "definition": "friends",
+                    "examples": []
+                },
+                "ndi Ukà": {
+                    "definition": "the Christians",
+                    "examples": []
+                },
+                "ndị ùlà": {
+                    "definition": "deceivers; cunning people",
+                    "examples": []
+                },
+                "ùwà ndi mmọọ": {
+                    "definition": "the world of spirits",
+                    "examples": []
+                },
+                "ùwà ndi oyìbo": {
+                    "definition": "luxurious pleasure-loving way of life or living; extravagant",
+                    "examples": [
+                        "life (lit. the world of the white people)"
+                    ]
+                }
+            }
+        }
+    ]
+}
