@@ -25,7 +25,7 @@ This project is still very low-level and bare bones. There are a lot of differen
 
 Double check to make sure that you have done the following things:
 
-1. Created new unit tests to increase confidence of your changes.
+1. If implementing a feature request, create new unit tests to increase confidence of your changes.
     * **You're code will be unable to get merged without new unit tests**
 2. Check to see if your changes are non-breaking by running `yarn test`
 3. And install or build dependencies are removed
