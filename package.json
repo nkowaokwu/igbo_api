@@ -20,6 +20,7 @@
     "lodash": "^4.17.20",
     "node-html-parser": "^1.2.20",
     "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
     "unicharadata": "^9.0.0-alpha.6"
   },
   "devDependencies": {

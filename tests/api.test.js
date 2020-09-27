@@ -23,7 +23,7 @@ describe('Words', () => {
             });
         });
 
-        it.only('should return an error for searching no word', (done) => {
+        it('should return an error for searching no word', (done) => {
             searchTerm()
             .end((_, res) => {
                 expect(res.status).to.equal(400);
@@ -42,7 +42,9 @@ describe('Words', () => {
                 done();
             });
         });
+    });
 
+    describe('Regex Search', () => {
         it('should return term information without included dashes', (done) => {
             searchTerm('bia')
             .then((res) => {
@@ -52,8 +54,29 @@ describe('Words', () => {
                     expect(key.charAt(0)).to.equal('-');
                 });
                 done();
+            });
+        });
+
+        it('should return term with apostrophe by using spaces', (done) => {
+            searchTerm('n oge')
+            .then((res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(keys(res.body)[0]).to.equal("n'oge");
+                done();
             })
-        })
+        });
+
+        it('should return term with apostrophe by using apostrophe', (done) => {
+            const keyword = "n'oge"
+            searchTerm(keyword)
+            .then((res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(keys(res.body)[0]).to.equal(keyword);
+                done();
+            });
+        });
     });
 });
 

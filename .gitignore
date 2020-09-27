@@ -75,9 +75,6 @@ web_modules/
 .env
 .env.test
 
-# generated mocks
-tests/__mocks__/dictionaries
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

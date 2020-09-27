@@ -55,5 +55,5 @@ export default {
     'O': '[O\u00d2\u00d3\u014c\u1ecc]',
     'u': '[u\u00f9\u00fa\u016b\u1ee5]',
     'U': '[U\u00d9\u00da\u016a\u1ee4]',
-    ' ': '[\s\u0027]',
+    ' ': '[\\s\u0027]',
 };
