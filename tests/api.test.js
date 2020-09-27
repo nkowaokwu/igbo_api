@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { isEqual } from 'lodash';
+import { keys, isEqual } from 'lodash';
 import server from '../server';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
 import { searchTerm } from './shared/commands';
@@ -17,7 +17,7 @@ describe('Words', () => {
             searchTerm(keyword)
             .end((_, res) => {
                 expect(res.status).to.equal(200);
-                expect(res.body).to.be.a('object');
+                expect(res.body).to.be.an('object');
                 expect(res.body).to.have.keys(keyword);
                 done();
             });
@@ -38,10 +38,22 @@ describe('Words', () => {
                 expect(status).to.equal(200);
                 const { status: rawStatus, body: rawData } = await searchTerm('ndị ndi');
                 expect(rawStatus).to.equal(200);
-                expect(isEqual(normalizeData, rawData)).to.be.equal(true);
+                expect(isEqual(normalizeData, rawData)).to.equal(true);
                 done();
             });
         });
+
+        it('should return term information without included dashes', (done) => {
+            searchTerm('bia')
+            .then((res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('object');
+                keys(res.body).forEach((key) => {
+                    expect(key.charAt(0)).to.equal('-');
+                });
+                done();
+            })
+        })
     });
 });
 

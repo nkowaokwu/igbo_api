@@ -34,7 +34,7 @@ export default ({
                 if (err) {
                     throw new Error('An error occurred during writing the dictionary');
                 }
-                console.log(`${config[0]} has been saved`);
+                process.env.NODE_ENV !== 'test' && console.log(`${config[0]} has been saved`);
             });
         })
     });
