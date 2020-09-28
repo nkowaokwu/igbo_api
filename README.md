@@ -5,7 +5,22 @@
 
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
-## Start the API
+## Getting Started
+
+This API is not publicly available. To run the API, you must run it locally on your machine.
+
+Clone the project:
+
+```
+git clone https://github.com/ijemmao/igbo_api.git
+```
+
+Inside the project, install the project's dependencies:
+
+```
+cd igbo_api/
+yarn install
+```
 
 To start the dev API server run the following command:
 
