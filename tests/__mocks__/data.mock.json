@@ -1,4 +1,38 @@
 {
+    "ama": [
+        {
+            "wordClass": "n.",
+            "definition": "(also èzi amā) space in front of the compound, outside thecompound wall and beginning from the main gate; street:",
+            "examples": [
+                "Ama Madùnààgụ Madụnaagụ street"
+            ],
+            "phrases": {
+                "-nò n’ama": {
+                    "definition": "(fig.) menstruate:",
+                    "examples": [
+                        "Nwaànyì nò n’ama The woman is menstruating"
+                    ]
+                },
+                "-pù ama": {
+                    "definition": "go to the toilet (lit. go out to the fore-compound beyond the",
+                    "examples": [
+                        "main compound door):",
+                        "Anà m apù amā I am going to the toilet"
+                    ]
+                },
+                "-pù n’ama": {
+                    "definition": "reach age of menstruation",
+                    "examples": [
+                        "Nwaànyì pùlù n’ama The girl has reached puberty"
+                    ]
+                },
+                "ụzò ezi amā": {
+                    "definition": "main entrance to a compound",
+                    "examples": []
+                }
+            }
+        }
+    ],
     "agụū": [
         {
             "wordClass": "n.",
