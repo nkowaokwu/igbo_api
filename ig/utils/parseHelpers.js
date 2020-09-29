@@ -1,9 +1,17 @@
 import { flatten } from 'lodash';
 
-export const getLeftStyle = (element) => {
-    const styles = element.getAttribute('style');
-    const leftStyle = styles.split(';')[1];
-    return leftStyle.split(':')[1];
+/* Converts the style's value into a float */
+const getStyleValues = (style = '') => parseFloat(style.split(':')[1]);
+
+/* Takes out the top and left styles from the element's style attribute */
+export const getLeftAndTopStyles = (element) => {
+    const styleAttribute = element.getAttribute('style');
+    const leftStyleMatches = styleAttribute.match(/left:\d{1,}.\d{1,}/) || [];
+    const topStyleMatches = styleAttribute.match(/top:\d{1,}.\d{1,}/) || [];
+    return {
+        left: getStyleValues(leftStyleMatches[0]),
+        top: getStyleValues(topStyleMatches[0]),
+    }
 }
 
 export const getChildrenText = (element) => {

@@ -11,7 +11,7 @@ export default ({
     if (!fs.existsSync(DICTIONARIES_DIR)){
         fs.mkdirSync(DICTIONARIES_DIR);
     }
-
+    
     fs.readFile(READ_FILE, READ_FILE_FORMAT, (err, data) => {
         if (err) {
             throw new Error('Unable to read file', err);
@@ -35,6 +35,6 @@ export default ({
                 }
                 process.env.NODE_ENV !== 'test' && console.log(`${config[0]} has been saved`);
             });
-        })
+        });
     });
 }
