@@ -26,6 +26,7 @@ export const getChildrenText = (element) => {
 }
 
 
+/* Checks to see if current text is one of many definitions for a term */
 export const startsWithLetterDot = (text) => (
     text.startsWith('A. ') ||
     text.startsWith('B. ') ||
@@ -33,14 +34,15 @@ export const startsWithLetterDot = (text) => (
     text.startsWith('D. ')
 );
 
-export const appendDefinition = (childrenText, currentDefinitions) => {
+/* Append the childrenText to the the current cell associated with a term */
+export const appendTextToCurrentCell = (childrenText, termArray) => {
     const isABBeginning = startsWithLetterDot(childrenText);
     if (isABBeginning) {
-        currentDefinitions.push(childrenText);
+        termArray.push(childrenText);
     } else {
-        const currentDefinition = last(currentDefinitions);
-        const lastIndex = currentDefinitions.length - 1;
-        currentDefinitions[lastIndex] = currentDefinition + childrenText;
+        const currentDefinition = last(termArray);
+        const lastIndex = termArray.length - 1;
+        termArray[lastIndex] = `${currentDefinition} ${childrenText}`;
     }
 }
 export const fromRightOrCenterColumn = (prevColumn) => (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER);

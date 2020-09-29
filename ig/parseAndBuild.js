@@ -1,14 +1,14 @@
 import { last } from 'lodash';
 import {
     startsWithLetterDot,
-    appendDefinition,
+    appendTextToCurrentCell,
     fromRightOrCenterColumn,
     getLeftAndTopStyles,
     getChildrenText,
 } from './utils/parseHelpers';
 import writeToFiles from './utils/writeToFiles';
 import { clean, normalize } from '../utils/normalization';
-import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE } from '../shared/constants/parseConstants';
+import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE, CELL_TYPE } from '../shared/constants/parseConstants';
 
 const normalizationMap = {};
 
@@ -16,6 +16,7 @@ let currentWord = '';
 let currentPhrase = '';
 let prevColumn = null;
 let prevSpan = null;
+let prevCellType = null;
 let centerCount = 0;
 let isABPhrase = false;
 
@@ -56,6 +57,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
             centerCount = 0; // Reset the center count for a new word
             currentPhrase = '';
             isABPhrase = false;
+            prevCellType = CELL_TYPE.WORD;
             break;
         case COLUMNS.CENTER:
             /* centerCount keeps track of how many times you are in the center column
@@ -65,6 +67,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
             if (prevColumn === COLUMNS.LEFT) {
                 /* Assigns term's word class */
                 last(dictionary[currentWord]).wordClass = childrenText;
+                prevCellType = CELL_TYPE.WORD_CLASS;
             } else if (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) {
                 /* Creates new entry for a term's phrase */
                 currentPhrase = childrenText;
@@ -74,6 +77,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
                         [currentPhrase]: { definitions: [], examples: [] },
                     };
                 }
+                prevCellType = CELL_TYPE.PHRASE;
             }
             isABPhrase = false;
             break;
@@ -95,25 +99,35 @@ const buildDictionary = (span, dictionary, options = {}) => {
             if (prevColumn === COLUMNS.CENTER && centerCount < 2) {
                 /* Add a new definition to current term */
                 currentWordDefinitions.push(childrenText);
+                prevCellType = CELL_TYPE.DEFINITION;
             } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount < 2) {
                 /* Append text to the term's last definition */
                 currentWordDefinitions[lastIndex] = currentDefinition + childrenText;
             } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount < 2) {
                 /* Handles definitions that start with a letter then dot for the term's definitions */
-                appendDefinition(childrenText, currentWordDefinitions);
+                appendTextToCurrentCell(childrenText, currentWordDefinitions);
             } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2) {
                 /* Add a new example to current term */
                 currentWordExamples.push(childrenText)
             } else if (prevColumn === COLUMNS.CENTER && centerCount >= 2) {
                 /* Add phrase definition if current phrase exists */
                 !!currentPhrase && currentPhraseDefinitions.push(childrenText);
+                prevCellType = CELL_TYPE.DEFINITION;
             } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount >= 2) {
                 /* Handles definitions that start with a letter then dot
                 for the term's current phrase definitions */
-                appendDefinition(childrenText, currentPhraseDefinitions);
+                appendTextToCurrentCell(childrenText, currentPhraseDefinitions);
+            } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
+                /* Append the text to the current cell depending on type */
+                if (prevCellType === CELL_TYPE.DEFINITION) {
+                    appendTextToCurrentCell(childrenText, currentPhraseDefinitions);
+                } else if (prevCellType === CELL_TYPE.EXAMPLE) {
+                    appendTextToCurrentCell(childrenText, currentPhraseExamples);
+                }
             } else if (prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
                 /* Append the current example to the currentPhrase */
                 !!currentPhrase && currentPhraseExamples.push(childrenText);
+                prevCellType = CELL_TYPE.EXAMPLE;
             }
             break;
         default:

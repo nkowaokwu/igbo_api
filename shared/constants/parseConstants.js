@@ -13,3 +13,10 @@ export const LEFT_STYLE_TO_COLUMN = {
     [CENTER_COULMN_STYLE_VALUE]: COLUMNS.CENTER,
     [RIGHT_COLUMN_STYLE_VALUE]: COLUMNS.RIGHT,
 };
+export const CELL_TYPE = {
+    WORD: 'word',
+    WORD_CLASS: 'wordClass',
+    PHRASE: 'phrase',
+    DEFINITION: 'definition',
+    EXAMPLE: 'example',
+};
