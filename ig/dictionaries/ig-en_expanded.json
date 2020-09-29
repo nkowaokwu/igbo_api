@@ -185,6 +185,10 @@
                     "examples": []
                 },
                 "egwù": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òtu àbànì dì egwù": {
                     "definition": "gang of bandits",
                     "examples": []
                 }
@@ -2095,6 +2099,10 @@
                     "examples": []
                 },
                 "mmụō, ekwensu": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-chụ àjà": {
                     "definition": "offer joyless sacrifice to drive out evil spirits",
                     "examples": []
                 },
@@ -2659,6 +2667,10 @@
                     "examples": []
                 },
                 "akā": {
+                    "definition": "",
+                    "examples": []
+                },
+                "mkpà akā": {
                     "definition": "biceps",
                     "examples": []
                 },
@@ -3546,6 +3558,10 @@
                     "examples": []
                 },
                 "ākpịlị": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gù àkpịlī": {
                     "definition": "make to lose voice:",
                     "examples": [
                         "Ukwalà gùlù m àkpịlī A cough has taken away my voice"
@@ -3841,6 +3857,10 @@
             "examples": [],
             "phrases": {
                 "akwā àbàda": {
+                    "definition": "",
+                    "examples": []
+                },
+                "akwà ajì": {
                     "definition": "native woven cloth, very thick, rough and coarse",
                     "examples": []
                 },
@@ -4123,6 +4143,10 @@
                     "examples": []
                 },
                 "ōbodòlòbo": {
+                    "definition": "",
+                    "examples": []
+                },
+                "akwụkwọ osisi": {
                     "definition": "leaf of tree",
                     "examples": []
                 },
@@ -5060,6 +5084,10 @@
                     "examples": []
                 },
                 "nà mmili ala efī": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ànị mmānya": {
                     "definition": "dregs of wine",
                     "examples": []
                 },
@@ -5105,6 +5133,10 @@
                     "examples": []
                 },
                 "ọnā èdò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ànì ụkwū": {
                     "definition": "heel of the foot",
                     "examples": []
                 },
@@ -5226,6 +5258,10 @@
                     "examples": []
                 },
                 "ànì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "onye ànì": {
                     "definition": "fellow countryman",
                     "examples": []
                 },
@@ -6686,6 +6722,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-bà afà": {
+                    "definition": "name; give a name (e.g. to new-born baby)",
+                    "examples": []
+                },
                 "òbùbà afà": {
                     "definition": "giving a name",
                     "examples": []
@@ -6800,6 +6840,10 @@
                     "examples": []
                 },
                 "Bèelụchukwu": {
+                    "definition": "",
+                    "examples": []
+                },
+                "bèelụ mà": {
                     "definition": "only if; unless (not):",
                     "examples": [
                         "Agà m àbịa bèelụ mà ị bịa I will come only if you will come:",
@@ -7690,6 +7734,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-bu isi, -bu isì": {
+                    "definition": "be first (to come)",
+                    "examples": []
+                },
                 "-bu ụzò": {
                     "definition": "lead; precede; used after another verb, = before:",
                     "examples": []
@@ -8021,6 +8069,10 @@
                     "examples": []
                 },
                 "mmanụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-cha ntụ ntụ": {
                     "definition": "be ash-grey in colour",
                     "examples": []
                 },
@@ -8757,7 +8809,15 @@
             "wordClass": "(slang):",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-chì jọòbù": {
+                    "definition": "cheat; unlawfully use part of another's time in attending to",
+                    "examples": [
+                        "one's needs (e.g. as a clerk who secretly fills in football",
+                        "coupons in the office); do petty job as a sideline"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -8819,6 +8879,10 @@
                     "examples": []
                 },
                 "chìghàlù àzụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-chìpù": {
                     "definition": "start on a journey",
                     "examples": []
                 }
@@ -9248,13 +9312,25 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-chụ àjà": {
+                    "definition": "offer joyless sacrifice to evil spirits (sometimes connected",
+                    "examples": [
+                        "with 1., as the sacrifice is to drive out the spirits)"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-chụ ajù": {
+                    "definition": "be, feel giddy",
+                    "examples": []
+                }
+            }
         }
     ],
     "D": [
@@ -9301,6 +9377,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-da anya": {
+                    "definition": "shirk one’s duty:",
+                    "examples": [
+                        "Ọ nà-àda anya ọlū He is shirking the work"
+                    ]
+                },
                 "-da ǹdamanya": {
                     "definition": "be lazy; malinger; loaf about",
                     "examples": []
@@ -9326,6 +9408,10 @@
                     "examples": []
                 },
                 "òdìda chī": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-dà àba": {
                     "definition": "fall on the back",
                     "examples": []
                 },
@@ -9627,13 +9713,23 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-dà ùdà": {
+                    "definition": "sound",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-dà ọnū": {
+                    "definition": "be expensive",
+                    "examples": []
+                }
+            }
         }
     ],
     "daa": [
@@ -9770,6 +9866,10 @@
                     "definition": "B. help to write a letter",
                     "examples": []
                 },
+                "-dekwu": {
+                    "definition": "write more",
+                    "examples": []
+                },
                 "-de letà": {
                     "definition": "write letter",
                     "examples": []
@@ -9898,6 +9998,13 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-bedebe": {
+                    "definition": "stop crying:",
+                    "examples": [
+                        "O bedebego kà ò nà-èbelịsị? Has she stopped (weeping) or is",
+                        "she still weeping?"
+                    ]
+                },
                 "-jedebe": {
                     "definition": "come to a stop:",
                     "examples": [
@@ -10662,6 +10769,10 @@
                     "examples": []
                 },
                 "dọòlịdō": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-dọgò": {
                     "definition": "pull crooked or wrongly",
                     "examples": []
                 },
@@ -11004,6 +11115,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-dù-dù": {
+                    "definition": "be in a dull state",
+                    "examples": []
+                },
                 "-gbadùba iru": {
                     "definition": "be morose, sulky, downcast:",
                     "examples": [
@@ -11146,7 +11261,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-dụ isi": {
+                    "definition": "swear one’s innocence by a deity",
+                    "examples": []
+                }
+            }
         }
     ],
     "E": [
@@ -11251,6 +11371,10 @@
                     "examples": []
                 },
                 "(n’)ichè,": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ebe ịtā nni": {
                     "definition": "pasture",
                     "examples": []
                 },
@@ -11843,6 +11967,10 @@
                     "examples": []
                 },
                 "èfifìè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "mgbè efìfìè": {
                     "definition": "during the afternoon",
                     "examples": []
                 }
@@ -12417,6 +12545,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "ife ekike": {
+                    "definition": "finery; adornment",
+                    "examples": []
+                },
                 "-ke ekike": {
                     "definition": "dress; adorn",
                     "examples": []
@@ -13211,6 +13343,10 @@
                     "examples": []
                 },
                 "àbànì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "n’ètitì": {
                     "definition": "amidst; in the middle",
                     "examples": []
                 },
@@ -13456,6 +13592,10 @@
                     "examples": []
                 },
                 "Ndùbezè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "oche ezè": {
                     "definition": "throne",
                     "examples": []
                 },
@@ -13907,7 +14047,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-fe ọlụ": {
+                    "definition": "superintend work (shortened from -nefe look over)",
+                    "examples": []
+                }
+            }
         }
     ],
     "-fè": [
@@ -14178,7 +14323,12 @@
             "wordClass": "ext. suff.1.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tụfì": {
+                    "definition": "be entangled (also -tụsì)",
+                    "examples": []
+                }
+            }
         }
     ],
     "-fịa": [
@@ -14677,6 +14827,10 @@
                     "examples": []
                 },
                 "gafèga)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ngabìga": {
                     "definition": "passing over; Passover",
                     "examples": []
                 },
@@ -14857,6 +15011,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-gàdo": {
+                    "definition": "hold with nails, claws, or teeth",
+                    "examples": []
+                },
                 "-gà mbọ": {
                     "definition": "scratch with nails",
                     "examples": []
@@ -14889,6 +15047,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-gàla ọnū": {
+                    "definition": "be dear:",
+                    "examples": [
+                        "Nni gàlàlù ọnụ n’ebe à Food is dear here"
+                    ]
+                },
                 "ǹgàla ōnụ": {
                     "definition": "dearness",
                     "examples": []
@@ -15011,6 +15175,10 @@
                     "examples": []
                 },
                 "ume": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbago": {
                     "definition": "ascend; run up",
                     "examples": []
                 },
@@ -15043,6 +15211,10 @@
                     "examples": []
                 },
                 "mgbayàlụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbaje": {
                     "definition": "run to",
                     "examples": []
                 },
@@ -15270,6 +15442,10 @@
                     "examples": []
                 },
                 "gba òbàlà)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gba mmilī": {
                     "definition": "A. pour water on (fainting or shocked persons as treatment)",
                     "examples": [
                         "B. bring out water, sap, etc. (as tree):",
@@ -15717,6 +15893,10 @@
                     "examples": []
                 },
                 "gba ūtụtù": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbacha afele": {
                     "definition": "clean the plate (of food)",
                     "examples": []
                 },
@@ -15750,7 +15930,11 @@
                     "examples": []
                 },
                 "mkpòlògwù(gwù)": {
-                    "definition": "send out shoot when yet unplanted",
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbakasị": {
+                    "definition": "make spots or scars on",
                     "examples": []
                 },
                 "ògbakasị": {
@@ -15761,6 +15945,14 @@
                 },
                 "-gbamì": {
                     "definition": "send roots deep",
+                    "examples": []
+                },
+                "-gbanye": {
+                    "definition": "be rooted in; be connected with a place by birth",
+                    "examples": []
+                },
+                "-gba ome": {
+                    "definition": "send out shoot when yet unplanted",
                     "examples": []
                 },
                 "-gbapute": {
@@ -16005,7 +16197,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gba enu#": {
+                    "definition": "be well-known",
+                    "examples": []
+                }
+            }
         }
     ],
     "-gba-": [
@@ -16270,6 +16467,10 @@
                     "examples": []
                 },
                 "(manya)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbà mmilī": {
                     "definition": "force to drink water (e.g. primitive way of feeding baby);",
                     "examples": [
                         "force to drink water by pushing the victim under water"
@@ -16457,7 +16658,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gbe anya": {
+                    "definition": "steal a look at",
+                    "examples": []
+                }
+            }
         }
     ],
     "-gbè": [
@@ -17033,7 +17239,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gbu ēgbu": {
+                    "definition": "intoxicate:",
+                    "examples": [
+                        "Mmanya ikē nà-ègbu ēgbu Local gin is intoxicating"
+                    ]
+                }
+            }
         }
     ],
     "gbùlùgbulù": [
@@ -17151,7 +17364,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gè ǹgìgè": {
+                    "definition": "cordon round with rope or fence",
+                    "examples": []
+                }
+            }
         }
     ],
     "genye nà": [
@@ -17319,6 +17537,10 @@
                     ]
                 },
                 "-ghàlụ = -ghà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbaghà": {
                     "definition": "overshoot (one's target)",
                     "examples": []
                 }
@@ -17757,7 +17979,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-go ngo": {
+                    "definition": "give a reward or inducement",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "infl. suff.",
@@ -17798,7 +18025,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gò iru": {
+                    "definition": "be coy; hesitate to grant a favour which one actually wants to",
+                    "examples": [
+                        "grant"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -17975,7 +18209,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gù mmilī": {
+                    "definition": "be damp (as of salt)",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -17996,7 +18235,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "(àkpịlī) -gù": {
+                    "definition": "lose voice (as a result of excessive straining of the voice",
+                    "examples": [
+                        "resulting from long speech or cold)"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -18306,6 +18552,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-gwò àgwò": {
+                    "definition": "be flexible, pliant:",
+                    "examples": [
+                        "Osisi à gwòlù àgwò This tree is flexible"
+                    ]
+                },
                 "-gwò ile": {
                     "definition": "speak in metaphor or slang unintelligible to an outsider",
                     "examples": []
@@ -18372,7 +18624,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gwọ ụla": {
+                    "definition": "snore",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -18628,6 +18885,10 @@
                     "examples": []
                 },
                 "naàbò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ibe nkū": {
                     "definition": "plant; piece of wood",
                     "examples": []
                 },
@@ -19114,6 +19375,10 @@
                     "examples": []
                 },
                 "mwute": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ife nchèta": {
                     "definition": "memorial",
                     "examples": []
                 },
@@ -20288,6 +20553,10 @@
                     "examples": []
                 },
                 "ogonogo": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ìkpoòkpò ụnò dị": {
                     "definition": "Tilapia aurea",
                     "examples": []
                 },
@@ -20542,6 +20811,10 @@
                     "examples": []
                 },
                 "imē": {
+                    "definition": "",
+                    "examples": []
+                },
+                "afọ imē": {
                     "definition": "pregnancy (lit. pregnant abdomen)",
                     "examples": []
                 },
@@ -20969,6 +21242,10 @@
                     "examples": []
                 },
                 "egenege irū": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-fo iru": {
                     "definition": "be open, clear, spacious",
                     "examples": []
                 },
@@ -21964,6 +22241,10 @@
                     "examples": []
                 },
                 "naàbò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ètitì naàbò": {
                     "definition": "the middle, centre",
                     "examples": []
                 },
@@ -22417,7 +22698,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ja ike": {
+                    "definition": "praise",
+                    "examples": []
+                }
+            }
         }
     ],
     "jà": [
@@ -22881,7 +23167,15 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-jọ njọ": {
+                    "definition": "be bad, wicked, evil, ugly; refuse to share (esp. food):",
+                    "examples": [
+                        "Nwatā à àna àjọka njō This child always refuses to share his",
+                        "food"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -23036,13 +23330,23 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-jù àrụ": {
+                    "definition": "propitiate a deity for a broken taboo",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-jù ọnū": {
+                    "definition": "draw out someone for information",
+                    "examples": []
+                }
+            }
         }
     ],
     "jùù": [
@@ -23255,6 +23559,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-ka(ta) àrụ": {
+                    "definition": "be of age, full-grown, developed",
+                    "examples": []
+                },
                 "-kanite àrụ": {
                     "definition": "increase in stature; be mature",
                     "examples": []
@@ -23784,6 +24092,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-jekèta": {
+                    "definition": "go near, nearer:",
+                    "examples": [
+                        "Jekèta yā nso Go near him"
+                    ]
+                },
                 "-kpụkèta": {
                     "definition": "draw near, nearer:",
                     "examples": [
@@ -24134,7 +24448,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kọ nsi, -kọ ọgwù": {
+                    "definition": "practise sorcery against",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "",
@@ -24401,7 +24720,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kù àkùkù": {
+                    "definition": "use slang word",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "ext. suff. 1",
@@ -24576,6 +24900,10 @@
                     "examples": []
                 },
                 "-kụsịsị aka": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkụ òkpòkpò": {
                     "definition": "influenza",
                     "examples": []
                 }
@@ -24636,6 +24964,10 @@
             "examples": [],
             "phrases": {
                 "(?) + -ta 5. D.)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbakụta": {
                     "definition": "contest all",
                     "examples": []
                 },
@@ -24714,6 +25046,14 @@
                     ]
                 },
                 "-kpachapù = -": {
+                    "definition": "",
+                    "examples": []
+                },
+                "kpapù": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpachapù anya": {
                     "definition": "take care; be careful, vigilant",
                     "examples": []
                 },
@@ -24773,6 +25113,10 @@
                     "examples": []
                 },
                 "nókụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpapù": {
                     "definition": "shove off; brush off; set aside (normally with instrument);",
                     "examples": [
                         "pick out (with stick) and remove; push open by force, press",
@@ -24850,16 +25194,20 @@
             "definition": "",
             "examples": [],
             "phrases": {
-                "-kpa afịfịa": {
-                    "definition": "collect herbs",
-                    "examples": []
-                },
-                "-kpa akụ": {
+                "A.": {
                     "definition": "Ụmù akā èjego ịkpā akụ The children have gone in search of",
                     "examples": [
                         "kernels",
                         "mkpa akụ  the search for kernels"
                     ]
+                },
+                "-kpa afịfịa": {
+                    "definition": "collect herbs",
+                    "examples": []
+                },
+                "-kpa akụ": {
+                    "definition": "",
+                    "examples": []
                 },
                 "B.": {
                     "definition": "pluck (leaves from plant)",
@@ -24870,6 +25218,10 @@
                     "examples": []
                 },
                 "akụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpakọ": {
                     "definition": "gather; collect",
                     "examples": []
                 },
@@ -24977,6 +25329,10 @@
                     "examples": []
                 },
                 "kpakwụdo": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpanarị": {
                     "definition": "forsake; leave behind",
                     "examples": []
                 },
@@ -25015,6 +25371,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpa aghalā": {
+                    "definition": "cause disturbance",
+                    "examples": []
+                },
                 "-kpa amụ": {
                     "definition": "jest; trifle; amuse",
                     "examples": []
@@ -25078,6 +25438,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "buy (oil)",
+                    "examples": []
+                },
                 "-kpa manụ": {
                     "definition": "buy oil",
                     "examples": []
@@ -25116,6 +25480,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpùkpà": {
+                    "definition": "suppression; compression",
+                    "examples": []
+                },
                 "-kpà àkpà = -kpà": {
                     "definition": "be narrow, tight, pressed together, choked, crowded; restrict;",
                     "examples": []
@@ -25148,11 +25516,21 @@
                     "examples": []
                 },
                 "A.": {
+                    "definition": "lose appetite:",
+                    "examples": [
+                        "Ọnụ  kpàlù m I have no appetite"
+                    ]
+                },
+                "-kpàgbu": {
                     "definition": "choke; suffocate",
                     "examples": []
                 },
                 "B.": {
                     "definition": "be speechless; be unable to speak much, or at all",
+                    "examples": []
+                },
+                "mkpàgbu": {
+                    "definition": "tribulation; oppression; trouble",
                     "examples": []
                 },
                 "-kpàghe": {
@@ -25184,6 +25562,14 @@
                     ]
                 },
                 "-kpà mkpà = -kpà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "àkpà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpà ntì": {
                     "definition": "listen carelessly; pretend not to hear; be obstinate (lit. close",
                     "examples": [
                         "ear)"
@@ -25201,10 +25587,8 @@
                     "examples": []
                 },
                 "(ọnụ ) -kpà": {
-                    "definition": "lose appetite:",
-                    "examples": [
-                        "Ọnụ  kpàlù m I have no appetite"
-                    ]
+                    "definition": "",
+                    "examples": []
                 },
                 "ọnụ òkpùkpà": {
                     "definition": "speechlessness; exhaustion; utter weariness",
@@ -25235,6 +25619,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpùkpà": {
+                    "definition": "plaiting",
+                    "examples": []
+                },
                 "òkpùkpà isiì": {
                     "definition": "plaiting of hair",
                     "examples": []
@@ -25262,6 +25650,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpùkpà": {
+                    "definition": "trimming; cutting",
+                    "examples": []
+                },
                 "-kpàcha": {
                     "definition": "cut; trim; barb; crop",
                     "examples": []
@@ -25407,6 +25799,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpukpe": {
+                    "definition": "smearing",
+                    "examples": []
+                },
                 "-kpe mmanụ": {
                     "definition": "smear with oil",
                     "examples": []
@@ -25486,6 +25882,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpècha": {
+                    "definition": "strip off (bark, skin, etc.)",
+                    "examples": []
+                },
                 "-kpèchalụ": {
                     "definition": "strip and take the bark",
                     "examples": []
@@ -25530,11 +25930,19 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpukpo": {
+                    "definition": "gathering; collecting; picking",
+                    "examples": []
+                },
                 "-kpo àgbụgbọ": {
                     "definition": "collect decayed compost for application to the crops",
                     "examples": []
                 },
                 "-kpocha": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "clear (rubbish, refuse); rid a place (of rubbish, refuse, filth):",
                     "examples": [
                         "Ànyị nà-àkwadebe iwu#ụnò n’ànì a nà-èkpocha We are",
@@ -25637,6 +26045,10 @@
             "examples": [],
             "phrases": {
                 "-kpò èkpò = -kpò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpo nàlànàlà": {
                     "definition": "be tepid, lukewarm",
                     "examples": []
                 },
@@ -25655,6 +26067,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-gbakpò": {
+                    "definition": "spread upon",
+                    "examples": []
+                },
                 "-kwukpò": {
                     "definition": "cover up with words",
                     "examples": []
@@ -25763,6 +26179,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkpụkpọ": {
+                    "definition": "calling; vocation",
+                    "examples": []
+                },
                 "-kpọ afà": {
                     "definition": "call by name; name:",
                     "examples": [
@@ -25827,12 +26251,17 @@
                     "examples": []
                 },
                 "-kpọ mụụ": {
-                    "definition": "take mụọ  when assuming duties of ọkpala",
+                    "definition": "",
                     "examples": []
                 },
                 "B.": {
-                    "definition": "invite masquerade to a ceremony",
-                    "examples": []
+                    "definition": "self-movement):",
+                    "examples": [
+                        "Ọ kpò mmadù naàbò He comes with two persons:",
+                        "Ònye kà ì gà-àkpọ je egwu? Whom are you taking to the",
+                        "dance?:",
+                        "Ọ kpò nkịtā bịa nzùkọ He came to the meeting with a dog"
+                    ]
                 },
                 "-kpọnaba": {
                     "definition": "call home; take home",
@@ -25862,7 +26291,7 @@
                     "examples": []
                 },
                 "-kpọtụ": {
-                    "definition": "make noise",
+                    "definition": "",
                     "examples": []
                 },
                 "mkpọtụ": {
@@ -25878,13 +26307,8 @@
                     "examples": []
                 },
                 "-kpọ": {
-                    "definition": "self-movement):",
-                    "examples": [
-                        "Ọ kpò mmadù naàbò He comes with two persons:",
-                        "Ònye kà ì gà-àkpọ je egwu? Whom are you taking to the",
-                        "dance?:",
-                        "Ọ kpò nkịtā bịa nzùkọ He came to the meeting with a dog"
-                    ]
+                    "definition": "",
+                    "examples": []
                 }
             }
         },
@@ -25893,6 +26317,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpụkpọ": {
+                    "definition": "drying",
+                    "examples": []
+                },
                 "-kpọ akpọ": {
                     "definition": "be dry:",
                     "examples": [
@@ -25919,6 +26347,10 @@
                     "examples": []
                 },
                 "mgbụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpọ nkụ": {
                     "definition": "be dry",
                     "examples": [
                         "Wètalụ m  akwụkwọ kpọ lụ nkụ Bring me a dry leaf:",
@@ -25949,6 +26381,18 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpọbè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "B.": {
+                    "definition": "take (snuff) (lit. strike in)",
+                    "examples": []
+                },
                 "kpọbè ụkwụ": {
                     "definition": "knock and cut, hurt, stub the toes",
                     "examples": []
@@ -25980,6 +26424,10 @@
                     "examples": []
                 },
                 "n’obe": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kpọ isi ànì": {
                     "definition": "kneel and touch ground with head in humiliation and entreaty",
                     "examples": []
                 },
@@ -26042,10 +26490,6 @@
                         "than with -kpọwa, which simply means run away)"
                     ]
                 },
-                "B.": {
-                    "definition": "take (snuff) (lit. strike in)",
-                    "examples": []
-                },
                 "-kpọ anwụlù": {
                     "definition": "take snuff",
                     "examples": []
@@ -26076,6 +26520,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpọta": {
+                    "definition": "buy, purchase (clothes, pottery):",
+                    "examples": [
+                        "Akpòtàlù m akwà ọfụụ  I bought a new cloth:",
+                        "Anà m èje ịkpọ ta ìte ọ zọ I am going to purchase another",
+                        "pot"
+                    ]
+                },
                 "-kpọ ute": {
                     "definition": "buy mat",
                     "examples": []
@@ -26087,6 +26539,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpọba afịa": {
+                    "definition": "expose, display wares for sale",
+                    "examples": []
+                },
                 "-kpọ ìfulu#": {
                     "definition": "blossom; flower (cf. -kpọ ìgùgù)",
                     "examples": []
@@ -26102,6 +26558,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpọ ànì": {
+                    "definition": "clear ground by burning",
+                    "examples": []
+                },
                 "-kpọcha": {
                     "definition": "clear; clean by burning:",
                     "examples": [
@@ -26160,6 +26620,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpọ ọkà": {
+                    "definition": "remove the grains from the ear of maize",
+                    "examples": []
+                },
                 "-kpọsị": {
                     "definition": "rub, pluck off grains from cob, etc.",
                     "examples": []
@@ -26178,13 +26642,27 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kpọ aghalā": {
+                    "definition": "cause confusion, riot, tumult",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "ext. suff.1",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-gbakpọ ìzù": {
+                    "definition": "discuss very thoroughly, again:",
+                    "examples": [
+                        "Àny!qị gbàkpòlù ìzù àgbakpọ We really had a thorough",
+                        "discussion:",
+                        "Jèe nù gbàkpọ ìzù Go and discuss it again"
+                    ]
+                }
+            }
         }
     ],
     "-kpọ-kọ": [
@@ -26233,6 +26711,10 @@
             "examples": [],
             "phrases": {
                 "-tụ kpọm": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "strike a hard surface",
                     "examples": []
                 },
@@ -26274,6 +26756,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkpùkpù": {
+                    "definition": "covering",
+                    "examples": []
+                },
                 "-kpù akwà": {
                     "definition": "cover the body with cloth",
                     "examples": []
@@ -26403,13 +26893,24 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kpù òkwu": {
+                    "definition": "be plentiful (i.e. as common as òkwu in a village)",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpù nónụ": {
+                    "definition": "carry in the mouth; (fig.) be actually, still speaking:",
+                    "examples": [
+                        "Akpù m akụ nónụ  I am holding palm kernels in my mouth"
+                    ]
+                },
                 "-kpù okwu nónụ": {
                     "definition": "be still speaking; be speaking (e.g. as contribution to debate or",
                     "examples": [
@@ -26432,6 +26933,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpùkpù": {
+                    "definition": "smoothing; shaving; scraping",
+                    "examples": []
+                },
                 "-kpùba": {
                     "definition": "abrade; abrade by scraping or dragging rough object over the",
                     "examples": [
@@ -26489,6 +26994,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkpụkpụ": {
+                    "definition": "pulling; drawing",
+                    "examples": []
+                },
                 "-kpụchìgha": {
                     "definition": "draw back; lead back (animals)",
                     "examples": []
@@ -26619,6 +27132,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpụkpụ": {
+                    "definition": "moulding; making; manufacturing",
+                    "examples": []
+                },
                 "-kpụ aja": {
                     "definition": "make mud wall",
                     "examples": []
@@ -26656,6 +27173,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkpụkpụ": {
+                    "definition": "barbing; shaving",
+                    "examples": []
+                },
                 "-kpụ àfù ọnụ": {
                     "definition": "shave beard",
                     "examples": []
@@ -26667,10 +27188,18 @@
                     ]
                 },
                 "òkpụ iìsi": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "shaver; barber",
                     "examples": []
                 },
                 "B.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkpụ iìsi eliì ngo": {
                     "definition": "ring-worm of the head (lit. barber who receives no pay)",
                     "examples": []
                 }
@@ -26683,6 +27212,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kpùmụlị amụ": {
+                    "definition": "smile, laugh, chuckle, in a gentle way (as a sign of pleasure):",
+                    "examples": [
+                        "Ogè a gwàlù Ibè nà nwunyè nwa nne  ya àmụgo ò",
+                        "kpùmụlịa amụ  When Ibe was informed that his brother’s",
+                        "wife had delivered (a child) he smiled"
+                    ]
+                },
                 "-kpù-kpò": {
                     "definition": "unroof; break up roof; be broken:",
                     "examples": [
@@ -26852,6 +27389,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "weep; cry; lament",
+                    "examples": []
+                },
                 "-kwa akwa": {
                     "definition": "cry; weep; lament",
                     "examples": []
@@ -26927,6 +27468,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkwụkwa": {
+                    "definition": "sewing",
+                    "examples": []
+                },
                 "-kwa (akwà)": {
                     "definition": "sew (cloth)",
                     "examples": []
@@ -26993,6 +27538,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "kwà ànyasì": {
+                    "definition": "every evening",
+                    "examples": []
+                },
                 "kwà arò": {
                     "definition": "yearly; annually",
                     "examples": []
@@ -27059,6 +27608,10 @@
                     "examples": []
                 },
                 "ụnò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kwadà": {
                     "definition": "push down",
                     "examples": []
                 },
@@ -27087,10 +27640,18 @@
                     "examples": []
                 },
                 "-kwànị ọkụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "(lit.) fan fire",
                     "examples": []
                 },
                 "B.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kwànye": {
                     "definition": "push in",
                     "examples": []
                 },
@@ -27113,6 +27674,23 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkwùkwà": {
+                    "definition": "disappointment; missing (something) as a result of some",
+                    "examples": [
+                        "hindrance:",
+                        "Ọ bù egwu òkwùkwà mèlù nà ị fụ rọ onye isi egwu ụmù",
+                        "àgbọghò a sì nà ọ bù yā mànàrìsìlì egwu àgba n’ Ògidi It is",
+                        "your missing the dance that prevented your seeing the leader",
+                        "of young women’s dance, reputed to be the greatest dancer in",
+                        "Ogidi:",
+                        "Egwu afù mụ e jedōrọò bù m nnukwu ife òkwùkwà (lit.",
+                        "The dance that I did not meet is to me a great disappointment)",
+                        "I’m very disappointed about missing the dance:",
+                        "Ọ bù ife òkwùkwà mèlù nà mụ esòrò nnene akwụkwọ",
+                        "n’ụkā à je Something prevented me from taking the",
+                        "examination this week:"
+                    ]
+                },
                 "": {
                     "definition": "Òlili nà ònụnụ diCnébe à n nyàafù akwàgo giC You have",
                     "examples": [
@@ -27130,6 +27708,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkwa àbù": {
+                    "definition": "soloist",
+                    "examples": []
+                },
                 "òkwa òjà": {
                     "definition": "piper; flute-player",
                     "examples": []
@@ -27140,13 +27722,26 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kwafù": {
+                    "definition": "spill:",
+                    "examples": [
+                        "Ọ kwāfùlù mmiliì He spilt the water, or He poured away the",
+                        "water"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-kwà ụta": {
+                    "definition": "regret; be sorry",
+                    "examples": []
+                }
+            }
         }
     ],
     "-kwa-cha": [
@@ -27208,6 +27803,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwukwàsị": {
+                    "definition": "speak again",
+                    "examples": []
+                },
                 "-mekwàsị": {
                     "definition": "do again",
                     "examples": []
@@ -27276,6 +27875,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwe ùkwe": {
+                    "definition": "sing hymns, songs in chorus",
+                    "examples": []
+                },
                 "ùkwe": {
                     "definition": "song; hymn",
                     "examples": []
@@ -27287,6 +27890,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwedo aka": {
+                    "definition": "lay hold of",
+                    "examples": []
+                },
                 "-kwe n’aka": {
                     "definition": "shake hands",
                     "examples": []
@@ -27306,6 +27913,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwedà": {
+                    "definition": "lower (price)",
+                    "examples": []
+                },
                 "-kwe ọnụ": {
                     "definition": "offer (a price)",
                     "examples": []
@@ -27317,6 +27928,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwe akwà": {
+                    "definition": "weave cloth (usu. with hand loom)",
+                    "examples": []
+                },
                 "-kwe ọnyà": {
                     "definition": "set (rope, wire) trap",
                     "examples": []
@@ -27380,6 +27995,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkwùkwò": {
+                    "definition": "rushing",
+                    "examples": []
+                },
                 "-kwòbà": {
                     "definition": "rush in",
                     "examples": []
@@ -27409,17 +28028,23 @@
                     "examples": []
                 },
                 "mmili nā-ekwō": {
-                    "definition": "water",
+                    "definition": "",
+                    "examples": []
+                },
+                "èkwò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
+                    "definition": "",
                     "examples": []
                 },
                 "B.": {
-                    "definition": "Mmili (pọmpù) Ụmùagụ  nà-ekwō èkwò n’ùtụtù There is",
-                    "examples": [
-                        "usually a rush at the stream (tap) of Ụmụagụ in the mornings"
-                    ]
+                    "definition": "rush, flow rapidly (of water-way, stream)",
+                    "examples": []
                 },
                 "(mmiliì) -kwò": {
-                    "definition": "rush, flow rapidly (of water-way, stream)",
+                    "definition": "",
                     "examples": []
                 },
                 "(pọmpù) -kwò": {
@@ -27607,7 +28232,19 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwọ mmiliì": {
+                    "definition": "bale; dip up water (with hands or container)",
+                    "examples": []
+                },
                 "-kwọsa mmiliì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "B.": {
                     "definition": "wipe off water from the floor or any wide surface (also -",
                     "examples": [
                         "kwọcha)"
@@ -27693,6 +28330,10 @@
                     "examples": []
                 },
                 "ofega": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kwu okwu": {
                     "definition": "speak; utter words",
                     "examples": []
                 },
@@ -27812,6 +28453,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-likwu": {
+                    "definition": "eat more:",
+                    "examples": [
+                        "Ị   chò iliìkwu nni? Do you want to eat more food?"
+                    ]
+                },
                 "-mùkwù": {
                     "definition": "read more (of):",
                     "examples": [
@@ -27839,6 +28486,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwuchi": {
+                    "definition": "cork; stopper",
+                    "examples": []
+                },
                 "nkwuchi": {
                     "definition": "cork; covering",
                     "examples": []
@@ -27864,6 +28515,12 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-chèkwube": {
+                    "definition": "trust in:",
+                    "examples": [
+                        "Chèkwube Chine kè Trust in God"
+                    ]
+                },
                 "nchèkwube": {
                     "definition": "trust; confidence:",
                     "examples": [
@@ -27960,6 +28617,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwùkwù aka": {
+                    "definition": "clench, close the hand",
+                    "examples": []
+                },
                 "nkwukwù akā": {
                     "definition": "fist",
                     "examples": []
@@ -28016,11 +28677,24 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "òkwụkwụ": {
+                    "definition": "paying",
+                    "examples": [
+                        "Anà m àbịa ịkwụ  onye ọ bụnà dịkà ọlụ yā sìlì dị I am",
+                        "coming to pay everyone according to his work:",
+                        "Ibì egō adā àdị ọlọ  kà òkwụkwụ yā Borrowing money is",
+                        "not usually as difficult as repaying it"
+                    ]
+                },
                 "-kwụchìgha": {
                     "definition": "pay back; repay; refund",
                     "examples": []
                 },
                 "-kwụ ngò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "pay bride-price",
                     "examples": []
                 },
@@ -28065,6 +28739,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwụba": {
+                    "definition": "stand (something); place",
+                    "examples": []
+                },
                 "-kwụbìdo": {
                     "definition": "interfere; stand in the way of",
                     "examples": []
@@ -28098,6 +28776,26 @@
                     "examples": []
                 },
                 "-kwụlụ ọtọ = -kwụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ọtọ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kwụ ọtọ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "B.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-kwụrube": {
                     "definition": "stand around",
                     "examples": []
                 },
@@ -28173,6 +28871,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-kwụ àlùlù": {
+                    "definition": "be misty",
+                    "examples": []
+                },
                 "-kwụ anwụlù": {
                     "definition": "smoke (of a fire)",
                     "examples": []
@@ -28712,7 +29414,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-li ìzìzì": {
+                    "definition": "tickle:",
+                    "examples": [
+                        "Ọ nà-èli m#ìzìzì He is tickling me"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "",
@@ -28773,6 +29482,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-lì òlìlì": {
+                    "definition": "announce news, usu. to summon people to a meeting",
+                    "examples": []
+                },
                 "onye òlìlì": {
                     "definition": "town-crier",
                     "examples": []
@@ -29019,7 +29732,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-lo ilo": {
+                    "definition": "bear a grudge; be enemies",
+                    "examples": []
+                }
+            }
         }
     ],
     "-lò": [
@@ -29131,7 +29849,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-lò anya": {
+                    "definition": "eye; look at angrily or with contempt:",
+                    "examples": [
+                        "Ọ nà-alō m#anya She is eyeing me"
+                    ]
+                }
+            }
         }
     ],
     "-lọ": [
@@ -29139,7 +29864,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-lọ mmụō": {
+                    "definition": "feast the dead; offer food to the ancestors",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -29303,13 +30033,23 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-lù ụkwụ": {
+                    "definition": "limp",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-lù ụla": {
+                    "definition": "be sleepy",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "",
@@ -29409,6 +30149,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-lụ àrụ ụkà": {
+                    "definition": "be self-controlled",
+                    "examples": []
+                },
                 "-lụlịta ụkà": {
                     "definition": "debate; discuss",
                     "examples": []
@@ -29734,6 +30478,10 @@
                     "examples": []
                 },
                 "amānụma": {
+                    "definition": "",
+                    "examples": []
+                },
+                "Àmà-àma-amāsị-": {
                     "definition": "A. one known but never fully (praise-name of God)",
                     "examples": []
                 },
@@ -29975,6 +30723,10 @@
                     "examples": []
                 },
                 "akwà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "akwā ōmụma": {
                     "definition": "blanket; wrapper",
                     "examples": []
                 }
@@ -30040,13 +30792,22 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ma ọsò": {
+                    "definition": "suck the teeth (in contempt, etc.)",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "(agwa) -ma": {
+                    "definition": "miss",
+                    "examples": []
+                },
                 "(agwa)ụnò) -ma": {
                     "definition": "be homesick",
                     "examples": [
@@ -31017,6 +31778,18 @@
                     "examples": []
                 },
                 "ọmā koòmè = ọmā": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ka ò mè however it": {
+                    "definition": "",
+                    "examples": []
+                },
+                "may be": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-pù imē": {
                     "definition": "be able to do",
                     "examples": []
                 },
@@ -31476,7 +32249,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-mì mkpụlū": {
+                    "definition": "bear fruit",
+                    "examples": []
+                }
+            }
         }
     ],
     "-mị": [
@@ -31781,6 +32559,10 @@
                     "examples": []
                 },
                 "egbè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "mkpịsị igwè": {
                     "definition": "spoke (e.g. of bicycle)",
                     "examples": []
                 },
@@ -31924,11 +32706,19 @@
             "examples": [],
             "phrases": {
                 "mkpòlògwù": {
-                    "definition": "take root",
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbamì mkpòlògwù": {
+                    "definition": "send roots deep",
                     "examples": []
                 },
                 "-gbanye": {
                     "definition": "be rooted in; be connected with a place by birth",
+                    "examples": []
+                },
+                "-pu": {
+                    "definition": "take root",
                     "examples": []
                 },
                 "mkpòlògwùgwù": {
@@ -32396,11 +33186,19 @@
                     "examples": []
                 },
                 "mmadù": {
-                    "definition": "stupid, hopeless person; ruffian",
+                    "definition": "",
+                    "examples": []
+                },
+                "mkpụlụ mmadù": {
+                    "definition": "few people",
                     "examples": []
                 },
                 "mkpụmkpụ": {
                     "definition": "a short person",
+                    "examples": []
+                },
+                "ngịlịga mmadù": {
+                    "definition": "stupid, hopeless person; ruffian",
                     "examples": []
                 },
                 "nkịlịka mmadù": {
@@ -32541,6 +33339,10 @@
                     "examples": []
                 },
                 "n’anya": {
+                    "definition": "",
+                    "examples": []
+                },
+                "mmanya nkwū": {
                     "definition": "wine from oilpalm",
                     "examples": []
                 },
@@ -33203,6 +34005,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-mù mbọ": {
+                    "definition": "use nails on",
+                    "examples": []
+                },
                 "-kwọmù": {
                     "definition": "grind into small pieces",
                     "examples": []
@@ -33331,7 +34137,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-mụ amụ": {
+                    "definition": "laugh at",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -33463,6 +34274,10 @@
                     "examples": []
                 },
                 "ànị mmụọ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-nanarị": {
                     "definition": "escape from; go away from",
                     "examples": []
                 },
@@ -34218,6 +35033,10 @@
                     "examples": []
                 },
                 "àbò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ndị mmụọ": {
                     "definition": "dead people (spirits)",
                     "examples": []
                 },
@@ -34440,6 +35259,10 @@
                     "examples": []
                 },
                 "isi)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "Ndùbụàkù": {
                     "definition": "male name (lit. life is wealth)",
                     "examples": []
                 },
@@ -34516,11 +35339,11 @@
             "examples": [],
             "phrases": {
                 "ndùdùgandū ǹke": {
-                    "definition": "third generation",
+                    "definition": "fourth generation",
                     "examples": []
                 },
                 "ītọ": {
-                    "definition": "fourth generation",
+                    "definition": "",
                     "examples": []
                 },
                 "īnọ": {
@@ -35457,6 +36280,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "èkpè niīne": {
+                    "definition": "always; at all times",
+                    "examples": []
+                },
                 "fa niīne": {
                     "definition": "all of them",
                     "examples": []
@@ -35764,6 +36591,10 @@
                     "examples": []
                 },
                 "ītọ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ǹkè m, ǹkè mụ nwà": {
                     "definition": "mine; my own",
                     "examples": []
                 },
@@ -35796,6 +36627,10 @@
                     "examples": []
                 },
                 "nwà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ndị ǹkè nya": {
                     "definition": "his own people",
                     "examples": []
                 },
@@ -36106,6 +36941,10 @@
                     "examples": []
                 },
                 "òkpụkpọ nkū": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ònòkò nkū": {
                     "definition": "half-burnt piece of wood",
                     "examples": []
                 },
@@ -36731,6 +37570,14 @@
                     "examples": []
                 },
                 "āgbọghò,": {
+                    "definition": "",
+                    "examples": []
+                },
+                "āgbọghọbìà": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nwa bī be": {
                     "definition": "child living in one's house",
                     "examples": []
                 },
@@ -36755,6 +37602,10 @@
                     "examples": []
                 },
                 "ntā": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nwa ègwu": {
                     "definition": "doll",
                     "examples": []
                 },
@@ -36781,10 +37632,18 @@
                     "examples": []
                 },
                 "ogbènyè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nwa mkpùkpù": {
                     "definition": "newborn infant",
                     "examples": []
                 },
                 "mmē": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nwa mmadù": {
                     "definition": "freeborn person; well-behaved person",
                     "examples": []
                 },
@@ -36843,6 +37702,10 @@
                     "examples": []
                 },
                 "mgbèyì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nwa ōkolo": {
                     "definition": "lad; boy; youth",
                     "examples": []
                 },
@@ -37126,7 +37989,18 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-nọ mmilī": {
+                    "definition": "(used with obì or ume) be fearful, worried:",
+                    "examples": [
+                        "Èri m jì nụ nà ụgbọ gbùlù mmadù n’ụzō Āba kà obī jì ànọ",
+                        "m#mmilī màkà nà nwụnyè m jēlụ ịzūta ife n’Àba akà",
+                        "ànatarọ Since learning that somebody was killed by a lorry",
+                        "on the Aba road I have been worried, because my wife who is",
+                        "away in Aba to buy something has not returned"
+                    ]
+                }
+            }
         }
     ],
     "-nò": [
@@ -38294,7 +39168,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-nu ọbìà": {
+                    "definition": "offer hospitality (= -ne ọbìà)",
+                    "examples": []
+                }
+            }
         }
     ],
     "-nù": [
@@ -38302,7 +39181,14 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-nù inu": {
+                    "definition": "ask riddle; use proverb:",
+                    "examples": [
+                        "Bikō nùelụ m#òfu inū Please give me a proverb"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "",
@@ -38453,6 +39339,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-nụ ọkụ": {
+                    "definition": "be warm",
+                    "examples": []
+                },
                 "-nụ ọkụ n’obì": {
                     "definition": "be zealous, enthusiastic; agitate; anger; enrage",
                     "examples": []
@@ -38790,10 +39680,18 @@
                     "examples": []
                 },
                 "-nwe ọnụ": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "be talkative",
                     "examples": []
                 },
                 "B.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-nweta": {
                     "definition": "obtain; get",
                     "examples": []
                 },
@@ -38874,6 +39772,10 @@
                     "examples": []
                 },
                 "ònwùnwò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-nwò àrụ, -wò àrụ": {
                     "definition": "change bodily appearance (e.g. put mask on or off)",
                     "examples": []
                 },
@@ -38882,6 +39784,10 @@
                     "examples": []
                 },
                 "èwò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-gbanwò": {
                     "definition": "change; exchange",
                     "examples": [
                         "Bikō gbanwòolụ m  ji n kaà màkà nà o lèlù ùle Please",
@@ -38983,10 +39889,18 @@
                     "examples": []
                 },
                 "-nwu enwu": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
                     "definition": "shine; blaze; flare",
                     "examples": []
                 },
                 "B.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-nwu gbàà": {
                     "definition": "shine, glitter, very brightly; be very white",
                     "examples": []
                 },
@@ -39101,6 +40015,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-nwụ àrụ": {
+                    "definition": "make ill; be ill; cause illness",
+                    "examples": []
+                },
                 "(àrụ) nwụ": {
                     "definition": "be sick:",
                     "examples": [
@@ -39143,6 +40061,13 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-denwù": {
+                    "definition": "re-iron; iron again:",
+                    "examples": [
+                        "Achòlù m kà ị denwùa akwà afù I want you to re-iron that",
+                        "cloth"
+                    ]
+                },
                 "-sụnwù": {
                     "definition": "re-wash; wash again:",
                     "examples": [
@@ -39198,6 +40123,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-nyachi": {
+                    "definition": "stop up cracks; seal",
+                    "examples": []
+                },
                 "-nyado": {
                     "definition": "stick; stop up a hole",
                     "examples": []
@@ -39216,7 +40145,12 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-nya ọkụ": {
+                    "definition": "warm oneself; bask",
+                    "examples": []
+                }
+            }
         }
     ],
     "-nyà": [
@@ -39225,6 +40159,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "ònyìnyà": {
+                    "definition": "bending; driving",
+                    "examples": []
+                },
                 "nnyagò": {
                     "definition": "crookedness; sinuousness; bent state",
                     "examples": []
@@ -39251,6 +40189,15 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-nyàji": {
+                    "definition": "(trans. and intrans.) break asunder; snap:",
+                    "examples": [
+                        "(trans.) Ènwè afù nà-àchọ ịnyàjì alakā osisi The monkey is",
+                        "going to break the branch of the tree:",
+                        "(intrans.) Alakā osisi afù gà-anyàji tupu ụtụtù echiì The",
+                        "branch of the tree will break before tomorrow morning"
+                    ]
+                },
                 "-nyàjipù": {
                     "definition": "break, snap, off:",
                     "examples": [
@@ -39298,6 +40245,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "Nye m": {
+                    "definition": "Give me",
+                    "examples": []
+                },
                 "ònyinye": {
                     "definition": "giving",
                     "examples": []
@@ -39339,6 +40294,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "Ụgbọ afù ènyego The lorry has stopped, or parked",
+                    "examples": []
+                },
                 "-nyedo": {
                     "definition": "stop, park (vehicle)",
                     "examples": []
@@ -39497,6 +40456,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ònìnyì": {
+                    "definition": "being heavy, weighty",
+                    "examples": []
+                },
                 "-nyìdo": {
                     "definition": "load heavily; become too heavy for:",
                     "examples": [
@@ -39547,6 +40514,18 @@
                     "examples": []
                 },
                 "-nyòcha": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nnyòcha": {
+                    "definition": "thorough examination",
+                    "examples": []
+                },
+                "B.": {
                     "definition": "be inquisitive, curious (fig.)",
                     "examples": [
                         "Ị nā-enyòchaka You are too inquisitive"
@@ -39599,6 +40578,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-nyụ arùlù": {
+                    "definition": "pass wind, fart, ‘gas’",
+                    "examples": []
+                },
                 "-nyụsịsị": {
                     "definition": "ooze out; spout",
                     "examples": []
@@ -39610,6 +40593,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "ònyụnyụ": {
+                    "definition": "being extinguished; dying out",
+                    "examples": []
+                },
                 "-nyụ nkọ": {
                     "definition": "be blunt",
                     "examples": []
@@ -39630,7 +40617,22 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-nyụ afịa": {
+                    "definition": "",
+                    "examples": []
+                },
+                "A.": {
+                    "definition": "",
+                    "examples": []
+                },
+                "B.": {
+                    "definition": "(fig.) be reactionary",
+                    "examples": [
+                        "Ọ nyùlù afịa He is reactionary"
+                    ]
+                }
+            }
         }
     ],
     "nzā": [
@@ -40048,6 +41050,10 @@
                     "examples": []
                 },
                 "okè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-ŋụ iyī": {
                     "definition": "take an oath; swear:",
                     "examples": [
                         "Ì nwèlù ike ịŋū iyī? Can you swear it?"
@@ -41072,6 +42078,10 @@
                     "examples": []
                 },
                 "mgbè)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òfu mkpụlū": {
                     "definition": "only one",
                     "examples": []
                 },
@@ -41124,6 +42134,10 @@
                     "examples": []
                 },
                 "mgbè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-sò n’òfu": {
                     "definition": "be of the same age",
                     "examples": []
                 },
@@ -43308,6 +44322,10 @@
                     "examples": []
                 },
                 "òkutē": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkwute anwūlù": {
                     "definition": "stone for grinding snuff",
                     "examples": []
                 },
@@ -44289,6 +45307,10 @@
                     "examples": []
                 },
                 "ọkū": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-tụ òòbò": {
                     "definition": "pile; heap up",
                     "examples": []
                 }
@@ -45155,6 +46177,10 @@
                     "examples": []
                 },
                 "bèkeè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ego oyìbo": {
                     "definition": "(lit. European money) name given to the present currency",
                     "examples": [
                         "when it existed side by side with cowrie currency"
@@ -45379,6 +46405,10 @@
                     "examples": []
                 },
                 "mā ekwe m)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "o mekwa": {
                     "definition": "afterwards",
                     "examples": []
                 },
@@ -45732,6 +46762,10 @@
                     "examples": []
                 },
                 "mmānụ)": {
+                    "definition": "",
+                    "examples": []
+                },
+                "nnekwu ọcha": {
                     "definition": "white hen:",
                     "examples": [
                         "Agà m ègbu òfu nnekwu ọcha taàtà I am going to kill a",
@@ -45750,6 +46784,10 @@
                     "examples": []
                 },
                 "ēdo": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ọnà ọcha": {
                     "definition": "silver",
                     "examples": []
                 },
@@ -46307,6 +47345,10 @@
                     "examples": []
                 },
                 "ọfụū": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ji ọfụū": {
                     "definition": "new yam",
                     "examples": []
                 },
@@ -46425,6 +47467,10 @@
                     "examples": []
                 },
                 "nwaànyì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ọgò nwokē": {
                     "definition": "father-in-law; any male relative by marriage",
                     "examples": []
                 },
@@ -47749,6 +48795,10 @@
                     "examples": []
                 },
                 "isi nkịtā": {
+                    "definition": "",
+                    "examples": []
+                },
+                "òkpọ mmānụ": {
                     "definition": "S. clarias, S. sorex, S. eupterus, S. ocellifer, S. gobroni, S.",
                     "examples": [
                         "nigrita"
@@ -50467,7 +51517,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-pịa ụgbà": {
+                    "definition": "take a somersault into water; dive (= -kpọ ụgbà)",
+                    "examples": []
+                }
+            }
         }
     ],
     "ponì": [
@@ -50570,7 +51625,12 @@
             "wordClass": "n.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "puku ndi": {
+                    "definition": "millions; countless number",
+                    "examples": []
+                }
+            }
         }
     ],
     "-pù": [
@@ -50898,7 +51958,12 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ra nrā": {
+                    "definition": "pay levy, fine",
+                    "examples": []
+                }
+            }
         }
     ],
     "-rà": [
@@ -51129,6 +52194,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-rika": {
+                    "definition": "be much; be too much; be excessive",
+                    "examples": []
+                },
                 "-ri nne, -ri nnē": {
                     "definition": "be many, much, numerous, plentiful, abundant",
                     "examples": []
@@ -51324,7 +52393,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-rì àrì": {
+                    "definition": "ferment (e.g. beans for making àkàlà)",
+                    "examples": []
+                }
+            }
         }
     ],
     "-rì-": [
@@ -52013,13 +53087,22 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-sa ùla": {
+                    "definition": "go and sleep with a friend or relative away from one's home",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-sa mbalā": {
+                    "definition": "be wide",
+                    "examples": []
+                },
                 "-sa obodobo": {
                     "definition": "be flat",
                     "examples": []
@@ -52629,6 +53712,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-si ike": {
+                    "definition": "be strong, firm, difficult, hard",
+                    "examples": []
+                },
                 "-sika ike": {
                     "definition": "be very, too, strong, difficult:",
                     "examples": [
@@ -52707,6 +53794,14 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-sikwụ": {
+                    "definition": "compare; contrast; think about; consider; criticise:",
+                    "examples": [
+                        "Achòlù m ijī òkè m sikwụ ǹkè gị kà m wèe malụ ǹke kā ibè",
+                        "ya I want to compare your share with mine to know which is",
+                        "greater (placing them side by side)"
+                    ]
+                },
                 "-si ngọ": {
                     "definition": "doubt; doubt obstinately",
                     "examples": []
@@ -53413,7 +54508,15 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-su òsụsọō": {
+                    "definition": "sweat; perspire; cause perspiration:",
+                    "examples": [
+                        "Àfe à m yì nà-èsu m òsụsọō This shirt I'm wearing is making",
+                        "me sweat"
+                    ]
+                }
+            }
         }
     ],
     "susu suso": [
@@ -53449,6 +54552,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-sụ asùsụ": {
+                    "definition": "speak language, tongue, dialect",
+                    "examples": []
+                },
                 "-sụghalị asùsụ": {
                     "definition": "interpret language (lit. change language)",
                     "examples": []
@@ -53527,6 +54634,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-sụ akwà": {
+                    "definition": "wash clothes:",
+                    "examples": []
+                },
                 "Anà m àsụ akwà": {
                     "definition": "I am washing some clothes",
                     "examples": []
@@ -53677,13 +54788,24 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-sù afịa": {
+                    "definition": "flood the market (of excess commodity); (fig.) of a person, be",
+                    "examples": [
+                        "useless"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-sù nsọ": {
+                    "definition": "lift a taboo",
+                    "examples": []
+                },
                 "-sùpù": {
                     "definition": "ostracize; excommunicate",
                     "examples": []
@@ -53929,19 +55051,39 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
-        },
-        {
-            "wordClass": "v.:",
-            "definition": "",
-            "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ta ụta": {
+                    "definition": "blame:",
+                    "examples": [
+                        "A gà-àta gī ụta You will be blamed"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-ta nchāla": {
+                    "definition": "be rusty:",
+                    "examples": [
+                        "Ǹgàjì ị rāpùlù n’ìlo ǹnyàafù ogè mmilī nà-ezò àtago nchāla",
+                        "The spoon you left outside yesterday when it was raining has",
+                        "become rusty"
+                    ]
+                }
+            }
+        },
+        {
+            "wordClass": "v.:",
+            "definition": "",
+            "examples": [],
+            "phrases": {
+                "-tamù": {
+                    "definition": "mutter; murmur; grumble",
+                    "examples": []
+                },
                 "-ta ụjalā": {
                     "definition": "A. chirp; cry as a child; utter a peculiar call",
                     "examples": [
@@ -54223,6 +55365,13 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-tè aka": {
+                    "definition": "be distant, far, afar off; be long (in time), remote:",
+                    "examples": [
+                        "Isī Port Harcourt je Lagos tèlù nnukwu akā To travel from",
+                        "Port Harcourt to Lagos is very far"
+                    ]
+                },
                 "n’òtè aka": {
                     "definition": "afar off; at a distance; long ago",
                     "examples": []
@@ -54624,7 +55773,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ti mmanwụ": {
+                    "definition": "bring out spirits in the form of masquerades",
+                    "examples": []
+                }
+            }
         }
     ],
     "-ti-": [
@@ -54701,7 +55855,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tì àtì": {
+                    "definition": "be firm, strong, hard, tenacious",
+                    "examples": []
+                }
+            }
         }
     ],
     "tìtì": [
@@ -55010,13 +56169,24 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tu afà": {
+                    "definition": "extol, salute by title: e.g. Ikè enyī Elephant's buttocks",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-tu ǹtutu": {
+                    "definition": "search for; look for, follow after in direction of thing being",
+                    "examples": [
+                        "followed"
+                    ]
+                },
                 "-tu ụkpụlū": {
                     "definition": "follow footprints, example",
                     "examples": []
@@ -55052,6 +56222,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-tu ùbu, ìbu": {
+                    "definition": "be stout",
+                    "examples": []
+                },
                 "-tu ụkpò": {
                     "definition": "blister",
                     "examples": []
@@ -55062,7 +56236,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tu ǹtutu": {
+                    "definition": "differentiate; make distinction",
+                    "examples": []
+                }
+            }
         }
     ],
     "-tù": [
@@ -55076,7 +56255,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tù ọnū": {
+                    "definition": "boast; \"bluff\"",
+                    "examples": []
+                }
+            }
         },
         {
             "wordClass": "",
@@ -55265,7 +56449,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tù ọnū": {
+                    "definition": "wish bad luck",
+                    "examples": []
+                }
+            }
         }
     ],
     "-tu-fù": [
@@ -55896,6 +57085,13 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-tụ n’anya": {
+                    "definition": "cause wonder; astonish; surprise; surpass:",
+                    "examples": [
+                        "Etu ndi orī sìlì bàta ụnō à n’anyàsì tùlù m n’anya How the",
+                        "thieves entered this house last night surprises me"
+                    ]
+                },
                 "ife ịtū n’anya": {
                     "definition": "surprising thing:",
                     "examples": [
@@ -55909,13 +57105,27 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-tụnye n’ụkwụ": {
+                    "definition": "be at hand, imminent; come unexpectedly:",
+                    "examples": [
+                        "\"Chèghalịa nù n’ifì nà Ànì Ezè Enu igwē àtụnyego",
+                        "n’ụkwụ\" Repent ye, for the Kingdom of God is at hand\""
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
             "phrases": {
+                "-tụ àsị": {
+                    "definition": "tell lies:",
+                    "examples": [
+                        "Ọ nà-àtụ āsị He is telling lies"
+                    ]
+                },
                 "-tụkpò àsị": {
                     "definition": "tell a lie against",
                     "examples": []
@@ -57780,6 +58990,10 @@
                     "examples": []
                 },
                 "nwuùyòm": {
+                    "definition": "",
+                    "examples": []
+                },
+                "ụmū ùyòm": {
                     "definition": "chicks",
                     "examples": []
                 }
@@ -59364,7 +60578,7 @@
                     "examples": []
                 },
                 "ụmù nwokē": {
-                    "definition": "boys",
+                    "definition": "men",
                     "examples": []
                 },
                 "ụmù ọkpū": {
@@ -59396,7 +60610,7 @@
                     "examples": []
                 },
                 "nwaànyà": {
-                    "definition": "men",
+                    "definition": "",
                     "examples": []
                 }
             }
@@ -60622,6 +61836,10 @@
                     "examples": []
                 },
                 "ebìghèèbì": {
+                    "definition": "",
+                    "examples": []
+                },
+                "wèe pù": {
                     "definition": "until",
                     "examples": []
                 },
@@ -61212,7 +62430,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-yàtò ọnū": {
+                    "definition": "be vulgar in speech",
+                    "examples": []
+                }
+            }
         }
     ],
     "-yi": [
@@ -61300,7 +62523,14 @@
             "wordClass": "v.",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-yi àkwa": {
+                    "definition": "lay eggs:",
+                    "examples": [
+                        "Òkụkò m nà-èyi ākwa My fowl is laying eggs"
+                    ]
+                }
+            }
         },
         {
             "wordClass": "v.",
@@ -61416,7 +62646,14 @@
             "wordClass": "+:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-wì ala, -yì ala": {
+                    "definition": "be mad:",
+                    "examples": [
+                        "Ì nà-awì alā? Are you mad?"
+                    ]
+                }
+            }
         }
     ],
     "-yọ": [
@@ -61653,6 +62890,10 @@
             "examples": [],
             "phrases": {
                 "-ze eze = -ze": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-zekpùdo": {
                     "definition": "sink over; collapse over",
                     "examples": []
                 }
@@ -61663,6 +62904,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-ze ume": {
+                    "definition": "sigh; snort",
+                    "examples": []
+                },
                 "-ze uzelē": {
                     "definition": "sneeze",
                     "examples": []
@@ -61673,7 +62918,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-ze ọdū": {
+                    "definition": "make a palm branch booth on a farm",
+                    "examples": []
+                }
+            }
         }
     ],
     "-zè": [
@@ -61701,6 +62951,10 @@
                     "examples": []
                 },
                 "-zèlụ = -zè": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-zè(lụ) anwū": {
                     "definition": "shelter from sun",
                     "examples": []
                 },
@@ -61959,6 +63213,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-zìchà": {
+                    "definition": "blow the nose; snort",
+                    "examples": []
+                },
                 "-zì imi": {
                     "definition": "blow the nose; expel mucus from the nose",
                     "examples": []
@@ -62188,6 +63446,10 @@
             "examples": [],
             "phrases": {
                 "-zò ìwu = -zò": {
+                    "definition": "",
+                    "examples": []
+                },
+                "-zò n’ibē": {
                     "definition": "stand surety for; bail",
                     "examples": []
                 },
@@ -62352,6 +63614,10 @@
             "definition": "",
             "examples": [],
             "phrases": {
+                "-zù ike": {
+                    "definition": "rest",
+                    "examples": []
+                },
                 "èzùmike": {
                     "definition": "rest; leave",
                     "examples": []
@@ -62473,7 +63739,12 @@
             "wordClass": "v.:",
             "definition": "",
             "examples": [],
-            "phrases": {}
+            "phrases": {
+                "-zuzò èzuzò": {
+                    "definition": "mimic",
+                    "examples": []
+                }
+            }
         }
     ],
     "-zu-zù": [

@@ -54,7 +54,10 @@ const buildDictionary = (span, dictionary, options = {}) => {
             if (prevColumn === 'left') {
                 // Word class
                 last(dictionary[currentWord]).wordClass = childrenText;
-            } else if (prevColumn === 'right') {
+            } else if (prevColumn === 'right' || prevColumn === 'center') {
+                if (currentWord === '-zu-zò') {
+                    console.log('ok')
+                }
                 currentPhrase = childrenText;
                 if (!!currentPhrase) {
                     last(dictionary[currentWord]).phrases = {
