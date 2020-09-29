@@ -1,5 +1,11 @@
 import { last } from 'lodash';
-import { getLeftAndTopStyles, getChildrenText } from './utils/parseHelpers';
+import {
+    startsWithLetterDot,
+    appendDefinition,
+    fromRightOrCenterColumn,
+    getLeftAndTopStyles,
+    getChildrenText,
+} from './utils/parseHelpers';
 import writeToFiles from './utils/writeToFiles';
 import { clean, normalize } from '../utils/normalization';
 import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE } from '../shared/constants/parseConstants';
@@ -20,12 +26,14 @@ const resetTrackers = () => {
     centerCount = 0;
 }
 
+/* Used to build normalized dictionary json */
 const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
     if (!normalizationMap[normalizedTerm]) {
         normalizationMap[normalizedTerm] = [];
     }
     normalizationMap[normalizedTerm].push(naturalTerm);
 }
+
 
 const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
@@ -50,17 +58,19 @@ const buildDictionary = (span, dictionary, options = {}) => {
             isABPhrase = false;
             break;
         case COLUMNS.CENTER:
-            // centerCount keeps track of how many times you are in the center column
-            // Great for identifying word classes vs phrases
+            /* centerCount keeps track of how many times you are in the center column
+            Great for identifying word classes vs phrases */
+            const wordObject = last(dictionary[currentWord]);
             centerCount += 1;
             if (prevColumn === COLUMNS.LEFT) {
-                // Word class
+                /* Assigns term's word class */
                 last(dictionary[currentWord]).wordClass = childrenText;
             } else if (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) {
+                /* Creates new entry for a term's phrase */
                 currentPhrase = childrenText;
                 if (!!currentPhrase) {
-                    last(dictionary[currentWord]).phrases = {
-                        ...last(dictionary[currentWord]).phrases,
+                    wordObject.phrases = {
+                        ...wordObject.phrases,
                         [currentPhrase]: { definitions: [], examples: [] },
                     };
                 }
@@ -69,46 +79,41 @@ const buildDictionary = (span, dictionary, options = {}) => {
             break;
         case COLUMNS.RIGHT:
             const isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top === SAME_CELL_TOP_DIFFERENCE;
+            const {
+                definitions: currentWordDefinitions,
+                examples: currentWordExamples,
+             } = last(dictionary[currentWord]);
+            const {
+                definitions: currentPhraseDefinitions,
+                examples: currentPhraseExamples,
+             } = last(dictionary[currentWord]).phrases[currentPhrase] || { definitions: [], examples: [] };
+            const currentDefinition = last(currentWordDefinitions);
+            const lastIndex = currentWordDefinitions.length - 1;
             if (prevColumn === COLUMNS.CENTER) {
-                isABPhrase = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
+                isABPhrase = startsWithLetterDot(childrenText);
             }
             if (prevColumn === COLUMNS.CENTER && centerCount < 2) {
-                last(dictionary[currentWord]).definitions.push(childrenText);
+                /* Add a new definition to current term */
+                currentWordDefinitions.push(childrenText);
             } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount < 2) {
-                const currentDefinition = last(last(dictionary[currentWord]).definitions);
-                const lastIndex = last(dictionary[currentWord]).definitions.length - 1;
-                last(dictionary[currentWord]).definitions[lastIndex] = currentDefinition + childrenText;
-            } else if (isABPhrase && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) && centerCount < 2) {
-                const isABBeginning = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
-                console.log(isABBeginning, childrenText);
-                if (isABBeginning) {
-                    last(dictionary[currentWord]).definitions.push(childrenText);
-                } else {
-                    const currentDefinition = last(last(dictionary[currentWord]).definitions);
-                    const lastIndex = last(dictionary[currentWord]).definitions.length - 1;
-                    last(dictionary[currentWord]).definitions[lastIndex] = currentDefinition + childrenText;
-                }
+                /* Append text to the term's last definition */
+                currentWordDefinitions[lastIndex] = currentDefinition + childrenText;
+            } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount < 2) {
+                /* Handles definitions that start with a letter then dot for the term's definitions */
+                appendDefinition(childrenText, currentWordDefinitions);
             } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2) {
-                last(dictionary[currentWord]).examples.push(childrenText)
+                /* Add a new example to current term */
+                currentWordExamples.push(childrenText)
             } else if (prevColumn === COLUMNS.CENTER && centerCount >= 2) {
-                // Grab the current phrase and then add to definition
-                if (!!currentPhrase) {
-                    last(dictionary[currentWord]).phrases[currentPhrase].definitions.push(childrenText);
-                }
-            } else if (isABPhrase && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) && centerCount >= 2) {
-                const isABBeginning = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
-                if (isABBeginning) {
-                    last(dictionary[currentWord]).phrases[currentPhrase].definitions.push(childrenText)
-                } else {
-                    const currentDefinition = last(last(dictionary[currentWord]).phrases[currentPhrase].definitions);
-                    const lastIndex = last(dictionary[currentWord]).phrases[currentPhrase].definitions.length - 1;
-                    last(dictionary[currentWord]).phrases[currentPhrase].definitions[lastIndex] = currentDefinition + childrenText;
-                }
+                /* Add phrase definition if current phrase exists */
+                !!currentPhrase && currentPhraseDefinitions.push(childrenText);
+            } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount >= 2) {
+                /* Handles definitions that start with a letter then dot
+                for the term's current phrase definitions */
+                appendDefinition(childrenText, currentPhraseDefinitions);
             } else if (prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
-                // Append the current example to the currentPhrase
-                if (!!currentPhrase) {
-                    last(dictionary[currentWord]).phrases[currentPhrase].examples.push(childrenText);
-                }
+                /* Append the current example to the currentPhrase */
+                !!currentPhrase && currentPhraseExamples.push(childrenText);
             }
             break;
         default:

@@ -1,4 +1,5 @@
-import { flatten } from 'lodash';
+import { flatten, last } from 'lodash';
+import { COLUMNS } from '../../shared/constants/parseConstants';
 
 /* Converts the style's value into a float */
 const getStyleValues = (style = '') => parseFloat(style.split(':')[1]);
@@ -23,3 +24,23 @@ export const getChildrenText = (element) => {
     }));
     return childrenText.join('');
 }
+
+
+export const startsWithLetterDot = (text) => (
+    text.startsWith('A. ') ||
+    text.startsWith('B. ') ||
+    text.startsWith('C. ') ||
+    text.startsWith('D. ')
+);
+
+export const appendDefinition = (childrenText, currentDefinitions) => {
+    const isABBeginning = startsWithLetterDot(childrenText);
+    if (isABBeginning) {
+        currentDefinitions.push(childrenText);
+    } else {
+        const currentDefinition = last(currentDefinitions);
+        const lastIndex = currentDefinitions.length - 1;
+        currentDefinitions[lastIndex] = currentDefinition + childrenText;
+    }
+}
+export const fromRightOrCenterColumn = (prevColumn) => (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER);
