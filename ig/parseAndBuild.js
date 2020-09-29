@@ -11,6 +11,7 @@ let currentPhrase = '';
 let prevColumn = null;
 let prevSpan = null;
 let centerCount = 0;
+let isABPhrase = false;
 
 const resetTrackers = () => {
     currentWord = '';
@@ -40,12 +41,13 @@ const buildDictionary = (span, dictionary, options = {}) => {
             dictionary[currentWord] = dictionary[currentWord] || [];
             dictionary[currentWord].push({
                 wordClass: '',
-                definition: '',
+                definitions: [],
                 examples: [],
                 phrases: {}
             });
             centerCount = 0; // Reset the center count for a new word
             currentPhrase = '';
+            isABPhrase = false;
             break;
         case COLUMNS.CENTER:
             // centerCount keeps track of how many times you are in the center column
@@ -59,24 +61,48 @@ const buildDictionary = (span, dictionary, options = {}) => {
                 if (!!currentPhrase) {
                     last(dictionary[currentWord]).phrases = {
                         ...last(dictionary[currentWord]).phrases,
-                        [currentPhrase]: { definition: '', examples: [] },
+                        [currentPhrase]: { definitions: [], examples: [] },
                     };
                 }
             }
+            isABPhrase = false;
             break;
         case COLUMNS.RIGHT:
             const isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top === SAME_CELL_TOP_DIFFERENCE;
+            if (prevColumn === COLUMNS.CENTER) {
+                isABPhrase = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
+            }
             if (prevColumn === COLUMNS.CENTER && centerCount < 2) {
-                last(dictionary[currentWord]).definition = childrenText;
+                last(dictionary[currentWord]).definitions.push(childrenText);
             } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount < 2) {
-                const currentDefinition = last(dictionary[currentWord]).definition;
-                last(dictionary[currentWord]).definition = currentDefinition + childrenText;
+                const currentDefinition = last(last(dictionary[currentWord]).definitions);
+                const lastIndex = last(dictionary[currentWord]).definitions.length - 1;
+                last(dictionary[currentWord]).definitions[lastIndex] = currentDefinition + childrenText;
+            } else if (isABPhrase && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) && centerCount < 2) {
+                const isABBeginning = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
+                console.log(isABBeginning, childrenText);
+                if (isABBeginning) {
+                    last(dictionary[currentWord]).definitions.push(childrenText);
+                } else {
+                    const currentDefinition = last(last(dictionary[currentWord]).definitions);
+                    const lastIndex = last(dictionary[currentWord]).definitions.length - 1;
+                    last(dictionary[currentWord]).definitions[lastIndex] = currentDefinition + childrenText;
+                }
             } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2) {
                 last(dictionary[currentWord]).examples.push(childrenText)
             } else if (prevColumn === COLUMNS.CENTER && centerCount >= 2) {
                 // Grab the current phrase and then add to definition
                 if (!!currentPhrase) {
-                    last(dictionary[currentWord]).phrases[currentPhrase].definition = childrenText;
+                    last(dictionary[currentWord]).phrases[currentPhrase].definitions.push(childrenText);
+                }
+            } else if (isABPhrase && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) && centerCount >= 2) {
+                const isABBeginning = childrenText.startsWith('A. ') || childrenText.startsWith('B. ') || childrenText.startsWith('C. ') || childrenText.startsWith('D. ');
+                if (isABBeginning) {
+                    last(dictionary[currentWord]).phrases[currentPhrase].definitions.push(childrenText)
+                } else {
+                    const currentDefinition = last(last(dictionary[currentWord]).phrases[currentPhrase].definitions);
+                    const lastIndex = last(dictionary[currentWord]).phrases[currentPhrase].definitions.length - 1;
+                    last(dictionary[currentWord]).phrases[currentPhrase].definitions[lastIndex] = currentDefinition + childrenText;
                 }
             } else if (prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
                 // Append the current example to the currentPhrase
