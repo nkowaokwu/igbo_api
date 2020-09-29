@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import { keys, isEqual } from 'lodash';
 import server from '../server';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
-import { searchTerm } from './shared/commands';
+import { searchTerm, searchMockedTerm } from './shared/commands';
 
 process.env.NODE_ENV = 'test';
 const { expect } = chai;
@@ -46,36 +46,26 @@ describe('Words', () => {
 
     describe('Regex Search', () => {
         it('should return term information without included dashes', (done) => {
-            searchTerm('bia')
-            .then((res) => {
-                expect(res.status).to.equal(200);
-                expect(res.body).to.be.an('object');
-                keys(res.body).forEach((key) => {
-                    expect(key.charAt(0)).to.equal('-');
-                });
-                done();
+            const res = searchMockedTerm('bia');
+            expect(res).to.be.an('object');
+            keys(res).forEach((key) => {
+                expect(key.charAt(0)).to.equal('-');
             });
+            done();
         });
 
         it('should return term with apostrophe by using spaces', (done) => {
-            searchTerm('n oge')
-            .then((res) => {
-                expect(res.status).to.equal(200);
-                expect(res.body).to.be.an('object');
-                expect(keys(res.body)[0]).to.equal("n'oge");
-                done();
-            })
+            const res = searchMockedTerm('n oge')
+            expect(res).to.be.an('object');
+            expect(keys(res)[0]).to.equal("n'oge");
+            done();
         });
 
         it('should return term with apostrophe by using apostrophe', (done) => {
-            const keyword = "n'oge"
-            searchTerm(keyword)
-            .then((res) => {
-                expect(res.status).to.equal(200);
-                expect(res.body).to.be.an('object');
-                expect(keys(res.body)[0]).to.equal(keyword);
-                done();
-            });
+            const res = searchMockedTerm("n'oge")
+            expect(res).to.be.an('object');
+            expect(keys(res)[0]).to.equal("n'oge");
+            done();
         });
     });
 });

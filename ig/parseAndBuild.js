@@ -69,7 +69,6 @@ const buildDictionary = (span, dictionary, options = {}) => {
             if (prevColumn === 'center' && centerCount < 2) {
                 last(dictionary[currentWord]).definition = childrenText;
             } else if (isSameCell && prevColumn === 'right' && centerCount < 2) {
-                // TODO: place A. B. definitions in definitions section as either a string or array
                 const currentDefinition = last(dictionary[currentWord]).definition;
                 last(dictionary[currentWord]).definition = currentDefinition + childrenText;
             } else if (prevColumn === 'right' && centerCount < 2) {
@@ -79,8 +78,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
                 if (!!currentPhrase) {
                     last(dictionary[currentWord]).phrases[currentPhrase].definition = childrenText;
                 }
-            } // TODO: Add else for isSameColumn
-            else if (prevColumn === 'right' && centerCount >= 2) {
+            } else if (prevColumn === 'right' && centerCount >= 2) {
                 // Append the current example to the currentPhrase
                 if (!!currentPhrase) {
                     last(dictionary[currentWord]).phrases[currentPhrase].examples.push(childrenText);
