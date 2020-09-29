@@ -34,7 +34,7 @@ describe('Words', () => {
 
         it('should return the same term information', (done) => {
             searchTerm('ndi ndi')
-            .then(async ({ status, body: normalizeData }) => {
+            .end(async (_, { status, body: normalizeData }) => {
                 expect(status).to.equal(200);
                 const { status: rawStatus, body: rawData } = await searchTerm('ndị ndi');
                 expect(rawStatus).to.equal(200);
