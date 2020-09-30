@@ -91,3 +91,7 @@ This will produce three different files in the `ig` directory:
 [dictionaries/ig-en_normalized.json](./ig/dictionaries/ig-en_normalized.json)
 
 [dictionaries/ig-en_normalized_expanded.json](./ig/dictionaries/ig-en_normalized_expanded.json)
+
+
+## Join us  
+Slack: https://igboapi.slack.com 
