@@ -9,9 +9,9 @@ export const searchTerm = (term) => {
     return chai.request(server)
                 .get(API_ROUTE)
                 .query({ keyword: term });
-}
+};
 
 export const searchMockedTerm = (term) => {
     const regexTerm = createRegExp(term);
     return resultsFromDictionarySearch(regexTerm, term, mockedData);
-}
+};

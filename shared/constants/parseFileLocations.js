@@ -1,4 +1,4 @@
-const mainPath = `${__dirname}/../..`
+const mainPath = `${__dirname}/../..`;
 export const READ_FILE = `${mainPath}/ig/dictionary.html`;
 export const READ_FILE_FORMAT = 'utf8';
 

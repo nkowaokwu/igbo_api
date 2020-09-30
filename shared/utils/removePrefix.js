@@ -4,4 +4,4 @@ export default (term) => {
         return term.substring(1);
     }
     return term;
-}
+};
