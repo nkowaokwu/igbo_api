@@ -1,9 +1,18 @@
 import express from 'express';
+import mongodb from 'mongodb';
 import { getWordData } from './controllers/words';
 
+const { MongoClient } = mongodb;
 const app = express();
 const router = express.Router();
 const port = 8080;
+const url = 'mongodb://localhost:27017';
+const dbName = 'igbo_api';
+
+MongoClient.connect(url, (_, client) => {
+    console.log('🗄 Database is connected');
+    client.db(dbName);
+});
 
 app.get('/', (_, res) => {
     res.send('Hello World!');

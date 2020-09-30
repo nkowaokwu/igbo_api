@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon --exec babel-node -- ./server.js",
+    "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
+    "start:database": "mongod --dbpath ./db",
+    "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./server.js",
+    "dev": "npm-run-all -p start:database start:server",
     "build": "npx babel-node dictionaries/parseAndBuild.js",
     "precommit": "lint-staged",
     "test": "NODE_ENV=test mocha -r esm ./tests",
@@ -29,6 +32,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "lodash": "^4.17.20",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.7",
     "node-html-parser": "^1.2.20",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
