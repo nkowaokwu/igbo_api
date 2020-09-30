@@ -15,7 +15,7 @@ const getWordData = (_, res) => {
     const searchWord = removePrefix(query.keyword);
     if (!searchWord) {
         res.status(400);
-        throw new Error(NO_PROVIDED_TERM);
+        res.send(NO_PROVIDED_TERM);
     }
     const regexWord = createRegExp(searchWord);
     return res.send(findSearchWord(regexWord, searchWord));
