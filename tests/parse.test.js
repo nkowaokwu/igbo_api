@@ -1,7 +1,7 @@
 import fs from 'fs';
 import chai from 'chai';
 import rimraf from 'rimraf';
-import { keys, forEach } from 'lodash';
+import { keys } from 'lodash';
 import { LONG_TIMEOUT } from './shared/constants';
 import { DICTIONARIES_DIR } from '../shared/constants/parseFileLocations';
 import { searchTerm } from './shared/commands';
@@ -33,7 +33,7 @@ describe('Parse', () => {
                 expect(res.body[keyword][0].definitions.length).to.be.at.least(1);
                 expect(res.body[keyword][0].examples.length).to.equal(1);
                 done();
-            })
+            });
         });
 
         it('should include phrases for zu-zo', (done) => {
@@ -44,7 +44,7 @@ describe('Parse', () => {
                 expect(res.body['-zu-zò']).to.exist;
                 expect(keys(res.body['-zu-zò'][0].phrases).length).to.be.at.least(1);
                 done();
-            })
+            });
         });
 
         it('should include the correct definition text for ewu chī', (done) => {
@@ -57,7 +57,7 @@ describe('Parse', () => {
                 expect(termPhraseDefinitions.length).to.be.at.least(1);
                 expect(termPhraseDefinitions[0]).to.equal(expectedDefinition);
                 done();
-            })
+            });
         });
 
         it('should include the correct A. B. text for ewu chī', (done) => {
@@ -67,8 +67,8 @@ describe('Parse', () => {
                 const termDefinitions = res[0].definitions;
                 expect(termDefinitions.length).to.be.at.least(2);
                 done();
-            })
-        })
+            });
+        });
     });
 
     after((done) => {

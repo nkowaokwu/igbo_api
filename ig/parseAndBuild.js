@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { last } from 'lodash';
 import {
     startsWithLetterDot,
@@ -25,7 +26,7 @@ const resetTrackers = () => {
     currentPhrase = '';
     prevColumn = null;
     centerCount = 0;
-}
+};
 
 /* Used to build normalized dictionary json */
 const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
@@ -33,18 +34,19 @@ const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
         normalizationMap[normalizedTerm] = [];
     }
     normalizationMap[normalizedTerm].push(naturalTerm);
-}
+};
 
 
 const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
     const naturalChildrenText = getChildrenText(span);
     const childrenText = options.normalize ? normalize(naturalChildrenText) : naturalChildrenText;
+    const cleanedChildrenText = clean(childrenText);
+    const cleanedNaturalChildrenText = clean(naturalChildrenText);
+    const wordObject = last(dictionary[currentWord]);
 
     switch (currentColumn) {
         case COLUMNS.LEFT:
-            const cleanedChildrenText = clean(childrenText);
-            const cleanedNaturalChildrenText = clean(naturalChildrenText);
             options.normalize && insertTermInNormalizationMap(cleanedChildrenText, cleanedNaturalChildrenText);
             currentWord = cleanedChildrenText;
             dictionary[currentWord] = dictionary[currentWord] || [];
@@ -62,7 +64,6 @@ const buildDictionary = (span, dictionary, options = {}) => {
         case COLUMNS.CENTER:
             /* centerCount keeps track of how many times you are in the center column
             Great for identifying word classes vs phrases */
-            const wordObject = last(dictionary[currentWord]);
             centerCount += 1;
             if (prevColumn === COLUMNS.LEFT) {
                 /* Assigns term's word class */
@@ -71,7 +72,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
             } else if (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) {
                 /* Creates new entry for a term's phrase */
                 currentPhrase = childrenText;
-                if (!!currentPhrase) {
+                if (currentPhrase) {
                     wordObject.phrases = {
                         ...wordObject.phrases,
                         [currentPhrase]: { definitions: [], examples: [] },
@@ -108,7 +109,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
                 appendTextToCurrentCell(childrenText, currentWordDefinitions);
             } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2) {
                 /* Add a new example to current term */
-                currentWordExamples.push(childrenText)
+                currentWordExamples.push(childrenText);
             } else if (prevColumn === COLUMNS.CENTER && centerCount >= 2) {
                 /* Add phrase definition if current phrase exists */
                 !!currentPhrase && currentPhraseDefinitions.push(childrenText);
@@ -135,14 +136,14 @@ const buildDictionary = (span, dictionary, options = {}) => {
         }
         prevSpan = span;
         prevColumn = currentColumn || prevColumn;
-}
+};
 
 const buildDictionaries = (root, dictionary, options) => {
     resetTrackers();
     Array.from(root.querySelectorAll('div')).forEach((span) => {
         buildDictionary(span, dictionary, options);
     });
-}
+};
 
 writeToFiles({
     buildDictionaries,

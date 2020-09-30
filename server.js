@@ -20,12 +20,12 @@ app.use('*', (req, res, next) => {
         console.log(req.query);
     }
     next();
-})
+});
 app.use('/api/v1/search', router);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     res.send(err.message);
-})
+});
 
 const server = app.listen(port, () => {
     console.log(`🟢 Server started on port ${port}`);

@@ -12,7 +12,7 @@ export const resultsFromDictionarySearch = (regexWord, word, dictionary) => {
         }
         return matchedResults;
     }, {});
-}
+};
 
 export const findSearchWord = (...args) => (
     resultsFromDictionarySearch(...args, databaseDictionary)

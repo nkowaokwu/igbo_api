@@ -55,14 +55,14 @@ describe('Words', () => {
         });
 
         it('should return term with apostrophe by using spaces', (done) => {
-            const res = searchMockedTerm('n oge')
+            const res = searchMockedTerm('n oge');
             expect(res).to.be.an('object');
             expect(keys(res)[0]).to.equal("n'oge");
             done();
         });
 
         it('should return term with apostrophe by using apostrophe', (done) => {
-            const res = searchMockedTerm("n'oge")
+            const res = searchMockedTerm("n'oge");
             expect(res).to.be.an('object');
             expect(keys(res)[0]).to.equal("n'oge");
             done();

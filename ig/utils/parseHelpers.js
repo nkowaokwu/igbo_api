@@ -12,8 +12,8 @@ export const getLeftAndTopStyles = (element) => {
     return {
         left: getStyleValues(leftStyleMatches[0]),
         top: getStyleValues(topStyleMatches[0]),
-    }
-}
+    };
+};
 
 export const getChildrenText = (element) => {
     const children = element.childNodes;
@@ -23,7 +23,7 @@ export const getChildrenText = (element) => {
         });
     }));
     return childrenText.join('');
-}
+};
 
 
 /* Checks to see if current text is one of many definitions for a term */
@@ -44,5 +44,5 @@ export const appendTextToCurrentCell = (childrenText, termArray) => {
         const lastIndex = termArray.length - 1;
         termArray[lastIndex] = `${currentDefinition} ${childrenText}`;
     }
-}
+};
 export const fromRightOrCenterColumn = (prevColumn) => (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER);

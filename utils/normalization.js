@@ -6,8 +6,8 @@ const clean = (text) => {
     if (!text) {
         return '';
     }
-    return text.replace(/[0-9+\.,]/g, '').trim();
-}
+    return text.replace(/[0-9+.,]/g, '').trim();
+};
 
 const normalize = (text, convertToLower = true, removeAbbreviations = true) => {
     if (!text) {
@@ -22,7 +22,7 @@ const normalize = (text, convertToLower = true, removeAbbreviations = true) => {
     text = removeDigitsAndSpecialCharacters(text, removeAbbreviations);
     text = splitCombinedWords(text, false);
     return text.trim();
-}
+};
 
 const removeTonalMarks = (text) => {
     return [...text].reduce((textCharacters, letter) => {
@@ -34,7 +34,7 @@ const removeTonalMarks = (text) => {
         }
         return textCharacters;
     }, '');
-}
+};
 
 const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
     let updatedText = text;
@@ -42,7 +42,7 @@ const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
         updatedText = updatedText.replace(/(?:[a-zA-Z]\.){2,}/, '');
     }
     updatedText = updatedText.replace(/([?.!,¿])/, / \1/);
-    const regExp = /[a-zA-ZỊịṄṅỌọỤụ\-\'\’]+/;
+    const regExp = /[a-zA-ZỊịṄṅỌọỤụ\-'’]+/;
     const wordTokens = updatedText.split(' ');
     const validWords = [];
     for (const wordToken of wordTokens) {
@@ -52,7 +52,7 @@ const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
         }
     }
     return validWords.join(' ');
-}
+};
 
 const tokenize = (text, convertToLower = false) => {
     if (!text) {
@@ -66,7 +66,7 @@ const tokenize = (text, convertToLower = false) => {
     text = splitCombinedWords(text);
     const wordTokens = text.trim().split(' ');
     return wordTokens;
-} 
+}; 
 
 const splitCombinedWords = (text, keySymbols = true) => {
     let updatedText = text;
@@ -77,19 +77,19 @@ const splitCombinedWords = (text, keySymbols = true) => {
         //updatedText = updatedText.replace(/([-’'])/, ' ');
     }
     return updatedText;
-}
+};
 
 const spaceOutSymbols = (text) => {
     let updatedText = text.replace(/([?.!:;,¿<>(){}[\]])/, / \1 /);
-    updatedText = updatedText.replace(/\s+([-'\"‘’“”])/, / \1 /);
-    updatedText = updatedText.replace(/([-'\"‘’“”])\s+/, / \1 /);
-    updatedText = updatedText.replace(/([-'\"‘’“”])$/, / \1/);
-    updatedText = updatedText.replace(/^([-'\"‘’“”])/, /\1 /);
+    updatedText = updatedText.replace(/\s+([-'"‘’“”])/, / \1 /);
+    updatedText = updatedText.replace(/([-'"‘’“”])\s+/, / \1 /);
+    updatedText = updatedText.replace(/([-'"‘’“”])$/, / \1/);
+    updatedText = updatedText.replace(/^([-'"‘’“”])/, /\1 /);
     return updatedText;
-}
+};
 
-const normalizedText = normalize('N’ụlọ Akwụkwọà');
-const tokenizedText = tokenize(normalizedText);
+// const normalizedText = normalize('N’ụlọ Akwụkwọà');
+// const tokenizedText = tokenize(normalizedText);
 
 // console.log({ normalizedText, tokenizedText });
 
