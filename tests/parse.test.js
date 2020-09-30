@@ -16,7 +16,7 @@ describe('Parse', () => {
     describe('Dictionaries', function() {
         this.timeout(LONG_TIMEOUT);
         it('should create dictionaries', (done) => {
-            import('../ig/parseAndBuild').then(() => {
+            import('../dictionaries/parseAndBuild').then(() => {
                 setTimeout(() => done(), 1000);
             }).catch((err) => {
                 throw err;

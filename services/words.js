@@ -1,6 +1,6 @@
 import { keys } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
-import databaseDictionary from '../ig/dictionaries/ig-en_expanded.json';
+import databaseDictionary from '../dictionaries/ig-en/ig-en_expanded.json';
 
 /* Provided a dictionary, find the corresponding terms */
 export const resultsFromDictionarySearch = (regexWord, word, dictionary) => {
