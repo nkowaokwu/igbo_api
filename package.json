@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon --exec babel-node -- ./server.js",
-    "build": "npx babel-node ig/parseAndBuild.js",
+    "build": "npx babel-node dictionaries/parseAndBuild.js",
     "precommit": "lint-staged",
     "test": "NODE_ENV=test mocha -r esm ./tests",
     "test:watch": "yarn test --watch",

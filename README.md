@@ -82,16 +82,15 @@ To parse `dictionary.html` and build a dictionary, run the following command:
 yarn build
 ```
 
-This will produce three different files in the `ig` directory:
+This will produce three different files in the `dictionaries` directory:
 
-[dictionaries/ig-en.json](./ig/dictionaries/ig-en.json)
+[ig-en/ig-en.json](./dictionaries/ig-en/ig-en.json)
 
-[dictionaries/ig-en_expanded.json](./ig/dictionaries/ig-en_expanded.json)
+[ig-en/ig-en_expanded.json](./dictionaries/ig-en/ig-en_expanded.json)
 
-[dictionaries/ig-en_normalized.json](./ig/dictionaries/ig-en_normalized.json)
+[ig-en/ig-en_normalized.json](./dictionaries/ig-en/ig-en_normalized.json)
 
-[dictionaries/ig-en_normalized_expanded.json](./ig/dictionaries/ig-en_normalized_expanded.json)
-
+[ig-en/ig-en_normalized_expanded.json](./dictionaries/ig-en/ig-en_normalized_expanded.json)
 
 ## Join us  
 Slack: https://igboapi.slack.com 
