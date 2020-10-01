@@ -32,7 +32,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "lodash": "^4.17.20",
-    "mongodb": "^3.6.2",
     "mongoose": "^5.10.7",
     "node-html-parser": "^1.2.20",
     "nodemon": "^2.0.4",
