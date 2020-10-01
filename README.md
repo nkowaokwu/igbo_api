@@ -21,13 +21,7 @@ Inside the project, install the project's dependencies:
 cd igbo_api/
 yarn install
 ```
-If you are running the API on windows Operating system, run the module to install it globally:
-
-```
-cd igbo_api/                   
-npm install -g win-node-env
-```
-Or run the module to install it In this particular project:
+If you are running the API on Windows operating system, run the module to install it globally:
 
 ```
 cd igbo_api/                   
