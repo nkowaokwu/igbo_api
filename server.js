@@ -1,16 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { getWordData } from './controllers/words';
-import { createWord } from './controllers/words';
-import dictionary from './dictionaries/ig-en/ig-en.json';
+import { SERVER_PORT, MONGO_URI } from './config';
 
 const app = express();
 const router = express.Router();
-const port = 8080;
-const dbName = 'igbo_api';
-const url = `mongodb://localhost:27017/${dbName}`;
 
-mongoose.connect(url, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, "connection error:"));
 db.once('open', function() {
@@ -19,21 +15,6 @@ db.once('open', function() {
 
 app.get('/', (_, res) => {
     res.send('Hello World!');
-});
-
-/* This route will populate a local MongoDB database */
-app.post('/populate', (_, res) => {
-    if (process.env.NODE_ENV === 'dev') {
-        mongoose.connection.db.dropDatabase();
-        for(const key in dictionary) {
-            const value = dictionary[key];
-            value.forEach((term) => {
-                term.word = key
-                createWord(term);
-            });
-        }
-    }
-    res.redirect('/');
 });
 
 router.get('/', (_, res) => {
@@ -54,8 +35,8 @@ app.use((err, req, res) => {
     res.send(err.message);
 });
 
-const server = app.listen(port, () => {
-    console.log(`🟢 Server started on port ${port}`);
+const server = app.listen(SERVER_PORT, () => {
+    console.log(`🟢 Server started on port ${SERVER_PORT}`);
 });
 
 export default server;
