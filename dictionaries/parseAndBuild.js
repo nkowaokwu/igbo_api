@@ -36,6 +36,16 @@ const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
     normalizationMap[normalizedTerm].push(naturalTerm);
 };
 
+/* Helper function to insert the current phrase in the provided word object */
+const insertCurrentPhrase = ({ currentPhrase, currentPhraseData, wordObject }) => {
+    if (currentPhrase) {
+        wordObject.phrases = {
+            ...wordObject.phrases,
+            [currentPhrase]: currentPhraseData,
+        };
+    }
+};
+
 const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
     const naturalChildrenText = options.normalize ? normalize(getChildrenText(span)) : getChildrenText(span);
@@ -68,7 +78,19 @@ const buildDictionary = (span, dictionary, options = {}) => {
             /* centerCount keeps track of how many times you are in the center column
             Great for identifying word classes vs phrases */
             centerCount += 1;
+            if (prevCellType === CELL_TYPE.PHRASE) {
+                /* If the last phrase was empty, append it to the last populated phrase */
+                const wordObjectPhrases = Object.keys(wordObject.phrases);
+                const lastPopulatedPhrase = wordObjectPhrases[wordObjectPhrases.length - 2];
+                const lastUnpopulatedPhrase = last(wordObjectPhrases);
+                const populatedPhraseData = wordObject.phrases[lastPopulatedPhrase];
 
+                currentPhrase = `${lastPopulatedPhrase} ${lastUnpopulatedPhrase}`;
+                delete wordObject.phrases[lastUnpopulatedPhrase];
+                delete wordObject.phrases[lastPopulatedPhrase];
+
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: populatedPhraseData, wordObject });
+            }
             if (prevColumn === COLUMNS.LEFT) {
                 /* Assigns term's word class */
                 last(dictionary[currentWord]).wordClass = childrenText;
@@ -76,25 +98,15 @@ const buildDictionary = (span, dictionary, options = {}) => {
             } else if (!isSameCell && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER)) {
                 /* Creates new entry for a term's phrase */
                 currentPhrase = childrenText;
-                if (currentPhrase) {
-                    wordObject.phrases = {
-                        ...wordObject.phrases,
-                        [currentPhrase]: { definitions: [], examples: [] },
-                    };
-                }
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: { definitions: [], examples: [] }, wordObject });
                 prevCellType = CELL_TYPE.PHRASE;
             } else if (isSameCell) {
+                /* If the phrase is in the same cell as the last, then append to the last phrase */
                 const lastPhrase = last(Object.keys(wordObject.phrases));
                 const lastPhraseData = wordObject.phrases[lastPhrase];
                 delete wordObject.phrases[lastPhrase];
                 currentPhrase = `${lastPhrase} ${childrenText}`;
-
-                if (currentPhrase) {
-                    wordObject.phrases = {
-                        ...wordObject.phrases,
-                        [currentPhrase]: lastPhraseData,
-                    };
-                }
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: lastPhraseData, wordObject });
             }
             isABPhrase = false;
             break;

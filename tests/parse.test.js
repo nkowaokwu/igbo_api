@@ -1,7 +1,7 @@
 import fs from 'fs';
 import chai from 'chai';
 import rimraf from 'rimraf';
-import { keys } from 'lodash';
+import { keys, map, isEqual } from 'lodash';
 import { LONG_TIMEOUT } from './shared/constants';
 import { DICTIONARIES_DIR } from '../shared/constants/parseFileLocations';
 import { searchTerm, searchMockedTerm } from './shared/commands';
@@ -70,6 +70,33 @@ describe('Parse', () => {
                 done();
             });
         });
+
+        it('should include all the phrases for -kwù-', (done) => {
+            const keyword = '-kwù-';
+            searchTerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('object');
+                expect(res.body[keyword]).to.be.an('array');
+                expect(keys(res.body[keyword][0].phrases).length).to.be.at.least(5);
+                done();
+            });
+        });
+
+        it.only('should include the entire phrases', (done) => {
+            const keywords = ['ànì ànà', '-bè'];
+            const expectedPhrases = ['ànì mmanụ anwū nà mmili ala efī', 'Bèelụchī, Bèelụchukwu'];
+            Promise.all(map(['ànì ànà', 'be'], (keyword, index) => {
+                return searchTerm(keyword)
+                    .then((res) => {
+                        expect(res.status).to.equal(200);
+                        expect(keys(res.body[keywords[index]][0].phrases)).contains(expectedPhrases[index]);
+                    });
+            }))
+            .then(() => {
+                done();
+            });
+        });
     });
 
     describe('Utils', () => {
@@ -96,6 +123,18 @@ describe('Parse', () => {
                 expect(keys(res)[0]).to.equal("n'oge");
                 done();
             });
+
+            it('should return all matching terms', (done) => {
+                const keyword = 'be';
+                const resKeys = ['be', '-be', '-bè'];
+                searchTerm(keyword)
+                .end((_, res) => {
+                    expect(res.status).to.equal(200);
+                    expect(keys(res.body).length).to.equal(3);
+                    expect(isEqual(keys(res.body), resKeys)).is.true;
+                    done();
+                });
+            });
         });
 
         describe('Abbreviations', () => {
@@ -104,9 +143,9 @@ describe('Parse', () => {
                 const withoutAbbreviations = replaceAbbreviations(withAbbreviations);
                 expect(withoutAbbreviations).to.equal('noun noun. numeral num.eral auxiliary verb aux.verb inflectional suffix');
                 done();
-            })
-        })
-    })
+            });
+        });
+    });
 
     after((done) => {
         rimraf(DICTIONARIES_DIR, () => done());
