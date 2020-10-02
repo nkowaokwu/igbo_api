@@ -26,6 +26,11 @@ const getWordData = (_, res) => {
     return res.send(findSearchWord(regexWord, searchWord));
 };
 
+export const getWords = async (_, res) => {
+    const words = await Word.find({});
+    res.send(words);
+}
+
 export const createWord = async (data) => {
     const { examples, word, wordClass, definitions } = data;
     const wordData = {
@@ -56,13 +61,13 @@ export const createWord = async (data) => {
     });
     
     /* Wait for all the Phrases and Examples to be created and then add them to the Word document */
-    return Promise.all([savedPhrases, savedExamples]).then((res) => {
-        const phraseIds = getDocumentsIds(res[0]);
-        const exampleIds = getDocumentsIds(res[1]);
-        newWord.phrases = phraseIds;
-        newWord.examples = exampleIds;
-        return newWord.save();
-    })
+    const resolvedPhrases = await Promise.all(savedPhrases);
+    const resolvedExamples = await Promise.all(savedExamples);
+    const phraseIds = getDocumentsIds(resolvedPhrases);
+    const exampleIds = getDocumentsIds(resolvedExamples);
+    newWord.phrases = phraseIds;
+    newWord.examples = exampleIds;
+    return newWord.save();
 };
 
 export { getWordData };

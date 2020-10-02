@@ -10,10 +10,8 @@
     "dev": "npm-run-all -p start:database start:server",
     "build": "babel-node dictionaries/parseAndBuild.js",
     "precommit": "lint-staged",
-    "seed": "babel-node dictionaries/seed.js",
-    "seed:database": "NODE_ENV=dev npm-run-all -p start:database seed",
-    "test": "NODE_ENV=test mocha -r esm ./tests",
-    "test:watch": "yarn test --watch",
+    "mocha": "NODE_ENV=test mocha -r esm ./tests",
+    "test": "npm-run-all -p start:database mocha",
     "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
   },
   "engines": {
