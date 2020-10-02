@@ -4,7 +4,8 @@ import rimraf from 'rimraf';
 import { keys } from 'lodash';
 import { LONG_TIMEOUT } from './shared/constants';
 import { DICTIONARIES_DIR } from '../shared/constants/parseFileLocations';
-import { searchTerm } from './shared/commands';
+import { searchTerm, searchMockedTerm } from './shared/commands';
+import replaceAbbreviations from '../shared/utils/replaceAbbreviations';
 
 const { expect } = chai;
 const mocksDir = `${__dirname}/../tests/__mocks__`;
@@ -53,7 +54,7 @@ describe('Parse', () => {
             searchTerm(keyword)
             .end((_, { body: { chi: res }}) => {
                 const termPhraseDefinitions = res[0].phrases[phraseKeyword].definitions;
-                const expectedDefinition = `a goat given to one's mother for her personal chi, which must never be killed:`;
+                const expectedDefinition = `a goat given to one's mother for her personal chi, which must never be killed`;
                 expect(termPhraseDefinitions.length).to.be.at.least(1);
                 expect(termPhraseDefinitions[0]).to.equal(expectedDefinition);
                 done();
@@ -70,6 +71,42 @@ describe('Parse', () => {
             });
         });
     });
+
+    describe('Utils', () => {
+        describe('Regex Search', () => {
+            it('should return term information without included dashes', (done) => {
+                const res = searchMockedTerm('bia');
+                expect(res).to.be.an('object');
+                keys(res).forEach((key) => {
+                    expect(key.charAt(0)).to.equal('-');
+                });
+                done();
+            });
+    
+            it('should return term with apostrophe by using spaces', (done) => {
+                const res = searchMockedTerm('n oge');
+                expect(res).to.be.an('object');
+                expect(keys(res)[0]).to.equal("n'oge");
+                done();
+            });
+    
+            it('should return term with apostrophe by using apostrophe', (done) => {
+                const res = searchMockedTerm("n'oge");
+                expect(res).to.be.an('object');
+                expect(keys(res)[0]).to.equal("n'oge");
+                done();
+            });
+        });
+
+        describe('Abbreviations', () => {
+            it('should replace all present valid abbreviations', (done) => {
+                const withAbbreviations = 'n. noun. num. num.eral aux. v. aux.v.';
+                const withoutAbbreviations = replaceAbbreviations(withAbbreviations);
+                expect(withoutAbbreviations).to.equal('noun noun. numeral num.eral auxiliary verb aux.verb');
+                done();
+            })
+        })
+    })
 
     after((done) => {
         rimraf(DICTIONARIES_DIR, () => done());
