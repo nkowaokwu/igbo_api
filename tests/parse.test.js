@@ -99,10 +99,10 @@ describe('Parse', () => {
         });
 
         describe('Abbreviations', () => {
-            it('should replace all present valid abbreviations', (done) => {
-                const withAbbreviations = 'n. noun. num. num.eral aux. v. aux.v.';
+            it.only('should replace all present valid abbreviations', (done) => {
+                const withAbbreviations = 'n. noun. num. num.eral aux. v. aux.v. infl. suff.';
                 const withoutAbbreviations = replaceAbbreviations(withAbbreviations);
-                expect(withoutAbbreviations).to.equal('noun noun. numeral num.eral auxiliary verb aux.verb');
+                expect(withoutAbbreviations).to.equal('noun noun. numeral num.eral auxiliary verb aux.verb inflectional suffix');
                 done();
             })
         })
