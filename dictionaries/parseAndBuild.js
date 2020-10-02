@@ -83,7 +83,8 @@ const buildDictionary = (span, dictionary, options = {}) => {
             isABPhrase = false;
             break;
         case COLUMNS.RIGHT:
-            const isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top === SAME_CELL_TOP_DIFFERENCE;
+            
+            const isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top <= SAME_CELL_TOP_DIFFERENCE;
             const {
                 definitions: currentWordDefinitions,
                 examples: currentWordExamples,
@@ -94,6 +95,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
              } = last(dictionary[currentWord]).phrases[currentPhrase] || { definitions: [], examples: [] };
             const currentDefinition = last(currentWordDefinitions);
             const lastIndex = currentWordDefinitions.length - 1;
+
             if (prevColumn === COLUMNS.CENTER) {
                 isABPhrase = startsWithLetterDot(childrenText);
             }
@@ -103,7 +105,7 @@ const buildDictionary = (span, dictionary, options = {}) => {
                 prevCellType = CELL_TYPE.DEFINITION;
             } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount < 2) {
                 /* Append text to the term's last definition */
-                currentWordDefinitions[lastIndex] = currentDefinition + childrenText;
+                currentWordDefinitions[lastIndex] = `${currentDefinition} ${childrenText}`;
             } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount < 2) {
                 /* Handles definitions that start with a letter then dot for the term's definitions */
                 appendTextToCurrentCell(childrenText, currentWordDefinitions);

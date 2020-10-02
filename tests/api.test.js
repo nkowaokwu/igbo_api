@@ -1,11 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { keys, isEqual } from 'lodash';
+import mongoose from 'mongoose';
 import server from '../server';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
 import { searchTerm, searchMockedTerm } from './shared/commands';
 
-process.env.NODE_ENV = 'test';
 const { expect } = chai;
 
 chai.use(chaiHttp);
@@ -70,4 +70,8 @@ describe('Words', () => {
     });
 });
 
-after(() => server.close());
+after(() => {
+    server.clearDatabase();
+    mongoose.connection.close();
+    server.close()
+});
