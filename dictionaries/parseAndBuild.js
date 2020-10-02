@@ -3,7 +3,6 @@ import { last } from 'lodash';
 import {
     startsWithLetterDot,
     appendTextToCurrentCell,
-    fromRightOrCenterColumn,
     getLeftAndTopStyles,
     getChildrenText,
 } from './utils/parseHelpers';
@@ -15,7 +14,7 @@ import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE, CELL_TYPE } fr
 const normalizationMap = {};
 
 let currentWord = '';
-let currentPhrase = '';
+let currentPhrase = null;
 let prevColumn = null;
 let prevSpan = null;
 let prevCellType = null;
@@ -37,6 +36,15 @@ const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
     normalizationMap[normalizedTerm].push(naturalTerm);
 };
 
+/* Helper function to insert the current phrase in the provided word object */
+const insertCurrentPhrase = ({ currentPhrase, currentPhraseData, wordObject }) => {
+    if (currentPhrase) {
+        wordObject.phrases = {
+            ...wordObject.phrases,
+            [currentPhrase]: currentPhraseData,
+        };
+    }
+};
 
 const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
@@ -45,6 +53,8 @@ const buildDictionary = (span, dictionary, options = {}) => {
     const cleanedChildrenText = clean(childrenText);
     const cleanedNaturalChildrenText = clean(naturalChildrenText);
     const wordObject = last(dictionary[currentWord]);
+    let isSameCell;
+    let isSameRow;
 
     switch (currentColumn) {
         case COLUMNS.LEFT:
@@ -58,34 +68,52 @@ const buildDictionary = (span, dictionary, options = {}) => {
                 phrases: {}
             });
             centerCount = 0; // Reset the center count for a new word
-            currentPhrase = '';
+            currentPhrase = null;
             isABPhrase = false;
             prevCellType = CELL_TYPE.WORD;
             break;
         case COLUMNS.CENTER:
+            isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top <= SAME_CELL_TOP_DIFFERENCE && prevColumn === currentColumn;
+            isSameRow = getLeftAndTopStyles(span).top === getLeftAndTopStyles(prevSpan).top;
             /* centerCount keeps track of how many times you are in the center column
             Great for identifying word classes vs phrases */
             centerCount += 1;
+            if (prevCellType === CELL_TYPE.PHRASE) {
+                /* If the last phrase was empty, append it to the last populated phrase */
+                const wordObjectPhrases = Object.keys(wordObject.phrases);
+                const lastPopulatedPhrase = wordObjectPhrases[wordObjectPhrases.length - 2];
+                const lastUnpopulatedPhrase = last(wordObjectPhrases);
+                const populatedPhraseData = wordObject.phrases[lastPopulatedPhrase];
+
+                currentPhrase = `${lastPopulatedPhrase} ${lastUnpopulatedPhrase}`;
+                delete wordObject.phrases[lastUnpopulatedPhrase];
+                delete wordObject.phrases[lastPopulatedPhrase];
+
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: populatedPhraseData, wordObject });
+            }
             if (prevColumn === COLUMNS.LEFT) {
                 /* Assigns term's word class */
                 last(dictionary[currentWord]).wordClass = childrenText;
                 prevCellType = CELL_TYPE.WORD_CLASS;
-            } else if (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER) {
+            } else if (!isSameCell && (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER)) {
                 /* Creates new entry for a term's phrase */
                 currentPhrase = childrenText;
-                if (currentPhrase) {
-                    wordObject.phrases = {
-                        ...wordObject.phrases,
-                        [currentPhrase]: { definitions: [], examples: [] },
-                    };
-                }
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: { definitions: [], examples: [] }, wordObject });
                 prevCellType = CELL_TYPE.PHRASE;
+            } else if (isSameCell) {
+                /* If the phrase is in the same cell as the last, then append to the last phrase */
+                const lastPhrase = last(Object.keys(wordObject.phrases));
+                const lastPhraseData = wordObject.phrases[lastPhrase];
+                delete wordObject.phrases[lastPhrase];
+                currentPhrase = `${lastPhrase} ${childrenText}`;
+                insertCurrentPhrase({ currentPhrase, currentPhraseData: lastPhraseData, wordObject });
             }
             isABPhrase = false;
             break;
         case COLUMNS.RIGHT:
+            isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top <= SAME_CELL_TOP_DIFFERENCE && prevColumn === currentColumn;
+            isSameRow = getLeftAndTopStyles(span).top === getLeftAndTopStyles(prevSpan).top;
             
-            const isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top <= SAME_CELL_TOP_DIFFERENCE;
             const {
                 definitions: currentWordDefinitions,
                 examples: currentWordExamples,
@@ -100,37 +128,72 @@ const buildDictionary = (span, dictionary, options = {}) => {
             if (prevColumn === COLUMNS.CENTER) {
                 isABPhrase = startsWithLetterDot(childrenText);
             }
-            if (prevColumn === COLUMNS.CENTER && centerCount < 2) {
+
+            if (prevColumn === COLUMNS.CENTER && (prevCellType === CELL_TYPE.WORD_CLASS || prevCellType === CELL_TYPE.WORD)) {
                 /* Add a new definition to current term */
                 currentWordDefinitions.push(childrenText);
                 prevCellType = CELL_TYPE.DEFINITION;
-            } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount < 2) {
+            } else if (!currentPhrase && !isABPhrase && isSameCell && prevColumn === COLUMNS.RIGHT && prevCellType === CELL_TYPE.DEFINITION) {
                 /* Append text to the term's last definition */
                 currentWordDefinitions[lastIndex] = `${currentDefinition} ${childrenText}`;
-            } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount < 2) {
+                prevCellType = CELL_TYPE.DEFINITION;
+            } else if (!currentPhrase && isABPhrase && !isSameCell) {
+                /* If the childrenText starts with a letter then dot, it's a new word definition */
+                currentWordDefinitions.push(childrenText);
+                prevCellType = CELL_TYPE.DEFINITION;
+            } else if (!currentPhrase && isABPhrase && isSameCell) {
                 /* Handles definitions that start with a letter then dot for the term's definitions */
                 appendTextToCurrentCell(childrenText, currentWordDefinitions);
-            } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2) {
+                prevCellType = CELL_TYPE.DEFINITION;
+            } else if (prevColumn === COLUMNS.RIGHT && centerCount < 2 && centerCount !== 0) {
                 /* Add a new example to current term */
                 currentWordExamples.push(childrenText);
-            } else if (prevColumn === COLUMNS.CENTER && centerCount >= 2) {
+                prevCellType = CELL_TYPE.EXAMPLE;
+            } else if (currentPhrase && isSameRow && prevCellType === CELL_TYPE.PHRASE) {
                 /* Add phrase definition if current phrase exists */
-                !!currentPhrase && currentPhraseDefinitions.push(childrenText);
+                currentPhraseDefinitions.push(childrenText);
                 prevCellType = CELL_TYPE.DEFINITION;
-            } else if (isABPhrase && fromRightOrCenterColumn(prevColumn) && centerCount >= 2) {
+            } else if (currentPhrase && !isSameRow && prevCellType === CELL_TYPE.PHRASE) {
+                currentPhraseExamples.push(childrenText);
+                prevCellType = CELL_TYPE.EXAMPLE;
+            } else if (currentPhrase && isABPhrase && isSameCell) {
                 /* Handles definitions that start with a letter then dot
                 for the term's current phrase definitions */
                 appendTextToCurrentCell(childrenText, currentPhraseDefinitions);
-            } else if (isSameCell && prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
+                prevCellType = CELL_TYPE.DEFINITION;
+            } else if (currentPhrase && isABPhrase && !isSameCell) {
+                if (!startsWithLetterDot(childrenText)) {
+                    /* In between A. B. definitions, there are examples, they should be inserted in the examples section */
+                    currentPhraseExamples.push(childrenText);
+                    prevCellType = CELL_TYPE.EXAMPLE;
+                } else {
+                    currentPhraseDefinitions.push(childrenText);
+                    prevCellType = CELL_TYPE.DEFINITION;
+                }
+            } else if (!currentPhrase && isSameCell && prevCellType === CELL_TYPE.EXAMPLE) {
+                appendTextToCurrentCell(childrenText, currentWordExamples);
+                prevCellType = CELL_TYPE.EXAMPLE;
+            } else if (currentPhrase && isSameCell && (prevCellType === CELL_TYPE.DEFINITION || prevCellType === CELL_TYPE.EXAMPLE)) {
                 /* Append the text to the current cell depending on type */
                 if (prevCellType === CELL_TYPE.DEFINITION) {
                     appendTextToCurrentCell(childrenText, currentPhraseDefinitions);
+                    prevCellType = CELL_TYPE.DEFINITION;
                 } else if (prevCellType === CELL_TYPE.EXAMPLE) {
                     appendTextToCurrentCell(childrenText, currentPhraseExamples);
+                    prevCellType = CELL_TYPE.EXAMPLE;
                 }
-            } else if (prevColumn === COLUMNS.RIGHT && centerCount >= 2) {
+            } else if (!isSameCell && currentPhrase && (prevCellType === CELL_TYPE.EXAMPLE || prevCellType === CELL_TYPE.DEFINITION)) {
                 /* Append the current example to the currentPhrase */
-                !!currentPhrase && currentPhraseExamples.push(childrenText);
+                currentPhraseExamples.push(childrenText);
+                prevCellType = CELL_TYPE.EXAMPLE;
+            } else if (isSameRow && prevCellType === CELL_TYPE.WORD) {
+                /* If on the same row as the last cell which was a word, then the current childrenText is a word definition */
+                currentWordDefinitions.push(childrenText);
+                prevCellType = CELL_TYPE.DEFINITION;
+            } else if (!isSameRow && (prevCellType === CELL_TYPE.WORD || prevCellType === CELL_TYPE.WORD_CLASS)) {
+                /* If not on the same row as the last cel that was either a word or word class, then the current
+                childrenText is a word example */
+                currentWordExamples.push(childrenText);
                 prevCellType = CELL_TYPE.EXAMPLE;
             }
             break;
