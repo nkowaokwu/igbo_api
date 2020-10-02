@@ -49,25 +49,35 @@ http://localhost:8080/api/v1/search/words?keyword=agụū
 returns:
 
 ```
-{
-    "wordClass": "n.",
-    "definition": "hunger; desire; eagerness",
-    "examples": [],
-    "phrases": {
-        "(agụū) -gụ": {
-            "definition": "be hungry",
-            "examples": []
-        },
-        "agụū mmīli": {
-            "definition": "thirst",
-            "examples": []
-        },
-        "-gụ agụū": {
-            "definition": "hunger; desire; long for ( -gụ 2. desire)",
-            "examples": []
+[
+    {
+        "wordClass": "noun",
+        "definitions": [
+            "hunger; desire; eagerness"
+        ],
+        "examples": [],
+        "phrases": {
+            "(agụū) -gụ": {
+                "definitions": [
+                    "be hungry"
+                ],
+                "examples": []
+            },
+            "agụū mmīli": {
+                "definitions": [
+                    "thirst"
+                ],
+                "examples": []
+            },
+            "-gụ agụū": {
+                "definitions": [
+                    "hunger; desire; long for ( -gụ 2. desire)"
+                ],
+                "examples": []
+            }
         }
     }
-}
+]
 ```
 
 ## Locally Populating Dictionary Data
