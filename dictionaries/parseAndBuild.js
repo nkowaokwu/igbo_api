@@ -8,6 +8,7 @@ import {
     getChildrenText,
 } from './utils/parseHelpers';
 import writeToFiles from './utils/writeToFiles';
+import replaceAbbreviations from '../shared/utils/replaceAbbreviations';
 import { clean, normalize } from '../utils/normalization';
 import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE, CELL_TYPE } from '../shared/constants/parseConstants';
 
@@ -39,8 +40,8 @@ const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
 
 const buildDictionary = (span, dictionary, options = {}) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
-    const naturalChildrenText = getChildrenText(span);
-    const childrenText = options.normalize ? normalize(naturalChildrenText) : naturalChildrenText;
+    const naturalChildrenText = options.normalize ? normalize(getChildrenText(span)) : getChildrenText(span);
+    const childrenText = replaceAbbreviations(naturalChildrenText);
     const cleanedChildrenText = clean(childrenText);
     const cleanedNaturalChildrenText = clean(naturalChildrenText);
     const wordObject = last(dictionary[currentWord]);
