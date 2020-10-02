@@ -25,7 +25,7 @@ If you are running the API on Windows operating system, run the module to instal
 
 ```
 cd igbo_api/                   
-yarn install --save-optional win-node-env
+yarn add --optional win-node-env
 ```
 
 To start the dev API server run the following command:
