@@ -33,7 +33,7 @@
     ],
     "-a/-e/-ọ/-o": [
         {
-            "wordClass": "infl. suff.",
+            "wordClass": "inflectional suffix",
             "definitions": [
                 "(-a after a ị ụ; -e after e i u; -ọ after ọ; -o after o) completive or open vowel suffix, used with most verbs in the imperative, the subjunctive, and the sequential forms Lùa ọlū Do the work: Kà ànyị jee Let us go ... ò wèe nalue ụnò wèe fụ yā ... and then he got home and found it"
             ],
@@ -78,7 +78,7 @@
     ],
     "aà aā": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "oh! (surprise)"
             ],
@@ -88,7 +88,7 @@
     ],
     "àa": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "answer to a call, e.g. yes; a low murmuring or exclamation over tragic news or surprise"
             ],
@@ -2555,7 +2555,7 @@
     ],
     "àhaà!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "aha! (surprise)"
             ],
@@ -3827,7 +3827,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "potash (H. kanwaa)"
+                "potash (Hausa kanwaa)"
             ],
             "examples": [],
             "phrases": {}
@@ -7033,7 +7033,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "tenth of a penny (H. àniinii)"
+                "tenth of a penny (Hausa àniinii)"
             ],
             "examples": [],
             "phrases": {}
@@ -7972,7 +7972,7 @@
     ],
     "ànyaā": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [],
             "examples": [],
             "phrases": {}
@@ -9506,7 +9506,7 @@
     ],
     "bikō": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "please! I beg you!"
             ],
@@ -9742,7 +9742,7 @@
         {
             "wordClass": "verb",
             "definitions": [
-                "ext. suff. 1. (break) off (of something large and brittle and capable of being reduced to ashes or powder, e.g. wall, floor)"
+                "extensional suffix 1. (break) off (of something large and brittle and capable of being reduced to ashes or powder, e.g. wall, floor)"
             ],
             "examples": [],
             "phrases": {
@@ -12880,7 +12880,7 @@
     ],
     "dàalụ": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "thank you; a form of greeting"
             ],
@@ -13170,7 +13170,7 @@
     ],
     "-de-be -do-be": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -13222,7 +13222,7 @@
     ],
     "deème": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "thank you!"
             ],
@@ -14044,7 +14044,7 @@
         {
             "wordClass": "verb",
             "definitions": [
-                "ext. suff. 1. against; fast (in, on) (implies continuity; compare -do 1.)"
+                "extensional suffix 1. against; fast (in, on) (implies continuity; compare -do 1.)"
             ],
             "examples": [],
             "phrases": {
@@ -14658,7 +14658,7 @@
         {
             "wordClass": "verb",
             "definitions": [
-                "ext. suff. 1. first; beforehand; precede (compare -godu, and perhaps -du 1.)"
+                "extensional suffix 1. first; beforehand; precede (compare -godu, and perhaps -du 1.)"
             ],
             "examples": [],
             "phrases": {
@@ -15068,7 +15068,7 @@
     ],
     "èbeē": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "where (to)?"
             ],
@@ -15572,7 +15572,7 @@
     ],
     "èe": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "answer to a call"
             ],
@@ -15582,7 +15582,7 @@
     ],
     "èe’è [èe?è] e’è": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "no!"
             ],
@@ -15592,7 +15592,7 @@
     ],
     "èè e eee": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "yes"
             ],
@@ -15602,7 +15602,7 @@
     ],
     "èèye!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "yes! certainly!"
             ],
@@ -15612,7 +15612,7 @@
     ],
     "èeyī!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "yes!"
             ],
@@ -17676,7 +17676,7 @@
     ],
     "ewō! èwo!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of surprise"
             ],
@@ -17686,7 +17686,7 @@
     ],
     "ewòò!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of sympathy or pity"
             ],
@@ -17741,7 +17741,7 @@
     ],
     "ewùù!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of regret, sympathy"
             ],
@@ -18896,7 +18896,7 @@
     ],
     "-fì": [
         {
-            "wordClass": "ext. suff.1.",
+            "wordClass": "extensional suffix1.",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -21838,7 +21838,7 @@
                 },
                 "-gbà-do": {
                     "definitions": [
-                        "ext. suff. 1. all; entirely (compare -gbà 3.)"
+                        "extensional suffix 1. all; entirely (compare -gbà 3.)"
                     ],
                     "examples": []
                 },
@@ -22350,7 +22350,7 @@
     ],
     "gbọò": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "word asking for confirmation or denial of a report; e.g. A narrates to B something concerning C, and B turns to C saying 'Gbọò', which implies 'You have heard what A has said. Is it true?' B then expects C to confirm or deny A's statement"
             ],
@@ -23528,7 +23528,7 @@
     ],
     "-gi-de -ji-de -de": [
         {
-            "wordClass": "ext. suff.1.",
+            "wordClass": "extensional suffix1.",
             "definitions": [
                 "against"
             ],
@@ -23617,7 +23617,7 @@
     ],
     "gịnī?": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "what?"
             ],
@@ -23710,7 +23710,7 @@
             }
         },
         {
-            "wordClass": "infl. suff.",
+            "wordClass": "inflectional suffix",
             "definitions": [
                 "Ọ nātago He has arrived sleeping room?)"
             ],
@@ -23721,7 +23721,7 @@
             "phrases": {}
         },
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "Ụmù akwụkwọ nà-akwàgo motō Ōbelē enu ugwu#Students are pushing Obele's car up the hill. Obele going upwards in the direction of the school. wall"
             ],
@@ -23801,7 +23801,7 @@
             }
         },
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "make, be bent (compare ngò crookedness)"
             ],
@@ -24422,7 +24422,7 @@
     ],
     "-gwò": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "into pieces (something harder than -lì)"
             ],
@@ -24780,7 +24780,7 @@
             }
         }
     ],
-    "H": [
+    "Hausa": [
         {
             "wordClass": "",
             "definitions": [],
@@ -25649,7 +25649,7 @@
                 },
                 "ife ōgbụgba": {
                     "definitions": [
-                        "post-partum haemorrhage (P.P.H.); menorrhagia (excessive loss at menstrual period)"
+                        "post-partum haemorrhage (P.P.Hausa); menorrhagia (excessive loss at menstrual period)"
                     ],
                     "examples": []
                 },
@@ -29915,7 +29915,7 @@
     ],
     "ìyaà ìyaa": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of assent or pleasure; very good! excellent! fine!"
             ],
@@ -30558,7 +30558,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "beads worn round waist by women for ornament (H. jìgìdaa)"
+                "beads worn round waist by women for ornament (Hausa jìgìdaa)"
             ],
             "examples": [],
             "phrases": {}
@@ -31333,7 +31333,7 @@
     ],
     "kaì!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "my word! goodness! (= paì!)"
             ],
@@ -31368,7 +31368,7 @@
     ],
     "-kàta": [
         {
-            "wordClass": "ext. suff. 4.",
+            "wordClass": "extensional suffix 4.",
             "definitions": [
                 "so much...that; to such an extent...that ǹnyàafù ò fọ nwantịntị afọ m#gbawaa I drank so much at a wedding yesterday that I almost burst If your servant is stubborn you will be worn out with talking became hoarse"
             ],
@@ -31731,7 +31731,7 @@
     ],
     "kèdu kèdụ": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "how? which?"
             ],
@@ -31814,7 +31814,7 @@
     ],
     "-kè-ta": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -31847,7 +31847,7 @@
             "phrases": {}
         },
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "about; up and down (always with -gba) at random lorry you were to have taken to the market has left while you were busy fussing about"
             ],
@@ -31887,7 +31887,7 @@
     ],
     "kìlịkìlịkìlị": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "word used by children when trying to count stars at night; each number is preceded by this word, and they try to count as far as possible on one breath"
             ],
@@ -32317,7 +32317,7 @@
             }
         },
         {
-            "wordClass": "ext. suff. 1",
+            "wordClass": "extensional suffix 1",
             "definitions": [
                 "all; altogether"
             ],
@@ -32639,7 +32639,7 @@
             }
         },
         {
-            "wordClass": "ext. suff. 1",
+            "wordClass": "extensional suffix 1",
             "definitions": [
                 "used in"
             ],
@@ -32920,7 +32920,7 @@
         {
             "wordClass": "verb",
             "definitions": [
-                "ext. suff. 1 upon; to; against"
+                "extensional suffix 1 upon; to; against"
             ],
             "examples": [],
             "phrases": {
@@ -34336,7 +34336,7 @@
             }
         },
         {
-            "wordClass": "ext. suff.1",
+            "wordClass": "extensional suffix1",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -34400,7 +34400,7 @@
             }
         },
         {
-            "wordClass": "ext. suff. 1",
+            "wordClass": "extensional suffix 1",
             "definitions": [
                 "Ji adā èkwe m  iliì mà ọ bụlụ nà o ghe kpòrò èghekpò I can’t eat yam if it is not thoroughly done Ọ nà-àgwa i Ada nà nyâ chòlù kà Àda gwekpòọ tanjele ọ nà-ègwe e gwekpò She is telling Ada to grind the galena stone that she is grinding very thoroughly"
             ],
@@ -35034,7 +35034,7 @@
             }
         },
         {
-            "wordClass": "ext. suff.1",
+            "wordClass": "extensional suffix1",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -35123,7 +35123,7 @@
     ],
     "kpọò!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "no! (compare mbà)"
             ],
@@ -35133,7 +35133,7 @@
     ],
     "-kpu": [
         {
-            "wordClass": "ext. suff.1",
+            "wordClass": "extensional suffix1",
             "definitions": [
                 "in"
             ],
@@ -36050,7 +36050,7 @@
             }
         },
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "well; so as to restore good condition"
             ],
@@ -36380,7 +36380,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "kind of louse, very stubborn, found on clothes, pubic hair, etc. of habitually dirty persons ( H., compare igwu louse)"
+                "kind of louse, very stubborn, found on clothes, pubic hair, etc. of habitually dirty persons ( Hausa, compare igwu louse)"
             ],
             "examples": [],
             "phrases": {}
@@ -36396,7 +36396,7 @@
     ],
     "-kwà-sị  -kwà-sa": [
         {
-            "wordClass": "ext. suff. 1",
+            "wordClass": "extensional suffix 1",
             "definitions": [
                 "upon; on"
             ],
@@ -36413,7 +36413,7 @@
     ],
     "-kwà-sị": [
         {
-            "wordClass": "ext. suff. 1",
+            "wordClass": "extensional suffix 1",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -37244,7 +37244,7 @@
             }
         },
         {
-            "wordClass": "ext. suff.1.",
+            "wordClass": "extensional suffix1.",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -37318,7 +37318,7 @@
     ],
     "-kwu  -ku": [
         {
-            "wordClass": "ext. suff.1.",
+            "wordClass": "extensional suffix1.",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -38532,7 +38532,7 @@
     ],
     "-lì": [
         {
-            "wordClass": "ext. suff.1.",
+            "wordClass": "extensional suffix1.",
             "definitions": [
                 "reduce to small units; splinter; crush (something softer or more fragile than -gwò)"
             ],
@@ -39567,7 +39567,7 @@
     ],
     "-lụ  -lu -lị -li": [
         {
-            "wordClass": "infl. suff.",
+            "wordClass": "inflectional suffix",
             "definitions": [
                 "(-lu after o u, -lị after ị, -li after i) neutral tense marker, denoting past with action verbs and present with non- alternating stative verbs its absence denotes present time and its presence past time vowel identical with the preceding vowel) or entirely dropped suffix of the same shape (i.e. -lụ 6 or -lụ 7.), the first one is dropped entirely if the sentence is unemphatic and reduced to -V if the sentence is emphatic help her gather and take away the oranges in the room (-lụ 5. oranges are scattered and take longer to collect help go round in the market and buy me abuke fowls (-lụ 5. + -lụ 6. more emphatic than gokọlụ, implying that every single one from all parts of the market must be bought) 5. + -lụ 7.)"
             ],
@@ -39593,7 +39593,7 @@
             "phrases": {}
         },
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "(-lu after o u, -lị after ị, -i after i; follows inflectional suffixes) dative suffix, denoting that the action is done to or for the benefit of the indirect object indirect object, it is understood to be for the benefit of the subject (reflexive) with -lụ 5. (neutral), see under -lụ 5."
             ],
@@ -40511,7 +40511,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "mango (Mangifera indica Linn.) (&lt; H.)"
+                "mango (Mangifera indica Linn.) (&lt; Hausa)"
             ],
             "examples": [],
             "phrases": {}
@@ -45651,7 +45651,7 @@
     ],
     "ǹdeèwo!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "common salutation of welcome or thanks"
             ],
@@ -46041,7 +46041,7 @@
     ],
     "ǹdo": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "salutation of sympathy"
             ],
@@ -46094,7 +46094,7 @@
     ],
     "ǹdoò": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "goodbye (to people one is leaving"
             ],
@@ -49019,7 +49019,7 @@
     ],
     "ǹnọò ǹnụà": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "welcome! (greeting to visitors or to someone passed on the way)"
             ],
@@ -52360,7 +52360,7 @@
     ],
     "-nwù": [
         {
-            "wordClass": "ext. suff.",
+            "wordClass": "extensional suffix",
             "definitions": [],
             "examples": [],
             "phrases": {
@@ -55842,7 +55842,7 @@
     ],
     "òhoò!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "Oho! (surprise)"
             ],
@@ -56487,7 +56487,7 @@
     ],
     "okōkòòko": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of pain, grief, surprise"
             ],
@@ -57968,7 +57968,7 @@
     ],
     "om!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "salutation of respect to an old woman (especially a pagan)"
             ],
@@ -58922,7 +58922,7 @@
     ],
     "ònye": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "who?"
             ],
@@ -64202,7 +64202,7 @@
     ],
     "ọm!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "salutation of respect to an old man (especially a pagan)"
             ],
@@ -66557,7 +66557,7 @@
     ],
     "paì!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation - my word! dear me! goodness! (= kaì!)"
             ],
@@ -67629,7 +67629,7 @@
     ],
     "-ràa": [
         {
-            "wordClass": "ext. suff. 3",
+            "wordClass": "extensional suffix 3",
             "definitions": [
                 "only; simple; just only if you give her what she wants that the quarrel will end want the quarrel will end"
             ],
@@ -67642,7 +67642,7 @@
     ],
     "-ràba": [
         {
-            "wordClass": "ext. suff.",
+            "wordClass": "extensional suffix",
             "definitions": [
                 "for long; after a long time (denoting a great degree either of smallness or bigness)"
             ],
@@ -67878,7 +67878,7 @@
     ],
     "-rị -ri -rụ -ru": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "intensity, completeness of action (compare -lụ 5.?)"
             ],
@@ -68723,7 +68723,7 @@
     ],
     "-ru-be": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "around circle round me. (In imperative can sometimes be used"
             ],
@@ -68737,7 +68737,7 @@
     ],
     "-rù-be": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "(move about) thoroughly; vigorously"
             ],
@@ -68793,7 +68793,7 @@
     ],
     "-rụ-ka -ru-ka": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "aside"
             ],
@@ -69150,7 +69150,7 @@
     ],
     "saà": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of displeasure; Shut up! Be quiet!"
             ],
@@ -69160,7 +69160,7 @@
     ],
     "saì!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation to scare away dogs pilfering or disturbing one"
             ],
@@ -70074,7 +70074,7 @@
     ],
     "sịò": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of anger, disgust"
             ],
@@ -70087,7 +70087,7 @@
     ],
     "-sịsị": [
         {
-            "wordClass": "ext. suff. 1.",
+            "wordClass": "extensional suffix 1.",
             "definitions": [
                 "continually"
             ],
@@ -70514,7 +70514,7 @@
     ],
     "sọò!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "A. exclamation adding emphasis Dàalụ sọò Oh, thank you! Wèta yā n’-ebe à sọò Bring it here, please! Nòdụnụ ànì sọò Do sit down (addressing more than one person) Nòdụ ànì sọò Do sit down (to one person) Ọ bù ezi okwū sọò It is true, really!",
                 "B. exclamation of anger, used when someone has been worried by someone else to the point of exhaustion and now asks to be left in peace Rapū m sọò, jèbe sọò Please leave me alone, you are free to go"
@@ -71540,7 +71540,7 @@
     ],
     "taà!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamation of anger; shut up!"
             ],
@@ -72690,7 +72690,7 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "turkey (H. tòlotòlo)"
+                "turkey (Hausa tòlotòlo)"
             ],
             "examples": [],
             "phrases": {}
@@ -80752,7 +80752,7 @@
     ],
     "yaà!": [
         {
-            "wordClass": "interjection",
+            "wordClass": "interjection/interrogative",
             "definitions": [
                 "exclamatory shout to frighten, call attention"
             ],
