@@ -58,7 +58,7 @@ describe('Database', () => {
             searchAPITerm(keyword)
             .end((_, res) => {
                 expect(res.status).to.equal(200);
-                expect(res.body).to.have.lengthOf.at.least(3);
+                expect(res.body).to.have.lengthOf.at.least(2);
                 forEach(res.body, (word) => {
                     expect(word).to.have.keys(['__v', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass']);
                 });
@@ -71,6 +71,29 @@ describe('Database', () => {
             .end((_, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body).to.have.lengthOf.at.least(2901);
+                done();
+            });
+        });
+
+        it('should return nothing because it\'s an incomplete word', (done) => {
+            const keyword = 'ak';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(0);
+                done();
+            });
+        });
+
+        it('should return loose matches without accent marks', (done) => {
+            const keyword = 'akikà';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(2);
+                expect(res.body[0].word).to.equal('àkịkà');
                 done();
             });
         });
