@@ -9,6 +9,7 @@ import { createPhrase } from './phrases';
 import { createExample } from './examples';
 
 export const createRegExp = (searchWord) => {
+    /* front and back ensure the regexp will match with whole words */
     const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
     const back = '(?![a-zA-Z\u00c0-\u1ee5]+|,|s[a-zA-Z\u00c0-\u1ee5]+)';
     const regexWordString = [...searchWord].reduce((regexWord, letter) => {
