@@ -1,11 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { keys, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
+import mongoose from 'mongoose';
 import server from '../server';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
-import { searchTerm, searchMockedTerm } from './shared/commands';
+import { searchTerm } from './shared/commands';
 
-process.env.NODE_ENV = 'test';
 const { expect } = chai;
 
 chai.use(chaiHttp);
@@ -19,6 +19,7 @@ describe('Words', () => {
                 expect(res.status).to.equal(200);
                 expect(res.body).to.be.an('object');
                 expect(res.body).to.have.keys(keyword);
+                expect(res.body[keyword][0].wordClass).to.equal('noun');
                 done();
             });
         });
@@ -43,31 +44,10 @@ describe('Words', () => {
             });
         });
     });
-
-    describe('Regex Search', () => {
-        it('should return term information without included dashes', (done) => {
-            const res = searchMockedTerm('bia');
-            expect(res).to.be.an('object');
-            keys(res).forEach((key) => {
-                expect(key.charAt(0)).to.equal('-');
-            });
-            done();
-        });
-
-        it('should return term with apostrophe by using spaces', (done) => {
-            const res = searchMockedTerm('n oge');
-            expect(res).to.be.an('object');
-            expect(keys(res)[0]).to.equal("n'oge");
-            done();
-        });
-
-        it('should return term with apostrophe by using apostrophe', (done) => {
-            const res = searchMockedTerm("n'oge");
-            expect(res).to.be.an('object');
-            expect(keys(res)[0]).to.equal("n'oge");
-            done();
-        });
-    });
 });
 
-after(() => server.close());
+after(() => {
+    server.clearDatabase();
+    mongoose.connection.close();
+    server.close()
+});
