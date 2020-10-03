@@ -12,7 +12,7 @@ export const createRegExp = (searchWord) => {
     const regexWordString = [...searchWord].reduce((regexWord, letter) => {
         return `${regexWord}${diacriticCodes[letter] || letter}`;
     }, '');
-    return new RegExp(`\\b${regexWordString}\\b`);
+    return new RegExp(`(\\B|\\b)${regexWordString}(\\B|\\b)`);
 };
 
 /* Gets words from JSON dictionary */
@@ -43,7 +43,8 @@ export const getWord = (keyword) => {
 /* Gets words from MongoDB */
 export const getWords = async (_, res) => {
     const { req: { query }} = res;
-    return query.keyword ? res.send(await getWord(query.keyword)) : res.send(Word.find({}));
+    const searchWord = removePrefix(query.keyword);
+    return query.keyword ? res.send(await getWord(searchWord)) : res.send(await Word.find({}));
 };
 
 /* Creates Word documents in MongoDB database */

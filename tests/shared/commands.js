@@ -9,13 +9,14 @@ import mockedData from '../__mocks__/data.mock.json';
 export const populateAPI = () => {
     return chai.request(server)
         .post(`${API_ROUTE}/populate`);
-}
+};
 
 /* Uses the data in MongoDB */
-export const searchAPITerm = () => {
+export const searchAPITerm = (term) => {
     return chai.request(server)
-        .get(API_ROUTE);
-}
+        .get(`${API_ROUTE}/words`)
+        .query({ keyword: term });
+};
 
 /* Uses data in JSON */
 export const searchTerm = (term) => {
