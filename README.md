@@ -15,7 +15,7 @@ Clone the project:
 git clone https://github.com/ijemmao/igbo_api.git
 ```
 
-This project uses [Yarn](https://classic.yarnpkg.com/lang/en/) to manage local dependencies, if you don't have installed you can get it[here](https://classic.yarnpkg.com/en/docs/install).
+This project uses [Yarn](https://classic.yarnpkg.com/lang/en/) to manage local dependencies, if you don't have installed you can get it [here](https://classic.yarnpkg.com/en/docs/install).
 
 Move in the project directory and install it's dependencies:
 
