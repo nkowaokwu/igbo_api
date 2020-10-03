@@ -12,10 +12,11 @@ export const createRegExp = (searchWord) => {
     const regexWordString = [...searchWord].reduce((regexWord, letter) => {
         return `${regexWord}${diacriticCodes[letter] || letter}`;
     }, '');
-    return new RegExp(regexWordString);
+    return new RegExp(`\\b${regexWordString}\\b`);
 };
 
-const getWordData = (_, res) => {
+/* Gets words from JSON dictionary */
+export const getWordData = (_, res) => {
     const { req: { query }} = res;
     const searchWord = removePrefix(query.keyword);
     if (!searchWord) {
@@ -26,11 +27,26 @@ const getWordData = (_, res) => {
     return res.send(findSearchWord(regexWord, searchWord));
 };
 
-export const getWords = async (_, res) => {
-    const words = await Word.find({});
-    res.send(words);
-}
+/* Searches for a word in MongoDB */
+export const getWord = (keyword) => {
+    return Word
+        .find({ word: { $regex: createRegExp(keyword) } })
+        .populate({
+            path: 'phrases',
+            populate: {
+                path: 'examples',
+                model: 'Example',
+            }
+        });
+};
 
+/* Gets words from MongoDB */
+export const getWords = async (_, res) => {
+    const { req: { query }} = res;
+    return query.keyword ? res.send(await getWord(query.keyword)) : res.send(Word.find({}));
+};
+
+/* Creates Word documents in MongoDB database */
 export const createWord = async (data) => {
     const { examples, word, wordClass, definitions } = data;
     const wordData = {
@@ -69,5 +85,3 @@ export const createWord = async (data) => {
     newWord.examples = exampleIds;
     return newWord.save();
 };
-
-export { getWordData };

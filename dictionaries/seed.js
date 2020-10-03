@@ -14,7 +14,7 @@ export const seedDatabase = async (_, res) => {
         res.status(400);
         return res.send('An error occurred during seeding');
     }
-}
+};
 
 const seed = () => {
     if (mongoose.connection.readyState !== 1) {
@@ -32,7 +32,7 @@ const seed = () => {
     } else {
         populate();
     }
-}
+};
 
 const populate = async () => {
     /* This route will populate a local MongoDB database */
@@ -42,7 +42,7 @@ const populate = async () => {
         const wordPromises = flatten(map(keys(dictionary), (key) => {
             const value = dictionary[key];
             return map(value, (term) => {
-                term.word = key
+                term.word = key;
                 createWord(term);
             });
         }));
@@ -60,4 +60,4 @@ const populate = async () => {
             });
         
     }
-}
+};
