@@ -15,7 +15,9 @@ Clone the project:
 git clone https://github.com/ijemmao/igbo_api.git
 ```
 
-Inside the project, install the project's dependencies:
+This project uses [Yarn](https://classic.yarnpkg.com/lang/en/) to manage local dependencies, if you don't have installed you can get it[here](https://classic.yarnpkg.com/en/docs/install).
+
+Move in the project directory and install it's dependencies:
 
 ```
 cd igbo_api/
@@ -54,7 +56,7 @@ http://localhost:8080/api/v1/search/words?keyword=agụū
 
 ### MongoDB Data
 
-**Note**: Make sure that you've populated your local MongoDB instance. Read through Locally Populating Dictionary Data to seed your MongoDB database.
+**Note**: Make sure that you've populated your local MongoDB instance. Read through [Locally Populating Dictionary Data](#populating-data) to seed your MongoDB database.
 
 To search for a term using the data in **MongoDB**, use the following route structure:
 
@@ -102,7 +104,7 @@ The responses for both routes will be a plain JSON object similar to this:
 ]
 ```
 
-## Locally Populating Dictionary Data
+<h2 id="populating-data">Locally Populating Dictionary Data</h2>
 
 This project uses [MongoDB](https://docs.mongodb.com/drivers/node/) to store local data.
 
@@ -150,7 +152,7 @@ Now that the data is living in a local instance of your database, you can see it
 
 ## Testing
 
-This project's test uses locally stored MongoDB data, so to spin up an instance of MongoDB and run the tests run:
+Tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same text, run:
 
 ```
 yarn test
