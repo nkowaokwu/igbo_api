@@ -32,13 +32,13 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
 ## Usage
 
-To search for a term, use the following route structure"
+### JSON Data
+
+To search for a term using the data in the **JSON dictionary**, use the following route structure:
 
 ```
 /api/v1/search/words?keyword=<keyword>
 ```
-
-The response will be a plain JSON object
 
 For example:
 
@@ -46,7 +46,23 @@ For example:
 http://localhost:8080/api/v1/search/words?keyword=agụū
 ```
 
-returns:
+### MongoDB Data
+
+**Note**: Make sure that you've populated your local MongoDB instance. Read through Locally Populating Dictionary Data to seed your MongoDB database.
+
+To search for a term using the data in **MongoDB**, use the following route structure:
+
+```
+/api/v1/test/words?keyword=<keyword>
+```
+
+For example:
+
+```
+http://localhost:8080/api/v1/test/words?keyword=agụū
+```
+
+The responses for both routes will be a plain JSON object similar to this:
 
 ```
 [

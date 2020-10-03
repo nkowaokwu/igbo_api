@@ -1,14 +1,21 @@
 import chai from 'chai';
+import { forEach } from 'lodash';
 import mongoose from 'mongoose';
-import { keys } from 'lodash';
 import { LONG_TIMEOUT } from './shared/constants';
 import Word from '../models/Word';
-import { populateAPI } from './shared/commands';
+import { populateAPI, searchAPITerm } from './shared/commands';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
 describe('Database', () => {
+    before(function(done) {
+        this.timeout(LONG_TIMEOUT);
+        populateAPI().then(() => {
+            setTimeout(done, 10000);
+        });
+    });
+
     describe('/POST mongodb words', function() {
         this.timeout(LONG_TIMEOUT);
         it('should populate mongodb with words', (done) => {
@@ -44,14 +51,26 @@ describe('Database', () => {
                     done();
                 });
         });
-
-        it('should seed mongodb database', (done) => {
-            populateAPI()
-            .end((err, res) => {
+    });
+    describe('/GET mongodb words', () => {
+        it('should return word information', (done) => {
+            const keyword = 'bia';
+            searchAPITerm(keyword)
+            .end((_, res) => {
                 expect(res.status).to.equal(200);
-                expect(err).to.not.exist;
-                expect(res.body).to.be.an('object');
-                expect(keys(res.body).length).to.equal(0);
+                expect(res.body).to.have.lengthOf.at.least(3);
+                forEach(res.body, (word) => {
+                    expect(word).to.have.keys(['__v', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass']);
+                });
+                done();
+            });
+        });
+
+        it('should return all words', (done) => {
+            searchAPITerm()
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.have.lengthOf.at.least(2901);
                 done();
             });
         });
