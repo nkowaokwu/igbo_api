@@ -1,27 +1,27 @@
 import chai from 'chai';
 import server from '../../server';
-import { API_ROUTE, JSON_ROUTE } from './constants';
+import { API_ROUTE, TEST_ROUTE } from './constants';
 import { createRegExp } from '../../controllers/words';
 import { resultsFromDictionarySearch } from '../../services/words';
 import mockedData from '../__mocks__/data.mock.json';
 
-/* Hits the POST /populate route to seed the local database */
-export const populateAPI = () => {
-    return chai.request(server)
-        .post(`${API_ROUTE}/populate`);
-};
-
 /* Uses the data in MongoDB */
 export const searchAPITerm = (term) => {
     return chai.request(server)
-        .get(`${API_ROUTE}/words`)
+        .get(API_ROUTE)
         .query({ keyword: term });
+};
+
+/* Hits the POST /populate route to seed the local MongoDB database */
+export const populateAPI = () => {
+    return chai.request(server)
+        .post(`${TEST_ROUTE}/populate`);
 };
 
 /* Uses data in JSON */
 export const searchTerm = (term) => {
     return chai.request(server)
-                .get(JSON_ROUTE)
+                .get(`${TEST_ROUTE}/words`)
                 .query({ keyword: term });
 };
 

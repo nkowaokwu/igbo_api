@@ -23,10 +23,10 @@ app.get('/', (_, res) => {
 
 app.use('*', logger);
 
-/* Grabs data from JSON dictionary */
+/* Grabs data from MongoDB */
 app.use('/api/v1/search', router);
 
-/* Grabs data from MongoDB */
+/* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
     app.use('/api/v1/test', testRouter);
 }
