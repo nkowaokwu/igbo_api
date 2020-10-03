@@ -9,10 +9,13 @@ import { createPhrase } from './phrases';
 import { createExample } from './examples';
 
 export const createRegExp = (searchWord) => {
+    /* front and back ensure the regexp will match with whole words */
+    const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
+    const back = '(?![a-zA-Z\u00c0-\u1ee5]+|,|s[a-zA-Z\u00c0-\u1ee5]+)';
     const regexWordString = [...searchWord].reduce((regexWord, letter) => {
         return `${regexWord}${diacriticCodes[letter] || letter}`;
     }, '');
-    return new RegExp(`(\\B|\\b)${regexWordString}(\\B|\\b)`);
+    return new RegExp(`${front}${regexWordString}${back}`);
 };
 
 /* Gets words from JSON dictionary */
