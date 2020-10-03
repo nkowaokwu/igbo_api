@@ -40,9 +40,11 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
 ## Usage
 
-### JSON Data
+### MongoDB Data
 
-To search for a term using the data in the **JSON dictionary**, use the following route structure:
+The database will initially be empty, meaning that no words will be returned from the API. To populate your local MongoDB database, read through [Locally Populating Dictionary Data](#populating-data)
+
+Once you've populated your data, use the follow route structure to get word information:
 
 ```
 /api/v1/search/words?keyword=<keyword>
@@ -54,11 +56,9 @@ For example:
 http://localhost:8080/api/v1/search/words?keyword=agụū
 ```
 
-### MongoDB Data
+### JSON Data
 
-**Note**: Make sure that you've populated your local MongoDB instance. Read through [Locally Populating Dictionary Data](#populating-data) to seed your MongoDB database.
-
-To search for a term using the data in **MongoDB**, use the following route structure:
+If you don't want the API to serve the word data from MongoDB, you can use the follow route to get the words that are stored in the **JSON dictionary**:
 
 ```
 /api/v1/test/words?keyword=<keyword>
@@ -106,25 +106,25 @@ The responses for both routes will be a plain JSON object similar to this:
 
 <h2 id="populating-data">Locally Populating Dictionary Data</h2>
 
-This project uses [MongoDB](https://docs.mongodb.com/drivers/node/) to store local data.
+This project requires the use of [MongoDB](http://docs.mongodb.com/) to locally store data. If you don't have MongoDB installed you can ge it [here](https://docs.mongodb.com/manual/administration/install-community/).
 
 To populate the database complete the following steps:
 
 ### 1. Build a Dictionary
 
-[`dictionary.html`](./dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF.
+[`dictionary.html`](./dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
 
-The following command parses it and builds a number of JSON dictionaries:
+The following command parses the `html` file and builds a number JSON files:
 
 ```
 yarn build
 ```
 
-Here's an example JSON dictionary object: [ig-en/ig-en_expanded.json](./dictionaries/ig-en/ig-en_expanded.json)
+Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./dictionaries/ig-en/ig-en_expanded.json)
 
 ### 2. Populate the MongoDB Database
 
-Now that we have the data, we need to use that data to populate, or seed, the database:
+Now that the data has been parsed, it needs to be used to populate, or seed, the MongoDB database.
 
 Start the development server:
 
@@ -144,11 +144,11 @@ For example:
 http://localhost:8080/api/v1/test/populate // POST
 ```
 
-If you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database
+After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database!
 
 ### 3. See Data in Database (Optional)
 
-Now that the data is living in a local instance of your database, you can see it either using the `mongo` command line tool, or through [MongoDB Compass](https://www.mongodb.com/try/download/compass)
+Now that the data is living in a local database, you can see it either using the `mongo` command line tool, or through [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
 ## Testing
 
