@@ -42,7 +42,7 @@ export const getWordData = (_, res) => {
 export const searchWordWithIgbo = (keyword) => {
     const regex = !keyword ? /./ : createRegExp(keyword);
     return Word
-        .find({ word: { $regex: regex } })
+        .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
         .populate(WORD_POPULATE);
 };
 
@@ -67,11 +67,12 @@ export const getWords = async (_, res) => {
 
 /* Creates Word documents in MongoDB database */
 export const createWord = async (data) => {
-    const { examples, word, wordClass, definitions } = data;
+    const { examples, word, wordClass, definitions, variations } = data;
     const wordData = {
         word,
         wordClass,
         definitions,
+        variations,
     };
     const newWord = new Word(wordData);
     await newWord.save();
