@@ -1,34 +1,42 @@
 import express from 'express';
-import { getWordData } from './controllers/words';
+import mongoose from 'mongoose';
+import { testRouter, router } from './routers';
+import logger from './middleware/logger';
+import { SERVER_PORT, MONGO_URI, TEST_MONGO_URI } from './config';
 
 const app = express();
-const router = express.Router();
-const port = 8080;
+
+mongoose.connect(process.env.NODE_ENV === 'test' ? TEST_MONGO_URI : MONGO_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, "connection error:"));
+db.once('open', function() {
+    console.log('🗄 Database is connected');
+});
 
 app.get('/', (_, res) => {
     res.send('Hello World!');
 });
 
-router.get('/', (_, res) => {
-    res.send('Welcome to the Igbo English Dictionary API');
-});
+app.use('*', logger);
 
-router.get('/words', getWordData);
-
-app.use('*', (req, res, next) => {
-    if (process.env.NODE_ENV === 'dev') {
-        console.log(req.query);
-    }
-    next();
-});
+/* Grabs data from MongoDB */
 app.use('/api/v1/search', router);
 
-app.use((err, req, res) => {
-    res.send(err.message);
+/* Grabs data from JSON dictionary */
+if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
+    app.use('/api/v1/test', testRouter);
+}
+
+const server = app.listen(SERVER_PORT, () => {
+    console.log(`🟢 Server started on port ${SERVER_PORT}`);
 });
 
-const server = app.listen(port, () => {
-    console.log(`🟢 Server started on port ${port}`);
-});
+server.clearDatabase = () => {
+    mongoose.connection.db.dropDatabase();
+};
 
 export default server;

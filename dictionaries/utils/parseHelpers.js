@@ -1,5 +1,4 @@
 import { flatten, last } from 'lodash';
-import { COLUMNS } from '../../shared/constants/parseConstants';
 
 /* Converts the style's value into a float */
 const getStyleValues = (style = '') => parseFloat(style.split(':')[1]);
@@ -45,4 +44,12 @@ export const appendTextToCurrentCell = (childrenText, termArray) => {
         termArray[lastIndex] = `${currentDefinition} ${childrenText}`;
     }
 };
-export const fromRightOrCenterColumn = (prevColumn) => (prevColumn === COLUMNS.RIGHT || prevColumn === COLUMNS.CENTER);
+
+/* Helps with testing parsing script
+Usages: printData('-kwùchi', { text: childrenText, isSameCell, isSameRow, prevColumn, prevCellType });
+*/
+export const printData = (text, data) => {
+    if (data.text.startsWith(text)) {
+        console.log(data);
+    }
+};
