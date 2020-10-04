@@ -8,6 +8,14 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { createPhrase } from './phrases';
 import { createExample } from './examples';
 
+const WORD_POPULATE = {
+    path: 'phrases',
+    populate: {
+        path: 'examples',
+        model: 'Example',
+    }
+};
+
 export const createRegExp = (searchWord) => {
     /* front and back ensure the regexp will match with whole words */
     const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
@@ -30,24 +38,31 @@ export const getWordData = (_, res) => {
     return res.send(findSearchWord(regexWord, searchWord));
 };
 
-/* Searches for a word in MongoDB */
-export const getWord = (keyword) => {
+/* Searches for a word with Igbo stored in MongoDB */
+export const searchWordWithIgbo = (keyword) => {
+    const regex = !keyword ? /./ : createRegExp(keyword);
     return Word
-        .find({ word: { $regex: createRegExp(keyword) } })
-        .populate({
-            path: 'phrases',
-            populate: {
-                path: 'examples',
-                model: 'Example',
-            }
-        });
+        .find({ word: { $regex: regex } })
+        .populate(WORD_POPULATE);
+};
+
+/* Searches for word with English stored in MongoDB */
+export const searchWordWithEnglish = (keyword) => {
+    const regex = !keyword ? /./ : createRegExp(keyword);
+    return Word
+        .find({ definitions: { $in : [regex] } })
+        .populate(WORD_POPULATE);
 };
 
 /* Gets words from MongoDB */
 export const getWords = async (_, res) => {
     const { req: { query }} = res;
-    const searchWord = removePrefix(query.keyword);
-    return query.keyword ? res.send(await getWord(searchWord)) : res.send(await Word.find({}));
+    const searchWord = removePrefix(query.keyword || '');
+    const words = await searchWordWithIgbo(searchWord);
+    if (!words.length) {
+        return res.send(await searchWordWithEnglish(searchWord));
+    }
+    return res.send(words);
 };
 
 /* Creates Word documents in MongoDB database */
