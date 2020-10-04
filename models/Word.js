@@ -6,7 +6,8 @@ const wordSchema = new Schema({
     wordClass: String,
     definitions: [{ type: String }],
     phrases: [{ type: Types.ObjectId, ref: 'Phrase' }],
-    examples: [{ type: Types.ObjectId, ref: 'Example' }]
+    examples: [{ type: Types.ObjectId, ref: 'Example' }],
+    variations: [{ type: String }],
 });
 
 export default mongoose.model('Word', wordSchema);

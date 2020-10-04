@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { last } from 'lodash';
+import { last, drop, first, map, trimStart, compact } from 'lodash';
 import {
     startsWithLetterDot,
     appendTextToCurrentCell,
@@ -59,14 +59,39 @@ const buildDictionary = (span, dictionary, options = {}) => {
     switch (currentColumn) {
         case COLUMNS.LEFT:
             options.normalize && insertTermInNormalizationMap(cleanedChildrenText, cleanedNaturalChildrenText);
-            currentWord = cleanedChildrenText;
-            dictionary[currentWord] = dictionary[currentWord] || [];
-            dictionary[currentWord].push({
+            const separateVariations = cleanedChildrenText.split(',');
+            const newWordData = {
                 wordClass: '',
                 definitions: [],
                 examples: [],
-                phrases: {}
-            });
+                phrases: {},
+                variations: [],
+            };
+
+            /* Parses out the multiple terms separated by commas */
+            if (separateVariations.length > 1) {
+                isSameCell = getLeftAndTopStyles(span).top - getLeftAndTopStyles(prevSpan).top <= SAME_CELL_TOP_DIFFERENCE;
+                if (!isSameCell) {
+                    /* If the term is not in the same cell, that means that it's one of the first terms */
+                    const primaryTerm = first(separateVariations);
+                    newWordData.variations = compact(map(drop(separateVariations), (variation) => trimStart(variation)));
+                    currentWord = primaryTerm;
+                    dictionary[currentWord] = dictionary[currentWord] || [];
+                    dictionary[currentWord].push(newWordData);
+                } else {
+                    /* If in the same cell, use the current terms as variations for the primary term */
+                    newWordData.variations = [...newWordData.variations, ...map(separateVariations, (variation) => trimStart(variation))];
+                    const lastIndex = dictionary[currentWord].length - 1;
+                    const lastWordObject = last(dictionary[currentWord]);
+                    dictionary[currentWord][lastIndex].variations = compact([...lastWordObject.variations, ...newWordData.variations]);
+                }
+                
+            } else {
+                currentWord = cleanedChildrenText;
+                dictionary[currentWord] = dictionary[currentWord] || [];
+                dictionary[currentWord].push(newWordData);
+            }
+            
             centerCount = 0; // Reset the center count for a new word
             currentPhrase = null;
             isABPhrase = false;

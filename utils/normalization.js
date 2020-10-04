@@ -6,7 +6,7 @@ const clean = (text) => {
     if (!text) {
         return '';
     }
-    return text.replace(/[0-9+.,]/g, '').trim();
+    return text.replace(/[0-9+.]/g, '').trim();
 };
 
 const normalize = (text, convertToLower = true, removeAbbreviations = true) => {

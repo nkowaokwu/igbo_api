@@ -27,7 +27,7 @@ export default ({
             [`${DICTIONARIES_DIR}/ig-en_normalized.json`, JSON.stringify(caseSensitiveNormalizedDictionary)],
             [`${DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
         ];
-    
+
         writeFileConfigs.forEach((config) => {
             fs.writeFileSync(...config, () => {
                 if (err) {
