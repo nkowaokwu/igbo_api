@@ -43,11 +43,20 @@ describe('Words', () => {
                 done();
             });
         });
+
+        it('should return term using variation', (done) => {
+            searchTerm('-mu-mù')
+            .end(async (_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body['-mụ-mù']).to.have.lengthOf(2);
+                done();
+            });
+        });
     });
 });
 
 after(() => {
     server.clearDatabase();
     mongoose.connection.close();
-    server.close()
+    server.close();
 });

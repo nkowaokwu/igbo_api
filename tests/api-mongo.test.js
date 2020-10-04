@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { forEach } from 'lodash';
+import { forEach, isEqual } from 'lodash';
 import mongoose from 'mongoose';
 import { LONG_TIMEOUT } from './shared/constants';
 import Word from '../models/Word';
@@ -122,6 +122,32 @@ describe('Database', () => {
                 forEach(res.body, (word) => {
                     expect(word).to.have.keys(WORD_KEYS);
                 });
+                done();
+            });
+        });
+
+        it('should return igbo word by searching variation', (done) => {
+            const keyword = 'mili';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(1);
+                expect(res.body[0].word).to.equal('mmilī');
+                expect(isEqual(res.body[0].variations, ['mmilī', 'milī'])).is.true;
+                done();
+            });
+        });
+
+        it('should return multiple word objects by searching variation', (done) => {
+            const keyword = '-mu-mù';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(2);
+                expect(res.body[0].word).to.equal('-mụ-mù');
+                expect(isEqual(res.body[0].variations, ['-mu-mù'])).is.true;
                 done();
             });
         });
