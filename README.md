@@ -1,5 +1,5 @@
 # Igbo Dictionary API
-![Travis (.org)](https://img.shields.io/travis/ijemmao/igbo_api)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ijemmao/igbo_api/Igbo%20API%20CI)
 
 [Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
