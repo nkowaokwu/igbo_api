@@ -56,6 +56,12 @@ For example:
 http://localhost:8080/api/v1/search/words?keyword=agụū
 ```
 
+You can also search with English terms with the same route:
+
+```
+/api/v1/search/words?keyword=hunger
+```
+
 ### JSON Data
 
 If you don't want the API to serve the word data from MongoDB, you can use the follow route to get the words that are stored in the **JSON dictionary**:
