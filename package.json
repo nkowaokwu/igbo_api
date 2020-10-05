@@ -7,7 +7,7 @@
     "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
     "start:database": "mongod --dbpath ./db",
     "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./src/server.js",
-    "build": "rm -rf build/ && babel -d build/ ./src -s && NODE_ENV=build yarn build",
+    "build": "rm -rf build/ && babel -d build/ ./src -s && NODE_ENV=build yarn build:dictionaries",
     "start": "yarn build && node ./build/server.js",
     "dev": "npm-run-all -p start:database start:server",
     "build:dictionaries": "babel-node src/dictionaries/parseAndBuild.js",
