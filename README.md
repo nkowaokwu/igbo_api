@@ -123,7 +123,7 @@ To populate the database complete the following steps:
 The following command parses the `html` file and builds a number JSON files:
 
 ```
-yarn build
+yarn build:dictionaries
 ```
 
 Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
