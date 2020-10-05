@@ -1,8 +1,8 @@
 import chai from 'chai';
-import server from '../../server';
+import server from '../../src/server';
 import { API_ROUTE, TEST_ROUTE } from './constants';
-import { createRegExp } from '../../controllers/words';
-import { resultsFromDictionarySearch } from '../../services/words';
+import { createRegExp } from '../../src/controllers/words';
+import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
 
 /* Uses the data in MongoDB */
