@@ -6,6 +6,7 @@ import { PORT, MONGO_URI } from './config';
 
 const app = express();
 
+console.log(MONGO_URI);
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
