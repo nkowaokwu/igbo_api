@@ -164,8 +164,14 @@ Tests use both locally stored MongoDB and JSON data, so to spin up an instance o
 yarn test
 ```
 
-If you just want to run the tests with no MongoDB instance, run:
+If you want to run your MongoDB instance and tests in separate terminals, you can run:
+
+```
+yarn start:database
+```
+
+in one terminal, and the following in another:
 
 ```
 yarn mocha
-```
+``1
