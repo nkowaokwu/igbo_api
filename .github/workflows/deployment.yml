@@ -15,8 +15,8 @@ jobs:
         fetch-depth: 0 
     - name: Commit files
       run: |
-        git config user.email "action@github.com"
-        git config user.name "GitHub Action"
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
