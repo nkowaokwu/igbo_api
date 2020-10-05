@@ -118,7 +118,7 @@ To populate the database complete the following steps:
 
 ### 1. Build a Dictionary
 
-[`dictionary.html`](./dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
+[`dictionary.html`](./src/dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
 
 The following command parses the `html` file and builds a number JSON files:
 
@@ -126,7 +126,7 @@ The following command parses the `html` file and builds a number JSON files:
 yarn build
 ```
 
-Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./dictionaries/ig-en/ig-en_expanded.json)
+Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
 
 ### 2. Populate the MongoDB Database
 
