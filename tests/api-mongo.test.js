@@ -1,14 +1,14 @@
 import chai from 'chai';
 import { forEach, isEqual } from 'lodash';
 import mongoose from 'mongoose';
+import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
-import Word from '../models/Word';
 import { populateAPI, searchAPITerm } from './shared/commands';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-const WORD_KEYS = ['__v', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass'];
+const WORD_KEYS = ['__v', 'variations', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass'];
 
 describe('Database', () => {
     before(function(done) {
@@ -72,7 +72,7 @@ describe('Database', () => {
             searchAPITerm()
             .end((_, res) => {
                 expect(res.status).to.equal(200);
-                expect(res.body).to.have.lengthOf.at.least(2901);
+                expect(res.body).to.have.lengthOf.at.least(2878);
                 done();
             });
         });

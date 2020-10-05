@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { map, flatten, keys } from 'lodash';
 import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
-import { MONGO_URI, TEST_MONGO_URI } from '../config';
+import { MONGO_URI } from '../config';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -18,7 +18,7 @@ export const seedDatabase = async (_, res) => {
 
 const seed = () => {
     if (mongoose.connection.readyState !== 1) {
-        mongoose.connect(process.env.NODE_ENV === 'test' ? TEST_MONGO_URI : MONGO_URI, {
+        mongoose.connect(MONGO_URI, {
             useNewUrlParser: true,
             useCreateIndex: true,
             useFindAndModify: false

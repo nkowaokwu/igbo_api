@@ -1,5 +1,5 @@
 {
-    "ànì ànà": [
+    "ànì": [
         {
             "wordClass": "noun",
             "definitions": [
@@ -448,7 +448,10 @@
                     ],
                     "examples": []
                 }
-            }
+            },
+            "variations": [
+                "ànà"
+            ]
         }
     ],
     "ama": [
@@ -482,7 +485,8 @@
                     "definition": "main entrance to a compound",
                     "examples": []
                 }
-            }
+            },
+            "variations": []
         }
     ],
     "agụū": [
@@ -503,7 +507,8 @@
                     "definition": "hunger; desire; long for ( -gụ 2. desire)",
                     "examples": []
                 }
-            }
+            },
+            "variations": []
         }
     ],
     "n'oge": [
@@ -511,7 +516,8 @@
             "wordClass": "tester",
             "definition": "tester",
             "examples": ["tester"],
-            "phrases": {}
+            "phrases": {},
+            "variations": []
         }
     ],
     "-zu-zu": [
@@ -519,66 +525,93 @@
             "wordClass": "tester",
             "definition": "tester",
             "examples": ["tester"],
-            "phrases": {}
+            "phrases": {},
+            "variations": []
         }
     ],
     "-bịa": [
         {
-            "wordClass": "v.",
-            "definition": "come",
+            "wordClass": "verb",
+            "definitions": [
+                "come"
+            ],
             "examples": [],
             "phrases": {
                 "òbịbịa": {
-                    "definition": "coming; advent",
+                    "definitions": [
+                        "coming; advent"
+                    ],
                     "examples": []
                 },
                 "Òbịbịaā Kraìst": {
-                    "definition": "Advent",
+                    "definitions": [
+                        "Advent"
+                    ],
                     "examples": []
                 },
                 "-bịachi anya": {
-                    "definition": "come regularly",
+                    "definitions": [
+                        "come regularly"
+                    ],
                     "examples": []
                 },
                 "-bịachìgha": {
-                    "definition": "come; return",
+                    "definitions": [
+                        "come; return"
+                    ],
                     "examples": []
                 },
                 "bịadị(lì)": {
-                    "definition": "by the way, ...",
+                    "definitions": [
+                        "by the way, ..."
+                    ],
                     "examples": []
                 },
                 "-bịakèta": {
-                    "definition": "come nearer",
+                    "definitions": [
+                        "come nearer"
+                    ],
                     "examples": []
                 },
                 "-bịakwute": {
-                    "definition": "come near to (a person)",
+                    "definitions": [
+                        "come near to (a person)"
+                    ],
                     "examples": []
                 },
                 "-bịalu": {
-                    "definition": "arrive at; reach",
+                    "definitions": [
+                        "arrive at; reach"
+                    ],
                     "examples": []
                 },
                 "-bịa ǹso": {
-                    "definition": "approach",
+                    "definitions": [
+                        "approach"
+                    ],
                     "examples": []
                 },
                 "-bịa(sò) n’àzụ": {
-                    "definition": "come after",
+                    "definitions": [
+                        "come after"
+                    ],
                     "examples": []
                 },
                 "arō nā-abịa": {
-                    "definition": "A. next year (cf. arō òzọ)",
-                    "examples": [
+                    "definitions": [
+                        "A. next year (compare arō òzọ)",
                         "B. coming year(s)"
-                    ]
+                    ],
+                    "examples": []
                 },
                 "-sibịa": {
-                    "definition": "come from; come (by way of)",
+                    "definitions": [
+                        "come from; come (by way of)"
+                    ],
                     "examples": []
                 }
-            }
+            },
+            "variations": []
         }
     ],
     "ndị ndi": [
@@ -739,7 +772,8 @@
                         "life (lit. the world of the white people)"
                     ]
                 }
-            }
+            },
+            "variations": []
         }
     ]
 }

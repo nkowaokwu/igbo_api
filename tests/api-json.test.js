@@ -2,8 +2,8 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import { isEqual } from 'lodash';
 import mongoose from 'mongoose';
-import server from '../server';
-import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
+import server from '../src/server';
+import { NO_PROVIDED_TERM } from '../src/utils/constants/errorMessages';
 import { searchTerm } from './shared/commands';
 
 const { expect } = chai;

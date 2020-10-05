@@ -2,11 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { testRouter, router } from './routers';
 import logger from './middleware/logger';
-import { SERVER_PORT, MONGO_URI, TEST_MONGO_URI } from './config';
+import { PORT, MONGO_URI } from './config';
 
 const app = express();
 
-mongoose.connect(process.env.NODE_ENV === 'test' ? TEST_MONGO_URI : MONGO_URI, {
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
@@ -27,12 +27,12 @@ app.use('*', logger);
 app.use('/api/v1/search', router);
 
 /* Grabs data from JSON dictionary */
-if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'production') {
     app.use('/api/v1/test', testRouter);
 }
 
-const server = app.listen(SERVER_PORT, () => {
-    console.log(`🟢 Server started on port ${SERVER_PORT}`);
+const server = app.listen(PORT, () => {
+    console.log(`🟢 Server started on port ${PORT}`);
 });
 
 server.clearDatabase = () => {

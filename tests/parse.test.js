@@ -2,13 +2,13 @@ import fs from 'fs';
 import chai from 'chai';
 import rimraf from 'rimraf';
 import { keys, map, isEqual } from 'lodash';
+import { DICTIONARIES_DIR } from '../src/shared/constants/parseFileLocations';
+import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
 import { LONG_TIMEOUT } from './shared/constants';
-import { DICTIONARIES_DIR } from '../shared/constants/parseFileLocations';
 import { searchTerm, searchMockedTerm } from './shared/commands';
-import replaceAbbreviations from '../shared/utils/replaceAbbreviations';
 
 const { expect } = chai;
-const mocksDir = `${__dirname}/../tests/__mocks__`;
+const mocksDir = `${__dirname}/__mocks__`;
 if (!fs.existsSync(mocksDir)){
     fs.mkdirSync(mocksDir);
 }
@@ -17,7 +17,7 @@ describe('Parse', () => {
     describe('Dictionaries', function() {
         this.timeout(LONG_TIMEOUT);
         it('should create dictionaries', (done) => {
-            import('../dictionaries/parseAndBuild').then(() => {
+            import('../src/dictionaries/parseAndBuild').then(() => {
                 setTimeout(() => done(), 1000);
             }).catch((err) => {
                 throw err;
@@ -84,12 +84,13 @@ describe('Parse', () => {
         });
 
         it('should include the entire phrases', (done) => {
-            const keywords = ['ànì ànà', '-bè'];
+            const keywords = ['ànì', '-bè'];
             const expectedPhrases = ['ànì mmanụ anwū nà mmili ala efī', 'Bèelụchī, Bèelụchukwu'];
-            Promise.all(map(['ànì ànà', 'be'], (keyword, index) => {
+            Promise.all(map(['ànì', 'be'], (keyword, index) => {
                 return searchTerm(keyword)
                     .then((res) => {
                         expect(res.status).to.equal(200);
+                        expect(res.body[keywords[index]]).to.exist;
                         expect(keys(res.body[keywords[index]][0].phrases)).contains(expectedPhrases[index]);
                     });
             }))
@@ -125,19 +126,19 @@ describe('Parse', () => {
             });
     
             it('should return term with apostrophe by using apostrophe', (done) => {
-                const res = searchMockedTerm('ànì ànà');
+                const res = searchMockedTerm('ànì');
                 expect(res).to.be.an('object');
-                expect(keys(res)[0]).to.equal('ànì ànà');
+                expect(keys(res)[0]).to.equal('ànì');
                 done();
             });
 
             it('should return all matching terms', (done) => {
                 const keyword = 'be';
-                const resKeys = ['be', '-be', '-bè'];
+                const resKeys = ['be', '-be', '-bè', '-de-be', '-dè-be'];
                 searchTerm(keyword)
                 .end((_, res) => {
                     expect(res.status).to.equal(200);
-                    expect(keys(res.body)).to.have.lengthOf(3);
+                    expect(keys(res.body)).to.have.lengthOf(5);
                     expect(isEqual(keys(res.body), resKeys)).is.true;
                     done();
                 });

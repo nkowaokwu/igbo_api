@@ -29,7 +29,7 @@ const abbreviations = {
 
 const trim = (text) => {
     return replace(text, ':', '');
-}
+};
 
 export default (text) => {
     const insertedAbbreviationsText = reduce(keys(abbreviations), (partiallyInsertedAbbreviationsText, abbreviation) => {
