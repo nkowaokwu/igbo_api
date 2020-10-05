@@ -19,7 +19,7 @@ export const createPhrase = async (data) => {
             example,
             parentPhrase: newPhrase.id,
             parentWord: data.word,
-        }
+        };
         return createExample(exampleData);
     });
 

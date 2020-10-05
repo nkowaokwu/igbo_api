@@ -6,13 +6,15 @@
   "scripts": {
     "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
     "start:database": "mongod --dbpath ./db",
-    "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./server.js",
+    "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./src/server.js",
+    "build:babel": "rm -rf build/ && babel -d build/ ./src -s && NODE_ENV=build yarn build",
+    "start": "node ./build/server.js",
     "dev": "npm-run-all -p start:database start:server",
-    "build": "babel-node dictionaries/parseAndBuild.js",
+    "build": "babel-node src/dictionaries/parseAndBuild.js",
     "precommit": "lint-staged",
     "mocha": "NODE_ENV=test mocha -r esm ./tests",
     "test": "npm-run-all -p start:database mocha",
-    "clean": "rm -rf node_modules/ yarn.lock package-lock.json *.log"
+    "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -43,6 +45,7 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "@babel/node": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",

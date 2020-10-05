@@ -9,6 +9,9 @@ lerna-debug.log*
 # MongoDB Database
 db/
 
+# Transpiled code
+build/
+
 # VSCode
 .vscode/
 
