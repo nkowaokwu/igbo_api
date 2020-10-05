@@ -8,7 +8,7 @@
     "start:database": "mongod --dbpath ./db",
     "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./src/server.js",
     "build:babel": "rm -rf build/ && babel -d build/ ./src -s && NODE_ENV=build yarn build",
-    "start": "node ./build/server.js",
+    "start": "yarn build:babel && node ./build/server.js",
     "dev": "npm-run-all -p start:database start:server",
     "build": "babel-node src/dictionaries/parseAndBuild.js",
     "precommit": "lint-staged",

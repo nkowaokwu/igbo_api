@@ -27,7 +27,7 @@ app.use('*', logger);
 app.use('/api/v1/search', router);
 
 /* Grabs data from JSON dictionary */
-if (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV !== 'production') {
     app.use('/api/v1/test', testRouter);
 }
 

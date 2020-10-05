@@ -33,7 +33,6 @@ export default ({
             [`${DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(caseSensitiveDictionary)],
         ];
 
-        console.log(process.env.NODE_ENV);
         const buildDictionaryFilePaths = process.env.NODE_ENV === 'build' ? [
             [`${BUILD_DICTIONARIES_DIR}/ig-en_expanded.json`, JSON.stringify(caseSensitiveDictionary, null, 4)],
             [`${BUILD_DICTIONARIES_DIR}/ig-en_normalized_expanded.json`, JSON.stringify(caseSensitiveNormalizedDictionary, null, 4)],
