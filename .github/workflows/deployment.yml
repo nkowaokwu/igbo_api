@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        fetch-depth: 0 
     - name: Commit files
       run: |
         git config user.email "action@github.com"
@@ -16,9 +20,7 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Checkout files
-      uses: actions/checkout@v2
+        github_token: ${{ secrets.PUSH_TOKEN }}
     - name: Deploy Heroku
       uses: akhileshns/heroku-deploy@v3.5.7
       with:
