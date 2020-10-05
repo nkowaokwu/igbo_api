@@ -14,14 +14,8 @@ jobs:
       run: |
         git config --local user.email ${{ secrets.EMAIL }}
         git config --local user.name "ijemmao"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PUSH_TOKEN }}
     - name: Deploy Heroku
-      uses: akhileshns/heroku-deploy@v3.5.7
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-        heroku_email: ${{ secrets.HEROKU_EMAIL }}
-        procfile: "web: yarn start"
+      run: |
+        git add .
+        git commit --amend --no-edit
+        git push heroku master --force
