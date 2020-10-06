@@ -1,177 +1,99 @@
-# Igbo Dictionary API
-[Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
+<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
+<p align="center">
+  <a href="https://www.gatsbyjs.com">
+    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  </a>
+</p>
+<h1 align="center">
+  Gatsby's hello-world starter
+</h1>
 
-> Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people in at least 20 different dialects.
+Kick off your project with this hello-world boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
 
-This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
+_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.com/docs/gatsby-starters/)._
 
-## Getting Started
+## 🚀 Quick start
 
-This API is not publicly available. To run the API, you must run it locally on your machine.
+1.  **Create a Gatsby site.**
 
-Clone the project:
+    Use the Gatsby CLI to create a new site, specifying the hello-world starter.
 
-```
-git clone https://github.com/ijemmao/igbo_api.git
-```
+    ```shell
+    # create a new Gatsby site using the hello-world starter
+    gatsby new my-hello-world-starter https://github.com/gatsbyjs/gatsby-starter-hello-world
+    ```
 
-This project uses [Yarn](https://classic.yarnpkg.com/lang/en/) to manage local dependencies, if you don't have installed you can get it [here](https://classic.yarnpkg.com/en/docs/install).
+1.  **Start developing.**
 
-Move in the project directory and install it's dependencies:
+    Navigate into your new site’s directory and start it up.
 
-```
-cd igbo_api/
-yarn install
-```
-If you are running the API on Windows operating system, run the module to install it globally:
+    ```shell
+    cd my-hello-world-starter/
+    gatsby develop
+    ```
 
-```
-cd igbo_api/                   
-yarn add --optional win-node-env
-```
+1.  **Open the source code and start editing!**
 
-To start the dev API server run the following command:
+    Your site is now running at `http://localhost:8000`!
 
-```
-yarn dev
-```
+    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.com/tutorial/part-five/#introducing-graphiql)._
 
-Navigate to [localhost:8080](http://localhost:8080/) to see the API
+    Open the `my-hello-world-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
 
-## Usage
+## 🧐 What's inside?
 
-### MongoDB Data
+A quick look at the top-level files and directories you'll see in a Gatsby project.
 
-The database will initially be empty, meaning that no words will be returned from the API. To populate your local MongoDB database, read through [Locally Populating Dictionary Data](#populating-data)
+    .
+    ├── node_modules
+    ├── src
+    ├── .gitignore
+    ├── .prettierrc
+    ├── gatsby-browser.js
+    ├── gatsby-config.js
+    ├── gatsby-node.js
+    ├── gatsby-ssr.js
+    ├── LICENSE
+    ├── package-lock.json
+    ├── package.json
+    └── README.md
 
-Once you've populated your data, use the follow route structure to get word information:
+1.  **`/node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages) are automatically installed.
 
-```
-/api/v1/search/words?keyword=<keyword>
-```
+2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
 
-For example:
+3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
-```
-http://localhost:8080/api/v1/search/words?keyword=agụū
-```
+4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
 
-You can also search with English terms with the same route:
+5.  **`gatsby-browser.js`**: This file is where Gatsby expects to find any usage of the [Gatsby browser APIs](https://www.gatsbyjs.com/docs/browser-apis/) (if any). These allow customization/extension of default Gatsby settings affecting the browser.
 
-```
-/api/v1/search/words?keyword=hunger
-```
+6.  **`gatsby-config.js`**: This is the main configuration file for a Gatsby site. This is where you can specify information about your site (metadata) like the site title and description, which Gatsby plugins you’d like to include, etc. (Check out the [config docs](https://www.gatsbyjs.com/docs/gatsby-config/) for more detail).
 
-### JSON Data
+7.  **`gatsby-node.js`**: This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.com/docs/node-apis/) (if any). These allow customization/extension of default Gatsby settings affecting pieces of the site build process.
 
-If you don't want the API to serve the word data from MongoDB, you can use the follow route to get the words that are stored in the **JSON dictionary**:
+8.  **`gatsby-ssr.js`**: This file is where Gatsby expects to find any usage of the [Gatsby server-side rendering APIs](https://www.gatsbyjs.com/docs/ssr-apis/) (if any). These allow customization of default Gatsby settings affecting server-side rendering.
 
-```
-/api/v1/test/words?keyword=<keyword>
-```
+9.  **`LICENSE`**: This Gatsby starter is licensed under the 0BSD license. This means that you can see this file as a placeholder and replace it with your own license.
 
-For example:
+10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
 
-```
-http://localhost:8080/api/v1/test/words?keyword=agụū
-```
+11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
 
-The responses for both routes will be a plain JSON object similar to this:
+12. **`README.md`**: A text file containing useful reference information about your project.
 
-```
-[
-    {
-        "wordClass": "noun",
-        "definitions": [
-            "hunger; desire; eagerness"
-        ],
-        "examples": [],
-        "phrases": {
-            "(agụū) -gụ": {
-                "definitions": [
-                    "be hungry"
-                ],
-                "examples": []
-            },
-            "agụū mmīli": {
-                "definitions": [
-                    "thirst"
-                ],
-                "examples": []
-            },
-            "-gụ agụū": {
-                "definitions": [
-                    "hunger; desire; long for ( -gụ 2. desire)"
-                ],
-                "examples": []
-            }
-        }
-    }
-]
-```
+## 🎓 Learning Gatsby
 
-<h2 id="populating-data">Locally Populating Dictionary Data</h2>
+Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.com/). Here are some places to start:
 
-This project requires the use of [MongoDB](http://docs.mongodb.com/) to locally store data. If you don't have MongoDB installed you can ge it [here](https://docs.mongodb.com/manual/administration/install-community/).
+- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.com/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
 
-To populate the database complete the following steps:
+- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.com/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
 
-### 1. Build a Dictionary
+## 💫 Deploy
 
-[`dictionary.html`](./src/dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
-The following command parses the `html` file and builds a number JSON files:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/gatsbyjs/gatsby-starter-hello-world)
 
-```
-yarn build:dictionaries
-```
-
-Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
-
-### 2. Populate the MongoDB Database
-
-Now that the data has been parsed, it needs to be used to populate, or seed, the MongoDB database.
-
-Start the development server:
-
-```
-yarn dev
-```
-
-Then make a `POST` request to the following route:
-
-```
-/api/v1/test/populate
-```
-
-For example:
-
-```
-http://localhost:8080/api/v1/test/populate // POST
-```
-
-After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database!
-
-### 3. See Data in Database (Optional)
-
-Now that the data is living in a local database, you can see it either using the `mongo` command line tool, or through [MongoDB Compass](https://www.mongodb.com/try/download/compass)
-
-## Testing
-
-Tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same text, run:
-
-```
-yarn test
-```
-
-If you want to run your MongoDB instance and tests in separate terminals, you can run:
-
-```
-yarn start:database
-```
-
-in one terminal, and the following in another:
-
-```
-yarn mocha
-``1
+<!-- AUTO-GENERATED-CONTENT:END -->
