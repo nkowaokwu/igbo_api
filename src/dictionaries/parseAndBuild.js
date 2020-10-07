@@ -8,10 +8,8 @@ import {
 } from './utils/parseHelpers';
 import writeToFiles from './utils/writeToFiles';
 import replaceAbbreviations from '../shared/utils/replaceAbbreviations';
-import { clean, normalize } from '../shared/utils/normalization';
+import { clean } from '../shared/utils/normalization';
 import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE, CELL_TYPE } from '../shared/constants/parseConstants';
-
-const normalizationMap = {};
 
 let currentWord = '';
 let currentPhrase = null;
@@ -28,14 +26,6 @@ const resetTrackers = () => {
     centerCount = 0;
 };
 
-/* Used to build normalized dictionary json */
-const insertTermInNormalizationMap = (normalizedTerm, naturalTerm) => {
-    if (!normalizationMap[normalizedTerm]) {
-        normalizationMap[normalizedTerm] = [];
-    }
-    normalizationMap[normalizedTerm].push(naturalTerm);
-};
-
 /* Helper function to insert the current phrase in the provided word object */
 const insertCurrentPhrase = ({ currentPhrase, currentPhraseData, wordObject }) => {
     if (currentPhrase) {
@@ -46,19 +36,17 @@ const insertCurrentPhrase = ({ currentPhrase, currentPhraseData, wordObject }) =
     }
 };
 
-const buildDictionary = (span, dictionary, options = {}) => {
+const buildDictionary = (span, dictionary) => {
     const currentColumn = LEFT_STYLE_TO_COLUMN[getLeftAndTopStyles(span).left];
-    const naturalChildrenText = options.normalize ? normalize(getChildrenText(span)) : getChildrenText(span);
+    const naturalChildrenText = getChildrenText(span);
     const childrenText = replaceAbbreviations(naturalChildrenText);
     const cleanedChildrenText = clean(childrenText);
-    const cleanedNaturalChildrenText = clean(naturalChildrenText);
     const wordObject = last(dictionary[currentWord]);
     let isSameCell;
     let isSameRow;
 
     switch (currentColumn) {
         case COLUMNS.LEFT:
-            options.normalize && insertTermInNormalizationMap(cleanedChildrenText, cleanedNaturalChildrenText);
             const separateVariations = cleanedChildrenText.split(',');
             const newWordData = {
                 wordClass: '',
@@ -237,6 +225,5 @@ const buildDictionaries = (root, dictionary, options) => {
 };
 
 writeToFiles({
-    buildDictionaries,
-    normalizationMap
+    buildDictionaries
 });
