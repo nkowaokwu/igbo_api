@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-spaces */
 export const OVERDOT_UPPERCASE_N = 7748;    // \u1e44
 export const GRAVE_UPPERCASE_N = 504;       // \u01f8
 export const GRAVE_ACUTE_UPPERCASE_N = 323; // \u0143
@@ -43,17 +44,17 @@ export const GRAVE_ACUTE_LOWERCASE_U = 250; // \u00fa
 export const MACRON_LOWERCASE_U = 363;      // \u016b
 
 export default {
-    'n': '[n\u1e44\u01f9\u0144]',
-    'N': '[N\u1e45\u01f8\u0143]',
-    'a': '[a\u0061\u00e0\u0101]',
-    'A': '[A\u00c0\u00c1\u0100]',
-    'e': '[e\u00e8\u00e9\u0113]',
-    'E': '[E\u00c8\u00c9\u0112]',
-    'i': '[i\u00ec\u00ed\u012b\u1ecb]',
-    'I': '[I\u00cc\u00cd\u012a\u1eca]',
-    'o': '[o\u00f2\u00f3\u014d\u1ecd]',
-    'O': '[O\u00d2\u00d3\u014c\u1ecc]',
-    'u': '[u\u00f9\u00fa\u016b\u1ee5]',
-    'U': '[U\u00d9\u00da\u016a\u1ee4]',
-    ' ': '[\\s\u0027]',
+  n: '[n\u1e44\u01f9\u0144]',
+  N: '[N\u1e45\u01f8\u0143]',
+  a: '[a\u0061\u00e0\u0101]',
+  A: '[A\u00c0\u00c1\u0100]',
+  e: '[e\u00e8\u00e9\u0113]',
+  E: '[E\u00c8\u00c9\u0112]',
+  i: '[i\u00ec\u00ed\u012b\u1ecb]',
+  I: '[I\u00cc\u00cd\u012a\u1eca]',
+  o: '[o\u00f2\u00f3\u014d\u1ecd]',
+  O: '[O\u00d2\u00d3\u014c\u1ecc]',
+  u: '[u\u00f9\u00fa\u016b\u1ee5]',
+  U: '[U\u00d9\u00da\u016a\u1ee4]',
+  ' ': '[\\s\u0027]',
 };
