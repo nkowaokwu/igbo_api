@@ -8,7 +8,7 @@ import {
 } from './utils/parseHelpers';
 import writeToFiles from './utils/writeToFiles';
 import replaceAbbreviations from '../shared/utils/replaceAbbreviations';
-import { clean, normalize } from '../utils/normalization';
+import { clean, normalize } from '../shared/utils/normalization';
 import { COLUMNS, LEFT_STYLE_TO_COLUMN, SAME_CELL_TOP_DIFFERENCE, CELL_TYPE } from '../shared/constants/parseConstants';
 
 const normalizationMap = {};

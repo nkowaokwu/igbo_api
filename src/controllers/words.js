@@ -2,7 +2,7 @@ import { keys, reduce, map, filter, some, uniqBy } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
-import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
+import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_PHRASE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
