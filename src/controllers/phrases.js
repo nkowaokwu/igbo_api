@@ -2,7 +2,16 @@ import { map } from 'lodash';
 import Phrase from '../models/Phrase';
 import { createExample } from './examples';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
+import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 
+/* Searches for a phrase with Igbo stored in MongoDB */
+export const searchPhraseWithIgbo = (regex) => {
+    return Phrase
+        .find({ phrase: { $in : [regex] } })
+        .populate(POPULATE_EXAMPLE);
+};
+
+/* Creates Phrase documents in MongoDB database */
 export const createPhrase = async (data) => {
     const { examples, phrase, word: parentWord, definitions } = data;
     const phraseData = {

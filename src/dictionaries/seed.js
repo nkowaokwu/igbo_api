@@ -52,7 +52,9 @@ const populate = async () => {
                 /* Wait 15 seconds to allow the data to be written to database */
                 setTimeout(() => {
                     console.log('✅ Seeding successful');
-                    process.exit(0);
+                    if (process.env.NODE_ENV !== 'test') {
+                        process.exit(0);
+                    }
                 }, WRITE_DB_DELAY);
             })
             .catch((err) => {

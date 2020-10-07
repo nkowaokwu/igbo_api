@@ -1,7 +1,7 @@
 import chai from 'chai';
 import server from '../../src/server';
 import { API_ROUTE, TEST_ROUTE } from './constants';
-import { createRegExp } from '../../src/controllers/words';
+import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
 

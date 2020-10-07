@@ -1,30 +1,17 @@
-import { keys, reduce, map } from 'lodash';
+import { keys, reduce, map, filter, some, uniqBy } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../utils/constants/errorMessages';
-import diacriticCodes from '../shared/constants/diacriticCodes';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
-import { createPhrase } from './phrases';
+import { POPULATE_PHRASE } from '../shared/constants/populateDocuments';
+import createRegExp from '../shared/utils/createRegExp';
+import { createPhrase, searchPhraseWithIgbo } from './phrases';
 import { createExample } from './examples';
 
-const WORD_POPULATE = {
-    path: 'phrases',
-    populate: {
-        path: 'examples',
-        model: 'Example',
-    }
-};
-
-export const createRegExp = (searchWord) => {
-    /* front and back ensure the regexp will match with whole words */
-    const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
-    const back = '(?![a-zA-Z\u00c0-\u1ee5]+|,|s[a-zA-Z\u00c0-\u1ee5]+)';
-    const regexWordString = [...searchWord].reduce((regexWord, letter) => {
-        return `${regexWord}${diacriticCodes[letter] || letter}`;
-    }, '');
-    return new RegExp(`${front}${regexWordString}${back}`);
-};
+/* Either creates a regex pattern for provided searchWord
+or fallbacks to matching every word */
+const createQueryRegex = (searchWord) => !searchWord ? /./ : createRegExp(searchWord);
 
 /* Gets words from JSON dictionary */
 export const getWordData = (_, res) => {
@@ -39,30 +26,58 @@ export const getWordData = (_, res) => {
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordWithIgbo = (keyword) => {
-    const regex = !keyword ? /./ : createRegExp(keyword);
+export const searchWordWithIgbo = (regex) => {
     return Word
         .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
-        .populate(WORD_POPULATE);
+        .populate(POPULATE_PHRASE);
 };
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordWithEnglish = (keyword) => {
-    const regex = !keyword ? /./ : createRegExp(keyword);
+export const searchWordWithEnglish = (regex) => {
     return Word
         .find({ definitions: { $in : [regex] } })
-        .populate(WORD_POPULATE);
+        .populate(POPULATE_PHRASE);
+};
+
+/* Returns list of phrases where their parentWord is a word that
+hasn't been queried and returned by mongoose */
+const filterUniqueParentWords = ({ words, phrases }) => {
+    const distinctPhrases = filter(phrases, (phrase) => (
+        !some(words, (word) => word._id.toString() === phrase.parentWord.toString())
+    ));
+    return uniqBy(distinctPhrases, (phrase) => phrase.parentWord.toString());
+};
+
+/* Finds all parentWords of word phrases that haven't
+been queried and returned by mongoose yet */
+const getNotYetQueriedParentWords = async ({ words, regex }) => {
+    const phrases = await searchPhraseWithIgbo(regex);
+    const distinctPhrasesSet = filterUniqueParentWords({ words, phrases });
+    const parentWords = map(distinctPhrasesSet, ({ parentWord }) => (
+        searchWordWithId(parentWord))
+    );
+    return Promise.all(parentWords);
 };
 
 /* Gets words from MongoDB */
 export const getWords = async (_, res) => {
     const { req: { query }} = res;
     const searchWord = removePrefix(query.keyword || '');
-    const words = await searchWordWithIgbo(searchWord);
-    if (!words.length) {
-        return res.send(await searchWordWithEnglish(searchWord));
+    const regexKeyword = createQueryRegex(searchWord);
+    const words = await searchWordWithIgbo(regexKeyword);
+    const uniqueParentWords = regexKeyword.toString() !== '/./' ?
+        await getNotYetQueriedParentWords({ words, regex: regexKeyword }) : [];
+    
+    if (!words.length && !uniqueParentWords.length) {
+        return res.send(await searchWordWithEnglish(regexKeyword));
     }
-    return res.send(words);
+    return res.send([...words, ...uniqueParentWords]);
+};
+
+const searchWordWithId = (id) => {
+    return Word
+        .findById(id)
+        .populate(POPULATE_PHRASE);
 };
 
 /* Creates Word documents in MongoDB database */
