@@ -5,7 +5,7 @@ import { seedDatabase } from '../dictionaries/seed';
 const testRouter = express.Router();
 
 testRouter.get('/', (_, res) => {
-    res.send('Welcome to the Igbo English Dictionary API');
+  res.send('Welcome to the Igbo English Dictionary API');
 });
 
 testRouter.post('/populate', seedDatabase);
