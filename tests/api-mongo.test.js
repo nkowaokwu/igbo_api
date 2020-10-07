@@ -136,7 +136,9 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
-        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
+        // TODO: Address this line from ticket #79
+        // eslint-disable-next-line no-underscore-dangle
+        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.keys(WORD_KEYS);
         });
@@ -164,7 +166,9 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
-        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
+        // TODO: Address this line from ticket #79
+        // eslint-disable-next-line no-underscore-dangle
+        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.keys(WORD_KEYS);
         });
@@ -178,7 +182,9 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(2);
-        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
+        // TODO: Address this line from ticket #79
+        // eslint-disable-next-line no-underscore-dangle
+        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.keys(WORD_KEYS);
         });
