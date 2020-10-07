@@ -13,7 +13,7 @@ export default ({
         fs.mkdirSync(DICTIONARIES_DIR);
     }
 
-    if (!fs.existsSync(BUILD_DICTIONARIES_DIR)) {
+    if (process.env.NODE_ENV !== 'test' && !fs.existsSync(BUILD_DICTIONARIES_DIR)) {
         fs.mkdirSync(BUILD_DICTIONARIES_DIR);
     }
     
