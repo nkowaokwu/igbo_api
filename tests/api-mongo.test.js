@@ -1,9 +1,10 @@
 import chai from 'chai';
-import { forEach, isEqual } from 'lodash';
+import { forEach, isEqual, uniqBy, some } from 'lodash';
 import mongoose from 'mongoose';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
 import { populateAPI, searchAPITerm } from './shared/commands';
+import createRegExp from '../src/shared/utils/createRegExp';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
@@ -14,7 +15,7 @@ describe('Database', () => {
     before(function(done) {
         this.timeout(LONG_TIMEOUT);
         populateAPI().then(() => {
-            setTimeout(done, 10000);
+            setTimeout(done, 20000);
         });
     });
 
@@ -68,7 +69,8 @@ describe('Database', () => {
             });
         });
 
-        it('should return all words', (done) => {
+        it('should return all words', function (done) {
+            this.timeout(10000);
             searchAPITerm()
             .end((_, res) => {
                 expect(res.status).to.equal(200);
@@ -94,8 +96,13 @@ describe('Database', () => {
             .end((_, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body).to.be.an('array');
-                expect(res.body).to.have.lengthOf(2);
-                expect(res.body[0].word).to.equal('àkịkà');
+                expect(res.body).to.have.lengthOf(3);
+                forEach((res.body), (wordObject) => {
+                    const { word, phrases } = wordObject;
+                    const regex = createRegExp(word);
+                    const isKeywordPresent = !!word.match(regex)[0] || some(phrases, ({ phrase }) => phrase.match(regex));
+                    expect(isKeywordPresent).is.true;
+                });
                 done();
             });
         });
@@ -132,7 +139,11 @@ describe('Database', () => {
             .end((_, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body).to.be.an('array');
-                expect(res.body).to.have.lengthOf(1);
+                expect(res.body).to.have.lengthOf(4);
+                expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+                forEach(res.body, (word) => {
+                    expect(word).to.have.keys(WORD_KEYS);
+                });
                 expect(res.body[0].word).to.equal('mmilī');
                 expect(isEqual(res.body[0].variations, ['mmilī', 'milī'])).is.true;
                 done();
@@ -147,7 +158,37 @@ describe('Database', () => {
                 expect(res.body).to.be.an('array');
                 expect(res.body).to.have.lengthOf(2);
                 expect(res.body[0].word).to.equal('-mụ-mù');
-                expect(isEqual(res.body[0].variations, ['-mu-mù'])).is.true;
+                expect(some(res.body, (word) => isEqual(word.variations, ['-mu-mù']))).is.true;
+                done();
+            });
+        });
+
+        it('should return unique words when searching for term', (done) => {
+            const keyword = 'ànùnù';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(4);
+                expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+                forEach(res.body, (word) => {
+                    expect(word).to.have.keys(WORD_KEYS);
+                });
+                done();
+            });
+        });
+
+        it('should return unique words when searching for phrase', (done) => {
+            const keyword = 'ànùnù ebè';
+            searchAPITerm(keyword)
+            .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body).to.be.an('array');
+                expect(res.body).to.have.lengthOf(2);
+                expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+                forEach(res.body, (word) => {
+                    expect(word).to.have.keys(WORD_KEYS);
+                });
                 done();
             });
         });
