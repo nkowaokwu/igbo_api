@@ -16,7 +16,10 @@ import createRegExp from '../src/shared/utils/createRegExp';
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-const WORD_KEYS = ['__v', 'variations', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass'];
+const WORD_KEYS = ['variations', 'definitions', 'phrases', 'examples', 'id', 'word', 'wordClass'];
+const PHRASE_KEYS = ['phrase', 'parentWord', 'definitions', 'examples', 'id'];
+const EXAMPLE_KEYS = ['example', 'parentWord', 'parentPhrase', 'id'];
+const EXCLUDE_KEYS = ['__v', '_id'];
 
 describe('Database', () => {
   before(function (done) {
@@ -26,7 +29,7 @@ describe('Database', () => {
     });
   });
 
-  describe('/POST mongodb words', function () {
+  describe('mongodb words', function () {
     this.timeout(LONG_TIMEOUT);
     it('should populate mongodb with words', (done) => {
       const wordData = {
@@ -67,7 +70,7 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.lengthOf.at.least(2);
         forEach(res.body, (word) => {
-          expect(word).to.have.keys(WORD_KEYS);
+          expect(word).to.have.all.keys(WORD_KEYS);
         });
         done();
       });
@@ -126,7 +129,7 @@ describe('Database', () => {
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(3);
         forEach(res.body, (word) => {
-          expect(word).to.have.keys(WORD_KEYS);
+          expect(word).to.have.all.keys(WORD_KEYS);
         });
         done();
       });
@@ -138,11 +141,9 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
-        // TODO: Address this line from ticket #79
-        // eslint-disable-next-line no-underscore-dangle
-        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
-          expect(word).to.have.keys(WORD_KEYS);
+          expect(word).to.have.all.keys(WORD_KEYS);
         });
         expect(res.body[0].word).to.equal('mmilī');
         expect(isEqual(res.body[0].variations, ['mmilī', 'milī'])).to.equal(true);
@@ -168,11 +169,9 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
-        // TODO: Address this line from ticket #79
-        // eslint-disable-next-line no-underscore-dangle
-        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
-          expect(word).to.have.keys(WORD_KEYS);
+          expect(word).to.have.all.keys(WORD_KEYS);
         });
         done();
       });
@@ -184,12 +183,34 @@ describe('Database', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(2);
-        // TODO: Address this line from ticket #79
-        // eslint-disable-next-line no-underscore-dangle
-        expect(uniqBy(res.body, (word) => word._id.toString()).length).to.equal(res.body.length);
+        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
-          expect(word).to.have.keys(WORD_KEYS);
+          expect(word).to.have.all.keys(WORD_KEYS);
         });
+        done();
+      });
+    });
+
+    it('should not include _id and __v keys', (done) => {
+      const keyword = 'elephant';
+      searchAPITerm(keyword).end((_, res) => {
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body).to.have.lengthOf.at.least(5);
+        expect(every(res.body, (word) => {
+          expect(word).to.have.all.keys(WORD_KEYS);
+          expect(word).to.not.have.any.keys(...EXCLUDE_KEYS);
+
+          expect(every(word.phrases, (phrase) => {
+            expect(phrase).to.have.all.keys(PHRASE_KEYS);
+            expect(phrase).to.not.have.any.keys(...EXCLUDE_KEYS);
+          }));
+
+          expect(every(word.examples, (example) => {
+            expect(example).to.have.all.keys(EXAMPLE_KEYS);
+            expect(example).to.not.have.any.keys(...EXCLUDE_KEYS);
+          }));
+        }));
         done();
       });
     });
