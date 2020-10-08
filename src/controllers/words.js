@@ -6,12 +6,13 @@ import {
   some,
   uniqBy,
 } from 'lodash';
+import levenshtein from 'js-levenshtein';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
-import { POPULATE_PHRASE } from '../shared/constants/populateDocuments';
+import { POPULATE_EXAMPLE, POPULATE_PHRASE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import { createPhrase, searchPhraseWithIgbo } from './phrases';
 import { createExample } from './examples';
@@ -19,6 +20,16 @@ import { createExample } from './examples';
 /* Either creates a regex pattern for provided searchWord
 or fallbacks to matching every word */
 const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
+
+/* Sorts all the words based on the provided searchWord */
+const sortWords = (searchWord, words) => {
+  words.sort((prevWord, nextWord) => {
+    const prevWordDifference = levenshtein(searchWord, prevWord.definitions[0] || '') - 1;
+    const nextWordDifference = levenshtein(searchWord, nextWord.definitions[0] || '') - 1;
+    return prevWordDifference - nextWordDifference;
+  });
+  return words;
+};
 
 /* Gets words from JSON dictionary */
 export const getWordData = (_, res) => {
@@ -39,6 +50,7 @@ export const searchWordWithIgbo = (regex) => (
   Word
     .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
     .populate(POPULATE_PHRASE)
+    .populate(POPULATE_EXAMPLE)
 );
 
 /* Searches for word with English stored in MongoDB */
@@ -46,12 +58,14 @@ export const searchWordWithEnglish = (regex) => (
   Word
     .find({ definitions: { $in: [regex] } })
     .populate(POPULATE_PHRASE)
+    .populate(POPULATE_EXAMPLE)
 );
 
 const searchWordWithId = (id) => (
   Word
     .findById(id)
     .populate(POPULATE_PHRASE)
+    .populate(POPULATE_EXAMPLE)
 );
 
 /* Returns list of phrases where their parentWord is a word that
@@ -84,7 +98,8 @@ export const getWords = async (_, res) => {
     ? await getNotYetQueriedParentWords({ words, regex: regexKeyword }) : [];
 
   if (!words.length && !uniqueParentWords.length) {
-    return res.send(await searchWordWithEnglish(regexKeyword));
+    const sortedWords = sortWords(searchWord, await searchWordWithEnglish(regexKeyword));
+    return res.send(sortedWords);
   }
   return res.send([...words, ...uniqueParentWords]);
 };
