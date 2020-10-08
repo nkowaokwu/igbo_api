@@ -5,7 +5,9 @@ import {
   isEqual,
   uniqBy,
   some,
+  every,
 } from 'lodash';
+import levenshtein from 'js-levenshtein';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
 import { populateAPI, searchAPITerm } from './shared/commands';
@@ -188,6 +190,24 @@ describe('Database', () => {
         forEach(res.body, (word) => {
           expect(word).to.have.keys(WORD_KEYS);
         });
+        done();
+      });
+    });
+
+    it('should return a sorted list of igbo terms when using english', (done) => {
+      const keyword = 'elephant';
+      searchAPITerm(keyword).end((_, res) => {
+        expect(res.status).to.be.equal(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body).to.have.lengthOf.at.least(5);
+        expect(every(res.body, (word, index) => {
+          if (index === 0) {
+            return true;
+          }
+          const prevWordDifference = levenshtein(keyword, res.body[index - 1].definitions[0]) - 1;
+          const nextWordDifference = levenshtein(keyword, word.definitions[0]) - 1;
+          return prevWordDifference <= nextWordDifference;
+        })).to.equal(true);
         done();
       });
     });

@@ -5,7 +5,7 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 
 /* Searches for a phrase with Igbo stored in MongoDB */
-export const searchPhraseWithIgbo = (regex) => (
+export const searchPhraseUsingIgbo = (regex) => (
   Phrase
     .find({ phrase: { $in: [regex] } })
     .populate(POPULATE_EXAMPLE)
