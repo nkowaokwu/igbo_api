@@ -32,11 +32,9 @@ const sortWords = (searchWord, words) => {
 };
 
 /* Gets words from JSON dictionary */
-export const getWordData = (_, res) => {
-  const {
-    req: { query },
-  } = res;
-  const searchWord = removePrefix(query.keyword);
+export const getWordData = (req, res) => {
+  const { keyword } = req.query;
+  const searchWord = removePrefix(keyword);
   if (!searchWord) {
     res.status(400);
     res.send(NO_PROVIDED_TERM);
@@ -46,26 +44,32 @@ export const getWordData = (_, res) => {
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = (regex) => (
+export const searchWordUsingIgbo = (regex, page) => (
   Word
     .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
+    .limit(10)
+    .skip(page)
 );
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = (regex) => (
+export const searchWordUsingEnglish = (regex, page) => (
   Word
     .find({ definitions: { $in: [regex] } })
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
+    .limit(10)
+    .skip(page)
 );
 
-const searchWordUsingId = (id) => (
+const searchWordUsingId = (id, page) => (
   Word
     .findById(id)
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
+    .limit(10)
+    .skip(page)
 );
 
 /* Returns list of phrases where their parentWord is a word that
@@ -79,31 +83,30 @@ const filterUniqueParentWords = ({ words, phrases }) => {
 
 /* Finds all parentWords of word phrases that haven't
 been queried and returned by mongoose yet */
-const getNotYetQueriedParentWords = async ({ words, regex }) => {
+const getNotYetQueriedParentWords = async ({ words, regex, page }) => {
   const phrases = await searchPhraseUsingIgbo(regex);
   const distinctPhrasesSet = filterUniqueParentWords({ words, phrases });
-  const parentWords = map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord));
+  const parentWords = map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord, page));
   return Promise.all(parentWords);
 };
 
-const getWordsUsingEnglish = async (res, searchWord) => {
-  const sortedWords = sortWords(searchWord, await searchWordUsingEnglish(searchWord));
+const getWordsUsingEnglish = async (res, searchWord, page) => {
+  const sortedWords = sortWords(searchWord, await searchWordUsingEnglish(searchWord, page));
   return res.send(sortedWords);
 };
 
 /* Gets words from MongoDB */
-export const getWords = async (_, res) => {
-  const {
-    req: { query },
-  } = res;
-  const searchWord = removePrefix(query.keyword || '');
+export const getWords = async (req, res) => {
+  const { keyword, page: pageQuery } = req.query;
+  const searchWord = removePrefix(keyword || '');
+  const page = parseInt(pageQuery, 10) || 0;
   const regexKeyword = createQueryRegex(searchWord);
-  const words = await searchWordUsingIgbo(regexKeyword);
+  const words = await searchWordUsingIgbo(regexKeyword, page);
   const uniqueParentWords = regexKeyword.toString() !== '/./'
     ? await getNotYetQueriedParentWords({ words, regex: regexKeyword }) : [];
 
   if (!words.length && !uniqueParentWords.length) {
-    return getWordsUsingEnglish(res, regexKeyword);
+    return getWordsUsingEnglish(res, regexKeyword, page);
   }
   return res.send([...words, ...uniqueParentWords]);
 };
