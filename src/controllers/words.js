@@ -3,6 +3,7 @@ import {
   reduce,
   map,
   filter,
+  forEach,
   some,
   uniqBy,
 } from 'lodash';
@@ -14,7 +15,7 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE, POPULATE_PHRASE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import { createQueryRegex, sortDocsByDefinitions } from './utils';
-import { createPhrase, searchPhraseUsingIgbo } from './phrases';
+import { createPhrase, searchPhraseUsingEnglish, searchPhraseUsingIgbo } from './phrases';
 import { createExample } from './examples';
 
 /* Gets words from JSON dictionary */
@@ -67,17 +68,36 @@ const filterUniqueParentWords = ({ words, phrases }) => {
   return uniqBy(distinctPhrases, (phrase) => phrase.parentWord.toString());
 };
 
-/* Finds all parentWords of word phrases that haven't
-been queried and returned by mongoose yet */
-const getNotYetQueriedParentWords = async ({ words, regex, page }) => {
-  const phrases = await searchPhraseUsingIgbo(regex);
+const getParentWords = (words, phrases, page) => {
   const distinctPhrasesSet = filterUniqueParentWords({ words, phrases });
-  const parentWords = map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord, page));
+  return map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord, page));
+};
+
+/* Finds all parentWords of word phrases that haven't
+been queried and returned by mongoose yet using Igbo */
+const getNotYetQueriedParentWordsUsingIgbo = async ({ words, regex, page }) => {
+  const phrasesUsingIgbo = await searchPhraseUsingIgbo(regex);
+  const phrases = phrasesUsingIgbo;
+  const parentWords = getParentWords(words, phrases, page);
+  return Promise.all(parentWords);
+};
+
+/* Finds all parentWords of word phrases that haven't
+been queried and returned by mongoose yet using English */
+const getNotYetQueriedParentWordsUsingEnglish = async ({ words, regex, page }) => {
+  const phrasesUsingEnglish = await searchPhraseUsingEnglish(regex);
+  const phrases = phrasesUsingEnglish;
+  const parentWords = getParentWords(words, phrases, page);
   return Promise.all(parentWords);
 };
 
 const getWordsUsingEnglish = async (res, searchWord, page) => {
-  const sortedWords = sortDocsByDefinitions(searchWord, await searchWordUsingEnglish(searchWord, page));
+  const words = await searchWordUsingEnglish(searchWord, page);
+  const uniqueParentWords = searchWord.toString() !== '/./'
+    ? await getNotYetQueriedParentWordsUsingEnglish({ words, regex: searchWord }) : [];
+  const combinedWords = [...uniqueParentWords, ...words];
+  forEach(combinedWords, ({ phrases }) => sortDocsByDefinitions(searchWord, phrases));
+  const sortedWords = sortDocsByDefinitions(searchWord, combinedWords);
   return res.send(sortedWords);
 };
 
@@ -89,10 +109,10 @@ export const getWords = async (req, res) => {
   const regexKeyword = createQueryRegex(searchWord);
   const words = await searchWordUsingIgbo(regexKeyword, page);
   const uniqueParentWords = regexKeyword.toString() !== '/./'
-    ? await getNotYetQueriedParentWords({ words, regex: regexKeyword }) : [];
+    ? await getNotYetQueriedParentWordsUsingIgbo({ words, regex: regexKeyword }) : [];
 
   if (!words.length && !uniqueParentWords.length) {
-    return getWordsUsingEnglish(res, regexKeyword, page);
+    return getWordsUsingEnglish(res, searchWord, page);
   }
   return res.send([...words, ...uniqueParentWords]);
 };

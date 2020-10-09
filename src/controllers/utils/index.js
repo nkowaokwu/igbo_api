@@ -5,12 +5,12 @@ import createRegExp from '../../shared/utils/createRegExp';
 or fallbacks to matching every word */
 export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
 
-/* Sorts all the words based on the provided searchWord */
-export const sortDocsByDefinitions = (searchWord, words) => {
-  words.sort((prevWord, nextWord) => {
-    const prevWordDifference = levenshtein(searchWord, prevWord.definitions[0] || '') - 1;
-    const nextWordDifference = levenshtein(searchWord, nextWord.definitions[0] || '') - 1;
-    return prevWordDifference - nextWordDifference;
+/* Sorts all the docs based on the provided searchWord */
+export const sortDocsByDefinitions = (searchWord, docs) => {
+  docs.sort((prevWord, nextWord) => {
+    const prevDocDifference = levenshtein(searchWord, prevWord.definitions[0] || '') - 1;
+    const nextDocDifference = levenshtein(searchWord, nextWord.definitions[0] || '') - 1;
+    return prevDocDifference - nextDocDifference;
   });
-  return words;
+  return docs;
 };

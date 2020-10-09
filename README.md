@@ -86,36 +86,6 @@ For example:
 http://localhost:8080/api/v1/search/words?keyword=agụū&page=1
 ```
 
-### GET phrases
-
-You can request phrases by using either Igbo or English:
-
-```
-/api/v1/search/phrases?keyword=<keyword>
-```
-
-For example:
-
-```
-// Igbo
-http://localhost:8080/api/v1/search/phrases?keyword=obibia
-
-// English
-http://localhost:8080/api/v1/search/phrases?keyword=advent
-```
-
-You can also paginate through responses:
-
-```
-/api/v1/search/phrases?keyword=<keyword>&page=<page>
-```
-
-For example:
-
-```
-http://localhost:8080/api/v1/search/phrases?keyword=obibiapage=1
-```
-
 ### JSON Data
 
 If you don't want the API to serve the word data from MongoDB, you can use the follow route to get the words that are stored in the **JSON dictionary**:
