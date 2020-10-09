@@ -11,6 +11,13 @@ export const searchPhraseUsingIgbo = (regex) => (
     .populate(POPULATE_EXAMPLE)
 );
 
+/* Searches for a phrase with English stored in MongoDB */
+export const searchPhraseUsingEnglish = (regex) => (
+  Phrase
+    .find({ definitions: { $in: [regex] } })
+    .populate(POPULATE_EXAMPLE)
+);
+
 /* Creates Phrase documents in MongoDB database */
 export const createPhrase = async (data) => {
   const {
