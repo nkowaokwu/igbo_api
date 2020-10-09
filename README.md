@@ -56,7 +56,7 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
 The database will initially be empty, meaning that no words will be returned from the API. To populate your local MongoDB database, read through [Locally Populating Dictionary Data](#populating-data)
 
-### GET/ words
+### GET words
 
 This route will let you pass in either Igbo or English to get Igbo word information.
 

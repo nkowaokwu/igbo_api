@@ -3,10 +3,10 @@ import {
   reduce,
   map,
   filter,
+  forEach,
   some,
   uniqBy,
 } from 'lodash';
-import levenshtein from 'js-levenshtein';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
@@ -14,22 +14,9 @@ import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE, POPULATE_PHRASE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
-import { createPhrase, searchPhraseUsingIgbo } from './phrases';
+import { createQueryRegex, sortDocsByDefinitions } from './utils';
+import { createPhrase, searchPhraseUsingEnglish, searchPhraseUsingIgbo } from './phrases';
 import { createExample } from './examples';
-
-/* Either creates a regex pattern for provided searchWord
-or fallbacks to matching every word */
-const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
-
-/* Sorts all the words based on the provided searchWord */
-const sortWords = (searchWord, words) => {
-  words.sort((prevWord, nextWord) => {
-    const prevWordDifference = levenshtein(searchWord, prevWord.definitions[0] || '') - 1;
-    const nextWordDifference = levenshtein(searchWord, nextWord.definitions[0] || '') - 1;
-    return prevWordDifference - nextWordDifference;
-  });
-  return words;
-};
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
@@ -81,32 +68,51 @@ const filterUniqueParentWords = ({ words, phrases }) => {
   return uniqBy(distinctPhrases, (phrase) => phrase.parentWord.toString());
 };
 
-/* Finds all parentWords of word phrases that haven't
-been queried and returned by mongoose yet */
-const getNotYetQueriedParentWords = async ({ words, regex, page }) => {
-  const phrases = await searchPhraseUsingIgbo(regex);
+const getParentWords = (words, phrases, page) => {
   const distinctPhrasesSet = filterUniqueParentWords({ words, phrases });
-  const parentWords = map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord, page));
+  return map(distinctPhrasesSet, ({ parentWord }) => searchWordUsingId(parentWord, page));
+};
+
+/* Finds all parentWords of word phrases that haven't
+been queried and returned by mongoose yet using Igbo */
+const getNotYetQueriedParentWordsUsingIgbo = async ({ words, regex, page }) => {
+  const phrasesUsingIgbo = await searchPhraseUsingIgbo(regex);
+  const phrases = phrasesUsingIgbo;
+  const parentWords = getParentWords(words, phrases, page);
   return Promise.all(parentWords);
 };
 
-const getWordsUsingEnglish = async (res, searchWord, page) => {
-  const sortedWords = sortWords(searchWord, await searchWordUsingEnglish(searchWord, page));
+/* Finds all parentWords of word phrases that haven't
+been queried and returned by mongoose yet using English */
+const getNotYetQueriedParentWordsUsingEnglish = async ({ words, regex, page }) => {
+  const phrasesUsingEnglish = await searchPhraseUsingEnglish(regex);
+  const phrases = phrasesUsingEnglish;
+  const parentWords = getParentWords(words, phrases, page);
+  return Promise.all(parentWords);
+};
+
+const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
+  const words = await searchWordUsingEnglish(regex, page);
+  const uniqueParentWords = regex.toString() !== '/./'
+    ? await getNotYetQueriedParentWordsUsingEnglish({ words, regex }) : [];
+  const combinedWords = [...uniqueParentWords, ...words];
+  forEach(combinedWords, ({ phrases }) => sortDocsByDefinitions(searchWord, phrases));
+  const sortedWords = sortDocsByDefinitions(searchWord, combinedWords);
   return res.send(sortedWords);
 };
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
-  const { keyword, page: pageQuery } = req.query;
+  const { keyword = '', page: pageQuery } = req.query;
   const searchWord = removePrefix(keyword || '');
   const page = parseInt(pageQuery, 10) || 0;
   const regexKeyword = createQueryRegex(searchWord);
   const words = await searchWordUsingIgbo(regexKeyword, page);
   const uniqueParentWords = regexKeyword.toString() !== '/./'
-    ? await getNotYetQueriedParentWords({ words, regex: regexKeyword }) : [];
+    ? await getNotYetQueriedParentWordsUsingIgbo({ words, regex: regexKeyword }) : [];
 
   if (!words.length && !uniqueParentWords.length) {
-    return getWordsUsingEnglish(res, regexKeyword, page);
+    return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
   }
   return res.send([...words, ...uniqueParentWords]);
 };
