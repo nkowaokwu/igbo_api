@@ -33,7 +33,7 @@ describe('Database', () => {
 
   describe('mongodb words', function () {
     this.timeout(LONG_TIMEOUT);
-    it.only('should populate mongodb with words', (done) => {
+    it('should populate mongodb with words', (done) => {
       const wordData = {
         word: 'word',
         wordClass: 'noun',
