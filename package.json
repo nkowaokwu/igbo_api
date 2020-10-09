@@ -38,12 +38,12 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "express": "^4.17.1",
-    "js-levenshtein": "^1.1.6",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.7",
     "node-html-parser": "^1.2.20",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
+    "string-similarity": "^4.0.2",
     "unicharadata": "^9.0.0-alpha.6",
     "yarn": "^1.22.10"
   },

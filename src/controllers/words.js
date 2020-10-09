@@ -91,10 +91,10 @@ const getNotYetQueriedParentWordsUsingEnglish = async ({ words, regex, page }) =
   return Promise.all(parentWords);
 };
 
-const getWordsUsingEnglish = async (res, searchWord, page) => {
-  const words = await searchWordUsingEnglish(searchWord, page);
-  const uniqueParentWords = searchWord.toString() !== '/./'
-    ? await getNotYetQueriedParentWordsUsingEnglish({ words, regex: searchWord }) : [];
+const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
+  const words = await searchWordUsingEnglish(regex, page);
+  const uniqueParentWords = regex.toString() !== '/./'
+    ? await getNotYetQueriedParentWordsUsingEnglish({ words, regex }) : [];
   const combinedWords = [...uniqueParentWords, ...words];
   forEach(combinedWords, ({ phrases }) => sortDocsByDefinitions(searchWord, phrases));
   const sortedWords = sortDocsByDefinitions(searchWord, combinedWords);
@@ -112,7 +112,7 @@ export const getWords = async (req, res) => {
     ? await getNotYetQueriedParentWordsUsingIgbo({ words, regex: regexKeyword }) : [];
 
   if (!words.length && !uniqueParentWords.length) {
-    return getWordsUsingEnglish(res, searchWord, page);
+    return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
   }
   return res.send([...words, ...uniqueParentWords]);
 };

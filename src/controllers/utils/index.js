@@ -1,4 +1,4 @@
-import levenshtein from 'js-levenshtein';
+import stringSimilarity from 'string-similarity';
 import createRegExp from '../../shared/utils/createRegExp';
 
 /* Either creates a regex pattern for provided searchWord
@@ -8,8 +8,8 @@ export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegEx
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsByDefinitions = (searchWord, docs) => {
   docs.sort((prevWord, nextWord) => {
-    const prevDocDifference = levenshtein(searchWord, prevWord.definitions[0] || '') - 1;
-    const nextDocDifference = levenshtein(searchWord, nextWord.definitions[0] || '') - 1;
+    const prevDocDifference = stringSimilarity.compareTwoStrings(searchWord, prevWord.definitions[0] || '') * -100;
+    const nextDocDifference = stringSimilarity.compareTwoStrings(searchWord, nextWord.definitions[0] || '') * -100;
     return prevDocDifference - nextDocDifference;
   });
   return docs;

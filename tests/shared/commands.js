@@ -1,6 +1,6 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { WORDS_API_ROUTE, PHRASES_API_ROUTE, TEST_ROUTE } from './constants';
+import { WORDS_API_ROUTE, TEST_ROUTE } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -10,14 +10,6 @@ export const searchAPIByWord = (query = {}) => (
   chai
     .request(server)
     .get(WORDS_API_ROUTE)
-    .query(query)
-);
-
-/* Searches for phrases using the data in MongoDB */
-export const searchAPIByPhrase = (query = {}) => (
-  chai
-    .request(server)
-    .get(PHRASES_API_ROUTE)
     .query(query)
 );
 

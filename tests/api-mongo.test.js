@@ -9,10 +9,10 @@ import {
   every,
   times,
 } from 'lodash';
-import levenshtein from 'js-levenshtein';
+import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
-import { populateAPI, searchAPIByWord, searchAPIByPhrase } from './shared/commands';
+import { populateAPI, searchAPIByWord } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 
 const { expect } = chai;
@@ -227,7 +227,7 @@ describe('Database', () => {
     });
 
     it('should return a sorted list of igbo terms when using english', (done) => {
-      const keyword = 'elephant';
+      const keyword = 'water';
       searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
@@ -236,56 +236,12 @@ describe('Database', () => {
           if (index === 0) {
             return true;
           }
-          const prevWordDifference = levenshtein(keyword, res.body[index - 1].definitions[0]) - 1;
-          const nextWordDifference = levenshtein(keyword, word.definitions[0]) - 1;
+          const prevWord = res.body[index - 1].definitions[0] || '';
+          const currentWord = word.definitions[0] || '';
+          const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, prevWord) * -100;
+          const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, currentWord) * -100;
           return prevWordDifference <= nextWordDifference;
         })).to.equal(true);
-        done();
-      });
-    });
-  });
-
-  describe('/GET mongodb phrases', () => {
-    it('should paginate through phrases', (done) => {
-      Promise.all(times(5, (index) => (
-        searchAPIByPhrase({ page: index }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.least(10);
-          forEach((res.body), (phrase) => {
-            expect(phrase).to.have.all.keys(PHRASE_KEYS);
-          });
-          return map(res.body, (word) => word.id);
-        })
-      ))).then((responses) => {
-        forEach(responses, (response, index) => {
-          if (index !== 0) {
-            expect(isEqual(response[index - 1], response[index])).to.equal(false);
-          }
-        });
-        done();
-      });
-    });
-
-    it('should return phrase by searching phrase using igbo', (done) => {
-      const keyword = 'obibia';
-      searchAPIByPhrase({ keyword }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('array');
-        forEach(res.body, (phrase) => {
-          expect(phrase).to.have.all.keys(PHRASE_KEYS);
-        });
-        done();
-      });
-    });
-
-    it('should return phrase by searching phrase using english', (done) => {
-      const keyword = 'advent';
-      searchAPIByPhrase({ keyword }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('array');
-        forEach(res.body, (phrase) => {
-          expect(phrase).to.have.all.keys(PHRASE_KEYS);
-        });
         done();
       });
     });
