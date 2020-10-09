@@ -8,7 +8,7 @@ const WRITE_DB_DELAY = 15000;
 
 const populate = async () => {
   /* This route will populate a local MongoDB database */
-  if (process.env.NODE_ENV !== 'prod') {
+  if (process.env.NODE_ENV !== 'production') {
     console.log('🌱 Seeding database...');
     mongoose.connection.db.dropDatabase();
     const wordPromises = flatten(
@@ -17,7 +17,7 @@ const populate = async () => {
         return map(value, (term) => {
           const word = { ...term };
           word.word = key;
-          createWord(word);
+          return createWord(word);
         });
       }),
     );
