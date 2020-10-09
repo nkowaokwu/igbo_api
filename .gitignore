@@ -5,6 +5,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# MongoDB Database
+db/
+
+# Transpiled code
+build/
+
 # Runtime data
 pids
 *.pid
