@@ -9,10 +9,10 @@ import {
   every,
   times,
 } from 'lodash';
-import levenshtein from 'js-levenshtein';
+import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
-import { populateAPI, searchAPITerm } from './shared/commands';
+import { populateAPI, searchAPIByWord } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 
 const { expect } = chai;
@@ -33,7 +33,7 @@ describe('Database', () => {
 
   describe('mongodb words', function () {
     this.timeout(LONG_TIMEOUT);
-    it.only('should populate mongodb with words', (done) => {
+    it('should populate mongodb with words', (done) => {
       const wordData = {
         word: 'word',
         wordClass: 'noun',
@@ -65,10 +65,11 @@ describe('Database', () => {
       });
     });
   });
+
   describe('/GET mongodb words', () => {
     it('should return word information', (done) => {
       const keyword = 'bia';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.lengthOf.at.least(2);
         forEach(res.body, (word) => {
@@ -80,7 +81,7 @@ describe('Database', () => {
 
     it('should return at most ten words per request due to pagination', (done) => {
       Promise.all(times(5, (index) => (
-        searchAPITerm({ page: index }).then((res) => {
+        searchAPIByWord({ page: index }).then((res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.least(10);
           return map(res.body, (word) => word.id);
@@ -97,7 +98,7 @@ describe('Database', () => {
 
     it("should return nothing because it's an incomplete word", (done) => {
       const keyword = 'ak';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(0);
@@ -107,7 +108,7 @@ describe('Database', () => {
 
     it('should return loose matches without accent marks', (done) => {
       const keyword = 'akikà';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(3);
@@ -123,7 +124,7 @@ describe('Database', () => {
 
     it('should return igbo words when given english with an exact match', (done) => {
       const keyword = 'animal; meat';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(1);
@@ -134,7 +135,7 @@ describe('Database', () => {
 
     it('should return igbo words when given english with a partial match', (done) => {
       const keyword = 'animal';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(3);
@@ -147,7 +148,7 @@ describe('Database', () => {
 
     it('should return igbo word by searching variation', (done) => {
       const keyword = 'mili';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
@@ -163,7 +164,7 @@ describe('Database', () => {
 
     it('should return multiple word objects by searching variation', (done) => {
       const keyword = '-mu-mù';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(2);
@@ -175,7 +176,7 @@ describe('Database', () => {
 
     it('should return unique words when searching for term', (done) => {
       const keyword = 'ànùnù';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
@@ -189,7 +190,7 @@ describe('Database', () => {
 
     it('should return unique words when searching for phrase', (done) => {
       const keyword = 'ànùnù ebè';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(2);
@@ -203,7 +204,7 @@ describe('Database', () => {
 
     it('should not include _id and __v keys', (done) => {
       const keyword = 'elephant';
-      searchAPITerm({ keyword }).end((_, res) => {
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(5);
@@ -226,8 +227,8 @@ describe('Database', () => {
     });
 
     it('should return a sorted list of igbo terms when using english', (done) => {
-      const keyword = 'elephant';
-      searchAPITerm({ keyword }).end((_, res) => {
+      const keyword = 'water';
+      searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(5);
@@ -235,8 +236,10 @@ describe('Database', () => {
           if (index === 0) {
             return true;
           }
-          const prevWordDifference = levenshtein(keyword, res.body[index - 1].definitions[0]) - 1;
-          const nextWordDifference = levenshtein(keyword, word.definitions[0]) - 1;
+          const prevWord = res.body[index - 1].definitions[0] || '';
+          const currentWord = word.definitions[0] || '';
+          const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, prevWord) * -100;
+          const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, currentWord) * -100;
           return prevWordDifference <= nextWordDifference;
         })).to.equal(true);
         done();
