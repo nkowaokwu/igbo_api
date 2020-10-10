@@ -36,6 +36,7 @@ const Home = () => {
         <h1 className="text-4xl my-3 mx-12">Igbo Dictionary</h1>
         <div className="w-full">
           <input
+            data-test="search-bar"
             className="bg-gray-300 rounded-full py-3 px-3 w-10/12"
             placeholder="Search in Igbo or English"
             onInput={(e) => setInput(e.target.value)}

@@ -4,6 +4,7 @@
         "es2021": true
     },
     "extends": ["plugin:react/recommended", "airbnb"],
+    "ignorePatterns": ["**/cypress/**/*.js"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
