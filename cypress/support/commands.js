@@ -25,8 +25,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('searchDictionary', (keyword) => {
-    cy.server();
-    cy.route(`https://cors-anywhere.herokuapp.com/http://igbo-api.herokuapp.com/api/v1/search/words?keyword=${keyword}`).as('getWord');
-    cy.get('[data-test="search-bar"]').type(keyword);
-    cy.contains('Search').click();
+  cy.server();
+  cy.route(`https://cors-anywhere.herokuapp.com/http://igbo-api.herokuapp.com/api/v1/search/words?keyword=${keyword}`).as('getWord');
+  cy.get('[data-test="search-bar"]').type(keyword);
+  cy.contains('Search').click();
 });

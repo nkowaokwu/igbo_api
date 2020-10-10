@@ -1,0 +1,24 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["plugin:react/recommended", "airbnb"],
+    "ignorePatterns": ["cypress/**/*.js"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "eslint-plugin-jsx-a11y",
+        "eslint-plugin-import"
+    ],
+    "rules": {
+      "react/jsx-filename-extension": "off",
+      "react/forbid-prop-types": "warn"
+    }
+}

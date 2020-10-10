@@ -1,6 +1,6 @@
 describe('Homepage', () => {
   before(() => {
-    cy.wait(5000)
+    cy.wait(5000);
   })
   beforeEach(() => {
     cy.visit('http://localhost:8000');
@@ -17,7 +17,7 @@ describe('Homepage', () => {
 
   it('searches and wait for words using english', () => {
     const keyword = 'run';
-    cy.searchDictionary(keyword)
+    cy.searchDictionary(keyword);
     cy.wait('@getWord').then(({ response }) => {
       const { body: data } = response;
       expect(data).to.have.lengthOf.at.least(3);
