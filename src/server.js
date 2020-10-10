@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { testRouter, router } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI } from './config';
@@ -16,6 +17,8 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('🗄 Database is connected');
 });
+
+app.use(cors());
 
 app.get('/', (_, res) => {
   res.send('Hello World!');
