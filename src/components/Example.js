@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Example = ({ example }) => (
   <div>
-    <h3 className="text-gray-500">{example.example}</h3>
+    <h3 className="text-gray-500 truncate">{example.example}</h3>
   </div>
 );
 
