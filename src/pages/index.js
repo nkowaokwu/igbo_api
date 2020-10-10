@@ -56,6 +56,7 @@ export default () => {
     <>
       <div>Welcome to the Igbo Dictionary</div>
       <input
+        data-test="search-bar"
         placeholder="Search in Igbo or English"
         onInput={(e) => setInput(e.target.value)}
         onKeyDown={onEnter}
