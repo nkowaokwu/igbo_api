@@ -25,8 +25,6 @@ Start the API local server on your computer, then access the server using the IP
 For example 
 ` "192.168.1.5:8080"  `  in your phone's browser. 
 
-
-
 **Note:** When accessing from an app, 
 Ensure internet permission has been added to the Android Manifest file :
 
