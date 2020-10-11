@@ -10,7 +10,7 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-describe('Words', () => {
+describe('JSON Dictionary', () => {
   describe('/GET words', () => {
     it('should return back word information', (done) => {
       const keyword = 'agụū';
