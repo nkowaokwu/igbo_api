@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { PhrasePropTypes } from '../utils/PropTypeShapes';
 
 const Phrase = ({ phrase }) => (
   <div>
@@ -9,7 +9,7 @@ const Phrase = ({ phrase }) => (
 );
 
 Phrase.propTypes = {
-  phrase: PropTypes.object,
+  phrase: PhrasePropTypes,
 };
 
 Phrase.defaultProps = {
