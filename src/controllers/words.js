@@ -18,6 +18,8 @@ import { createQueryRegex, sortDocsByDefinitions } from './utils';
 import { createPhrase, searchPhraseUsingEnglish, searchPhraseUsingIgbo } from './phrases';
 import { createExample } from './examples';
 
+const RESPONSE_LIMIT = 10;
+
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
   const { keyword } = req.query;
@@ -30,33 +32,32 @@ export const getWordData = (req, res) => {
   return res.send(findSearchWord(regexWord, searchWord));
 };
 
+/* Wrapper function to prep response by limiting number of words */
+const sendWords = (res, words, page) => (
+  res.send(words.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)))
+);
+
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = (regex, page) => (
+export const searchWordUsingIgbo = (regex) => (
   Word
     .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
-    .limit(10)
-    .skip(page)
 );
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = (regex, page) => (
+export const searchWordUsingEnglish = (regex) => (
   Word
     .find({ definitions: { $in: [regex] } })
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
-    .limit(10)
-    .skip(page)
 );
 
-const searchWordUsingId = (id, page) => (
+const searchWordUsingId = (id) => (
   Word
     .findById(id)
     .populate(POPULATE_PHRASE)
     .populate(POPULATE_EXAMPLE)
-    .limit(10)
-    .skip(page)
 );
 
 /* Returns list of phrases where their parentWord is a word that
@@ -92,13 +93,13 @@ const getNotYetQueriedParentWordsUsingEnglish = async ({ words, regex, page }) =
 };
 
 const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
-  const words = await searchWordUsingEnglish(regex, page);
+  const words = await searchWordUsingEnglish(regex);
   const uniqueParentWords = regex.toString() !== '/./'
     ? await getNotYetQueriedParentWordsUsingEnglish({ words, regex }) : [];
   const combinedWords = [...uniqueParentWords, ...words];
   forEach(combinedWords, ({ phrases }) => sortDocsByDefinitions(searchWord, phrases));
   const sortedWords = sortDocsByDefinitions(searchWord, combinedWords);
-  return res.send(sortedWords);
+  return sendWords(res, sortedWords, page);
 };
 
 /* Gets words from MongoDB */
@@ -107,14 +108,15 @@ export const getWords = async (req, res) => {
   const searchWord = removePrefix(keyword || '');
   const page = parseInt(pageQuery, 10) || 0;
   const regexKeyword = createQueryRegex(searchWord);
-  const words = await searchWordUsingIgbo(regexKeyword, page);
+  const words = await searchWordUsingIgbo(regexKeyword);
   const uniqueParentWords = regexKeyword.toString() !== '/./'
     ? await getNotYetQueriedParentWordsUsingIgbo({ words, regex: regexKeyword }) : [];
+  const combinedWords = [...words, ...uniqueParentWords];
 
-  if (!words.length && !uniqueParentWords.length) {
+  if (!combinedWords.length) {
     return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
   }
-  return res.send([...words, ...uniqueParentWords]);
+  return sendWords(res, combinedWords, page);
 };
 
 /* Creates Word documents in MongoDB database */
