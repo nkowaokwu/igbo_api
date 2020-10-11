@@ -8,6 +8,7 @@ lerna-debug.log*
 
 # MongoDB Database
 db/
+dump/
 
 # Transpiled code
 build/
