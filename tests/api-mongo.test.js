@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import {
   forEach,
   isEqual,
+  difference,
   uniqBy,
   map,
   some,
@@ -23,7 +24,7 @@ const PHRASE_KEYS = ['phrase', 'parentWord', 'definitions', 'examples', 'id'];
 const EXAMPLE_KEYS = ['example', 'parentWord', 'parentPhrase', 'id'];
 const EXCLUDE_KEYS = ['__v', '_id'];
 
-describe('Database', () => {
+describe('MongoDB Database', () => {
   before(function (done) {
     this.timeout(LONG_TIMEOUT);
     populateAPI().then(() => {
@@ -31,7 +32,7 @@ describe('Database', () => {
     });
   });
 
-  describe('mongodb words', function () {
+  describe('mongodb collection', function () {
     this.timeout(LONG_TIMEOUT);
     it('should populate mongodb with words', (done) => {
       const wordData = {
@@ -79,7 +80,8 @@ describe('Database', () => {
       });
     });
 
-    it('should return at most ten words per request due to pagination', (done) => {
+    it('should return at most ten words per request due to pagination', function (done) {
+      this.timeout(LONG_TIMEOUT);
       Promise.all(times(5, (index) => (
         searchAPIByWord({ page: index }).then((res) => {
           expect(res.status).to.equal(200);
@@ -89,11 +91,38 @@ describe('Database', () => {
       ))).then((responses) => {
         forEach(responses, (response, index) => {
           if (index !== 0) {
-            expect(isEqual(response[index - 1], response[index])).to.equal(false);
+            const prevResponse = responses[index - 1];
+            const smallerLength = response.length <= prevResponse.length ? responses.length : prevResponse.length;
+            expect(difference(prevResponse, response).length).to.be.at.least(smallerLength);
           }
         });
         done();
       });
+    });
+
+    it('should return only ten words', (done) => {
+      const keyword = 'woman';
+      searchAPIByWord({ keyword }).then((res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.lengthOf(10);
+        done();
+      });
+    });
+
+    it('should handle invalid page number', (done) => {
+      const keyword = 'woman';
+      Promise.all([
+        searchAPIByWord({ keyword, page: -1 }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+        }),
+        searchAPIByWord({ keyword, page: 'fake' }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(10);
+        }),
+      ]).then(() => (
+        done()
+      ));
     });
 
     it("should return nothing because it's an incomplete word", (done) => {
