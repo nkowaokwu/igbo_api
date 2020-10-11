@@ -109,6 +109,22 @@ describe('MongoDB Database', () => {
       });
     });
 
+    it('should handle invalid page number', (done) => {
+      const keyword = 'woman';
+      Promise.all([
+        searchAPIByWord({ keyword, page: -1 }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+        }),
+        searchAPIByWord({ keyword, page: 'fake' }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(10);
+        }),
+      ]).then(() => (
+        done()
+      ));
+    });
+
     it("should return nothing because it's an incomplete word", (done) => {
       const keyword = 'ak';
       searchAPIByWord({ keyword }).end((_, res) => {
