@@ -111,11 +111,12 @@ export const getWords = async (req, res) => {
   const words = await searchWordUsingIgbo(regexKeyword);
   const uniqueParentWords = regexKeyword.toString() !== '/./'
     ? await getNotYetQueriedParentWordsUsingIgbo({ words, regex: regexKeyword }) : [];
+  const combinedWords = [...words, ...uniqueParentWords];
 
-  if (!words.length && !uniqueParentWords.length) {
+  if (!combinedWords.length) {
     return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
   }
-  return sendWords(res, [...words, ...uniqueParentWords], page);
+  return sendWords(res, combinedWords, page);
 };
 
 /* Creates Word documents in MongoDB database */
