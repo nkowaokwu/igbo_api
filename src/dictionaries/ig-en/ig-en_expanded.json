@@ -11750,7 +11750,7 @@
             "wordClass": "noun",
             "definitions": [
                 "(in general) animate, purposeful essence; procreative life- force",
-                "(specifically) life-force or spiritual essence of an individual, which with he has made a pre-birth contract that determines his life-pattern",
+                "(specifically) life-force or spiritual essence of an individual, which with he has made a pre-birth contract that determines his life-pattern"
             ],
             "examples": [
               "Chukwû kèlù gị, kèe chi nwē i God created you and created your personal chi",
@@ -11946,7 +11946,7 @@
                 "put drink to someone's lips"
             ],
             "examples": [
-              "Bikō chi ọkū Please show the light",
+              "Bikō chi ọkū Please show the light"
             ],
             "phrases": {},
             "variations": []
@@ -44461,7 +44461,7 @@
                     ],
                     "examples": [
                         "Nwa ǹkaà dì kà mkpụlụ Èzènwiìlè This child looks like a descendant of Ezenwiile",
-                        "Ibè nò n’ime oke afụfụ, ọ bù mkpụlụ njō yā kà ọ nà- àghọlụ Ibe is in great trouble; he is reaping the fruit of his sin",
+                        "Ibè nò n’ime oke afụfụ, ọ bù mkpụlụ njō yā kà ọ nà- àghọlụ Ibe is in great trouble; he is reaping the fruit of his sin"
                     ]
                 },
                 "mkpụlụ ụbòsì": {
@@ -65654,7 +65654,7 @@
             ],
             "examples": [
               "Abù m ọkpala nnà m I am the first-born son of my father",
-              "Òtùto dìlì Nnà nà Ọkpala nà Mọọ Nsō Glory be to the Father and to the Son and to the Holy Ghost",
+              "Òtùto dìlì Nnà nà Ọkpala nà Mọọ Nsō Glory be to the Father and to the Son and to the Holy Ghost"
             ],
             "phrases": {},
             "variations": []
@@ -69761,6 +69761,192 @@
         }
     ],
     "-ra": [
+      {
+        "wordClass": "verb",
+        "definitions": [
+            "comb"
+        ],
+        "examples": [],
+        "phrases": {
+            "òrịra": {
+                "definitions": [
+                    "combing"
+                ],
+                "examples": []
+            },
+            "-ra isi": {
+                "definitions": [
+                    "comb (hair of head)"
+                ],
+                "examples": []
+            },
+            "-ra ǹra": {
+                "definitions": [
+                    "comb with comb"
+                ],
+                "examples": []
+            },
+            "ǹra": {
+                "definitions": [
+                    "comb"
+                ],
+                "examples": []
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [
+            "knead"
+        ],
+        "examples": [],
+        "phrases": {
+            "-ra nni": {
+                "definitions": [
+                    "knead pounded food in plate or mortar, etc."
+                ],
+                "examples": []
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [
+            "make; produce (rain)"
+        ],
+        "examples": [],
+        "phrases": {
+            "-ra mmilī": {
+                "definitions": [
+                    "make, produce rain"
+                ],
+                "examples": []
+            },
+            "òra mmili": {
+                "definitions": [
+                    "rain-maker"
+                ],
+                "examples": [
+                    "Ndi ilō ānyî chòlù ịrā mmilī taà ijī wèe mebì egwu ānyị nà- àchọ ibū pùtà taàtà Our enemies want to make it rain today in order to spoil the dance we are launching today"
+                ]
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [
+            "consider; discuss"
+        ],
+        "examples": [],
+        "phrases": {
+            "-ra alò": {
+                "definitions": [
+                    "consider; take counsel, consult together; advise"
+                ],
+                "examples": []
+            },
+            "-ralụ alò": {
+                "definitions": [
+                    "consider; take counsel; counsel; consult together; advise"
+                ],
+                "examples": []
+            },
+            "-ranye alò": {
+                "definitions": [
+                    "advise; give advice"
+                ],
+                "examples": [
+                    "Achòlù m onye gā-aranye m alò bànyelụ ịfe m gà-ème onye nā ada àbịa ebe à kwà anyàsì inyē nnwa m nsògbu I want someone to advise me on what to do with the person who comes here every night to trouble my child"
+                ]
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [
+            "sound"
+        ],
+        "examples": [],
+        "phrases": {
+            "òrịra": {
+                "definitions": [
+                    "sounding"
+                ],
+                "examples": []
+            },
+            "-ra ara": {
+                "definitions": [
+                    "sound; make a stir, be a success"
+                ],
+                "examples": [
+                    "Nkupùte nnwā Òfuèpeka ràlù àra ri nnē The naming ceremony of Ofuepeka's child was a big occasion"
+                ]
+            },
+            "-ra ọnū": {
+                "definitions": [
+                    "sound"
+                ],
+                "examples": []
+            },
+            "Ìgba ǹke à nà-àra": {
+                "definitions": [
+                    "This drum sounds great"
+                ],
+                "examples": []
+            },
+            "ọnū ri nnē": {
+                "definitions": [],
+                "examples": []
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [
+            "send"
+        ],
+        "examples": [],
+        "phrases": {
+            "-ra ìfulū": {
+                "definitions": [
+                    "blossom; flower"
+                ],
+                "examples": []
+            },
+            "-ra ozi": {
+                "definitions": [
+                    "send on errand"
+                ],
+                "examples": []
+            },
+            "-ra ụkò": {
+                "definitions": [
+                    "send representative, ambassador, special messenger, middleman"
+                ],
+                "examples": []
+            }
+        },
+        "variations": []
+    },
+    {
+        "wordClass": "verb",
+        "definitions": [],
+        "examples": [],
+        "phrases": {
+            "-ra nrā": {
+                "definitions": [
+                    "pay levy, fine"
+                ],
+                "examples": []
+            }
+        },
+        "variations": []
+    },
         {
             "wordClass": "",
             "definitions": [
@@ -69794,194 +69980,6 @@
             "variations": [
               "-ralụ"
             ]
-        }
-    ],
-    "-ra": [
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "comb"
-            ],
-            "examples": [],
-            "phrases": {
-                "òrịra": {
-                    "definitions": [
-                        "combing"
-                    ],
-                    "examples": []
-                },
-                "-ra isi": {
-                    "definitions": [
-                        "comb (hair of head)"
-                    ],
-                    "examples": []
-                },
-                "-ra ǹra": {
-                    "definitions": [
-                        "comb with comb"
-                    ],
-                    "examples": []
-                },
-                "ǹra": {
-                    "definitions": [
-                        "comb"
-                    ],
-                    "examples": []
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "knead"
-            ],
-            "examples": [],
-            "phrases": {
-                "-ra nni": {
-                    "definitions": [
-                        "knead pounded food in plate or mortar, etc."
-                    ],
-                    "examples": []
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "make; produce (rain)"
-            ],
-            "examples": [],
-            "phrases": {
-                "-ra mmilī": {
-                    "definitions": [
-                        "make, produce rain"
-                    ],
-                    "examples": []
-                },
-                "òra mmili": {
-                    "definitions": [
-                        "rain-maker"
-                    ],
-                    "examples": [
-                        "Ndi ilō ānyî chòlù ịrā mmilī taà ijī wèe mebì egwu ānyị nà- àchọ ibū pùtà taàtà Our enemies want to make it rain today in order to spoil the dance we are launching today"
-                    ]
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "consider; discuss"
-            ],
-            "examples": [],
-            "phrases": {
-                "-ra alò": {
-                    "definitions": [
-                        "consider; take counsel, consult together; advise"
-                    ],
-                    "examples": []
-                },
-                "-ralụ alò": {
-                    "definitions": [
-                        "consider; take counsel; counsel; consult together; advise"
-                    ],
-                    "examples": []
-                },
-                "-ranye alò": {
-                    "definitions": [
-                        "advise; give advice"
-                    ],
-                    "examples": [
-                        "Achòlù m onye gā-aranye m alò bànyelụ ịfe m gà-ème onye nā ada àbịa ebe à kwà anyàsì inyē nnwa m nsògbu I want someone to advise me on what to do with the person who comes here every night to trouble my child"
-                    ]
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "sound"
-            ],
-            "examples": [],
-            "phrases": {
-                "òrịra": {
-                    "definitions": [
-                        "sounding"
-                    ],
-                    "examples": []
-                },
-                "-ra ara": {
-                    "definitions": [
-                        "sound; make a stir, be a success"
-                    ],
-                    "examples": [
-                        "Nkupùte nnwā Òfuèpeka ràlù àra ri nnē The naming ceremony of Ofuepeka's child was a big occasion"
-                    ]
-                },
-                "-ra ọnū": {
-                    "definitions": [
-                        "sound"
-                    ],
-                    "examples": []
-                },
-                "Ìgba ǹke à nà-àra": {
-                    "definitions": [
-                        "This drum sounds great"
-                    ],
-                    "examples": []
-                },
-                "ọnū ri nnē": {
-                    "definitions": [],
-                    "examples": []
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [
-                "send"
-            ],
-            "examples": [],
-            "phrases": {
-                "-ra ìfulū": {
-                    "definitions": [
-                        "blossom; flower"
-                    ],
-                    "examples": []
-                },
-                "-ra ozi": {
-                    "definitions": [
-                        "send on errand"
-                    ],
-                    "examples": []
-                },
-                "-ra ụkò": {
-                    "definitions": [
-                        "send representative, ambassador, special messenger, middleman"
-                    ],
-                    "examples": []
-                }
-            },
-            "variations": []
-        },
-        {
-            "wordClass": "verb",
-            "definitions": [],
-            "examples": [],
-            "phrases": {
-                "-ra nrā": {
-                    "definitions": [
-                        "pay levy, fine"
-                    ],
-                    "examples": []
-                }
-            },
-            "variations": []
         }
     ],
     "-rà": [
@@ -70066,7 +70064,7 @@
                 },
                 "-ràpù": {
                     "definitions": [
-                      "leave; abandon; give up; release grip on; release; leave alone; allow; permit; omit; spare",
+                      "leave; abandon; give up; release grip on; release; leave alone; allow; permit; omit; spare"
                     ],
                     "examples": [
                       "Bikō rapū m aka Please let me go, or, Please leave me alone",
@@ -70078,7 +70076,6 @@
                 },
                 "-rà": {
                   "definitions": [
-                    "leave; abandon; give up; release grip on; release; leave alone; allow; permit; omit; spare",
                   ],
                   "examples": [
                     "Bikō rapū m aka Please let me go, or, Please leave me alone",
@@ -70090,7 +70087,7 @@
                 },
                 "-ràlụ": {
                   "definitions": [
-                    "leave; abandon; give up; release grip on; release; leave alone; allow; permit; omit; spare",
+                    "leave; abandon; give up; release grip on; release; leave alone; allow; permit; omit; spare"
                   ],
                   "examples": [
                     "Bikō rapū m aka Please let me go, or, Please leave me alone",
@@ -81066,7 +81063,7 @@
                 "(òlù ụla) -tụ": {
                     "definitions": [
                         "slumber; doze",
-                        "sleeping sickness; trypasonomiasis",
+                        "sleeping sickness; trypasonomiasis"
                     ],
                     "examples": [
                         "Ị dì kà onye òlù ụla nà-ème You look like someone suffering from sleeping sickness"
