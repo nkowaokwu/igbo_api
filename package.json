@@ -4,17 +4,18 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
-    "start:database": "mongod --dbpath ./db",
-    "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./src/server.js",
     "build": "rm -rf build/ && ./node_modules/.bin/babel -d build/ ./src -s && NODE_ENV=build yarn build:dictionaries",
-    "start": "node ./build/server.js",
+    "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
+    "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log",
     "dev": "npm-run-all -p start:database start:server",
-    "build:dictionaries": "babel-node src/dictionaries/parseAndBuild.js",
-    "precommit": "lint-staged",
+    "mongodump": "mongodump -d igbo_api -o dump",
     "mocha": "NODE_ENV=test mocha -r esm ./tests",
-    "test": "npm-run-all -p -r start:database mocha",
-    "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log"
+    "precommit": "lint-staged",
+    "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
+    "start": "node ./build/server.js",
+    "start:server": "NODE_ENV=dev nodemon --exec babel-node -- ./src/server.js",
+    "start:database": "mongod --dbpath ./db",
+    "test": "npm-run-all -p -r start:database mocha"
   },
   "engines": {
     "node": ">=10.0.0"
