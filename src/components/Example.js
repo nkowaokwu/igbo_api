@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { ExamplePropTypes } from '../utils/PropTypeShapes';
 
 const Example = ({ example }) => (
   <div>
@@ -8,7 +8,7 @@ const Example = ({ example }) => (
 );
 
 Example.propTypes = {
-  example: PropTypes.object,
+  example: ExamplePropTypes,
 };
 
 Example.defaultProps = {

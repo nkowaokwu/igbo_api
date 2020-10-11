@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { map } from 'lodash';
+import { WordPropTypes } from '../utils/PropTypeShapes';
 import Example from './Example';
 import Phrase from './Phrase';
 import AudioButton from './AudioButton';
@@ -42,7 +42,7 @@ const Word = ({ word }) => (
 );
 
 Word.propTypes = {
-  word: PropTypes.object,
+  word: WordPropTypes,
 };
 
 Word.defaultProps = {

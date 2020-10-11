@@ -18,7 +18,6 @@
         "eslint-plugin-import"
     ],
     "rules": {
-      "react/jsx-filename-extension": "off",
-      "react/forbid-prop-types": "warn"
+      "react/jsx-filename-extension": "off"
     }
 }
