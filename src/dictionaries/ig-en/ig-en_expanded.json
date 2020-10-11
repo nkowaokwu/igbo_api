@@ -331,7 +331,7 @@
             "wordClass": "noun",
             "definitions": [
                 "plant resembling aŋā, used for its fibres",
-                "B. the rope made from it"
+                "the rope made from it"
             ],
             "examples": [],
             "phrases": {},
@@ -407,7 +407,7 @@
                 "abù akwā": {
                     "definitions": [
                         "song (esp Song of Solomon)",
-                        "B. mourning song"
+                        "mourning song"
                     ],
                     "examples": []
                 },
@@ -628,7 +628,7 @@
             "wordClass": "noun",
             "definitions": [
                 "biscuit; cake;",
-                "B. dried food (prepared by boiling plantain or banana and cutting it up into small bits, after removing the skin, and drying it in sun. In the dry form this is stored in a bag and preserved in ùko till used. It is then measured out like beans and steeped in water for a few minutes, removed and wrapped in balls with leaves and boiled. It is then emptied on to boiled pieces of yam or cocoyam, sometimes with vegetables added, and stirred and rolled thoroughly with other ingredients - pepper, oil, etc. - and served)"
+                "dried food (prepared by boiling plantain or banana and cutting it up into small bits, after removing the skin, and drying it in sun. In the dry form this is stored in a bag and preserved in ùko till used. It is then measured out like beans and steeped in water for a few minutes, removed and wrapped in balls with leaves and boiled. It is then emptied on to boiled pieces of yam or cocoyam, sometimes with vegetables added, and stirred and rolled thoroughly with other ingredients - pepper, oil, etc. - and served)"
             ],
             "examples": [],
             "phrases": {},
@@ -640,7 +640,7 @@
             "wordClass": "noun",
             "definitions": [
                 "a warlike people living to the north of the Ọhafịa, who traditionally acted as head-hunting mercenaries to the Nike and the Arụ",
-                "B. a feast, celebrated to commemorate a victory of Onitsha North people over the Ada, in which large numbers of small masquerades throw sticks and stones at people"
+                "a feast, celebrated to commemorate a victory of Onitsha North people over the Ada, in which large numbers of small masquerades throw sticks and stones at people"
             ],
             "examples": [],
             "phrases": {},
@@ -731,7 +731,7 @@
                 "Nwaāda": {
                     "definitions": [
                         "same as àda (for petting)",
-                        "B. female name"
+                        "female name"
                     ],
                     "examples": []
                 },
@@ -1141,7 +1141,7 @@
                 "-sù afịa": {
                     "definitions": [
                         "flood the market (of excess commodity) The shoes I bought from Aba last month were sold at a loss",
-                        "B. (fig., of person) be useless"
+                        "(fig., of person) be useless"
                     ],
                     "examples": [
                         "Azù sùlù afịa The market is flooded with fish",
@@ -1348,7 +1348,7 @@
                 "-nupù afọ": {
                     "definitions": [
                         "act as purgative;",
-                        "B. have swollen belly"
+                        "have swollen belly"
                     ],
                     "examples": []
                 },
@@ -1550,7 +1550,7 @@
                 "afụfụ mmụọ": {
                     "definitions": [
                         "punishment in underworld",
-                        "B. very severe punishment or trouble"
+                        "very severe punishment or trouble"
                     ],
                     "examples": []
                 },
@@ -1644,7 +1644,7 @@
             "wordClass": "noun",
             "definitions": [
                 "lion",
-                "B. name of masquerade"
+                "name of masquerade"
             ],
             "examples": [],
             "phrases": {},
@@ -1709,7 +1709,7 @@
             "wordClass": "noun",
             "definitions": [
                 "false thistle (Acanthus montanus T. Anders.)",
-                "B. name of a masquerade"
+                "name of a masquerade"
             ],
             "examples": [],
             "phrases": {},
@@ -1820,7 +1820,7 @@
                 "agụ atā": {
                     "definitions": [
                         "jackal-like animal",
-                        "B. name of a town (literally leopard of the wilderness)"
+                        "name of a town (literally leopard of the wilderness)"
                     ],
                     "examples": []
                 },
@@ -2073,15 +2073,15 @@
             "wordClass": "noun",
             "definitions": [
                 "the author of fertility, one of the manifestations of Chukwu Òkìke, Creator",
-                "B. male name",
-                "C. child (usually male) whose pregnancy and delivery was made possible by Agbala"
+                "child (usually male) whose pregnancy and delivery was made possible by Agbala",
+                "male name"
             ],
             "examples": [],
             "phrases": {
                 "-do Agbàlà": {
                     "definitions": [
                         "perform routine sacrifice to Agbala",
-                        "B. swear blood-brotherhood; make covenant (between two or more parties) vowing not to do anything to endanger either party’s life safety, etc."
+                        "swear blood-brotherhood; make covenant (between two or more parties) vowing not to do anything to endanger either party’s life safety, etc."
                     ],
                     "examples": []
                 },
@@ -2160,7 +2160,7 @@
             "wordClass": "noun",
             "definitions": [
                 "a god",
-                "B. male name"
+                "male name"
             ],
             "examples": [],
             "phrases": {},
@@ -2361,11 +2361,11 @@
                 },
                 "-ke agbụ": {
                     "definitions": [
-                        "bind"
+                        "bind",
+                        "rope used for climbing, made from ngwò fronds"
                     ],
                     "examples": [
-                        "O kèlù yà agbụ He bound him",
-                        "B. rope used for climbing, made from ngwò fronds"
+                        "O kèlù yà agbụ He bound him"
                     ]
                 }
             },
@@ -2485,7 +2485,7 @@
                 "òchì agha": {
                     "definitions": [
                         "military officer, leader; commanding officer",
-                        "B. a male name"
+                        "male name"
                     ],
                     "examples": []
                 }
@@ -2681,7 +2681,7 @@
             "wordClass": "noun",
             "definitions": [
                 "raffia",
-                "B. raffia dancing-skirt used by masquerades"
+                "raffia dancing-skirt used by masquerades"
             ],
             "examples": [],
             "phrases": {},
@@ -3030,10 +3030,12 @@
             "wordClass": "noun",
             "definitions": [
                 "smooth pebble",
-                "B. (fig.) strong and wiry",
-                "Ọ bù ajịlịja mmadù/Ọ dì ajịlịja n’anya He is strong and wiry"
+                "(fig.) strong and wiry"
+                
             ],
-            "examples": [],
+            "examples": [
+              "Ọ bù ajịlịja mmadù/Ọ dì ajịlịja n’anya He is strong and wiry"
+            ],
             "phrases": {},
             "variations": []
         }
@@ -3244,7 +3246,7 @@
                 "aka ebē": {
                     "definitions": [
                         "witness; surety",
-                        "B. pledge"
+                        "pledge"
                     ],
                     "examples": [
                         "Ọ bù onye aka ebē m He is my witness",
@@ -3266,8 +3268,8 @@
                 "aka ikē": {
                     "definitions": [
                         "stinginess",
-                        "B. rigid discipline",
-                        "C. force; violence"
+                        "rigid discipline",
+                        "force; violence"
                     ],
                     "examples": []
                 },
@@ -3422,7 +3424,7 @@
                 "-chịni aka": {
                     "definitions": [
                         "lift up hands",
-                        "B. take the hands off; desist from"
+                        "take the hands off; desist from"
                     ],
                     "examples": []
                 },
@@ -3483,7 +3485,7 @@
                 "-gba aka": {
                     "definitions": [
                         "snap fingers to show interest",
-                        "B. be empty-handed empty-handed"
+                        "be empty-handed empty-handed"
                     ],
                     "examples": [
                         "Agà m àgba akā je be ezè I shall go to the King’s house"
@@ -3817,7 +3819,7 @@
                 "-bitè aka": {
                     "definitions": [
                         "live far away",
-                        "B. live for long"
+                        "live for long"
                     ],
                     "examples": []
                 },
@@ -4017,10 +4019,11 @@
             "wordClass": "noun",
             "definitions": [
                 "spirits of the dead of worthless people (see mmụō)",
-                "Ndị àkàloògòlì jì yà aka He is possessed by the spirits of worthless people",
-                "B. unambititious, easy-going, prodigal person"
+                "unambititious, easy-going, prodigal person"
             ],
-            "examples": [],
+            "examples": [
+              "Ndị àkàloògòlì jì yà aka He is possessed by the spirits of worthless people"
+            ],
             "phrases": {},
             "variations": []
         }
@@ -4204,7 +4207,7 @@
             "wordClass": "noun",
             "definitions": [
                 "peeling or scraping of roasted yam; food burnt in cooking",
-                "B. dry yam plant (external stem which looks like rope and which when twined into a bundle resembles a sponge, sometimes used for hard scrubbing)"
+                "dry yam plant (external stem which looks like rope and which when twined into a bundle resembles a sponge, sometimes used for hard scrubbing)"
             ],
             "examples": [],
             "phrases": {},
@@ -4494,7 +4497,7 @@
                         "fable; myth"
                     ],
                     "examples": [
-                        "B. true narrative; history (as opposed to akụkọ irò)"
+                        "true narrative; history (as opposed to akụkọ irò)"
                     ]
                 }
             },
@@ -4655,8 +4658,8 @@
                 "àkpà egō": {
                     "definitions": [
                         "purse",
-                        "B. 24,000 cowries (= 20 akwà)",
-                        "C. a hundred pounds"
+                        "24,000 cowries (= 20 akwà)",
+                        "a hundred pounds"
                     ],
                     "examples": []
                 },
@@ -4906,7 +4909,7 @@
                         "goitre"
                     ],
                     "examples": [
-                        "B. desire; greed; lust"
+                        "desire; greed; lust"
                     ]
                 },
                 "àkpịlī ịkpō nkụ": {
@@ -5220,7 +5223,7 @@
                 "abù akwā": {
                     "definitions": [
                         "song (especially Song of Solomon)",
-                        "B. mourning song"
+                        "mourning song"
                     ],
                     "examples": []
                 },
@@ -5548,7 +5551,7 @@
             "wordClass": "noun",
             "definitions": [
                 "vein; sinew; muscle",
-                "B. fibres from raphia palm; rope made from them (also akwalà ngwò)"
+                "fibres from raphia palm; rope made from them (also akwalà ngwò)"
             ],
             "examples": [],
             "phrases": {
@@ -5567,7 +5570,7 @@
             "wordClass": "noun",
             "definitions": [
                 "creeping plant in the bush, whose vines can be made into strings (Landolphia dulcis)",
-                "B. a charm, made of the strings of àkwalī A. or akwūlu to increase fruitfulness (òmùmù). It can be for a whole village or family, or for an individual woman (àkwalị nwaànyì)"
+                "a charm, made of the strings of àkwalī A. or akwūlu to increase fruitfulness (òmùmù). It can be for a whole village or family, or for an individual woman (àkwalị nwaànyì)"
             ],
             "examples": [],
             "phrases": {},
@@ -5714,11 +5717,10 @@
                 },
                 "mkpa ākwụkwọ": {
                     "definitions": [
-                        "(shed) leaves"
+                        "(shed) leaves",
+                        "book; paper; letter"
                     ],
-                    "examples": [
-                        "B. book; paper; letter"
-                    ]
+                    "examples": []
                 },
                 "akwụkwọ īwu": {
                     "definitions": [
@@ -5781,7 +5783,7 @@
                 "-delụ akwụkwọ": {
                     "definitions": [
                         "write (letter) to",
-                        "B. help in writing a letter (or, write for him)"
+                        "help in writing a letter (or, write for him)"
                     ],
                     "examples": [
                         "Anà m àchọ idēlụ ya akwụkwọ I am preparing to write him"
@@ -6024,7 +6026,7 @@
                 "-sa ala": {
                     "definitions": [
                         "wash breasts, especially of a newly delivered mother, to induce breast milk",
-                        "B. artificially induce the breasts of a non-pregnant woman to begin to produce milk by washing with a certain native medicine preparation. This is usually done when the mother of a sucking infant dies, or when the child is taken from her on medical grounds, etc. A healthy woman is asked to take up the infant’s breast-feeding. Her breasts are then medicinally washed to induce milk"
+                        "artificially induce the breasts of a non-pregnant woman to begin to produce milk by washing with a certain native medicine preparation. This is usually done when the mother of a sucking infant dies, or when the child is taken from her on medical grounds, etc. A healthy woman is asked to take up the infant’s breast-feeding. Her breasts are then medicinally washed to induce milk"
                     ],
                     "examples": []
                 },
@@ -6201,7 +6203,7 @@
             "wordClass": "noun",
             "definitions": [
                 "spear used by titled men for ceremonies (= ubē ǹzè)",
-                "B. (in Nri) staff symbolizing the power which a lineage received from Chukwu during its creation"
+                "(in Nri) staff symbolizing the power which a lineage received from Chukwu during its creation"
             ],
             "examples": [],
             "phrases": {},
@@ -6942,7 +6944,7 @@
                 "ànị mmadù": {
                     "definitions": [
                         "foreign country; another person’s land",
-                        "B. land of the living (opposed to ànì mmụọ)"
+                        "land of the living (opposed to ànì mmụọ)"
                     ],
                     "examples": []
                 },
@@ -6999,7 +7001,7 @@
                 "ànì ọcha": {
                     "definitions": [
                         "dry land, not overflowed in wet season",
-                        "B. Igbo land"
+                        "Igbo land"
                     ],
                     "examples": []
                 },
@@ -7284,7 +7286,7 @@
                 "ùsọ ànì": {
                     "definitions": [
                         "boundary (of farmland)",
-                        "B. bank of river"
+                        "bank of river"
                     ],
                     "examples": []
                 },
@@ -7296,11 +7298,10 @@
                 },
                 "-wedàta ànì": {
                     "definitions": [
-                        "bring down; humble; humiliate"
+                        "bring down; humble; humiliate",
+                        "Ànì, Ànà the Earth Spirit, regarded as the mother of all men, the queen of the underworld, and the custodian of public morality"
                     ],
-                    "examples": [
-                        "B. Ànì, Ànà the Earth Spirit, regarded as the mother of all men, the queen of the underworld, and the custodian of public morality"
-                    ]
+                    "examples": []
                 },
                 "Ajaànà": {
                     "definitions": [
@@ -7457,7 +7458,7 @@
                 "anụ ọfīa": {
                     "definitions": [
                         "wild animal",
-                        "B. (fig.) any person who behaves like an animal; foolish person"
+                        "(fig.) any person who behaves like an animal; foolish person"
                     ],
                     "examples": []
                 },
@@ -7530,7 +7531,7 @@
             "wordClass": "noun",
             "definitions": [
                 "female tortoise",
-                "B. wife of Tortoise in fables"
+                "wife of Tortoise in fables"
             ],
             "examples": [],
             "phrases": {},
@@ -7757,7 +7758,7 @@
             "wordClass": "noun",
             "definitions": [
                 "smoke",
-                "B. tobacco; cigarette; cigar; tobacco snuff (compare ùtabà)"
+                "tobacco; cigarette; cigar; tobacco snuff (compare ùtabà)"
             ],
             "examples": [],
             "phrases": {
@@ -7878,8 +7879,8 @@
                 "anya ọkū": {
                     "definitions": [
                         "disease of the eye",
-                        "B. fierceness of aspect",
-                        "C. jealousy; envy (literally fiery eyes)"
+                        "fierceness of aspect",
+                        "jealousy; envy (literally fiery eyes)"
                     ],
                     "examples": []
                 },
@@ -8367,7 +8368,7 @@
                 "iru anyaanwū": {
                     "definitions": [
                         "sun",
-                        "B. sky (= iru igwē)"
+                        "sky (= iru igwē)"
                     ],
                     "examples": [
                         "Iru anyaanwū dì njọ The sky is cloudy"
@@ -8381,10 +8382,10 @@
                 },
                 "òwụwa anyaanwū": {
                     "definitions": [
-                        "sunrise; East"
+                        "sunrise; East",
+                        "the sun, regarded as a manifestation or son of Chukwu, the author of light and knowledge"
                     ],
                     "examples": [
-                        "B. the sun, regarded as a manifestation or son of Chukwu, the author of light and knowledge",
                         "Chèe irū n’anyaanwū, sìị ‘Anyaanwū nà Agbàlà’ Face the sun, saying, ‘Sun and Agbala’ (in sacrifice) (anya 1. eye + anwū 1. sunshine)"
                     ]
                 }
@@ -8870,7 +8871,7 @@
             "wordClass": "verb",
             "definitions": [
                 "be many, plenty, much, abundant, numerous; increase in number; multiply",
-                "B. grow rich, wealthy"
+                "grow rich, wealthy"
             ],
             "examples": [],
             "phrases": {
@@ -8913,7 +8914,7 @@
                 "-ba ùba": {
                     "definitions": [
                         "be many; multiply; increase",
-                        "B. be rich, wealthy"
+                        "be rich, wealthy"
                     ],
                     "examples": [
                         "Umù ya bàlù ùba He has many children",
@@ -8931,7 +8932,7 @@
                 "ùba": {
                     "definitions": [
                         "plentifulness; increase",
-                        "B. wealth; riches (compare àkù)"
+                        "wealth; riches (compare àkù)"
                     ],
                     "examples": []
                 }
@@ -9101,7 +9102,7 @@
                 "-bàkọ": {
                     "definitions": [
                         "enter together",
-                        "B. be about to enter"
+                        "be about to enter"
                     ],
                     "examples": []
                 },
@@ -9711,7 +9712,7 @@
                 "-bitè aka": {
                     "definitions": [
                         "live far away",
-                        "B. live for long"
+                        "live for long"
                     ],
                     "examples": []
                 }
@@ -9823,11 +9824,10 @@
                 },
                 "-bì nkenke": {
                     "definitions": [
-                        "shorten (a speech)"
+                        "shorten (a speech)",
+                        "terminate; bring to an end"
                     ],
-                    "examples": [
-                        "B. terminate; bring to an end"
-                    ]
+                    "examples": []
                 },
                 "-bì okwu": {
                     "definitions": [
@@ -10078,7 +10078,7 @@
                 "arō nā-abịa": {
                     "definitions": [
                         "next year (compare arō òzọ)",
-                        "B. coming year(s)"
+                        "coming year(s)"
                     ],
                     "examples": []
                 },
@@ -10317,11 +10317,10 @@
                 },
                 "-bọlì": {
                     "definitions": [
-                        "divide into small pieces"
+                        "divide into small pieces",
+                        "pull apart"
                     ],
-                    "examples": [
-                        "B. pull apart"
-                    ]
+                    "examples": []
                 },
                 "-bòcha": {
                     "definitions": [
@@ -10498,7 +10497,7 @@
                 "-bulu n’isi": {
                     "definitions": [
                         "carry on head",
-                        "B. undertake"
+                        "undertake"
                     ],
                     "examples": []
                 },
@@ -10531,8 +10530,8 @@
                 "-bu n’isi": {
                     "definitions": [
                         "be youthful, in one’s prime",
-                        "B. know by heart",
-                        "C. be responsible"
+                        "know by heart",
+                        "be responsible"
                     ],
                     "examples": [
                         "O bù ume n’isi He is in the bloom of youth"
@@ -10559,7 +10558,7 @@
                 "-bupùte": {
                     "definitions": [
                         "carry out (object)",
-                        "B. bring out, display (e.g. dance)"
+                        "bring out, display (e.g. dance)"
                     ],
                     "examples": []
                 },
@@ -11116,10 +11115,10 @@
                 },
                 "òcha": {
                     "definitions": [
-                        "whiteness; light colour"
+                        "whiteness; light colour",
+                        "be(come) ripe, as shown by change of colour (of fruit, e.g. orange, banana; contrast -ka, ripen or mature by getting hard, as maize)"
                     ],
                     "examples": [
-                        "B. be(come) ripe, as shown by change of colour (of fruit, e.g. orange, banana; contrast -ka, ripen or mature by getting hard, as maize)",
                         "Ọ nà-àcha ācha It is ripening (and changing colour)"
                     ]
                 },
@@ -11401,11 +11400,10 @@
         {
             "wordClass": "",
             "definitions": [
-                "small edible dark-brown fruits which grow in clusters"
+                "small edible dark-brown fruits which grow in clusters",
+                "charcoal made from it"
             ],
-            "examples": [
-                "B. charcoal made from it"
-            ],
+            "examples": [],
             "phrases": {
                 "ichēku oyìbo": {
                     "definitions": [
@@ -11529,7 +11527,7 @@
                 "-che ǹdò": {
                     "definitions": [
                         "act as regent; administer during interregnum",
-                        "B. give shade"
+                        "give shade"
                     ],
                     "examples": []
                 },
@@ -11788,11 +11786,10 @@
                 },
                 "ògbụ chī": {
                     "definitions": [
-                        "fig-tree planted near dwelling to represent one's chi"
+                        "fig-tree planted near dwelling to represent one's chi",
+                        "(specifically and more particularly) life-essence of the universe; God"
                     ],
-                    "examples": [
-                        "B. (specifically and more particularly) life-essence of the universe; God"
-                    ]
+                    "examples": []
                 },
                 "Chi ọma": {
                     "definitions": [
@@ -12335,11 +12332,10 @@
                 },
                 "-chịta": {
                     "definitions": [
-                        "bring (several things)"
+                        "bring (several things)",
+                        "lead; be the leader (e.g. of a group)"
                     ],
-                    "examples": [
-                        "B. lead; be the leader (e.g. of a group)"
-                    ]
+                    "examples": []
                 },
                 "-chị ụmù": {
                     "definitions": [
@@ -12543,10 +12539,10 @@
                 },
                 "-chọ ụla": {
                     "definitions": [
-                        "go and sleep with friend or relative"
+                        "go and sleep with friend or relative",
+                        "be in season, on heat (of animals) Ewu Ndù àchọgo; a gà-àkpụgalụ yā mkpi Ndụ's goat is on"
                     ],
                     "examples": [
-                        "B. be in season, on heat (of animals) Ewu Ndù àchọgo; a gà-àkpụgalụ yā mkpi Ndụ's goat is on",
                         "heat; it will be taken to a he-goat"
                     ]
                 }
@@ -13554,15 +13550,17 @@
                 },
                 "-delụ akwụkwọ,": {
                     "definitions": [
-                        "write (letter) to"
+                      "write (letter) to",
+                      "help to write a letter"
                     ],
                     "examples": []
                 },
                 "letà": {
-                    "definitions": [],
-                    "examples": [
-                        "B. help to write a letter"
-                    ]
+                    "definitions": [
+                      "write (letter) to",
+                      "help to write a letter"
+                    ],
+                    "examples": []
                 },
                 "-denye": {
                     "definitions": [
@@ -15842,11 +15840,11 @@
             "phrases": {
                 "ụmù nnà": {
                     "definitions": [
-                        "(patrilineage); sublineage"
+                        "(patrilineage); sublineage",
+                        "(= ogbè) ‘village’; a constituent part of a ‘quarter’ which is itself part of a ‘town’ (òbòdò), containing a number of patrileages (ụmù nnà)"
                     ],
                     "examples": [
-                        "Ebo unù bù gịnī? What is your special sublineage?",
-                        "B. (= ogbè) ‘village’; a constituent part of a ‘quarter’ which is itself part of a ‘town’ (òbòdò), containing a number of patrileages (ụmù nnà)"
+                        "Ebo unù bù gịnī? What is your special sublineage?"
                     ]
                 },
                 "Ònìchà Ebo": {
@@ -16558,7 +16556,7 @@
                 "àkpà egō": {
                     "definitions": [
                         "purse",
-                        "B. a hundred pounds"
+                        "a hundred pounds"
                     ],
                     "examples": []
                 },
@@ -16577,7 +16575,7 @@
                 "isi egō": {
                     "definitions": [
                         "unit of six cowries (= èkpète)",
-                        "B. capital"
+                        "capital"
                     ],
                     "examples": []
                 },
@@ -16633,7 +16631,7 @@
             "wordClass": "noun",
             "definitions": [
                 "hawk; kite",
-                "B. rogue (slang)"
+                "rogue (slang)"
             ],
             "examples": [],
             "phrases": {},
@@ -16845,7 +16843,7 @@
             "wordClass": "noun",
             "definitions": [
                 "drum",
-                "B. dance; play; entertainment"
+                "dance; play; entertainment"
             ],
             "examples": [],
             "phrases": {
@@ -16936,7 +16934,7 @@
             "wordClass": "noun",
             "definitions": [
                 "fear",
-                "B. fearful, terrible or fierce-looking thing; dangerous thing"
+                "fearful, terrible or fierce-looking thing; dangerous thing"
             ],
             "examples": [],
             "phrases": {
@@ -17125,7 +17123,7 @@
             "wordClass": "noun",
             "definitions": [
                 "a divinity",
-                "B. ekè good luck, fortune"
+                "ekè good luck, fortune"
             ],
             "examples": [],
             "phrases": {},
@@ -17203,7 +17201,7 @@
             "wordClass": "noun",
             "definitions": [
                 "adornment of the body",
-                "B. tie; belt; girdle"
+                "tie; belt; girdle"
             ],
             "examples": [],
             "phrases": {},
@@ -17566,7 +17564,7 @@
             "wordClass": "noun",
             "definitions": [
                 "the malevolent spirits of those who have died a 'bad death' and cannot reincarnate; malevolent non-human spirits; (Christian usage) the devil",
-                "B. (fig.) a person who causes confusion and havoc"
+                "(fig.) a person who causes confusion and havoc"
             ],
             "examples": [],
             "phrases": {},
@@ -17813,7 +17811,7 @@
                 "-pu elō": {
                     "definitions": [
                         "grow fungus",
-                        "B. (fig.) live for ever"
+                        "(fig.) live for ever"
                     ],
                     "examples": []
                 }
@@ -17835,7 +17833,7 @@
             "wordClass": "noun",
             "definitions": [
                 "North (borrowed from Central Igbo)",
-                "B. (fig.) very far away"
+                "(fig.) very far away"
             ],
             "examples": [],
             "phrases": {},
@@ -18703,11 +18701,10 @@
                 },
                 "-zọ ezè": {
                     "definitions": [
-                        "contest for chieftancy title"
+                        "contest for chieftancy title",
+                        "(fig.) the best or chief of its kind"
                     ],
-                    "examples": [
-                        "B. (fig.) the best or chief of its kind"
-                    ]
+                    "examples": []
                 },
                 "ezè anụmànù": {
                     "definitions": [
@@ -19225,10 +19222,10 @@
                 },
                 "ụgbọ nā-efe ēfe": {
                     "definitions": [
-                        "aeroplane"
+                        "aeroplane",
+                        "blow (of wind); fan; flutter; wave; flap"
                     ],
                     "examples": [
-                        "B. blow (of wind); fan; flutter; wave; flap",
                         "Ufèlè nà-èfe ēfe The wind is blowing",
                         "Ibe akwà nà-èfe n’ìkùkù The cloth is fluttering in the breeze"
                     ]
@@ -19296,7 +19293,7 @@
                 "-fe mmilī": {
                     "definitions": [
                         "drive away rain",
-                        "B. sprinkle water"
+                        "sprinkle water"
                     ],
                     "examples": []
                 },
@@ -19850,11 +19847,10 @@
                 },
                 "chi ōfifo, ōfufo": {
                     "definitions": [
-                        "period of daybreak as light grows stronger"
+                        "period of daybreak as light grows stronger",
+                        "be open, clear"
                     ],
-                    "examples": [
-                        "B. be open, clear"
-                    ]
+                    "examples": []
                 },
                 "-focha": {
                     "definitions": [
@@ -20296,7 +20292,7 @@
                 "-fụju anya": {
                     "definitions": [
                         "toil, suffer greatly",
-                        "B. be horrified, as by an abomination horrified by what is happening now"
+                        "be horrified, as by an abomination horrified by what is happening now"
                     ],
                     "examples": [
                         "Ndị mmadù àfụjugo anya n’ife nā-eme kịtāà People are"
@@ -20588,11 +20584,10 @@
                 },
                 "-gazù": {
                     "definitions": [
-                        "go through"
+                        "go through",
+                        "be beyond; be farther off"
                     ],
-                    "examples": [
-                        "B. be beyond; be farther off"
-                    ]
+                    "examples": []
                 },
                 "-gabìga": {
                     "definitions": [
@@ -21178,11 +21173,10 @@
                 },
                 "-gba ụgbọ": {
                     "definitions": [
-                        "go in a vehicle"
+                        "go in a vehicle",
+                        "move (as liquid) (1) flow, run (liquid as subject)"
                     ],
-                    "examples": [
-                        "B. move (as liquid) (1) flow, run (liquid as subject)"
-                    ]
+                    "examples": []
                 },
                 "-gbacha": {
                     "definitions": [
@@ -21253,7 +21247,7 @@
                 "-gba mmilī": {
                     "definitions": [
                         "pour water on (fainting or shocked persons as treatment)",
-                        "B. bring out water, sap, etc. (as tree) flowers the person who has fallen from a height am hurrying to bring water to be poured on a person who has fallen from a height"
+                        "bring out water, sap, etc. (as tree) flowers the person who has fallen from a height am hurrying to bring water to be poured on a person who has fallen from a height"
                     ],
                     "examples": [
                         "Achòlù m kà ị gbaa òdòdo mmilī I want you to water the",
@@ -21567,12 +21561,12 @@
             "phrases": {
                 "-gba ọkụ": {
                     "definitions": [
-                        "burn (1) trans."
+                        "burn (1) trans.",
+                        "(combined with another verb) make bright; do thoroughly"
                     ],
                     "examples": [
                         "ị gà-àgba ụnò ọkụ ọ bụlụ nà ị kpāchàpùrò anya You will burn (set fire to) the house if you are not careful (2) intrans.",
                         "Ụnò nà-àgba ọkū The house is burning (on fire)",
-                        "B. (combined with another verb) make bright; do thoroughly",
                         "Achò m kà i figbaa akpụkpọ ụkwū afù èfigbaa I want you to give those shoes a thorough polishing"
                     ]
                 },
@@ -21628,10 +21622,13 @@
                 },
                 "-gba ngò": {
                     "definitions": [
-                        "B. be crooked, wrong, false approaching me for my daughter (whom you want me to give you in marriage) is wrong. (Lit. The way through which you come for my daughter is crooked)"
+                        "be bent, crooked, curved",
+                        "be crooked, wrong, false"
                     ],
                     "examples": [
-                        "Ụzō gbālụ ngò kà i sì àbịa okwu nwā m The way you are",
+                        "Mkpịsīǹke à gbàlù ngò n’ọnū This spike is bent towards the tip",
+                        "ǹke à bù ụzō gbālụ ngò This is a crooked path",
+                        "Ụzō gbālụ ngò kà i sì àbịa okwu nwā m The way you are approaching me for my daughter (whom you want me to give you in marriage) is wrong. (Lit. The way through which you come for my daughter is crooked)",
                         "Òmùme afù gbàlù ngò That deed is wrong"
                     ]
                 },
@@ -22450,10 +22447,10 @@
                 },
                 "-gbàgha": {
                     "definitions": [
-                        "turn round (especially of a boat)"
+                        "turn round (especially of a boat)",
+                        "spread (across, as mat, cloth, etc.); lie (across)"
                     ],
                     "examples": [
-                        "B. spread (across, as mat, cloth, etc.); lie (across)",
                         "Achòlù m kà ị gbàa akwà n’enu àkwà I want you to spread cloth on the bed"
                     ]
                 },
@@ -22520,7 +22517,7 @@
                 "mgbàkọ": {
                     "definitions": [
                         "joining; seam; collection; joining together, gathering, flowing together (of liquids)",
-                        "B. arithmetic; addition"
+                        "arithmetic; addition"
                     ],
                     "examples": []
                 },
@@ -22541,11 +22538,11 @@
                 },
                 "-gbànye": {
                     "definitions": [
-                        "reckon with; regard; care for; consider (as important)"
+                        "reckon with; regard; care for; consider (as important)",
+                        "mate (mammals); wed; marry"
                     ],
                     "examples": [
-                        "Àgbanyèrò m yà n’ife I have no regard for him or I do not consider him/it important",
-                        "B. mate (mammals); wed; marry"
+                        "Àgbanyèrò m yà n’ife I have no regard for him or I do not consider him/it important"
                     ]
                 },
                 "-gbà akwụkwọ": {
@@ -22665,11 +22662,10 @@
                 },
                 "-gbà ume": {
                     "definitions": [
-                        "encourage (literally strengthen the heart)"
+                        "encourage (literally strengthen the heart)",
+                        "be so many years old, ago"
                     ],
-                    "examples": [
-                        "B. be so many years old, ago"
-                    ]
+                    "examples": []
                 },
                 "-gbà arò": {
                     "definitions": [
@@ -22996,11 +22992,10 @@
                 },
                 "Ànìegbòka": {
                     "definitions": [
-                        "person's name (literally the land has offered very formidable protection)"
+                        "person's name (literally the land has offered very formidable protection)",
+                        "cover in order to prevent; cover"
                     ],
-                    "examples": [
-                        "B. cover in order to prevent; cover"
-                    ]
+                    "examples": []
                 },
                 "-gbò akwà": {
                     "definitions": [
@@ -23172,7 +23167,7 @@
                 "-gbọkàpù": {
                     "definitions": [
                         "cut up meat",
-                        "B. prune (tree); break off with force (e.g. as tree branch breaking during a storm)"
+                        "prune (tree); break off with force (e.g. as tree branch breaking during a storm)"
                     ],
                     "examples": []
                 },
@@ -23338,7 +23333,7 @@
                 "-gbugwò": {
                     "definitions": [
                         "cut open (of pot or pot-like object, e.g. coconut, or something breakable, e.g. plate, with knife or matchet) break that coconut (by cutting)",
-                        "B. till (something hard)"
+                        "till (something hard)"
                     ],
                     "examples": [
                         "Àchọrō m kà i gbugwòo akụ oyìbo afù I do not want you to"
@@ -23470,11 +23465,10 @@
                 },
                 "ògbu mmādù": {
                     "definitions": [
-                        "‘man-killer’; a much-coveted honour in the olden days conferred on anyone who possessed a human head"
+                        "‘man-killer’; a much-coveted honour in the olden days conferred on anyone who possessed a human head",
+                        "intoxicate"
                     ],
-                    "examples": [
-                        "B. intoxicate"
-                    ]
+                    "examples": []
                 },
                 "(mmanya) -gbu": {
                     "definitions": [
@@ -23720,7 +23714,7 @@
                 "-gbụ àgbụ": {
                     "definitions": [
                         "be slippery, slip on or off (of rings, bracelets)",
-                        "B. be shed (leaves)"
+                        "be shed (leaves)"
                     ],
                     "examples": []
                 },
@@ -23930,11 +23924,10 @@
                 },
                 "onye nghagbu": {
                     "definitions": [
-                        "a trickster"
+                        "a trickster",
+                        "toss about before dying"
                     ],
-                    "examples": [
-                        "B. toss about before dying"
-                    ]
+                    "examples": []
                 },
                 "-ghaghalị": {
                     "definitions": [
@@ -23956,11 +23949,10 @@
                 },
                 "àma ūgha": {
                     "definitions": [
-                        "false witness"
+                        "false witness",
+                        "followed by -lị, used as suffix meaning about'"
                     ],
-                    "examples": [
-                        "B. followed by -lị, used as suffix meaning ábout'"
-                    ]
+                    "examples": []
                 },
                 "-jeghalị": {
                     "definitions": [
@@ -24320,11 +24312,11 @@
                 },
                 "-ghọlụ = -ghọ": {
                     "definitions": [
-                        "catch"
+                        "catch",
+                        "pick, pluck fruit"
                     ],
                     "examples": [
-                        "Ghòlụ ife ọ nà-àchọ ịtūpùlù gị Catch what he is going to throw to you",
-                        "B. pick, pluck fruit"
+                        "Ghòlụ ife ọ nà-àchọ ịtūpùlù gị Catch what he is going to throw to you"
                     ]
                 },
                 "-ghọta": {
@@ -25958,11 +25950,11 @@
                 },
                 "-jide n’ibē": {
                     "definitions": [
-                        "hold as hostage"
+                        "hold as hostage",
+                        "bet"
                     ],
                     "examples": [
                         "E jìdèlù yà n’ibe He's a hostage",
-                        "B. bet",
                         "Ibē fìèlù m I lost the bet"
                     ]
                 },
@@ -26602,7 +26594,7 @@
                 "ife nsō": {
                     "definitions": [
                         "forbidden thing",
-                        "B. holy thing"
+                        "holy thing"
                     ],
                     "examples": []
                 },
@@ -27127,11 +27119,10 @@
                 },
                 "-sụ Ìgbò": {
                     "definitions": [
-                        "speak Igbo"
+                        "speak Igbo",
+                        "(when qualifying another noun) indigenous, as opposed to something of outside origin"
                     ],
-                    "examples": [
-                        "B. (when qualifying another noun) indigenous, as opposed to something of outside origin"
-                    ]
+                    "examples": []
                 },
                 "afā Ìgbò": {
                     "definitions": [
@@ -27211,7 +27202,7 @@
                 "Igwē ka Ànì": {
                     "definitions": [
                         "title for an Obi or Ezè",
-                        "B. name of a very notorious and powerful Igbo cult, with which many important Igbos were connected. It has been banned by legislation"
+                        "name of a very notorious and powerful Igbo cult, with which many important Igbos were connected. It has been banned by legislation"
                     ],
                     "examples": []
                 },
@@ -27238,7 +27229,7 @@
                 "enu igwē nà ùwà": {
                     "definitions": [
                         "heaven and earth",
-                        "B. title for a king or chief"
+                        "title for a king or chief"
                     ],
                     "examples": []
                 },
@@ -27322,7 +27313,7 @@
                 "Ìgwè bù ike": {
                     "definitions": [
                         "Union is strength",
-                        "B. Man’s name"
+                        "Man’s name"
                     ],
                     "examples": []
                 },
@@ -27521,8 +27512,8 @@
                 "aka ikē": {
                     "definitions": [
                         "rigid discipline",
-                        "B. stinginess",
-                        "C. force; violence enforces rigid discipline in his town"
+                        "stinginess",
+                        "force; violence enforces rigid discipline in his town"
                     ],
                     "examples": [
                         "Ezè afù jì aka ikē wèlu àchị ndi òbòdò ya The chief"
@@ -27531,7 +27522,7 @@
                 "anya ikē": {
                     "definitions": [
                         "boldness; greed; fearlessness",
-                        "B. axe"
+                        "axe"
                     ],
                     "examples": []
                 },
@@ -28554,12 +28545,11 @@
                 },
                 "n’ime ụnò": {
                     "definitions": [
-                        "inside the house"
+                        "inside the house",
+                        "out of (a number)",
+                        "pregnancy"
                     ],
-                    "examples": [
-                        "B. out of (a number)",
-                        "B. pregnancy"
-                    ]
+                    "examples": []
                 },
                 "ime òpùpù, òpùpù imē": {
                     "definitions": [
@@ -29046,7 +29036,7 @@
                 "iru anyanwū": {
                     "definitions": [
                         "sun",
-                        "B. sky"
+                        "sky"
                     ],
                     "examples": []
                 },
@@ -29249,7 +29239,7 @@
                 "ǹkè irū kà": {
                     "definitions": [
                         "that to come is greater",
-                        "B. personal name"
+                        "personal name"
                     ],
                     "examples": []
                 },
@@ -29273,10 +29263,10 @@
                 },
                 "òdìniiru": {
                     "definitions": [
-                        "that which is to come"
+                        "that which is to come",
+                        "cult of the face, symbolizing one's commanding personality"
                     ],
                     "examples": [
-                        "B. cult of the face, symbolizing one's commanding personality",
                         "and influence, symbolized by a wooden chalice"
                     ]
                 }
@@ -29511,7 +29501,7 @@
                 "-bu n’isi": {
                     "definitions": [
                         "be youthful, in one's prime",
-                        "B. know by heart"
+                        "know by heart"
                     ],
                     "examples": []
                 },
@@ -29686,7 +29676,7 @@
                 "okpokolo isī": {
                     "definitions": [
                         "skull, cranium",
-                        "B. (fig.) empty-headedness; foolishness"
+                        "(fig.) empty-headedness; foolishness"
                     ],
                     "examples": []
                 },
@@ -29737,7 +29727,7 @@
                 "òkpụ īsi": {
                     "definitions": [
                         "shaver; barber",
-                        "B. ringworm of the head (tinea capitis)"
+                        "ringworm of the head (tinea capitis)"
                     ],
                     "examples": [
                         "Òkpụ īsi adīrọ n’isi m#There is no ringworm on my scalp"
@@ -29927,7 +29917,7 @@
                 "òsi ìtè": {
                     "definitions": [
                         "cook",
-                        "B. metal cooking tripod"
+                        "metal cooking tripod"
                     ],
                     "examples": []
                 },
@@ -30180,12 +30170,11 @@
                 },
                 "òŋụŋụ iyī": {
                     "definitions": [
-                        "oath-taking"
+                        "oath-taking",
+                        "stone or any other article used in oath-taking",
+                        "swearing at (someone); abuse; insult; curse"
                     ],
-                    "examples": [
-                        "B. stone or any other article used in oath-taking",
-                        "C. swearing at (someone); abuse; insult; curse"
-                    ]
+                    "examples": []
                 },
                 "-kpò iyī": {
                     "definitions": [
@@ -30522,7 +30511,7 @@
                 "àda ìbà": {
                     "definitions": [
                         "daughter of the family",
-                        "B. female name"
+                        "female name"
                     ],
                     "examples": []
                 }
@@ -31652,11 +31641,10 @@
                 },
                 "Chi èjimìgo": {
                     "definitions": [
-                        "It is the dead of night (compare Chi èjigo Night has fallen (about 8 - 10 p.m.))"
+                        "It is the dead of night (compare Chi èjigo Night has fallen (about 8 - 10 p.m.))",
+                        "be black, dark (of colour)"
                     ],
-                    "examples": [
-                        "B. be black, dark (of colour)"
-                    ]
+                    "examples": []
                 },
                 "-ji eji": {
                     "definitions": [
@@ -31757,7 +31745,7 @@
                 "-jìkọta ọnū": {
                     "definitions": [
                         "join together",
-                        "B. maintain discipline"
+                        "maintain discipline"
                     ],
                     "examples": []
                 },
@@ -33030,7 +33018,7 @@
                 "-kèli": {
                     "definitions": [
                         "betroth daughter to a man irregularly by going to bargain with him instead of waiting until the girl is asked for",
-                        "B. give (daughter) in marriage"
+                        "give (daughter) in marriage"
                     ],
                     "examples": []
                 }
@@ -33287,11 +33275,11 @@
                 },
                 "-kopù": {
                     "definitions": [
-                        "remove from where hanging"
+                        "remove from where hanging",
+                        "be arrested and suspended in fall"
                     ],
                     "examples": [
-                        "Kopù ya ebe à Remove it from here (where it is wrongly hanging)",
-                        "B. be arrested and suspended in fall"
+                        "Kopù ya ebe à Remove it from here (where it is wrongly hanging)"
                     ]
                 }
             },
@@ -33339,13 +33327,13 @@
                         "distend abdomen;"
                     ],
                     "examples": [
-                        "Nni ǹkaà nà-ekò afō This food is stodgy"
+                        "Nni ǹkaà nà-ekò afō This food is stodgy",
+                        "distend; swell; bulge"
                     ]
                 },
                 "-kò èkò": {
                     "definitions": [
-                        "writhe; bubble; froth; ferment",
-                        "B. distend; swell; bulge"
+                        "writhe; bubble; froth; ferment"
                     ],
                     "examples": []
                 },
@@ -34443,7 +34431,7 @@
                 "-kpani": {
                     "definitions": [
                         "raise, lift up (with instrument)",
-                        "B. (fig.) stir up; provoke; incite"
+                        "(fig.) stir up; provoke; incite"
                     ],
                     "examples": []
                 },
@@ -41170,11 +41158,10 @@
                 },
                 "-ma n’ọnyà": {
                     "definitions": [
-                        "be caught in a trap"
+                        "be caught in a trap",
+                        "shake"
                     ],
-                    "examples": [
-                        "B. shake"
-                    ]
+                    "examples": []
                 },
                 "-ma lìlì": {
                     "definitions": [
@@ -41320,11 +41307,10 @@
                 },
                 "òmụma ụnō īkwuù": {
                     "definitions": [
-                        "encampment"
+                        "encampment",
+                        "stick together; stick to; compress together; pile u"
                     ],
-                    "examples": [
-                        "B. stick together; stick to; compress together; pile up"
-                    ]
+                    "examples": []
                 },
                 "-ma àbùbà": {
                     "definitions": [
@@ -41917,11 +41903,11 @@
                 },
                 "-sa mbalā": {
                     "definitions": [
-                        "be wide"
+                        "be wide",
+                        "compound; pack; open space in town"
                     ],
                     "examples": [
-                        "Afele à sà mbalā This plate is wide",
-                        "B. compound; pack; open space in town"
+                        "Afele à sà mbalā This plate is wide"
                     ]
                 }
             },
@@ -44434,11 +44420,10 @@
                 },
                 "ǹga mkpụlụ ọkà": {
                     "definitions": [
-                        "life imprisonment (literally imprisonment of grains of maize; from idea that each year was represented by a single grain of maize)"
+                        "life imprisonment (literally imprisonment of grains of maize; from idea that each year was represented by a single grain of maize)",
+                        "(fig.) object of fruit or seed-like shape, e.g. pill, tablet"
                     ],
-                    "examples": [
-                        "B. (fig.) object of fruit or seed-like shape, e.g. pill, tablet"
-                    ]
+                    "examples": []
                 },
                 "mkpụlụ amū": {
                     "definitions": [
@@ -45594,11 +45579,10 @@
                 },
                 "ùwà ndi mmụọ": {
                     "definitions": [
-                        "the world of spirits"
+                        "the world of spirits",
+                        "masquerade (= mmanwụ)"
                     ],
-                    "examples": [
-                        "B. masquerade (= mmanwụ)"
-                    ]
+                    "examples": []
                 },
                 "mmụọ ebì ogwū": {
                     "definitions": [
@@ -46276,11 +46260,11 @@
                 },
                 "-na n’iyì": {
                     "definitions": [
-                        "become useless, spoilt; be ruined"
+                        "become useless, spoilt; be ruined",
+                        "go away, heal (of sore, cut, etc.)"
                     ],
                     "examples": [
-                        "Ife o mè nà n’iyì What he has done is useless",
-                        "B. go away, heal (of sore, cut, etc.)"
+                        "Ife o mè nà n’iyì What he has done is useless"
                     ]
                 }
             },
@@ -47167,11 +47151,11 @@
                 },
                 "onye ǹdìdì": {
                     "definitions": [
-                        "patient person"
+                        "patient person",
+                        "personal name"
                     ],
                     "examples": [
-                        "Proverb Onye ǹdìdì nà-èli azū ūkpoò The patient man eats hook-killed fish",
-                        "B. personal name"
+                        "Proverb Onye ǹdìdì nà-èli azū ūkpoò The patient man eats hook-killed fish"
                     ]
                 }
             },
@@ -47652,10 +47636,10 @@
                 },
                 "-zọ ndù": {
                     "definitions": [
-                        "save life"
+                        "save life",
+                        "state of being living, raw, fresh, green, uncooked"
                     ],
                     "examples": [
-                        "B. state of being living, raw, fresh, green, uncooked",
                         "Ọ nà-èli ji ndù He is eating raw yam",
                         "Ọ nà-àta akwụkwọ ndù He is eating fresh leaves (as opposed to dry ones)"
                     ]
@@ -49312,11 +49296,10 @@
             "phrases": {
                 "-kpà ǹkàtà": {
                     "definitions": [
-                        "make, weave basket"
+                        "make, weave basket",
+                        "type of fish-trap"
                     ],
-                    "examples": [
-                        "B. type of fish-trap"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -50314,10 +50297,10 @@
                 },
                 "ikwu nnē": {
                     "definitions": [
-                        "one's mother's home town"
+                        "one's mother's home town",
+                        "mature female (of animal); contrast nwunyè, immature female animal"
                     ],
                     "examples": [
-                        "B. mature female (of animal); contrast nwunyè, immature female animal",
                         "Azùtàlù m nne ewū n’afịa Àfò Nnoòbì n’ụbòsì àfọ gālụ àga",
                         "I bought one female goat at the Afọ Nnoobi market last Afọ market day"
                     ]
@@ -51016,11 +50999,10 @@
                 },
                 "ụmù nwokē": {
                     "definitions": [
-                        "men (as opposed to women"
+                        "men (as opposed to women",
+                        "used as first element of names, preceding name of market day on which someone was born"
                     ],
-                    "examples": [
-                        "B. Used as first element of names, preceding name of market day on which someone was born"
-                    ]
+                    "examples": []
                 },
                 "Nwankwọ, Nweēke,": {
                     "definitions": [
@@ -51673,10 +51655,10 @@
                 },
                 "òdìnàànị Ǹrì": {
                     "definitions": [
-                        "Nri culture"
+                        "Nri culture",
+                        "(in Nri) the highest ritual-political title in Nri and Oreri"
                     ],
                     "examples": [
-                        "B. (in Nri) the highest ritual-political title in Nri and Oreri",
                         "Ǹrì bù echichi Nri is a title"
                     ]
                 }
@@ -51979,11 +51961,10 @@
                 },
                 "ụnò nsō": {
                     "definitions": [
-                        "Church building"
+                        "Church building",
+                        "forbidden things and acts, including both those which are forbidden or taboo (= nsọ C.) and those which are abominations (nsọ ànì, = alū)"
                     ],
-                    "examples": [
-                        "B. forbidden things and acts, including both those which are forbidden or taboo (= nsọ C.) and those which are abominations (nsọ ànì, = alū)"
-                    ]
+                    "examples": []
                 },
                 "nsọ ànì": {
                     "definitions": [
@@ -53742,15 +53723,21 @@
                     ],
                     "examples": []
                 },
-                "-nwuchita anya -nwu enwu": {
+                "-nwuchita anya": {
                     "definitions": [
                         "dazzle the eyes"
                     ],
                     "examples": []
                 },
-                "A. B. -nwu gbàà": {
+                "-nwu enwu": {
+                  "definitions": [
+                    "shine; blaze; flare",
+                    "shine, glitter, very brightly; be very white"
+                  ],
+                  "examples": []
+                },
+                "-nwu gbàà": {
                     "definitions": [
-                        "shine; blaze; flare",
                         "shine, glitter, very brightly; be very white"
                     ],
                     "examples": []
@@ -57660,7 +57647,7 @@
                 },
                 "Òji": {
                     "definitions": [
-                        "B. Africans; Black race"
+                        "Africans; Black race"
                     ],
                     "examples": []
                 },
@@ -58537,11 +58524,11 @@
                 },
                 "-sè òkù": {
                     "definitions": [
-                        "smoke pipe"
+                        "smoke pipe",
+                        "clay bowl; plate"
                     ],
                     "examples": [
-                        "B. clay bowl; plate",
-                        "Proverb Chukwu Nnà ekwēna kà anyị fụ elikàta n’efele èlibe n’òkù May God the Father never allow us to fall from eating off china plates to eating off clay plates, i.e., May our condition never revert from good to bad"
+                        "Proverb: Chukwu Nnà ekwēna kà anyị fụ elikàta n’efele èlibe n’òkù May God the Father never allow us to fall from eating off china plates to eating off clay plates, i.e., May our condition never revert from good to bad"
                     ]
                 }
             },
@@ -59059,11 +59046,11 @@
             "phrases": {
                 "òkpùkpu īkwu": {
                     "definitions": [
-                        "ridging of a house"
+                        "ridging of a house",
+                        "set, group; stack (from -kpù 1. cover"
                     ],
                     "examples": [
-                        "Òkpùkpu īkwû bù ọlụ sīli ike Ridging a house is hard work",
-                        "B. set, group; stack (from -kpù 1. cover)"
+                        "Òkpùkpu īkwû bù ọlụ sīli ike Ridging a house is hard work"
                     ]
                 },
                 "òkpùkpù naàbò": {
@@ -60163,10 +60150,10 @@
                 },
                 "ife onū": {
                     "definitions": [
-                        "necklace"
+                        "necklace",
+                        "(human) voice"
                     ],
                     "examples": [
-                        "B. (human) voice",
                         "Onu m nà-àtọ ūtọ My voice is melodious",
                         "Anùlù m onu nnà m I hear the voice of my father",
                         "Bikō nùlụ onū m Please hear me:",
@@ -60826,11 +60813,10 @@
                 },
                 "onye ùtà": {
                     "definitions": [
-                        "deceiver; enticer"
+                        "deceiver; enticer",
+                        "seller, dealer (preceding name of article dealt in)"
                     ],
-                    "examples": [
-                        "B. seller, dealer (preceding name of article dealt in)"
-                    ]
+                    "examples": []
                 },
                 "onye anū": {
                     "definitions": [
@@ -63577,12 +63563,11 @@
                 },
                 "-sù òfọ": {
                     "definitions": [
-                        "knock the stick representing the god of justice (òfọ) on the ground"
+                        "knock the stick representing the god of justice (òfọ) on the ground",
+                        "the tree from which the wood representing òfọ is cut (Detarium senegalense J.F. Gmel.)",
+                        "male name"
                     ],
-                    "examples": [
-                        "B. the tree from which the wood representing òfọ is cut (Detarium senegalense J.F. Gmel.)",
-                        "C. male name"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -64690,11 +64675,10 @@
                 },
                 "-wa ọjị": {
                     "definitions": [
-                        "break kola"
+                        "break kola",
+                        "bribe; tip"
                     ],
-                    "examples": [
-                        "B. bribe; tip"
-                    ]
+                    "examples": []
                 }
             },
             "variations": [
@@ -64730,11 +64714,10 @@
                 },
                 "-tùtù ọjì": {
                     "definitions": [
-                        "pick iroko leaves (for feeding livestock, e.g. goats, sheep, etc.)"
+                        "pick iroko leaves (for feeding livestock, e.g. goats, sheep, etc.)",
+                        "male name"
                     ],
-                    "examples": [
-                        "B. male name"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -64972,11 +64955,10 @@
                 },
                 "ọtụlụ òkàlà": {
                     "definitions": [
-                        "paralysis of one half of the body; hemiplegia and paraplegia"
+                        "paralysis of one half of the body; hemiplegia and paraplegia",
+                        "short cloth tied as sign of reaching puberty"
                     ],
-                    "examples": [
-                        "B. short cloth tied as sign of reaching puberty"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -64992,11 +64974,10 @@
             "phrases": {
                 "ìgba òkàǹgà": {
                     "definitions": [
-                        "drum of the Igwē of Àgùleèrì"
+                        "drum of the Igwē of Àgùleèrì",
+                        "masquerade"
                     ],
-                    "examples": [
-                        "B. masquerade"
-                    ]
+                    "examples": []
                 }
             },
             "variations": [
@@ -65462,10 +65443,10 @@
                 },
                 "ùfìè ji ọkū": {
                     "definitions": [
-                        "sacrifice, feast before eating new yams"
+                        "sacrifice, feast before eating new yams",
+                        "lamp; light; lantern"
                     ],
                     "examples": [
-                        "B. lamp; light; lantern",
                         "Bùtelụ m ọkụ Bring me the lamp",
                         "Chì ọkū Show the light"
                     ]
@@ -66201,7 +66182,8 @@
         {
             "wordClass": "noun",
             "definitions": [
-                "funeral (from -kwa 2. B. keep funeral)"
+                "funeral",
+                "(from -kwa 2. B. keep funeral)"
             ],
             "examples": [],
             "phrases": {},
@@ -67203,10 +67185,10 @@
                 },
                 "myàtọ ọnū": {
                     "definitions": [
-                        "opening of mouth forcibly, especially of another person or animal; (fig.) abusing someone by saying he is talking nonsense"
+                        "opening of mouth forcibly, especially of another person or animal; (fig.) abusing someone by saying he is talking nonsense",
+                        "hole; opening; cave; den"
                     ],
                     "examples": [
-                        "B. hole; opening; cave; den",
                         "Òkê nò n’ime ọnū The rat is in the hole, or There is a rat in the hole"
                     ]
                 },
@@ -69345,10 +69327,10 @@
                 },
                 "-pịasàsị": {
                     "definitions": [
-                        "flog and scatter"
+                        "flog and scatter",
+                        "smash; be smashed, flattened"
                     ],
                     "examples": [
-                        "B. smash; be smashed, flattened",
                         "Ènyò ọkū m àpịago The bulb of my lantern has smashed"
                     ]
                 },
@@ -69663,11 +69645,11 @@
                 },
                 "-pùta n’ụzò": {
                     "definitions": [
-                        "move out of the way"
+                        "move out of the way",
+                        "(acting like suffix) completely"
                     ],
                     "examples": [
-                        "Pùta n’ụzò Get out of the way",
-                        "B. (acting like suffix) completely"
+                        "Pùta n’ụzò Get out of the way"
                     ]
                 },
                 "-tichapù": {
@@ -70122,10 +70104,10 @@
                 },
                 "nrapù": {
                     "definitions": [
-                        "abandonment"
+                        "abandonment",
+                        "euphemism for 'die' (compare -nwụ 1.); pass away"
                     ],
                     "examples": [
-                        "B. euphemism for 'die' (compare -nwụ 1.); pass away",
                         "Nwatā nō n’àkwà ọyà èri ụkā gālụ aga ārapùgo The child who has been sick since last week has passed away"
                     ]
                 },
@@ -70520,11 +70502,11 @@
                 },
                 "ife nrìba amā": {
                     "definitions": [
-                        "a mark (placed on something in order to distinguish it from the others or in order to be able to recognize it in future)"
+                        "a mark (placed on something in order to distinguish it from the others or in order to be able to recognize it in future)",
+                        "remark; notice"
                     ],
                     "examples": [
-                        "Achòlù m kà ànyị begbàdo ewu ānyị niīne ntì aka nnī kà ọ bụlụ ife nrìba amā ijī wèe malụ ewu ānyị ebe ànyị àfùnà ya I suggest that we cut off the right ear of each one of our goats as a mark to enable us to recognize our goat wherever we find it",
-                        "B. remark; notice"
+                        "Achòlù m kà ànyị begbàdo ewu ānyị niīne ntì aka nnī kà ọ bụlụ ife nrìba amā ijī wèe malụ ewu ānyị ebe ànyị àfùnà ya I suggest that we cut off the right ear of each one of our goats as a mark to enable us to recognize our goat wherever we find it"
                     ]
                 }
             },
@@ -71039,11 +71021,10 @@
                 },
                 "-rurùpù": {
                     "definitions": [
-                        "draw away"
+                        "draw away",
+                        "be downcast; mourn"
                     ],
-                    "examples": [
-                        "B. be downcast; mourn"
-                    ]
+                    "examples": []
                 },
                 "-ru ùru": {
                     "definitions": [
@@ -71657,11 +71638,11 @@
                 },
                 "-sàta": {
                     "definitions": [
-                        "open page of book"
+                        "open page of book",
+                        "spread (as result of something being opened)"
                     ],
                     "examples": [
-                        "Sàta Abù Ọma isi ǹke īsiì Open at the Book of Psalms, chapter six",
-                        "B. spread (as result of something being opened)"
+                        "Sàta Abù Ọma isi ǹke īsiì Open at the Book of Psalms, chapter six"
                     ]
                 },
                 "-gbasà": {
@@ -72048,11 +72029,11 @@
                 },
                 "-sèwa": {
                     "definitions": [
-                        "tear; pull asunder; tear apart"
+                        "tear; pull asunder; tear apart",
+                        "draw on (cigarette, etc.)"
                     ],
                     "examples": [
-                        "Sèwaa yā ìbụō Tear it into two",
-                        "B. draw on (cigarette, etc.)"
+                        "Sèwaa yā ìbụō Tear it into two"
                     ]
                 },
                 "-sè anwụlù (ùtabà)": {
@@ -72936,14 +72917,13 @@
                 },
                 "-sò ụkpụlū": {
                     "definitions": [
-                        "take after, resemble ancestor (in behaviour)"
+                        "take after, resemble ancestor (in behaviour)",
+                        "take part in; be a member of",
+                        "with (acting like suffix)"
                     ],
                     "examples": [
-                        "Ụmū Ìbè niīne nà-èzugbàdo orī, fa nà-esò ụkpụlū nnà nnà",
-                        "fa All of Ibè's children are thieves, they take after their grandfather",
-                        "B. take part in; be a member of",
-                        "Enyì m sò na ndi isi ōde ākwụkwọ My friend is one of the leading writers",
-                        "C. with (acting like suffix)"
+                        "Ụmū Ìbè niīne nà-èzugbàdo orī, fa nà-esò ụkpụlū nnà nnà fa All of Ibè's children are thieves, they take after their grandfather",
+                        "Enyì m sò na ndi isi ōde ākwụkwọ My friend is one of the leading writers"
                     ]
                 },
                 "-gwusò egwu": {
@@ -73030,21 +73010,24 @@
                 },
                 "asō anya": {
                     "definitions": [
-                        "disregard for status or presence; impartiality; fairness in judgement; disrespect"
+                        "disregard for status or presence; impartiality; fairness in judgement; disrespect",
+                        "avoid (out of disgust); abhor; shun; be beware of"
                     ],
-                    "examples": [
-                        "B. avoid (out of disgust); abhor; shun; be beware of"
-                    ]
+                    "examples": []
                 },
-                "-sọ oyi, oyī": {
+                "-sọ oyi": {
                     "definitions": [
-                        "abhor; disgust; be ugly to; be ugly (e.g. faeces or ulcer)"
+                        "abhor; disgust; be ugly to; be ugly (e.g. faeces or ulcer)",
+                        "forbid; be taboo"
                     ],
                     "examples": [
                         "Ọnya dī gị n’ụkwụ nà-àsọ m oyī The ulcer on your leg disgusts me",
-                        "C. forbid; be taboo",
                         "Ndi Nneēwi nà-àsọ ewī nsọ The giant rat is taboo to the people of Nneewi (literally The people of Nneēwi forbid the giant rat)"
                     ]
+                },
+                "oyī": {
+                  "definitions": [],
+                  "examples": []
                 },
                 "-sọ nsọ": {
                     "definitions": [
@@ -73227,11 +73210,10 @@
             "phrases": {
                 "-sucha": {
                     "definitions": [
-                        "thresh (e.g. rice)"
+                        "thresh (e.g. rice)",
+                        "box, beat, strike, hit (hard)"
                     ],
-                    "examples": [
-                        "B. box, beat, strike, hit (hard)"
-                    ]
+                    "examples": []
                 },
                 "-su ekwe": {
                     "definitions": [
@@ -74145,11 +74127,11 @@
                 },
                 "-zụpùta": {
                     "definitions": [
-                        "train; see through"
+                        "train; see through",
+                        "(fig.) to one's advantage"
                     ],
                     "examples": [
-                        "A zūpùtago yā nà Yunivasitìì Someone has seen him through the University",
-                        "B. (fig.) to one's advantage"
+                        "A zūpùtago yā nà Yunivasitìì Someone has seen him through the University"
                     ]
                 },
                 "-fụchata": {
@@ -74942,11 +74924,10 @@
                 },
                 "-ti mkpùkpò": {
                     "definitions": [
-                        "cry out; shout; sound alarm (compare -kpò mkpùkpò)"
+                        "cry out; shout; sound alarm (compare -kpò mkpùkpò)",
+                        "make, proclaim (law, decree)"
                     ],
-                    "examples": [
-                        "B. make, proclaim (law, decree)"
-                    ]
+                    "examples": []
                 },
                 "-ti ìwu": {
                     "definitions": [
@@ -76258,11 +76239,10 @@
                 },
                 "-tụ ùzù": {
                     "definitions": [
-                        "quarrel noisily; make noise (in quarrel (= -fịọ ùzù)"
+                        "quarrel noisily; make noise (in quarrel (= -fịọ ùzù)",
+                        "drop, place, upon"
                     ],
-                    "examples": [
-                        "B. drop, place, upon"
-                    ]
+                    "examples": []
                 },
                 "-tụ anya": {
                     "definitions": [
@@ -77014,11 +76994,10 @@
                 },
                 "-tụ ubè": {
                     "definitions": [
-                        "throw spear"
+                        "throw spear",
+                        "short digging-stick (compare mbàzù)"
                     ],
-                    "examples": [
-                        "B. short digging-stick (compare mbàzù)"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -77117,12 +77096,11 @@
             "phrases": {
                 "aja ubòm": {
                     "definitions": [
-                        "white sand from river, used in building"
+                        "white sand from river, used in building",
+                        "the old boundary market, held in the dry season on the sandbar in the middle of the Niger opposite Onitsha",
+                        "male name"
                     ],
-                    "examples": [
-                        "B. the old boundary market, held in the dry season on the sandbar in the middle of the Niger opposite Onitsha",
-                        "C. male name"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -77249,11 +77227,10 @@
                 },
                 "-wepù uchè": {
                     "definitions": [
-                        "cease to expect; give up hope (literally remove mind)"
+                        "cease to expect; give up hope (literally remove mind)",
+                        "male name (from -chè think)"
                     ],
-                    "examples": [
-                        "B. male name (from -chè think)"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -79260,11 +79237,10 @@
                 },
                 "(ùwà) -tò ute": {
                     "definitions": [
-                        "have an easy life"
+                        "have an easy life",
+                        "tree (Pandanus candelabrum Beauv.) from whose leaves mats are made"
                     ],
-                    "examples": [
-                        "B. tree (Pandanus candelabrum Beauv.) from whose leaves mats are made"
-                    ]
+                    "examples": []
                 }
             },
             "variations": []
@@ -80023,11 +79999,10 @@
                 },
                 "-yi ụgbọ": {
                     "definitions": [
-                        "paddle canoe"
+                        "paddle canoe",
+                        "any kind of motor vehicle; lorry; car"
                     ],
-                    "examples": [
-                        "B. any kind of motor vehicle; lorry; car"
-                    ]
+                    "examples": []
                 },
                 "ụgbọ ànì": {
                     "definitions": [
@@ -81483,11 +81458,10 @@
                 },
                 "òtù ụmù òkolọbìà": {
                     "definitions": [
-                        "young men’s society"
+                        "young men’s society",
+                        "young of animals (plural of nnwa)"
                     ],
-                    "examples": [
-                        "B. young of animals (plural of nnwa)"
-                    ]
+                    "examples": []
                 },
                 "ụmù nkịtā": {
                     "definitions": [
@@ -82621,10 +82595,10 @@
                 },
                 "-sụ ụzò": {
                     "definitions": [
-                        "cut road"
+                        "cut road",
+                        "way; manner; conduct; sort; kind"
                     ],
                     "examples": [
-                        "B. way; manner; conduct; sort; kind",
                         "Ụzò i sì èkwu okwū asōrọ m I don’t like your way of speaking"
                     ]
                 },
@@ -82878,10 +82852,10 @@
                 },
                 "-wapùta": {
                     "definitions": [
-                        "burst out; flow"
+                        "burst out; flow",
+                        "come out from the soil (of water); flood"
                     ],
                     "examples": [
-                        "B. come out from the soil (of water); flood",
                         "Mmilī àwago n’ụnò Underground water has flooded the floors of the house"
                     ]
                 },
@@ -83919,11 +83893,11 @@
                 },
                 "(àrụ) -ya": {
                     "definitions": [
-                        "be sick"
+                        "be sick",
+                        "suffer from misfortune (brought by a person)"
                     ],
                     "examples": [
                         "Àrụ nà-ayā ya He is sick",
-                        "B. suffer from misfortune (brought by a person)",
                         "(fig.) Ọ bù Òfọ kà ànyị nà-ayà It is Ọfọ who worries us",
                         "(fig.) Adā ayā gī àyà No one can suffer from you! (Used in reply to someone who boasts he can harm one)"
                     ]
@@ -84199,11 +84173,10 @@
                 },
                 "myigbu": {
                     "definitions": [
-                        "slander; craftiness; evil"
+                        "slander; craftiness; evil",
+                        "paddle (e.g. turn paddle in water)"
                     ],
-                    "examples": [
-                        "B. paddle (e.g. turn paddle in water)"
-                    ]
+                    "examples": []
                 },
                 "-yido": {
                     "definitions": [
@@ -84594,10 +84567,10 @@
             "phrases": {
                 "òzìzà": {
                     "definitions": [
-                        "filtering"
+                        "filtering",
+                        "(fig.) be reduced in weight; be lean, thin (as result of abnormal condition, e.g. worry, illness, etc.)"
                     ],
                     "examples": [
-                        "B. (fig.) be reduced in weight; be lean, thin (as result of abnormal condition, e.g. worry, illness, etc.)",
                         "Agū azàgo Agụ has lost weight"
                     ]
                 }
