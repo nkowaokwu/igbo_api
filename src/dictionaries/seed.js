@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import { map, flatten, keys } from 'lodash';
 import { createWord } from '../controllers/words';
-// import dictionary from './ig-en/ig-en.json';
-import dictionary from './ig-en/ig-en_new_expanded.json';
+import dictionary from './ig-en/ig-en.json';
 import { MONGO_URI } from '../config';
 
 const WRITE_DB_DELAY = 15000;
