@@ -1,17 +1,9 @@
-const POPULATE_PHRASE = {
-  path: 'phrases',
-  populate: {
-    path: 'examples',
-    model: 'Example',
-  },
-};
-
 const POPULATE_EXAMPLE = {
   path: 'examples',
 };
 
-const POPULATE_PARENT_WORD = {
-  path: 'parentWord',
+const POPULATE_ASSOCIATED_WORDS = {
+  path: 'associatedWords',
 };
 
-export { POPULATE_PHRASE, POPULATE_EXAMPLE, POPULATE_PARENT_WORD };
+export { POPULATE_EXAMPLE, POPULATE_ASSOCIATED_WORDS };
