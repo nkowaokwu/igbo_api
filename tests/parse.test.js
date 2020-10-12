@@ -1,7 +1,7 @@
 import fs from 'fs';
 import chai from 'chai';
 import rimraf from 'rimraf';
-import { keys, map, isEqual } from 'lodash';
+import { keys, isEqual } from 'lodash';
 import { DICTIONARIES_DIR } from '../src/shared/constants/parseFileLocations';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
 import { LONG_TIMEOUT } from './shared/constants';
@@ -38,28 +38,6 @@ describe('Parse', () => {
       });
     });
 
-    it('should include phrases for zu-zo', (done) => {
-      const keyword = 'zu-zo';
-      searchTerm(keyword).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body['-zu-zò']).to.not.equal(undefined);
-        expect(keys(res.body['-zu-zò'][0].phrases)).to.have.lengthOf.at.least(1);
-        done();
-      });
-    });
-
-    it('should include the correct definition text for ewu chī', (done) => {
-      const keyword = 'chi';
-      const phraseKeyword = 'ewu chī';
-      searchTerm(keyword).end((_, { body: { chi: res } }) => {
-        const termPhraseDefinitions = res[0].phrases[phraseKeyword].definitions;
-        const expectedDefinition = 'a goat given to one\'s mother for her personal chi, which must never be killed';
-        expect(termPhraseDefinitions).to.have.lengthOf.at.least(1);
-        expect(termPhraseDefinitions[0]).to.equal(expectedDefinition);
-        done();
-      });
-    });
-
     it('should include the correct A. B. text for ewu chī', (done) => {
       const keyword = 'chi';
       searchTerm(keyword).end((_, { body: { chi: res } }) => {
@@ -69,29 +47,13 @@ describe('Parse', () => {
       });
     });
 
-    it('should include all the phrases for -kwù-', (done) => {
+    it('should include all words -kwù-', (done) => {
       const keyword = '-kwù-';
       searchTerm(keyword).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
         expect(res.body[keyword]).to.be.an('array');
-        expect(keys(res.body[keyword][0].phrases)).to.have.lengthOf.at.least(5);
-        done();
-      });
-    });
-
-    it('should include the entire phrases', (done) => {
-      const keywords = ['ànì', '-bè'];
-      const expectedPhrases = ['ànì mmanụ anwū nà mmili ala efī', 'Bèelụchī, Bèelụchukwu'];
-      Promise.all(
-        map(['ànì', 'be'], (keyword, index) => (
-          searchTerm(keyword).then((res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body[keywords[index]]).to.not.equal(undefined);
-            expect(keys(res.body[keywords[index]][0].phrases)).contains(expectedPhrases[index]);
-          })
-        )),
-      ).then(() => {
+        expect(keys(res.body)).to.have.lengthOf.at.least(1);
         done();
       });
     });
@@ -131,10 +93,10 @@ describe('Parse', () => {
 
       it('should return all matching terms', (done) => {
         const keyword = 'be';
-        const resKeys = ['be', '-be', '-bè', '-de-be', '-dè-be'];
+        const resKeys = ['be', '-be', '-bè', '-gbubè', '-de-be', '-dè-be'];
         searchTerm(keyword).end((_, res) => {
           expect(res.status).to.equal(200);
-          expect(keys(res.body)).to.have.lengthOf(5);
+          expect(keys(res.body)).to.have.lengthOf(6);
           expect(isEqual(keys(res.body), resKeys)).to.equal(true);
           done();
         });

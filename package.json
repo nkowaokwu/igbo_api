@@ -8,7 +8,7 @@
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log",
     "dev": "npm-run-all -p start:database start:server",
-    "mongodump": "mongodump -d igbo_api -o dump",
+    "mongodump": "rm -rf dump/ && mongodump -d igbo_api -o dump",
     "mocha": "NODE_ENV=test mocha -r esm ./tests",
     "precommit": "lint-staged",
     "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",

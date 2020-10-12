@@ -1,4 +1,4 @@
-import { map, forEach } from 'lodash';
+import { map } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
@@ -44,7 +44,6 @@ export const searchWordUsingEnglish = (regex) => (
 
 const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
   const words = await searchWordUsingEnglish(regex);
-  forEach(words, ({ phrases }) => sortDocsByDefinitions(searchWord, phrases));
   const sortedWords = sortDocsByDefinitions(searchWord, words);
   return sendWords(res, sortedWords, page);
 };
@@ -89,7 +88,6 @@ export const createWord = async (data) => {
       ...example,
       associatedWords: [newWord.id],
     };
-    console.log(exampleData);
     return createExample(exampleData);
   });
 

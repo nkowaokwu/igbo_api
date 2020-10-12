@@ -19,9 +19,8 @@ import createRegExp from '../src/shared/utils/createRegExp';
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-const WORD_KEYS = ['variations', 'definitions', 'phrases', 'examples', 'id', 'word', 'wordClass'];
-const PHRASE_KEYS = ['phrase', 'parentWord', 'definitions', 'examples', 'id'];
-const EXAMPLE_KEYS = ['example', 'parentWord', 'parentPhrase', 'id'];
+const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'word', 'wordClass'];
+const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
 const EXCLUDE_KEYS = ['__v', '_id'];
 
 describe('MongoDB Database', () => {
@@ -40,7 +39,7 @@ describe('MongoDB Database', () => {
         wordClass: 'noun',
         definitions: ['first definition', 'second definition'],
         examples: [new ObjectId(), new ObjectId()],
-        phrases: new ObjectId(),
+        stems: [],
       };
       const validWord = new Word(wordData);
       validWord.save().then((savedWord) => {
@@ -57,7 +56,7 @@ describe('MongoDB Database', () => {
         wordClass: 'n.',
         definitions: ['first definition', 'second definition'],
         examples: ['first example'],
-        phrases: new ObjectId(),
+        stems: [],
       };
       const validWord = new Word(wordData);
       validWord.save().catch((err) => {
@@ -140,11 +139,11 @@ describe('MongoDB Database', () => {
       searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(3);
+        expect(res.body).to.have.lengthOf(4);
         forEach(res.body, (wordObject) => {
-          const { word, phrases } = wordObject;
+          const { word } = wordObject;
           const regex = createRegExp(word);
-          const isKeywordPresent = !!word.match(regex)[0] || some(phrases, ({ phrase }) => phrase.match(regex));
+          const isKeywordPresent = !!word.match(regex)[0];
           expect(isKeywordPresent).to.equal(true);
         });
         done();
@@ -180,13 +179,11 @@ describe('MongoDB Database', () => {
       searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(4);
+        expect(res.body).to.have.lengthOf(7);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
         });
-        expect(res.body[0].word).to.equal('mmilī');
-        expect(isEqual(res.body[0].variations, ['mmilī', 'milī'])).to.equal(true);
         done();
       });
     });
@@ -208,21 +205,7 @@ describe('MongoDB Database', () => {
       searchAPIByWord({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(4);
-        expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
-        forEach(res.body, (word) => {
-          expect(word).to.have.all.keys(WORD_KEYS);
-        });
-        done();
-      });
-    });
-
-    it('should return unique words when searching for phrase', (done) => {
-      const keyword = 'ànùnù ebè';
-      searchAPIByWord({ keyword }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(2);
+        expect(res.body).to.have.lengthOf(5);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
@@ -240,11 +223,6 @@ describe('MongoDB Database', () => {
         expect(every(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
           expect(word).to.not.have.any.keys(...EXCLUDE_KEYS);
-
-          expect(every(word.phrases, (phrase) => {
-            expect(phrase).to.have.all.keys(PHRASE_KEYS);
-            expect(phrase).to.not.have.any.keys(...EXCLUDE_KEYS);
-          }));
 
           expect(every(word.examples, (example) => {
             expect(example).to.have.all.keys(EXAMPLE_KEYS);
