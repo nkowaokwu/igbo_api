@@ -218,15 +218,17 @@
             ]
         }
     ],
-    "-dinà n’àba, dinà": [
+    "-dinà n’àba": [
         {
-            "word": "-dinà n’àba, dinà",
+            "word": "-dinà n’àba",
             "wordClass": "noun",
             "definitions": [
                 "sleep on the back"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "dinà"
+            ],
             "stems": [
                 "àba"
             ]
@@ -1099,6 +1101,25 @@
             "variations": [],
             "stems": [
                 "adà "
+            ]
+        },
+        {
+            "word": "-dà adà",
+            "wordClass": "verb",
+            "definitions": [
+                "fall; fall down (usually of persons)"
+            ],
+            "examples": [
+                {
+                    "igbo": "Ọ dàlù adà",
+                    "english": "She fell down"
+                }
+            ],
+            "variations": [
+                "ada"
+            ],
+            "stems": [
+                "-dà"
             ]
         }
     ],
@@ -2981,27 +3002,31 @@
             ]
         }
     ],
-    "afọ òsùsù, afọ ōzịza": [
+    "afọ òsùsù": [
         {
-            "word": "afọ òsùsù, afọ ōzịza",
+            "word": "afọ òsùsù",
             "wordClass": "noun",
             "definitions": [
                 "flatulence"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "afọ ōzịza"
+            ],
             "stems": [
                 "afọ"
             ]
         },
         {
-            "word": "afọ òsùsù, afọ ōzịza",
+            "word": "afọ òsùsù",
             "wordClass": "verb",
             "definitions": [
                 "flatulence; distended stomach; rumbling stomach"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "afọ ōzịza"
+            ],
             "stems": [
                 "-sù"
             ]
@@ -3765,27 +3790,31 @@
             "stems": null
         }
     ],
-    "àfù ọnū, àfè ọnū": [
+    "àfù ọnū": [
         {
-            "word": "àfù ọnū, àfè ọnū",
+            "word": "àfù ọnū",
             "wordClass": "noun",
             "definitions": [
                 "moustache; beard"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àfè ọnū"
+            ],
             "stems": [
                 "àfù"
             ]
         },
         {
-            "word": "àfù ọnū, àfè ọnū",
+            "word": "àfù ọnū",
             "wordClass": "noun",
             "definitions": [
                 "beard; moustache"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àfè ọnū"
+            ],
             "stems": [
                 "ọnū"
             ]
@@ -5534,6 +5563,20 @@
             "stems": [
                 "agha"
             ]
+        },
+        {
+            "word": "ife aghā",
+            "wordClass": "noun",
+            "definitions": [
+                "weapon"
+            ],
+            "examples": [],
+            "variations": [
+                "ife ayā"
+            ],
+            "stems": [
+                "ife"
+            ]
         }
     ],
     "-je agha": [
@@ -5708,6 +5751,20 @@
             "stems": [
                 "àghalā"
             ]
+        },
+        {
+            "word": "-kpọ àghalā",
+            "wordClass": "verb",
+            "definitions": [
+                "be in an uproar Àda āna-àkpọka aghalā Ada is very fond of causing an uproar, or creating a disturbance"
+            ],
+            "examples": [],
+            "variations": [
+                "àyalā"
+            ],
+            "stems": [
+                "-kpọ"
+            ]
         }
     ],
     "onye āghala": [
@@ -5721,6 +5778,20 @@
             "variations": [],
             "stems": [
                 "àghalā"
+            ]
+        },
+        {
+            "word": "onye āghala",
+            "wordClass": "noun",
+            "definitions": [
+                "wild person; careless person"
+            ],
+            "examples": [],
+            "variations": [
+                "āyala"
+            ],
+            "stems": [
+                "onye"
             ]
         }
     ],
@@ -6510,18 +6581,22 @@
             "stems": null
         }
     ],
-    "àkàloògòlì, ajō mmụō, ekwensu": [
+    "àkàloògòlì": [
         {
-            "word": "àkàloògòlì, ajō mmụō, ekwensu",
+            "word": "àkàloògòlì",
             "wordClass": "noun",
             "definitions": [
-                "sometimes, more generally, any sacrifice"
+                "spirits of the dead of worthless people (see mmụō)",
+                "unambititious, easy-going, prodigal person"
             ],
-            "examples": [],
+            "examples": [
+                {
+                    "igbo": "Ndị àkàloògòlì jì yà aka",
+                    "english": "He is possessed by the spirits of worthless people"
+                }
+            ],
             "variations": [],
-            "stems": [
-                "àjà"
-            ]
+            "stems": null
         }
     ],
     "-chụ àjà": [
@@ -8978,17 +9053,33 @@
             ]
         }
     ],
-    "mgbà akā, mgba akā": [
+    "mgbà akā": [
         {
-            "word": "mgbà akā, mgba akā",
+            "word": "mgbà akā",
             "wordClass": "noun",
             "definitions": [
                 "ring"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "mgba akā"
+            ],
             "stems": [
                 "aka"
+            ]
+        },
+        {
+            "word": "mgbà akā",
+            "wordClass": "verb",
+            "definitions": [
+                "ring"
+            ],
+            "examples": [],
+            "variations": [
+                "mgba"
+            ],
+            "stems": [
+                "-gbà"
             ]
         }
     ],
@@ -9820,15 +9911,17 @@
             ]
         }
     ],
-    "àkǎ à, àkà afù": [
+    "àkǎ à": [
         {
-            "word": "àkǎ à, àkà afù",
+            "word": "àkǎ à",
             "wordClass": "noun",
             "definitions": [
                 "last year; old times; days of old"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àkà afù"
+            ],
             "stems": [
                 "àkà"
             ]
@@ -10109,24 +10202,6 @@
             "variations": [
                 "àkàrà"
             ],
-            "stems": null
-        }
-    ],
-    "àkàloògòlì": [
-        {
-            "word": "àkàloògòlì",
-            "wordClass": "noun",
-            "definitions": [
-                "spirits of the dead of worthless people (see mmụō)",
-                "unambititious, easy-going, prodigal person"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ndị àkàloògòlì jì yà aka",
-                    "english": "He is possessed by the spirits of worthless people"
-                }
-            ],
-            "variations": [],
             "stems": null
         }
     ],
@@ -14235,6 +14310,20 @@
             "stems": [
                 "akwụkwọ"
             ]
+        },
+        {
+            "word": "-degalụ akwụkwọ",
+            "wordClass": "verb",
+            "definitions": [
+                "write (letter) to"
+            ],
+            "examples": [],
+            "variations": [
+                "letà"
+            ],
+            "stems": [
+                "-de"
+            ]
         }
     ],
     "-delụ akwụkwọ": [
@@ -15229,9 +15318,9 @@
             ]
         }
     ],
-    "-yì ala, -wì ala": [
+    "-yì ala": [
         {
-            "word": "-yì ala, -wì ala",
+            "word": "-yì ala",
             "wordClass": "noun",
             "definitions": [
                 "be mad; become mad"
@@ -15242,7 +15331,9 @@
                     "english": "He is mad"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "-wì ala"
+            ],
             "stems": [
                 "ala"
             ]
@@ -15366,17 +15457,31 @@
             "stems": null
         }
     ],
-    "-ra alò, -ralu alò": [
+    "-ra alò": [
         {
-            "word": "-ra alò, -ralu alò",
+            "word": "-ra alò",
             "wordClass": "noun",
             "definitions": [
                 "consider; take counsel; consult together; advise"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-ralu alò"
+            ],
             "stems": [
                 "alò"
+            ]
+        },
+        {
+            "word": "-ra alò",
+            "wordClass": "verb",
+            "definitions": [
+                "consider; take counsel, consult together; advise"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "-ra"
             ]
         }
     ],
@@ -15448,6 +15553,29 @@
             "variations": [],
             "stems": [
                 "alò"
+            ]
+        },
+        {
+            "word": "-tụnye alò",
+            "wordClass": "verb",
+            "definitions": [
+                "advise; counsel; suggest; give opinion"
+            ],
+            "examples": [
+                {
+                    "igbo": "Anà m àchọ onye gā-atụnye m alò bànyelụ nwunyè m mmadū kpòlù gbafèlụ ọsō",
+                    "englsih": "I am looking for someone to advise me on what to do concerning my wife whom somebody has run away with"
+                },
+                {
+                    "igbo": "Ànyị nà-àtụ alò etu ànyị gà-èsi sò ịfe ndapùta ā dāpùtàlù n’ùtụtū à",
+                    "english": "We are deliberating on how to tackle this emergency that occurred this morning"
+                }
+            ],
+            "variations": [
+                "elò"
+            ],
+            "stems": [
+                "-tụ"
             ]
         }
     ],
@@ -22149,9 +22277,23 @@
             ]
         }
     ],
-    "nni anyàsì, nni": [
+    "nni anyàsì": [
         {
-            "word": "nni anyàsì, nni",
+            "word": "nni anyàsì",
+            "wordClass": "noun",
+            "definitions": [
+                "supper"
+            ],
+            "examples": [],
+            "variations": [
+                "nni"
+            ],
+            "stems": [
+                "ànyasì"
+            ]
+        },
+        {
+            "word": "nni anyàsì",
             "wordClass": "noun",
             "definitions": [
                 "supper"
@@ -22159,7 +22301,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "ànyasì"
+                "nni"
             ]
         }
     ],
@@ -22750,6 +22892,20 @@
                 "àpìlàpì"
             ],
             "stems": null
+        },
+        {
+            "word": "àpàlàpà",
+            "wordClass": "verb",
+            "definitions": [
+                "fresh fufu"
+            ],
+            "examples": [],
+            "variations": [
+                "àpìlàpì"
+            ],
+            "stems": [
+                "-pà"
+            ]
         }
     ],
     "àpàlì": [
@@ -23324,17 +23480,36 @@
             ]
         }
     ],
-    "-gaba, -jebe": [
+    "-gaba": [
         {
-            "word": "-gaba, -jebe",
+            "word": "-gaba",
             "wordClass": "-chùbe",
             "definitions": [
                 "go away"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-jebe"
+            ],
             "stems": [
                 "-ba/-be"
+            ]
+        },
+        {
+            "word": "-gaba",
+            "wordClass": "verb",
+            "definitions": [
+                "go on; continue to go; henceforth; thenceforth"
+            ],
+            "examples": [
+                {
+                    "igbo": "Mèlu gàba etu mbụ",
+                    "english": "Continue as hitherto!"
+                }
+            ],
+            "variations": [],
+            "stems": [
+                "-ga"
             ]
         }
     ],
@@ -24046,15 +24221,17 @@
             ]
         }
     ],
-    "Bèelụchī, Bèelụchukwu": [
+    "Bèelụchī": [
         {
-            "word": "Bèelụchī, Bèelụchukwu",
+            "word": "Bèelụchī",
             "wordClass": "verb",
             "definitions": [
                 "personal name (‘Except God’)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "Bèelụchukwu"
+            ],
             "stems": [
                 "-bè"
             ]
@@ -26735,15 +26912,17 @@
             ]
         }
     ],
-    "-bu isi, -bu isì": [
+    "-bu isi": [
         {
-            "word": "-bu isi, -bu isì",
+            "word": "-bu isi",
             "wordClass": "verb",
             "definitions": [
                 "be first (to come)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-bu isì"
+            ],
             "stems": [
                 "-bu"
             ]
@@ -27443,6 +27622,20 @@
             "stems": [
                 "-bụ"
             ]
+        },
+        {
+            "word": "òbụnà",
+            "wordClass": "noun",
+            "definitions": [
+                "any; every"
+            ],
+            "examples": [],
+            "variations": [
+                "òbùnà"
+            ],
+            "stems": [
+                "òbụbụū"
+            ]
         }
     ],
     "òbùnà": [
@@ -27479,27 +27672,31 @@
             ]
         }
     ],
-    "ò bụnā, ò bụnāda,": [
+    "ò bụnā": [
         {
-            "word": "ò bụnā, ò bụnāda,",
+            "word": "ò bụnā",
             "wordClass": "verb",
             "definitions": [
                 "even if; even; if"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ò bụnāda,"
+            ],
             "stems": [
                 "-bụ"
             ]
         },
         {
-            "word": "ò bụnā, ò bụnāda,",
+            "word": "ò bụnā",
             "wordClass": "pronoun",
             "definitions": [
                 "if; even; even if"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ò bụnāda,"
+            ],
             "stems": [
                 "ọ"
             ]
@@ -27730,6 +27927,20 @@
             "variations": [],
             "stems": [
                 "-bụ"
+            ]
+        },
+        {
+            "word": "-bụ ùbụ",
+            "wordClass": "noun",
+            "definitions": [
+                "scramble (e.g. of children when eating or given something like biscuits)"
+            ],
+            "examples": [],
+            "variations": [
+                "ụbụ"
+            ],
+            "stems": [
+                "ùbụ"
             ]
         }
     ],
@@ -28536,17 +28747,40 @@
             ]
         }
     ],
-    "-gbubè, -bè": [
+    "-gbubè": [
         {
-            "word": "-gbubè, -bè",
+            "word": "-gbubè",
             "wordClass": "verb",
             "definitions": [
                 "more commonly used)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-bè"
+            ],
             "stems": [
                 "-chà"
+            ]
+        },
+        {
+            "word": "-gbubè",
+            "wordClass": "verb",
+            "definitions": [
+                "cut off, across; chop off"
+            ],
+            "examples": [
+                {
+                    "igbo": "Gbubèe yā isi",
+                    "english": "Cut off his head, or Behead him"
+                },
+                {
+                    "igbo": "Egbubègo m agwọ afù ìbùọ",
+                    "english": "I have cut the snake into two"
+                }
+            ],
+            "variations": [],
+            "stems": [
+                "-gbu"
             ]
         }
     ],
@@ -28699,15 +28933,17 @@
             "stems": null
         }
     ],
-    "-chebe, -chelụ": [
+    "-chebe": [
         {
-            "word": "-chebe, -chelụ",
+            "word": "-chebe",
             "wordClass": "verb",
             "definitions": [
                 "guard; keep; preserve"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-chelụ"
+            ],
             "stems": [
                 "-che"
             ]
@@ -29756,17 +29992,32 @@
             ]
         }
     ],
-    "chi ōfifo, ōfufo": [
+    "chi ōfifo": [
         {
-            "word": "chi ōfifo, ōfufo",
+            "word": "chi ōfifo",
             "wordClass": "noun",
             "definitions": [
                 "period after daybreak as light grows stronger; daybreak"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ōfufo"
+            ],
             "stems": [
                 "chi"
+            ]
+        },
+        {
+            "word": "chi ōfifo",
+            "wordClass": "verb",
+            "definitions": [
+                "period of daybreak as light grows stronger",
+                "be open, clear"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "-fo"
             ]
         }
     ],
@@ -29812,6 +30063,20 @@
             "variations": [],
             "stems": [
                 "chi"
+            ]
+        },
+        {
+            "word": "ùfochī",
+            "wordClass": "noun",
+            "definitions": [
+                "dawn; dayspring; next day"
+            ],
+            "examples": [],
+            "variations": [
+                "ùfochì"
+            ],
+            "stems": [
+                "ùfo"
             ]
         }
     ],
@@ -31131,15 +31396,17 @@
             ]
         }
     ],
-    "-chọpùta, -chọòta": [
+    "-chọpùta": [
         {
-            "word": "-chọpùta, -chọòta",
+            "word": "-chọpùta",
             "wordClass": "verb",
             "definitions": [
                 "search out; find; discover"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-chọòta"
+            ],
             "stems": [
                 "-chọ"
             ]
@@ -31958,15 +32225,17 @@
             ]
         }
     ],
-    "òdìdà anyanwū, òdìda chī": [
+    "òdìdà anyanwū": [
         {
-            "word": "òdìdà anyanwū, òdìda chī",
+            "word": "òdìdà anyanwū",
             "wordClass": "verb",
             "definitions": [
                 "West; sunset"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òdìda chī"
+            ],
             "stems": [
                 "-dà"
             ]
@@ -31980,25 +32249,6 @@
                 "fall on the back"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "-dà"
-            ]
-        }
-    ],
-    "-dà adà, ada": [
-        {
-            "word": "-dà adà, ada",
-            "wordClass": "verb",
-            "definitions": [
-                "fall; fall down (usually of persons)"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọ dàlù adà",
-                    "english": "She fell down"
-                }
-            ],
             "variations": [],
             "stems": [
                 "-dà"
@@ -33435,20 +33685,6 @@
             "wordClass": "verb",
             "definitions": [
                 "write incorrectly"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-de"
-            ]
-        }
-    ],
-    "-degalụ akwụkwọ, letà": [
-        {
-            "word": "-degalụ akwụkwọ, letà",
-            "wordClass": "verb",
-            "definitions": [
-                "write (letter) to"
             ],
             "examples": [],
             "variations": [],
@@ -36619,15 +36855,17 @@
             ]
         }
     ],
-    "-dọ dọònịdō, dọòlịdō": [
+    "-dọ dọònịdō": [
         {
-            "word": "-dọ dọònịdō, dọòlịdō",
+            "word": "-dọ dọònịdō",
             "wordClass": "verb",
             "definitions": [
                 "pull against one another; have a tug-of-war"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "dọòlịdō"
+            ],
             "stems": [
                 "-dọ"
             ]
@@ -37172,15 +37410,17 @@
             ]
         }
     ],
-    "-dọnò, -dọ n’ànì": [
+    "-dọnò": [
         {
-            "word": "-dọnò, -dọ n’ànì",
+            "word": "-dọnò",
             "wordClass": "verb",
             "definitions": [
                 "sit down"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-dọ n’ànì"
+            ],
             "stems": [
                 "-dọ"
             ]
@@ -37735,15 +37975,17 @@
             ]
         }
     ],
-    "-dù ọdù, ọdụ": [
+    "-dù ọdù": [
         {
-            "word": "-dù ọdù, ọdụ",
+            "word": "-dù ọdù",
             "wordClass": "verb",
             "definitions": [
                 "advise; give advice"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ọdụ"
+            ],
             "stems": [
                 "-dù"
             ]
@@ -39788,15 +40030,17 @@
             ]
         }
     ],
-    "kwà efìfìè, kwà èfifìè": [
+    "kwà efìfìè": [
         {
-            "word": "kwà efìfìè, kwà èfifìè",
+            "word": "kwà efìfìè",
             "wordClass": "noun",
             "definitions": [
                 "every midday"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "kwà èfifìè"
+            ],
             "stems": [
                 "efìfìè"
             ]
@@ -39828,15 +40072,17 @@
             "stems": null
         }
     ],
-    "efùlefù, èfùleèfù": [
+    "efùlefù": [
         {
-            "word": "efùlefù, èfùleèfù",
+            "word": "efùlefù",
             "wordClass": "noun",
             "definitions": [
                 "empty; vain; useless (usually of a person)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "èfùleèfù"
+            ],
             "stems": [
                 "efù"
             ]
@@ -39883,6 +40129,20 @@
             "stems": [
                 "egedege"
             ]
+        },
+        {
+            "word": "egedege irū",
+            "wordClass": "noun",
+            "definitions": [
+                "forehead"
+            ],
+            "examples": [],
+            "variations": [
+                "egenege irū"
+            ],
+            "stems": [
+                "iru"
+            ]
         }
     ],
     "egedege": [
@@ -39899,15 +40159,17 @@
             "stems": null
         }
     ],
-    "ego àyòlò, àyò": [
+    "ego àyòlò": [
         {
-            "word": "ego àyòlò, àyò",
+            "word": "ego àyòlò",
             "wordClass": "noun",
             "definitions": [
                 "cowry"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àyò"
+            ],
             "stems": [
                 "egō"
             ]
@@ -41228,15 +41490,17 @@
             ]
         }
     ],
-    "eke ukwu, eke": [
+    "eke ukwu": [
         {
-            "word": "eke ukwu, eke",
+            "word": "eke ukwu",
             "wordClass": "noun",
             "definitions": [
                 "the larger python; African or Rock Python; (Python sebae)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "eke"
+            ],
             "stems": [
                 "eke"
             ]
@@ -41646,6 +41910,20 @@
             "variations": [],
             "stems": [
                 "ekpè"
+            ]
+        },
+        {
+            "word": "-ti ekpè",
+            "wordClass": "verb",
+            "definitions": [
+                "make low mud wall, usually in the farm, to mark boundary and/or check erosion"
+            ],
+            "examples": [],
+            "variations": [
+                "egwè"
+            ],
+            "stems": [
+                "-ti"
             ]
         }
     ],
@@ -43080,6 +43358,20 @@
             "examples": [],
             "variations": [],
             "stems": null
+        },
+        {
+            "word": "Enugwū",
+            "wordClass": "noun",
+            "definitions": [
+                "Enugu"
+            ],
+            "examples": [],
+            "variations": [
+                "Enugū"
+            ],
+            "stems": [
+                "ugwu"
+            ]
         }
     ],
     "ènwè ọfīa": [
@@ -43458,9 +43750,23 @@
             ]
         }
     ],
-    "ètitī ūchichì, ètitī àbànì": [
+    "ètitī ūchichì": [
         {
-            "word": "ètitī ūchichì, ètitī àbànì",
+            "word": "ètitī ūchichì",
+            "wordClass": "noun",
+            "definitions": [
+                "midnight"
+            ],
+            "examples": [],
+            "variations": [
+                "ètitī àbànì"
+            ],
+            "stems": [
+                "ètitì"
+            ]
+        },
+        {
+            "word": "ètitī ūchichì",
             "wordClass": "noun",
             "definitions": [
                 "midnight"
@@ -43468,7 +43774,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "ètitì"
+                "ùchichì"
             ]
         }
     ],
@@ -44072,15 +44378,17 @@
             ]
         }
     ],
-    "Ndùbeezè, Ndùbezè": [
+    "Ndùbeezè": [
         {
-            "word": "Ndùbeezè, Ndùbezè",
+            "word": "Ndùbeezè",
             "wordClass": "noun",
             "definitions": [
                 "male name (literally life is king or life is most important)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "Ndùbezè"
+            ],
             "stems": [
                 "ezè"
             ]
@@ -44755,15 +45063,17 @@
             ]
         }
     ],
-    "fa ncha, fa niīne": [
+    "fa ncha": [
         {
-            "word": "fa ncha, fa niīne",
+            "word": "fa ncha",
             "wordClass": "pronoun",
             "definitions": [
                 "all of them"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "fa niīne"
+            ],
             "stems": [
                 "fa"
             ]
@@ -44794,6 +45104,20 @@
             "variations": [],
             "stems": [
                 "fa"
+            ]
+        },
+        {
+            "word": "ǹkè fa",
+            "wordClass": "noun",
+            "definitions": [
+                "their; theirs"
+            ],
+            "examples": [],
+            "variations": [
+                "ǹkè fa nwà"
+            ],
+            "stems": [
+                "ǹkè"
             ]
         }
     ],
@@ -46317,15 +46641,17 @@
             ]
         }
     ],
-    "-fịkpọ, -fịkpa": [
+    "-fịkpọ": [
         {
-            "word": "-fịkpọ, -fịkpa",
+            "word": "-fịkpọ",
             "wordClass": "verb",
             "definitions": [
                 "dry up; wither and break"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-fịkpa"
+            ],
             "stems": [
                 "-fị"
             ]
@@ -46559,6 +46885,20 @@
             "stems": [
                 "-fịọ"
             ]
+        },
+        {
+            "word": "-fịọ ùzù",
+            "wordClass": "noun",
+            "definitions": [
+                "make quarrelsome noise; quarrel noisily; make tumultous noise"
+            ],
+            "examples": [],
+            "variations": [
+                "-shọ ùzù"
+            ],
+            "stems": [
+                "ùzù"
+            ]
         }
     ],
     "-fịọ": [
@@ -46589,9 +46929,9 @@
             "stems": null
         }
     ],
-    "òfifo, òfufo": [
+    "òfifo": [
         {
-            "word": "òfifo, òfufo",
+            "word": "òfifo",
             "wordClass": "verb",
             "definitions": [
                 "breaking (of day)"
@@ -46602,7 +46942,9 @@
                     "english": "Day has dawned"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "òfufo"
+            ],
             "stems": [
                 "-fo"
             ]
@@ -46654,21 +46996,6 @@
                     "english": "The daylight is bright and strong"
                 }
             ],
-            "variations": [],
-            "stems": [
-                "-fo"
-            ]
-        }
-    ],
-    "chi ōfifo": [
-        {
-            "word": "chi ōfifo",
-            "wordClass": "verb",
-            "definitions": [
-                "period of daybreak as light grows stronger",
-                "be open, clear"
-            ],
-            "examples": [],
             "variations": [],
             "stems": [
                 "-fo"
@@ -46927,15 +47254,17 @@
             "stems": null
         }
     ],
-    "òfùfù, mfù": [
+    "òfùfù": [
         {
-            "word": "òfùfù, mfù",
+            "word": "òfùfù",
             "wordClass": "verb",
             "definitions": [
                 "loss"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "mfù"
+            ],
             "stems": [
                 "-fù"
             ]
@@ -47282,9 +47611,9 @@
             "stems": null
         }
     ],
-    "fụ ǹdụù, fụ kịtaà": [
+    "fụ ǹdụù": [
         {
-            "word": "fụ ǹdụù, fụ kịtaà",
+            "word": "fụ ǹdụù",
             "wordClass": "enclitic",
             "definitions": [
                 "just now, immediately"
@@ -47295,7 +47624,9 @@
                     "english": "Please, I want you to come just now"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "fụ kịtaà"
+            ],
             "stems": [
                 "fụ"
             ]
@@ -47829,25 +48160,6 @@
             ]
         }
     ],
-    "-gaba": [
-        {
-            "word": "-gaba",
-            "wordClass": "verb",
-            "definitions": [
-                "go on; continue to go; henceforth; thenceforth"
-            ],
-            "examples": [
-                {
-                    "igbo": "Mèlu gàba etu mbụ",
-                    "english": "Continue as hitherto!"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "-ga"
-            ]
-        }
-    ],
     "-gabìdo": [
         {
             "word": "-gabìdo",
@@ -47916,29 +48228,33 @@
             ]
         }
     ],
-    "-gadobe, -gadebe": [
+    "-gadobe": [
         {
-            "word": "-gadobe, -gadebe",
+            "word": "-gadobe",
             "wordClass": "verb",
             "definitions": [
                 "stop moving"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-gadebe"
+            ],
             "stems": [
                 "-ga"
             ]
         }
     ],
-    "-gadòbe, -gadèbe": [
+    "-gadòbe": [
         {
-            "word": "-gadòbe, -gadèbe",
+            "word": "-gadòbe",
             "wordClass": "verb",
             "definitions": [
                 "move nearer"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-gadèbe"
+            ],
             "stems": [
                 "-ga"
             ]
@@ -48938,17 +49254,31 @@
             ]
         }
     ],
-    "-gbafù obì, -gbafù ume": [
+    "-gbafù obì": [
         {
-            "word": "-gbafù obì, -gbafù ume",
+            "word": "-gbafù obì",
             "wordClass": "verb",
             "definitions": [
                 "take the breath away; startle; shock; make shudder"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-gbafù ume"
+            ],
             "stems": [
                 "-gba"
+            ]
+        },
+        {
+            "word": "-gbafù obì",
+            "wordClass": "noun",
+            "definitions": [
+                "take the breath away; startle; shock; make shudder (literally make the heart run away)"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "obì"
             ]
         }
     ],
@@ -49074,18 +49404,16 @@
             ]
         }
     ],
-    "mgbaghàlụ, mgbayàlụ": [
+    "mgbaghàlụ": [
         {
-            "word": "mgbaghàlụ, mgbayàlụ",
-            "wordClass": "verb",
+            "word": "mgbaghàlụ",
+            "wordClass": "noun",
             "definitions": [
                 "forgiveness"
             ],
             "examples": [],
             "variations": [],
-            "stems": [
-                "-gba"
-            ]
+            "stems": null
         }
     ],
     "-gbaje": [
@@ -51516,17 +51844,31 @@
             ]
         }
     ],
-    "-gba àzị ūtụtù, - gba ūtụtù": [
+    "-gba àzị ūtụtù": [
         {
-            "word": "-gba àzị ūtụtù, - gba ūtụtù",
+            "word": "-gba àzị ūtụtù",
             "wordClass": "verb",
+            "definitions": [
+                "take breakfast"
+            ],
+            "examples": [],
+            "variations": [
+                "- gba ūtụtù"
+            ],
+            "stems": [
+                "-gba"
+            ]
+        },
+        {
+            "word": "-gba àzị ūtụtù",
+            "wordClass": "noun",
             "definitions": [
                 "take breakfast"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "-gba"
+                "ùtụtù"
             ]
         }
     ],
@@ -52905,20 +53247,6 @@
             ]
         }
     ],
-    "mgbà akā, mgba": [
-        {
-            "word": "mgbà akā, mgba",
-            "wordClass": "verb",
-            "definitions": [
-                "ring"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-gbà"
-            ]
-        }
-    ],
     "akā": [
         {
             "word": "akā",
@@ -53516,17 +53844,36 @@
             ]
         }
     ],
-    "-gbe igbē, igbe": [
+    "-gbe igbē": [
         {
-            "word": "-gbe igbē, igbe",
+            "word": "-gbe igbē",
             "wordClass": "verb",
             "definitions": [
                 "crawl (like children)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "igbe"
+            ],
             "stems": [
                 "-gbe"
+            ]
+        },
+        {
+            "word": "-gbe igbē",
+            "wordClass": "noun",
+            "definitions": [
+                "crawl (like children)"
+            ],
+            "examples": [
+                {
+                    "igbo": "Ọ nà-ègbe igbē",
+                    "english": "He is crawling"
+                }
+            ],
+            "variations": [],
+            "stems": [
+                "igbē"
             ]
         }
     ],
@@ -54324,29 +54671,6 @@
             ]
         }
     ],
-    "-gbubè": [
-        {
-            "word": "-gbubè",
-            "wordClass": "verb",
-            "definitions": [
-                "cut off, across; chop off"
-            ],
-            "examples": [
-                {
-                    "igbo": "Gbubèe yā isi",
-                    "english": "Cut off his head, or Behead him"
-                },
-                {
-                    "igbo": "Egbubègo m agwọ afù ìbùọ",
-                    "english": "I have cut the snake into two"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "-gbu"
-            ]
-        }
-    ],
     "-gbucha": [
         {
             "word": "-gbucha",
@@ -54767,17 +55091,31 @@
             ]
         }
     ],
-    "-gbuwa, -gbuwe": [
+    "-gbuwa": [
         {
-            "word": "-gbuwa, -gbuwe",
+            "word": "-gbuwa",
             "wordClass": "verb",
             "definitions": [
                 "cut open, break into two (e.g. coconut)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-gbuwe"
+            ],
             "stems": [
                 "-gbu"
+            ]
+        },
+        {
+            "word": "-gbuwa",
+            "wordClass": "verb",
+            "definitions": [
+                "split by cutting (especially with axe or matchet)"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "-wa"
             ]
         }
     ],
@@ -55715,9 +56053,9 @@
             "stems": null
         }
     ],
-    "òghụgha, òghịgha": [
+    "òghụgha": [
         {
-            "word": "òghụgha, òghịgha",
+            "word": "òghụgha",
             "wordClass": "verb",
             "definitions": [
                 "change, turning (usually for worse)"
@@ -55732,6 +56070,20 @@
                     "english": "It is the changing of the state of things for the worse that has brought about marriageable girls choosing their husbands by themselves"
                 }
             ],
+            "variations": [
+                "òghịgha"
+            ],
+            "stems": [
+                "-gha"
+            ]
+        },
+        {
+            "word": "òghụgha",
+            "wordClass": "verb",
+            "definitions": [
+                "scattering"
+            ],
+            "examples": [],
             "variations": [],
             "stems": [
                 "-gha"
@@ -56013,20 +56365,6 @@
             ]
         }
     ],
-    "òghụgha": [
-        {
-            "word": "òghụgha",
-            "wordClass": "verb",
-            "definitions": [
-                "scattering"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-gha"
-            ]
-        }
-    ],
     "Anà m èje ịghā osè": [
         {
             "word": "Anà m èje ịghā osè",
@@ -56221,15 +56559,17 @@
             ]
         }
     ],
-    "-ghe oghe, -ghe": [
+    "-ghe oghe": [
         {
-            "word": "-ghe oghe, -ghe",
+            "word": "-ghe oghe",
             "wordClass": "verb",
             "definitions": [
                 "be open"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-ghe"
+            ],
             "stems": [
                 "-ghe"
             ]
@@ -56959,6 +57299,20 @@
             "stems": [
                 "-gi-de"
             ]
+        },
+        {
+            "word": "-megide",
+            "wordClass": "verb",
+            "definitions": [
+                "act against"
+            ],
+            "examples": [],
+            "variations": [
+                "-mejide"
+            ],
+            "stems": [
+                "-me"
+            ]
         }
     ],
     "-nwụde": [
@@ -57648,15 +58002,17 @@
             "stems": null
         }
     ],
-    "-gọ àgìgò, àgùgò": [
+    "-gọ àgìgò": [
         {
-            "word": "-gọ àgìgò, àgùgò",
+            "word": "-gọ àgìgò",
             "wordClass": "verb",
             "definitions": [
                 "deny (a fact)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àgùgò"
+            ],
             "stems": [
                 "-gọ"
             ]
@@ -58885,15 +59241,17 @@
             ]
         }
     ],
-    "-gwọ ọgù, ọgwù": [
+    "-gwọ ọgù": [
         {
-            "word": "-gwọ ọgù, ọgwù",
+            "word": "-gwọ ọgù",
             "wordClass": "verb",
             "definitions": [
                 "make poison or medicine"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ọgwù"
+            ],
             "stems": [
                 "-gwọ"
             ]
@@ -59466,6 +59824,25 @@
             "variations": [],
             "stems": [
                 "-gwụ"
+            ]
+        },
+        {
+            "word": "-gwụsị",
+            "wordClass": "",
+            "definitions": [
+                "finish; complete"
+            ],
+            "examples": [
+                {
+                    "igbo": "Ọ gà-àgwụsị echī",
+                    "english": "It will finish tomorrow"
+                }
+            ],
+            "variations": [
+                "-gụsị"
+            ],
+            "stems": [
+                "-sị"
             ]
         }
     ],
@@ -60573,20 +60950,6 @@
             "stems": null
         }
     ],
-    "ife aghā, ife ayā": [
-        {
-            "word": "ife aghā, ife ayā",
-            "wordClass": "noun",
-            "definitions": [
-                "weapon"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ife"
-            ]
-        }
-    ],
     "ife arịma": [
         {
             "word": "ife arịma",
@@ -60776,17 +61139,31 @@
             ]
         }
     ],
-    "ife izè, òzìzè": [
+    "ife izè": [
         {
-            "word": "ife izè, òzìzè",
+            "word": "ife izè",
             "wordClass": "noun",
+            "definitions": [
+                "thing to avoid; offensive thing"
+            ],
+            "examples": [],
+            "variations": [
+                "òzìzè"
+            ],
+            "stems": [
+                "ife"
+            ]
+        },
+        {
+            "word": "ife izè",
+            "wordClass": "verb",
             "definitions": [
                 "thing to avoid; offensive thing"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "ife"
+                "-zè"
             ]
         }
     ],
@@ -60920,17 +61297,31 @@
             ]
         }
     ],
-    "ife mwuta, ife mwute": [
+    "ife mwuta": [
         {
-            "word": "ife mwuta, ife mwute",
+            "word": "ife mwuta",
             "wordClass": "noun",
             "definitions": [
                 "painful, distressing thing"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ife mwute"
+            ],
             "stems": [
                 "ife"
+            ]
+        },
+        {
+            "word": "ife mwuta",
+            "wordClass": "verb",
+            "definitions": [
+                "painful thing; distressing thing"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "-wu-ta"
             ]
         }
     ],
@@ -61088,15 +61479,17 @@
             ]
         }
     ],
-    "ife nzizo, nzuzo": [
+    "ife nzizo": [
         {
-            "word": "ife nzizo, nzuzo",
+            "word": "ife nzizo",
             "wordClass": "noun",
             "definitions": [
                 "secret thing"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nzuzo"
+            ],
             "stems": [
                 "ife"
             ]
@@ -61293,6 +61686,25 @@
             "variations": [],
             "stems": [
                 "ife"
+            ]
+        },
+        {
+            "word": "ife ōbụnà",
+            "wordClass": "noun",
+            "definitions": [
+                "anything; everything"
+            ],
+            "examples": [
+                {
+                    "igbo": "Nye m ife ōbụnà",
+                    "english": "Give me anything"
+                }
+            ],
+            "variations": [
+                "òbùnà"
+            ],
+            "stems": [
+                "òbụbụū"
             ]
         }
     ],
@@ -61611,9 +62023,23 @@
             ]
         }
     ],
-    "òòbò ifē, òbùbò ifē": [
+    "òòbò ifē": [
         {
-            "word": "òòbò ifē, òbùbò ifē",
+            "word": "òòbò ifē",
+            "wordClass": "noun",
+            "definitions": [
+                "heap of something"
+            ],
+            "examples": [],
+            "variations": [
+                "òbùbò ifē"
+            ],
+            "stems": [
+                "ife"
+            ]
+        },
+        {
+            "word": "òòbò ifē",
             "wordClass": "noun",
             "definitions": [
                 "heap of something"
@@ -61621,7 +62047,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "ife"
+                "òòbò"
             ]
         }
     ],
@@ -62163,25 +62589,6 @@
                 "ìgùlùbe"
             ],
             "stems": null
-        }
-    ],
-    "-gbe igbē": [
-        {
-            "word": "-gbe igbē",
-            "wordClass": "noun",
-            "definitions": [
-                "crawl (like children)"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọ nà-ègbe igbē",
-                    "english": "He is crawling"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "igbē"
-            ]
         }
     ],
     "igbē": [
@@ -63487,9 +63894,9 @@
             "stems": null
         }
     ],
-    "ike kwọ, ike kwe": [
+    "ike kwọ": [
         {
-            "word": "ike kwọ, ike kwe",
+            "word": "ike kwọ",
             "wordClass": "noun",
             "definitions": [
                 "perhaps"
@@ -63500,7 +63907,9 @@
                     "english": "Perhaps I will come"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ike kwe"
+            ],
             "stems": [
                 "ìkekele"
             ]
@@ -64852,27 +65261,31 @@
             "stems": null
         }
     ],
-    "-lo ìlìlò, ìlòlò": [
+    "-lo ìlìlò": [
         {
-            "word": "-lo ìlìlò, ìlòlò",
+            "word": "-lo ìlìlò",
             "wordClass": "noun",
             "definitions": [
                 "think"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìlòlò"
+            ],
             "stems": [
                 "ìlòlò"
             ]
         },
         {
-            "word": "-lo ìlìlò, ìlòlò",
+            "word": "-lo ìlìlò",
             "wordClass": "verb",
             "definitions": [
                 "think; suggest"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìlòlò"
+            ],
             "stems": [
                 "-lò"
             ]
@@ -65062,17 +65475,31 @@
             ]
         }
     ],
-    "ime òpùpù, òpùpù imē": [
+    "ime òpùpù": [
         {
-            "word": "ime òpùpù, òpùpù imē",
+            "word": "ime òpùpù",
             "wordClass": "noun",
+            "definitions": [
+                "miscarriage"
+            ],
+            "examples": [],
+            "variations": [
+                "òpùpù imē"
+            ],
+            "stems": [
+                "imē"
+            ]
+        },
+        {
+            "word": "ime òpùpù",
+            "wordClass": "verb",
             "definitions": [
                 "miscarriage"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "imē"
+                "-pù"
             ]
         }
     ],
@@ -66201,20 +66628,6 @@
             ]
         }
     ],
-    "egedege irū, egenege irū": [
-        {
-            "word": "egedege irū, egenege irū",
-            "wordClass": "noun",
-            "definitions": [
-                "forehead"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "iru"
-            ]
-        }
-    ],
     "-je n’iru": [
         {
             "word": "-je n’iru",
@@ -66516,15 +66929,17 @@
             "stems": null
         }
     ],
-    "ife īse, ife neesè": [
+    "ife īse": [
         {
-            "word": "ife īse, ife neesè",
+            "word": "ife īse",
             "wordClass": "",
             "definitions": [
                 "five things"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ife neesè"
+            ],
             "stems": [
                 "ìse"
             ]
@@ -69142,6 +69557,20 @@
             "stems": [
                 "ị"
             ]
+        },
+        {
+            "word": "ǹkè i",
+            "wordClass": "noun",
+            "definitions": [
+                "your (sg.); yours; thy; thine"
+            ],
+            "examples": [],
+            "variations": [
+                "ǹkè gị"
+            ],
+            "stems": [
+                "ǹkè"
+            ]
         }
     ],
     "ị": [
@@ -69343,15 +69772,17 @@
             "stems": null
         }
     ],
-    "èfifìè naàbò, efìfìè naàbò": [
+    "èfifìè naàbò": [
         {
-            "word": "èfifìè naàbò, efìfìè naàbò",
+            "word": "èfifìè naàbò",
             "wordClass": "numeral",
             "definitions": [
                 "noonday"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "efìfìè naàbò"
+            ],
             "stems": [
                 "ìbùọ"
             ]
@@ -69421,29 +69852,33 @@
             ]
         }
     ],
-    "ǹke àbùa, ìbùọ": [
+    "ǹke àbùa": [
         {
-            "word": "ǹke àbùa, ìbùọ",
+            "word": "ǹke àbùa",
             "wordClass": "numeral",
             "definitions": [
                 "second"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìbùọ"
+            ],
             "stems": [
                 "ìbùọ"
             ]
         }
     ],
-    "ọgụ ìbùa, àbùa": [
+    "ọgụ ìbùa": [
         {
-            "word": "ọgụ ìbùa, àbùa",
+            "word": "ọgụ ìbùa",
             "wordClass": "numeral",
             "definitions": [
                 "forty"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àbùa"
+            ],
             "stems": [
                 "ìbùọ"
             ]
@@ -70996,15 +71431,17 @@
             ]
         }
     ],
-    "ji òyìbè, òyìbò": [
+    "ji òyìbè": [
         {
-            "word": "ji òyìbè, òyìbò",
+            "word": "ji òyìbè",
             "wordClass": "noun",
             "definitions": [
                 "Yellow Guinea Yam (Dioscorea cayenensis Lam.)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òyìbò"
+            ],
             "stems": [
                 "ji"
             ]
@@ -71062,15 +71499,17 @@
             ]
         }
     ],
-    "akpū ji, akpǔ jī": [
+    "akpū ji": [
         {
-            "word": "akpū ji, akpǔ jī",
+            "word": "akpū ji",
             "wordClass": "noun",
             "definitions": [
                 "second yam for re-planting"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "akpǔ jī"
+            ],
             "stems": [
                 "ji"
             ]
@@ -72178,9 +72617,9 @@
             ]
         }
     ],
-    "-jụ àsè, èsè": [
+    "-jụ àsè": [
         {
-            "word": "-jụ àsè, èsè",
+            "word": "-jụ àsè",
             "wordClass": "verb",
             "definitions": [
                 "inquire, ask about"
@@ -72191,7 +72630,9 @@
                     "english": "I asked about you"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "èsè"
+            ],
             "stems": [
                 "-jụ"
             ]
@@ -73770,15 +74211,17 @@
             ]
         }
     ],
-    "anwụlū, ùtabā": [
+    "anwụlū": [
         {
-            "word": "anwụlū, ùtabā",
+            "word": "anwụlū",
             "wordClass": "verb",
             "definitions": [
                 "tied or rolled tobacco; bits of such tobacco retailed in small"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ùtabā"
+            ],
             "stems": [
                 "-ke"
             ]
@@ -73923,15 +74366,17 @@
             ]
         }
     ],
-    "-kèlụ okè, òkè": [
+    "-kèlụ okè": [
         {
-            "word": "-kèlụ okè, òkè",
+            "word": "-kèlụ okè",
             "wordClass": "verb",
             "definitions": [
                 "take a share"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òkè"
+            ],
             "stems": [
                 "-kè"
             ]
@@ -74407,15 +74852,17 @@
             ]
         }
     ],
-    "kèdu zi, kèe zi": [
+    "kèdu zi": [
         {
-            "word": "kèdu zi, kèe zi",
+            "word": "kèdu zi",
             "wordClass": "interjection/interrogative",
             "definitions": [
                 "how then?"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "kèe zi"
+            ],
             "stems": [
                 "kèdu"
             ]
@@ -75253,17 +75700,31 @@
             ]
         }
     ],
-    "-kọ nsi, -kọ ọgwù": [
+    "-kọ nsi": [
         {
-            "word": "-kọ nsi, -kọ ọgwù",
+            "word": "-kọ nsi",
             "wordClass": "verb",
+            "definitions": [
+                "practise sorcery against"
+            ],
+            "examples": [],
+            "variations": [
+                "-kọ ọgwù"
+            ],
+            "stems": [
+                "-kọ"
+            ]
+        },
+        {
+            "word": "-kọ nsi",
+            "wordClass": "noun",
             "definitions": [
                 "practise sorcery against"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "-kọ"
+                "nsi"
             ]
         }
     ],
@@ -76305,15 +76766,17 @@
             ]
         }
     ],
-    "-kupùte, -kupùta": [
+    "-kupùte": [
         {
-            "word": "-kupùte, -kupùta",
+            "word": "-kupùte",
             "wordClass": "verb",
             "definitions": [
                 "present child at naming ceremony"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kupùta"
+            ],
             "stems": [
                 "-kù-"
             ]
@@ -76623,6 +77086,20 @@
             "variations": [],
             "stems": [
                 "-kụ"
+            ]
+        },
+        {
+            "word": "-kụpịa",
+            "wordClass": "verb",
+            "definitions": [
+                "smash into pieces"
+            ],
+            "examples": [],
+            "variations": [
+                "-kụpìà"
+            ],
+            "stems": [
+                "-pịa"
             ]
         }
     ],
@@ -77104,16 +77581,18 @@
             ]
         }
     ],
-    "mkpa ọ kụ, mkpa nókụ -kpapù": [
+    "mkpa ọ kụ": [
         {
-            "word": "mkpa ọ kụ, mkpa nókụ -kpapù",
+            "word": "mkpa ọ kụ",
             "wordClass": "verb",
             "definitions": [
                 "matches",
                 "shove off; brush off; set aside (normally with instrument); pick out (with stick) and remove; push open by force, press open (e.g. burst door open); push off (e.g. three persons lying on a bed, one of them being pushed off as a result of the others being selfish. The pushing is not done by the hand but by the body) Bikō, kpapù alịlị afù ìlo Please take that millipede outside; (fig.) push out (e.g. if one person is forced to leave house where he was living with others)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "mkpa nókụ -kpapù"
+            ],
             "stems": [
                 "-kpa"
             ]
@@ -77729,16 +78208,18 @@
             ]
         }
     ],
-    "-kpakwudo, - kpakwụdo -kpanarị": [
+    "-kpakwudo": [
         {
-            "word": "-kpakwudo, - kpakwụdo -kpanarị",
+            "word": "-kpakwudo",
             "wordClass": "verb",
             "definitions": [
                 "encounter each other suddenly; overtake",
                 "forsake; leave behind"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "- kpakwụdo -kpanarị"
+            ],
             "stems": [
                 "-kpa"
             ]
@@ -78712,15 +79193,17 @@
             ]
         }
     ],
-    "-kpe ekpelu, ekpele": [
+    "-kpe ekpelu": [
         {
-            "word": "-kpe ekpelu, ekpele",
+            "word": "-kpe ekpelu",
             "wordClass": "verb",
             "definitions": [
                 "say prayer; pray Kà ànyị kpee  ekpelu Let us pray"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ekpele"
+            ],
             "stems": [
                 "-kpe"
             ]
@@ -79197,15 +79680,17 @@
             ]
         }
     ],
-    "-kponita, -kponite": [
+    "-kponita": [
         {
-            "word": "-kponita, -kponite",
+            "word": "-kponita",
             "wordClass": "verb",
             "definitions": [
                 "gather up"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kponite"
+            ],
             "stems": [
                 "-kpo"
             ]
@@ -79683,20 +80168,6 @@
             "stems": null
         }
     ],
-    "-kpọ àghalā, àyalā": [
-        {
-            "word": "-kpọ àghalā, àyalā",
-            "wordClass": "verb",
-            "definitions": [
-                "be in an uproar Àda āna-àkpọka aghalā Ada is very fond of causing an uproar, or creating a disturbance"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-kpọ"
-            ]
-        }
-    ],
     "-kpọ asì": [
         {
             "word": "-kpọ asì",
@@ -80089,6 +80560,20 @@
             "examples": [],
             "variations": [],
             "stems": null
+        },
+        {
+            "word": "-kpọ",
+            "wordClass": "noun",
+            "definitions": [
+                "take a somersault into water; dive"
+            ],
+            "examples": [],
+            "variations": [
+                "-pịa ụgbà"
+            ],
+            "stems": [
+                "ụgbà"
+            ]
         }
     ],
     "-kpọ akpọ": [
@@ -82038,6 +82523,20 @@
             "stems": [
                 "kwa"
             ]
+        },
+        {
+            "word": "-mekwa",
+            "wordClass": "extensional suffix 1.",
+            "definitions": [
+                "repair; please by an action; give a tip, small present Ọ sì nà ya amā ana mà ọ bụlụ nà fa eme kwatarọ ya He said he would not go if he was not pleased (i.e. if something was not done to please him)"
+            ],
+            "examples": [],
+            "variations": [
+                "-mekwata"
+            ],
+            "stems": [
+                "-kwa"
+            ]
         }
     ],
     "-rikwa": [
@@ -82533,20 +83032,6 @@
             "wordClass": "extensional suffix 1.",
             "definitions": [
                 "repair"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-kwa"
-            ]
-        }
-    ],
-    "-mekwa, -mekwata": [
-        {
-            "word": "-mekwa, -mekwata",
-            "wordClass": "extensional suffix 1.",
-            "definitions": [
-                "repair; please by an action; give a tip, small present Ọ sì nà ya amā ana mà ọ bụlụ nà fa eme kwatarọ ya He said he would not go if he was not pleased (i.e. if something was not done to please him)"
             ],
             "examples": [],
             "variations": [],
@@ -84158,6 +84643,20 @@
             "stems": [
                 "-kwọ"
             ]
+        },
+        {
+            "word": "-kwọpìà",
+            "wordClass": "verb",
+            "definitions": [
+                "be smashed (by lorry)"
+            ],
+            "examples": [],
+            "variations": [
+                "-kwọpịa"
+            ],
+            "stems": [
+                "-pịa"
+            ]
         }
     ],
     "(motò) -kwọpìà": [
@@ -84430,18 +84929,32 @@
             ]
         }
     ],
-    "-kwu òfegà, -kwu ofega -kwu okwu": [
+    "-kwu òfegà": [
         {
-            "word": "-kwu òfegà, -kwu ofega -kwu okwu",
+            "word": "-kwu òfegà",
             "wordClass": "extensional suffix1.",
             "definitions": [
                 "talk in a flippant way",
                 "speak; utter words"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kwu ofega -kwu okwu"
+            ],
             "stems": [
                 "-kwu"
+            ]
+        },
+        {
+            "word": "-kwu òfegà",
+            "wordClass": "N.",
+            "definitions": [
+                "talk in a flippant way"
+            ],
+            "examples": [],
+            "variations": [],
+            "stems": [
+                "òfegà"
             ]
         }
     ],
@@ -84623,15 +85136,17 @@
             ]
         }
     ],
-    "-kwutò, -kwutì": [
+    "-kwutò": [
         {
-            "word": "-kwutò, -kwutì",
+            "word": "-kwutò",
             "wordClass": "extensional suffix1.",
             "definitions": [
                 "slander; speak evil of"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kwutì"
+            ],
             "stems": [
                 "-kwu"
             ]
@@ -84837,18 +85352,18 @@
             ]
         }
     ],
-    "okwuchi, okwu": [
+    "okwuchi": [
         {
-            "word": "okwuchi, okwu",
-            "wordClass": "extensional suffix1.",
+            "word": "okwuchi",
+            "wordClass": "noun",
             "definitions": [
-                "stopper; cork; cover"
+                "cork; stopper; lid (compare okwu 2.)"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "-kwu"
-            ]
+            "variations": [
+                "ọkwụchi"
+            ],
+            "stems": null
         }
     ],
     "-kwụghe -chèkwube": [
@@ -84865,15 +85380,17 @@
             ]
         }
     ],
-    "-gbakwu(te), -": [
+    "-gbakwu(te)": [
         {
-            "word": "-gbakwu(te), -",
+            "word": "-gbakwu(te)",
             "wordClass": "extensional suffix1.",
             "definitions": [
                 "run towards, to"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-"
+            ],
             "stems": [
                 "-kwu"
             ]
@@ -85068,15 +85585,17 @@
             "stems": null
         }
     ],
-    "-kwukọnye, -": [
+    "-kwukọnye": [
         {
-            "word": "-kwukọnye, -",
+            "word": "-kwukọnye",
             "wordClass": "verb",
             "definitions": [
                 "join, piece together"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-"
+            ],
             "stems": [
                 "-kwu-do"
             ]
@@ -85714,15 +86233,17 @@
             ]
         }
     ],
-    "-kwụni, -kwuni": [
+    "-kwụni": [
         {
-            "word": "-kwụni, -kwuni",
+            "word": "-kwụni",
             "wordClass": "verb",
             "definitions": [
                 "rise (of mist, smoke, etc.)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kwuni"
+            ],
             "stems": [
                 "-kwụ"
             ]
@@ -85990,15 +86511,17 @@
             ]
         }
     ],
-    "-larụ ụlā, -lụ ụla": [
+    "-larụ ụlā": [
         {
-            "word": "-larụ ụlā, -lụ ụla",
+            "word": "-larụ ụlā",
             "wordClass": "verb",
             "definitions": [
                 "sleep"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-lụ ụla"
+            ],
             "stems": [
                 "-la"
             ]
@@ -87748,15 +88271,17 @@
             ]
         }
     ],
-    "-mụlị, -kpùmùlì": [
+    "-mụlị": [
         {
-            "word": "-mụlị, -kpùmùlì",
+            "word": "-mụlị",
             "wordClass": "",
             "definitions": [
                 "smile; laugh"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-kpùmùlì"
+            ],
             "stems": [
                 "-lị"
             ]
@@ -88174,15 +88699,17 @@
             ]
         }
     ],
-    "-lòta, -lòte": [
+    "-lòta": [
         {
-            "word": "-lòta, -lòte",
+            "word": "-lòta",
             "wordClass": "verb",
             "definitions": [
                 "remember"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-lòte"
+            ],
             "stems": [
                 "-lò"
             ]
@@ -88261,15 +88788,17 @@
             ]
         }
     ],
-    "ọka elùlò, ọka ilòlò": [
+    "ọka elùlò": [
         {
-            "word": "ọka elùlò, ọka ilòlò",
+            "word": "ọka elùlò",
             "wordClass": "verb",
             "definitions": [
                 "counsellor; thinker; adviser"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ọka ilòlò"
+            ],
             "stems": [
                 "-lò"
             ]
@@ -90054,15 +90583,17 @@
             ]
         }
     ],
-    "amā ụma, amānụma": [
+    "amā ụma": [
         {
-            "word": "amā ụma, amānụma",
+            "word": "amā ụma",
             "wordClass": "verb",
             "definitions": [
                 "mistakenly"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "amānụma"
+            ],
             "stems": [
                 "-ma"
             ]
@@ -90425,15 +90956,17 @@
             ]
         }
     ],
-    "-ma ùla, òla": [
+    "-ma ùla": [
         {
-            "word": "-ma ùla, òla",
+            "word": "-ma ùla",
             "wordClass": "verb",
             "definitions": [
                 "slap the face with the open hand"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òla"
+            ],
             "stems": [
                 "-ma"
             ]
@@ -92257,20 +92790,6 @@
             ]
         }
     ],
-    "-megide, -mejide": [
-        {
-            "word": "-megide, -mejide",
-            "wordClass": "verb",
-            "definitions": [
-                "act against"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-me"
-            ]
-        }
-    ],
     "-megbu": [
         {
             "word": "-megbu",
@@ -92327,15 +92846,17 @@
             ]
         }
     ],
-    "-meghepù, -mepù": [
+    "-meghepù": [
         {
-            "word": "-meghepù, -mepù",
+            "word": "-meghepù",
             "wordClass": "verb",
             "definitions": [
                 "undo; loose; unfasten; open"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-mepù"
+            ],
             "stems": [
                 "-me"
             ]
@@ -92411,15 +92932,17 @@
             ]
         }
     ],
-    "-mekàta, -mekata": [
+    "-mekàta": [
         {
-            "word": "-mekàta, -mekata",
+            "word": "-mekàta",
             "wordClass": "verb",
             "definitions": [
                 "do for a long time"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-mekata"
+            ],
             "stems": [
                 "-me"
             ]
@@ -93282,15 +93805,17 @@
             "stems": null
         }
     ],
-    "mgba akā, mgbà": [
+    "mgba akā": [
         {
-            "word": "mgba akā, mgbà",
+            "word": "mgba akā",
             "wordClass": "noun",
             "definitions": [
                 "ring"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "mgbà"
+            ],
             "stems": [
                 "mgba"
             ]
@@ -93444,18 +93969,6 @@
             "wordClass": "noun",
             "definitions": [
                 "small type of yam which cannot be replanted but only eaten (= mkpụlù)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": null
-        }
-    ],
-    "mgbaghàlụ": [
-        {
-            "word": "mgbaghàlụ",
-            "wordClass": "noun",
-            "definitions": [
-                "forgiveness"
             ],
             "examples": [],
             "variations": [],
@@ -94555,15 +95068,17 @@
             "stems": null
         }
     ],
-    "mkpịsị, (mkpala) egbè": [
+    "mkpịsị": [
         {
-            "word": "mkpịsị, (mkpala) egbè",
+            "word": "mkpịsị",
             "wordClass": "noun",
             "definitions": [
                 "ramrod"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "(mkpala) egbè"
+            ],
             "stems": [
                 "mkpịsī"
             ]
@@ -97624,6 +98139,20 @@
             "variations": [],
             "stems": [
                 "mpe"
+            ]
+        },
+        {
+            "word": "nwa mpe",
+            "wordClass": "noun",
+            "definitions": [
+                "very short, little, smallish state (of human beings in particular, and animals)"
+            ],
+            "examples": [],
+            "variations": [
+                "mpe"
+            ],
+            "stems": [
+                "ǹnwa"
             ]
         }
     ],
@@ -100877,17 +101406,36 @@
             ]
         }
     ],
-    "-tụlụ, -tụnye ndù": [
+    "-tụlụ": [
         {
-            "word": "-tụlụ, -tụnye ndù",
+            "word": "-tụlụ",
             "wordClass": "noun",
             "definitions": [
                 "revive; refresh"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-tụnye ndù"
+            ],
             "stems": [
                 "ndù"
+            ]
+        },
+        {
+            "word": "-tụlụ",
+            "wordClass": "verb",
+            "definitions": [
+                "(fig.) defraud"
+            ],
+            "examples": [
+                {
+                    "igbo": "Ndị wàyo tùlù yà egō ya",
+                    "english": "The confidence tricksters defrauded him of his money"
+                }
+            ],
+            "variations": [],
+            "stems": [
+                "-tụ"
             ]
         }
     ],
@@ -101409,6 +101957,25 @@
             "variations": [],
             "stems": [
                 "-ne"
+            ]
+        },
+        {
+            "word": "-ne ọbìà",
+            "wordClass": "noun",
+            "definitions": [
+                "offer entertainment"
+            ],
+            "examples": [
+                {
+                    "igbo": "Anà m ène ụmùakā bīalụ nà be m ọbìà",
+                    "english": "I am entertaining the children who came to my house"
+                }
+            ],
+            "variations": [
+                "-nu ọbìà"
+            ],
+            "stems": [
+                "ọbìà"
             ]
         }
     ],
@@ -101941,15 +102508,17 @@
             "stems": null
         }
     ],
-    "ngịlị, ǹgịlị afō": [
+    "ngịlị": [
         {
-            "word": "ngịlị, ǹgịlị afō",
+            "word": "ngịlị",
             "wordClass": "noun",
             "definitions": [
                 "intestines; bowels"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹgịlị afō"
+            ],
             "stems": [
                 "ǹgịlị"
             ]
@@ -103023,15 +103592,17 @@
             "stems": null
         }
     ],
-    "afọ njọ, afọ njō": [
+    "afọ njọ": [
         {
-            "word": "afọ njọ, afọ njō",
+            "word": "afọ njọ",
             "wordClass": "noun",
             "definitions": [
                 "unkindness"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "afọ njō"
+            ],
             "stems": [
                 "ǹjọ"
             ]
@@ -103056,27 +103627,31 @@
             ]
         }
     ],
-    "onye njọ, onye njō": [
+    "onye njọ": [
         {
-            "word": "onye njọ, onye njō",
+            "word": "onye njọ",
             "wordClass": "noun",
             "definitions": [
                 "sinner; miserly, niggardly person"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "onye njō"
+            ],
             "stems": [
                 "ǹjọ"
             ]
         },
         {
-            "word": "onye njọ, onye njō",
+            "word": "onye njọ",
             "wordClass": "noun",
             "definitions": [
                 "sinner; niggardly person"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "onye njō"
+            ],
             "stems": [
                 "onye"
             ]
@@ -103299,29 +103874,33 @@
             "stems": null
         }
     ],
-    "ǹke à, ǹkaà": [
+    "ǹke à": [
         {
-            "word": "ǹke à, ǹkaà",
+            "word": "ǹke à",
             "wordClass": "noun",
             "definitions": [
                 "this (one)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹkaà"
+            ],
             "stems": [
                 "ǹkè"
             ]
         }
     ],
-    "ǹkè afù, ǹkàafù": [
+    "ǹkè afù": [
         {
-            "word": "ǹkè afù, ǹkàafù",
+            "word": "ǹkè afù",
             "wordClass": "noun",
             "definitions": [
                 "that (one)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹkàafù"
+            ],
             "stems": [
                 "ǹkè"
             ]
@@ -103347,34 +103926,6 @@
             "wordClass": "noun",
             "definitions": [
                 "our; ours"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ǹkè"
-            ]
-        }
-    ],
-    "ǹkè fa, ǹkè fa nwà": [
-        {
-            "word": "ǹkè fa, ǹkè fa nwà",
-            "wordClass": "noun",
-            "definitions": [
-                "their; theirs"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ǹkè"
-            ]
-        }
-    ],
-    "ǹkè i, ǹkè gị": [
-        {
-            "word": "ǹkè i, ǹkè gị",
-            "wordClass": "noun",
-            "definitions": [
-                "your (sg.); yours; thy; thine"
             ],
             "examples": [],
             "variations": [],
@@ -103425,15 +103976,17 @@
             ]
         }
     ],
-    "ǹkè m, ǹkè mụ nwà": [
+    "ǹkè m": [
         {
-            "word": "ǹkè m, ǹkè mụ nwà",
+            "word": "ǹkè m",
             "wordClass": "noun",
             "definitions": [
                 "mine; my own"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹkè mụ nwà"
+            ],
             "stems": [
                 "ǹkè"
             ]
@@ -103535,17 +104088,31 @@
             ]
         }
     ],
-    "ǹkè ya, ǹkè nya nwà": [
+    "ǹkè ya": [
         {
-            "word": "ǹkè ya, ǹkè nya nwà",
+            "word": "ǹkè ya",
             "wordClass": "noun",
+            "definitions": [
+                "his; her; hers; its"
+            ],
+            "examples": [],
+            "variations": [
+                "ǹkè nya nwà"
+            ],
+            "stems": [
+                "ǹkè"
+            ]
+        },
+        {
+            "word": "ǹkè ya",
+            "wordClass": "pronoun",
             "definitions": [
                 "his; her; hers; its"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "ǹkè"
+                "ya"
             ]
         }
     ],
@@ -104106,15 +104673,17 @@
             ]
         }
     ],
-    "òkpụkpọ nkụ, òkpụkpọ nkū": [
+    "òkpụkpọ nkụ": [
         {
-            "word": "òkpụkpọ nkụ, òkpụkpọ nkū",
+            "word": "òkpụkpọ nkụ",
             "wordClass": "noun",
             "definitions": [
                 "drought; dryness"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òkpụkpọ nkū"
+            ],
             "stems": [
                 "nkụ"
             ]
@@ -105010,20 +105579,6 @@
             ]
         }
     ],
-    "nni anyàsì": [
-        {
-            "word": "nni anyàsì",
-            "wordClass": "noun",
-            "definitions": [
-                "supper"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "nni"
-            ]
-        }
-    ],
     "nni edè": [
         {
             "word": "nni edè",
@@ -105527,15 +106082,19 @@
             ]
         }
     ],
-    "nwa afō, nnwa afō nwa āgbọò, āgbọghò, āgbọghọbìà": [
+    "nwa afō": [
         {
-            "word": "nwa afō, nnwa afō nwa āgbọò, āgbọghò, āgbọghọbìà",
+            "word": "nwa afō",
             "wordClass": "noun",
             "definitions": [
                 "freeborn child"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nnwa afō nwa āgbọò",
+                "āgbọghò",
+                "āgbọghọbìà"
+            ],
             "stems": [
                 "ǹnwa"
             ]
@@ -105569,15 +106128,17 @@
             ]
         }
     ],
-    "nwa di ọtā, nwa di ntā": [
+    "nwa di ọtā": [
         {
-            "word": "nwa di ọtā, nwa di ntā",
+            "word": "nwa di ọtā",
             "wordClass": "noun",
             "definitions": [
                 "hunter's attendant"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nwa di ntā"
+            ],
             "stems": [
                 "ǹnwa"
             ]
@@ -105625,15 +106186,17 @@
             ]
         }
     ],
-    "nwa mgbèyì, nwa ogbènyè": [
+    "nwa mgbèyì": [
         {
-            "word": "nwa mgbèyì, nwa ogbènyè",
+            "word": "nwa mgbèyì",
             "wordClass": "noun",
             "definitions": [
                 "orphan; destitute child"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nwa ogbènyè"
+            ],
             "stems": [
                 "ǹnwa"
             ]
@@ -105779,9 +106342,23 @@
             ]
         }
     ],
-    "nwa ogbènyè, nwa mgbèyì": [
+    "nwa ogbènyè": [
         {
-            "word": "nwa ogbènyè, nwa mgbèyì",
+            "word": "nwa ogbènyè",
+            "wordClass": "noun",
+            "definitions": [
+                "orphan; destitute child"
+            ],
+            "examples": [],
+            "variations": [
+                "nwa mgbèyì"
+            ],
+            "stems": [
+                "ǹnwa"
+            ]
+        },
+        {
+            "word": "nwa ogbènyè",
             "wordClass": "noun",
             "definitions": [
                 "orphan; destitute child"
@@ -105789,7 +106366,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "ǹnwa"
+                "ogbènyà"
             ]
         }
     ],
@@ -105965,15 +106542,17 @@
             ]
         }
     ],
-    "nwatà, nwantà": [
+    "nwatà": [
         {
-            "word": "nwatà, nwantà",
+            "word": "nwatà",
             "wordClass": "noun",
             "definitions": [
                 "child"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nwantà"
+            ],
             "stems": [
                 "ǹnwa"
             ]
@@ -106018,6 +106597,20 @@
             "variations": [],
             "stems": [
                 "ǹnwa"
+            ]
+        },
+        {
+            "word": "nwa ùyòm",
+            "wordClass": "noun",
+            "definitions": [
+                "chick"
+            ],
+            "examples": [],
+            "variations": [
+                "nwuùyòm"
+            ],
+            "stems": [
+                "ùyòm"
             ]
         }
     ],
@@ -106088,6 +106681,20 @@
             "variations": [],
             "stems": [
                 "ǹnwa"
+            ]
+        },
+        {
+            "word": "ùme nnwā",
+            "wordClass": "noun",
+            "definitions": [
+                "frequent loss of new-born children soon after birth"
+            ],
+            "examples": [],
+            "variations": [
+                "òmùmù"
+            ],
+            "stems": [
+                "ùme"
             ]
         }
     ],
@@ -106247,20 +106854,6 @@
             ]
         }
     ],
-    "nwa mpe, mpe": [
-        {
-            "word": "nwa mpe, mpe",
-            "wordClass": "noun",
-            "definitions": [
-                "very short, little, smallish state (of human beings in particular, and animals)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ǹnwa"
-            ]
-        }
-    ],
     "Nwa mpe kà ọ bù": [
         {
             "word": "Nwa mpe kà ọ bù",
@@ -106313,15 +106906,17 @@
             ]
         }
     ],
-    "nwa pe, nwa mpe": [
+    "nwa pe": [
         {
-            "word": "nwa pe, nwa mpe",
+            "word": "nwa pe",
             "wordClass": "noun",
             "definitions": [
                 "a very small, little"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nwa mpe"
+            ],
             "stems": [
                 "ǹnwa"
             ]
@@ -107254,9 +107849,9 @@
             ]
         }
     ],
-    "nọònwọ, nọònwa": [
+    "nọònwọ": [
         {
-            "word": "nọònwọ, nọònwa",
+            "word": "nọònwọ",
             "wordClass": "verb",
             "definitions": [
                 "so; thus; here (compare n’ebe à)"
@@ -107267,7 +107862,9 @@
                     "english": "It is here"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "nọònwa"
+            ],
             "stems": [
                 "-nò"
             ]
@@ -107693,20 +108290,6 @@
             "wordClass": "noun",
             "definitions": [
                 "work sickness or death by means of magic or poison"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "nsi"
-            ]
-        }
-    ],
-    "-kọ nsi": [
-        {
-            "word": "-kọ nsi",
-            "wordClass": "noun",
-            "definitions": [
-                "practise sorcery against"
             ],
             "examples": [],
             "variations": [],
@@ -110087,6 +110670,20 @@
             "stems": [
                 "nwaāmili"
             ]
+        },
+        {
+            "word": "ọgò nwaàyì",
+            "wordClass": "noun",
+            "definitions": [
+                "mother-in-law; any female relative by marriage"
+            ],
+            "examples": [],
+            "variations": [
+                "nwaànyì"
+            ],
+            "stems": [
+                "ọgò"
+            ]
         }
     ],
     "nwaāmili": [
@@ -110577,15 +111174,17 @@
             ]
         }
     ],
-    "nnwòji, nnwoji": [
+    "nnwòji": [
         {
-            "word": "nnwòji, nnwoji",
+            "word": "nnwòji",
             "wordClass": "demonstrative",
             "definitions": [
                 "sprain; dislocation"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nnwoji"
+            ],
             "stems": [
                 "-nwo"
             ]
@@ -110645,31 +111244,36 @@
             ]
         }
     ],
-    "ònwùnwè, ònwùnwò -nwò àrụ, -wò àrụ": [
+    "ònwùnwè": [
         {
-            "word": "ònwùnwè, ònwùnwò -nwò àrụ, -wò àrụ",
+            "word": "ònwùnwè",
             "wordClass": "demonstrative",
             "definitions": [
                 "changing",
                 "change bodily appearance (e.g. put mask on or off)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ònwùnwò -nwò àrụ",
+                "-wò àrụ"
+            ],
             "stems": [
                 "-nwo"
             ]
         }
     ],
-    "-nwò ènwò, -wò èwò -gbanwò": [
+    "-nwò ènwò": [
         {
-            "word": "-nwò ènwò, -wò èwò -gbanwò",
+            "word": "-nwò ènwò",
             "wordClass": "demonstrative",
             "definitions": [
                 "change; be changed; metamorphose; be transfigured",
                 "change; exchange Bikō gbanwòolụ m  ji n kaà màkà nà o lèlù ùle Please change this yam for me, for it is rotten Ndị àfè ojiiì jìdèlù òfu nwoke  nā-agbanwò egō n’afịa The police arrested a man exchanging money in the market Anà m èje ụnọ  àkù ịgbānwò ego ochiìè m fùlù n’akpàtì m n nyàafù I am going to the bank to change the old money I found in my box yesterday"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-wò èwò -gbanwò"
+            ],
             "stems": [
                 "-nwo"
             ]
@@ -112464,15 +113068,17 @@
             "stems": null
         }
     ],
-    "ǹzuzō, ǹzuzo": [
+    "ǹzuzō": [
         {
-            "word": "ǹzuzō, ǹzuzo",
+            "word": "ǹzuzō",
             "wordClass": "noun",
             "definitions": [
                 "hiding; secret (-zo 1. hide)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹzuzo"
+            ],
             "stems": [
                 "nzùkọ"
             ]
@@ -112932,15 +113538,17 @@
             ]
         }
     ],
-    "-ŋe òfì, òrì": [
+    "-ŋe òfì": [
         {
-            "word": "-ŋe òfì, òrì",
+            "word": "-ŋe òfì",
             "wordClass": "verb",
             "definitions": [
                 "step over somebody's outstretched legs; step over"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òrì"
+            ],
             "stems": [
                 "-ŋe"
             ]
@@ -112972,9 +113580,9 @@
             ]
         }
     ],
-    "-ŋòtalụ, -ŋùtalụ": [
+    "-ŋòtalụ": [
         {
-            "word": "-ŋòtalụ, -ŋùtalụ",
+            "word": "-ŋòtalụ",
             "wordClass": "verb",
             "definitions": [
                 "borrow for; help borrow"
@@ -112985,7 +113593,9 @@
                     "english": "Go and borrow a chair for me"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "-ŋùtalụ"
+            ],
             "stems": [
                 "-ŋò"
             ]
@@ -113521,20 +114131,6 @@
             ]
         }
     ],
-    "-gbafù obì": [
-        {
-            "word": "-gbafù obì",
-            "wordClass": "noun",
-            "definitions": [
-                "take the breath away; startle; shock; make shudder (literally make the heart run away)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "obì"
-            ]
-        }
-    ],
     "-tachi obì": [
         {
             "word": "-tachi obì",
@@ -114047,15 +114643,17 @@
             ]
         }
     ],
-    "ochīè, ochìè": [
+    "ochīè": [
         {
-            "word": "ochīè, ochìè",
+            "word": "ochīè",
             "wordClass": "noun",
             "definitions": [
                 "old; aged; ancient"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ochìè"
+            ],
             "stems": [
                 "oche"
             ]
@@ -114577,20 +115175,6 @@
             "stems": null
         }
     ],
-    "-kwu òfegà": [
-        {
-            "word": "-kwu òfegà",
-            "wordClass": "N.",
-            "definitions": [
-                "talk in a flippant way"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òfegà"
-            ]
-        }
-    ],
     "òfegà": [
         {
             "word": "òfegà",
@@ -114915,15 +115499,17 @@
             ]
         }
     ],
-    "n’òfu ogè, n’òfu mgbè": [
+    "n’òfu ogè": [
         {
-            "word": "n’òfu ogè, n’òfu mgbè",
+            "word": "n’òfu ogè",
             "wordClass": "noun",
             "definitions": [
                 "at the same time; once upon a time"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "n’òfu mgbè"
+            ],
             "stems": [
                 "òfu"
             ]
@@ -115177,6 +115763,20 @@
             "variations": [],
             "stems": [
                 "ogè"
+            ]
+        },
+        {
+            "word": "ogē ūfọdụ",
+            "wordClass": "noun",
+            "definitions": [
+                "sometimes; from time to time"
+            ],
+            "examples": [],
+            "variations": [
+                "ùfọdụ"
+            ],
+            "stems": [
+                "ùfọdụ"
             ]
         }
     ],
@@ -115474,6 +116074,25 @@
             "variations": [],
             "stems": [
                 "ògòlì"
+            ]
+        },
+        {
+            "word": "òfọ ògòlì",
+            "wordClass": "noun",
+            "definitions": [
+                "prodigal; spendthrift; womaniser"
+            ],
+            "examples": [
+                {
+                    "igbo": "Ọjì bù òfọ ògèlì",
+                    "english": "Ọjị is a wild character"
+                }
+            ],
+            "variations": [
+                "ògèlì"
+            ],
+            "stems": [
+                "òfọ"
             ]
         }
     ],
@@ -115834,20 +116453,6 @@
             "wordClass": "noun",
             "definitions": [
                 "be, become poor"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ogbènyà"
-            ]
-        }
-    ],
-    "nwa ogbènyè": [
-        {
-            "word": "nwa ogbènyè",
-            "wordClass": "noun",
-            "definitions": [
-                "orphan; destitute child"
             ],
             "examples": [],
             "variations": [],
@@ -116645,18 +117250,18 @@
             ]
         }
     ],
-    "okènyè, okènyà": [
+    "okènyè": [
         {
-            "word": "okènyè, okènyà",
+            "word": "okènyè",
             "wordClass": "noun",
             "definitions": [
-                "see separate entry"
+                "full-aged, elder, principal person; senior (person)"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "oke"
-            ]
+            "variations": [
+                "okènyà"
+            ],
+            "stems": null
         }
     ],
     "oke ōlili": [
@@ -117082,17 +117687,31 @@
             ]
         }
     ],
-    "-zù òkè, okè": [
+    "-zù òkè": [
         {
-            "word": "-zù òkè, okè",
+            "word": "-zù òkè",
             "wordClass": "noun",
+            "definitions": [
+                "be correct; suffice; be complete, perfect, sufficient"
+            ],
+            "examples": [],
+            "variations": [
+                "okè"
+            ],
+            "stems": [
+                "òkè"
+            ]
+        },
+        {
+            "word": "-zù òkè",
+            "wordClass": "verb",
             "definitions": [
                 "be correct; suffice; be complete, perfect, sufficient"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "òkè"
+                "-zù"
             ]
         }
     ],
@@ -117130,20 +117749,6 @@
             "examples": [],
             "variations": [
                 "okelùwà"
-            ],
-            "stems": null
-        }
-    ],
-    "okènyè": [
-        {
-            "word": "okènyè",
-            "wordClass": "noun",
-            "definitions": [
-                "full-aged, elder, principal person; senior (person)"
-            ],
-            "examples": [],
-            "variations": [
-                "okènyà"
             ],
             "stems": null
         }
@@ -117353,15 +117958,17 @@
             "stems": null
         }
     ],
-    "òkolọbìà, òkolobìà,": [
+    "òkolọbìà": [
         {
-            "word": "òkolọbìà, òkolobìà,",
+            "word": "òkolọbìà",
             "wordClass": "noun",
             "definitions": [
                 "(ìkolobìà is an old pl. form, but nowadays both ò- and ì- are"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òkolobìà,"
+            ],
             "stems": [
                 "òkolo"
             ]
@@ -118741,20 +119348,6 @@
             "stems": null
         }
     ],
-    "okwuchi": [
-        {
-            "word": "okwuchi",
-            "wordClass": "noun",
-            "definitions": [
-                "cork; stopper; lid (compare okwu 2.)"
-            ],
-            "examples": [],
-            "variations": [
-                "ọkwụchi"
-            ],
-            "stems": null
-        }
-    ],
     "òkwùdùkwudū": [
         {
             "word": "òkwùdùkwudū",
@@ -118837,15 +119430,18 @@
             "stems": null
         }
     ],
-    "òkwutē, òkutā, òkutē": [
+    "òkwutē": [
         {
-            "word": "òkwutē, òkutā, òkutē",
+            "word": "òkwutē",
             "wordClass": "noun",
             "definitions": [
                 "rock; stone (compare Yoruba òkuta, Ẹdo (Bini) òkutá)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òkutā",
+                "òkutē"
+            ],
             "stems": [
                 "okwumkwudo"
             ]
@@ -119448,9 +120044,9 @@
             ]
         }
     ],
-    "ònenòne, ònemòne": [
+    "ònenòne": [
         {
-            "word": "ònenòne, ònemòne",
+            "word": "ònenòne",
             "wordClass": "",
             "definitions": [
                 "few; some"
@@ -119461,7 +120057,9 @@
                     "english": "It is only a few people that I want to go with me to greet the newly-installed chief"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ònemòne"
+            ],
             "stems": [
                 "òne?"
             ]
@@ -119619,15 +120217,17 @@
             ]
         }
     ],
-    "ònwe ī, ònwe gī": [
+    "ònwe ī": [
         {
-            "word": "ònwe ī, ònwe gī",
+            "word": "ònwe ī",
             "wordClass": "noun",
             "definitions": [
                 "yourself"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ònwe gī"
+            ],
             "stems": [
                 "ònwe"
             ]
@@ -119765,43 +120365,33 @@
             "stems": null
         }
     ],
-    "onye àbọō, àbùọ": [
+    "onye àbọō": [
         {
-            "word": "onye àbọō, àbùọ",
+            "word": "onye àbọō",
             "wordClass": "noun",
             "definitions": [
                 "another, a second (person)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "àbùọ"
+            ],
             "stems": [
                 "onye"
             ]
         }
     ],
-    "onye aghā, ayā": [
+    "onye aghā": [
         {
-            "word": "onye aghā, ayā",
+            "word": "onye aghā",
             "wordClass": "noun",
             "definitions": [
                 "soldier; warrior"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "onye"
-            ]
-        }
-    ],
-    "onye āghala, āyala": [
-        {
-            "word": "onye āghala, āyala",
-            "wordClass": "noun",
-            "definitions": [
-                "wild person; careless person"
+            "variations": [
+                "ayā"
             ],
-            "examples": [],
-            "variations": [],
             "stems": [
                 "onye"
             ]
@@ -120061,15 +120651,17 @@
             ]
         }
     ],
-    "onye ogbì, ogbī": [
+    "onye ogbì": [
         {
-            "word": "onye ogbì, ogbī",
+            "word": "onye ogbì",
             "wordClass": "noun",
             "definitions": [
                 "dumb person"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ogbī"
+            ],
             "stems": [
                 "onye"
             ]
@@ -120259,17 +120851,40 @@
             ]
         }
     ],
-    "onye ọbìà, onye òrà": [
+    "onye ọbìà": [
         {
-            "word": "onye ọbìà, onye òrà",
+            "word": "onye ọbìà",
             "wordClass": "noun",
             "definitions": [
                 "stranger; visitor"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "onye òrà"
+            ],
             "stems": [
                 "onye"
+            ]
+        },
+        {
+            "word": "onye ọbìà",
+            "wordClass": "noun",
+            "definitions": [
+                "(often shortened to ọbìà) stranger; guest; visitor (= onye òrà)"
+            ],
+            "examples": [
+                {
+                    "igbo": "Abù m ọbìà n’ebe à",
+                    "english": "I am a stranger here"
+                },
+                {
+                    "igbo": "Enwèlù m onye ọbìà",
+                    "english": "I have a visitor"
+                }
+            ],
+            "variations": [],
+            "stems": [
+                "ọbìà"
             ]
         }
     ],
@@ -120287,17 +120902,42 @@
             ]
         }
     ],
-    "onye ōbụnà, òbùnà": [
+    "onye ōbụnà": [
         {
-            "word": "onye ōbụnà, òbùnà",
+            "word": "onye ōbụnà",
             "wordClass": "noun",
             "definitions": [
                 "anybody; anyone; (with negative verb) no one"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òbùnà"
+            ],
             "stems": [
                 "onye"
+            ]
+        },
+        {
+            "word": "onye ōbụnà",
+            "wordClass": "noun",
+            "definitions": [
+                "anyone; everyone; (with negative verb) no one"
+            ],
+            "examples": [
+                {
+                    "igbo": "Onye ōbụnà (òbùnà) abà n’ime ụnò",
+                    "english": "Let no one enter the room"
+                },
+                {
+                    "igbo": "Onye ōbụnà bàa ime ụnò!",
+                    "english": "Let everybody (everyone) enter into the room!"
+                }
+            ],
+            "variations": [
+                "òbụnà"
+            ],
+            "stems": [
+                "òbụbụū"
             ]
         }
     ],
@@ -120606,29 +121246,17 @@
             "stems": null
         }
     ],
-    "òòbò ifē": [
+    "òòbò ọkū": [
         {
-            "word": "òòbò ifē",
-            "wordClass": "noun",
-            "definitions": [
-                "heap of something"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òòbò"
-            ]
-        }
-    ],
-    "òòbò ọkū, òbùbò ọkū": [
-        {
-            "word": "òòbò ọkū, òbùbò ọkū",
+            "word": "òòbò ọkū",
             "wordClass": "noun",
             "definitions": [
                 "furnace, heap of coal, charcoal, etc.; fire"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òbùbò ọkū"
+            ],
             "stems": [
                 "òòbò"
             ]
@@ -120710,19 +121338,19 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "opotò, obotò ọkū": [
+        },
         {
-            "word": "opotò, obotò ọkū",
+            "word": "opòpò",
             "wordClass": "noun",
             "definitions": [
-                "burning coal; embers; heap of glowing charcoal (= òbùbò ọkū)"
+                "sapling"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìpopo osisi"
+            ],
             "stems": [
-                "opotò"
+                "osisi"
             ]
         }
     ],
@@ -121390,20 +122018,6 @@
             "wordClass": "noun",
             "definitions": [
                 "(fig.) great person (literally great tree)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "osisi"
-            ]
-        }
-    ],
-    "opòpò, ìpopo osisi": [
-        {
-            "word": "opòpò, ìpopo osisi",
-            "wordClass": "noun",
-            "definitions": [
-                "sapling"
             ],
             "examples": [],
             "variations": [],
@@ -122082,6 +122696,20 @@
             "stems": [
                 "òwèlè"
             ]
+        },
+        {
+            "word": "ụzō òwèlè",
+            "wordClass": "noun",
+            "definitions": [
+                "path to the back of the compound or outskirts of town"
+            ],
+            "examples": [],
+            "variations": [
+                "òwèlè"
+            ],
+            "stems": [
+                "ụzò"
+            ]
         }
     ],
     "òwèlè": [
@@ -122123,9 +122751,23 @@
             ]
         }
     ],
-    "òwu ọkū, ukpē": [
+    "òwu ọkū": [
         {
-            "word": "òwu ọkū, ukpē",
+            "word": "òwu ọkū",
+            "wordClass": "noun",
+            "definitions": [
+                "wick"
+            ],
+            "examples": [],
+            "variations": [
+                "ukpē"
+            ],
+            "stems": [
+                "òwu"
+            ]
+        },
+        {
+            "word": "òwu ọkū",
             "wordClass": "noun",
             "definitions": [
                 "wick"
@@ -122133,7 +122775,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "òwu"
+                "ọkụ"
             ]
         }
     ],
@@ -122424,15 +123066,17 @@
             ]
         }
     ],
-    "ji òyìbò, òyìbe": [
+    "ji òyìbò": [
         {
-            "word": "ji òyìbò, òyìbe",
+            "word": "ji òyìbò",
             "wordClass": "noun",
             "definitions": [
                 "Yellow Guinea Yam (Dioscorea cayenensis)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òyìbe"
+            ],
             "stems": [
                 "oyìbo"
             ]
@@ -123091,48 +123735,6 @@
             "stems": null
         }
     ],
-    "-ne ọbìà, -nu ọbìà": [
-        {
-            "word": "-ne ọbìà, -nu ọbìà",
-            "wordClass": "noun",
-            "definitions": [
-                "offer entertainment"
-            ],
-            "examples": [
-                {
-                    "igbo": "Anà m ène ụmùakā bīalụ nà be m ọbìà",
-                    "english": "I am entertaining the children who came to my house"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "ọbìà"
-            ]
-        }
-    ],
-    "onye ọbìà": [
-        {
-            "word": "onye ọbìà",
-            "wordClass": "noun",
-            "definitions": [
-                "(often shortened to ọbìà) stranger; guest; visitor (= onye òrà)"
-            ],
-            "examples": [
-                {
-                    "igbo": "Abù m ọbìà n’ebe à",
-                    "english": "I am a stranger here"
-                },
-                {
-                    "igbo": "Enwèlù m onye ọbìà",
-                    "english": "I have a visitor"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "ọbìà"
-            ]
-        }
-    ],
     "ọbìà": [
         {
             "word": "ọbìà",
@@ -123272,39 +123874,6 @@
             "stems": null
         }
     ],
-    "òbụnà, òbùnà": [
-        {
-            "word": "òbụnà, òbùnà",
-            "wordClass": "noun",
-            "definitions": [
-                "any; every"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òbụbụū"
-            ]
-        }
-    ],
-    "ife ōbụnà, òbùnà": [
-        {
-            "word": "ife ōbụnà, òbùnà",
-            "wordClass": "noun",
-            "definitions": [
-                "anything; everything"
-            ],
-            "examples": [
-                {
-                    "igbo": "Nye m ife ōbụnà",
-                    "english": "Give me anything"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "òbụbụū"
-            ]
-        }
-    ],
     "mmadū ōbụnà,": [
         {
             "word": "mmadū ōbụnà,",
@@ -123327,29 +123896,6 @@
                 "either; whichever"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "òbụbụū"
-            ]
-        }
-    ],
-    "onye ōbụnà, òbụnà": [
-        {
-            "word": "onye ōbụnà, òbụnà",
-            "wordClass": "noun",
-            "definitions": [
-                "anyone; everyone; (with negative verb) no one"
-            ],
-            "examples": [
-                {
-                    "igbo": "Onye ōbụnà (òbùnà) abà n’ime ụnò",
-                    "english": "Let no one enter the room"
-                },
-                {
-                    "igbo": "Onye ōbụnà bàa ime ụnò!",
-                    "english": "Let everybody (everyone) enter into the room!"
-                }
-            ],
             "variations": [],
             "stems": [
                 "òbụbụū"
@@ -124079,25 +124625,6 @@
             ]
         }
     ],
-    "òfọ ògòlì, ògèlì": [
-        {
-            "word": "òfọ ògòlì, ògèlì",
-            "wordClass": "noun",
-            "definitions": [
-                "prodigal; spendthrift; womaniser"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọjì bù òfọ ògèlì",
-                    "english": "Ọjị is a wild character"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "òfọ"
-            ]
-        }
-    ],
     "òfọ": [
         {
             "word": "òfọ",
@@ -124201,15 +124728,17 @@
             ]
         }
     ],
-    "akwụkwọ ọfụlū, ọfụū": [
+    "akwụkwọ ọfụlū": [
         {
-            "word": "akwụkwọ ọfụlū, ọfụū",
+            "word": "akwụkwọ ọfụlū",
             "wordClass": "noun",
             "definitions": [
                 "new book"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ọfụū"
+            ],
             "stems": [
                 "ọfụū"
             ]
@@ -124393,20 +124922,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "ọgò nwaàyì, nwaànyì": [
-        {
-            "word": "ọgò nwaàyì, nwaànyì",
-            "wordClass": "noun",
-            "definitions": [
-                "mother-in-law; any female relative by marriage"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ọgò"
-            ]
         }
     ],
     "-ma ògòdò": [
@@ -125467,15 +125982,17 @@
             "stems": null
         }
     ],
-    "ọkà ìŋarị, ìŋàrịì": [
+    "ọkà ìŋarị": [
         {
-            "word": "ọkà ìŋarị, ìŋàrịì",
+            "word": "ọkà ìŋarị",
             "wordClass": "noun",
             "definitions": [
                 "millet"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìŋàrịì"
+            ],
             "stems": [
                 "ọkà"
             ]
@@ -125507,15 +126024,17 @@
             "stems": null
         }
     ],
-    "òka elùlò, òka ìlòlò": [
+    "òka elùlò": [
         {
-            "word": "òka elùlò, òka ìlòlò",
+            "word": "òka elùlò",
             "wordClass": "noun",
             "definitions": [
                 "counsellor; thinker; adviser"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òka ìlòlò"
+            ],
             "stems": [
                 "òka"
             ]
@@ -126161,20 +126680,6 @@
             "wordClass": "noun",
             "definitions": [
                 "burning coal; ember"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ọkụ"
-            ]
-        }
-    ],
-    "òwu ọkū": [
-        {
-            "word": "òwu ọkū",
-            "wordClass": "noun",
-            "definitions": [
-                "wick"
             ],
             "examples": [],
             "variations": [],
@@ -129065,15 +129570,17 @@
             "stems": null
         }
     ],
-    "ọnwa āsatō, āsatọ": [
+    "ọnwa āsatō": [
         {
-            "word": "ọnwa āsatō, āsatọ",
+            "word": "ọnwa āsatō",
             "wordClass": "noun",
             "definitions": [
                 "eighth month"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "āsatọ"
+            ],
             "stems": [
                 "ọnwa"
             ]
@@ -129365,9 +129872,9 @@
             "stems": null
         }
     ],
-    "ọò, ọō": [
+    "ọò": [
         {
-            "word": "ọò, ọō",
+            "word": "ọò",
             "wordClass": "noun",
             "definitions": [
                 "short form of ọ bù, it is"
@@ -129378,15 +129885,17 @@
                     "english": "Who is approaching? It is Chiima."
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ọō"
+            ],
             "stems": [
                 "òŋụŋụ"
             ]
         }
     ],
-    "òọ, òò?": [
+    "òọ": [
         {
-            "word": "òọ, òò?",
+            "word": "òọ",
             "wordClass": "noun",
             "definitions": [
                 "short form of ò bù? is he? is it?"
@@ -129401,7 +129910,9 @@
                     "english": "Is it you who is supposed to come? (= ò bù gî ...)"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "òò?"
+            ],
             "stems": [
                 "òŋụŋụ"
             ]
@@ -129650,9 +130161,9 @@
             ]
         }
     ],
-    "ọsọōsọ, ọsịīsọ": [
+    "ọsọōsọ": [
         {
-            "word": "ọsọōsọ, ọsịīsọ",
+            "word": "ọsọōsọ",
             "wordClass": "noun",
             "definitions": [
                 "quickly"
@@ -129663,7 +130174,9 @@
                     "english": "I want you to do that work quickly"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ọsịīsọ"
+            ],
             "stems": [
                 "ọsọ"
             ]
@@ -130185,15 +130698,17 @@
             "stems": null
         }
     ],
-    "ọyà azịza, ọyā": [
+    "ọyà azịza": [
         {
-            "word": "ọyà azịza, ọyā",
+            "word": "ọyà azịza",
             "wordClass": "noun",
             "definitions": [
                 "(literally swelling disease) used to describe diseases which are"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ọyā"
+            ],
             "stems": [
                 "ọyà"
             ]
@@ -130739,20 +131254,6 @@
             ]
         }
     ],
-    "àpàlàpà, àpìlàpì": [
-        {
-            "word": "àpàlàpà, àpìlàpì",
-            "wordClass": "verb",
-            "definitions": [
-                "fresh fufu"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-pà"
-            ]
-        }
-    ],
     "ụpà": [
         {
             "word": "ụpà",
@@ -131263,34 +131764,6 @@
             ]
         }
     ],
-    "-kụpịa, -kụpìà": [
-        {
-            "word": "-kụpịa, -kụpìà",
-            "wordClass": "verb",
-            "definitions": [
-                "smash into pieces"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-pịa"
-            ]
-        }
-    ],
-    "-kwọpìà, -kwọpịa": [
-        {
-            "word": "-kwọpìà, -kwọpịa",
-            "wordClass": "verb",
-            "definitions": [
-                "be smashed (by lorry)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-pịa"
-            ]
-        }
-    ],
     "-pịakọ": [
         {
             "word": "-pịakọ",
@@ -131549,20 +132022,6 @@
             ]
         }
     ],
-    "ime òpùpù": [
-        {
-            "word": "ime òpùpù",
-            "wordClass": "verb",
-            "definitions": [
-                "miscarriage"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-pù"
-            ]
-        }
-    ],
     "-pùcha": [
         {
             "word": "-pùcha",
@@ -131803,20 +132262,6 @@
             "wordClass": "verb",
             "definitions": [
                 "sounding"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-ra"
-            ]
-        }
-    ],
-    "-ra alò": [
-        {
-            "word": "-ra alò",
-            "wordClass": "verb",
-            "definitions": [
-                "consider; take counsel, consult together; advise"
             ],
             "examples": [],
             "variations": [],
@@ -132574,15 +133019,17 @@
             ]
         }
     ],
-    "-ri nne, -ri nnē": [
+    "-ri nne": [
         {
-            "word": "-ri nne, -ri nnē",
+            "word": "-ri nne",
             "wordClass": "verb",
             "definitions": [
                 "be many, much, numerous, plentiful, abundant"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-ri nnē"
+            ],
             "stems": [
                 "-ri"
             ]
@@ -134018,9 +134465,9 @@
             ]
         }
     ],
-    "-rù lìlì, -rù lìlìlì": [
+    "-rù lìlì": [
         {
-            "word": "-rù lìlì, -rù lìlìlì",
+            "word": "-rù lìlì",
             "wordClass": "verb",
             "definitions": [
                 "shiver; quiver"
@@ -134031,7 +134478,9 @@
                     "english": "The child who washed with cold water is shivering"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "-rù lìlìlì"
+            ],
             "stems": [
                 "-rù"
             ]
@@ -134138,15 +134587,17 @@
             ]
         }
     ],
-    "-rù mọọ, mọō": [
+    "-rù mọọ": [
         {
-            "word": "-rù mọọ, mọō",
+            "word": "-rù mọọ",
             "wordClass": "verb",
             "definitions": [
                 "look after deities"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "mọō"
+            ],
             "stems": [
                 "-rù"
             ]
@@ -134457,6 +134908,29 @@
             "variations": [],
             "stems": [
                 "-sa"
+            ]
+        },
+        {
+            "word": "-sa ùla",
+            "wordClass": "noun",
+            "definitions": [
+                "go and sleep with a friend or relative away from one's home"
+            ],
+            "examples": [
+                {
+                    "igbo:": "Ì sago ūla?",
+                    "english": "Good morning (literally Have you spent the night away?, but can be used in any circumstances)"
+                },
+                {
+                    "igbo:": "Ì pùtago ūla?",
+                    "english": "Good morning"
+                }
+            ],
+            "variations": [
+                "-chọ ùla"
+            ],
+            "stems": [
+                "ùla"
             ]
         }
     ],
@@ -136228,25 +136702,6 @@
             ]
         }
     ],
-    "-gwụsị, -gụsị": [
-        {
-            "word": "-gwụsị, -gụsị",
-            "wordClass": "",
-            "definitions": [
-                "finish; complete"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọ gà-àgwụsị echī",
-                    "english": "It will finish tomorrow"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "-sị"
-            ]
-        }
-    ],
     "emesịa": [
         {
             "word": "emesịa",
@@ -136898,9 +137353,9 @@
             ]
         }
     ],
-    "sò, sòọsò, sịsò": [
+    "sò": [
         {
-            "word": "sò, sòọsò, sịsò",
+            "word": "sò",
             "wordClass": "(òsụsọō)",
             "definitions": [
                 "only"
@@ -136923,7 +137378,10 @@
                     "english": "Only God the Father can save us from the hands of the enemy"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "sòọsò",
+                "sịsò"
+            ],
             "stems": [
                 "-sọ"
             ]
@@ -139035,20 +139493,6 @@
             ]
         }
     ],
-    "-ti ekpè, egwè": [
-        {
-            "word": "-ti ekpè, egwè",
-            "wordClass": "verb",
-            "definitions": [
-                "make low mud wall, usually in the farm, to mark boundary and/or check erosion"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-ti"
-            ]
-        }
-    ],
     "-tigbu": [
         {
             "word": "-tigbu",
@@ -139185,29 +139629,33 @@
             ]
         }
     ],
-    "-tikpọ, -tikpò": [
+    "-tikpọ": [
         {
-            "word": "-tikpọ, -tikpò",
+            "word": "-tikpọ",
             "wordClass": "verb",
             "definitions": [
                 "demolish; break up; break down"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-tikpò"
+            ],
             "stems": [
                 "-ti"
             ]
         }
     ],
-    "ntikpọ, ntikpò": [
+    "ntikpọ": [
         {
-            "word": "ntikpọ, ntikpò",
+            "word": "ntikpọ",
             "wordClass": "verb",
             "definitions": [
                 "demolition; destruction (est. of building)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ntikpò"
+            ],
             "stems": [
                 "-ti"
             ]
@@ -140437,15 +140885,17 @@
             ]
         }
     ],
-    "-tu ùbu, ìbu": [
+    "-tu ùbu": [
         {
-            "word": "-tu ùbu, ìbu",
+            "word": "-tu ùbu",
             "wordClass": "verb",
             "definitions": [
                 "be stout"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ìbu"
+            ],
             "stems": [
                 "-tu"
             ]
@@ -141582,15 +142032,17 @@
             ]
         }
     ],
-    "-tụ ụtụ, ùtụ": [
+    "-tụ ụtụ": [
         {
-            "word": "-tụ ụtụ, ùtụ",
+            "word": "-tụ ụtụ",
             "wordClass": "verb",
             "definitions": [
                 "pay tax, tribute, collection (much used for payment of church levies)"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ùtụ"
+            ],
             "stems": [
                 "-tụ"
             ]
@@ -142020,9 +142472,9 @@
             ]
         }
     ],
-    "-tụ izè, ize": [
+    "-tụ izè": [
         {
-            "word": "-tụ izè, ize",
+            "word": "-tụ izè",
             "wordClass": "verb",
             "definitions": [
                 "shudder; shrink from; abhor; make disgusted with, apprehensive of"
@@ -142033,7 +142485,9 @@
                     "english": "Ibe's behaviour disgusts me"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ize"
+            ],
             "stems": [
                 "-tụ"
             ]
@@ -142142,28 +142596,9 @@
             ]
         }
     ],
-    "-tụlụ": [
+    "-tụ ǹtụ": [
         {
-            "word": "-tụlụ",
-            "wordClass": "verb",
-            "definitions": [
-                "(fig.) defraud"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ndị wàyo tùlù yà egō ya",
-                    "english": "The confidence tricksters defrauded him of his money"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "-tụ"
-            ]
-        }
-    ],
-    "-tụ ǹtụ, ntụ": [
-        {
-            "word": "-tụ ǹtụ, ntụ",
+            "word": "-tụ ǹtụ",
             "wordClass": "verb",
             "definitions": [
                 "tell lies (in order to escape something) (compare -tù 6.)",
@@ -142175,30 +142610,9 @@
                     "english": "You are telling a lie"
                 }
             ],
-            "variations": [],
-            "stems": [
-                "-tụ"
-            ]
-        }
-    ],
-    "-tụnye alò, elò": [
-        {
-            "word": "-tụnye alò, elò",
-            "wordClass": "verb",
-            "definitions": [
-                "advise; counsel; suggest; give opinion"
+            "variations": [
+                "ntụ"
             ],
-            "examples": [
-                {
-                    "igbo": "Anà m àchọ onye gā-atụnye m alò bànyelụ nwunyè m mmadū kpòlù gbafèlụ ọsō",
-                    "englsih": "I am looking for someone to advise me on what to do concerning my wife whom somebody has run away with"
-                },
-                {
-                    "igbo": "Ànyị nà-àtụ alò etu ànyị gà-èsi sò ịfe ndapùta ā dāpùtàlù n’ùtụtū à",
-                    "english": "We are deliberating on how to tackle this emergency that occurred this morning"
-                }
-            ],
-            "variations": [],
             "stems": [
                 "-tụ"
             ]
@@ -142938,20 +143352,6 @@
             "stems": null
         }
     ],
-    "ètitī ūchichì": [
-        {
-            "word": "ètitī ūchichì",
-            "wordClass": "noun",
-            "definitions": [
-                "midnight"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùchichì"
-            ]
-        }
-    ],
     "nnī ūchichì": [
         {
             "word": "nnī ūchichì",
@@ -143333,20 +143733,6 @@
                 "ufùlù"
             ],
             "stems": null
-        }
-    ],
-    "ùfochī, ùfochì": [
-        {
-            "word": "ùfochī, ùfochì",
-            "wordClass": "noun",
-            "definitions": [
-                "dawn; dayspring; next day"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùfo"
-            ]
         }
     ],
     "ùfo": [
@@ -143845,20 +144231,6 @@
                     "english": "Nwaamalụbịa has never been to Northern Nigeria"
                 }
             ],
-            "variations": [],
-            "stems": [
-                "ugwu"
-            ]
-        }
-    ],
-    "Enugwū, Enugū": [
-        {
-            "word": "Enugwū, Enugū",
-            "wordClass": "noun",
-            "definitions": [
-                "Enugu"
-            ],
-            "examples": [],
             "variations": [],
             "stems": [
                 "ugwu"
@@ -144747,20 +145119,6 @@
             "stems": null
         }
     ],
-    "ùme nnwā, òmùmù": [
-        {
-            "word": "ùme nnwā, òmùmù",
-            "wordClass": "noun",
-            "definitions": [
-                "frequent loss of new-born children soon after birth"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùme"
-            ]
-        }
-    ],
     "ùme": [
         {
             "word": "ùme",
@@ -144991,20 +145349,6 @@
             ],
             "variations": [],
             "stems": null
-        }
-    ],
-    "nwa ùyòm, nwuùyòm": [
-        {
-            "word": "nwa ùyòm, nwuùyòm",
-            "wordClass": "noun",
-            "definitions": [
-                "chick"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùyòm"
-            ]
         }
     ],
     "ụmū ùyòm": [
@@ -145238,20 +145582,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "-bụ ùbụ, ụbụ": [
-        {
-            "word": "-bụ ùbụ, ụbụ",
-            "wordClass": "noun",
-            "definitions": [
-                "scramble (e.g. of children when eating or given something like biscuits)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùbụ"
-            ]
         }
     ],
     "Ụmụ akā nà-àbụ": [
@@ -145523,20 +145853,6 @@
             "stems": null
         }
     ],
-    "ogē ūfọdụ, ùfọdụ": [
-        {
-            "word": "ogē ūfọdụ, ùfọdụ",
-            "wordClass": "noun",
-            "definitions": [
-                "sometimes; from time to time"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùfọdụ"
-            ]
-        }
-    ],
     "ùfọdụ": [
         {
             "word": "ùfọdụ",
@@ -145694,20 +146010,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "-kpọ, -pịa ụgbà": [
-        {
-            "word": "-kpọ, -pịa ụgbà",
-            "wordClass": "noun",
-            "definitions": [
-                "take a somersault into water; dive"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ụgbà"
-            ]
         }
     ],
     "-yi ụgbà": [
@@ -146153,15 +146455,17 @@
             ]
         }
     ],
-    "Fadaa, Anglican,": [
+    "Fadaa": [
         {
-            "word": "Fadaa, Anglican,",
+            "word": "Fadaa",
             "wordClass": "noun",
             "definitions": [
                 "Church"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "Anglican,"
+            ],
             "stems": [
                 "ụkà"
             ]
@@ -146656,29 +146960,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "-sa ùla, -chọ ùla": [
-        {
-            "word": "-sa ùla, -chọ ùla",
-            "wordClass": "noun",
-            "definitions": [
-                "go and sleep with a friend or relative away from one's home"
-            ],
-            "examples": [
-                {
-                    "igbo:": "Ì sago ūla?",
-                    "english": "Good morning (literally Have you spent the night away?, but can be used in any circumstances)"
-                },
-                {
-                    "igbo:": "Ì pùtago ūla?",
-                    "english": "Good morning"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "ùla"
-            ]
         }
     ],
     "ùla": [
@@ -147684,20 +147965,6 @@
             ]
         }
     ],
-    "-gba àzị ūtụtù": [
-        {
-            "word": "-gba àzị ūtụtù",
-            "wordClass": "noun",
-            "definitions": [
-                "take breakfast"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùtụtù"
-            ]
-        }
-    ],
     "-gba ùtụtù": [
         {
             "word": "-gba ùtụtù",
@@ -147915,20 +148182,6 @@
             ]
         }
     ],
-    "ụzō òwèlè, òwèlè": [
-        {
-            "word": "ụzō òwèlè, òwèlè",
-            "wordClass": "noun",
-            "definitions": [
-                "path to the back of the compound or outskirts of town"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ụzò"
-            ]
-        }
-    ],
     "ọtụ ụzò": [
         {
             "word": "ọtụ ụzò",
@@ -147984,20 +148237,6 @@
             "stems": null
         }
     ],
-    "-fịọ ùzù, -shọ ùzù": [
-        {
-            "word": "-fịọ ùzù, -shọ ùzù",
-            "wordClass": "noun",
-            "definitions": [
-                "make quarrelsome noise; quarrel noisily; make tumultous noise"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ùzù"
-            ]
-        }
-    ],
     "ùzù": [
         {
             "word": "ùzù",
@@ -148040,20 +148279,6 @@
             "wordClass": "verb",
             "definitions": [
                 "feast of new yams"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-wa"
-            ]
-        }
-    ],
-    "-gbuwa": [
-        {
-            "word": "-gbuwa",
-            "wordClass": "verb",
-            "definitions": [
-                "split by cutting (especially with axe or matchet)"
             ],
             "examples": [],
             "variations": [],
@@ -148517,15 +148742,17 @@
             "stems": null
         }
     ],
-    "wèe ganye nà, wèe": [
+    "wèe ganye nà": [
         {
-            "word": "wèe ganye nà, wèe",
+            "word": "wèe ganye nà",
             "wordClass": "verb",
             "definitions": [
                 "till; until; pending"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "wèe"
+            ],
             "stems": [
                 "-wè"
             ]
@@ -149234,20 +149461,6 @@
             ]
         }
     ],
-    "ife mwuta": [
-        {
-            "word": "ife mwuta",
-            "wordClass": "verb",
-            "definitions": [
-                "painful thing; distressing thing"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-wu-ta"
-            ]
-        }
-    ],
     "-wu-ta": [
         {
             "word": "-wu-ta",
@@ -149558,20 +149771,6 @@
             "wordClass": "pronoun",
             "definitions": [
                 "he himself; she herself"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ya"
-            ]
-        }
-    ],
-    "ǹkè ya": [
-        {
-            "word": "ǹkè ya",
-            "wordClass": "pronoun",
-            "definitions": [
-                "his; her; hers; its"
             ],
             "examples": [],
             "variations": [],
@@ -150086,15 +150285,17 @@
             "stems": null
         }
     ],
-    "òyìyì, òwìwì": [
+    "òyìyì": [
         {
-            "word": "òyìyì, òwìwì",
+            "word": "òyìyì",
             "wordClass": "verb",
             "definitions": [
                 "going together"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "òwìwì"
+            ],
             "stems": [
                 "-yì "
             ]
@@ -150119,9 +150320,9 @@
             ]
         }
     ],
-    "-wì ala, -yì ala": [
+    "-wì ala": [
         {
-            "word": "-wì ala, -yì ala",
+            "word": "-wì ala",
             "wordClass": "+",
             "definitions": [
                 "be mad"
@@ -150132,7 +150333,9 @@
                     "english": "Are you mad?"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "-yì ala"
+            ],
             "stems": [
                 "-yì "
             ]
@@ -150776,23 +150979,9 @@
             ]
         }
     ],
-    "ife izè": [
+    "ìzè": [
         {
-            "word": "ife izè",
-            "wordClass": "verb",
-            "definitions": [
-                "thing to avoid; offensive thing"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-zè"
-            ]
-        }
-    ],
-    "ìzè, ǹzè": [
-        {
-            "word": "ìzè, ǹzè",
+            "word": "ìzè",
             "wordClass": "verb",
             "definitions": [
                 "avoidance (of disaster, etc.)"
@@ -150803,7 +150992,9 @@
                     "english": "He has good luck (naturally or by use of charms)"
                 }
             ],
-            "variations": [],
+            "variations": [
+                "ǹzè"
+            ],
             "stems": [
                 "-zè"
             ]
@@ -151076,15 +151267,17 @@
             ]
         }
     ],
-    "nzili, nzita": [
+    "nzili": [
         {
-            "word": "nzili, nzita",
+            "word": "nzili",
             "wordClass": "verb",
             "definitions": [
                 "borrowing"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "nzita"
+            ],
             "stems": [
                 "-zi"
             ]
@@ -151653,15 +151846,17 @@
             ]
         }
     ],
-    "ǹzuzo, ǹzuzō": [
+    "ǹzuzo": [
         {
-            "word": "ǹzuzo, ǹzuzō",
+            "word": "ǹzuzo",
             "wordClass": "verb",
             "definitions": [
                 "hiding; secret"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "ǹzuzō"
+            ],
             "stems": [
                 "-zo"
             ]
@@ -152102,15 +152297,17 @@
             ]
         }
     ],
-    "-zùte, -zùta": [
+    "-zùte": [
         {
-            "word": "-zùte, -zùta",
+            "word": "-zùte",
             "wordClass": "verb",
             "definitions": [
                 "meet, welcome visitor by deliberately going out to meet him on the way or at a place, e.g. motor park"
             ],
             "examples": [],
-            "variations": [],
+            "variations": [
+                "-zùta"
+            ],
             "stems": [
                 "-zù"
             ]
@@ -152129,20 +152326,6 @@
                     "english": "It is correct"
                 }
             ],
-            "variations": [],
-            "stems": [
-                "-zù"
-            ]
-        }
-    ],
-    "-zù òkè": [
-        {
-            "word": "-zù òkè",
-            "wordClass": "verb",
-            "definitions": [
-                "be correct; suffice; be complete, perfect, sufficient"
-            ],
-            "examples": [],
             "variations": [],
             "stems": [
                 "-zù"
