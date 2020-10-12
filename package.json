@@ -42,7 +42,6 @@
     "express": "^4.17.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.7",
-    "node-html-parser": "^1.2.20",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
