@@ -1,2 +1,3 @@
-const API_ROOT = process.env.NODE_ENV === 'production' ? 'http://igbo-api.herokuapp.com' : 'https://cors-anywhere.herokuapp.com/http://igbo-api.herokuapp.com'
-export const API_URL = `${API_ROOT}/api/v1/search/words`;
+const API_ROOT = process.env.NODE_ENV === 'production' ? 'http://igboapi.com' : 'https://cors-anywhere.herokuapp.com/http://www.igboapi.com';
+
+export default `${API_ROOT}/api/v1/search/words`;
