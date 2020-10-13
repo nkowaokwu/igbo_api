@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { map } from 'lodash';
-import { API_URL } from '../config';
+import API_URL from '../config';
 import Word from '../components/Word';
 
 const Home = () => {

@@ -3,7 +3,8 @@ import { ExamplePropTypes } from '../utils/PropTypeShapes';
 
 const Example = ({ example }) => (
   <div>
-    <h3 className="text-gray-500 truncate">{example.example}</h3>
+    <h3 className="text-gray-900 truncate">{example.igbo}</h3>
+    <h3 className="text-gray-500 truncate">{example.english}</h3>
   </div>
 );
 
