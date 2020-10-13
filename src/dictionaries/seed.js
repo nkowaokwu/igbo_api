@@ -17,7 +17,7 @@ const populate = async () => {
         return map(value, (term) => {
           const word = { ...term };
           word.word = key;
-          createWord(word);
+          return createWord(word);
         });
       }),
     );
