@@ -8,6 +8,7 @@ lerna-debug.log*
 
 # MongoDB Database
 db/
+dump/
 
 # Transpiled code
 build/
@@ -127,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Cypress
+cypress/
