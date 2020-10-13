@@ -2,7 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { testRouter, router } from './routers';
 import logger from './middleware/logger';
-import { PORT, MONGO_URI } from './config';
+import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
+
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 
 const app = express();
 
@@ -22,6 +25,8 @@ app.get('/', (_, res) => {
 });
 
 app.use('*', logger);
+
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1/search', router);

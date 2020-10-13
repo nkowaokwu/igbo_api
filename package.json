@@ -1,7 +1,7 @@
 {
   "name": "igbo-dictionary",
   "version": "1.0.0",
-  "description": "",
+  "description": "An Igbo-English Dictionary API",
   "main": "server.js",
   "scripts": {
     "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
@@ -14,7 +14,8 @@
     "precommit": "lint-staged",
     "mocha": "NODE_ENV=test mocha -r esm ./tests",
     "test": "npm-run-all -p start:database mocha",
-    "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log"
+    "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log",
+    "generate:docs": ""
   },
   "engines": {
     "node": ">=10.0.0"
@@ -45,7 +46,9 @@
     "rimraf": "^3.0.2",
     "string-similarity": "^4.0.2",
     "unicharadata": "^9.0.0-alpha.6",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.10",
+    "swagger-jsdoc": "^4.2.3",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
