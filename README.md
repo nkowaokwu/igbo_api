@@ -51,7 +51,7 @@ The project uses [Cypress](https://cypress.io) for unit tests. To execute all th
 yarn test
 ```
 
-If you want to run the tests headless, run :
+If you want to run the tests headless, run:
 
 ```
 yarn test:run
