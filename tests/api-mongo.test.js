@@ -19,7 +19,7 @@ import createRegExp from '../src/shared/utils/createRegExp';
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'word', 'wordClass'];
+const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'normalized', 'word', 'wordClass'];
 const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
 const EXCLUDE_KEYS = ['__v', '_id'];
 
