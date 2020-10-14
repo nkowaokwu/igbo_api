@@ -4,20 +4,21 @@ Contributions are always welcome. Before contributing please read the [Code of C
 
 ## Feature Requests
 
-Feature requests should be captured through the repo's [issues](https://github.com/ijemmao/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue.
+Feature requests should be captured through the repo's [issues](https://github.com/ijemmao/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
 
 
-Before opening an issue, please read through the [issues](https://github.com/ijemmao/igbo_api/issues); your issue may have already ben discussed or fixed in master.
+Before opening an issue, please read through the [issues](https://github.com/ijemmao/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
 
 ## Areas of Contribution
 
-This project is still very low-level and bare bones. There are a lot of different things that can be done to support the development of this repo:
+There are a lot of different things that can be done to support the development of this repo:
 
 1. Implement requested features
-2. Correct typos or misplaced data in the dictionary json files
+2. Correct typos or misplaced data in the dictionary JSON files
 3. Write documentation on the project structure
 4. Collaborate on creating a roadmap for the project
-5. If you have any ideas reach out to [@ijemmao](https://github.com/ijemmao)
+
+You can also reach out to [@ijemmao](https://github.com/ijemmao) if you any other ideas.
 
 ## Pull Request Process
 

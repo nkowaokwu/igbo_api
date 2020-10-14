@@ -8,9 +8,22 @@
 
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
+## Try it Out
+For a demo, check out this link [http://igboapi.com/api/v1/search/words](http://www.igboapi.com/api/v1/search/words)
+
 ## Getting Started
 
-This API is not publicly available. To run the API, you must run it locally on your machine.
+These instructions will get a copy of the project up and running on your machine for development and testing purposes.
+
+### Prerequisites
+
+To run this project locally, the follow tools need to be installed:
+
+* [Node.js](https://nodejs.org/en/download/)
+* [Yarn](https://classic.yarnpkg.com/en/docs/install)
+* [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+
+### Installation
 
 Clone the project:
 
@@ -18,14 +31,13 @@ Clone the project:
 git clone https://github.com/ijemmao/igbo_api.git
 ```
 
-This project uses [Yarn](https://classic.yarnpkg.com/lang/en/) to manage local dependencies, if you don't have installed you can get it [here](https://classic.yarnpkg.com/en/docs/install).
-
-Move in the project directory and install it's dependencies:
+Move into the project directory and install it's dependencies:
 
 ```
 cd igbo_api/
 yarn install
 ```
+
 If you are running the API on Windows operating system, run the module to install it globally:
 
 ```
@@ -47,7 +59,9 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
 The database will initially be empty, meaning that no words will be returned from the API. To populate your local MongoDB database, read through [Locally Populating Dictionary Data](#populating-data)
 
-Once you've populated your data, use the follow route structure to get word information:
+### GET words
+
+This route will let you pass in either Igbo or English to get Igbo word information.
 
 ```
 /api/v1/search/words?keyword=<keyword>
@@ -56,13 +70,23 @@ Once you've populated your data, use the follow route structure to get word info
 For example:
 
 ```
+// Igbo
 http://localhost:8080/api/v1/search/words?keyword=agụū
+
+// English
+http://localhost:8080/api/v1/search/words?keyword=hunger
 ```
 
-You can also search with English terms with the same route:
+For responses with more than 10 words, you can paginate through them by using:
 
 ```
-/api/v1/search/words?keyword=hunger
+/api/v1/search/words?keyword=<keyword>&page=<page>
+```
+
+For example:
+
+```
+http://localhost:8080/api/v1/search/words?keyword=agụū&page=1
 ```
 
 ### JSON Data
@@ -115,21 +139,19 @@ The responses for both routes will be a plain JSON object similar to this:
 
 <h2 id="populating-data">Locally Populating Dictionary Data</h2>
 
-This project requires the use of [MongoDB](http://docs.mongodb.com/) to locally store data. If you don't have MongoDB installed you can ge it [here](https://docs.mongodb.com/manual/administration/install-community/).
-
 To populate the database complete the following steps:
 
 ### 1. Build a Dictionary
 
-[`dictionary.html`](./dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
+[`dictionary.html`](./src/dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
 
 The following command parses the `html` file and builds a number JSON files:
 
 ```
-yarn build
+yarn build:dictionaries
 ```
 
-Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./dictionaries/ig-en/ig-en_expanded.json)
+Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
 
 ### 2. Populate the MongoDB Database
 
@@ -161,13 +183,19 @@ Now that the data is living in a local database, you can see it either using the
 
 ## Testing
 
-Tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same text, run:
+Tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same time, run:
 
 ```
 yarn test
 ```
 
-If you just want to run the tests with no MongoDB instance, run:
+If you want to run your MongoDB instance and tests in separate terminals, you can run:
+
+```
+yarn start:database
+```
+
+in one terminal, and the following in another:
 
 ```
 yarn mocha

@@ -1,4 +1,4 @@
-name: Igbo API CI
+name: integration
 
 on: pull_request
 
