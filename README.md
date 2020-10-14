@@ -52,6 +52,14 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
 ## Usage
 
+### Documentation
+
+#### Development
+After starting the API server with this `yarn dev`, visit `http://localhost:8080/docs`.
+
+#### Production
+You can also view the productions docs by visiting `http://igboapi.com/docs`.
+
 ### MongoDB Data
 
 The database will initially be empty, meaning that no words will be returned from the API. To populate your local MongoDB database, read through [Locally Populating Dictionary Data](#populating-data)
