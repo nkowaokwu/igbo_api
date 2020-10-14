@@ -11,6 +11,7 @@ const wordSuggestionSchema = new Schema({
     validate: (v) => Array.isArray(v) && v.length > 0,
   },
   variations: { type: [{ type: String }], default: [] },
+  details: { type: String, default: '' },
   approvals: { type: Number, default: 0 },
   denials: { type: Number, default: 0 },
   updatedOn: { type: Date, default: Date.now() },
