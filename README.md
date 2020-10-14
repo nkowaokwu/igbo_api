@@ -1,4 +1,6 @@
 # Igbo Dictionary API
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ijemmao/igbo_api/integration)
+
 [Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
 > Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people in at least 20 different dialects.
