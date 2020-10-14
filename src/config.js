@@ -1,6 +1,6 @@
 import * as packageJson from '../package.json';
 
-const DOMAIN_NAME = 'igboapi.com';
+const { DOMAIN_NAME } = process.env;
 
 // Database
 const DB_NAME = 'igbo_api';
@@ -24,7 +24,7 @@ export const SWAGGER_OPTIONS = {
       version: packageJson.version,
       description: packageJson.description,
     },
-    host: `${(process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev') ? 'localhost:8080' : DOMAIN_NAME}`,
+    host: `${process.env.NODE_ENV !== 'production' ? 'localhost:8080' : DOMAIN_NAME}`,
     basePath: '/api/v1/',
   },
   apis: ['src/routers/*'],

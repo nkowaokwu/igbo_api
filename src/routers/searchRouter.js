@@ -1,7 +1,7 @@
 import express from 'express';
 import { getWords } from '../controllers/words';
 
-const router = express.Router();
+const searchRouter = express.Router();
 
 /**
  * @swagger
@@ -25,6 +25,6 @@ const router = express.Router();
  *      200:
  *         description: OK
  */
-router.get('/words', getWords);
+searchRouter.get('/words', getWords);
 
-export default router;
+export default searchRouter;
