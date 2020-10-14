@@ -2,12 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import swaggerJsDoc from 'swagger-jsdoc';
+import swaggerUI from 'swagger-ui-express';
 import { editRouter, searchRouter, testRouter } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
-
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
