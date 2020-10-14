@@ -5,10 +5,12 @@ import { postExampleSuggestion, putExampleSuggestion } from '../controllers/exam
 const editRouter = express.Router();
 
 /* These routes are used to allow users to suggest new words and examples */
-editRouter.post('/words', postWordSuggestion);
-editRouter.put('/words', putWordSuggestion);
+if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail when releasing for production
+  editRouter.post('/words', postWordSuggestion);
+  editRouter.put('/words', putWordSuggestion);
 
-editRouter.post('/examples', postExampleSuggestion);
-editRouter.put('/examples', putExampleSuggestion);
+  editRouter.post('/examples', postExampleSuggestion);
+  editRouter.put('/examples', putExampleSuggestion);
+}
 
 export default editRouter;
