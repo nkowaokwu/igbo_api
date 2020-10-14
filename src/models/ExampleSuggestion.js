@@ -3,7 +3,7 @@ import { toJSONPlugin } from './plugins';
 
 const { Schema, Types } = mongoose;
 const exampleSuggestionSchema = new Schema({
-  originalExampleId: { type: Types.ObjectId, ref: 'Word' },
+  originalExampleId: { type: Types.ObjectId, ref: 'Example' },
   igbo: { type: String, default: '' },
   english: { type: String, default: '' },
   associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },

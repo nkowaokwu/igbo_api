@@ -1,7 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { testRouter, router } from './routers';
+import bodyParser from 'body-parser';
+import { editRouter, searchRouter, testRouter } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
 
@@ -9,6 +10,9 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
@@ -32,7 +36,8 @@ app.use('*', logger);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1/search', router);
+app.use('/api/v1/search', searchRouter);
+app.use('/api/v1/edit', editRouter);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {

@@ -1,7 +1,9 @@
-import router from './router';
+import editRouter from './editRouter';
+import searchRouter from './searchRouter';
 import testRouter from './testRouter';
 
 export {
-  router,
+  editRouter,
+  searchRouter,
   testRouter,
 };
