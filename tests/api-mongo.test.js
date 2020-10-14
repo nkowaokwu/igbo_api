@@ -13,7 +13,10 @@ import {
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
-import { populateAPI, searchAPIByWord } from './shared/commands';
+import {
+  populateAPI,
+  searchAPIByWord,
+} from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 
 const { expect } = chai;
@@ -23,7 +26,7 @@ const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'norm
 const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
 const EXCLUDE_KEYS = ['__v', '_id'];
 
-describe('MongoDB Database', () => {
+describe('MongoDB Words', () => {
   before(function (done) {
     this.timeout(LONG_TIMEOUT);
     populateAPI().then(() => {
