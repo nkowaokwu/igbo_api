@@ -5,10 +5,11 @@ import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
 
-export const getWordSuggestions = () => (
+export const getWordSuggestions = (query = {}) => (
   chai
     .request(server)
     .get(`${EDIT_API_ROUTE}/words`)
+    .query(query)
 );
 
 export const getWordSuggestion = (id) => (
@@ -17,16 +18,30 @@ export const getWordSuggestion = (id) => (
     .get(`${EDIT_API_ROUTE}/words/${id}`)
 );
 
-export const getExampleSuggestions = () => (
+export const getExampleSuggestions = (query = {}) => (
   chai
     .request(server)
     .get(`${EDIT_API_ROUTE}/examples`)
+    .query(query)
 );
 
 export const getExampleSuggestion = (id) => (
   chai
     .request(server)
     .get(`${EDIT_API_ROUTE}/examples/${id}`)
+);
+
+export const getGenericWords = (query = {}) => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/genericWords`)
+    .query(query)
+);
+
+export const getGenericWord = (id) => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/genericWords/${id}`)
 );
 
 export const suggestNewWord = (data) => (
@@ -70,6 +85,12 @@ export const populateAPI = () => (
   chai
     .request(server)
     .post(`${TEST_ROUTE}/populate`)
+);
+
+export const populateGenericWordsAPI = () => (
+  chai
+    .request(server)
+    .post(`${EDIT_API_ROUTE}/genericWords`)
 );
 
 /* Uses data in JSON */

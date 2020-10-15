@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
 import ExampleSuggestion from '../models/ExampleSuggestion';
+import { paginate } from './utils/index';
 
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = (req, res) => {
@@ -48,16 +49,18 @@ export const putExampleSuggestion = (req, res) => {
 };
 
 /* Returns all existing ExampleSuggestion objects */
-export const getExampleSuggestions = (_, res) => (
+export const getExampleSuggestions = (req, res) => {
+  const { page: pageQuery } = req.query;
+  const page = parseInt(pageQuery, 10) || 0;
   ExampleSuggestion.find()
     .then((exampleSuggestions) => (
-      res.send(exampleSuggestions)
+      paginate(res, exampleSuggestions, page)
     ))
     .catch(() => {
       res.status(400);
       return res.send('An error has occurred while return example suggestions, double check your provided data');
-    })
-);
+    });
+};
 
 /* Returns a single ExampleSuggestion by using an id */
 export const getExampleSuggestion = (req, res) => {

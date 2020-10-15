@@ -6,10 +6,8 @@ import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
-import { createQueryRegex, sortDocsByDefinitions } from './utils';
+import { createQueryRegex, sortDocsByDefinitions, paginate } from './utils';
 import { createExample } from './examples';
-
-const RESPONSE_LIMIT = 10;
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
@@ -22,11 +20,6 @@ export const getWordData = (req, res) => {
   const regexWord = createRegExp(searchWord);
   return res.send(findSearchWord(regexWord, searchWord));
 };
-
-/* Wrapper function to prep response by limiting number of words */
-const sendWords = (res, words, page) => (
-  res.send(words.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)))
-);
 
 /* Searches for a word with Igbo stored in MongoDB */
 export const searchWordUsingIgbo = (regex) => (
@@ -45,7 +38,7 @@ export const searchWordUsingEnglish = (regex) => (
 const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
   const words = await searchWordUsingEnglish(regex);
   const sortedWords = sortDocsByDefinitions(searchWord, words);
-  return sendWords(res, sortedWords, page);
+  return paginate(res, sortedWords, page);
 };
 
 /* Gets words from MongoDB */
@@ -59,7 +52,7 @@ export const getWords = async (req, res) => {
   if (!words.length) {
     return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
   }
-  return sendWords(res, words, page);
+  return paginate(res, words, page);
 };
 
 /* Creates Word documents in MongoDB database */

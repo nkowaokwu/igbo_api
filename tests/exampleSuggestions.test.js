@@ -1,5 +1,11 @@
 import chai from 'chai';
-import { forEach, forIn, isEqual } from 'lodash';
+import {
+  forEach,
+  forIn,
+  isEqual,
+  difference,
+  map,
+} from 'lodash';
 import {
   suggestNewExample,
   updateExampleSuggestion,
@@ -46,7 +52,7 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it.only('should return an example error because of invalid associateWords ids', (done) => {
+    it('should return an example error because of invalid associateWords ids', (done) => {
       const malformedData = {
         ...updatedExampleSuggestionData,
         associatedWords: [...updatedExampleSuggestionData.associatedWords, 'okokok'],
@@ -92,13 +98,13 @@ describe('MongoDB Example Suggestions', () => {
   });
 
   describe('/GET mongodb exampleSuggestions', () => {
-    it.only('should return all example suggestions', (done) => {
+    it('should return all example suggestions', (done) => {
       Promise.all([suggestNewExample(exampleSuggestionData), suggestNewExample(exampleSuggestionData)])
         .then(() => {
           getExampleSuggestions()
             .end((_, res) => {
               expect(res.status).to.equal(200);
-              expect(res.body).to.have.lengthOf(2);
+              expect(res.body).to.have.lengthOf.at.least(5);
               forEach(res.body, (exampleSuggestion) => {
                 expect(exampleSuggestion).to.have.all.keys(EXAMPLE_SUGGESTION_KEYS);
               });
@@ -107,7 +113,7 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it.only('should return one example suggestion', (done) => {
+    it('should return one example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           getExampleSuggestion(res.body.id)
@@ -118,6 +124,27 @@ describe('MongoDB Example Suggestions', () => {
               done();
             });
         });
+    });
+
+    it('should return different sets of example suggestions for pagination', (done) => {
+      Promise.all([
+        getExampleSuggestions(0),
+        getExampleSuggestions(1),
+        getExampleSuggestions(2),
+      ]).then((res) => {
+        forEach(res, (exampleSuggestionsRes, index) => {
+          expect(exampleSuggestionsRes.status).to.equal(200);
+          if (index !== 0) {
+            const prevExampleSuggestionIds = map(res[index].body, ({ id }) => ({ id }));
+            const currentExampleSuggestionIds = map(exampleSuggestionsRes.body, ({ id }) => ({ id }));
+            expect(difference(
+              prevExampleSuggestionIds,
+              currentExampleSuggestionIds,
+            )).to.have.lengthOf(prevExampleSuggestionIds.length);
+          }
+        });
+        done();
+      });
     });
   });
 });

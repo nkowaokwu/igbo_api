@@ -1,6 +1,8 @@
 import stringSimilarity from 'string-similarity';
 import createRegExp from '../../shared/utils/createRegExp';
 
+const RESPONSE_LIMIT = 10;
+
 /* Either creates a regex pattern for provided searchWord
 or fallbacks to matching every word */
 export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
@@ -14,3 +16,8 @@ export const sortDocsByDefinitions = (searchWord, docs) => {
   });
   return docs;
 };
+
+/* Wrapper function to prep response by limiting number of docs return to the client */
+export const paginate = (res, docs, page) => (
+  res.send(docs.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)))
+);
