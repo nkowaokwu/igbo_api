@@ -40,3 +40,17 @@ export const putWordSuggestion = (req, res) => {
       return res.send({ error: 'An error has occurred while updating, double check your provided data' });
     });
 };
+
+/* Returns all existing WordSuggestion objects */
+export const getWordSuggestions = (_, res) => (
+  WordSuggestion.find()
+    .then((wordSuggestions) => (
+      res.send(wordSuggestions)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send({
+        error: 'An error has occurred while returning word suggestions',
+      });
+    })
+);

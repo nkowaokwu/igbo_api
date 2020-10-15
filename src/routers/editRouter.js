@@ -1,6 +1,6 @@
 import express from 'express';
-import { postWordSuggestion, putWordSuggestion } from '../controllers/wordSuggestions';
-import { postExampleSuggestion, putExampleSuggestion } from '../controllers/exampleSuggestions';
+import { postWordSuggestion, putWordSuggestion, getWordSuggestions } from '../controllers/wordSuggestions';
+import { getExampleSuggestions, postExampleSuggestion, putExampleSuggestion } from '../controllers/exampleSuggestions';
 
 const editRouter = express.Router();
 
@@ -78,13 +78,27 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
+ *   get:
+ *      description: Returns all WordSuggestion objects in the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/words', postWordSuggestion);
   editRouter.put('/words', putWordSuggestion);
+  editRouter.get('/words', getWordSuggestions);
 
   /**
  * @swagger
- * /edit/example:
+ * /edit/examples:
  *   post:
  *     description: Creates a new ExampleSuggestion document
  *     tags:
@@ -146,9 +160,23 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
+ *   get:
+ *      description: Returns all ExampleSuggestion objects in the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/examples', postExampleSuggestion);
   editRouter.put('/examples', putExampleSuggestion);
+  editRouter.get('/examples', getExampleSuggestions);
 }
 
 export default editRouter;

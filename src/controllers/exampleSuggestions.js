@@ -35,9 +35,20 @@ export const putExampleSuggestion = (req, res) => {
       const updatedExampleSuggestion = assign(exampleSuggestion, data);
       res.send(await updatedExampleSuggestion.save());
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(400);
       return res.send('An error has occurred while updating, double check your provided data');
     });
 };
+
+/* Returns all existing ExampleSuggestion objects */
+export const getExampleSuggestions = (_, res) => (
+  ExampleSuggestion.find()
+    .then((exampleSuggestions) => (
+      res.send(exampleSuggestions)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send('An error has occurred while return example suggestions, double check your provided data');
+    })
+);
