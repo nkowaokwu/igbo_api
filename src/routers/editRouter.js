@@ -11,7 +11,7 @@ import {
   postExampleSuggestion,
   putExampleSuggestion,
 } from '../controllers/exampleSuggestions';
-import { createGenericWords } from '../controllers/genericWords';
+import { getGenericWords, createGenericWords, getGenericWord } from '../controllers/genericWords';
 
 const editRouter = express.Router();
 
@@ -247,8 +247,37 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *     responses:
  *      200:
  *         description: OK
+ *   get:
+ *     description: Gets all GenericWord objects from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     responses:
+ *      200:
+ *         description: OK
+ *
+ * /edit/genericWords/${genericWordId}:
+ *   get:
+ *     description: Returns a single GenericWord object from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: genericWordId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the genericWord id
+ *     responses:
+ *      200:
+ *         description: OK
  */
   editRouter.post('/genericWords', createGenericWords);
+  editRouter.get('/genericWords', getGenericWords);
+  editRouter.get('/genericWords/:id', getGenericWord);
 }
 
 export default editRouter;

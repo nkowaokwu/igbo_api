@@ -6,6 +6,7 @@ import {
   partial,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
+import { paginate } from './utils/index';
 
 const REQUIRE_KEYS = ['id', 'word', 'wordClass', 'definitions'];
 
@@ -49,18 +50,20 @@ export const putWordSuggestion = (req, res) => {
 };
 
 /* Returns all existing WordSuggestion objects */
-export const getWordSuggestions = (_, res) => (
+export const getWordSuggestions = (req, res) => {
+  const { page: pageQuery } = req.query;
+  const page = parseInt(pageQuery, 10) || 0;
   WordSuggestion.find()
     .then((wordSuggestions) => (
-      res.send(wordSuggestions)
+      paginate(res, wordSuggestions, page)
     ))
     .catch(() => {
       res.status(400);
       return res.send({
         error: 'An error has occurred while returning word suggestions',
       });
-    })
-);
+    });
+};
 
 /* Returns a single WordSuggestion by using an id */
 export const getWordSuggestion = (req, res) => {

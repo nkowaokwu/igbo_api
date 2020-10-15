@@ -1,7 +1,36 @@
 import { forIn } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
+import { paginate } from './utils/index';
 
+/* Returns all existing GenericWord objects */
+export const getGenericWords = (req, res) => {
+  const { page: pageQuery } = req.query;
+  const page = parseInt(pageQuery, 10) || 0;
+  return GenericWord.find()
+    .then((genericWords) => (
+      paginate(res, genericWords, page)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while returning all generic words' });
+    });
+};
+
+/* Returns a single WordSuggestion by using an id */
+export const getGenericWord = (req, res) => {
+  const { id } = req.params;
+  return GenericWord.findById(id)
+    .then((genericWord) => (
+      res.send(genericWord)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while return a single word suggestion' });
+    });
+};
+
+/* Populates the MongoDB database with GenericWords */
 export const createGenericWords = (_, res) => {
   const genericWordsPromises = [];
   forIn(genericWordsDictionary, (value, key) => {
