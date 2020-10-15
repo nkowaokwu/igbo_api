@@ -1,6 +1,17 @@
 import express from 'express';
-import { postWordSuggestion, putWordSuggestion } from '../controllers/wordSuggestions';
-import { postExampleSuggestion, putExampleSuggestion } from '../controllers/exampleSuggestions';
+import {
+  getWordSuggestion,
+  getWordSuggestions,
+  postWordSuggestion,
+  putWordSuggestion,
+} from '../controllers/wordSuggestions';
+import {
+  getExampleSuggestion,
+  getExampleSuggestions,
+  postExampleSuggestion,
+  putExampleSuggestion,
+} from '../controllers/exampleSuggestions';
+import { createGenericWords } from '../controllers/genericWords';
 
 const editRouter = express.Router();
 
@@ -78,13 +89,50 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
+ *   get:
+ *      description: Returns all WordSuggestion objects in the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *
+ * /edit/words/{wordSuggestionId}:
+ *    get:
+ *      description: Returns a single WordSuggestion object from the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: wordSuggestionId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the wordSuggestion id
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/words', postWordSuggestion);
   editRouter.put('/words', putWordSuggestion);
+  editRouter.get('/words', getWordSuggestions);
+  editRouter.get('/words/:id', getWordSuggestion);
 
   /**
  * @swagger
- * /edit/example:
+ * /edit/examples:
  *   post:
  *     description: Creates a new ExampleSuggestion document
  *     tags:
@@ -146,9 +194,61 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
+ *   get:
+ *      description: Returns all ExampleSuggestion objects in the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *
+ * /edit/examples/{exampleSuggestionId}:
+ *    get:
+ *      description: Returns a single ExampleSuggestion object from the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: exampleSuggestionId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the exampleSuggestion id
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/examples', postExampleSuggestion);
   editRouter.put('/examples', putExampleSuggestion);
+  editRouter.get('/examples', getExampleSuggestions);
+  editRouter.get('/examples/:id', getExampleSuggestion);
+
+  /**
+ * @swagger
+ * /edit/genericWords:
+ *   post:
+ *     description: Populates the database with GenericWords using ig-en_normalized_expanded.json
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     responses:
+ *      200:
+ *         description: OK
+ */
+  editRouter.post('/genericWords', createGenericWords);
 }
 
 export default editRouter;

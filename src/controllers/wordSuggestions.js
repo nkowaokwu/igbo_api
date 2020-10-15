@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import {
   assign,
   every,
@@ -11,8 +12,14 @@ const REQUIRE_KEYS = ['id', 'word', 'wordClass', 'definitions'];
 /* Creates a new WordSuggestion document in the database */
 export const postWordSuggestion = (req, res) => {
   const { body: data } = req;
+
+  if (!mongoose.Types.ObjectId.isValid(data.originalWordId)) {
+    res.status(400);
+    return res.send({ error: 'Invalid word id provided' });
+  }
+
   const newWordSuggestion = new WordSuggestion(data);
-  newWordSuggestion.save()
+  return newWordSuggestion.save()
     .then((wordSuggestion) => (
       res.send({ id: wordSuggestion.id })
     ))
@@ -38,5 +45,32 @@ export const putWordSuggestion = (req, res) => {
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while updating, double check your provided data' });
+    });
+};
+
+/* Returns all existing WordSuggestion objects */
+export const getWordSuggestions = (_, res) => (
+  WordSuggestion.find()
+    .then((wordSuggestions) => (
+      res.send(wordSuggestions)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send({
+        error: 'An error has occurred while returning word suggestions',
+      });
+    })
+);
+
+/* Returns a single WordSuggestion by using an id */
+export const getWordSuggestion = (req, res) => {
+  const { id } = req.params;
+  return WordSuggestion.findById(id)
+    .then((wordSuggestion) => (
+      res.send(wordSuggestion)
+    ))
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while returning a single word suggestion' });
     });
 };
