@@ -1,8 +1,10 @@
 import chai from 'chai';
-import { forIn, isEqual } from 'lodash';
+import { forEach, forIn, isEqual } from 'lodash';
 import {
   suggestNewExample,
   updateExampleSuggestion,
+  getExampleSuggestions,
+  getExampleSuggestion,
 } from './shared/commands';
 import {
   exampleSuggestionData,
@@ -11,6 +13,19 @@ import {
 } from './__mocks__/suggestions';
 
 const { expect } = chai;
+
+const EXAMPLE_SUGGESTION_KEYS = [
+  'igbo',
+  'english',
+  'associatedWords',
+  'details',
+  'approvals',
+  'denials',
+  'updatedOn',
+  'merged',
+  'id',
+];
+
 describe('MongoDB Example Suggestions', () => {
   describe('/POST mongodb exampleSuggestions', () => {
     it('should save submitted example suggestion', (done) => {
@@ -22,8 +37,21 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return a word error because of malformed data', (done) => {
+    it('should return an example error because of malformed data', (done) => {
       suggestNewExample(malformedExampleSuggestionData)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it.only('should return an example error because of invalid associateWords ids', (done) => {
+      const malformedData = {
+        ...updatedExampleSuggestionData,
+        associatedWords: [...updatedExampleSuggestionData.associatedWords, 'okokok'],
+      };
+      suggestNewExample(malformedData)
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
@@ -57,6 +85,36 @@ describe('MongoDB Example Suggestions', () => {
           updateExampleSuggestion(malformedExampleSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
+              done();
+            });
+        });
+    });
+  });
+
+  describe('/GET mongodb exampleSuggestions', () => {
+    it.only('should return all example suggestions', (done) => {
+      Promise.all([suggestNewExample(exampleSuggestionData), suggestNewExample(exampleSuggestionData)])
+        .then(() => {
+          getExampleSuggestions()
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.have.lengthOf(2);
+              forEach(res.body, (exampleSuggestion) => {
+                expect(exampleSuggestion).to.have.all.keys(EXAMPLE_SUGGESTION_KEYS);
+              });
+              done();
+            });
+        });
+    });
+
+    it.only('should return one example suggestion', (done) => {
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          getExampleSuggestion(res.body.id)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body).to.be.an('object');
+              expect(result.body).to.have.all.keys(EXAMPLE_SUGGESTION_KEYS);
               done();
             });
         });

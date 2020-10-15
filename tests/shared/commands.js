@@ -5,6 +5,30 @@ import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
 
+export const getWordSuggestions = () => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/words`)
+);
+
+export const getWordSuggestion = (id) => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/words/${id}`)
+);
+
+export const getExampleSuggestions = () => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/examples`)
+);
+
+export const getExampleSuggestion = (id) => (
+  chai
+    .request(server)
+    .get(`${EDIT_API_ROUTE}/examples/${id}`)
+);
+
 export const suggestNewWord = (data) => (
   chai
     .request(server)
