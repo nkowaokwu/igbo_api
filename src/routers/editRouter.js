@@ -11,6 +11,7 @@ import {
   postExampleSuggestion,
   putExampleSuggestion,
 } from '../controllers/exampleSuggestions';
+import { createGenericWords } from '../controllers/genericWords';
 
 const editRouter = express.Router();
 
@@ -233,6 +234,21 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
   editRouter.put('/examples', putExampleSuggestion);
   editRouter.get('/examples', getExampleSuggestions);
   editRouter.get('/examples/:id', getExampleSuggestion);
+
+  /**
+ * @swagger
+ * /edit/genericWords:
+ *   post:
+ *     description: Populates the database with GenericWords using ig-en_normalized_expanded.json
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     responses:
+ *      200:
+ *         description: OK
+ */
+  editRouter.post('/genericWords', createGenericWords);
 }
 
 export default editRouter;
