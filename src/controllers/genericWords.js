@@ -1,5 +1,6 @@
 import { forIn } from 'lodash';
 import GenericWord from '../models/GenericWord';
+import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
 import { paginate } from './utils/index';
 
@@ -33,7 +34,8 @@ export const getGenericWord = (req, res) => {
 /* Populates the MongoDB database with GenericWords */
 export const createGenericWords = (_, res) => {
   const genericWordsPromises = [];
-  forIn(genericWordsDictionary, (value, key) => {
+  const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
+  forIn(dictionary, (value, key) => {
     const newGenericWords = new GenericWord({
       word: key,
       definitions: value,

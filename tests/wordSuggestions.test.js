@@ -1,5 +1,11 @@
 import chai from 'chai';
-import { forEach, forIn, isEqual } from 'lodash';
+import {
+  forEach,
+  forIn,
+  isEqual,
+  map,
+  difference,
+} from 'lodash';
 import {
   suggestNewWord,
   updateWordSuggestion,
@@ -48,7 +54,7 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it.only('should return a word error because invalid id', (done) => {
+    it('should return a word error because invalid id', (done) => {
       const malformedData = { ...wordSuggestionData, originalWordId: 'ok123' };
       suggestNewWord(malformedData)
         .end((_, res) => {
@@ -87,34 +93,55 @@ describe('MongoDB Word Suggestions', () => {
             });
         });
     });
+  });
 
-    describe('/GET mongodb wordSuggestions', () => {
-      it.only('should return all word suggestions', (done) => {
-        Promise.all([suggestNewWord(wordSuggestionData), suggestNewWord(wordSuggestionData)])
-          .then(() => {
-            getWordSuggestions()
-              .end((_, res) => {
-                expect(res.status).to.equal(200);
-                expect(res.body).to.have.lengthOf(2);
-                forEach(res.body, (wordSuggestion) => {
-                  expect(wordSuggestion).to.have.all.keys(WORD_SUGGESTION_KEYS);
-                });
-                done();
+  describe('/GET mongodb wordSuggestions', () => {
+    it('should return all word suggestions', (done) => {
+      Promise.all([suggestNewWord(wordSuggestionData), suggestNewWord(wordSuggestionData)])
+        .then(() => {
+          getWordSuggestions()
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.have.lengthOf.at.least(5);
+              forEach(res.body, (wordSuggestion) => {
+                expect(wordSuggestion).to.have.all.keys(WORD_SUGGESTION_KEYS);
               });
-          });
-      });
+              done();
+            });
+        });
+    });
 
-      it.only('should return one word suggestion', (done) => {
-        suggestNewWord(wordSuggestionData)
-          .then((res) => {
-            getWordSuggestion(res.body.id)
-              .end((_, result) => {
-                expect(result.status).to.equal(200);
-                expect(result.body).to.be.an('object');
-                expect(result.body).to.have.all.keys(WORD_SUGGESTION_KEYS);
-                done();
-              });
-          });
+    it('should return one word suggestion', (done) => {
+      suggestNewWord(wordSuggestionData)
+        .then((res) => {
+          getWordSuggestion(res.body.id)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body).to.be.an('object');
+              expect(result.body).to.have.all.keys(WORD_SUGGESTION_KEYS);
+              done();
+            });
+        });
+    });
+
+    it('should return different sets of word suggestions for pagination', (done) => {
+      Promise.all([
+        getWordSuggestions(0),
+        getWordSuggestions(1),
+        getWordSuggestions(2),
+      ]).then((res) => {
+        forEach(res, (wordSuggestionsRes, index) => {
+          expect(wordSuggestionsRes.status).to.equal(200);
+          if (index !== 0) {
+            const prevWordSuggestionIds = map(res[index].body, ({ id }) => ({ id }));
+            const currentWordSuggestionIds = map(wordSuggestionsRes.body, ({ id }) => ({ id }));
+            expect(difference(
+              prevWordSuggestionIds,
+              currentWordSuggestionIds,
+            )).to.have.lengthOf(prevWordSuggestionIds.length);
+          }
+        });
+        done();
       });
     });
   });
