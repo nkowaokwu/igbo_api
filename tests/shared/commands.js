@@ -73,10 +73,18 @@ export const updateExampleSuggestion = (data) => (
 );
 
 /* Searches for words using the data in MongoDB */
-export const searchAPIByWord = (query = {}) => (
+export const getWords = (query = {}) => (
   chai
     .request(server)
     .get(`${API_ROUTE}/words`)
+    .query(query)
+);
+
+/* Searches for examples using the data in MongoDB */
+export const getExamples = (query = {}) => (
+  chai
+    .request(server)
+    .get(`${API_ROUTE}/examples`)
     .query(query)
 );
 
