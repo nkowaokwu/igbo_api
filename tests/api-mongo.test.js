@@ -12,7 +12,7 @@ import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
 import {
   populateAPI,
-  searchAPIByWord,
+  getWords,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import expectUniqSetsOfResponses from './shared/utils';
@@ -70,7 +70,7 @@ describe('MongoDB Words', () => {
   describe('/GET mongodb words', () => {
     it('should return word information', (done) => {
       const keyword = 'bia';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.lengthOf.at.least(2);
         forEach(res.body, (word) => {
@@ -83,9 +83,9 @@ describe('MongoDB Words', () => {
     it('should return at most ten words per request with range query', function (done) {
       this.timeout(LONG_TIMEOUT);
       Promise.all([
-        searchAPIByWord({ range: true }),
-        searchAPIByWord({ range: '[10,19]' }),
-        searchAPIByWord({ range: '[20,29' }),
+        getWords({ range: true }),
+        getWords({ range: '[10,19]' }),
+        getWords({ range: '[20,29' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -95,9 +95,9 @@ describe('MongoDB Words', () => {
     it('should return at most ten words per request due to pagination', function (done) {
       this.timeout(LONG_TIMEOUT);
       Promise.all([
-        searchAPIByWord(),
-        searchAPIByWord({ page: '1' }),
-        searchAPIByWord({ page: '2' }),
+        getWords(),
+        getWords({ page: '1' }),
+        getWords({ page: '2' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -106,7 +106,7 @@ describe('MongoDB Words', () => {
 
     it('should return only ten words', (done) => {
       const keyword = 'woman';
-      searchAPIByWord({ keyword }).then((res) => {
+      getWords({ keyword }).then((res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.have.lengthOf(10);
         done();
@@ -116,11 +116,11 @@ describe('MongoDB Words', () => {
     it('should handle invalid page number', (done) => {
       const keyword = 'woman';
       Promise.all([
-        searchAPIByWord({ keyword, page: -1 }).then((res) => {
+        getWords({ keyword, page: -1 }).then((res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(0);
         }),
-        searchAPIByWord({ keyword, page: 'fake' }).then((res) => {
+        getWords({ keyword, page: 'fake' }).then((res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(10);
         }),
@@ -131,7 +131,7 @@ describe('MongoDB Words', () => {
 
     it("should return nothing because it's an incomplete word", (done) => {
       const keyword = 'ak';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(0);
@@ -141,7 +141,7 @@ describe('MongoDB Words', () => {
 
     it('should return loose matches without accent marks', (done) => {
       const keyword = 'akikà';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(4);
@@ -157,7 +157,7 @@ describe('MongoDB Words', () => {
 
     it('should return igbo words when given english with an exact match', (done) => {
       const keyword = 'animal; meat';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(1);
@@ -168,7 +168,7 @@ describe('MongoDB Words', () => {
 
     it('should return igbo words when given english with a partial match', (done) => {
       const keyword = 'animal';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(3);
@@ -181,7 +181,7 @@ describe('MongoDB Words', () => {
 
     it('should return igbo word by searching variation', (done) => {
       const keyword = 'mili';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(7);
@@ -195,7 +195,7 @@ describe('MongoDB Words', () => {
 
     it('should return multiple word objects by searching variation', (done) => {
       const keyword = '-mu-mù';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(2);
@@ -207,7 +207,7 @@ describe('MongoDB Words', () => {
 
     it('should return unique words when searching for term', (done) => {
       const keyword = 'ànùnù';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(5);
@@ -221,7 +221,7 @@ describe('MongoDB Words', () => {
 
     it('should not include _id and __v keys', (done) => {
       const keyword = 'elephant';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(5);
@@ -240,7 +240,7 @@ describe('MongoDB Words', () => {
 
     it('should return a sorted list of igbo terms when using english', (done) => {
       const keyword = 'water';
-      searchAPIByWord({ keyword }).end((_, res) => {
+      getWords({ keyword }).end((_, res) => {
         expect(res.status).to.be.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.least(5);

@@ -165,5 +165,15 @@ describe('MongoDB Example Suggestions', () => {
         done();
       });
     });
+
+    it('should return prioritize page over range', (done) => {
+      Promise.all([
+        getExampleSuggestions({ page: '1' }),
+        getExampleSuggestions({ page: '1', range: '[100,109]' }),
+      ]).then((res) => {
+        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        done();
+      });
+    });
   });
 });

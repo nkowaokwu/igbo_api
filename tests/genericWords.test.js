@@ -95,5 +95,15 @@ describe('MongoDB Generic Words', () => {
         done();
       });
     });
+
+    it('should return prioritize page over range', (done) => {
+      Promise.all([
+        getGenericWords({ page: '1' }),
+        getGenericWords({ page: '1', range: '[100,109]' }),
+      ]).then((res) => {
+        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        done();
+      });
+    });
   });
 });
