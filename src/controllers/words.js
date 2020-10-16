@@ -7,10 +7,9 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import {
-  createQueryRegex,
   sortDocsByDefinitions,
   paginate,
-  convertRangeToPage,
+  handleQueries,
 } from './utils';
 import { createExample } from './examples';
 
@@ -48,10 +47,7 @@ const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
-  const { keyword = '', page: pageQuery, range } = req.query;
-  const searchWord = removePrefix(keyword || '');
-  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
-  const regexKeyword = createQueryRegex(searchWord);
+  const { searchWord, regexKeyword, page } = handleQueries(req.query);
   const words = await searchWordUsingIgbo(regexKeyword);
 
   if (!words.length) {

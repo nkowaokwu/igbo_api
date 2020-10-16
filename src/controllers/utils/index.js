@@ -1,4 +1,5 @@
 import stringSimilarity from 'string-similarity';
+import removePrefix from '../../shared/utils/removePrefix';
 import createRegExp from '../../shared/utils/createRegExp';
 
 const RESPONSE_LIMIT = 10;
@@ -23,10 +24,20 @@ export const paginate = (res, docs, page) => {
   return res.send(docs.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)));
 };
 
+/* Converts the range query into a number to be used as the page query */
 export const convertRangeToPage = (range = '[0,10]') => {
   try {
     return parseInt(range.substring(range.indexOf('[') + 1, range.indexOf(',')), 10) / 10;
   } catch {
     return 0;
   }
+};
+
+/* Handles all the queries for searching in the database */
+export const handleQueries = (query = {}) => {
+  const { keyword = '', page: pageQuery = '', range } = query;
+  const searchWord = removePrefix(keyword || '');
+  const regexKeyword = createQueryRegex(searchWord);
+  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
+  return { searchWord, regexKeyword, page };
 };

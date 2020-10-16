@@ -104,7 +104,7 @@ describe('MongoDB Example Suggestions', () => {
           getExampleSuggestions()
             .end((_, res) => {
               expect(res.status).to.equal(200);
-              expect(res.body).to.have.lengthOf.at.least(5);
+              expect(res.body).to.have.lengthOf.at.least(2);
               forEach(res.body, (exampleSuggestion) => {
                 expect(exampleSuggestion).to.have.all.keys(EXAMPLE_SUGGESTION_KEYS);
               });
