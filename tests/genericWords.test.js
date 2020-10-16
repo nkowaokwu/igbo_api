@@ -35,6 +35,18 @@ describe('MongoDB Generic Words', () => {
   });
 
   describe('/GET mongodb genericWords', () => {
+    it('should return a generic word by searching', (done) => {
+      const keyword = 'mbughari';
+      getGenericWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
+          expect(res.body[0].word).to.equal(keyword);
+          done();
+        });
+    });
+
     it('should return all generic words', (done) => {
       getGenericWords()
         .end((_, res) => {

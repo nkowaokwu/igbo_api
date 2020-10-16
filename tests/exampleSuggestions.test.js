@@ -98,13 +98,30 @@ describe('MongoDB Example Suggestions', () => {
   });
 
   describe('/GET mongodb exampleSuggestions', () => {
+    it('should return an example suggestion by searching', (done) => {
+      const exampleText = exampleSuggestionData.igbo;
+      suggestNewExample(exampleSuggestionData)
+        .then(() => {
+          getExampleSuggestions({ keyword: exampleText })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
+              forEach(Object.keys(exampleSuggestionData), (key) => {
+                expect(res.body[0][key]).to.equal(exampleSuggestionData[key]);
+              });
+              done();
+            });
+        });
+    });
+
     it('should return all example suggestions', (done) => {
       Promise.all([suggestNewExample(exampleSuggestionData), suggestNewExample(exampleSuggestionData)])
         .then(() => {
           getExampleSuggestions()
             .end((_, res) => {
               expect(res.status).to.equal(200);
-              expect(res.body).to.have.lengthOf.at.least(5);
+              expect(res.body).to.have.lengthOf.at.least(2);
               forEach(res.body, (exampleSuggestion) => {
                 expect(exampleSuggestion).to.have.all.keys(EXAMPLE_SUGGESTION_KEYS);
               });
