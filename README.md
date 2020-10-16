@@ -71,29 +71,29 @@ The database will initially be empty, meaning that no words will be returned fro
 This route will let you pass in either Igbo or English to get Igbo word information.
 
 ```
-/api/v1/search/words?keyword=<keyword>
+/api/v1/words?keyword=<keyword>
 ```
 
 For example:
 
 ```
 // Igbo
-http://localhost:8080/api/v1/search/words?keyword=agụū
+http://localhost:8080/api/v1/words?keyword=agụū
 
 // English
-http://localhost:8080/api/v1/search/words?keyword=hunger
+http://localhost:8080/api/v1/words?keyword=hunger
 ```
 
 For responses with more than 10 words, you can paginate through them by using:
 
 ```
-/api/v1/search/words?keyword=<keyword>&page=<page>
+/api/v1/words?keyword=<keyword>&page=<page>
 ```
 
 For example:
 
 ```
-http://localhost:8080/api/v1/search/words?keyword=agụū&page=1
+http://localhost:8080/api/v1/words?keyword=agụū&page=1
 ```
 
 ### JSON Data

@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import { editRouter, searchRouter, testRouter } from './routers';
+import { editRouter, router, testRouter } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
 
@@ -37,7 +37,7 @@ app.use('*', logger);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1/search', searchRouter);
+app.use('/api/v1', router);
 app.use('/api/v1/edit', editRouter);
 
 /* Grabs data from JSON dictionary */

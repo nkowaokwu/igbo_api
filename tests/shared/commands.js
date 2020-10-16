@@ -1,6 +1,6 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { EDIT_API_ROUTE, TEST_ROUTE, WORDS_API_ROUTE } from './constants';
+import { API_ROUTE, EDIT_API_ROUTE, TEST_ROUTE } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -76,7 +76,7 @@ export const updateExampleSuggestion = (data) => (
 export const searchAPIByWord = (query = {}) => (
   chai
     .request(server)
-    .get(WORDS_API_ROUTE)
+    .get(`${API_ROUTE}/words`)
     .query(query)
 );
 

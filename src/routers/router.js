@@ -1,11 +1,11 @@
 import express from 'express';
 import { getWords } from '../controllers/words';
 
-const searchRouter = express.Router();
+const router = express.Router();
 
 /**
  * @swagger
- * /search/words:
+ * /words:
  *   get:
  *     description: Get words in dictionary
   *     tags:
@@ -21,10 +21,15 @@ const searchRouter = express.Router();
  *        in: query
  *        required: false
  *        type: integer
+ *      - name: range
+ *        description: page for results using [x,y] syntax
+ *        in: query
+ *        required: false
+ *        type: string
  *     responses:
  *      200:
  *         description: OK
  */
-searchRouter.get('/words', getWords);
+router.get('/words', getWords);
 
-export default searchRouter;
+export default router;
