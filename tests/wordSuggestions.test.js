@@ -96,6 +96,21 @@ describe('MongoDB Word Suggestions', () => {
   });
 
   describe('/GET mongodb wordSuggestions', () => {
+    it('should return an example by searching', (done) => {
+      const keyword = wordSuggestionData.word;
+      suggestNewWord(wordSuggestionData)
+        .then(() => {
+          getWordSuggestions({ keyword })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
+              expect(res.body[0].word).to.equal(keyword);
+              done();
+            });
+        });
+    });
+
     it('should return all word suggestions', (done) => {
       Promise.all([suggestNewWord(wordSuggestionData), suggestNewWord(wordSuggestionData)])
         .then(() => {
