@@ -44,6 +44,20 @@ export const getGenericWord = (id) => (
     .get(`${EDIT_API_ROUTE}/genericWords/${id}`)
 );
 
+export const createWord = (data) => (
+  chai
+    .request(server)
+    .post(`${API_ROUTE}/words`)
+    .send(data)
+);
+
+export const createExample = (data) => (
+  chai
+    .request(server)
+    .post(`${API_ROUTE}/examples`)
+    .send(data)
+);
+
 export const suggestNewWord = (data) => (
   chai
     .request(server)

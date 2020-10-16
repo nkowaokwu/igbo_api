@@ -22,6 +22,12 @@ const updatedWordSuggestionData = {
   definitions: ['first', 'second'],
 };
 
+const malformedWordData = {
+  worrd: 'newWord',
+  wordClass: '',
+  definitions: [],
+};
+
 const exampleSuggestionData = {
   igbo: 'igbo text',
   english: 'english text',
@@ -42,6 +48,7 @@ export {
   wordSuggestionData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
+  malformedWordData,
   exampleSuggestionData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
