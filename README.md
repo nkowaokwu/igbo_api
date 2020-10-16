@@ -96,6 +96,12 @@ For example:
 http://localhost:8080/api/v1/words?keyword=agụū&page=1
 ```
 
+You can also search for examples using:
+
+```
+/api/v1/examples?keyword<keyword>&page=<page>
+```
+
 ### JSON Data
 
 If you don't want the API to serve the word data from MongoDB, you can use the follow route to get the words that are stored in the **JSON dictionary**:
