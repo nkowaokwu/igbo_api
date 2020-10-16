@@ -1,6 +1,6 @@
 import express from 'express';
-import { getWords } from '../controllers/words';
-import { getExamples } from '../controllers/examples';
+import { getWords, postWord } from '../controllers/words';
+import { getExamples, postExample } from '../controllers/examples';
 
 const router = express.Router();
 
@@ -58,5 +58,10 @@ const router = express.Router();
  */
 router.get('/words', getWords);
 router.get('/examples', getExamples);
+
+if (process.env.NODE_ENV !== 'production') {
+  router.post('/words', postWord);
+  router.post('/examples', postExample);
+}
 
 export default router;
