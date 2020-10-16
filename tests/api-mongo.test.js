@@ -3,12 +3,9 @@ import mongoose from 'mongoose';
 import {
   forEach,
   isEqual,
-  difference,
   uniqBy,
-  map,
   some,
   every,
-  times,
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
@@ -18,6 +15,7 @@ import {
   searchAPIByWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
+import expectUniqSetsOfResponses from './shared/utils';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
@@ -82,22 +80,26 @@ describe('MongoDB Words', () => {
       });
     });
 
+    it('should return at most ten words per request with range query', function (done) {
+      this.timeout(LONG_TIMEOUT);
+      Promise.all([
+        searchAPIByWord({ range: true }),
+        searchAPIByWord({ range: '[10,19]' }),
+        searchAPIByWord({ range: '[20,29' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res);
+        done();
+      });
+    });
+
     it('should return at most ten words per request due to pagination', function (done) {
       this.timeout(LONG_TIMEOUT);
-      Promise.all(times(5, (index) => (
-        searchAPIByWord({ page: index }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.least(10);
-          return map(res.body, (word) => word.id);
-        })
-      ))).then((responses) => {
-        forEach(responses, (response, index) => {
-          if (index !== 0) {
-            const prevResponse = responses[index - 1];
-            const smallerLength = response.length <= prevResponse.length ? responses.length : prevResponse.length;
-            expect(difference(prevResponse, response).length).to.be.at.least(smallerLength);
-          }
-        });
+      Promise.all([
+        searchAPIByWord(),
+        searchAPIByWord({ page: '1' }),
+        searchAPIByWord({ page: '2' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res);
         done();
       });
     });

@@ -6,7 +6,12 @@ import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
-import { createQueryRegex, sortDocsByDefinitions, paginate } from './utils';
+import {
+  createQueryRegex,
+  sortDocsByDefinitions,
+  paginate,
+  convertRangeToPage,
+} from './utils';
 import { createExample } from './examples';
 
 /* Gets words from JSON dictionary */
@@ -43,9 +48,9 @@ const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
-  const { keyword = '', page: pageQuery } = req.query;
+  const { keyword = '', page: pageQuery, range } = req.query;
   const searchWord = removePrefix(keyword || '');
-  const page = parseInt(pageQuery, 10) || 0;
+  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
   const regexKeyword = createQueryRegex(searchWord);
   const words = await searchWordUsingIgbo(regexKeyword);
 

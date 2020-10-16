@@ -18,6 +18,15 @@ export const sortDocsByDefinitions = (searchWord, docs) => {
 };
 
 /* Wrapper function to prep response by limiting number of docs return to the client */
-export const paginate = (res, docs, page) => (
-  res.send(docs.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)))
-);
+export const paginate = (res, docs, page) => {
+  res.setHeader('Content-Range', docs.length);
+  return res.send(docs.slice(page * RESPONSE_LIMIT, RESPONSE_LIMIT * (page + 1)));
+};
+
+export const convertRangeToPage = (range = '[0,10]') => {
+  try {
+    return parseInt(range.substring(range.indexOf('[') + 1, range.indexOf(',')), 10) / 10;
+  } catch {
+    return 0;
+  }
+};
