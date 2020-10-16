@@ -6,7 +6,7 @@ import {
   partial,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
-import { paginate } from './utils/index';
+import { paginate, convertRangeToPage } from './utils';
 
 const REQUIRE_KEYS = ['id', 'word', 'wordClass', 'definitions'];
 
@@ -51,8 +51,8 @@ export const putWordSuggestion = (req, res) => {
 
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
-  const { page: pageQuery } = req.query;
-  const page = parseInt(pageQuery, 10) || 0;
+  const { page: pageQuery, range } = req.query;
+  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
   WordSuggestion.find()
     .then((wordSuggestions) => (
       paginate(res, wordSuggestions, page)

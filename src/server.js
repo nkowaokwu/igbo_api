@@ -24,7 +24,9 @@ db.once('open', () => {
   console.log('🗄 Database is connected');
 });
 
-app.use(cors());
+app.use(cors({
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+}));
 
 app.get('/', (_, res) => {
   res.send('Hello World!');

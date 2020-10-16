@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { paginate } from './utils/index';
+import { paginate, convertRangeToPage } from './utils';
 
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = (req, res) => {
@@ -50,8 +50,8 @@ export const putExampleSuggestion = (req, res) => {
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const { page: pageQuery } = req.query;
-  const page = parseInt(pageQuery, 10) || 0;
+  const { page: pageQuery, range } = req.query;
+  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
   ExampleSuggestion.find()
     .then((exampleSuggestions) => (
       paginate(res, exampleSuggestions, page)

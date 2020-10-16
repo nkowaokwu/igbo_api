@@ -2,12 +2,12 @@ import { forIn } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import { paginate } from './utils/index';
+import { paginate, convertRangeToPage } from './utils';
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { page: pageQuery } = req.query;
-  const page = parseInt(pageQuery, 10) || 0;
+  const { page: pageQuery, range } = req.query;
+  const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
   return GenericWord.find()
     .then((genericWords) => (
       paginate(res, genericWords, page)
