@@ -3,8 +3,6 @@ import {
   forEach,
   forIn,
   isEqual,
-  map,
-  difference,
 } from 'lodash';
 import {
   suggestNewWord,
@@ -17,6 +15,8 @@ import {
   malformedWordSuggestionData,
   updatedWordSuggestionData,
 } from './__mocks__/suggestions';
+import { LONG_TIMEOUT } from './shared/constants';
+import expectUniqSetsOfResponses from './shared/utils';
 
 const { expect } = chai;
 
@@ -124,23 +124,25 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
+    it('should return at most ten word suggestions per request with range query', function (done) {
+      this.timeout(LONG_TIMEOUT);
+      Promise.all([
+        getWordSuggestions({ range: '[0,9]' }),
+        getWordSuggestions({ range: '[10,19]' }),
+        getWordSuggestions({ range: '[20,29' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res);
+        done();
+      });
+    });
+
     it('should return different sets of word suggestions for pagination', (done) => {
       Promise.all([
         getWordSuggestions(0),
         getWordSuggestions(1),
         getWordSuggestions(2),
       ]).then((res) => {
-        forEach(res, (wordSuggestionsRes, index) => {
-          expect(wordSuggestionsRes.status).to.equal(200);
-          if (index !== 0) {
-            const prevWordSuggestionIds = map(res[index].body, ({ id }) => ({ id }));
-            const currentWordSuggestionIds = map(wordSuggestionsRes.body, ({ id }) => ({ id }));
-            expect(difference(
-              prevWordSuggestionIds,
-              currentWordSuggestionIds,
-            )).to.have.lengthOf(prevWordSuggestionIds.length);
-          }
-        });
+        expectUniqSetsOfResponses(res);
         done();
       });
     });

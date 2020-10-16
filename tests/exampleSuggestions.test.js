@@ -3,8 +3,6 @@ import {
   forEach,
   forIn,
   isEqual,
-  difference,
-  map,
 } from 'lodash';
 import {
   suggestNewExample,
@@ -17,6 +15,8 @@ import {
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
 } from './__mocks__/suggestions';
+import { LONG_TIMEOUT } from './shared/constants';
+import expectUniqSetsOfResponses from './shared/utils';
 
 const { expect } = chai;
 
@@ -126,23 +126,25 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
+    it('should return at most ten example suggestions per request with range query', function (done) {
+      this.timeout(LONG_TIMEOUT);
+      Promise.all([
+        getExampleSuggestions({ range: '[0,9]' }),
+        getExampleSuggestions({ range: '[10,19]' }),
+        getExampleSuggestions({ range: '[20,29' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res);
+        done();
+      });
+    });
+
     it('should return different sets of example suggestions for pagination', (done) => {
       Promise.all([
         getExampleSuggestions(0),
         getExampleSuggestions(1),
         getExampleSuggestions(2),
       ]).then((res) => {
-        forEach(res, (exampleSuggestionsRes, index) => {
-          expect(exampleSuggestionsRes.status).to.equal(200);
-          if (index !== 0) {
-            const prevExampleSuggestionIds = map(res[index].body, ({ id }) => ({ id }));
-            const currentExampleSuggestionIds = map(exampleSuggestionsRes.body, ({ id }) => ({ id }));
-            expect(difference(
-              prevExampleSuggestionIds,
-              currentExampleSuggestionIds,
-            )).to.have.lengthOf(prevExampleSuggestionIds.length);
-          }
-        });
+        expectUniqSetsOfResponses(res);
         done();
       });
     });

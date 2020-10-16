@@ -1,7 +1,5 @@
 import chai from 'chai';
 import {
-  map,
-  difference,
   forEach,
   isEqual,
 } from 'lodash';
@@ -11,6 +9,7 @@ import {
   getGenericWord,
 } from './shared/commands';
 import { LONG_TIMEOUT } from './shared/constants';
+import expectUniqSetsOfResponses from './shared/utils';
 
 const { expect } = chai;
 
@@ -65,18 +64,22 @@ describe('MongoDB Generic Words', () => {
 
     it('should return different sets of generic words for pagination', (done) => {
       Promise.all([
+        getGenericWords({ range: '[0,9]' }),
+        getGenericWords({ range: '[10,19]' }),
+        getGenericWords({ range: '[20,29' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res);
+        done();
+      });
+    });
+
+    it('should return different sets of generic words for pagination', (done) => {
+      Promise.all([
         getGenericWords(0),
         getGenericWords(1),
         getGenericWords(2),
       ]).then((res) => {
-        forEach(res, (wordsRes, index) => {
-          expect(wordsRes.status).to.equal(200);
-          if (index !== 0) {
-            const prevWordIds = map(res[index].body, ({ id }) => ({ id }));
-            const currentWordIds = map(wordsRes.body, ({ id }) => ({ id }));
-            expect(difference(prevWordIds, currentWordIds)).to.have.lengthOf(prevWordIds.length);
-          }
-        });
+        expectUniqSetsOfResponses(res);
         done();
       });
     });
