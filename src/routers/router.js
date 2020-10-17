@@ -9,7 +9,7 @@ const router = express.Router();
  * /words:
  *   get:
  *     description: Get words in dictionary
-  *     tags:
+ *     tags:
  *      - production
  *     parameters:
  *      - name: keyword
@@ -30,6 +30,42 @@ const router = express.Router();
  *     responses:
  *      200:
  *         description: OK
+ *
+ *   post:
+ *     description: Creates a new Word document
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: The word that will be created in the database
+ *         schema:
+ *           type: object
+ *           properties:
+ *             word:
+ *               type: string
+ *             wordClass:
+ *               type: string
+ *             definitions:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             variations:
+ *               type: array
+ *               items:
+ *                 type: string
+ *     responses:
+ *      200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                type: string
  *
  * /examples:
  *   get:
@@ -55,6 +91,28 @@ const router = express.Router();
  *     responses:
  *      200:
  *         description: OK
+ *
+ *   post:
+ *     description: Creates a new Example document
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: The example that will be created in the database
+ *         schema:
+ *           type: object
+ *           properties:
+ *             igbo:
+ *               type: string
+ *             english:
+ *               type: string
+ *             associatedWords:
+ *               type: array
+ *               items:
+ *                 type: string
  */
 router.get('/words', getWords);
 router.get('/examples', getExamples);
