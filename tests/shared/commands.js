@@ -72,17 +72,17 @@ export const suggestNewExample = (data) => (
     .send(data)
 );
 
-export const updateWordSuggestion = (data) => (
+export const updateWordSuggestion = (id, data) => (
   chai
     .request(server)
-    .put(`${EDIT_API_ROUTE}/words`)
+    .put(`${EDIT_API_ROUTE}/words/${id}`)
     .send(data)
 );
 
-export const updateExampleSuggestion = (data) => (
+export const updateExampleSuggestion = (id, data) => (
   chai
     .request(server)
-    .put(`${EDIT_API_ROUTE}/examples`)
+    .put(`${EDIT_API_ROUTE}/examples/${id}`)
     .send(data)
 );
 

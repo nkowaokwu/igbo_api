@@ -8,7 +8,7 @@ import {
 import WordSuggestion from '../models/WordSuggestion';
 import { paginate, handleQueries } from './utils';
 
-const REQUIRE_KEYS = ['id', 'word', 'wordClass', 'definitions'];
+const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
 /* Creates a new WordSuggestion document in the database */
 export const postWordSuggestion = (req, res) => {
@@ -32,16 +32,20 @@ export const postWordSuggestion = (req, res) => {
 
 /* Updates an existing WordSuggestion object */
 export const putWordSuggestion = (req, res) => {
-  const { body: data } = req;
+  const { body: data, params: { id } } = req;
   if (!every(REQUIRE_KEYS, partial(has, data))) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
   }
 
-  return WordSuggestion.findById(data.id)
+  return WordSuggestion.findById(id)
     .then(async (wordSuggestion) => {
+      if (!wordSuggestion) {
+        res.status(400);
+        return res.send({ error: 'Word suggestion doesn\'t exist' });
+      }
       const updatedWordSuggestion = assign(wordSuggestion, data);
-      res.send(await updatedWordSuggestion.save());
+      return res.send(await updatedWordSuggestion.save());
     })
     .catch(() => {
       res.status(400);

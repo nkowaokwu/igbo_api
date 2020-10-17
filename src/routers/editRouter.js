@@ -55,6 +55,43 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *              properties:
  *                id:
  *                type: string
+ *
+ *   get:
+ *      description: Returns all WordSuggestion objects in the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *
+ * /edit/words/{wordSuggestionId}:
+ *   get:
+ *      description: Returns a single WordSuggestion object from the database
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - in: path
+ *          name: wordSuggestionId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the wordSuggestion id
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *
  *   put:
  *      description: Updates an existing WordSuggestion document
  *      tags:
@@ -62,6 +99,12 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *      consumes:
  *        - application/json
  *      parameters:
+ *       - in: path
+ *         name: wordSuggestionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: the wordSuggestion id
  *       - in: body
  *         name: body
  *         description: The updated word suggested data
@@ -89,45 +132,11 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
- *   get:
- *      description: Returns all WordSuggestion objects in the database
- *      tags:
- *       - development
- *      consumes:
- *        - application/json
- *      responses:
- *        200:
- *         description: OK
- *         content:
- *          application/json:
- *            schema:
- *              type: object
  *
- * /edit/words/{wordSuggestionId}:
- *    get:
- *      description: Returns a single WordSuggestion object from the database
- *      tags:
- *       - development
- *      consumes:
- *        - application/json
- *      parameters:
- *        - in: path
- *          name: wordSuggestionId
- *          required: true
- *          schema:
- *            type: string
- *          description: the wordSuggestion id
- *      responses:
- *        200:
- *         description: OK
- *         content:
- *          application/json:
- *            schema:
- *              type: object
  */
   editRouter.post('/words', postWordSuggestion);
-  editRouter.put('/words', putWordSuggestion);
   editRouter.get('/words', getWordSuggestions);
+  editRouter.put('/words/:id', putWordSuggestion);
   editRouter.get('/words/:id', getWordSuggestion);
 
   /**
@@ -164,36 +173,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *              properties:
  *                id:
  *                type: string
- *   put:
- *      description: Updates and existing ExampleSuggestion document
- *      tags:
- *       - development
- *      consumes:
- *        - application/json
- *      parameters:
- *       - in: body
- *         name: body
- *         description: The updated example suggested data
- *         schema:
- *           type: object
- *           properties:
- *             id:
- *               type: string
- *             igbo:
- *               type: string
- *             english:
- *               type: string
- *             associatedWords:
- *               type: array
- *               items:
- *                 type: string
- *      responses:
- *        200:
- *         description: OK
- *         content:
- *          application/json:
- *            schema:
- *              type: object
+ *
  *   get:
  *      description: Returns all ExampleSuggestion objects in the database
  *      tags:
@@ -229,10 +209,47 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *          application/json:
  *            schema:
  *              type: object
+ *
+ *    put:
+ *      description: Updates and existing ExampleSuggestion document
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *       - in: path
+ *         name: exampleSuggestionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: the exampleSuggestion id
+ *       - in: body
+ *         name: body
+ *         description: The updated example suggested data
+ *         schema:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             igbo:
+ *               type: string
+ *             english:
+ *               type: string
+ *             associatedWords:
+ *               type: array
+ *               items:
+ *                 type: string
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/examples', postExampleSuggestion);
-  editRouter.put('/examples', putExampleSuggestion);
   editRouter.get('/examples', getExampleSuggestions);
+  editRouter.put('/examples/:id', putExampleSuggestion);
   editRouter.get('/examples/:id', getExampleSuggestion);
 
   /**
@@ -257,7 +274,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *      200:
  *         description: OK
  *
- * /edit/genericWords/${genericWordId}:
+ * /edit/genericWords/{genericWordId}:
  *   get:
  *     description: Returns a single GenericWord object from the database
  *     tags:

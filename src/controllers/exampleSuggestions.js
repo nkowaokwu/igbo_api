@@ -30,17 +30,21 @@ export const postExampleSuggestion = (req, res) => {
 
 /* Updates an existing ExampleSuggestion object */
 export const putExampleSuggestion = (req, res) => {
-  const { body: data } = req;
+  const { body: data, params: { id } } = req;
 
   if (!data.igbo && !data.english) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
   }
 
-  return ExampleSuggestion.findById(data.id)
+  return ExampleSuggestion.findById(id)
     .then(async (exampleSuggestion) => {
+      if (!exampleSuggestion) {
+        res.status(400);
+        return res.send({ error: 'Example suggestion doesn\'t exist' });
+      }
       const updatedExampleSuggestion = assign(exampleSuggestion, data);
-      res.send(await updatedExampleSuggestion.save());
+      return res.send(await updatedExampleSuggestion.save());
     })
     .catch(() => {
       res.status(400);
