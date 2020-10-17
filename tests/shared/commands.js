@@ -86,6 +86,20 @@ export const updateExampleSuggestion = (id, data) => (
     .send(data)
 );
 
+export const updateWord = (id, data) => (
+  chai
+    .request(server)
+    .put(`${API_ROUTE}/words/${id}`)
+    .send(data)
+);
+
+export const updateExample = (id, data) => (
+  chai
+    .request(server)
+    .put(`${API_ROUTE}/examples/${id}`)
+    .send(data)
+);
+
 /* Searches for words using the data in MongoDB */
 export const getWords = (query = {}) => (
   chai

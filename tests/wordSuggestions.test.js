@@ -70,8 +70,7 @@ describe('MongoDB Word Suggestions', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updatedWordSuggestionData.id = res.body.id;
-          updateWordSuggestion(updatedWordSuggestionData)
+          updateWordSuggestion(res.body.id, updatedWordSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(200);
               forIn(updatedWordSuggestionData, (value, key) => {
@@ -86,11 +85,20 @@ describe('MongoDB Word Suggestions', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateWordSuggestion(malformedWordSuggestionData)
+          updateWordSuggestion(res.body.id, malformedWordSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
             });
+        });
+    });
+
+    it('should return an error because document doesn\'t exist', (done) => {
+      getWordSuggestion('fdsafdsad')
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
         });
     });
   });

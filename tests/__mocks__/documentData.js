@@ -22,9 +22,21 @@ const updatedWordSuggestionData = {
   definitions: ['first', 'second'],
 };
 
+const wordData = {
+  word: 'word',
+  wordClass: 'noun',
+  definitions: [],
+};
+
 const malformedWordData = {
   worrd: 'newWord',
   wordClass: '',
+  definitions: [],
+};
+
+const updatedWordData = {
+  word: 'newWord',
+  wordClass: 'verb',
   definitions: [],
 };
 
@@ -44,12 +56,27 @@ const updatedExampleSuggestionData = {
   associatedWords: [exampleId],
 };
 
+const exampleData = {
+  igbo: 'igbo text',
+  english: 'english text',
+};
+
+const updatedExampleData = {
+  igbo: 'updated igbo text',
+  english: 'updated english text',
+  associatedWords: ['5f864d7401203866b6546dd3'],
+};
+
 export {
   wordSuggestionData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
+  wordData,
   malformedWordData,
+  updatedWordData,
   exampleSuggestionData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
+  exampleData,
+  updatedExampleData,
 };
