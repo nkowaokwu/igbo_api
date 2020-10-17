@@ -71,8 +71,7 @@ describe('MongoDB Example Suggestions', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updatedExampleSuggestionData.id = res.body.id;
-          updateExampleSuggestion(updatedExampleSuggestionData)
+          updateExampleSuggestion(res.body.id, updatedExampleSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(200);
               forIn(updatedExampleSuggestionData, (value, key) => {
@@ -87,12 +86,20 @@ describe('MongoDB Example Suggestions', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updatedExampleSuggestionData.id = res.body.id;
-          updateExampleSuggestion(malformedExampleSuggestionData)
+          updateExampleSuggestion(res.body.id, malformedExampleSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
             });
+        });
+    });
+
+    it('should return an error because document doesn\'t exist', (done) => {
+      getExampleSuggestion('fdsafdsad')
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
         });
     });
   });

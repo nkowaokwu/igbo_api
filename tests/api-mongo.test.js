@@ -2,6 +2,7 @@ import chai from 'chai';
 import mongoose from 'mongoose';
 import {
   forEach,
+  forIn,
   isEqual,
   uniqBy,
   some,
@@ -10,11 +11,17 @@ import {
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
-import { malformedWordData, wordSuggestionData } from './__mocks__/documentData';
+import {
+  wordData,
+  malformedWordData,
+  wordSuggestionData,
+  updatedWordData,
+} from './__mocks__/documentData';
 import {
   populateAPI,
   getWords,
   createWord,
+  updateWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import expectUniqSetsOfResponses from './shared/utils';
@@ -37,14 +44,14 @@ describe('MongoDB Words', () => {
   describe('mongodb collection', function () {
     this.timeout(LONG_TIMEOUT);
     it('should populate mongodb with words', (done) => {
-      const wordData = {
+      const word = {
         word: 'word',
         wordClass: 'noun',
         definitions: ['first definition', 'second definition'],
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
       };
-      const validWord = new Word(wordData);
+      const validWord = new Word(word);
       validWord.save().then((savedWord) => {
         expect(savedWord.id).to.not.equal(undefined);
         expect(savedWord.word).to.equal('word');
@@ -54,14 +61,14 @@ describe('MongoDB Words', () => {
     });
 
     it('should throw an error for invalid data', (done) => {
-      const wordData = {
+      const word = {
         word: 'word',
         wordClass: 'n.',
         definitions: ['first definition', 'second definition'],
         examples: ['first example'],
         stems: [],
       };
-      const validWord = new Word(wordData);
+      const validWord = new Word(word);
       validWord.save().catch((err) => {
         expect(err).to.not.equal(undefined);
         done();
@@ -100,6 +107,29 @@ describe('MongoDB Words', () => {
               done();
             });
         });
+    });
+  });
+
+  describe('/PUT mongodb words', () => {
+    it('should create a new word and update it', (done) => {
+      createWord(wordData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.not.equal(undefined);
+          updateWord(res.body.id, updatedWordData)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              forIn(updatedWordData, (value, key) => {
+                expect(isEqual(result.body[key], value)).to.equal(true);
+              });
+              done();
+            });
+        });
+    });
+
+    it.skip('should return an error because document doesn\'t exist', (done) => {
+      // TODO: complete this test when getting words by ids is implemented
+      done();
     });
   });
 

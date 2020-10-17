@@ -3,9 +3,9 @@ import { toJSONPlugin } from './plugins';
 
 const { Schema, Types } = mongoose;
 const exampleSchema = new Schema({
-  igbo: String,
-  english: String,
-  associatedWords: [{ type: Types.ObjectId, ref: 'Word' }],
+  igbo: { type: String, default: '' },
+  english: { type: String, default: '' },
+  associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
 });
 
 toJSONPlugin(exampleSchema);

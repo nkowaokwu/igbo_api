@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { assign, map } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
@@ -114,4 +114,27 @@ export const postWord = (req, res) => {
     res.send(400);
     return res.send({ error: 'An error has occurred during the word and example creation process.' });
   }
+};
+
+/* Updates a Word document in the database */
+export const putWord = (req, res) => {
+  const { body: data, params: { id } } = req;
+  if (!data.word) {
+    res.status(400);
+    return res.send({ error: 'Required information is missing, double your provided data.' });
+  }
+
+  return Word.findById(id)
+    .then(async (word) => {
+      if (!word) {
+        res.status(400);
+        return res.send({ error: 'Word doesn\'t exist' });
+      }
+      const updatedWord = assign(word, data);
+      return res.send(await updatedWord.save());
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while updating the word, double check your provided data.' });
+    });
 };

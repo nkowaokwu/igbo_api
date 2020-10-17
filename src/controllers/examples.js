@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { some } from 'lodash';
+import { assign, some } from 'lodash';
 import Example from '../models/Example';
 import { paginate, handleQueries } from './utils';
 
@@ -50,4 +50,23 @@ export const postExample = (req, res) => {
     res.send(400);
     return res.send({ error: 'An error has occurred during the example creation process.' });
   }
+};
+
+/* Updates an Example document in the database */
+export const putExample = (req, res) => {
+  const { body: data, params: { id } } = req;
+
+  return Example.findById(id)
+    .then(async (example) => {
+      if (!example) {
+        res.status(400);
+        return res.send({ error: 'Example doesn\'t exist' });
+      }
+      const updatedExample = assign(example, data);
+      return res.send(await updatedExample.save());
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while updating the example, double check your provided data.' });
+    });
 };

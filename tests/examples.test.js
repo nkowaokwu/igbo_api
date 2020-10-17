@@ -1,16 +1,20 @@
 import chai from 'chai';
-import { isEqual, some } from 'lodash';
-import { createExample, getExamples } from './shared/commands';
+import { isEqual, forIn, some } from 'lodash';
+import { createExample, getExamples, updateExample } from './shared/commands';
 import { LONG_TIMEOUT } from './shared/constants';
 import expectUniqSetsOfResponses from './shared/utils';
-import { exampleSuggestionData, malformedWordSuggestionData } from './__mocks__/documentData';
+import {
+  exampleData,
+  malformedWordSuggestionData,
+  updatedExampleData,
+} from './__mocks__/documentData';
 
 const { expect } = chai;
 
 describe('MongoDB Examples', () => {
   describe('/POST mongodb examples', () => {
     it('should create a new example in the database', (done) => {
-      createExample(exampleSuggestionData)
+      createExample(exampleData)
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.id).to.not.equal(undefined);
@@ -28,18 +32,40 @@ describe('MongoDB Examples', () => {
     });
 
     it('should return newly created example by searching with keyword', (done) => {
-      createExample(exampleSuggestionData)
+      createExample(exampleData)
         .then((res) => {
           expect(res.status).to.equal(200);
           expect(res.body.id).to.not.equal(undefined);
-          getExamples({ keyword: exampleSuggestionData.igbo })
+          getExamples({ keyword: exampleData.igbo })
             .end((_, result) => {
               expect(res.status).to.equal(200);
-              console.log(result.body);
-              expect(some(result.body, (example) => example.igbo === exampleSuggestionData.igbo)).to.equal(true);
+              expect(some(result.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
               done();
             });
         });
+    });
+  });
+
+  describe('/PUT mongodb examples', () => {
+    it('should create a new example and update it', (done) => {
+      createExample(exampleData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.not.equal(undefined);
+          updateExample(res.body.id, updatedExampleData)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              forIn(updatedExampleData, (value, key) => {
+                expect(isEqual(result.body[key], value)).to.equal(true);
+              });
+              done();
+            });
+        });
+    });
+
+    it.skip('should return an error because document doesn\'t exist', (done) => {
+      // TODO: complete this test when getting examples by ids is implemented
+      done();
     });
   });
 
