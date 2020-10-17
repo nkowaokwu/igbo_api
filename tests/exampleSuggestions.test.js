@@ -14,7 +14,7 @@ import {
   exampleSuggestionData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
-} from './__mocks__/suggestions';
+} from './__mocks__/documentData';
 import { LONG_TIMEOUT } from './shared/constants';
 import expectUniqSetsOfResponses from './shared/utils';
 

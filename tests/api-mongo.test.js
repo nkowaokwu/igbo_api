@@ -10,9 +10,11 @@ import {
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import { LONG_TIMEOUT } from './shared/constants';
+import { malformedWordData, wordSuggestionData } from './__mocks__/documentData';
 import {
   populateAPI,
   getWords,
+  createWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import expectUniqSetsOfResponses from './shared/utils';
@@ -64,6 +66,40 @@ describe('MongoDB Words', () => {
         expect(err).to.not.equal(undefined);
         done();
       });
+    });
+  });
+
+  describe('/POST mongodb words', () => {
+    it('should create a new word in the database', (done) => {
+      createWord(wordSuggestionData)
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error for malformed new word data', (done) => {
+      createWord(malformedWordData)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should return newly created word by searching with keyword', (done) => {
+      createWord(wordSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.not.equal(undefined);
+          getWords({ keyword: wordSuggestionData.word })
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(some(result.body, (word) => word.word === wordSuggestionData.word)).to.equal(true);
+              done();
+            });
+        });
     });
   });
 

@@ -91,3 +91,27 @@ export const createWord = async (data) => {
   newWord.examples = exampleIds;
   return newWord.save();
 };
+
+/* Call the createWord helper function and returns status to client */
+export const postWord = (req, res) => {
+  const { body: data } = req;
+
+  if (!data.word) {
+    res.status(400);
+    return res.send({ error: 'The word property is missing, double check your provided data' });
+  }
+
+  try {
+    return createWord(data)
+      .then((word) => (
+        res.send({ id: word.id })
+      ))
+      .catch(() => {
+        res.status(400);
+        return res.send({ error: 'An error occurred while saving the new word.' });
+      });
+  } catch {
+    res.send(400);
+    return res.send({ error: 'An error has occurred during the word and example creation process.' });
+  }
+};
