@@ -1,5 +1,5 @@
 # Igbo Dictionary API
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ijemmao/igbo_api/integration)
+![integration](https://github.com/ijemmao/igbo_api/workflows/integration/badge.svg)
 
 [Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
