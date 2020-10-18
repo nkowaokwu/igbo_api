@@ -81,7 +81,7 @@ const router = express.Router();
  *   get:
  *     description: Returns a single Word object from the database
  *     tags:
- *      - development
+ *      - production
  *     consumes:
  *       - application/json
  *     parameters:
@@ -146,7 +146,7 @@ const router = express.Router();
  *   get:
  *     description: Returns a single Example object from the database
  *     tags:
- *      - development
+ *      - production
  *     consumes:
  *       - application/json
  *     parameters:
