@@ -67,6 +67,27 @@ const updatedExampleData = {
   associatedWords: ['5f864d7401203866b6546dd3'],
 };
 
+const genericWordData = {
+  word: 'genericWord',
+  wordClass: 'noun',
+  definitions: [],
+};
+
+const malformedGenericWordData = {
+  word: 'newGenericWord',
+  wordClass: '',
+  definitions: [],
+  approvals: 'car',
+};
+
+const updatedGenericWordData = {
+  word: 'newWord',
+  wordClass: 'verb',
+  definitions: ['required'],
+  approvals: 2,
+  denials: 1,
+};
+
 export {
   wordSuggestionData,
   malformedWordSuggestionData,
@@ -79,4 +100,7 @@ export {
   updatedExampleSuggestionData,
   exampleData,
   updatedExampleData,
+  genericWordData,
+  malformedGenericWordData,
+  updatedGenericWordData,
 };
