@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export const LONG_TIMEOUT = 30000;
 export const EDIT_API_ROUTE = '/api/v1/edit';
 export const API_ROUTE = '/api/v1';
@@ -43,3 +45,4 @@ export const WORD_SUGGESTION_KEYS = [
 ];
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const INVALID_ID = 'fdsafdsad';
+export const NONEXISTENT_ID = new mongoose.Types.ObjectId();

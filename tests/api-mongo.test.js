@@ -16,6 +16,7 @@ import {
   EXAMPLE_KEYS,
   EXCLUDE_KEYS,
   INVALID_ID,
+  NONEXISTENT_ID,
 } from './shared/constants';
 import {
   wordData,
@@ -159,8 +160,8 @@ describe('MongoDB Words', function () {
 
     it('should return an error for incorrect word id', (done) => {
       getWords()
-        .then((res) => {
-          getWord(res.body[0].id.replace(/.$/, '0'))
+        .then(() => {
+          getWord(NONEXISTENT_ID)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.error).to.not.equal(undefined);

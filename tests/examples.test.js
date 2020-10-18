@@ -6,7 +6,12 @@ import {
   getExample,
   updateExample,
 } from './shared/commands';
-import { LONG_TIMEOUT, EXAMPLE_KEYS, INVALID_ID } from './shared/constants';
+import {
+  LONG_TIMEOUT,
+  EXAMPLE_KEYS,
+  INVALID_ID,
+  NONEXISTENT_ID,
+} from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 import {
   exampleData,
@@ -94,8 +99,8 @@ describe('MongoDB Examples', () => {
 
     it('should return an error for incorrect word id', (done) => {
       getExamples()
-        .then((res) => {
-          getExample(res.body[0].id.replace(/....$/, 'fff1'))
+        .then(() => {
+          getExample(NONEXISTENT_ID)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.error).to.not.equal(undefined);

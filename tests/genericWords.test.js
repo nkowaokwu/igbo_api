@@ -8,7 +8,12 @@ import {
   getGenericWords,
   getGenericWord,
 } from './shared/commands';
-import { LONG_TIMEOUT, GENERIC_WORD_KEYS, INVALID_ID } from './shared/constants';
+import {
+  LONG_TIMEOUT,
+  GENERIC_WORD_KEYS,
+  INVALID_ID,
+  NONEXISTENT_ID,
+} from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
@@ -63,8 +68,8 @@ describe('MongoDB Generic Words', () => {
 
     it('should return an error for incorrect word id', (done) => {
       getGenericWords()
-        .then((res) => {
-          getGenericWord(res.body[0].id.replace(/....$/, 'fff1'))
+        .then(() => {
+          getGenericWord(NONEXISTENT_ID)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.error).to.not.equal(undefined);
