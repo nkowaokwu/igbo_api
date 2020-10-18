@@ -2,14 +2,14 @@ import { forIn } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import { paginate, handleQueries } from './utils';
+import { prepResponse, handleQueries } from './utils';
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { regexKeyword, page } = handleQueries(req.query);
+  const { regexKeyword, page, sort } = handleQueries(req.query);
   return GenericWord.find({ word: regexKeyword })
     .then((genericWords) => (
-      paginate(res, genericWords, page)
+      res.send(prepResponse(res, genericWords, page, sort))
     ))
     .catch(() => {
       res.status(400);

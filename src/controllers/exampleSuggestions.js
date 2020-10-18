@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { paginate, handleQueries } from './utils';
+import { prepResponse, handleQueries } from './utils';
 
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = (req, res) => {
@@ -54,10 +54,10 @@ export const putExampleSuggestion = (req, res) => {
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const { regexKeyword, page } = handleQueries(req.query);
+  const { regexKeyword, page, sort } = handleQueries(req.query);
   ExampleSuggestion.find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
     .then((exampleSuggestions) => (
-      paginate(res, exampleSuggestions, page)
+      res.send(prepResponse(res, exampleSuggestions, page, sort))
     ))
     .catch(() => {
       res.status(400);
