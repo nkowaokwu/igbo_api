@@ -2,7 +2,7 @@ name: backup_production
 
 on:
   schedule:
-    - cron: '22 23 * * 0'
+    - cron: '25 23 * * *'
 
 jobs:
   backup:
