@@ -1,6 +1,16 @@
 import express from 'express';
-import { getWords, putWord, postWord } from '../controllers/words';
-import { getExamples, putExample, postExample } from '../controllers/examples';
+import {
+  getWords,
+  getWord,
+  putWord,
+  postWord,
+} from '../controllers/words';
+import {
+  getExamples,
+  getExample,
+  putExample,
+  postExample,
+} from '../controllers/examples';
 
 const router = express.Router();
 
@@ -115,7 +125,9 @@ const router = express.Router();
  *                 type: string
  */
 router.get('/words', getWords);
+router.get('/words/:id', getWord);
 router.get('/examples', getExamples);
+router.get('/examples/:id', getExample);
 
 if (process.env.NODE_ENV !== 'production') {
   router.post('/words', postWord);
