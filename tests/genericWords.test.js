@@ -1,12 +1,10 @@
 import chai from 'chai';
-import {
-  forEach,
-  isEqual,
-} from 'lodash';
+import { forIn, forEach, isEqual } from 'lodash';
 import {
   populateGenericWordsAPI,
   getGenericWords,
   getGenericWord,
+  updateGenericWord,
 } from './shared/commands';
 import {
   LONG_TIMEOUT,
@@ -15,6 +13,7 @@ import {
   NONEXISTENT_ID,
 } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
+import { malformedGenericWordData, updatedGenericWordData } from './__mocks__/documentData';
 
 const { expect } = chai;
 
@@ -23,6 +22,44 @@ describe('MongoDB Generic Words', () => {
     this.timeout(LONG_TIMEOUT);
     populateGenericWordsAPI().then(() => {
       setTimeout(done, 5000);
+    });
+  });
+
+  describe('/PUT mongodb genericWords', () => {
+    it('should update specific genericWord with provided data', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          updateGenericWord(res.body[0].id, updatedGenericWordData)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              forIn(updatedGenericWordData, (value, key) => {
+                expect(isEqual(result.body[key].toString(), value.toString())).to.equal(true);
+              });
+              done();
+            });
+        });
+    });
+
+    it('should return a generic word error because of malformed data', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          updateGenericWord(res.body.id, malformedGenericWordData)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              done();
+            });
+        });
+    });
+
+    it('should return a generic word because document doesn\'t exist', (done) => {
+      getGenericWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
     });
   });
 

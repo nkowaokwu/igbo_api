@@ -1,8 +1,40 @@
-import { forIn } from 'lodash';
+import {
+  assign,
+  every,
+  has,
+  partial,
+  forIn,
+} from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
 import { prepResponse, handleQueries } from './utils';
+
+const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
+
+/* Updates an existing WordSuggestion object */
+export const putGenericWord = (req, res) => {
+  const { body: data, params: { id } } = req;
+  if (!every(REQUIRE_KEYS, partial(has, data))) {
+    res.status(400);
+    return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  return GenericWord.findById(id)
+    .then(async (genericWord) => {
+      if (!genericWord) {
+        res.status(400);
+        return res.send({ error: 'Generic word doesn\'t exist' });
+      }
+      const updatedGenericWord = assign(genericWord, data);
+      return res.send(await updatedGenericWord.save());
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400);
+      return res.send({ error: 'An error has occurred while updating, double check your provided data' });
+    });
+};
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {

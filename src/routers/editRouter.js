@@ -11,7 +11,12 @@ import {
   postExampleSuggestion,
   putExampleSuggestion,
 } from '../controllers/exampleSuggestions';
-import { getGenericWords, createGenericWords, getGenericWord } from '../controllers/genericWords';
+import {
+  getGenericWords,
+  createGenericWords,
+  putGenericWord,
+  getGenericWord,
+} from '../controllers/genericWords';
 
 const editRouter = express.Router();
 
@@ -291,8 +296,50 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *     responses:
  *      200:
  *         description: OK
+ *
+ *   put:
+ *      description: Updates an existing GenericWord document
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *       - in: path
+ *         name: genericWordId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: the genericWord id
+ *       - in: body
+ *         name: body
+ *         description: The updated generic word data
+ *         schema:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             word:
+ *               type: string
+ *             wordClass:
+ *               type: string
+ *             definitions:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             variations:
+ *               type: array
+ *               items:
+ *                 type: string
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  */
   editRouter.post('/genericWords', createGenericWords);
+  editRouter.put('/genericWords/:id', putGenericWord);
   editRouter.get('/genericWords', getGenericWords);
   editRouter.get('/genericWords/:id', getGenericWord);
 }

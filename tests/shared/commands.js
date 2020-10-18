@@ -86,6 +86,13 @@ export const updateExampleSuggestion = (id, data) => (
     .send(data)
 );
 
+export const updateGenericWord = (id, data) => (
+  chai
+    .request(server)
+    .put(`${EDIT_API_ROUTE}/genericWords/${id}`)
+    .send(data)
+);
+
 export const updateWord = (id, data) => (
   chai
     .request(server)
