@@ -79,6 +79,9 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 
+# Output of database backup
+*.tar.*
+
 # Yarn Integrity file
 .yarn-integrity
 

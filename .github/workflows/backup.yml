@@ -1,0 +1,18 @@
+name: backup_production
+
+on:
+  schedule:
+    - cron: '15 16 * * 0'
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+      
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+    - shell: bash
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+      run: ./scripts/sync.sh $MONGO_URI $DROPBOX_TOKEN
