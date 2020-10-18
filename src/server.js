@@ -1,10 +1,14 @@
 import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import { testRouter, router } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI } from './config';
 
 const app = express();
+
+/* implementing cors for http requests during pre - flight phase */
+app.options('*' , cors());
 
 mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,

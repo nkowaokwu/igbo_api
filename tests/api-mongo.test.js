@@ -1,4 +1,5 @@
 import chai from 'chai';
+import chaiHttp from 'chai-http';
 import { forEach, isEqual } from 'lodash';
 import mongoose from 'mongoose';
 import Word from '../src/models/Word';
@@ -7,6 +8,8 @@ import { populateAPI, searchAPITerm } from './shared/commands';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
+
+chai.use(chaiHttp);
 
 const WORD_KEYS = ['__v', 'variations', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass'];
 
@@ -153,3 +156,24 @@ describe('Database', () => {
         });
     });
 });
+
+describe('API Requests For Home Directory "/"', () => {
+    describe('/undefinedRoute', () => {
+      it('should return response status of 404', (done) => {
+        chai.request('http://igboapi.com').get('/undefined').end((_, res) => {
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+  
+    it('should return hello world!', (done) => {
+      chai.request('http://igboapi.com').get('/').end((_, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('object');
+        expect(res.text).to.equal('Hello World!');
+        done();
+      });
+    });
+  });
+  
