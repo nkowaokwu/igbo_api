@@ -108,6 +108,18 @@ export const getWords = (query = {}) => (
     .query(query)
 );
 
+export const getWord = (id) => (
+  chai
+    .request(server)
+    .get(`${API_ROUTE}/words/${id}`)
+);
+
+export const getExample = (id) => (
+  chai
+    .request(server)
+    .get(`${API_ROUTE}/examples/${id}`)
+);
+
 /* Searches for examples using the data in MongoDB */
 export const getExamples = (query = {}) => (
   chai

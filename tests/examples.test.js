@@ -1,7 +1,12 @@
 import chai from 'chai';
 import { isEqual, forIn, some } from 'lodash';
-import { createExample, getExamples, updateExample } from './shared/commands';
-import { LONG_TIMEOUT } from './shared/constants';
+import {
+  createExample,
+  getExamples,
+  getExample,
+  updateExample,
+} from './shared/commands';
+import { LONG_TIMEOUT, EXAMPLE_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 import {
   exampleData,
@@ -62,11 +67,6 @@ describe('MongoDB Examples', () => {
             });
         });
     });
-
-    it.skip('should return an error because document doesn\'t exist', (done) => {
-      // TODO: complete this test when getting examples by ids is implemented
-      done();
-    });
   });
 
   describe('/GET mongodb examples', () => {
@@ -75,6 +75,40 @@ describe('MongoDB Examples', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return one word', (done) => {
+      getExamples()
+        .then((res) => {
+          getExample(res.body[0].id)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body).to.be.an('object');
+              expect(result.body).to.have.all.keys(EXAMPLE_KEYS);
+              done();
+            });
+        });
+    });
+
+    it('should return an error for incorrect word id', (done) => {
+      getExamples()
+        .then((res) => {
+          getExample(res.body[0].id.replace(/....$/, 'fff1'))
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
+
+    it('should return an error because document doesn\'t exist', (done) => {
+      getExample(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

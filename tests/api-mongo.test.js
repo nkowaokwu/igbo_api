@@ -10,7 +10,13 @@ import {
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
-import { LONG_TIMEOUT } from './shared/constants';
+import {
+  LONG_TIMEOUT,
+  WORD_KEYS,
+  EXAMPLE_KEYS,
+  EXCLUDE_KEYS,
+  INVALID_ID,
+} from './shared/constants';
 import {
   wordData,
   malformedWordData,
@@ -20,6 +26,7 @@ import {
 import {
   populateAPI,
   getWords,
+  getWord,
   createWord,
   updateWord,
 } from './shared/commands';
@@ -28,10 +35,6 @@ import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils'
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
-
-const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'normalized', 'word', 'wordClass'];
-const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
-const EXCLUDE_KEYS = ['__v', '_id'];
 
 describe('MongoDB Words', function () {
   this.timeout(LONG_TIMEOUT);
@@ -126,11 +129,6 @@ describe('MongoDB Words', function () {
             });
         });
     });
-
-    it.skip('should return an error because document doesn\'t exist', (done) => {
-      // TODO: complete this test when getting words by ids is implemented
-      done();
-    });
   });
 
   describe('/GET mongodb words', () => {
@@ -144,6 +142,40 @@ describe('MongoDB Words', function () {
         });
         done();
       });
+    });
+
+    it('should return one word', (done) => {
+      getWords()
+        .then((res) => {
+          getWord(res.body[0].id)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body).to.be.an('object');
+              expect(result.body).to.have.all.keys(WORD_KEYS);
+              done();
+            });
+        });
+    });
+
+    it('should return an error for incorrect word id', (done) => {
+      getWords()
+        .then((res) => {
+          getWord(res.body[0].id.replace(/.$/, '0'))
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
+
+    it('should return an error because document doesn\'t exist', (done) => {
+      getWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
     });
 
     it('should return at most ten words per request with range query', function (done) {

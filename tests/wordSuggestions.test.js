@@ -15,24 +15,10 @@ import {
   malformedWordSuggestionData,
   updatedWordSuggestionData,
 } from './__mocks__/documentData';
-import { LONG_TIMEOUT } from './shared/constants';
+import { LONG_TIMEOUT, WORD_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
-
-const WORD_SUGGESTION_KEYS = [
-  'originalWordId',
-  'word',
-  'wordClass',
-  'definitions',
-  'variations',
-  'details',
-  'approvals',
-  'denials',
-  'updatedOn',
-  'merged',
-  'id',
-];
 
 describe('MongoDB Word Suggestions', () => {
   describe('/POST mongodb wordSuggestions', () => {
@@ -94,7 +80,7 @@ describe('MongoDB Word Suggestions', () => {
     });
 
     it('should return an error because document doesn\'t exist', (done) => {
-      getWordSuggestion('fdsafdsad')
+      getWordSuggestion(INVALID_ID)
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
