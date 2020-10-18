@@ -77,6 +77,24 @@ const router = express.Router();
  *                id:
  *                type: string
  *
+ * /words/{wordId}:
+ *   get:
+ *     description: Returns a single Word object from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: wordId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the word id
+ *     responses:
+ *      200:
+ *         description: OK
+ *
  * /examples:
  *   get:
  *     description: Get examples in dictionary
@@ -123,6 +141,24 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 type: string
+ *
+ * /examples/{exampleId}:
+ *   get:
+ *     description: Returns a single Example object from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: exampleId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the example id
+ *     responses:
+ *      200:
+ *         description: OK
  */
 router.get('/words', getWords);
 router.get('/words/:id', getWord);
