@@ -2,7 +2,7 @@ import chai from 'chai';
 import { isEqual, forIn, some } from 'lodash';
 import { createExample, getExamples, updateExample } from './shared/commands';
 import { LONG_TIMEOUT } from './shared/constants';
-import expectUniqSetsOfResponses from './shared/utils';
+import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 import {
   exampleData,
   malformedWordSuggestionData,
@@ -110,6 +110,38 @@ describe('MongoDB Examples', () => {
         expect(isEqual(res[0].body, res[1].body)).to.equal(true);
         done();
       });
+    });
+
+    it('should return a descending sorted list of examples with sort query', (done) => {
+      const key = 'igbo';
+      const direction = 'desc';
+      getExamples({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return a ascending sorted list of examples with sort query', (done) => {
+      const key = 'english';
+      const direction = 'asc';
+      getExamples({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return ascending sorted list of examples with malformed sort query', (done) => {
+      const key = 'igbo';
+      getExamples({ sort: `["${key}]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key);
+          done();
+        });
     });
   });
 });

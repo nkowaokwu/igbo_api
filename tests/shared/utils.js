@@ -1,5 +1,10 @@
 import chai from 'chai';
-import { difference, forEach, map } from 'lodash';
+import {
+  difference,
+  forEach,
+  map,
+  every,
+} from 'lodash';
 
 const { expect } = chai;
 
@@ -15,4 +20,16 @@ const expectUniqSetsOfResponses = (res) => {
   });
 };
 
-export default expectUniqSetsOfResponses;
+const expectArrayIsInOrder = (array, key, direction = 'asc') => {
+  const isOrdered = every(map(array, (item) => item[key]), (value, index) => (
+    index === 0 || direction === 'asc'
+      ? String(array[index - 1] <= String(value))
+      : String(array[index - 1] >= String(value))
+  ));
+  expect(isOrdered).to.equal(true);
+};
+
+export {
+  expectUniqSetsOfResponses,
+  expectArrayIsInOrder,
+};

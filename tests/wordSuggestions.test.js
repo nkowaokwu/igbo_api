@@ -16,7 +16,7 @@ import {
   updatedWordSuggestionData,
 } from './__mocks__/documentData';
 import { LONG_TIMEOUT } from './shared/constants';
-import expectUniqSetsOfResponses from './shared/utils';
+import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
 
@@ -178,6 +178,38 @@ describe('MongoDB Word Suggestions', () => {
         expect(isEqual(res[0].body, res[1].body)).to.equal(true);
         done();
       });
+    });
+
+    it('should return a descending sorted list of word suggestions with sort query', (done) => {
+      const key = 'word';
+      const direction = 'desc';
+      getWordSuggestions({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return a ascending sorted list of word suggestions with sort query', (done) => {
+      const key = 'definitions';
+      const direction = 'asc';
+      getWordSuggestions({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return ascending sorted list of word suggestions with malformed sort query', (done) => {
+      const key = 'wordClass';
+      getWordSuggestions({ sort: `["${key}]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key);
+          done();
+        });
     });
   });
 });
