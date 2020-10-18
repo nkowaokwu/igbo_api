@@ -2,8 +2,8 @@ name: backup_production
 
 on:
   schedule:
-    # Backs up database every Monday at 12:00 AM UTC
-    - cron: '0 0 * * 1'
+    # Backs up database every day at 12:00 AM UTC
+    - cron: '0 0 * * *'
 
 jobs:
   backup:
