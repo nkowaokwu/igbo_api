@@ -24,7 +24,7 @@ import {
   updateWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
-import expectUniqSetsOfResponses from './shared/utils';
+import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
@@ -33,9 +33,9 @@ const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'norm
 const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
 const EXCLUDE_KEYS = ['__v', '_id'];
 
-describe('MongoDB Words', () => {
-  before(function (done) {
-    this.timeout(LONG_TIMEOUT);
+describe('MongoDB Words', function () {
+  this.timeout(LONG_TIMEOUT);
+  before((done) => {
     populateAPI().then(() => {
       setTimeout(done, 20000);
     });
@@ -322,6 +322,38 @@ describe('MongoDB Words', () => {
         })).to.equal(true);
         done();
       });
+    });
+
+    it('should return a descending sorted list of words with sort query', (done) => {
+      const key = 'word';
+      const direction = 'desc';
+      getWords({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return a ascending sorted list of words with sort query', (done) => {
+      const key = 'definitions';
+      const direction = 'asc';
+      getWords({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return ascending sorted list of words with malformed sort query', (done) => {
+      const key = 'wordClass';
+      getWords({ sort: `["${key}]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key);
+          done();
+        });
     });
   });
 });

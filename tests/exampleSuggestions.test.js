@@ -16,7 +16,7 @@ import {
   updatedExampleSuggestionData,
 } from './__mocks__/documentData';
 import { LONG_TIMEOUT } from './shared/constants';
-import expectUniqSetsOfResponses from './shared/utils';
+import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
 
@@ -181,6 +181,38 @@ describe('MongoDB Example Suggestions', () => {
         expect(isEqual(res[0].body, res[1].body)).to.equal(true);
         done();
       });
+    });
+
+    it('should return a descending sorted list of example suggestions with sort query', (done) => {
+      const key = 'word';
+      const direction = 'desc';
+      getExampleSuggestions({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return a ascending sorted list of example suggestions with sort query', (done) => {
+      const key = 'definitions';
+      const direction = 'asc';
+      getExampleSuggestions({ sort: `["${key}": "${direction}"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key, direction);
+          done();
+        });
+    });
+
+    it('should return ascending sorted list of example suggestions with malformed sort query', (done) => {
+      const key = 'wordClass';
+      getExampleSuggestions({ sort: `["${key}]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expectArrayIsInOrder(res.body, key);
+          done();
+        });
     });
   });
 });

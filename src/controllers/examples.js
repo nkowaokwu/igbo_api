@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
 import Example from '../models/Example';
-import { paginate, handleQueries } from './utils';
+import { prepResponse, handleQueries } from './utils';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -17,10 +17,10 @@ const searchExamples = (regex) => (
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res) => {
-  const { regexKeyword, page } = handleQueries(req.query);
+  const { regexKeyword, page, sort } = handleQueries(req.query);
   const examples = await searchExamples(regexKeyword);
 
-  return paginate(res, examples, page);
+  return prepResponse(res, examples, page, sort);
 };
 
 /* Call the createExample helper function and returns status to client */

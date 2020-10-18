@@ -8,7 +8,7 @@ import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import {
   sortDocsByDefinitions,
-  paginate,
+  prepResponse,
   handleQueries,
 } from './utils';
 import { createExample } from './examples';
@@ -39,21 +39,27 @@ export const searchWordUsingEnglish = (regex) => (
     .populate(POPULATE_EXAMPLE)
 );
 
-const getWordsUsingEnglish = async (res, regex, searchWord, page) => {
+const getWordsUsingEnglish = async (regex, searchWord) => {
   const words = await searchWordUsingEnglish(regex);
   const sortedWords = sortDocsByDefinitions(searchWord, words);
-  return paginate(res, sortedWords, page);
+  return sortedWords;
 };
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
-  const { searchWord, regexKeyword, page } = handleQueries(req.query);
+  const {
+    searchWord,
+    regexKeyword,
+    page,
+    sort,
+  } = handleQueries(req.query);
   const words = await searchWordUsingIgbo(regexKeyword);
 
   if (!words.length) {
-    return getWordsUsingEnglish(res, regexKeyword, searchWord, page);
+    const englishWords = await getWordsUsingEnglish(regexKeyword, searchWord, page);
+    return prepResponse(res, englishWords, page, sort);
   }
-  return paginate(res, words, page);
+  return prepResponse(res, words, page, sort);
 };
 
 /* Creates Word documents in MongoDB database */

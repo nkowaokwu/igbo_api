@@ -6,7 +6,7 @@ import {
   partial,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
-import { paginate, handleQueries } from './utils';
+import { prepResponse, handleQueries } from './utils';
 
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
@@ -55,10 +55,10 @@ export const putWordSuggestion = (req, res) => {
 
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
-  const { regexKeyword, page } = handleQueries(req.query);
+  const { regexKeyword, page, sort } = handleQueries(req.query);
   WordSuggestion.find({ word: regexKeyword })
     .then((wordSuggestions) => (
-      paginate(res, wordSuggestions, page)
+      prepResponse(res, wordSuggestions, page, sort)
     ))
     .catch(() => {
       res.status(400);
