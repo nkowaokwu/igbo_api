@@ -20,7 +20,7 @@ export const getExamples = async (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
   const examples = await searchExamples(regexKeyword);
 
-  return res.send(prepResponse(res, examples, page, sort));
+  return prepResponse(res, examples, page, sort);
 };
 
 /* Call the createExample helper function and returns status to client */

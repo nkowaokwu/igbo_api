@@ -56,10 +56,10 @@ export const getWords = async (req, res) => {
   const words = await searchWordUsingIgbo(regexKeyword);
 
   if (!words.length) {
-    const englishWords = getWordsUsingEnglish(regexKeyword, searchWord, page);
-    return res.send(prepResponse(res, englishWords, page, sort));
+    const englishWords = await getWordsUsingEnglish(regexKeyword, searchWord, page);
+    return prepResponse(res, englishWords, page, sort);
   }
-  return res.send(prepResponse(res, words, page, sort));
+  return prepResponse(res, words, page, sort);
 };
 
 /* Creates Word documents in MongoDB database */

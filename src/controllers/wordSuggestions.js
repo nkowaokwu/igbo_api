@@ -58,7 +58,7 @@ export const getWordSuggestions = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
   WordSuggestion.find({ word: regexKeyword })
     .then((wordSuggestions) => (
-      res.send(prepResponse(res, wordSuggestions, page, sort))
+      prepResponse(res, wordSuggestions, page, sort)
     ))
     .catch(() => {
       res.status(400);

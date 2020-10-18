@@ -57,7 +57,7 @@ export const getExampleSuggestions = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
   ExampleSuggestion.find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
     .then((exampleSuggestions) => (
-      res.send(prepResponse(res, exampleSuggestions, page, sort))
+      prepResponse(res, exampleSuggestions, page, sort)
     ))
     .catch(() => {
       res.status(400);

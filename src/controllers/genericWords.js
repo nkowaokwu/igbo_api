@@ -9,7 +9,7 @@ export const getGenericWords = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
   return GenericWord.find({ word: regexKeyword })
     .then((genericWords) => (
-      res.send(prepResponse(res, genericWords, page, sort))
+      prepResponse(res, genericWords, page, sort)
     ))
     .catch(() => {
       res.status(400);

@@ -28,7 +28,7 @@ export const paginate = (res, docs, page) => {
 /* Preps response with sorting and paginating */
 export const prepResponse = (res, docs, page, sort) => {
   const tenDocs = paginate(res, docs, page);
-  res.send(orderBy(tenDocs, [sort.key], [sort.direction]));
+  return res.send(orderBy(tenDocs, [sort.key], [sort.direction]));
 };
 
 /* Converts the range query into a number to be used as the page query */
