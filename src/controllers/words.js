@@ -62,6 +62,23 @@ export const getWords = async (req, res) => {
   return prepResponse(res, words, page, sort);
 };
 
+/* Returns a word from MongoDB using an id */
+export const getWord = (req, res) => {
+  const { id } = req.params;
+  return Word.findById(id)
+    .then((word) => {
+      if (!word) {
+        res.status(400);
+        return res.send({ error: 'No word exists with the provided id.' });
+      }
+      return res.send(word);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while returning a single word.' });
+    });
+};
+
 /* Creates Word documents in MongoDB database */
 export const createWord = async (data) => {
   const {

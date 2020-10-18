@@ -23,6 +23,23 @@ export const getExamples = async (req, res) => {
   return prepResponse(res, examples, page, sort);
 };
 
+/* Returns an example from MongoDB using an id */
+export const getExample = (req, res) => {
+  const { id } = req.params;
+  return Example.findById(id)
+    .then((example) => {
+      if (!example) {
+        res.status(400);
+        return res.send({ error: 'No example exists with the provided id.' });
+      }
+      return res.send(example);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while return a single example.' });
+    });
+};
+
 /* Call the createExample helper function and returns status to client */
 export const postExample = (req, res) => {
   const { body: data } = req;

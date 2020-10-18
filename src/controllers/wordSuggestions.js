@@ -72,9 +72,13 @@ export const getWordSuggestions = (req, res) => {
 export const getWordSuggestion = (req, res) => {
   const { id } = req.params;
   return WordSuggestion.findById(id)
-    .then((wordSuggestion) => (
-      res.send(wordSuggestion)
-    ))
+    .then((wordSuggestion) => {
+      if (!wordSuggestion) {
+        res.status(400);
+        return res.send({ error: 'No word suggestion exists with the provided id.' });
+      }
+      return res.send(wordSuggestion);
+    })
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while returning a single word suggestion' });

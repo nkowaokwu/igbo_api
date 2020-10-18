@@ -1,6 +1,16 @@
 import express from 'express';
-import { getWords, putWord, postWord } from '../controllers/words';
-import { getExamples, putExample, postExample } from '../controllers/examples';
+import {
+  getWords,
+  getWord,
+  putWord,
+  postWord,
+} from '../controllers/words';
+import {
+  getExamples,
+  getExample,
+  putExample,
+  postExample,
+} from '../controllers/examples';
 
 const router = express.Router();
 
@@ -67,6 +77,24 @@ const router = express.Router();
  *                id:
  *                type: string
  *
+ * /words/{wordId}:
+ *   get:
+ *     description: Returns a single Word object from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: wordId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the word id
+ *     responses:
+ *      200:
+ *         description: OK
+ *
  * /examples:
  *   get:
  *     description: Get examples in dictionary
@@ -113,9 +141,29 @@ const router = express.Router();
  *               type: array
  *               items:
  *                 type: string
+ *
+ * /examples/{exampleId}:
+ *   get:
+ *     description: Returns a single Example object from the database
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: exampleId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the example id
+ *     responses:
+ *      200:
+ *         description: OK
  */
 router.get('/words', getWords);
+router.get('/words/:id', getWord);
 router.get('/examples', getExamples);
+router.get('/examples/:id', getExample);
 
 if (process.env.NODE_ENV !== 'production') {
   router.post('/words', postWord);

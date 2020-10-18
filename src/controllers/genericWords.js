@@ -21,9 +21,13 @@ export const getGenericWords = (req, res) => {
 export const getGenericWord = (req, res) => {
   const { id } = req.params;
   return GenericWord.findById(id)
-    .then((genericWord) => (
-      res.send(genericWord)
-    ))
+    .then((genericWord) => {
+      if (!genericWord) {
+        res.status(400);
+        return res.send({ error: 'No genericWord exists with the provided id.' });
+      }
+      return res.send(genericWord);
+    })
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while return a single word suggestion' });

@@ -69,9 +69,13 @@ export const getExampleSuggestions = (req, res) => {
 export const getExampleSuggestion = (req, res) => {
   const { id } = req.params;
   return ExampleSuggestion.findById(id)
-    .then((exampleSuggestion) => (
-      res.send(exampleSuggestion)
-    ))
+    .then((exampleSuggestion) => {
+      if (!exampleSuggestion) {
+        res.status(400);
+        return res.send({ error: 'No example suggestion exists with the provided id.' });
+      }
+      return res.send(exampleSuggestion);
+    })
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while returning a single example suggestion' });

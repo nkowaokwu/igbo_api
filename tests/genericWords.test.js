@@ -8,23 +8,15 @@ import {
   getGenericWords,
   getGenericWord,
 } from './shared/commands';
-import { LONG_TIMEOUT } from './shared/constants';
+import {
+  LONG_TIMEOUT,
+  GENERIC_WORD_KEYS,
+  INVALID_ID,
+  NONEXISTENT_ID,
+} from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
-
-const GENERIC_WORD_KEYS = [
-  'word',
-  'wordClass',
-  'definitions',
-  'variations',
-  'details',
-  'approvals',
-  'denials',
-  'updatedOn',
-  'merged',
-  'id',
-];
 
 describe('MongoDB Generic Words', () => {
   before(function (done) {
@@ -71,6 +63,27 @@ describe('MongoDB Generic Words', () => {
               expect(isEqual(result.body, firstGenericWord)).to.equal(true);
               done();
             });
+        });
+    });
+
+    it('should return an error for incorrect word id', (done) => {
+      getGenericWords()
+        .then(() => {
+          getGenericWord(NONEXISTENT_ID)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
+
+    it('should return an error because document doesn\'t exist', (done) => {
+      getGenericWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
         });
     });
 
