@@ -7,6 +7,8 @@ import { PORT, MONGO_URI } from './config';
 
 const app = express();
 
+app.use('*' , cors());
+
 /* implementing cors for http requests during pre - flight phase */
 app.options('*' , cors());
 
