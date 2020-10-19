@@ -14,11 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-app.use('*' , cors());
-
-/* implementing cors for http requests during pre - flight phase */
-app.options('*' , cors());
-
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -33,6 +28,9 @@ db.once('open', () => {
 app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 }));
+
+/* implementing cors for http requests during pre - flight phase */
+app.options('*' , cors());
 
 app.get('/', (_, res) => {
   res.send('Hello World!');
