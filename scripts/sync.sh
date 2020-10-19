@@ -3,8 +3,6 @@
 #Get current date
 NOW="$(date +'%d-%m-%Y_%H-%M')"
 
-# Settings:
-
 # Path to a temporary directory
 DIR=./igbo_api_db
 
