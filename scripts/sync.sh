@@ -21,6 +21,14 @@ function mongodb_dump
   # Dump the database
   mongodump --uri $DB_URI -o $DIR
 
+  if [ $? -eq 0 ]
+  then
+    echo "✅ MongoDB dump successful"
+  else
+    echo "🔴 MongoDB dump failed"
+    exit 1
+  fi
+
   # Compress
   tar -zcvf $FILE $DIR
 
@@ -44,3 +52,11 @@ HTTP_CODE=$(curl -X POST -sL -w "%{http_code}" --output /dev/null https://conten
 fi
 echo $CMD
 echo "Response code => $HTTP_CODE"
+
+if [ $HTTP_CODE != "200" ]; then
+  echo "🔴 Backup failed"
+  exit 1
+else
+  echo "✅ Backup successful"
+  exit 0
+fi
