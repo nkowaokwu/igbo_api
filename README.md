@@ -1,4 +1,5 @@
 # Igbo Dictionary API
+![backup_production](https://github.com/ijemmao/igbo_api/workflows/backup_production/badge.svg?event=schedule)
 ![integration](https://github.com/ijemmao/igbo_api/workflows/integration/badge.svg)
 
 [Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
