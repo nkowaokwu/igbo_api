@@ -8,6 +8,7 @@ lerna-debug.log*
 
 # MongoDB Database
 db/
+dump/
 
 # Transpiled code
 build/
@@ -46,6 +47,10 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+# Built files
+build/
+public/
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -73,6 +78,9 @@ web_modules/
 
 # Output of 'npm pack'
 *.tgz
+
+# Output of database backup
+*.tar.*
 
 # Yarn Integrity file
 .yarn-integrity
@@ -123,3 +131,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Cypress
+cypress/
