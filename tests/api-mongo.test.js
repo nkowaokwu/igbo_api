@@ -421,21 +421,21 @@ describe('API Requests For Home Directory "/"', () => {
   describe('/undefinedRoute', () => {
     it('should return response status of 404', (done) => {
       const route = '/undefinedRoute';
-      getApiUrlRoute(route).then((res) => {
+      getApiUrlRoute(route).end((_, res) => {
         expect(res.status).to.equal(404);
-        done();
       });
+      done();
     });
   });
 
   describe('/', () => {
     it('should return hello world!', (done) => {
-      getApiUrlRoute().then((res) => {
+      getApiUrlRoute().end(async (_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
         expect(res.text).to.equal('Hello World!');
-        done();
       });
+      done();
     });
   });
 });
