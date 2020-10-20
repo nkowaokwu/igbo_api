@@ -15,7 +15,7 @@ const wordSuggestionSchema = new Schema({
   approvals: { type: Number, default: 0 },
   denials: { type: Number, default: 0 },
   updatedOn: { type: Date, default: Date.now() },
-  merged: { type: Boolean, default: false },
+  merged: { type: Types.ObjectId, ref: 'Word', default: null },
 });
 
 toJSONPlugin(wordSuggestionSchema);

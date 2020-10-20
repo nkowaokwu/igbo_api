@@ -65,10 +65,14 @@ export const getExampleSuggestions = (req, res) => {
     });
 };
 
+export const findExampleSuggestionById = (id) => (
+  ExampleSuggestion.findById(id)
+);
+
 /* Returns a single ExampleSuggestion by using an id */
 export const getExampleSuggestion = (req, res) => {
   const { id } = req.params;
-  return ExampleSuggestion.findById(id)
+  return findExampleSuggestionById(id)
     .then((exampleSuggestion) => {
       if (!exampleSuggestion) {
         res.status(400);

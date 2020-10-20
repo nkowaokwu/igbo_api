@@ -10,8 +10,11 @@ import {
   sortDocsByDefinitions,
   prepResponse,
   handleQueries,
+  updateDocumentMerge,
 } from './utils';
 import { createExample } from './examples';
+import { findGenericWordById } from './genericWords';
+import { findWordSuggestionById } from './wordSuggestions';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
@@ -37,6 +40,10 @@ export const searchWordUsingEnglish = (regex) => (
   Word
     .find({ definitions: { $in: [regex] } })
     .populate(POPULATE_EXAMPLE)
+);
+
+export const findWordById = (id) => (
+  Word.findById(id)
 );
 
 const getWordsUsingEnglish = async (regex, searchWord) => {
@@ -65,7 +72,7 @@ export const getWords = async (req, res) => {
 /* Returns a word from MongoDB using an id */
 export const getWord = (req, res) => {
   const { id } = req.params;
-  return Word.findById(id)
+  return findWordById(id)
     .then((word) => {
       if (!word) {
         res.status(400);
@@ -116,7 +123,7 @@ export const createWord = async (data) => {
 };
 
 /* Call the createWord helper function and returns status to client */
-export const postWord = (req, res) => {
+export const postWord = async (req, res) => {
   const { body: data } = req;
 
   if (!data.word) {
@@ -124,11 +131,42 @@ export const postWord = (req, res) => {
     return res.send({ error: 'The word property is missing, double check your provided data' });
   }
 
+  if (!data.wordClass) {
+    res.status(400);
+    return res.send({ error: 'The word class property is missing, double check your provided data' });
+  }
+
+  if (!data.definitions) {
+    res.status(400);
+    return res.send({ error: 'The definition property is missing, double check your provided data' });
+  }
+
+  if (!data.id) {
+    res.status(400);
+    return res.send({ error: 'The id property is missing, double check your provided data' });
+  }
+
+  const genericWord = await findGenericWordById(data.id);
+  const wordSuggestion = await findWordSuggestionById(data.id);
+
+  if (!genericWord && !wordSuggestion) {
+    res.status(400);
+    return res.send({
+      error: 'There is no associated generic word or word suggestion, double check your provided data',
+    });
+  }
+
   try {
     return createWord(data)
-      .then((word) => (
-        res.send({ id: word.id })
-      ))
+      .then((word) => {
+        if (genericWord) {
+          updateDocumentMerge(genericWord, word.id);
+        }
+        if (wordSuggestion) {
+          updateDocumentMerge(wordSuggestion, word.id);
+        }
+        res.send({ id: word.id });
+      })
       .catch(() => {
         res.status(400);
         return res.send({ error: 'An error occurred while saving the new word.' });

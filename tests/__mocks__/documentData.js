@@ -22,12 +22,6 @@ const updatedWordSuggestionData = {
   definitions: ['first', 'second'],
 };
 
-const wordData = {
-  word: 'word',
-  wordClass: 'noun',
-  definitions: [],
-};
-
 const malformedWordData = {
   worrd: 'newWord',
   wordClass: '',
@@ -92,7 +86,6 @@ export {
   wordSuggestionData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
-  wordData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,

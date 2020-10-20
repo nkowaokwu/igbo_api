@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
 import Example from '../models/Example';
-import { prepResponse, handleQueries } from './utils';
+import { prepResponse, handleQueries, updateDocumentMerge } from './utils';
+import { findExampleSuggestionById } from './exampleSuggestions';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -23,10 +24,14 @@ export const getExamples = async (req, res) => {
   return prepResponse(res, examples, page, sort);
 };
 
+export const findExampleById = (id) => (
+  Example.findById(id)
+);
+
 /* Returns an example from MongoDB using an id */
 export const getExample = (req, res) => {
   const { id } = req.params;
-  return Example.findById(id)
+  return findExampleById(id)
     .then((example) => {
       if (!example) {
         res.status(400);
@@ -41,7 +46,7 @@ export const getExample = (req, res) => {
 };
 
 /* Call the createExample helper function and returns status to client */
-export const postExample = (req, res) => {
+export const postExample = async (req, res) => {
   const { body: data } = req;
 
   if (!data.igbo && !data.english) {
@@ -54,11 +59,26 @@ export const postExample = (req, res) => {
     return res.send({ error: 'Invalid id found in associatedWords' });
   }
 
+  if (!data.id) {
+    res.status(400);
+    return res.send({ error: 'The id property is missing, double check your provided data' });
+  }
+
+  const exampleSuggestion = await findExampleSuggestionById(data.id);
+
+  if (!exampleSuggestion) {
+    res.status(400);
+    return res.send({
+      error: 'There is no associated example suggestion, double check your provided data',
+    });
+  }
+
   try {
     return createExample(data)
-      .then((example) => (
-        res.send({ id: example.id })
-      ))
+      .then((example) => {
+        updateDocumentMerge(exampleSuggestion, example.id);
+        res.send({ id: example.id });
+      })
       .catch(() => {
         res.status(400);
         return res.send({ error: 'An error occurred while saving the new example.' });
@@ -73,7 +93,17 @@ export const postExample = (req, res) => {
 export const putExample = (req, res) => {
   const { body: data, params: { id } } = req;
 
-  return Example.findById(id)
+  if (!data.igbo && !data.english) {
+    res.status(400);
+    return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
+    res.status(400);
+    return res.send({ error: 'Invalid id found in associatedWords' });
+  }
+
+  return findExampleById(id)
     .then(async (example) => {
       if (!example) {
         res.status(400);
