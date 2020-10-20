@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import { editRouter, router, testRouter } from './routers';
+import { editorRouter, router, testRouter } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
 
@@ -38,7 +38,11 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS))
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);
-app.use('/api/v1/edit', editRouter);
+
+// TODO: remove this guard rail when releasing for production
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api/v1', editorRouter);
+}
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {

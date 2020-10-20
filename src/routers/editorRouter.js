@@ -5,6 +5,8 @@ import {
   postWordSuggestion,
   putWordSuggestion,
 } from '../controllers/wordSuggestions';
+import { putWord, postWord } from '../controllers/words';
+import { putExample, postExample } from '../controllers/examples';
 import {
   getExampleSuggestion,
   getExampleSuggestions,
@@ -18,15 +20,15 @@ import {
   getGenericWord,
 } from '../controllers/genericWords';
 
-const editRouter = express.Router();
+const editorRouter = express.Router();
 
 /* These routes are used to allow users to suggest new words and examples */
-if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail when releasing for production
-  /**
+
+/**
  * @swagger
- * /edit/words:
+ * /words:
  *   post:
- *     description: Creates a new WordSuggestion document
+ *     description: Creates a new Word document
  *     tags:
  *      - development
  *     consumes:
@@ -34,7 +36,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *     parameters:
  *       - in: body
  *         name: body
- *         description: The word suggestion that will be created in the database
+ *         description: The word that will be created in the database
  *         schema:
  *           type: object
  *           properties:
@@ -50,6 +52,176 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *               type: array
  *               items:
  *                 type: string
+ *   responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                id:
+ *                type: string
+ *
+ * /words/{wordId}:
+ *   put:
+ *     description: Updates a Word object from the database
+ *     tags:
+ *      - production
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: wordId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the word id
+ *        - in: body
+ *          name: body
+ *          description: The updated word data
+ *          schema:
+ *             type: object
+ *             properties:
+ *              id:
+ *                type: string
+ *              word:
+ *                type: string
+ *              wordClass:
+ *                type: string
+ *              definitions:
+ *                type: array
+ *                items:
+ *                  type: string
+ *              variations:
+ *               type: array
+ *               items:
+ *                 type: string
+ *     responses:
+ *      200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *
+ * /examples:
+ *   get:
+ *     description: Get examples in dictionary
+ *     tags:
+ *      - production
+ *     parameters:
+ *      - name: keyword
+ *        description: keyword for querying examples
+ *        in: query
+ *        required: false
+ *        type: string
+ *      - name: page
+ *        description: page for results
+ *        in: query
+ *        required: false
+ *        type: integer
+ *      - name: range
+ *        description: page for results using [x,y] syntax
+ *        in: query
+ *        required: false
+ *        type: string
+ *     responses:
+ *      200:
+ *         description: OK
+ *
+ *   post:
+ *     description: Creates a new Example document
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: The example that will be created in the database
+ *         schema:
+ *           type: object
+ *           properties:
+ *             igbo:
+ *               type: string
+ *             english:
+ *               type: string
+ *             associatedWords:
+ *               type: array
+ *               items:
+ *                 type: string
+ *   responses:
+ *      200:
+ *       description: OK
+ *
+ * /examples/{exampleId}:
+ *   put:
+ *     description: Updates a Example object from the database
+ *     tags:
+ *      - production
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *        - in: path
+ *          name: exampleId
+ *          required: true
+ *          schema:
+ *            type: string
+ *          description: the example id
+ *        - in: body
+ *          name: body
+ *          description: The updated example data
+ *          schema:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: string
+ *              igbo:
+ *                type: string
+ *              english:
+ *                type: string
+ *              associatedWords:
+ *                type: array
+ *                items:
+ *                  type: string
+ *     responses:
+ *      200:
+ *         description: OK
+ */
+editorRouter.post('/words', postWord);
+editorRouter.put('/words/:id', putWord);
+editorRouter.post('/examples', postExample);
+editorRouter.put('/examples/:id', putExample);
+
+/**
+ * @swagger
+ * /wordSuggestions:
+ *   post:
+ *     description: Creates a new WordSuggestion document
+ *     tags:
+ *      - development
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: The word suggestion that will be created in the database
+ *         schema:
+ *            type: object
+ *            properties:
+ *              word:
+ *               type: string
+ *              wordClass:
+ *               type: string
+ *              definitions:
+ *               type: array
+ *               items:
+ *                 type: string
+ *               variations:
+ *                type: array
+ *                items:
+ *                   type: string
  *     responses:
  *      200:
  *         description: OK
@@ -75,7 +247,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *            schema:
  *              type: object
  *
- * /edit/words/{wordSuggestionId}:
+ * /wordSuggestions/{wordSuggestionId}:
  *   get:
  *      description: Returns a single WordSuggestion object from the database
  *      tags:
@@ -139,14 +311,14 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *              type: object
  *
  */
-  editRouter.post('/words', postWordSuggestion);
-  editRouter.get('/words', getWordSuggestions);
-  editRouter.put('/words/:id', putWordSuggestion);
-  editRouter.get('/words/:id', getWordSuggestion);
+editorRouter.post('/wordSuggestions', postWordSuggestion);
+editorRouter.get('/wordSuggestions', getWordSuggestions);
+editorRouter.put('/wordSuggestions/:id', putWordSuggestion);
+editorRouter.get('/wordSuggestions/:id', getWordSuggestion);
 
-  /**
+/**
  * @swagger
- * /edit/examples:
+ * /exampleSuggestions:
  *   post:
  *     description: Creates a new ExampleSuggestion document
  *     tags:
@@ -193,7 +365,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *            schema:
  *              type: object
  *
- * /edit/examples/{exampleSuggestionId}:
+ * /exampleSuggestions/{exampleSuggestionId}:
  *    get:
  *      description: Returns a single ExampleSuggestion object from the database
  *      tags:
@@ -252,14 +424,14 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *            schema:
  *              type: object
  */
-  editRouter.post('/examples', postExampleSuggestion);
-  editRouter.get('/examples', getExampleSuggestions);
-  editRouter.put('/examples/:id', putExampleSuggestion);
-  editRouter.get('/examples/:id', getExampleSuggestion);
+editorRouter.post('/exampleSuggestions', postExampleSuggestion);
+editorRouter.get('/exampleSuggestions', getExampleSuggestions);
+editorRouter.put('/exampleSuggestions/:id', putExampleSuggestion);
+editorRouter.get('/exampleSuggestions/:id', getExampleSuggestion);
 
-  /**
+/**
  * @swagger
- * /edit/genericWords:
+ * /genericWords:
  *   post:
  *     description: Populates the database with GenericWords using ig-en_normalized_expanded.json
  *     tags:
@@ -279,7 +451,7 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *      200:
  *         description: OK
  *
- * /edit/genericWords/{genericWordId}:
+ * /genericWords/{genericWordId}:
  *   get:
  *     description: Returns a single GenericWord object from the database
  *     tags:
@@ -338,10 +510,9 @@ if (process.env.NODE_ENV !== 'production') { // TODO: remove this guard rail whe
  *            schema:
  *              type: object
  */
-  editRouter.post('/genericWords', createGenericWords);
-  editRouter.put('/genericWords/:id', putGenericWord);
-  editRouter.get('/genericWords', getGenericWords);
-  editRouter.get('/genericWords/:id', getGenericWord);
-}
+editorRouter.post('/genericWords', createGenericWords);
+editorRouter.put('/genericWords/:id', putGenericWord);
+editorRouter.get('/genericWords', getGenericWords);
+editorRouter.get('/genericWords/:id', getGenericWord);
 
-export default editRouter;
+export default editorRouter;
