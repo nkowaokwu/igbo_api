@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/igbo_api',
   plugins: [
     'gatsby-plugin-postcss',
     {
