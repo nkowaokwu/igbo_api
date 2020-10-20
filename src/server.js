@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -30,7 +29,7 @@ app.use(cors({
 }));
 
 /* implementing cors for http requests during pre - flight phase */
-app.options('*' , cors());
+app.options('*', cors());
 
 app.get('/', (_, res) => {
   res.send('Hello World!');

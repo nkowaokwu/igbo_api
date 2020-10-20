@@ -4,6 +4,7 @@ export const LONG_TIMEOUT = 30000;
 export const EDIT_API_ROUTE = '/api/v1/edit';
 export const API_ROUTE = '/api/v1';
 export const TEST_ROUTE = '/api/v1/test';
+export const API_URL = 'http://igboapi.com';
 
 export const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'normalized', 'word', 'wordClass'];
 export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];

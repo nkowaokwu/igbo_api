@@ -1,9 +1,5 @@
 import chai from 'chai';
-<<<<<<< HEAD
 import chaiHttp from 'chai-http';
-import { forEach, isEqual } from 'lodash';
-=======
->>>>>>> upstream/master
 import mongoose from 'mongoose';
 import {
   forEach,
@@ -35,6 +31,7 @@ import {
   getWord,
   createWord,
   updateWord,
+  getApiUrlRoute,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -42,11 +39,8 @@ import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils'
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-<<<<<<< HEAD
 chai.use(chaiHttp);
 
-const WORD_KEYS = ['__v', 'variations', 'definitions', 'phrases', 'examples', '_id', 'word', 'wordClass'];
-=======
 describe('MongoDB Words', function () {
   this.timeout(LONG_TIMEOUT);
   before((done) => {
@@ -54,7 +48,6 @@ describe('MongoDB Words', function () {
       setTimeout(done, 20000);
     });
   });
->>>>>>> upstream/master
 
   describe('mongodb collection', function () {
     this.timeout(LONG_TIMEOUT);
@@ -399,21 +392,23 @@ describe('MongoDB Words', function () {
           done();
         });
     });
-<<<<<<< HEAD
+  });
 });
 
 describe('API Requests For Home Directory "/"', () => {
-    describe('/undefinedRoute', () => {
-      it('should return response status of 404', (done) => {
-        chai.request('http://igboapi.com').get('/undefined').end((_, res) => {
-          expect(res.status).to.equal(404);
-          done();
-        });
+  describe('/undefinedRoute', () => {
+    it('should return response status of 404', (done) => {
+      const route = '/undefinedRoute';
+      getApiUrlRoute(route).then((res) => {
+        expect(res.status).to.equal(404);
+        done();
       });
     });
-  
+  });
+
+  describe('/', () => {
     it('should return hello world!', (done) => {
-      chai.request('http://igboapi.com').get('/').end((_, res) => {
+      getApiUrlRoute().then((res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
         expect(res.text).to.equal('Hello World!');
@@ -421,8 +416,4 @@ describe('API Requests For Home Directory "/"', () => {
       });
     });
   });
-  
-=======
-  });
 });
->>>>>>> upstream/master

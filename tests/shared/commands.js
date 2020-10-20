@@ -1,6 +1,6 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { API_ROUTE, EDIT_API_ROUTE, TEST_ROUTE } from './constants';
+import { API_ROUTE, EDIT_API_ROUTE, TEST_ROUTE, API_URL } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -161,3 +161,9 @@ export const searchMockedTerm = (term) => {
   const regexTerm = createRegExp(term);
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
+
+export const getApiUrlRoute = (route = '/') => (
+  chai
+    .request(API_URL)
+    .get(route) 
+);
