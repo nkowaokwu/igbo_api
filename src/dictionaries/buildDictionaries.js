@@ -17,13 +17,19 @@ const updateJSONDictionary = () => {
   }
 
   const dictionaryFilePaths = [
+    [`${DICTIONARIES_DIR}/ig-en_1000_common.json`, JSON.stringify(dictionary, null, 4)],
     [`${DICTIONARIES_DIR}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
+    [`${DICTIONARIES_DIR}/ig-en_new_expanded.json`, JSON.stringify(dictionary, null, 4)],
+    [`${DICTIONARIES_DIR}/ig-en_normalized_expanded.json`, JSON.stringify(dictionary, null, 4)],
     [`${DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(dictionary)],
   ];
 
   const buildDictionaryFilePaths = process.env.NODE_ENV === 'build'
     ? [
+      [`${BUILD_DICTIONARIES_DIR}/ig-en_1000_common.json`, JSON.stringify(dictionary, null, 4)],
       [`${BUILD_DICTIONARIES_DIR}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
+      [`${BUILD_DICTIONARIES_DIR}/ig-en_new_expanded.json`, JSON.stringify(dictionary, null, 4)],
+      [`${BUILD_DICTIONARIES_DIR}/ig-en_normalized_expanded.json`, JSON.stringify(dictionary, null, 4)],
       [`${BUILD_DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(dictionary)],
     ] : [];
 
