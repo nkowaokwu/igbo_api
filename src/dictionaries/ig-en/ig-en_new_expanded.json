@@ -11968,12 +11968,12 @@
             "word": "akpụ àpàlàpà",
             "wordClass": "noun",
             "definitions": [
-                "raw fufu (sieved and ready for cooking. Usually sold in this"
+                "raw fufu (sieved and ready for cooking)"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "akpụ"
+                "àpàlàpà"
             ]
         }
     ],
@@ -14329,20 +14329,15 @@
     "-delụ akwụkwọ": [
         {
             "word": "-delụ akwụkwọ",
-            "wordClass": "noun",
+            "wordClass": "verb",
             "definitions": [
                 "write (letter) to",
-                "help in writing a letter (or, write for him)"
+                "help to write a letter"
             ],
-            "examples": [
-                {
-                    "igbo": "Anà m àchọ idēlụ ya akwụkwọ",
-                    "english": "I am preparing to write him"
-                }
-            ],
+            "examples": [],
             "variations": [],
             "stems": [
-                "akwụkwọ"
+                "-de"
             ]
         }
     ],
@@ -22270,10 +22265,15 @@
             "definitions": [
                 "late in the evening; evening"
             ],
-            "examples": [],
+            "examples": [
+                {
+                    "igbo": "Ọ gà-àbịa ebe à na mgbèdè anyàsì",
+                    "english": "She will come here late in the evening"
+                }
+            ],
             "variations": [],
             "stems": [
-                "ànyasì"
+                "mgbèdè"
             ]
         }
     ],
@@ -22864,20 +22864,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "akpụ àpàlàpà": [
-        {
-            "word": "akpụ àpàlàpà",
-            "wordClass": "noun",
-            "definitions": [
-                "raw fufu (sieved and ready for cooking)"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "àpàlàpà"
-            ]
         }
     ],
     "àpàlàpà": [
@@ -33733,21 +33719,6 @@
             ]
         }
     ],
-    "-delụ akwụkwọ": [
-        {
-            "word": "-delụ akwụkwọ",
-            "wordClass": "verb",
-            "definitions": [
-                "write (letter) to",
-                "help to write a letter"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "-de"
-            ]
-        }
-    ],
     "letà": [
         {
             "word": "letà",
@@ -41600,12 +41571,13 @@
             "word": "Nweēke",
             "wordClass": "noun",
             "definitions": [
-                "male names (for someone born on Èke)"
+                "for men born on Ǹkwọ, Èke, Oyè, and Àfò respectively, and Nwam̀gbankw̄ ọ, Nwam̀gbeēke, Nwam̀gbaàfò for women born on Ǹkwọ, Èke, and Àfò respectively. It is also used preceding the name of a deity, person, or set of circumstances, etc., after which a person is named: e.g. Nwudō (son of Udō, a deity); Nwọòrà (son of all); Nwoòlìsà (son of Òlìsà, God); Nwachukwu (son of God); Nwiijè (for a son born away from home)",
+                "young of animal"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "Èke"
+                "ǹnwa"
             ]
         }
     ],
@@ -94192,25 +94164,6 @@
             "stems": null
         }
     ],
-    "mgbèdè anyàsì": [
-        {
-            "word": "mgbèdè anyàsì",
-            "wordClass": "noun",
-            "definitions": [
-                "late in the evening; evening"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọ gà-àbịa ebe à na mgbèdè anyàsì",
-                    "english": "She will come here late in the evening"
-                }
-            ],
-            "variations": [],
-            "stems": [
-                "mgbèdè"
-            ]
-        }
-    ],
     "mgbèdè": [
         {
             "word": "mgbèdè",
@@ -96381,14 +96334,14 @@
     "mmadū ōbụnà": [
         {
             "word": "mmadū ōbụnà",
-            "wordClass": "mmadù ìtọ",
+            "wordClass": "noun",
             "definitions": [
-                "everybody; any, every person"
+                "everybody; any person; every person"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "madù"
+                "òbụbụū"
             ]
         }
     ],
@@ -106375,12 +106328,13 @@
             "word": "nwa ōkolo",
             "wordClass": "noun",
             "definitions": [
-                "lad; boy; youth"
+                "lad; boy; young man",
+                "male name"
             ],
             "examples": [],
             "variations": [],
             "stems": [
-                "ǹnwa"
+                "òkolo"
             ]
         }
     ],
@@ -106755,21 +106709,6 @@
     "Nwankwọ": [
         {
             "word": "Nwankwọ",
-            "wordClass": "noun",
-            "definitions": [
-                "for men born on Ǹkwọ, Èke, Oyè, and Àfò respectively, and Nwam̀gbankw̄ ọ, Nwam̀gbeēke, Nwam̀gbaàfò for women born on Ǹkwọ, Èke, and Àfò respectively. It is also used preceding the name of a deity, person, or set of circumstances, etc., after which a person is named: e.g. Nwudō (son of Udō, a deity); Nwọòrà (son of all); Nwoòlìsà (son of Òlìsà, God); Nwachukwu (son of God); Nwiijè (for a son born away from home)",
-                "young of animal"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "ǹnwa"
-            ]
-        }
-    ],
-    "Nweēke": [
-        {
-            "word": "Nweēke",
             "wordClass": "noun",
             "definitions": [
                 "for men born on Ǹkwọ, Èke, Oyè, and Àfò respectively, and Nwam̀gbankw̄ ọ, Nwam̀gbeēke, Nwam̀gbaàfò for women born on Ǹkwọ, Èke, and Àfò respectively. It is also used preceding the name of a deity, person, or set of circumstances, etc., after which a person is named: e.g. Nwudō (son of Udō, a deity); Nwọòrà (son of all); Nwoòlìsà (son of Òlìsà, God); Nwachukwu (son of God); Nwiijè (for a son born away from home)",
@@ -118030,21 +117969,6 @@
             ]
         }
     ],
-    "nwa ōkolo": [
-        {
-            "word": "nwa ōkolo",
-            "wordClass": "noun",
-            "definitions": [
-                "lad; boy; young man",
-                "male name"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òkolo"
-            ]
-        }
-    ],
     "nwoōkolo": [
         {
             "word": "nwoōkolo",
@@ -121841,20 +121765,6 @@
         {
             "word": "òsèkpaàkpaà",
             "wordClass": "noun",
-            "definitions": [
-                "epilepsy"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òsè"
-            ]
-        }
-    ],
-    "òsèkpaàkpaà": [
-        {
-            "word": "òsèkpaàkpaà",
-            "wordClass": "noun",
             "definitions": [],
             "examples": [],
             "variations": [],
@@ -123872,20 +123782,6 @@
             "examples": [],
             "variations": [],
             "stems": null
-        }
-    ],
-    "mmadū ōbụnà": [
-        {
-            "word": "mmadū ōbụnà",
-            "wordClass": "noun",
-            "definitions": [
-                "everybody; any person; every person"
-            ],
-            "examples": [],
-            "variations": [],
-            "stems": [
-                "òbụbụū"
-            ]
         }
     ],
     "ǹke ōbụnà": [
