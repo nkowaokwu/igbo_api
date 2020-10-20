@@ -19,7 +19,6 @@ import {
   NONEXISTENT_ID,
 } from './shared/constants';
 import {
-  wordData,
   malformedWordData,
   wordSuggestionData,
   updatedWordData,
@@ -28,8 +27,10 @@ import {
   populateAPI,
   getWords,
   getWord,
+  getWordSuggestion,
   createWord,
   updateWord,
+  suggestNewWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -82,33 +83,50 @@ describe('MongoDB Words', function () {
 
   describe('/POST mongodb words', () => {
     it('should create a new word in the database', (done) => {
-      createWord(wordSuggestionData)
-        .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          done();
+      suggestNewWord(wordSuggestionData)
+        .then((res) => {
+          const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
+          createWord(mergingWordSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getWordSuggestion(res.body.id)
+                .end((_, wordRes) => {
+                  expect(wordRes.status).to.equal(200);
+                  expect(result.body.id).to.equal(wordRes.body.merged);
+                  done();
+                });
+            });
         });
     });
 
     it('should throw an error for malformed new word data', (done) => {
-      createWord(malformedWordData)
-        .end((_, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.error).to.not.equal(undefined);
-          done();
+      suggestNewWord(wordSuggestionData)
+        .then((res) => {
+          const malformedMergingWordSuggestion = { ...res.body, ...malformedWordData };
+          createWord(malformedMergingWordSuggestion)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.body.error).to.not.equal(undefined);
+              done();
+            });
         });
     });
 
     it('should return newly created word by searching with keyword', (done) => {
-      createWord(wordSuggestionData)
+      suggestNewWord(wordSuggestionData)
         .then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          getWords({ keyword: wordSuggestionData.word })
-            .end((_, result) => {
+          const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
+          createWord(mergingWordSuggestion)
+            .then((result) => {
               expect(result.status).to.equal(200);
-              expect(some(result.body, (word) => word.word === wordSuggestionData.word)).to.equal(true);
-              done();
+              expect(result.body.id).to.not.equal(undefined);
+              getWords({ keyword: wordSuggestionData.word })
+                .end((_, wordRes) => {
+                  expect(wordRes.status).to.equal(200);
+                  expect(some(wordRes.body, (word) => word.word === mergingWordSuggestion.word)).to.equal(true);
+                  done();
+                });
             });
         });
     });
@@ -116,17 +134,21 @@ describe('MongoDB Words', function () {
 
   describe('/PUT mongodb words', () => {
     it('should create a new word and update it', (done) => {
-      createWord(wordData)
+      suggestNewWord(wordSuggestionData)
         .then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          updateWord(res.body.id, updatedWordData)
-            .end((_, result) => {
+          const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
+          createWord(mergingWordSuggestion)
+            .then((result) => {
               expect(result.status).to.equal(200);
-              forIn(updatedWordData, (value, key) => {
-                expect(isEqual(result.body[key], value)).to.equal(true);
-              });
-              done();
+              expect(result.body.id).to.not.equal(undefined);
+              updateWord(result.body.id, updatedWordData)
+                .end((_, updateWordRes) => {
+                  expect(updateWordRes.status).to.equal(200);
+                  forIn(updatedWordData, (value, key) => {
+                    expect(isEqual(updateWordRes.body[key], value)).to.equal(true);
+                  });
+                  done();
+                });
             });
         });
     });

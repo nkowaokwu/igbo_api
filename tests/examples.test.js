@@ -5,6 +5,8 @@ import {
   getExamples,
   getExample,
   updateExample,
+  suggestNewExample,
+  getExampleSuggestion,
 } from './shared/commands';
 import {
   LONG_TIMEOUT,
@@ -15,7 +17,8 @@ import {
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 import {
   exampleData,
-  malformedWordSuggestionData,
+  exampleSuggestionData,
+  malformedExampleSuggestionData,
   updatedExampleData,
 } from './__mocks__/documentData';
 
@@ -24,33 +27,50 @@ const { expect } = chai;
 describe('MongoDB Examples', () => {
   describe('/POST mongodb examples', () => {
     it('should create a new example in the database', (done) => {
-      createExample(exampleData)
-        .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          done();
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
+          createExample(mergingExampleSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getExampleSuggestion(res.body.id)
+                .end((_, exampleRes) => {
+                  expect(exampleRes.status).to.equal(200);
+                  expect(result.body.id).to.equal(exampleRes.body.merged);
+                  done();
+                });
+            });
         });
     });
 
     it('should throw an error for malformed new example data', (done) => {
-      createExample(malformedWordSuggestionData)
-        .end((_, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.error).to.not.equal(undefined);
-          done();
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          const malformedMergingExampleSuggestion = { ...res.body, ...malformedExampleSuggestionData };
+          createExample(malformedMergingExampleSuggestion)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.body.error).to.not.equal(undefined);
+              done();
+            });
         });
     });
 
     it('should return newly created example by searching with keyword', (done) => {
-      createExample(exampleData)
+      suggestNewExample(exampleSuggestionData)
         .then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          getExamples({ keyword: exampleData.igbo })
-            .end((_, result) => {
-              expect(res.status).to.equal(200);
-              expect(some(result.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
-              done();
+          const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
+          createExample(mergingExampleSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getExamples({ keyword: exampleData.igbo })
+                .end((_, exampleRes) => {
+                  expect(exampleRes.status).to.equal(200);
+                  expect(some(exampleRes.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
+                  done();
+                });
             });
         });
     });
@@ -58,17 +78,21 @@ describe('MongoDB Examples', () => {
 
   describe('/PUT mongodb examples', () => {
     it('should create a new example and update it', (done) => {
-      createExample(exampleData)
+      suggestNewExample(exampleSuggestionData)
         .then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.id).to.not.equal(undefined);
-          updateExample(res.body.id, updatedExampleData)
-            .end((_, result) => {
+          const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
+          createExample(mergingExampleSuggestion)
+            .then((result) => {
               expect(result.status).to.equal(200);
-              forIn(updatedExampleData, (value, key) => {
-                expect(isEqual(result.body[key], value)).to.equal(true);
-              });
-              done();
+              expect(result.body.id).to.not.equal(undefined);
+              updateExample(result.body.id, updatedExampleData)
+                .end((_, exampleRes) => {
+                  expect(exampleRes.status).to.equal(200);
+                  forIn(updatedExampleData, (value, key) => {
+                    expect(isEqual(exampleRes.body[key], value)).to.equal(true);
+                  });
+                  done();
+                });
             });
         });
     });

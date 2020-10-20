@@ -49,10 +49,14 @@ export const getGenericWords = (req, res) => {
     });
 };
 
+export const findGenericWordById = (id) => (
+  GenericWord.findById(id)
+);
+
 /* Returns a single WordSuggestion by using an id */
 export const getGenericWord = (req, res) => {
   const { id } = req.params;
-  return GenericWord.findById(id)
+  return findGenericWordById(id)
     .then((genericWord) => {
       if (!genericWord) {
         res.status(400);
