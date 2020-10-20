@@ -26,7 +26,7 @@
 
 Cypress.Commands.add('searchDictionary', (keyword) => {
   cy.server();
-  cy.route(`https://cors-anywhere.herokuapp.com/http://www.igboapi.com/api/v1/search/words?keyword=${keyword}`).as('getWord');
+  cy.route(`https://cors-anywhere.herokuapp.com/http://www.igboapi.com/api/v1/words?keyword=${keyword}`).as('getWord');
   cy.get('[data-test="search-bar"]').type(keyword);
   cy.contains('Search').click();
 });
