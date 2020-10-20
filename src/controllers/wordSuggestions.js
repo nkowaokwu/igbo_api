@@ -30,6 +30,10 @@ export const postWordSuggestion = (req, res) => {
     });
 };
 
+export const findWordSuggestionById = (id) => (
+  WordSuggestion.findById(id)
+);
+
 /* Updates an existing WordSuggestion object */
 export const putWordSuggestion = (req, res) => {
   const { body: data, params: { id } } = req;
@@ -38,7 +42,7 @@ export const putWordSuggestion = (req, res) => {
     return res.send({ error: 'Required information is missing, double check your provided data' });
   }
 
-  return WordSuggestion.findById(id)
+  return findWordSuggestionById(id)
     .then(async (wordSuggestion) => {
       if (!wordSuggestion) {
         res.status(400);
