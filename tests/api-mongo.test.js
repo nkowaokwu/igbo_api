@@ -303,7 +303,7 @@ describe('MongoDB Words', function () {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(4);
+        expect(res.body).to.have.lengthOf(2);
         forEach(res.body, (wordObject) => {
           const { word } = wordObject;
           const regex = createRegExp(word);
@@ -357,7 +357,7 @@ describe('MongoDB Words', function () {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(2);
+        expect(res.body).to.have.lengthOf(1);
         expect(res.body[0].word).to.equal('-mụ-mù');
         expect(some(res.body, (word) => isEqual(word.variations, ['-mu-mù']))).to.equal(true);
         done();
@@ -369,7 +369,7 @@ describe('MongoDB Words', function () {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(5);
+        expect(res.body).to.have.lengthOf(2);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
