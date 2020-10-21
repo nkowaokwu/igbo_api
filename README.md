@@ -191,6 +191,20 @@ http://localhost:8080/api/v1/test/populate // POST
 
 After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database!
 
+Then make another `POST` request to the following route, to populate all the `GenericWord` documents:
+
+```
+/api/v1/genericWords
+```
+
+For example:
+
+```
+http://localhost:8080/api/v1/genericWords // POST
+```
+
+After about 30 seconds, you should get a messaged returned back saying that populating the GenericWords documents was successful!
+
 ### 3. See Data in Database (Optional)
 
 Now that the data is living in a local database, you can see it either using the `mongo` command line tool, or through [MongoDB Compass](https://www.mongodb.com/try/download/compass)
