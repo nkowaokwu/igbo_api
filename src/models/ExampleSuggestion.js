@@ -8,8 +8,8 @@ const exampleSuggestionSchema = new Schema({
   english: { type: String, default: '' },
   associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   details: { type: String, default: '' },
-  approvals: { type: Number, default: 0 },
-  denials: { type: Number, default: 0 },
+  approvals: { type: [{ type: String }], default: [] },
+  denials: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
   merged: { type: Types.ObjectId, ref: 'Example', default: null },
 });
