@@ -167,6 +167,18 @@ describe('MongoDB Words', function () {
       });
     });
 
+    it('should return word information with the filter query', (done) => {
+      const filter = 'bia';
+      getWords({ filter: { word: filter } }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.lengthOf.at.least(2);
+        forEach(res.body, (word) => {
+          expect(word).to.have.all.keys(WORD_KEYS);
+        });
+        done();
+      });
+    });
+
     it('should return one word', (done) => {
       getWords()
         .then((res) => {
@@ -207,6 +219,7 @@ describe('MongoDB Words', function () {
         getWords({ range: true }),
         getWords({ range: '[10,19]' }),
         getWords({ range: '[20,29' }),
+        getWords({ range: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -234,6 +247,15 @@ describe('MongoDB Words', function () {
       });
     });
 
+    it('should return only ten words with the filter query', (done) => {
+      const filter = 'woman';
+      getWords({ filter: { word: filter } }).then((res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.lengthOf(10);
+        done();
+      });
+    });
+
     it('should handle invalid page number', (done) => {
       const keyword = 'woman';
       Promise.all([
@@ -242,6 +264,22 @@ describe('MongoDB Words', function () {
           expect(res.body).to.have.lengthOf(0);
         }),
         getWords({ keyword, page: 'fake' }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(10);
+        }),
+      ]).then(() => (
+        done()
+      ));
+    });
+
+    it('should handle invalid page number with filter query', (done) => {
+      const filter = 'woman';
+      Promise.all([
+        getWords({ filter: { word: filter }, page: -1 }).then((res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+        }),
+        getWords({ filter: { word: filter }, page: 'fake' }).then((res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(10);
         }),

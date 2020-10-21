@@ -31,10 +31,22 @@ export const prepResponse = (res, docs, page, sort) => {
   return res.send(orderBy(tenDocs, [sort.key], [sort.direction]));
 };
 
+/* Converts the filter query into a word to be used as the keyword query */
+const convertFilterToKeyword = (filter = '{"word": ""}') => {
+  try {
+    const parsedFilter = typeof filter === 'object' ? filter : JSON.parse(filter) || { word: '' };
+    const firstFilterKey = Object.keys(parsedFilter)[0];
+    return parsedFilter[firstFilterKey];
+  } catch {
+    return '';
+  }
+};
+
 /* Converts the range query into a number to be used as the page query */
 const convertRangeToPage = (range = '[0,10]') => {
   try {
-    return parseInt(range.substring(range.indexOf('[') + 1, range.indexOf(',')), 10) / 10;
+    const parsedRange = typeof range === 'object' ? range : JSON.parse(range) || [0, 10];
+    return parseInt(parsedRange[0], 10) || 0;
   } catch {
     return 0;
   }
@@ -43,9 +55,9 @@ const convertRangeToPage = (range = '[0,10]') => {
 /* Parses out the key and the direction of sorting out into an object */
 const parseSortKeys = (sort = '["", ""]') => {
   try {
-    const splitSortQuery = sort.split('"');
-    const key = splitSortQuery[1] || '';
-    const direction = splitSortQuery[3].toLowerCase() || '';
+    const parsedSort = JSON.parse(sort) || ['id', 'ASC'];
+    const key = parsedSort[0];
+    const direction = parsedSort[1].toLowerCase() || '';
     return {
       key,
       direction,
@@ -65,8 +77,10 @@ export const handleQueries = (query = {}) => {
     page: pageQuery = '',
     range,
     sort: sortQuery,
+    filter: filterQuery,
   } = query;
-  const searchWord = removePrefix(keyword || '');
+  const filter = convertFilterToKeyword(filterQuery);
+  const searchWord = removePrefix(keyword || filter || '');
   const regexKeyword = createQueryRegex(searchWord);
   const page = parseInt(pageQuery, 10) || convertRangeToPage(range) || 0;
   const sort = parseSortKeys(sortQuery);

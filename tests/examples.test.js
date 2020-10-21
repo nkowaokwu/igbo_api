@@ -74,6 +74,24 @@ describe('MongoDB Examples', () => {
             });
         });
     });
+
+    it('should return newly created example by searching with filter query', (done) => {
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
+          createExample(mergingExampleSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getExamples({ filter: { igbo: exampleData.igbo } })
+                .end((_, exampleRes) => {
+                  expect(exampleRes.status).to.equal(200);
+                  expect(some(exampleRes.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
+                  done();
+                });
+            });
+        });
+    });
   });
 
   describe('/PUT mongodb examples', () => {
@@ -146,8 +164,9 @@ describe('MongoDB Examples', () => {
       this.timeout(LONG_TIMEOUT);
       Promise.all([
         getExamples({ range: '[0,9]' }),
-        getExamples({ range: '[10,19]' }),
-        getExamples({ range: '[20,29' }),
+        getExamples({ range: [10, 19] }),
+        getExamples({ range: '[20,29]' }),
+        getExamples({ range: '[30,39' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
