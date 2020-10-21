@@ -1,16 +1,6 @@
 import express from 'express';
-import {
-  getWords,
-  getWord,
-  putWord,
-  postWord,
-} from '../controllers/words';
-import {
-  getExamples,
-  getExample,
-  putExample,
-  postExample,
-} from '../controllers/examples';
+import { getWords, getWord } from '../controllers/words';
+import { getExamples, getExample } from '../controllers/examples';
 
 const router = express.Router();
 
@@ -40,42 +30,6 @@ const router = express.Router();
  *     responses:
  *      200:
  *         description: OK
- *
- *   post:
- *     description: Creates a new Word document
- *     tags:
- *      - development
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: The word that will be created in the database
- *         schema:
- *           type: object
- *           properties:
- *             word:
- *               type: string
- *             wordClass:
- *               type: string
- *             definitions:
- *               type: array
- *               items:
- *                 type: string
- *             variations:
- *               type: array
- *               items:
- *                 type: string
- *     responses:
- *      200:
- *         description: OK
- *         content:
- *          application/json:
- *            schema:
- *              type: object
- *              properties:
- *                id:
- *                type: string
  *
  * /words/{wordId}:
  *   get:
@@ -120,28 +74,6 @@ const router = express.Router();
  *      200:
  *         description: OK
  *
- *   post:
- *     description: Creates a new Example document
- *     tags:
- *      - development
- *     consumes:
- *       - application/json
- *     parameters:
- *       - in: body
- *         name: body
- *         description: The example that will be created in the database
- *         schema:
- *           type: object
- *           properties:
- *             igbo:
- *               type: string
- *             english:
- *               type: string
- *             associatedWords:
- *               type: array
- *               items:
- *                 type: string
- *
  * /examples/{exampleId}:
  *   get:
  *     description: Returns a single Example object from the database
@@ -164,12 +96,5 @@ router.get('/words', getWords);
 router.get('/words/:id', getWord);
 router.get('/examples', getExamples);
 router.get('/examples/:id', getExample);
-
-if (process.env.NODE_ENV !== 'production') {
-  router.post('/words', postWord);
-  router.put('/words/:id', putWord);
-  router.post('/examples', postExample);
-  router.put('/examples/:id', putExample);
-}
 
 export default router;
