@@ -12,7 +12,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install Dependencies
+      - name: Install Dependencies 🛠
         run: yarn
       - name: Build Production Bundle 🏗
         run: yarn build
