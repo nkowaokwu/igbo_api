@@ -1,5 +1,10 @@
 import chai from 'chai';
-import { forIn, forEach, isEqual } from 'lodash';
+import {
+  forIn,
+  forEach,
+  isEqual,
+  some,
+} from 'lodash';
 import {
   populateGenericWordsAPI,
   getGenericWords,
@@ -76,6 +81,18 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
+    it('should return a generic word by searching with filter query', (done) => {
+      const filter = 'mbughari';
+      getGenericWords({ filter: { word: filter } })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
+          expect(some(res.body, ({ word }) => word === filter)).to.equal(true);
+          done();
+        });
+    });
+
     it('should return all generic words', (done) => {
       getGenericWords()
         .end((_, res) => {
@@ -127,8 +144,9 @@ describe('MongoDB Generic Words', () => {
     it('should return different sets of generic words for pagination', (done) => {
       Promise.all([
         getGenericWords({ range: '[0,9]' }),
-        getGenericWords({ range: '[10,19]' }),
-        getGenericWords({ range: '[20,29' }),
+        getGenericWords({ range: [10, 19] }),
+        getGenericWords({ range: '[20,29]' }),
+        getGenericWords({ range: '[30,39' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();

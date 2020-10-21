@@ -105,6 +105,21 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
+    it('should return an example by searching', (done) => {
+      const filter = wordSuggestionData.word;
+      suggestNewWord(wordSuggestionData)
+        .then(() => {
+          getWordSuggestions({ filter: { word: filter } })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
+              expect(res.body[0].word).to.equal(filter);
+              done();
+            });
+        });
+    });
+
     it('should return all word suggestions', (done) => {
       Promise.all([suggestNewWord(wordSuggestionData), suggestNewWord(wordSuggestionData)])
         .then(() => {
@@ -139,6 +154,7 @@ describe('MongoDB Word Suggestions', () => {
         getWordSuggestions({ range: '[0,9]' }),
         getWordSuggestions({ range: '[10,19]' }),
         getWordSuggestions({ range: '[20,29' }),
+        getWordSuggestions({ range: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();

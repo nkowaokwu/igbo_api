@@ -110,6 +110,23 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
+    it('should return an example suggestion by searching with filter query', (done) => {
+      const exampleText = exampleSuggestionData.igbo;
+      suggestNewExample(exampleSuggestionData)
+        .then(() => {
+          getExampleSuggestions({ filter: { igbo: exampleText } })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
+              forEach(Object.keys(exampleSuggestionData), (key) => {
+                expect(res.body[0][key]).to.equal(exampleSuggestionData[key]);
+              });
+              done();
+            });
+        });
+    });
+
     it('should return all example suggestions', (done) => {
       Promise.all([suggestNewExample(exampleSuggestionData), suggestNewExample(exampleSuggestionData)])
         .then(() => {
@@ -144,6 +161,7 @@ describe('MongoDB Example Suggestions', () => {
         getExampleSuggestions({ range: '[0,9]' }),
         getExampleSuggestions({ range: '[10,19]' }),
         getExampleSuggestions({ range: '[20,29' }),
+        getExampleSuggestions({ rnage: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
