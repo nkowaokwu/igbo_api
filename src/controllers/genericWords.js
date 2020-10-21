@@ -3,7 +3,7 @@ import {
   every,
   has,
   partial,
-  forIn,
+  map,
 } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
@@ -72,14 +72,13 @@ export const getGenericWord = (req, res) => {
 
 /* Populates the MongoDB database with GenericWords */
 export const createGenericWords = (_, res) => {
-  const genericWordsPromises = [];
   const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
-  forIn(dictionary, (value, key) => {
-    const newGenericWords = new GenericWord({
+  const genericWordsPromises = map(dictionary, (value, key) => {
+    const newGenericWord = new GenericWord({
       word: key,
       definitions: value,
     });
-    genericWordsPromises.push(newGenericWords.save());
+    return newGenericWord.save();
   });
 
   Promise.all(genericWordsPromises)
