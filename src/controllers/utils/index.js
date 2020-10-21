@@ -46,7 +46,7 @@ const convertFilterToKeyword = (filter = '{"word": ""}') => {
 const convertRangeToPage = (range = '[0,10]') => {
   try {
     const parsedRange = typeof range === 'object' ? range : JSON.parse(range) || [0, 10];
-    return parsedRange[0];
+    return parseInt(parsedRange[0], 10) || 0;
   } catch {
     return 0;
   }
