@@ -203,7 +203,7 @@ For example:
 http://localhost:8080/api/v1/genericWords // POST
 ```
 
-After about 30 seconds, you should get a messaged returned back saying that populating the GenericWords documents was successful!
+After about 30 seconds, you should get a message returned back saying `Successfully populated generic words`.
 
 ### 3. See Data in Database (Optional)
 
