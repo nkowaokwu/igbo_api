@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "yarn develop",
@@ -26,7 +26,6 @@
     "*.js": [
       "./node_modules/.bin/eslint"
     ]
-    
   },
   "engines": {
     "node": ">=10.0.0"
@@ -34,6 +33,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "gatsby": "^2.24.66",
+    "gatsby-plugin-offline": "^3.2.34",
     "gatsby-plugin-postcss": "^3.0.1",
     "gatsby-plugin-react-svg": "^3.0.0",
     "lodash": "^4.17.20",

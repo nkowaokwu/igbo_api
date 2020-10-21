@@ -50,8 +50,16 @@ const Home = () => {
             Search
           </button>
         </div>
-        {response.length > 0 ? map(response, (word) => <Word word={word} />) : noMatch}
-        {response.length === 10 ? <button onClick={nextPage} type="button">More Words</button> : null}
+        {
+          response.length > 0
+            ? map(response, (word, idx) => <Word word={word} key={idx} />)
+            : noMatch
+        }
+        {
+          response.length === 10
+            ? <button onClick={nextPage} type="button">More Words</button>
+            : null
+        }
       </div>
     </div>
   );
