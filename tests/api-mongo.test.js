@@ -238,6 +238,18 @@ describe('MongoDB Words', function () {
       });
     });
 
+    it('should return ignore case', (done) => {
+      const lowerCase = 'tree';
+      const upperCase = 'Tree';
+      Promise.all([
+        getWords({ keyword: lowerCase }),
+        getWords({ keyword: upperCase }),
+      ]).then((res) => {
+        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        done();
+      });
+    });
+
     it('should return only ten words', (done) => {
       const keyword = 'woman';
       getWords({ keyword }).then((res) => {

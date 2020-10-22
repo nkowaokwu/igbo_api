@@ -43,18 +43,25 @@ export const GRAVE_LOWERCASE_U = 249;       // \u00f9
 export const GRAVE_ACUTE_LOWERCASE_U = 250; // \u00fa
 export const MACRON_LOWERCASE_U = 363;      // \u016b
 
+const caseInsensitiveN = '[n\u1e44\u01f9\u0144N\u1e45\u01f8\u0143]';
+const caseInsensitiveA = '[a\u0061\u00e0\u0101A\u00c0\u00c1\u0100]';
+const caseInsensitiveE = '[e\u00e8\u00e9\u0113E\u00c8\u00c9\u0112]';
+const caseInsensitiveI = '[i\u00ec\u00ed\u012b\u1ecbI\u00cc\u00cd\u012a\u1eca]';
+const caseInsensitiveO = '[o\u00f2\u00f3\u014d\u1ecdO\u00d2\u00d3\u014c\u1ecc]';
+const caseInsensitiveU = '[u\u00f9\u00fa\u016b\u1ee5U\u00d9\u00da\u016a\u1ee4]';
+
 export default {
-  n: '[n\u1e44\u01f9\u0144]',
-  N: '[N\u1e45\u01f8\u0143]',
-  a: '[a\u0061\u00e0\u0101]',
-  A: '[A\u00c0\u00c1\u0100]',
-  e: '[e\u00e8\u00e9\u0113]',
-  E: '[E\u00c8\u00c9\u0112]',
-  i: '[i\u00ec\u00ed\u012b\u1ecb]',
-  I: '[I\u00cc\u00cd\u012a\u1eca]',
-  o: '[o\u00f2\u00f3\u014d\u1ecd]',
-  O: '[O\u00d2\u00d3\u014c\u1ecc]',
-  u: '[u\u00f9\u00fa\u016b\u1ee5]',
-  U: '[U\u00d9\u00da\u016a\u1ee4]',
+  n: caseInsensitiveN,
+  N: caseInsensitiveN,
+  a: caseInsensitiveA,
+  A: caseInsensitiveA,
+  e: caseInsensitiveE,
+  E: caseInsensitiveE,
+  i: caseInsensitiveI,
+  I: caseInsensitiveI,
+  o: caseInsensitiveO,
+  O: caseInsensitiveO,
+  u: caseInsensitiveU,
+  U: caseInsensitiveU,
   ' ': '[\\s\u0027]',
 };
