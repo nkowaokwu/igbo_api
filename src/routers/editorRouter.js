@@ -5,7 +5,7 @@ import {
   postWordSuggestion,
   putWordSuggestion,
 } from '../controllers/wordSuggestions';
-import { putWord, postWord } from '../controllers/words';
+import { putWord, postWord, deleteWord } from '../controllers/words';
 import { putExample, postExample, getExamples } from '../controllers/examples';
 import {
   getExampleSuggestion,
@@ -563,5 +563,27 @@ editorRouter.get('/genericWords/:id', getGenericWord);
 *              type: object
 */
 editorRouter.put('/genericWords/:id', putGenericWord);
+
+/**
+* @swagger
+* /edit/words/{wordId}:
+*   delete:
+*     description: Deletes a word document from the production database
+*     tags:
+*      - development
+*     consumes:
+*       - application/json
+*     parameters:
+*        - in: path
+*          name: wordId
+*          required: true
+*          schema:
+*            type: string
+*          description: the word id
+*     responses:
+*       200:
+*         description: OK
+*/
+editorRouter.delete('/edit/words/:id', deleteWord);
 
 export default editorRouter;

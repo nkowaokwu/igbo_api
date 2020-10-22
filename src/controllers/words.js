@@ -199,3 +199,22 @@ export const putWord = (req, res) => {
       return res.send({ error: 'An error has occurred while updating the word, double check your provided data.' });
     });
 };
+
+export const deleteWord = (req, res) => {
+  const { params: { id } } = req;
+
+  return Word.findByIdAndDelete(id)
+    .then(async (word) => {
+      if (!word) {
+        res.status(400);
+        return res.send({ error: 'Word doesn\'t exist' });
+      }
+
+      res.status(200);
+      return res.send(word);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while deleting the word, double check your provided id.' });
+    });
+};
