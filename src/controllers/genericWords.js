@@ -29,8 +29,7 @@ export const putGenericWord = (req, res) => {
       const updatedGenericWord = assign(genericWord, data);
       return res.send(await updatedGenericWord.save());
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while updating, double check your provided data' });
     });
@@ -39,7 +38,9 @@ export const putGenericWord = (req, res) => {
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
-  return GenericWord.find({ word: regexKeyword })
+  return GenericWord
+    .find({ word: regexKeyword })
+    .sort({ approvals: 'desc' })
     .then((genericWords) => (
       prepResponse(res, genericWords, page, sort)
     ))

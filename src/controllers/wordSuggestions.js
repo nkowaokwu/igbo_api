@@ -60,7 +60,9 @@ export const putWordSuggestion = (req, res) => {
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
-  WordSuggestion.find({ word: regexKeyword })
+  WordSuggestion
+    .find({ word: regexKeyword })
+    .sort({ approvals: 'desc' })
     .then((wordSuggestions) => (
       prepResponse(res, wordSuggestions, page, sort)
     ))
