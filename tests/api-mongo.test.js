@@ -440,7 +440,7 @@ describe('MongoDB Words', function () {
         });
     });
 
-    it('should return a ascending sorted list of words with sort query', (done) => {
+    it('should return an ascending sorted list of words with sort query', (done) => {
       const key = 'definitions';
       const direction = 'asc';
       getWords({ sort: `["${key}": "${direction}"]` })

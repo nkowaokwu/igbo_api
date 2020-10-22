@@ -21,11 +21,16 @@ const expectUniqSetsOfResponses = (res) => {
 };
 
 const expectArrayIsInOrder = (array, key, direction = 'asc') => {
-  const isOrdered = every(map(array, (item) => item[key]), (value, index) => (
-    index === 0 || direction === 'asc'
-      ? String(array[index - 1] <= String(value))
-      : String(array[index - 1] >= String(value))
-  ));
+  const isOrdered = every(map(array, (item) => item[key]), (value, index) => {
+    if (index === 0) {
+      return true;
+    }
+    return (
+      direction === 'asc'
+        ? String(array[index - 1][key] <= String(value))
+        : String(array[index - 1][key] >= String(value))
+    );
+  });
   expect(isOrdered).to.equal(true);
 };
 

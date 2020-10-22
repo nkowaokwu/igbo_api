@@ -205,7 +205,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return a ascending sorted list of examples with sort query', (done) => {
+    it('should return an ascending sorted list of examples with sort query', (done) => {
       const key = 'english';
       const direction = 'asc';
       getExamples({ sort: `["${key}": "${direction}"]` })

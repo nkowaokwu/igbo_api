@@ -10,6 +10,14 @@ const wordSuggestionData = {
   definitions: ['first'],
 };
 
+const wordSuggestionApprovedData = {
+  originalWordId: wordId,
+  word: 'word',
+  wordClass: 'wordClass',
+  definitions: ['first'],
+  approvals: ['first user', 'second user'],
+};
+
 const malformedWordSuggestionData = {
   word: 'word',
   wordCllass: 'wordClass',
@@ -37,6 +45,12 @@ const updatedWordData = {
 const exampleSuggestionData = {
   igbo: 'igbo text',
   english: 'english text',
+};
+
+const exampleSuggestionApprovedData = {
+  igbo: 'igbo text',
+  english: 'english text',
+  approvals: ['first user', 'second user'],
 };
 
 const malformedExampleSuggestionData = {
@@ -67,6 +81,13 @@ const genericWordData = {
   definitions: [],
 };
 
+const genericWordApprovedData = {
+  word: 'genericWord',
+  wordClass: 'noun',
+  definitions: [],
+  approvals: ['first user', 'second user'],
+};
+
 const malformedGenericWordData = {
   word: 'newGenericWord',
   wordClass: '',
@@ -84,16 +105,19 @@ const updatedGenericWordData = {
 
 export {
   wordSuggestionData,
+  wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,
+  exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
   exampleData,
   updatedExampleData,
   genericWordData,
+  genericWordApprovedData,
   malformedGenericWordData,
   updatedGenericWordData,
 };

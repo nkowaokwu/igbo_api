@@ -12,6 +12,7 @@ import {
 } from './shared/commands';
 import {
   wordSuggestionData,
+  wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
 } from './__mocks__/documentData';
@@ -90,7 +91,7 @@ describe('MongoDB Word Suggestions', () => {
   });
 
   describe('/GET mongodb wordSuggestions', () => {
-    it('should return an example by searching', (done) => {
+    it('should return a word suggestion by searching', (done) => {
       const keyword = wordSuggestionData.word;
       suggestNewWord(wordSuggestionData)
         .then(() => {
@@ -105,7 +106,7 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it('should return an example by searching', (done) => {
+    it('should return a word suggestion by searching', (done) => {
       const filter = wordSuggestionData.word;
       suggestNewWord(wordSuggestionData)
         .then(() => {
@@ -133,6 +134,20 @@ describe('MongoDB Word Suggestions', () => {
               done();
             });
         });
+    });
+
+    it('should be sorted by number of approvals', (done) => {
+      Promise.all([
+        suggestNewWord(wordSuggestionData),
+        suggestNewWord(wordSuggestionApprovedData),
+      ]).then(() => {
+        getWordSuggestions()
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expectArrayIsInOrder(res.body, 'approvals', 'desc');
+            done();
+          });
+      });
     });
 
     it('should return one word suggestion', (done) => {
@@ -193,7 +208,7 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it('should return a ascending sorted list of word suggestions with sort query', (done) => {
+    it('should return an ascending sorted list of word suggestions with sort query', (done) => {
       const key = 'definitions';
       const direction = 'asc';
       getWordSuggestions({ sort: `["${key}": "${direction}"]` })
