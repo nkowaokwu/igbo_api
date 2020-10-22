@@ -12,6 +12,7 @@ import {
 } from './shared/commands';
 import {
   exampleSuggestionData,
+  exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
 } from './__mocks__/documentData';
@@ -142,6 +143,20 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
+    it('should be sorted by number of approvals', (done) => {
+      Promise.all([
+        suggestNewExample(exampleSuggestionData),
+        suggestNewExample(exampleSuggestionApprovedData),
+      ]).then(() => {
+        getExampleSuggestions()
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expectArrayIsInOrder(res.body, 'approvals', 'desc');
+            done();
+          });
+      });
+    });
+
     it('should return one example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
@@ -200,7 +215,7 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return a ascending sorted list of example suggestions with sort query', (done) => {
+    it('should return an ascending sorted list of example suggestions with sort query', (done) => {
       const key = 'definitions';
       const direction = 'asc';
       getExampleSuggestions({ sort: `["${key}": "${direction}"]` })

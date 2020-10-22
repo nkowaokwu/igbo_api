@@ -18,7 +18,7 @@ import {
   NONEXISTENT_ID,
 } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
-import { malformedGenericWordData, updatedGenericWordData } from './__mocks__/documentData';
+import { genericWordApprovedData, malformedGenericWordData, updatedGenericWordData } from './__mocks__/documentData';
 
 const { expect } = chai;
 
@@ -50,7 +50,7 @@ describe('MongoDB Generic Words', () => {
       getGenericWords()
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateGenericWord(res.body.id, malformedGenericWordData)
+          updateGenericWord(res.body[0].id, malformedGenericWordData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
@@ -102,6 +102,22 @@ describe('MongoDB Generic Words', () => {
             expect(genericWords).to.have.all.keys(GENERIC_WORD_KEYS);
           });
           done();
+        });
+    });
+
+    it('should be sorted by number of approvals', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          updateGenericWord(res.body[0].id, genericWordApprovedData)
+            .then(() => {
+              getGenericWords()
+                .end((_, result) => {
+                  expect(result.status).to.equal(200);
+                  expectArrayIsInOrder(result.body, 'approvals', 'desc');
+                  done();
+                });
+            });
         });
     });
 
@@ -185,7 +201,7 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return a ascending sorted list of generic words with sort query', (done) => {
+    it('should return an ascending sorted list of generic words with sort query', (done) => {
       const key = 'definitions';
       const direction = 'asc';
       getGenericWords({ sort: `["${key}": "${direction}"]` })
