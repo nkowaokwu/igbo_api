@@ -51,6 +51,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 const server = app.listen(PORT, () => {
   console.log(`🟢 Server started on port ${PORT}`);
+
+  /* Used to test server build */
+  if (process.env.NODE_ENV === 'build') {
+    console.log('🧪 Testing server build');
+    setTimeout(() => {
+      console.log('✅ Build test passed');
+      process.exit(0);
+    }, 5000);
+  }
 });
 
 server.clearDatabase = () => {
