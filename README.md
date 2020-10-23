@@ -53,6 +53,16 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
+### API Site
+
+To start up the front site for the API, run:
+
+```
+yarn dev:site
+```
+
+Navigate to [localhost:3000](http://localhost:3000) to see the API front site
+
 ## Usage
 
 ### Documentation

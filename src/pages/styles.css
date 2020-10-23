@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.jsonPretty {
+  height: 600px;
+  max-height: 600px;
+  width: 600px;
+  overflow: scroll;
+  font-size: 1em;
+  background-color: rgb(249, 249, 249);
+}
+
+.__json-key__ {
+  color: black;
+}
+.__json-string__ {
+  color: rgb(0, 77, 15);
+}
+
+.demo-inputs-container {
+  max-width: 600px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .demo-inputs-container {
+    max-width: 600px;
+    width: 80%;
+  }
+}
+
+.card-container {
+  width: 250px;
+  height: 250px;
+}
