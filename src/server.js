@@ -28,10 +28,6 @@ app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 }));
 
-app.get('/', (_, res) => {
-  res.send('Hello World!');
-});
-
 app.use('*', logger);
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
