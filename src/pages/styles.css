@@ -8,6 +8,7 @@
   width: 600px;
   overflow: scroll;
   font-size: 1em;
+  background-color: rgb(249, 249, 249);
 }
 
 .__json-key__ {

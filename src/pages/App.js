@@ -14,11 +14,11 @@ const App = () => (
         <h1 className="text-6xl font-extrabold text-center mt-6 mb-24">The First African Language API</h1>
         <div className="text-2xl text-center text-gray-700 w-1/2 self-center mb-24">
           <p>
-            {`Igbo is a rich Nigerian language that’s spoke by around 40 million people.
-            Despite the language's wide use, it's considered to be a low resources language.`}
+            {`Igbo is a rich Nigerian language that’s spoken by approximately 45 million people.
+            Despite the language's wide use, it's considered to be a low resource language.`}
           </p>
           <br />
-          <p>This API changes that</p>
+          <p>This API aims to change that</p>
         </div>
       </div>
       <h2 id="features" className={headerStyles}>
@@ -27,7 +27,7 @@ const App = () => (
       <div className="flex flex-col mb-24">
         <div className="flex justify-evenly mt-10 mb-24">
           <Card title="Definitions" description="Each word is provided with at least one definition." />
-          <Card title="Examples" description="Certain words are accompanied with contextual examples." />
+          <Card title="Examples" description="Certain words are accompanied by contextual examples." />
           <Card
             title="Variations"
             description={`The Igbo language has many dialects, 
@@ -46,7 +46,7 @@ const App = () => (
       <h2 className={headerStyles}>Docs</h2>
       <div className="flex flex-col mb-24">
         <p className="text-2xl text-center text-gray-700 w-1/2 self-center mb-24">
-          {'Are you a developer interesting in using the API? Head over to the '}
+          {'Are you a developer interested in using the API? Head over to the '}
           <a className="text-green-400 hover:text-green-700" href={`${API_ROUTE}/docs`}>
             docs
           </a>
