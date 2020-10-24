@@ -1,3 +1,6 @@
 const withCSS = require('@zeit/next-css');
 
-module.exports = withCSS({});
+module.exports = withCSS({
+  distDir: 'build',
+  generateBuildId: async () => 'api-homepage',
+});
