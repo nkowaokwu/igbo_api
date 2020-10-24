@@ -6,6 +6,10 @@ const { DOMAIN_NAME } = process.env;
 const DB_NAME = 'igbo_api';
 const TEST_DB_NAME = 'test_igbo_api';
 
+// API Homepage
+export const API_ROUTE = process.env.NODE_ENV === 'production' ? 'http://igboapi.com' : 'http://localhost:8080';
+export const DICTIONARY_APP_URL = 'https://ijemmao.github.io/igbo_api';
+
 export const PORT = process.env.PORT || 8080;
 export const MONGO_ROOT = 'mongodb://localhost:27017';
 const TEST_MONGO_URI = `${MONGO_ROOT}/${TEST_DB_NAME}`;

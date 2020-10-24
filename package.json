@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "rm -rf build/ && ./node_modules/.bin/babel -d build/ ./src -s && NODE_ENV=build yarn build:dictionaries",
+    "build": "rm -rf build/ && ./node_modules/.bin/babel -d build/ ./src -s && NODE_ENV=build yarn build:dictionaries && next export -o build/dist",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log",
     "dev": "npm-run-all -p start:database start:server",
