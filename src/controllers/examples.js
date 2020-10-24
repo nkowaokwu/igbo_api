@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
-import { assign, some } from 'lodash';
+import {
+  assign,
+  some,
+  map,
+  trim,
+} from 'lodash';
 import Example from '../models/Example';
 import { prepResponse, handleQueries, updateDocumentMerge } from './utils';
 import { findExampleSuggestionById } from './exampleSuggestions';
@@ -96,6 +101,10 @@ export const putExample = (req, res) => {
   if (!data.igbo && !data.english) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  if (!Array.isArray(data.associatedWords)) {
+    data.associatedWords = map(data.associatedWords.split(','), (associatedWord) => trim(associatedWord));
   }
 
   if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {

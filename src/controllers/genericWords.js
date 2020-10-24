@@ -4,6 +4,7 @@ import {
   has,
   partial,
   map,
+  trim,
 } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
@@ -18,6 +19,10 @@ export const putGenericWord = (req, res) => {
   if (!every(REQUIRE_KEYS, partial(has, data))) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  if (!Array.isArray(data.definitions)) {
+    data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
   }
 
   return GenericWord.findById(id)
@@ -39,7 +44,7 @@ export const putGenericWord = (req, res) => {
 export const getGenericWords = (req, res) => {
   const { regexKeyword, page, sort } = handleQueries(req.query);
   return GenericWord
-    .find({ word: regexKeyword })
+    .find({ $or: [{ word: regexKeyword }, { definitions: regexKeyword }] })
     .sort({ approvals: 'desc' })
     .then((genericWords) => (
       prepResponse(res, genericWords, page, sort)

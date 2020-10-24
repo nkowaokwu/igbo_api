@@ -4,6 +4,8 @@ import {
   every,
   has,
   partial,
+  map,
+  trim,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
 import { prepResponse, handleQueries } from './utils';
@@ -14,9 +16,13 @@ const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 export const postWordSuggestion = (req, res) => {
   const { body: data } = req;
 
-  if (!mongoose.Types.ObjectId.isValid(data.originalWordId)) {
+  if (data.originalWordId && !mongoose.Types.ObjectId.isValid(data.originalWordId)) {
     res.status(400);
     return res.send({ error: 'Invalid word id provided' });
+  }
+
+  if (!Array.isArray(data.definitions)) {
+    data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
   }
 
   const newWordSuggestion = new WordSuggestion(data);
@@ -40,6 +46,10 @@ export const putWordSuggestion = (req, res) => {
   if (!every(REQUIRE_KEYS, partial(has, data))) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  if (!Array.isArray(data.definitions)) {
+    data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
   }
 
   return findWordSuggestionById(id)
