@@ -77,3 +77,6 @@ yarn-error.log
 
 # VSCode preferences
 .vscode/
+
+*.tar.gz
+out/
