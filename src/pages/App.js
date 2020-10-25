@@ -36,7 +36,7 @@ const App = () => (
         </h2>
       </div>
       <div className="flex flex-col mb-24">
-        <div className="flex flex-col items-center md:flex-row justify-evenly mt-10 mb-24 md:space-x-10">
+        <div className="flex flex-col items-center lg:flex-row justify-evenly mt-10 mb-24 lg:space-x-10">
           <Card title="Definitions" description="Each word is provided with at least one definition." />
           <Card title="Examples" description="Certain words are accompanied by contextual examples." />
           <Card

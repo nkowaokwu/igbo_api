@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  width: fit-content;
+}
+
 .jsonPretty {
   height: 600px;
   max-height: 600px;
