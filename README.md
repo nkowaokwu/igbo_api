@@ -9,7 +9,7 @@
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
 ## Try it Out
-For a demo, check out this link [http://igboapi.com/api/v1/words](http://www.igboapi.com/api/v1/words)
+For a demo, check out this link [https://igboapi.com/api/v1/words](https://www.igboapi.com/api/v1/words)
 
 ## Getting Started
 
@@ -71,7 +71,7 @@ Navigate to [localhost:3000](http://localhost:3000) to see the API front site
 After starting the API server with this `yarn dev`, visit `http://localhost:8080/docs`.
 
 #### Production
-You can also view the productions docs by visiting `http://igboapi.com/docs`.
+You can also view the productions docs by visiting `https://igboapi.com/docs`.
 
 ### MongoDB Data
 
