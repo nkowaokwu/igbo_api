@@ -23,7 +23,7 @@ const Demo = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col items-center md:items-start md:flex-row md:space-x-10">
+      <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10">
         <div className="demo-inputs-container space-y-5">
           <div className="flex flex-col w-full space-y-5">
             <p className="self-center md:self-start">
@@ -52,7 +52,7 @@ const Demo = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          <h3 className="self-center md:self-start text-2xl mb-5 mt-10 md:mt-0">Response</h3>
+          <h3 className="self-center lg:self-start text-2xl mb-5 mt-10 lg:mt-0">Response</h3>
           <JSONPretty className="jsonPretty" id="json-pretty" data={responseBody} />
         </div>
       </div>
