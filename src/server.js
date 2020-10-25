@@ -5,6 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
+import sslRedirect from 'heroku-ssl-redirect';
 import { editorRouter, router, testRouter } from './routers';
 import logger from './middleware/logger';
 import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
@@ -24,6 +25,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('🗄 Database is connected');
 });
+
+if (process.env.NODE_ENV === 'production') {
+  // enable ssl redirect
+  app.use(sslRedirect());
+}
 
 app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
