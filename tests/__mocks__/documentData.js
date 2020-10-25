@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
 
 const wordId = new ObjectId('5f864d7401203866b6546dd3');
+const wordSuggestionId = new ObjectId();
 const wordSuggestionData = {
   originalWordId: wordId,
   word: 'word',
@@ -104,6 +105,7 @@ const updatedGenericWordData = {
 };
 
 export {
+  wordSuggestionId,
   wordSuggestionData,
   wordSuggestionApprovedData,
   malformedWordSuggestionData,

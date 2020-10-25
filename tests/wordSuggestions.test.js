@@ -5,12 +5,14 @@ import {
   isEqual,
 } from 'lodash';
 import {
+  deleteWordSuggestion,
   suggestNewWord,
   updateWordSuggestion,
   getWordSuggestions,
   getWordSuggestion,
 } from './shared/commands';
 import {
+  wordSuggestionId,
   wordSuggestionData,
   wordSuggestionApprovedData,
   malformedWordSuggestionData,
@@ -225,6 +227,35 @@ describe('MongoDB Word Suggestions', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE mongodb wordSuggestions', () => {
+    it('should delete a single word suggestion', (done) => {
+      suggestNewWord(wordSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          deleteWordSuggestion(res.body.id)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getWordSuggestion(result.body.id)
+                .end((_, resError) => {
+                  expect(resError.status).to.equal(400);
+                  expect(resError.body.error).to.not.equal(undefined);
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should return error for non existent word suggestion', (done) => {
+      getWordSuggestion(wordSuggestionId)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

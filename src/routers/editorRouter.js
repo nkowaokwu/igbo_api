@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  deleteWordSuggestion,
   getWordSuggestion,
   getWordSuggestions,
   postWordSuggestion,
@@ -309,12 +310,33 @@ editorRouter.put('/examples/:id', putExample);
  *          application/json:
  *            schema:
  *              type: object
+ *   delete:
+ *      description: Deletes an existing WordSuggestion document
+ *      tags:
+ *       - development
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *       - in: path
+ *         name: wordSuggestionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: the wordSuggestion id
+ *      responses:
+ *        200:
+ *         description: OK
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: object
  *
  */
 editorRouter.post('/wordSuggestions', postWordSuggestion);
 editorRouter.get('/wordSuggestions', getWordSuggestions);
 editorRouter.put('/wordSuggestions/:id', putWordSuggestion);
 editorRouter.get('/wordSuggestions/:id', getWordSuggestion);
+editorRouter.delete('/wordSuggestions/:id', deleteWordSuggestion);
 
 /**
  * @swagger

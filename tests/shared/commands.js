@@ -79,6 +79,12 @@ export const updateWordSuggestion = (id, data) => (
     .send(data)
 );
 
+export const deleteWordSuggestion = (id) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/wordSuggestions/${id}`)
+);
+
 export const updateExampleSuggestion = (id, data) => (
   chai
     .request(server)
