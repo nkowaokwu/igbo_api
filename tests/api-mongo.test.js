@@ -238,7 +238,7 @@ describe('MongoDB Words', function () {
       });
     });
 
-    it('should return ignore case', (done) => {
+    it.skip('should return ignore case', (done) => {
       const lowerCase = 'tree';
       const upperCase = 'Tree';
       Promise.all([

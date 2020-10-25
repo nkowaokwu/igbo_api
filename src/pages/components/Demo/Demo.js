@@ -51,9 +51,13 @@ const Demo = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col">
-          <h3 className="self-center lg:self-start text-2xl mb-5 mt-10 lg:mt-0">Response</h3>
-          <JSONPretty className="jsonPretty" id="json-pretty" data={responseBody} />
+        <div className="flex flex-col w-full lg:w-auto">
+          <h3
+            className="text-center lg:text-left self-center w-full lg:w-auto lg:self-start text-2xl mb-5 mt-10 lg:mt-0"
+          >
+            Response
+          </h3>
+          <JSONPretty className="w-full self-center lg:w-auto jsonPretty" id="json-pretty" data={responseBody} />
         </div>
       </div>
     </div>
