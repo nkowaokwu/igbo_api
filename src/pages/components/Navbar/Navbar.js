@@ -1,6 +1,6 @@
 import React from 'react';
-import { API_ROUTE } from '../../config';
-import { transition } from '../../styles/constants';
+import { API_ROUTE } from '../../../config';
+import { transition } from '../../../shared/constants/styles';
 
 const Navbar = () => (
   <div className="flex items-center justify-between w-screen py-5 px-10">

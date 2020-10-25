@@ -2,8 +2,8 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
-import { API_ROUTE } from './config';
-import { headerStyles, transition } from './styles/constants';
+import { API_ROUTE } from '../config';
+import { headerStyles, transition } from '../shared/constants/styles';
 
 const App = () => (
   <div>

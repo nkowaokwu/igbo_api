@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -28,8 +29,9 @@ app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 }));
 
+app.use(express.static('./build/dist'));
 app.get('/', (_, res) => {
-  res.send('Hello World!');
+  res.send(path.resolve(__dirname, '/build/dist/index.html'));
 });
 
 app.use('*', logger);
@@ -60,6 +62,12 @@ const server = app.listen(PORT, () => {
       process.exit(0);
     }, 5000);
   }
+});
+
+app.get('*', (_, res) => {
+  res
+    .status(404)
+    .sendFile(path.resolve(__dirname, 'dist/404.html'));
 });
 
 server.clearDatabase = () => {

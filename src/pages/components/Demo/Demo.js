@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import JSONPretty from 'react-json-pretty';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../config';
-import { transition } from '../../styles/constants';
+import { API_ROUTE, DICTIONARY_APP_URL } from '../../../config';
+import { transition } from '../../../shared/constants/styles';
 
 const Demo = () => {
   const [keyword, setKeyword] = useState('');
