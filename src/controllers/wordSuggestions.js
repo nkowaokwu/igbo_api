@@ -100,3 +100,20 @@ export const getWordSuggestion = (req, res) => {
       return res.send({ error: 'An error has occurred while returning a single word suggestion' });
     });
 };
+
+/* Deletes a single WordSuggestion by using an id */
+export const deleteWordSuggestion = (req, res) => {
+  const { id } = req.params;
+  return WordSuggestion.findByIdAndDelete(id)
+    .then((wordSuggestion) => {
+      if (!wordSuggestion) {
+        res.status(400);
+        return res.send({ error: 'No word suggestion exists with teh provided id.' });
+      }
+      return res.send(wordSuggestion);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while deleting and return a single word suggestion' });
+    });
+};
