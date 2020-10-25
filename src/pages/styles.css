@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 html {
-  width: fit-content;
+  width: 100vw;
 }
 
 .jsonPretty {
   height: 600px;
   max-height: 600px;
-  width: 600px;
+  max-width: 95vw;
   overflow: scroll;
   font-size: 1em;
   background-color: rgb(249, 249, 249);
@@ -31,6 +31,18 @@ html {
   .demo-inputs-container {
     max-width: 600px;
     width: 80%;
+  }
+}
+
+@media (min-width: 768px) {
+  .jsonPretty {
+    height: 600px;
+    max-height: 600px;
+    max-width: 600px !important;
+    width: 600px !important;
+    overflow: scroll;
+    font-size: 1em;
+    background-color: rgb(249, 249, 249);
   }
 }
 
