@@ -3,11 +3,10 @@ import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import { editorRouter, router, testRouter } from './routers';
 import logger from './middleware/logger';
-import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
+import { PORT, MONGO_URI, SWAGGER_DOCS } from './config';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +35,7 @@ app.get('/', (_, res) => {
 
 app.use('*', logger);
 
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);

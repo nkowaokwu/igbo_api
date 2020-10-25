@@ -1,7 +1,7 @@
 {
   "name": "igbo-dictionary",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dictionary API that contains Igbo words",
   "main": "server.js",
   "scripts": {
     "build": "rm -rf build/ && ./node_modules/.bin/babel -d build/ ./src -s && NODE_ENV=build yarn build:dictionaries && yarn build:site",
@@ -57,7 +57,6 @@
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "string-similarity": "^4.0.2",
-    "swagger-jsdoc": "^4.3.0",
     "swagger-ui-express": "^4.1.4",
     "tailwindcss": "^1.9.5",
     "unicharadata": "^9.0.0-alpha.6",
