@@ -9,6 +9,7 @@ const EditModal = ({
   onRequestClose,
   isOpen,
   children,
+  ...rest
 }) => {
   const [resultStatus, setResultStatus] = useState(null);
   const [resultTitle, setResultTitle] = useState('');
@@ -36,35 +37,37 @@ const EditModal = ({
       isOpen={isOpen}
       onRequestClose={handleClose}
       contentLabel={modalTitle}
-      className="bg-white border-current border-solid border border-gray-200 max-h-full h-8/12 w-full lg:w-10/12 p-12 rounded-lg shadow-lg overflow-scroll text-gray-800"
+      {...rest}
     >
-      {!resultStatus ? (
-        <>
-          <div className="flex justify-between">
-            <h1 className="text-2xl">{modalTitle}</h1>
-            <button type="button" onClick={handleClose}>
-              <ExitIcon />
-            </button>
-          </div>
-          {React.Children.map(children, (child) => (
-            React.cloneElement(child, { onRequestClose, onSuccess, onFailure })
-          ))}
-        </>
-      ) : (
-        <>
-          <div className="flex justify-end">
-            <button type="button" onClick={handleClose}>
-              <ExitIcon />
-            </button>
-          </div>
-          <Result
-            status={resultStatus}
-            title={resultTitle}
-            subtitle={resultSubTitle}
-            back={() => setResultStatus(null)}
-          />
-        </>
-      )}
+      <div data-test="suggestion-modal">
+        {!resultStatus ? (
+          <>
+            <div className="flex justify-between">
+              <h1 className="text-2xl">{modalTitle}</h1>
+              <button type="button" onClick={handleClose}>
+                <ExitIcon />
+              </button>
+            </div>
+            {React.Children.map(children, (child) => (
+              React.cloneElement(child, { onRequestClose, onSuccess, onFailure })
+            ))}
+          </>
+        ) : (
+          <>
+            <div className="flex justify-end">
+              <button type="button" onClick={handleClose}>
+                <ExitIcon />
+              </button>
+            </div>
+            <Result
+              status={resultStatus}
+              title={resultTitle}
+              subtitle={resultSubTitle}
+              back={() => setResultStatus(null)}
+            />
+          </>
+        )}
+      </div>
     </Modal>
   );
 };
@@ -74,6 +77,7 @@ EditModal.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   children: PropTypes.any.isRequired, // eslint-disable-line
+  rest: PropTypes.any, // eslint-disable-line
 };
 
 export default EditModal;

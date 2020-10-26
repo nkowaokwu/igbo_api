@@ -45,7 +45,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h2 className={formHeader}>New Word</h2>
       <Controller
-        as={<input className={`${inputStyles}`} placeholder="i.e. biko, igwe, mmiri" />}
+        as={<input className={`${inputStyles}`} placeholder="i.e. biko, igwe, mmiri" data-test="new-word-input" />}
         name="word"
         control={control}
         defaultValue={getValues().word}
@@ -58,7 +58,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
       )}
       <h2 className={formHeader}>Part of speech</h2>
       <Controller
-        as={<input className={inputStyles} placeholder="i.e. noun, verb" />}
+        as={<input className={inputStyles} placeholder="i.e. noun, verb" data-test="word-class-input" />}
         name="wordClass"
         control={control}
         defaultValue={getValues().wordClass}
@@ -73,6 +73,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
         <h2 className="text-xl">Definitions</h2>
         <button
           type="button"
+          aria-label="Add Definition"
           onClick={() => {
             const updateDefinitions = [...definitions];
             updateDefinitions.push('');
@@ -88,7 +89,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
             {`${index + 1}.`}
           </h3>
           <Controller
-            as={<input className={inputStyles} size="large" placeholder="Definition" defaultValue={definition} />}
+            as={<input className={inputStyles} size="large" placeholder="Definition" defaultValue={definition} data-test={`definitions-${index}-input`} />}
             name={`definitions[${index}]`}
             defaultValue={definitions[index]}
             control={control}
@@ -98,6 +99,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
           />
           <button
             type="button"
+            aria-label="Delete Definition"
             className="ml-2"
             onClick={() => {
               const updateDefinitions = [...definitions];
@@ -117,6 +119,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
         <h2 className="text-xl">Variations</h2>
         <button
           type="button"
+          aria-label="Add Variation"
           onClick={() => {
             const updateVariations = [...variations];
             updateVariations.push('');
@@ -129,13 +132,14 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
       {variations.length ? variations.map((variation, index) => (
         <div className={listContainerStyles}>
           <Controller
-            as={<input className={`${inputStyles}`} size="large" placeholder="Variation" defaultValue={variation} />}
+            as={<input className={`${inputStyles}`} size="large" placeholder="Variation" defaultValue={variation} data-test={`variations-${index}-input`} />}
             name={`variations[${index}]`}
             defaultValue={variations[index]}
             control={control}
           />
           <button
             type="button"
+            aria-label="Delete Variation"
             className="ml-2"
             onClick={() => {
               const updateVariations = [...variations];

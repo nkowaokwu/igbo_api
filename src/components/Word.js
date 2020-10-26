@@ -4,7 +4,7 @@ import { WordPropTypes } from '../utils/PropTypeShapes';
 import Example from './Example';
 
 const Word = ({ word }) => (
-  <div className="w-full">
+  <div className="w-full" data-test="word">
     <div className="flex flex-col lg:flex-row py-5">
       <div className="w-full lg:w-3/12">
         <div className="flex flex-col lg:flex-row lg:items-end">

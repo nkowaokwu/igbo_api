@@ -24,7 +24,7 @@ const Result = ({
   subtitle,
   back,
 }) => (
-  <div className="flex flex-col w-full justify-center items-center">
+  <div className="flex flex-col w-full justify-center items-center" data-test={`result-${status}`}>
     <Icon status={status} />
     <h2 className="text-gray-800 text-2xl mt-5">{title}</h2>
     <h3 className="text-gray-600 text-l mt-5">{subtitle}</h3>

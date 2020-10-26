@@ -48,7 +48,11 @@ const Home = () => {
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center w-11/12 lg:w-8/12">
         {process.env.NODE_ENV !== 'production' ? (
-          <button type="button" onClick={showModal}>
+          <button
+            type="button"
+            onClick={showModal}
+            data-test="add-button"
+          >
             add word
           </button>
         ) : null}
