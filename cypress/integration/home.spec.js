@@ -51,6 +51,7 @@ describe('Homepage', () => {
       cy.get('[data-test="add-button"]').click();
       cy.get('[data-test="new-word-input"]').type('new word');
       cy.get('[data-test="word-class-input"]').type('new word class');
+      cy.get('[data-test="definitions-0-input"]').type('first definition');
       cy.get('button[type="submit"]').click();
       cy.wait('@postWordSuggestion');
       cy.get('[data-test="result-error"]');
@@ -68,7 +69,7 @@ describe('Homepage', () => {
       cy.get('[data-test="add-button"]').click();
       cy.get('[data-test="new-word-input"]').should('not.have.value');
       cy.get('[data-test="word-class-input"]').should('not.have.value');
-      cy.contains('At least one definitions is required');
+      cy.get('[data-test="definitions-0-input"]').should('not.have.value');
       cy.contains('No variations');
     });
 
@@ -82,6 +83,7 @@ describe('Homepage', () => {
       cy.get('[data-test="add-button"]').click();
       cy.get('[data-test="new-word-input"]').type('new word');
       cy.get('[data-test="word-class-input"]').type('new word class');
+      cy.get('[data-test="definitions-0-input"]').type('first definition');
       cy.get('button[type="submit"]').click();
       cy.wait('@postWordSuggestion');
       cy.get('[data-test="result-error"]');
@@ -91,14 +93,11 @@ describe('Homepage', () => {
 
     it('adds and deletes definitions', () => {
       cy.get('[data-test="add-button"]').click();
-      cy.get('[aria-label="Add Definition"]').click();
       cy.get('[data-test="definitions-0-input"]');
       cy.get('[aria-label="Add Definition"]').click();
       cy.get('[data-test="definitions-1-input"]');
-      cy.get('[aria-label="Add Definition"]').click();
-      cy.get('[data-test="definitions-2-input"]');
       cy.get('[aria-label="Delete Definition"]').first().click();
-      cy.get('[data-test="definitions-2-input"]').should('not.exist');
+      cy.get('[data-test="definitions-1-input"]').should('not.exist');
     });
 
     it('adds and deletes variations', () => {

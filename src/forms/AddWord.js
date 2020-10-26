@@ -12,6 +12,7 @@ const listContainerStyles = 'flex items-center mb-10';
 const submitButtonStyles = 'h-10 mt-5 lg:h-10 w-full lg:w-32 bg-green-600 rounded text-gray-100';
 const cancelButtonStyles = 'h-10 mt-5 lg:h-10 lg:w-32 text-gray-600';
 const formHeader = 'text-xl mb-2 mt-5';
+const errorStyles = 'text-red-500 mt-3';
 
 const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
   const {
@@ -21,7 +22,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
     control,
     errors,
   } = useForm();
-  const [definitions, setDefinitions] = useState([]);
+  const [definitions, setDefinitions] = useState(['']);
   const [variations, setVariations] = useState([]);
 
   const onSubmit = (data) => {
@@ -54,7 +55,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
         }}
       />
       {errors.word && (
-        <span className="word text-red-500">Word is required</span>
+        <span className={errorStyles}>Word is required</span>
       )}
       <h2 className={formHeader}>Part of speech</h2>
       <Controller
@@ -67,7 +68,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
         }}
       />
       {errors.wordClass && (
-        <span className="wordClass text-red-500">Part of speech is required</span>
+        <span className={errorStyles}>Part of speech is required</span>
       )}
       <div className="flex items-center my-5 w-full justify-between">
         <h2 className="text-xl">Definitions</h2>
@@ -83,38 +84,41 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
           <AddIcon />
         </button>
       </div>
-      {definitions.length ? definitions.map((definition, index) => (
-        <div className={listContainerStyles}>
-          <h3 className="text-xl text-gray-600 mr-2">
-            {`${index + 1}.`}
-          </h3>
-          <Controller
-            as={<input className={inputStyles} size="large" placeholder="Definition" defaultValue={definition} data-test={`definitions-${index}-input`} />}
-            name={`definitions[${index}]`}
-            defaultValue={definitions[index]}
-            control={control}
-            rules={{
-              validate: true,
-            }}
-          />
-          <button
-            type="button"
-            aria-label="Delete Definition"
-            className="ml-2"
-            onClick={() => {
-              const updateDefinitions = [...definitions];
-              updateDefinitions.splice(index, 1);
-              setDefinitions(updateDefinitions);
-            }}
-          >
-            <DeleteIcon />
-          </button>
-        </div>
-      )) : (
-        <div className="flex w-full justify-center">
-          <p className="text-gray-600">At least one definitions is required</p>
-        </div>
-      )}
+      {definitions.map((definition, index) => (
+        <>
+          <div className={listContainerStyles}>
+            <h3 className="text-xl text-gray-600 mr-2">
+              {`${index + 1}.`}
+            </h3>
+            <Controller
+              as={<input className={inputStyles} size="large" placeholder="Definition" defaultValue={definition} data-test={`definitions-${index}-input`} />}
+              name={`definitions[${index}]`}
+              defaultValue={definitions[index]}
+              control={control}
+              rules={{
+                required: !index,
+              }}
+            />
+            {index ? (
+              <button
+                type="button"
+                aria-label="Delete Definition"
+                className="ml-2"
+                onClick={() => {
+                  const updateDefinitions = [...definitions];
+                  updateDefinitions.splice(index, 1);
+                  setDefinitions(updateDefinitions);
+                }}
+              >
+                <DeleteIcon />
+              </button>
+            ) : null }
+          </div>
+          {!index && errors.definitions && (
+            <span className={`${errorStyles} definitionError relative`}>Definition is required</span>
+          )}
+        </>
+      ))}
       <div className="flex items-center my-5 w-full justify-between">
         <h2 className="text-xl">Variations</h2>
         <button
