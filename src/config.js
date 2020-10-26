@@ -27,5 +27,5 @@ const docs = { ...swaggerDocument, SWAGGER_OPTIONS };
 export const SWAGGER_DOCS = docs;
 
 // API Homepage
-export const API_ROUTE = process.env.NODE_ENV === 'production' ? 'http://igboapi.com' : `http://localhost:${PORT}`;
+export const API_ROUTE = process.env.NODE_ENV === 'production' ? 'https://igboapi.com' : `http://localhost:${PORT}`;
 export const DICTIONARY_APP_URL = 'https://ijemmao.github.io/igbo_api';
