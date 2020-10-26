@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { map } from 'lodash';
-import API_URL from '../config';
+import { useForm } from 'react-hook-form';
+import { WORDS_API_URL } from '../config';
 import Word from '../components/Word';
+import Modal from '../components/Modal';
+import AddWord from '../forms/AddWord';
 
 const Home = () => {
+  const { reset } = useForm();
   const [input, setInput] = useState('');
+  const [visible, setVisible] = useState(false);
   const [lastSearch, setLastSearch] = useState(input);
   const [page, setPage] = useState(1);
   const [response, setResponse] = useState([]);
   const [noMatch, setNoMatch] = useState('');
 
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    reset();
+    setVisible(false);
+  };
+
   const searchWord = async () => {
-    const res = await axios.get(`${API_URL}?keyword=${input}`);
+    const res = await axios.get(`${WORDS_API_URL}?keyword=${input}`);
     setResponse(res.data);
     setNoMatch(`No word matching ${input}`);
   };
 
   const nextPage = async () => {
-    const res = await axios.get(`${API_URL}?keyword=${lastSearch}&page=${page}`);
+    const res = await axios.get(`${WORDS_API_URL}?keyword=${lastSearch}&page=${page}`);
     setPage(page + 1);
     setResponse(res.data);
   };
@@ -33,6 +47,11 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center w-11/12 lg:w-8/12">
+        {process.env.NODE_ENV !== 'production' ? (
+          <button type="button" onClick={showModal}>
+            add word
+          </button>
+        ) : null}
         <h1 className="self-start lg:self-center text-2xl lg:text-4xl my-3 mx-2 lg:mx-12">Igbo Dictionary</h1>
         <div className="flex flex-col lg:flex-row w-full lg:justify-between lg:items-center">
           <input
@@ -61,6 +80,16 @@ const Home = () => {
             : null
         }
       </div>
+      <Modal
+          title="Suggest a New Word"
+          isOpen={visible}
+          onRequestClose={handleCancel}
+          className={`bg-white border-current border-solid border border-gray-200
+          max-h-full h-8/12 w-full lg:w-10/12 p-12 rounded-lg shadow-lg
+          overflow-scroll text-gray-800`}
+      >
+        <AddWord />
+      </Modal>
     </div>
   );
 };
