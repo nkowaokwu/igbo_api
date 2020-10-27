@@ -50,8 +50,41 @@ export const getExample = (req, res) => {
     });
 };
 
-/* Call the createExample helper function and returns status to client */
-export const postExample = async (req, res) => {
+/* Merges new data into an existing Example document */
+const mergeIntoExample = ({ data, exampleSuggestion }) => (
+  findExampleById(data.id)
+    .then((example) => {
+      if (!example) {
+        throw new Error('Example doesn\'t exist');
+      }
+      const updatedExample = assign(example, data);
+      if (exampleSuggestion) {
+        updateDocumentMerge(exampleSuggestion, example.id);
+      }
+      return updatedExample.save();
+    })
+    .catch(() => {
+      throw new Error('An error occurred while merging into an existing example.');
+    })
+);
+
+/* Creates a new Example document from an existing ExampleSuggestion document */
+const createExampleFromSuggestion = ({ data, exampleSuggestion }) => (
+  createExample(data)
+    .then((example) => {
+      if (exampleSuggestion) {
+        updateDocumentMerge(exampleSuggestion, example.id);
+      }
+      return { id: example.id };
+    })
+    .catch(() => {
+      throw new Error('An error occurred while saving the new example.');
+    })
+);
+
+/* Merges the existing ExampleSuggestion into either a brand
+ * new Example document or merges into an existing Example document */
+export const mergeExample = async (req, res) => {
   const { body: data } = req;
 
   if (!data.igbo && !data.english) {
@@ -79,18 +112,13 @@ export const postExample = async (req, res) => {
   }
 
   try {
-    return createExample(data)
-      .then((example) => {
-        updateDocumentMerge(exampleSuggestion, example.id);
-        res.send({ id: example.id });
-      })
-      .catch(() => {
-        res.status(400);
-        return res.send({ error: 'An error occurred while saving the new example.' });
-      });
-  } catch {
+    if (data.originalExampleId) {
+      return res.send(mergeIntoExample({ data, exampleSuggestion }));
+    }
+    return res.send(createExampleFromSuggestion({ data, exampleSuggestion }));
+  } catch (error) {
     res.send(400);
-    return res.send({ error: 'An error has occurred during the example creation process.' });
+    return res.send({ error: error.message });
   }
 };
 

@@ -122,8 +122,47 @@ export const createWord = async (data) => {
   return newWord.save();
 };
 
-/* Call the createWord helper function and returns status to client */
-export const postWord = async (req, res) => {
+/* Merges new data into an existing Word document */
+const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
+  findWordById(data.id)
+    .then((word) => {
+      if (!word) {
+        throw new Error('Word doesn\'t exist');
+      }
+      const updatedWord = assign(word, data);
+      if (genericWord) {
+        updateDocumentMerge(genericWord, word.id);
+      }
+      if (wordSuggestion) {
+        updateDocumentMerge(wordSuggestion, word.id);
+      }
+      return updatedWord.save();
+    })
+    .catch(() => {
+      throw new Error('An error occurred while merging into an existing word.');
+    })
+);
+
+/* Creates a new Word document from an existing WordSuggestion or GenericWord document */
+const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
+  createWord(data)
+    .then((word) => {
+      if (genericWord) {
+        updateDocumentMerge(genericWord, word.id);
+      }
+      if (wordSuggestion) {
+        updateDocumentMerge(wordSuggestion, word.id);
+      }
+      return { id: word.id };
+    })
+    .catch(() => {
+      throw new Error('An error occurred while saving the new word.');
+    })
+);
+
+/* Merges the existing WordSuggestion of GenericWord into either a brand
+ * new Word document or merges into an existing Word document */
+export const mergeWord = async (req, res) => {
   const { body: data } = req;
 
   if (!data.word) {
@@ -157,23 +196,13 @@ export const postWord = async (req, res) => {
   }
 
   try {
-    return createWord(data)
-      .then((word) => {
-        if (genericWord) {
-          updateDocumentMerge(genericWord, word.id);
-        }
-        if (wordSuggestion) {
-          updateDocumentMerge(wordSuggestion, word.id);
-        }
-        res.send({ id: word.id });
-      })
-      .catch(() => {
-        res.status(400);
-        return res.send({ error: 'An error occurred while saving the new word.' });
-      });
-  } catch {
+    if (data.originalWordId) {
+      return res.send(mergeIntoWord({ data, genericWord, wordSuggestion }));
+    }
+    return res.send(createWordFromSuggestion({ data, genericWord, wordSuggestion }));
+  } catch (error) {
     res.send(400);
-    return res.send({ error: 'An error has occurred during the word and example creation process.' });
+    return res.send({ error: error.message });
   }
 };
 

@@ -218,8 +218,8 @@
         }
       },
       "post": {
-        "summary": "Creates a new Word document",
-        "description": "Creates a new Word document",
+        "summary": "Creates a new Word document via merging",
+        "description": "Merges an existing WordSuggestion or GenericWord document into either an existing Word document or create a new Word document",
         "tags": ["Development"],
         "parameters": [
           {
@@ -340,8 +340,8 @@
         }
       },
       "post": {
-        "summary": "Creates a new Example document",
-        "description": "Creates a new Example document",
+        "summary": "Creates a new Example document via merging",
+        "description": "Merges an existing ExampleSuggestion document into either an existing Example document or create a new Example document",
         "tags": ["Development"],
         "parameters": [
           {
