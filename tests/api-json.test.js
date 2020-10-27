@@ -4,13 +4,28 @@ import { isEqual } from 'lodash';
 import mongoose from 'mongoose';
 import server from '../src/server';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
-import { searchTerm } from './shared/commands';
+import { LONG_TIMEOUT } from './shared/constants';
+import {
+  populateAPI,
+  populateGenericWordsAPI,
+  searchTerm,
+} from './shared/commands';
 
 const { expect } = chai;
 
 chai.use(chaiHttp);
 
-describe('JSON Dictionary', () => {
+describe('JSON Dictionary', function () {
+  this.timeout(LONG_TIMEOUT);
+  before((done) => {
+    Promise.all([
+      populateAPI(),
+      populateGenericWordsAPI(),
+    ]).then(() => {
+      setTimeout(done, 30000);
+    });
+  });
+
   describe('/GET words', () => {
     it('should return back word information', (done) => {
       const keyword = 'agụū';

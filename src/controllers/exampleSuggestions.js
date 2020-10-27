@@ -20,7 +20,7 @@ export const postExampleSuggestion = (req, res) => {
   const newExampleSuggestion = new ExampleSuggestion(data);
   return newExampleSuggestion.save()
     .then((exampleSuggestion) => (
-      res.send({ id: exampleSuggestion.id })
+      res.send(exampleSuggestion)
     ))
     .catch(() => {
       res.status(400);

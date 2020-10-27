@@ -29,16 +29,52 @@ describe('MongoDB Examples', () => {
     it('should create a new example in the database', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
+          expect(res.status).to.equal(200);
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
           createExample(mergingExampleSuggestion)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
-              getExampleSuggestion(res.body.id)
-                .end((_, exampleRes) => {
-                  expect(exampleRes.status).to.equal(200);
-                  expect(result.body.id).to.equal(exampleRes.body.merged);
-                  done();
+              getExample(result.body.id)
+                .then((updatedExampleRes) => {
+                  expect(updatedExampleRes.status).to.equal(200);
+                  getExampleSuggestion(res.body.id)
+                    .end((_, exampleRes) => {
+                      expect(exampleRes.status).to.equal(200);
+                      expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
+                      expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
+                      expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);
+                      done();
+                    });
+                });
+            });
+        });
+    });
+
+    it('should merge into an existing example', (done) => {
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          getExamples()
+            .then((examplesRes) => {
+              const firstExample = examplesRes.body[0];
+              const mergingExampleSuggestion = { ...res.body, originalExampleId: firstExample.id };
+              createExample(mergingExampleSuggestion)
+                .then((result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.id).to.not.equal(undefined);
+                  getExample(result.body.id)
+                    .then((updatedExampleRes) => {
+                      expect(updatedExampleRes.status).to.equal(200);
+                      getExampleSuggestion(res.body.id)
+                        .end((_, exampleRes) => {
+                          expect(exampleRes.status).to.equal(200);
+                          expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
+                          expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
+                          expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);
+                          done();
+                        });
+                    });
                 });
             });
         });
@@ -126,7 +162,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return one word', (done) => {
+    it('should return one example', (done) => {
       getExamples()
         .then((res) => {
           getExample(res.body[0].id)
@@ -139,7 +175,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return an error for incorrect word id', (done) => {
+    it('should return an error for incorrect example id', (done) => {
       getExamples()
         .then(() => {
           getExample(NONEXISTENT_ID)
