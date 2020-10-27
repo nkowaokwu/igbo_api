@@ -10,11 +10,11 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "yarn develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
+    "clean": "gatsby clean && rm -rf node_modules",
     "precommit": "lint-staged",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "start-server-and-test -p develop http://localhost:8000 cypress:open",
+    "test": "start-server-and-test develop http://localhost:8000 cypress:open",
     "test:run": "start-server-and-test develop http://localhost:8000 cypress:run"
   },
   "husky": {
