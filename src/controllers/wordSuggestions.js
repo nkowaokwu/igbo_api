@@ -28,7 +28,7 @@ export const postWordSuggestion = (req, res) => {
   const newWordSuggestion = new WordSuggestion(data);
   return newWordSuggestion.save()
     .then((wordSuggestion) => (
-      res.send({ id: wordSuggestion.id })
+      res.send(wordSuggestion)
     ))
     .catch(() => {
       res.status(400);

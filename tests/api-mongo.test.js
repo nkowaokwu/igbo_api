@@ -22,15 +22,18 @@ import {
   malformedWordData,
   wordSuggestionData,
   updatedWordData,
+  updatedWordSuggestionData,
 } from './__mocks__/documentData';
 import {
-  populateAPI,
   getWords,
   getWord,
   getWordSuggestion,
   createWord,
   updateWord,
   suggestNewWord,
+  getGenericWord,
+  getGenericWords,
+  updateGenericWord,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -38,14 +41,7 @@ import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils'
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
-describe('MongoDB Words', function () {
-  this.timeout(LONG_TIMEOUT);
-  before((done) => {
-    populateAPI().then(() => {
-      setTimeout(done, 20000);
-    });
-  });
-
+describe('MongoDB Words', () => {
   describe('mongodb collection', function () {
     this.timeout(LONG_TIMEOUT);
     it('should populate mongodb with words', (done) => {
@@ -82,19 +78,126 @@ describe('MongoDB Words', function () {
   });
 
   describe('/POST mongodb words', () => {
-    it('should create a new word in the database', (done) => {
-      suggestNewWord(wordSuggestionData)
+    it('should create a new word in the database by merging wordSuggestion', (done) => {
+      suggestNewWord(updatedWordSuggestionData)
         .then((res) => {
-          const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
+          expect(res.status).to.equal(200);
+          const mergingWordSuggestion = { ...res.body, ...updatedWordSuggestionData };
           createWord(mergingWordSuggestion)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
-              getWordSuggestion(res.body.id)
-                .end((_, wordRes) => {
-                  expect(wordRes.status).to.equal(200);
-                  expect(result.body.id).to.equal(wordRes.body.merged);
-                  done();
+              getWord(result.body.id)
+                .then((updatedWordRes) => {
+                  expect(updatedWordRes.status).to.equal(200);
+                  getWordSuggestion(res.body.id)
+                    .end((_, wordRes) => {
+                      expect(wordRes.status).to.equal(200);
+                      expect(updatedWordRes.body.word).to.equal(wordRes.body.word);
+                      expect(updatedWordRes.body.wordClass).to.equal(wordRes.body.wordClass);
+                      expect(updatedWordRes.body.id).to.equal(wordRes.body.merged);
+                      done();
+                    });
+                });
+            });
+        });
+    });
+
+    it('should create a new word in the database by merging genericWord', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstGenericWord = res.body[0];
+          firstGenericWord.wordClass = 'something new';
+          updateGenericWord(firstGenericWord.id, firstGenericWord)
+            .then((saveMergedGenericWord) => {
+              expect(saveMergedGenericWord.status).to.equal(200);
+              createWord(firstGenericWord)
+                .then((result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.id).to.not.equal(undefined);
+                  getGenericWord(firstGenericWord.id)
+                    .end((_, genericWordRes) => {
+                      expect(genericWordRes.status).to.equal(200);
+                      expect(result.body.word).to.equal(genericWordRes.body.word);
+                      expect(result.body.wordClass).to.equal(genericWordRes.body.wordClass);
+                      expect(result.body.id).to.equal(genericWordRes.body.merged);
+                      done();
+                    });
+                });
+            });
+        });
+    });
+
+    it('should throw an error from creating a new word from malformed genericWord', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstGenericWord = res.body[0];
+          delete firstGenericWord.word;
+          createWord(firstGenericWord)
+            .then((result) => {
+              expect(result.status).to.equal(400);
+              expect(result.body.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
+
+    it('should merge into an existing word with wordSuggestions', (done) => {
+      suggestNewWord(wordSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          getWords()
+            .then((wordRes) => {
+              const firstWord = wordRes.body[0];
+              const mergingWordSuggestion = { ...res.body, originalExampleId: firstWord.id };
+              createWord(mergingWordSuggestion)
+                .then((result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.id).to.not.equal(undefined);
+                  getWord(result.body.id)
+                    .then((updatedWordRes) => {
+                      expect(updatedWordRes.status).to.equal(200);
+                      getWordSuggestion(res.body.id)
+                        .end((_, updatedWordSuggestionRes) => {
+                          expect(updatedWordRes.status).to.equal(200);
+                          expect(updatedWordRes.body.word).to.equal(updatedWordSuggestionRes.body.word);
+                          expect(updatedWordRes.body.wordClass).to.equal(updatedWordSuggestionRes.body.wordClass);
+                          expect(updatedWordRes.body.id).to.equal(updatedWordSuggestionRes.body.merged);
+                          done();
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it('should merge into an existing word with genericWords', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstGenericWord = res.body[0];
+          getWords()
+            .then((wordRes) => {
+              const firstWord = wordRes.body[0];
+              const mergingGenericWord = { ...firstGenericWord, originalExampleId: firstWord.id };
+              createWord(mergingGenericWord)
+                .then((result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.id).to.not.equal(undefined);
+                  getWord(result.body.id)
+                    .then((updatedWordRes) => {
+                      expect(updatedWordRes.status).to.equal(200);
+                      getGenericWord(firstGenericWord.id)
+                        .end((_, genericWordRes) => {
+                          expect(genericWordRes.status).to.equal(200);
+                          expect(updatedWordRes.body.word).to.equal(genericWordRes.body.word);
+                          expect(updatedWordRes.body.wordClass).to.equal(genericWordRes.body.wordClass);
+                          expect(updatedWordRes.body.id).to.equal(genericWordRes.body.merged);
+                          done();
+                        });
+                    });
                 });
             });
         });

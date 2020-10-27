@@ -52,7 +52,7 @@ export const getExample = (req, res) => {
 
 /* Merges new data into an existing Example document */
 const mergeIntoExample = ({ data, exampleSuggestion }) => (
-  findExampleById(data.id)
+  findExampleById(data.originalExampleId)
     .then((example) => {
       if (!example) {
         throw new Error('Example doesn\'t exist');
@@ -63,9 +63,6 @@ const mergeIntoExample = ({ data, exampleSuggestion }) => (
       }
       return updatedExample.save();
     })
-    .catch(() => {
-      throw new Error('An error occurred while merging into an existing example.');
-    })
 );
 
 /* Creates a new Example document from an existing ExampleSuggestion document */
@@ -75,7 +72,7 @@ const createExampleFromSuggestion = ({ data, exampleSuggestion }) => (
       if (exampleSuggestion) {
         updateDocumentMerge(exampleSuggestion, example.id);
       }
-      return { id: example.id };
+      return example;
     })
     .catch(() => {
       throw new Error('An error occurred while saving the new example.');
@@ -113,11 +110,13 @@ export const mergeExample = async (req, res) => {
 
   try {
     if (data.originalExampleId) {
-      return res.send(mergeIntoExample({ data, exampleSuggestion }));
+      const result = await mergeIntoExample({ data, exampleSuggestion });
+      return res.send(result);
     }
-    return res.send(createExampleFromSuggestion({ data, exampleSuggestion }));
+    const result = await createExampleFromSuggestion({ data, exampleSuggestion });
+    return res.send(result);
   } catch (error) {
-    res.send(400);
+    res.status(400);
     return res.send({ error: error.message });
   }
 };

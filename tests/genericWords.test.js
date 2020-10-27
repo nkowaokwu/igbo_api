@@ -6,13 +6,11 @@ import {
   some,
 } from 'lodash';
 import {
-  populateGenericWordsAPI,
   getGenericWords,
   getGenericWord,
   updateGenericWord,
 } from './shared/commands';
 import {
-  LONG_TIMEOUT,
   GENERIC_WORD_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -23,13 +21,6 @@ import { genericWordApprovedData, malformedGenericWordData, updatedGenericWordDa
 const { expect } = chai;
 
 describe('MongoDB Generic Words', () => {
-  before(function (done) {
-    this.timeout(LONG_TIMEOUT);
-    populateGenericWordsAPI().then(() => {
-      setTimeout(done, 5000);
-    });
-  });
-
   describe('/PUT mongodb genericWords', () => {
     it('should update specific genericWord with provided data', (done) => {
       getGenericWords()

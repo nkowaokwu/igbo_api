@@ -124,7 +124,7 @@ export const createWord = async (data) => {
 
 /* Merges new data into an existing Word document */
 const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
-  findWordById(data.id)
+  findWordById(data.originalWordID)
     .then((word) => {
       if (!word) {
         throw new Error('Word doesn\'t exist');
@@ -136,10 +136,11 @@ const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
       if (wordSuggestion) {
         updateDocumentMerge(wordSuggestion, word.id);
       }
-      return updatedWord.save();
+      updatedWord.save();
+      return updatedWord;
     })
-    .catch(() => {
-      throw new Error('An error occurred while merging into an existing word.');
+    .catch((error) => {
+      throw new Error(error.message);
     })
 );
 
@@ -153,7 +154,7 @@ const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
       if (wordSuggestion) {
         updateDocumentMerge(wordSuggestion, word.id);
       }
-      return { id: word.id };
+      return word;
     })
     .catch(() => {
       throw new Error('An error occurred while saving the new word.');
@@ -197,11 +198,13 @@ export const mergeWord = async (req, res) => {
 
   try {
     if (data.originalWordId) {
-      return res.send(mergeIntoWord({ data, genericWord, wordSuggestion }));
+      const result = await mergeIntoWord({ data, genericWord, wordSuggestion });
+      return res.send(result);
     }
-    return res.send(createWordFromSuggestion({ data, genericWord, wordSuggestion }));
+    const result = await createWordFromSuggestion({ data, genericWord, wordSuggestion });
+    return res.send(result);
   } catch (error) {
-    res.send(400);
+    res.status(400);
     return res.send({ error: error.message });
   }
 };
