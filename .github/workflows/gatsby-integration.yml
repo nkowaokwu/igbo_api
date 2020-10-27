@@ -1,6 +1,9 @@
 name: gatsby-integration
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - gatsby-dev
 
 jobs:
   test:

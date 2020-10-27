@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioIcon from '../assets/sound.svg';
+import AudioIcon from '../assets/icons/sound.svg';
 
 const AudioButton = () => (
   <div
