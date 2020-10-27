@@ -26,13 +26,6 @@
     }
   ],
   "definitions": {
-    "id": {
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
     "word": {
       "properties": {
         "word": {
@@ -235,7 +228,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/word"
             }
           }
         }
@@ -261,7 +254,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/word"
             }
           }
         }
@@ -357,7 +350,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/example"
             }
           }
         }
@@ -383,7 +376,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/example"
             }
           }
         }
@@ -479,7 +472,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/wordSuggestion"
             }
           }
         }
@@ -625,7 +618,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/exampleSuggestion"
             }
           }
         }
