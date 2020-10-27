@@ -162,7 +162,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return one word', (done) => {
+    it('should return one example', (done) => {
       getExamples()
         .then((res) => {
           getExample(res.body[0].id)
@@ -175,7 +175,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return an error for incorrect word id', (done) => {
+    it('should return an error for incorrect example id', (done) => {
       getExamples()
         .then(() => {
           getExample(NONEXISTENT_ID)

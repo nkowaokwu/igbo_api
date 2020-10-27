@@ -22,7 +22,7 @@ describe('JSON Dictionary', function () {
       populateAPI(),
       populateGenericWordsAPI(),
     ]).then(() => {
-      setTimeout(done, 20000);
+      setTimeout(done, 30000);
     });
   });
 

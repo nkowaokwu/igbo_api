@@ -127,7 +127,7 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return an error for incorrect word id', (done) => {
+    it('should return an error for incorrect generic word id', (done) => {
       getGenericWords()
         .then(() => {
           getGenericWord(NONEXISTENT_ID)
