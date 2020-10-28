@@ -9,7 +9,6 @@ import {
   getExampleSuggestion,
 } from './shared/commands';
 import {
-  LONG_TIMEOUT,
   EXAMPLE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -196,13 +195,12 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return at most ten example per request with range query', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most ten example per request with range query', (done) => {
       Promise.all([
         getExamples({ range: '[0,9]' }),
         getExamples({ range: [10, 19] }),
         getExamples({ range: '[20,29]' }),
-        getExamples({ range: '[30,39' }),
+        getExamples({ range: '[30,39]' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -220,12 +218,12 @@ describe('MongoDB Examples', () => {
       });
     });
 
-    it('should return prioritize page over range', (done) => {
+    it('should return prioritize range over page', (done) => {
       Promise.all([
         getExamples({ page: '1' }),
         getExamples({ page: '1', range: '[100,109]' }),
       ]).then((res) => {
-        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
       });
     });

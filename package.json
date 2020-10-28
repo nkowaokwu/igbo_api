@@ -10,7 +10,7 @@
     "clean": "rm -rf node_modules/ build/ yarn.lock package-lock.json *.log",
     "dev": "npm-run-all -p start:database start:server",
     "mongodump": "rm -rf dump/ && mongodump -d igbo_api -o dump",
-    "mocha": "NODE_ENV=test mocha --timeout 10000 -r esm ./tests",
+    "mocha": "NODE_ENV=test mocha --timeout 60000 -r esm ./tests",
     "precommit": "lint-staged",
     "prestart:database": "[ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
     "start": "node ./build/server.js",
