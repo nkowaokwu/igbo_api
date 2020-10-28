@@ -18,7 +18,7 @@ import {
   malformedWordSuggestionData,
   updatedWordSuggestionData,
 } from './__mocks__/documentData';
-import { LONG_TIMEOUT, WORD_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
+import { WORD_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
@@ -165,12 +165,58 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it('should return at most ten word suggestions per request with range query', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most twenty five word suggestions per request with range query', (done) => {
+      Promise.all([
+        getWordSuggestions({ range: true }),
+        getWordSuggestions({ range: '[10,34]' }),
+        getWordSuggestions({ range: '[35,59]' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res, 25);
+        done();
+      });
+    });
+
+    it('should return at most four word suggestions per request with range query', (done) => {
+      getWordSuggestions({ range: '[5,8]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(4);
+          done();
+        });
+    });
+
+    it('should return at most ten word suggestions because of a large range', (done) => {
+      getWordSuggestions({ range: '[10,40]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten word suggestions because of a tiny range', (done) => {
+      getWordSuggestions({ range: '[10,9]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten word suggestions because of an invalid', (done) => {
+      getWordSuggestions({ range: 'incorrect' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten word suggestions per request with range query', (done) => {
       Promise.all([
         getWordSuggestions({ range: '[0,9]' }),
         getWordSuggestions({ range: '[10,19]' }),
-        getWordSuggestions({ range: '[20,29' }),
+        getWordSuggestions({ range: '[20,29]' }),
         getWordSuggestions({ range: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
@@ -189,12 +235,12 @@ describe('MongoDB Word Suggestions', () => {
       });
     });
 
-    it('should return prioritize page over range', (done) => {
+    it('should return prioritize range over page', (done) => {
       Promise.all([
         getWordSuggestions({ page: '1' }),
         getWordSuggestions({ page: '1', range: '[100,109]' }),
       ]).then((res) => {
-        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
       });
     });

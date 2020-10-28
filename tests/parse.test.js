@@ -4,7 +4,6 @@ import rimraf from 'rimraf';
 import { keys, isEqual } from 'lodash';
 import { DICTIONARIES_DIR } from '../src/shared/constants/parseFileLocations';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
-import { LONG_TIMEOUT } from './shared/constants';
 import { searchTerm, searchMockedTerm } from './shared/commands';
 
 const { expect } = chai;
@@ -14,8 +13,7 @@ if (!fs.existsSync(mocksDir)) {
 }
 
 describe('Parse', () => {
-  describe('Dictionaries', function () {
-    this.timeout(LONG_TIMEOUT);
+  describe('Dictionaries', () => {
     it('should create dictionaries', (done) => {
       import('../src/dictionaries/buildDictionaries')
         .then(() => {

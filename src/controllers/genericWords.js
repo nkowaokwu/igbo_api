@@ -42,12 +42,12 @@ export const putGenericWord = (req, res) => {
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
+  const { regexKeyword, ...rest } = handleQueries(req.query);
   return GenericWord
     .find({ $or: [{ word: regexKeyword }, { definitions: regexKeyword }] })
     .sort({ approvals: 'desc' })
     .then((genericWords) => (
-      prepResponse(res, genericWords, page, sort)
+      prepResponse({ res, docs: genericWords, ...rest })
     ))
     .catch(() => {
       res.status(400);

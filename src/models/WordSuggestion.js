@@ -3,7 +3,7 @@ import { toJSONPlugin } from './plugins';
 
 const { Schema, Types } = mongoose;
 const wordSuggestionSchema = new Schema({
-  originalWordId: { type: Types.ObjectId, ref: 'Word' },
+  originalWordId: { type: Types.ObjectId, ref: 'Word', default: null },
   word: { type: String, required: true },
   wordClass: { type: String, required: true },
   definitions: {

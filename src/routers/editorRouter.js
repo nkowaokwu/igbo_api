@@ -6,8 +6,8 @@ import {
   postWordSuggestion,
   putWordSuggestion,
 } from '../controllers/wordSuggestions';
-import { putWord, postWord } from '../controllers/words';
-import { putExample, postExample } from '../controllers/examples';
+import { putWord, mergeWord } from '../controllers/words';
+import { putExample, mergeExample } from '../controllers/examples';
 import {
   getExampleSuggestion,
   getExampleSuggestions,
@@ -24,9 +24,9 @@ import {
 const editorRouter = express.Router();
 
 /* These routes are used to allow users to suggest new words and examples */
-editorRouter.post('/words', postWord);
+editorRouter.post('/words', mergeWord);
 editorRouter.put('/words/:id', putWord);
-editorRouter.post('/examples', postExample);
+editorRouter.post('/examples', mergeExample);
 editorRouter.put('/examples/:id', putExample);
 
 editorRouter.post('/wordSuggestions', postWordSuggestion);

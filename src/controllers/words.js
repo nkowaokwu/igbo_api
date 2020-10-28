@@ -58,15 +58,25 @@ export const getWords = async (req, res) => {
     searchWord,
     regexKeyword,
     page,
-    sort,
+    ...rest
   } = handleQueries(req.query);
   const words = await searchWordUsingIgbo(regexKeyword);
 
   if (!words.length) {
     const englishWords = await getWordsUsingEnglish(regexKeyword, searchWord, page);
-    return prepResponse(res, englishWords, page, sort);
+    return prepResponse({
+      res,
+      docs: englishWords,
+      page,
+      ...rest,
+    });
   }
-  return prepResponse(res, words, page, sort);
+  return prepResponse({
+    res,
+    docs: words,
+    page,
+    ...rest,
+  });
 };
 
 /* Returns a word from MongoDB using an id */
@@ -122,8 +132,48 @@ export const createWord = async (data) => {
   return newWord.save();
 };
 
-/* Call the createWord helper function and returns status to client */
-export const postWord = async (req, res) => {
+/* Merges new data into an existing Word document */
+const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
+  findWordById(data.originalWordID)
+    .then((word) => {
+      if (!word) {
+        throw new Error('Word doesn\'t exist');
+      }
+      const updatedWord = assign(word, data);
+      if (genericWord) {
+        updateDocumentMerge(genericWord, word.id);
+      }
+      if (wordSuggestion) {
+        updateDocumentMerge(wordSuggestion, word.id);
+      }
+      updatedWord.save();
+      return updatedWord;
+    })
+    .catch((error) => {
+      throw new Error(error.message);
+    })
+);
+
+/* Creates a new Word document from an existing WordSuggestion or GenericWord document */
+const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
+  createWord(data)
+    .then((word) => {
+      if (genericWord) {
+        updateDocumentMerge(genericWord, word.id);
+      }
+      if (wordSuggestion) {
+        updateDocumentMerge(wordSuggestion, word.id);
+      }
+      return word;
+    })
+    .catch(() => {
+      throw new Error('An error occurred while saving the new word.');
+    })
+);
+
+/* Merges the existing WordSuggestion of GenericWord into either a brand
+ * new Word document or merges into an existing Word document */
+export const mergeWord = async (req, res) => {
   const { body: data } = req;
 
   if (!data.word) {
@@ -157,23 +207,15 @@ export const postWord = async (req, res) => {
   }
 
   try {
-    return createWord(data)
-      .then((word) => {
-        if (genericWord) {
-          updateDocumentMerge(genericWord, word.id);
-        }
-        if (wordSuggestion) {
-          updateDocumentMerge(wordSuggestion, word.id);
-        }
-        res.send({ id: word.id });
-      })
-      .catch(() => {
-        res.status(400);
-        return res.send({ error: 'An error occurred while saving the new word.' });
-      });
-  } catch {
-    res.send(400);
-    return res.send({ error: 'An error has occurred during the word and example creation process.' });
+    if (data.originalWordId) {
+      const result = await mergeIntoWord({ data, genericWord, wordSuggestion });
+      return res.send(result);
+    }
+    const result = await createWordFromSuggestion({ data, genericWord, wordSuggestion });
+    return res.send(result);
+  } catch (error) {
+    res.status(400);
+    return res.send({ error: error.message });
   }
 };
 

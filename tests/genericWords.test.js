@@ -6,13 +6,11 @@ import {
   some,
 } from 'lodash';
 import {
-  populateGenericWordsAPI,
   getGenericWords,
   getGenericWord,
   updateGenericWord,
 } from './shared/commands';
 import {
-  LONG_TIMEOUT,
   GENERIC_WORD_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -23,13 +21,6 @@ import { genericWordApprovedData, malformedGenericWordData, updatedGenericWordDa
 const { expect } = chai;
 
 describe('MongoDB Generic Words', () => {
-  before(function (done) {
-    this.timeout(LONG_TIMEOUT);
-    populateGenericWordsAPI().then(() => {
-      setTimeout(done, 5000);
-    });
-  });
-
   describe('/PUT mongodb genericWords', () => {
     it('should update specific genericWord with provided data', (done) => {
       getGenericWords()
@@ -136,7 +127,7 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return an error for incorrect word id', (done) => {
+    it('should return an error for incorrect generic word id', (done) => {
       getGenericWords()
         .then(() => {
           getGenericWord(NONEXISTENT_ID)
@@ -157,12 +148,59 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
+    it('should return at most twenty five generic words per request with range query', (done) => {
+      Promise.all([
+        getGenericWords({ range: true }),
+        getGenericWords({ range: '[10,34]' }),
+        getGenericWords({ range: '[35,59]' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res, 25);
+        done();
+      });
+    });
+
+    it('should return at most four generic words per request with range query', (done) => {
+      getGenericWords({ range: '[5,8]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(4);
+          done();
+        });
+    });
+
+    it('should return at most ten generic words because of a large range', (done) => {
+      getGenericWords({ range: '[10,40]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten generic words because of a tiny range', (done) => {
+      getGenericWords({ range: '[10,9]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten generic words because of an invalid', (done) => {
+      getGenericWords({ range: 'incorrect' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
     it('should return different sets of generic words for pagination', (done) => {
       Promise.all([
         getGenericWords({ range: '[0,9]' }),
         getGenericWords({ range: [10, 19] }),
         getGenericWords({ range: '[20,29]' }),
-        getGenericWords({ range: '[30,39' }),
+        getGenericWords({ range: '[30,39]' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -180,12 +218,12 @@ describe('MongoDB Generic Words', () => {
       });
     });
 
-    it('should return prioritize page over range', (done) => {
+    it('should return prioritize range over page', (done) => {
       Promise.all([
         getGenericWords({ page: '1' }),
         getGenericWords({ page: '1', range: '[100,109]' }),
       ]).then((res) => {
-        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
       });
     });

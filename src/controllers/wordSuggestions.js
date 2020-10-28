@@ -28,7 +28,7 @@ export const postWordSuggestion = (req, res) => {
   const newWordSuggestion = new WordSuggestion(data);
   return newWordSuggestion.save()
     .then((wordSuggestion) => (
-      res.send({ id: wordSuggestion.id })
+      res.send(wordSuggestion)
     ))
     .catch(() => {
       res.status(400);
@@ -69,12 +69,12 @@ export const putWordSuggestion = (req, res) => {
 
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
+  const { regexKeyword, ...rest } = handleQueries(req.query);
   WordSuggestion
     .find({ word: regexKeyword })
     .sort({ approvals: 'desc' })
     .then((wordSuggestions) => (
-      prepResponse(res, wordSuggestions, page, sort)
+      prepResponse({ res, docs: wordSuggestions, ...rest })
     ))
     .catch(() => {
       res.status(400);

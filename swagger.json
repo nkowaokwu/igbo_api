@@ -26,13 +26,6 @@
     }
   ],
   "definitions": {
-    "id": {
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
     "word": {
       "properties": {
         "word": {
@@ -199,7 +192,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -218,8 +211,8 @@
         }
       },
       "post": {
-        "summary": "Creates a new Word document",
-        "description": "Creates a new Word document",
+        "summary": "Creates a new Word document via merging",
+        "description": "Merges an existing WordSuggestion or GenericWord document into either an existing Word document or create a new Word document",
         "tags": ["Development"],
         "parameters": [
           {
@@ -235,7 +228,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/word"
             }
           }
         }
@@ -261,7 +254,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/word"
             }
           }
         }
@@ -321,7 +314,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -340,8 +333,8 @@
         }
       },
       "post": {
-        "summary": "Creates a new Example document",
-        "description": "Creates a new Example document",
+        "summary": "Creates a new Example document via merging",
+        "description": "Merges an existing ExampleSuggestion document into either an existing Example document or create a new Example document",
         "tags": ["Development"],
         "parameters": [
           {
@@ -357,7 +350,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/example"
             }
           }
         }
@@ -383,7 +376,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/example"
             }
           }
         }
@@ -443,7 +436,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -479,7 +472,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/wordSuggestion"
             }
           }
         }
@@ -589,7 +582,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -625,7 +618,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/id"
+              "$ref": "#/definitions/exampleSuggestion"
             }
           }
         }
@@ -735,7 +728,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -862,7 +855,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
