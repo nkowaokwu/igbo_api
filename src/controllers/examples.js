@@ -23,10 +23,10 @@ const searchExamples = (regex) => (
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
+  const { regexKeyword, ...rest } = handleQueries(req.query);
   const examples = await searchExamples(regexKeyword);
 
-  return prepResponse(res, examples, page, sort);
+  return prepResponse({ res, docs: examples, ...rest });
 };
 
 export const findExampleById = (id) => (
