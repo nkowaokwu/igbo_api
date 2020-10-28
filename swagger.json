@@ -192,7 +192,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -314,7 +314,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -436,7 +436,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -582,7 +582,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -728,7 +728,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
@@ -855,7 +855,7 @@
           },
           {
             "name": "range",
-            "description": "Page for result using [x,y] syntax",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
             "in": "query",
             "required": false,
             "type": "string"
