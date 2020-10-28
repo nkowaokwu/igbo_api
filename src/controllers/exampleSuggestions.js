@@ -54,12 +54,12 @@ export const putExampleSuggestion = (req, res) => {
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
+  const { regexKeyword, ...rest } = handleQueries(req.query);
   return ExampleSuggestion
     .find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
     .sort({ approvals: 'desc' })
     .then((exampleSuggestions) => (
-      prepResponse(res, exampleSuggestions, page, sort)
+      prepResponse({ res, docs: exampleSuggestions, ...rest })
     ))
     .catch(() => {
       res.status(400);

@@ -11,7 +11,6 @@ import {
 import stringSimilarity from 'string-similarity';
 import Word from '../src/models/Word';
 import {
-  LONG_TIMEOUT,
   WORD_KEYS,
   EXAMPLE_KEYS,
   EXCLUDE_KEYS,
@@ -42,8 +41,7 @@ const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
 describe('MongoDB Words', () => {
-  describe('mongodb collection', function () {
-    this.timeout(LONG_TIMEOUT);
+  describe('mongodb collection', () => {
     it('should populate mongodb with words', (done) => {
       const word = {
         word: 'word',
@@ -316,12 +314,58 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return at most ten words per request with range query', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most twenty five words per request with range query', (done) => {
+      Promise.all([
+        getWords({ range: true }),
+        getWords({ range: '[10,34]' }),
+        getWords({ range: '[35,59]' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res, 25);
+        done();
+      });
+    });
+
+    it('should return at most four words per request with range query', (done) => {
+      getWords({ range: '[5,8]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(4);
+          done();
+        });
+    });
+
+    it('should return at most ten words because of a large range', (done) => {
+      getWords({ range: '[10,40]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten words because of a tiny range', (done) => {
+      getWords({ range: '[10,9]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten words because of an invalid', (done) => {
+      getWords({ range: 'incorrect' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten words per request with range query', (done) => {
       Promise.all([
         getWords({ range: true }),
         getWords({ range: '[10,19]' }),
-        getWords({ range: '[20,29' }),
+        getWords({ range: '[20,29]' }),
         getWords({ range: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
@@ -329,8 +373,7 @@ describe('MongoDB Words', () => {
       });
     });
 
-    it('should return at most ten words per request due to pagination', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most ten words per request due to pagination', (done) => {
       Promise.all([
         getWords(),
         getWords({ page: '1' }),

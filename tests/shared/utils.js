@@ -8,10 +8,10 @@ import {
 
 const { expect } = chai;
 
-const expectUniqSetsOfResponses = (res) => {
+const expectUniqSetsOfResponses = (res, responseLength = 10) => {
   forEach(res, (docsRes, index) => {
     expect(docsRes.status).to.equal(200);
-    expect(docsRes.body).to.have.lengthOf.at.most(10);
+    expect(docsRes.body).to.have.lengthOf.at.most(responseLength);
     if (index !== 0) {
       const prevDocsIds = map(res[index].body, ({ id }) => ({ id }));
       const currentDocsIds = map(docsRes.body, ({ id }) => ({ id }));

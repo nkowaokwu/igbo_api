@@ -4,7 +4,6 @@ import { isEqual } from 'lodash';
 import mongoose from 'mongoose';
 import server from '../src/server';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
-import { LONG_TIMEOUT } from './shared/constants';
 import {
   populateAPI,
   populateGenericWordsAPI,
@@ -15,8 +14,7 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
-describe('JSON Dictionary', function () {
-  this.timeout(LONG_TIMEOUT);
+describe('JSON Dictionary', () => {
   before((done) => {
     Promise.all([
       populateAPI(),

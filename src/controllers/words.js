@@ -58,15 +58,25 @@ export const getWords = async (req, res) => {
     searchWord,
     regexKeyword,
     page,
-    sort,
+    ...rest
   } = handleQueries(req.query);
   const words = await searchWordUsingIgbo(regexKeyword);
 
   if (!words.length) {
     const englishWords = await getWordsUsingEnglish(regexKeyword, searchWord, page);
-    return prepResponse(res, englishWords, page, sort);
+    return prepResponse({
+      res,
+      docs: englishWords,
+      page,
+      ...rest,
+    });
   }
-  return prepResponse(res, words, page, sort);
+  return prepResponse({
+    res,
+    docs: words,
+    page,
+    ...rest,
+  });
 };
 
 /* Returns a word from MongoDB using an id */
