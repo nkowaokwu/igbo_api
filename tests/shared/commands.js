@@ -44,17 +44,19 @@ export const getGenericWord = (id) => (
     .get(`${API_ROUTE}/genericWords/${id}`)
 );
 
-export const createWord = (data) => (
+export const createWord = (data, query = {}) => (
   chai
     .request(server)
     .post(`${API_ROUTE}/words`)
+    .query(query)
     .send(data)
 );
 
-export const createExample = (data) => (
+export const createExample = (data, query = {}) => (
   chai
     .request(server)
     .post(`${API_ROUTE}/examples`)
+    .query(query)
     .send(data)
 );
 
