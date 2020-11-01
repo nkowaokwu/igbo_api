@@ -629,4 +629,16 @@ describe('API Requests For Home Directory "/"', () => {
         done();
       });
   });
+
+  it('/api/v1/words should get words document', (done) => {
+    getAPIUrlRoute('/api/v1/words')
+      .end((_, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.an('array');
+        expect(res.body[0]).to.be.an('object');
+        expect(res.body[0]).to.have.property('wordClass');
+        expect(res.body).to.have.lengthOf.at.least(10);
+        done();
+      });
+  });
 });
