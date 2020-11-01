@@ -1,6 +1,6 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { API_ROUTE, EDIT_API_ROUTE, TEST_ROUTE, API_URL } from './constants';
+import { API_ROUTE, TEST_ROUTE, API_URL } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -8,40 +8,40 @@ import mockedData from '../__mocks__/data.mock.json';
 export const getWordSuggestions = (query = {}) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/words`)
+    .get(`${API_ROUTE}/wordSuggestions`)
     .query(query)
 );
 
 export const getWordSuggestion = (id) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/words/${id}`)
+    .get(`${API_ROUTE}/wordSuggestions/${id}`)
 );
 
 export const getExampleSuggestions = (query = {}) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/examples`)
+    .get(`${API_ROUTE}/exampleSuggestions`)
     .query(query)
 );
 
 export const getExampleSuggestion = (id) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/examples/${id}`)
+    .get(`${API_ROUTE}/exampleSuggestions/${id}`)
 );
 
 export const getGenericWords = (query = {}) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/genericWords`)
+    .get(`${API_ROUTE}/genericWords`)
     .query(query)
 );
 
 export const getGenericWord = (id) => (
   chai
     .request(server)
-    .get(`${EDIT_API_ROUTE}/genericWords/${id}`)
+    .get(`${API_ROUTE}/genericWords/${id}`)
 );
 
 export const createWord = (data) => (
@@ -61,35 +61,41 @@ export const createExample = (data) => (
 export const suggestNewWord = (data) => (
   chai
     .request(server)
-    .post(`${EDIT_API_ROUTE}/words`)
+    .post(`${API_ROUTE}/wordSuggestions`)
     .send(data)
 );
 
 export const suggestNewExample = (data) => (
   chai
     .request(server)
-    .post(`${EDIT_API_ROUTE}/examples`)
+    .post(`${API_ROUTE}/exampleSuggestions`)
     .send(data)
 );
 
 export const updateWordSuggestion = (id, data) => (
   chai
     .request(server)
-    .put(`${EDIT_API_ROUTE}/words/${id}`)
+    .put(`${API_ROUTE}/wordSuggestions/${id}`)
     .send(data)
+);
+
+export const deleteWordSuggestion = (id) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/wordSuggestions/${id}`)
 );
 
 export const updateExampleSuggestion = (id, data) => (
   chai
     .request(server)
-    .put(`${EDIT_API_ROUTE}/examples/${id}`)
+    .put(`${API_ROUTE}/exampleSuggestions/${id}`)
     .send(data)
 );
 
 export const updateGenericWord = (id, data) => (
   chai
     .request(server)
-    .put(`${EDIT_API_ROUTE}/genericWords/${id}`)
+    .put(`${API_ROUTE}/genericWords/${id}`)
     .send(data)
 );
 
@@ -145,7 +151,7 @@ export const populateAPI = () => (
 export const populateGenericWordsAPI = () => (
   chai
     .request(server)
-    .post(`${EDIT_API_ROUTE}/genericWords`)
+    .post(`${API_ROUTE}/genericWords`)
 );
 
 /* Uses data in JSON */
@@ -162,8 +168,8 @@ export const searchMockedTerm = (term) => {
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
 
-export const getApiUrlRoute = (route = '/') => (
+export const getAPIUrlRoute = (route = '/') => (
   chai
     .request(API_URL)
-    .get(route) 
+    .get(route)
 );

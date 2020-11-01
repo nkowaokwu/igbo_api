@@ -7,5 +7,5 @@ export default (searchWord) => {
   const regexWordString = [...searchWord].reduce((regexWord, letter) => (
     `${regexWord}${diacriticCodes[letter] || letter}`
   ), '');
-  return new RegExp(`${front}${regexWordString}${back}`);
+  return new RegExp(`${front}${regexWordString}${back}`, 'i');
 };

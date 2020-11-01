@@ -1,0 +1,878 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Igbo API",
+    "description": "Dictionary API that contains Igbo words",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Production",
+      "description": "Publicly accessible API routes"
+    },
+    {
+      "name": "Development",
+      "description": "API route only for local development"
+    },
+    {
+      "name": "Test",
+      "description": "API routes only for local testing"
+    }
+  ],
+  "definitions": {
+    "word": {
+      "properties": {
+        "word": {
+          "type": "string"
+        },
+        "wordClass": {
+          "type": "string"
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "variations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "example": {
+      "properties": {
+        "igbo": {
+          "type": "string"
+        },
+        "english": {
+          "type": "string"
+        },
+        "associatedWords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "wordSuggestion": {
+      "properties": {
+        "originalWordId": {
+          "type": "string"
+        },
+        "word": {
+          "type": "string"
+        },
+        "wordClass": {
+          "type": "string"
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "variations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "denials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "exampleSuggestion": {
+      "properties": {
+        "originalExampleId": {
+          "type": "string"
+        },
+        "igbo": {
+          "type": "string"
+        },
+        "english": {
+          "type": "string"
+        },
+        "associatedWords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "denials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "genericWord": {
+      "properties": {
+        "word": {
+          "type": "string"
+        },
+        "wordClass": {
+          "type": "string"
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "variations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "denials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/words": {
+      "get": {
+        "summary": "Get words in dictionary",
+        "description": "Get words in dictionary",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying words",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/word"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new Word document via merging",
+        "description": "Merges an existing WordSuggestion or GenericWord document into either an existing Word document or create a new Word document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The word that will be created in the database",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        }
+      }
+    },
+    "/words/{wordId}": {
+      "get": {
+        "summary": "Get a single Word",
+        "description": "Returns a single Word object from the database",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "wordId",
+            "description": "The word Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a Word object from the database",
+        "description": "Updates a Word object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "wordId",
+            "description": "The word Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "description": "The updated word data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        }
+      }
+    },
+    "/examples": {
+      "get": {
+        "summary": "Get examples in dictionary",
+        "description": "Get examples in dictionary",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying examples",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/example"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new Example document via merging",
+        "description": "Merges an existing ExampleSuggestion document into either an existing Example document or create a new Example document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The example that will be created in the database",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        }
+      }
+    },
+    "/examples/{wordId}": {
+      "get": {
+        "summary": "Get a single Example",
+        "description": "Returns a single Example object from the database",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "exampleId",
+            "description": "The example Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a Example object from the database",
+        "description": "Updates a Example object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "wordId",
+            "description": "The word Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "description": "The updated word data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        }
+      }
+    },
+    "/wordSuggestions": {
+      "get": {
+        "summary": "Get WordSuggestion objects in the database",
+        "description": "Get WordSuggestion objects in the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying word suggestions",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/wordSuggestion"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new WordSuggestion document",
+        "description": "Creates a new WordSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The word suggestion that will be created in the database",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/wordSuggestion"
+            }
+          }
+        }
+      }
+    },
+    "/wordSuggestions/{wordSuggestionId}": {
+      "get": {
+        "summary": "Get a single WordSuggestion",
+        "description": "Returns a single WordSuggestion object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "wordSuggestionId",
+            "description": "The wordSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/wordSuggestion"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates an existing WordSuggestion document",
+        "description": "Updates an existing WordSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "wordSuggestionId",
+            "description": "The wordSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "description": "The updated word suggestion data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/wordSuggestion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/wordSuggestion"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an existing WordSuggestion document",
+        "description": "Deletes an existing WordSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "wordSuggestionId",
+            "description": "The wordSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/wordSuggestion"
+            }
+          }
+        }
+      }
+    },
+    "/exampleSuggestions": {
+      "get": {
+        "summary": "Get ExampleSuggestion objects in the database",
+        "description": "Get ExampleSuggestion objects in the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying example suggestions",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/exampleSuggestion"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a new ExampleSuggestion document",
+        "description": "Creates a new ExampleSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "body",
+            "description": "The example suggestion that will be created in the database",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exampleSuggestion"
+            }
+          }
+        }
+      }
+    },
+    "/exampleSuggestions/{exampleSuggestionsId}": {
+      "get": {
+        "summary": "Get a single ExampleSuggestion",
+        "description": "Returns a single ExampleSuggestion object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "exampleSuggestionId",
+            "description": "The exampleSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exampleSuggestion"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates an existing ExampleSuggestion document",
+        "description": "Updates an existing ExampleSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "exampleSuggestionId",
+            "description": "The exampleSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "description": "The updated example suggestion data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/exampleSuggestion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exampleSuggestion"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes an existing ExampleSuggestion document",
+        "description": "Deletes an existing ExampleSuggestion document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "exampleSuggestionId",
+            "description": "The exampleSuggestion Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exampleSuggestion"
+            }
+          }
+        }
+      }
+    },
+    "/genericWords": {
+      "get": {
+        "summary": "Get GenericWord objects from the database",
+        "description": "Get GenericWord objects from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying generic words",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/genericWord"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Populates GenericWord collection",
+        "description": "Populates the database with GenericWords using ig-en_normalized_expanded.json",
+        "tags": ["Development"],
+        "response": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/genericWords/{genericWordsId}": {
+      "get": {
+        "summary": "Get a single GenericWord",
+        "description": "Returns a single GenericWord object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "genericWordId",
+            "description": "The genericWord Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/genericWord"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Updates a GenericWord object from the database",
+        "description": "Updates a GenericWord object from the database",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "genericWordId",
+            "description": "The genericWord Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "description": "The updated generic word data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/genericWord"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          }
+        }
+      }
+    },
+    "/test/populate": {
+      "post": {
+        "summary": "Creates a new Word document",
+        "description": "Creates a new Word document",
+        "tags": ["Test"],
+        "parameters": [
+          {
+            "name": "Populate Word and Example collections",
+            "description": "Populate mongodb with json from ./ig-en/ig-en.json"
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/test/words": {
+      "get": {
+        "summary": "Get words in JSON dictionary",
+        "description": "Get words in JSON dictionary",
+        "tags": ["Test"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying words",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/word"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

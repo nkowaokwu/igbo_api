@@ -9,7 +9,7 @@
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
 ## Try it Out
-For a demo, check out this link [http://igboapi.com/api/v1/words](http://www.igboapi.com/api/v1/words)
+For a demo, check out this link [https://igboapi.com/api/v1/words](https://www.igboapi.com/api/v1/words)
 
 ## Getting Started
 
@@ -53,6 +53,16 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
+### API Site
+
+To start up the front site for the API, run:
+
+```
+yarn dev:site
+```
+
+Navigate to [localhost:3000](http://localhost:3000) to see the API front site
+
 ## Usage
 
 ### Documentation
@@ -61,7 +71,7 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 After starting the API server with this `yarn dev`, visit `http://localhost:8080/docs`.
 
 #### Production
-You can also view the productions docs by visiting `http://igboapi.com/docs`.
+You can also view the productions docs by visiting `https://igboapi.com/docs`.
 
 ### MongoDB Data
 
@@ -190,6 +200,20 @@ http://localhost:8080/api/v1/test/populate // POST
 ```
 
 After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database!
+
+Then make another `POST` request to the following route, to populate all the `GenericWord` documents:
+
+```
+/api/v1/genericWords
+```
+
+For example:
+
+```
+http://localhost:8080/api/v1/genericWords // POST
+```
+
+After about 30 seconds, you should get a message returned back saying `Successfully populated generic words`.
 
 ### 3. See Data in Database (Optional)
 

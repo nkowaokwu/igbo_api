@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
-import { assign, some } from 'lodash';
+import {
+  assign,
+  some,
+  map,
+  trim,
+} from 'lodash';
 import Example from '../models/Example';
 import { prepResponse, handleQueries, updateDocumentMerge } from './utils';
 import { findExampleSuggestionById } from './exampleSuggestions';
@@ -18,10 +23,10 @@ const searchExamples = (regex) => (
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
+  const { regexKeyword, ...rest } = handleQueries(req.query);
   const examples = await searchExamples(regexKeyword);
 
-  return prepResponse(res, examples, page, sort);
+  return prepResponse({ res, docs: examples, ...rest });
 };
 
 export const findExampleById = (id) => (
@@ -45,8 +50,38 @@ export const getExample = (req, res) => {
     });
 };
 
-/* Call the createExample helper function and returns status to client */
-export const postExample = async (req, res) => {
+/* Merges new data into an existing Example document */
+const mergeIntoExample = ({ data, exampleSuggestion }) => (
+  findExampleById(data.originalExampleId)
+    .then((example) => {
+      if (!example) {
+        throw new Error('Example doesn\'t exist');
+      }
+      const updatedExample = assign(example, data);
+      if (exampleSuggestion) {
+        updateDocumentMerge(exampleSuggestion, example.id);
+      }
+      return updatedExample.save();
+    })
+);
+
+/* Creates a new Example document from an existing ExampleSuggestion document */
+const createExampleFromSuggestion = ({ data, exampleSuggestion }) => (
+  createExample(data)
+    .then((example) => {
+      if (exampleSuggestion) {
+        updateDocumentMerge(exampleSuggestion, example.id);
+      }
+      return example;
+    })
+    .catch(() => {
+      throw new Error('An error occurred while saving the new example.');
+    })
+);
+
+/* Merges the existing ExampleSuggestion into either a brand
+ * new Example document or merges into an existing Example document */
+export const mergeExample = async (req, res) => {
   const { body: data } = req;
 
   if (!data.igbo && !data.english) {
@@ -74,18 +109,15 @@ export const postExample = async (req, res) => {
   }
 
   try {
-    return createExample(data)
-      .then((example) => {
-        updateDocumentMerge(exampleSuggestion, example.id);
-        res.send({ id: example.id });
-      })
-      .catch(() => {
-        res.status(400);
-        return res.send({ error: 'An error occurred while saving the new example.' });
-      });
-  } catch {
-    res.send(400);
-    return res.send({ error: 'An error has occurred during the example creation process.' });
+    if (data.originalExampleId) {
+      const result = await mergeIntoExample({ data, exampleSuggestion });
+      return res.send(result);
+    }
+    const result = await createExampleFromSuggestion({ data, exampleSuggestion });
+    return res.send(result);
+  } catch (error) {
+    res.status(400);
+    return res.send({ error: error.message });
   }
 };
 
@@ -96,6 +128,10 @@ export const putExample = (req, res) => {
   if (!data.igbo && !data.english) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
+  }
+
+  if (!Array.isArray(data.associatedWords)) {
+    data.associatedWords = map(data.associatedWords.split(','), (associatedWord) => trim(associatedWord));
   }
 
   if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {

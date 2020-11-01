@@ -3,11 +3,19 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
 
 const wordId = new ObjectId('5f864d7401203866b6546dd3');
+const wordSuggestionId = new ObjectId();
 const wordSuggestionData = {
+  word: 'word',
+  wordClass: 'wordClass',
+  definitions: ['first'],
+};
+
+const wordSuggestionApprovedData = {
   originalWordId: wordId,
   word: 'word',
   wordClass: 'wordClass',
   definitions: ['first'],
+  approvals: ['first user', 'second user'],
 };
 
 const malformedWordSuggestionData = {
@@ -39,6 +47,12 @@ const exampleSuggestionData = {
   english: 'english text',
 };
 
+const exampleSuggestionApprovedData = {
+  igbo: 'igbo text',
+  english: 'english text',
+  approvals: ['first user', 'second user'],
+};
+
 const malformedExampleSuggestionData = {
   associatedWords: ['wrong'],
 };
@@ -67,6 +81,13 @@ const genericWordData = {
   definitions: [],
 };
 
+const genericWordApprovedData = {
+  word: 'genericWord',
+  wordClass: 'noun',
+  definitions: [],
+  approvals: ['first user', 'second user'],
+};
+
 const malformedGenericWordData = {
   word: 'newGenericWord',
   wordClass: '',
@@ -83,17 +104,21 @@ const updatedGenericWordData = {
 };
 
 export {
+  wordSuggestionId,
   wordSuggestionData,
+  wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,
+  exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
   exampleData,
   updatedExampleData,
   genericWordData,
+  genericWordApprovedData,
   malformedGenericWordData,
   updatedGenericWordData,
 };

@@ -9,7 +9,6 @@ import {
   getExampleSuggestion,
 } from './shared/commands';
 import {
-  LONG_TIMEOUT,
   EXAMPLE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -29,16 +28,52 @@ describe('MongoDB Examples', () => {
     it('should create a new example in the database', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
+          expect(res.status).to.equal(200);
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
           createExample(mergingExampleSuggestion)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
-              getExampleSuggestion(res.body.id)
-                .end((_, exampleRes) => {
-                  expect(exampleRes.status).to.equal(200);
-                  expect(result.body.id).to.equal(exampleRes.body.merged);
-                  done();
+              getExample(result.body.id)
+                .then((updatedExampleRes) => {
+                  expect(updatedExampleRes.status).to.equal(200);
+                  getExampleSuggestion(res.body.id)
+                    .end((_, exampleRes) => {
+                      expect(exampleRes.status).to.equal(200);
+                      expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
+                      expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
+                      expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);
+                      done();
+                    });
+                });
+            });
+        });
+    });
+
+    it('should merge into an existing example', (done) => {
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          getExamples()
+            .then((examplesRes) => {
+              const firstExample = examplesRes.body[0];
+              const mergingExampleSuggestion = { ...res.body, originalExampleId: firstExample.id };
+              createExample(mergingExampleSuggestion)
+                .then((result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.id).to.not.equal(undefined);
+                  getExample(result.body.id)
+                    .then((updatedExampleRes) => {
+                      expect(updatedExampleRes.status).to.equal(200);
+                      getExampleSuggestion(res.body.id)
+                        .end((_, exampleRes) => {
+                          expect(exampleRes.status).to.equal(200);
+                          expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
+                          expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
+                          expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);
+                          done();
+                        });
+                    });
                 });
             });
         });
@@ -66,6 +101,24 @@ describe('MongoDB Examples', () => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
               getExamples({ keyword: exampleData.igbo })
+                .end((_, exampleRes) => {
+                  expect(exampleRes.status).to.equal(200);
+                  expect(some(exampleRes.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should return newly created example by searching with filter query', (done) => {
+      suggestNewExample(exampleSuggestionData)
+        .then((res) => {
+          const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
+          createExample(mergingExampleSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.id).to.not.equal(undefined);
+              getExamples({ filter: { igbo: exampleData.igbo } })
                 .end((_, exampleRes) => {
                   expect(exampleRes.status).to.equal(200);
                   expect(some(exampleRes.body, (example) => example.igbo === exampleData.igbo)).to.equal(true);
@@ -108,7 +161,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return one word', (done) => {
+    it('should return one example', (done) => {
       getExamples()
         .then((res) => {
           getExample(res.body[0].id)
@@ -121,7 +174,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return an error for incorrect word id', (done) => {
+    it('should return an error for incorrect example id', (done) => {
       getExamples()
         .then(() => {
           getExample(NONEXISTENT_ID)
@@ -142,12 +195,12 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return at most ten example per request with range query', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most ten example per request with range query', (done) => {
       Promise.all([
         getExamples({ range: '[0,9]' }),
-        getExamples({ range: '[10,19]' }),
-        getExamples({ range: '[20,29' }),
+        getExamples({ range: [10, 19] }),
+        getExamples({ range: '[20,29]' }),
+        getExamples({ range: '[30,39]' }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -165,12 +218,12 @@ describe('MongoDB Examples', () => {
       });
     });
 
-    it('should return prioritize page over range', (done) => {
+    it('should return prioritize range over page', (done) => {
       Promise.all([
         getExamples({ page: '1' }),
         getExamples({ page: '1', range: '[100,109]' }),
       ]).then((res) => {
-        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
       });
     });
@@ -186,7 +239,7 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return a ascending sorted list of examples with sort query', (done) => {
+    it('should return an ascending sorted list of examples with sort query', (done) => {
       const key = 'english';
       const direction = 'asc';
       getExamples({ sort: `["${key}": "${direction}"]` })

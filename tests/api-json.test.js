@@ -4,13 +4,26 @@ import { isEqual } from 'lodash';
 import mongoose from 'mongoose';
 import server from '../src/server';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
-import { searchTerm } from './shared/commands';
+import {
+  populateAPI,
+  populateGenericWordsAPI,
+  searchTerm,
+} from './shared/commands';
 
 const { expect } = chai;
 
 chai.use(chaiHttp);
 
 describe('JSON Dictionary', () => {
+  before((done) => {
+    Promise.all([
+      populateAPI(),
+      populateGenericWordsAPI(),
+    ]).then(() => {
+      setTimeout(done, 30000);
+    });
+  });
+
   describe('/GET words', () => {
     it('should return back word information', (done) => {
       const keyword = 'agụū';
@@ -44,7 +57,7 @@ describe('JSON Dictionary', () => {
     it('should return term using variation', (done) => {
       searchTerm('-mu-mù').end(async (_, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body['-mụ-mù']).to.have.lengthOf(2);
+        expect(res.body['-mụ-mù']).to.have.lengthOf(1);
         done();
       });
     });

@@ -16,6 +16,7 @@
     "max-len": ["error", { "code": 120 }],
     "no-console": ["off"],
     "no-nested-ternary": ["off"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "react/jsx-filename-extension": ["off"]
   }
 }

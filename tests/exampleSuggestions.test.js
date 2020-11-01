@@ -12,10 +12,11 @@ import {
 } from './shared/commands';
 import {
   exampleSuggestionData,
+  exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
 } from './__mocks__/documentData';
-import { LONG_TIMEOUT, EXAMPLE_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
+import { EXAMPLE_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
@@ -110,6 +111,23 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
+    it('should return an example suggestion by searching with filter query', (done) => {
+      const exampleText = exampleSuggestionData.igbo;
+      suggestNewExample(exampleSuggestionData)
+        .then(() => {
+          getExampleSuggestions({ filter: { igbo: exampleText } })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('array');
+              expect(res.body).to.have.lengthOf.at.least(1);
+              forEach(Object.keys(exampleSuggestionData), (key) => {
+                expect(res.body[0][key]).to.equal(exampleSuggestionData[key]);
+              });
+              done();
+            });
+        });
+    });
+
     it('should return all example suggestions', (done) => {
       Promise.all([suggestNewExample(exampleSuggestionData), suggestNewExample(exampleSuggestionData)])
         .then(() => {
@@ -125,6 +143,20 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
+    it('should be sorted by number of approvals', (done) => {
+      Promise.all([
+        suggestNewExample(exampleSuggestionData),
+        suggestNewExample(exampleSuggestionApprovedData),
+      ]).then(() => {
+        getExampleSuggestions()
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expectArrayIsInOrder(res.body, 'approvals', 'desc');
+            done();
+          });
+      });
+    });
+
     it('should return one example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
@@ -138,12 +170,59 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return at most ten example suggestions per request with range query', function (done) {
-      this.timeout(LONG_TIMEOUT);
+    it('should return at most twenty five example suggestions per request with range query', (done) => {
+      Promise.all([
+        getExampleSuggestions({ range: true }),
+        getExampleSuggestions({ range: '[10,34]' }),
+        getExampleSuggestions({ range: '[35,59]' }),
+      ]).then((res) => {
+        expectUniqSetsOfResponses(res, 25);
+        done();
+      });
+    });
+
+    it('should return at most four example suggestions per request with range query', (done) => {
+      getExampleSuggestions({ range: '[5,8]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(4);
+          done();
+        });
+    });
+
+    it('should return at most ten example suggestions because of a large range', (done) => {
+      getExampleSuggestions({ range: '[10,40]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten example suggestions because of a tiny range', (done) => {
+      getExampleSuggestions({ range: '[10,9]' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten example suggestions because of an invalid', (done) => {
+      getExampleSuggestions({ range: 'incorrect' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return at most ten example suggestions per request with range query', (done) => {
       Promise.all([
         getExampleSuggestions({ range: '[0,9]' }),
         getExampleSuggestions({ range: '[10,19]' }),
-        getExampleSuggestions({ range: '[20,29' }),
+        getExampleSuggestions({ range: '[20,29]' }),
+        getExampleSuggestions({ range: [30, 39] }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -161,12 +240,12 @@ describe('MongoDB Example Suggestions', () => {
       });
     });
 
-    it('should return prioritize page over range', (done) => {
+    it('should return prioritize range over page', (done) => {
       Promise.all([
         getExampleSuggestions({ page: '1' }),
-        getExampleSuggestions({ page: '1', range: '[100,109]' }),
+        getExampleSuggestions({ page: '1', range: '[0,10]' }),
       ]).then((res) => {
-        expect(isEqual(res[0].body, res[1].body)).to.equal(true);
+        expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
       });
     });
@@ -182,7 +261,7 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return a ascending sorted list of example suggestions with sort query', (done) => {
+    it('should return an ascending sorted list of example suggestions with sort query', (done) => {
       const key = 'definitions';
       const direction = 'asc';
       getExampleSuggestions({ sort: `["${key}": "${direction}"]` })

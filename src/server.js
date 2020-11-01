@@ -1,12 +1,13 @@
 import express from 'express';
+import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import { editRouter, router, testRouter } from './routers';
+import sslRedirect from 'heroku-ssl-redirect';
+import { editorRouter, router, testRouter } from './routers';
 import logger from './middleware/logger';
-import { PORT, MONGO_URI, SWAGGER_OPTIONS } from './config';
+import { PORT, MONGO_URI, SWAGGER_DOCS } from './config';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +25,11 @@ db.once('open', () => {
   console.log('🗄 Database is connected');
 });
 
+if (process.env.NODE_ENV === 'production') {
+  // enable ssl redirect
+  app.use(sslRedirect());
+}
+
 app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 }));
@@ -32,16 +38,20 @@ app.use(cors({
 app.options('*', cors());
 
 app.get('/', (_, res) => {
-  res.send('Hello World!');
+  res.send(path.resolve(__dirname, '/build/dist/index.html'));
 });
 
 app.use('*', logger);
 
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerJsDoc(SWAGGER_OPTIONS)));
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);
-app.use('/api/v1/edit', editRouter);
+
+// TODO: remove this guard rail when releasing for production
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api/v1', editorRouter);
+}
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
@@ -50,6 +60,21 @@ if (process.env.NODE_ENV !== 'production') {
 
 const server = app.listen(PORT, () => {
   console.log(`🟢 Server started on port ${PORT}`);
+
+  /* Used to test server build */
+  if (process.env.NODE_ENV === 'build') {
+    console.log('🧪 Testing server build');
+    setTimeout(() => {
+      console.log('✅ Build test passed');
+      process.exit(0);
+    }, 5000);
+  }
+});
+
+app.get('*', (_, res) => {
+  res
+    .status(404)
+    .sendFile(path.resolve(__dirname, 'dist/404.html'));
 });
 
 server.clearDatabase = () => {

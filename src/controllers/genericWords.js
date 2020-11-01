@@ -3,7 +3,8 @@ import {
   every,
   has,
   partial,
-  forIn,
+  map,
+  trim,
 } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
@@ -20,6 +21,10 @@ export const putGenericWord = (req, res) => {
     return res.send({ error: 'Required information is missing, double check your provided data' });
   }
 
+  if (!Array.isArray(data.definitions)) {
+    data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
+  }
+
   return GenericWord.findById(id)
     .then(async (genericWord) => {
       if (!genericWord) {
@@ -29,8 +34,7 @@ export const putGenericWord = (req, res) => {
       const updatedGenericWord = assign(genericWord, data);
       return res.send(await updatedGenericWord.save());
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while updating, double check your provided data' });
     });
@@ -38,10 +42,12 @@ export const putGenericWord = (req, res) => {
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { regexKeyword, page, sort } = handleQueries(req.query);
-  return GenericWord.find({ word: regexKeyword })
+  const { regexKeyword, ...rest } = handleQueries(req.query);
+  return GenericWord
+    .find({ $or: [{ word: regexKeyword }, { definitions: regexKeyword }] })
+    .sort({ approvals: 'desc' })
     .then((genericWords) => (
-      prepResponse(res, genericWords, page, sort)
+      prepResponse({ res, docs: genericWords, ...rest })
     ))
     .catch(() => {
       res.status(400);
@@ -72,14 +78,13 @@ export const getGenericWord = (req, res) => {
 
 /* Populates the MongoDB database with GenericWords */
 export const createGenericWords = (_, res) => {
-  const genericWordsPromises = [];
   const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
-  forIn(dictionary, (value, key) => {
-    const newGenericWords = new GenericWord({
+  const genericWordsPromises = map(dictionary, (value, key) => {
+    const newGenericWord = new GenericWord({
       word: key,
       definitions: value,
     });
-    genericWordsPromises.push(newGenericWords.save());
+    return newGenericWord.save();
   });
 
   Promise.all(genericWordsPromises)
