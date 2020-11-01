@@ -1,5 +1,4 @@
 import chai from 'chai';
-import chaiHttp from 'chai-http';
 import mongoose from 'mongoose';
 import {
   forEach,
@@ -38,8 +37,6 @@ import {
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
-
-chai.use(chaiHttp);
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;

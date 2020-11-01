@@ -18,7 +18,7 @@
     "dev:site": "NODE_ENV=development next",
     "start:server": "NODE_ENV=development nodemon --exec babel-node -- ./src/server.js",
     "start:database": "mongod --dbpath ./db",
-    "test": "npm-run-all -p -r  mocha"
+    "test": "npm-run-all -p -r start:server mocha"
   },
   "engines": {
     "node": ">=10.0.0"
