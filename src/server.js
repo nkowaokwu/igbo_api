@@ -34,6 +34,8 @@ app.use(cors({
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 }));
 
+app.use(express.static('./build/dist'));
+
 /* implementing cors for http requests during pre - flight phase */
 app.options('*', cors());
 
