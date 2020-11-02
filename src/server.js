@@ -14,7 +14,6 @@ import {
 import logger from './middleware/logger';
 import authentication from './middleware/authentication';
 import authorization from './middleware/authorization';
-import login from './controllers/login';
 import { PORT, MONGO_URI, SWAGGER_DOCS } from './config';
 
 const app = express();
@@ -56,8 +55,7 @@ app.use('/api/v1', router);
 
 // TODO: remove this guard rail when releasing for production
 if (process.env.NODE_ENV !== 'production') {
-  app.post('/login', login);
-  app.use('/admin', authorization(['admin']), adminRouter);
+  app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
 }
 
 // TODO: remove this guard rail when releasing for production
@@ -67,7 +65,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1/test', authorization(['admin']), testRouter);
+  app.use('/api/v1/test', authentication, authorization(['admin']), testRouter);
 }
 
 const server = app.listen(PORT, () => {

@@ -5,6 +5,7 @@ import {
   createWord,
   getExampleSuggestions,
   getGenericWords,
+  getUsers,
   getWordSuggestions,
 } from './shared/commands';
 
@@ -109,6 +110,22 @@ describe('Auth', () => {
         .end((_, res) => {
           expect(res.status).to.equal(403);
           expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should allow an admin to get all users', (done) => {
+      getUsers()
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          done();
+        });
+    });
+
+    it('should forbid a non-admin from getting users', (done) => {
+      getUsers({ role: 'merger' })
+        .end((_, res) => {
+          expect(res.status).to.equal(403);
           done();
         });
     });
