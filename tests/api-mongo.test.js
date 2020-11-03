@@ -391,7 +391,7 @@ describe('MongoDB Words', () => {
         getWords({ keyword: lowerCase }),
         getWords({ keyword: upperCase }),
       ]).then((res) => {
-        expect(res[1].length).to.equal.at.least(res[0].length);
+        expect(res[1].body.length).to.be.at.least(res[0].body.length);
         done();
       });
     });
