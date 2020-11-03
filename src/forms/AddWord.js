@@ -14,7 +14,12 @@ const cancelButtonStyles = 'h-10 mt-5 lg:h-10 lg:w-32 text-gray-600';
 const formHeader = 'text-xl mb-2 mt-5';
 const errorStyles = 'text-red-500 mt-3';
 
-const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
+const AddWord = ({
+  onRequestClose,
+  onSuccess,
+  onFailure,
+  defaultValues,
+}) => {
   const {
     handleSubmit,
     getValues,
@@ -49,7 +54,7 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
         as={<input className={`${inputStyles}`} placeholder="i.e. biko, igwe, mmiri" data-test="new-word-input" />}
         name="word"
         control={control}
-        defaultValue={getValues().word}
+        defaultValue={defaultValues?.word || getValues().word}
         rules={{
           required: true,
         }}
@@ -91,7 +96,15 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
               {`${index + 1}.`}
             </h3>
             <Controller
-              as={<input className={inputStyles} size="large" placeholder="Definition" defaultValue={definition} data-test={`definitions-${index}-input`} />}
+              as={(
+                <input
+                  className={inputStyles}
+                  size="large"
+                  placeholder="Definition"
+                  defaultValue={definition}
+                  data-test={`definitions-${index}-input`}
+                />
+              )}
               name={`definitions[${index}]`}
               defaultValue={definitions[index]}
               control={control}
@@ -136,7 +149,15 @@ const AddWord = ({ onRequestClose, onSuccess, onFailure }) => {
       {variations.length ? variations.map((variation, index) => (
         <div className={listContainerStyles}>
           <Controller
-            as={<input className={`${inputStyles}`} size="large" placeholder="Variation" defaultValue={variation} data-test={`variations-${index}-input`} />}
+            as={(
+              <input
+                className={`${inputStyles}`}
+                size="large"
+                placeholder="Variation"
+                defaultValue={variation}
+                data-test={`variations-${index}-input`}
+              />
+            )}
             name={`variations[${index}]`}
             defaultValue={variations[index]}
             control={control}
@@ -171,11 +192,13 @@ AddWord.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   onSuccess: PropTypes.func,
   onFailure: PropTypes.func,
+  defaultValues: PropTypes.objectOf(['word']),
 };
 
 AddWord.defaultProps = {
   onSuccess: () => {},
   onFailure: () => {},
+  defaultValues: {},
 };
 
 export default AddWord;
