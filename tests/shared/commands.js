@@ -1,6 +1,6 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { ADMIN_ROUTE, API_ROUTE, TEST_ROUTE } from './constants';
+import { API_ROUTE, TEST_ROUTE } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -147,7 +147,7 @@ export const getExamples = (query = {}) => (
 export const getUsers = (query = {}) => (
   chai
     .request(server)
-    .get(`${ADMIN_ROUTE}/users`)
+    .get(`${API_ROUTE}/users`)
     .query(query)
 );
 
