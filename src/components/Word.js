@@ -8,7 +8,7 @@ const Word = ({ word }) => (
     <div className="flex flex-col lg:flex-row py-5">
       <div className="w-full lg:w-3/12">
         <div className="flex flex-col lg:flex-row lg:items-end">
-          <h1 className="text-2xl mx-2">{word.word}</h1>
+          <h1 className="text-3xl mx-2">{word.word}</h1>
           <h3 className="text-gray-500 py-1 mx-2 italic truncate ">{word.wordClass}</h3>
         </div>
         <div>
@@ -29,7 +29,9 @@ const Word = ({ word }) => (
         </div>
         <div className="w-full lg:w-5/12">
           <h2 className="text-2xl">Examples</h2>
-          {word.examples.length ? map(word.examples.slice(0, 3), (example) => <Example example={example} />) : 'No examples'}
+          {word.examples.length ? (
+            map(word.examples.slice(0, 3), (example) => <Example example={example} />)
+          ) : 'No examples'}
         </div>
       </div>
     </div>

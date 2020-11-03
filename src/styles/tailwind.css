@@ -1,6 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+font-family: 'Arvo-Bold';
+  src: url('../assets/fonts/Arvo/Arvo-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoSansJP';
+  src: url('../assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.otf') format('woff');
+}
+
+#logo {
+  font-family: 'Arvo-Bold' !important;
+}
+
+h1 {
+  font-family: 'EB Garamond' !important;
+  font-weight: bold;
+}
+
+body, h2, h3, h4, h5, h6, p {
+  font-family: 'NotoSansJP' !important;
+}
 
 .ReactModal__Overlay {
   display: flex;
