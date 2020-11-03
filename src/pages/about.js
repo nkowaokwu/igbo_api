@@ -7,7 +7,7 @@ const About = () => (
     <div className="w-11/12 lg:w-7/12 flex flex-col justify-start py-10">
       <h1 className="text-5xl mb-5">About</h1>
       <p className="text-xl mb-6">
-        Igbo Dictionary is an online Igbo-English dictionary. It for searching
+        Nkowaokwu is an online Igbo-English dictionary. It for searching
         Igbo words using either Igbo or English.
       </p>
       <p className="text-xl mb-6">
