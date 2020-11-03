@@ -121,7 +121,7 @@ describe('Homepage', () => {
       cy.get('[data-test="pagination"]');
     });
 
-    it.only('doesn\'t render the pagination bar', () => {
+    it('doesn\'t render the pagination bar', () => {
       const keyword = '';
       cy.route({
         method: 'GET',
