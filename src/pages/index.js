@@ -4,9 +4,11 @@ import { map } from 'lodash';
 import { useForm } from 'react-hook-form';
 import Pagination from '@material-ui/lab/Pagination';
 import { WORDS_API_URL } from '../config';
+import Navbar from '../components/Navbar';
 import Word from '../components/Word';
 import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
+import SearchIcon from '../assets/icons/search.svg';
 
 const Home = () => {
   const { reset } = useForm();
@@ -30,8 +32,10 @@ const Home = () => {
   /* Returns the correct number of pages of words */
   const determinePageCount = (res) => {
     const WORDS_PER_PAGE = 10;
-    const wordCount = Math.floor(parseInt(res.headers['content-range'], 10));
-    return wordCount % WORDS_PER_PAGE === 0 ? (wordCount / WORDS_PER_PAGE) - 1 : wordCount / WORDS_PER_PAGE;
+    const wordCount = parseInt(res.headers['content-range'], 10);
+    return wordCount % WORDS_PER_PAGE === 0
+      ? Math.ceil(wordCount / WORDS_PER_PAGE) - 1
+      : Math.ceil(wordCount / WORDS_PER_PAGE);
   };
 
   /* Makes a network request and updates the number of pages */
@@ -73,7 +77,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center w-11/12 lg:w-8/12">
+      <Navbar />
+      <div className="flex flex-col items-center w-11/12 lg:w-7/12">
         {process.env.NODE_ENV !== 'production' ? (
           <button
             type="button"
@@ -83,21 +88,23 @@ const Home = () => {
             add word
           </button>
         ) : null}
-        <h1 className="self-start lg:self-center text-2xl lg:text-4xl my-3 mx-2 lg:mx-12">Igbo Dictionary</h1>
         <form onSubmit={handleSearch} className="flex flex-col lg:flex-row w-full lg:justify-between lg:items-center">
-          <input
-            data-test="search-bar"
-            className="bg-gray-300 rounded-full h-12 py-3 px-3 w-full lg:w-9/12"
-            placeholder="Search in Igbo or English"
-            onInput={(e) => setInput(e.target.value)}
-            value={input}
-          />
-          <button
-            className="w-full text-gray-100 bg-green-800 py-3 mt-5 lg:mt-0 rounded lg:w-2/12"
-            type="submit"
-          >
-            Search
-          </button>
+          <div className="flex w-full items-center bg-gray-300 rounded-full h-12 py-3 px-3">
+            <input
+              data-test="search-bar"
+              className="bg-gray-300 rounded-full h-12 py-3 px-3 w-11/12 lg:w-full"
+              placeholder="Search in Igbo or English"
+              onInput={(e) => setInput(e.target.value)}
+              value={input}
+            />
+            <button
+              className="lg:mt-0 w-1/12 lg:w-6 rounded"
+              data-test="search-button"
+              type="submit"
+            >
+              <SearchIcon />
+            </button>
+          </div>
         </form>
         {
           response.length > 0
@@ -120,7 +127,7 @@ const Home = () => {
           <Pagination
             data-test="pagination"
             count={pageCount}
-            onChange={(_, page) => handlePagination(page)}
+            onChange={(_, page) => handlePagination(page - 1)}
             shape="rounded"
           />
         </div>

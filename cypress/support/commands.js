@@ -133,5 +133,5 @@ Cypress.Commands.add('searchDictionary', (keyword) => {
   if (keyword !== '') {
     cy.get('[data-test="search-bar"]').type(keyword);
   }
-  cy.contains('Search').click();
+  cy.get('[data-test="search-button"]').click();
 });
