@@ -36,7 +36,7 @@ describe('Homepage', () => {
       cy.get('[data-test="definitions-0-input"]').type('first definition');
       cy.get('[aria-label="Add Variation"]').click();
       cy.get('[data-test="variations-0-input"]').type('first variation');
-      cy.get('button[type="submit"]').click();
+      cy.get('button[type="submit"]').contains('Submit').click();
       cy.wait('@postWordSuggestion');
       cy.get('[data-test="result-success"]');
     });
@@ -52,7 +52,7 @@ describe('Homepage', () => {
       cy.get('[data-test="new-word-input"]').type('new word');
       cy.get('[data-test="word-class-input"]').type('new word class');
       cy.get('[data-test="definitions-0-input"]').type('first definition');
-      cy.get('button[type="submit"]').click();
+      cy.get('button[type="submit"]').contains('Submit').click();
       cy.wait('@postWordSuggestion');
       cy.get('[data-test="result-error"]');
     });
@@ -84,7 +84,7 @@ describe('Homepage', () => {
       cy.get('[data-test="new-word-input"]').type('new word');
       cy.get('[data-test="word-class-input"]').type('new word class');
       cy.get('[data-test="definitions-0-input"]').type('first definition');
-      cy.get('button[type="submit"]').click();
+      cy.get('button[type="submit"]').contains('Submit').click();
       cy.wait('@postWordSuggestion');
       cy.get('[data-test="result-error"]');
       cy.get('button').contains('Back to Form').click();
@@ -110,6 +110,21 @@ describe('Homepage', () => {
       cy.get('[data-test="variations-2-input"]');
       cy.get('[aria-label="Delete Variation"]').first().click();
       cy.get('[data-test="variations-2-input"]').should('not.exist');
+    });
+  });
+
+  describe('Pagination', () => {
+    it('renders the pagination bar', () => {
+      const keyword = 'more';
+      cy.searchDictionary(keyword);
+      cy.get('[data-test="word"]');
+      cy.get('[data-test="pagination"]');
+    });
+
+    it('doesn\'t render the pagination bar', () => {
+      const keyword = 'gibberishing';
+      cy.searchDictionary(keyword);
+      cy.get('[data-test="pagination"]').should('not.exist');
     });
   });
 });
