@@ -6,7 +6,7 @@ Cypress.Commands.add('searchDictionary', (keyword) => {
     headers: {
       'content-range': 12,
     },
-    response: keyword !== '' ? [
+    response: keyword === 'not a word' ? [] : keyword !== '' ? [
       {
         word: 'word',
         wordClass: 'wordClass',
