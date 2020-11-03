@@ -121,8 +121,14 @@ describe('Homepage', () => {
       cy.get('[data-test="pagination"]');
     });
 
-    it('doesn\'t render the pagination bar', () => {
-      const keyword = 'gibberishing';
+    it.only('doesn\'t render the pagination bar', () => {
+      const keyword = '';
+      cy.route({
+        method: 'GET',
+        url: `/api/v1/words?keyword=${keyword}`,
+        response: [],
+        status: 200,
+      }).as('noPaginationBar');
       cy.searchDictionary(keyword);
       cy.get('[data-test="pagination"]').should('not.exist');
     });
