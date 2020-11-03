@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Pagination from '@material-ui/lab/Pagination';
 import { WORDS_API_URL } from '../config';
 import Navbar from '../components/Navbar';
+import NoWord from '../components/NoWord';
 import Word from '../components/Word';
 import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
@@ -12,11 +13,11 @@ import SearchIcon from '../assets/icons/search.svg';
 
 const Home = () => {
   const { reset } = useForm();
+  const [defaultValues, setDefaultValues] = useState({});
   const [input, setInput] = useState('');
   const [visible, setVisible] = useState(false);
   const [lastSearch, setLastSearch] = useState(input);
-  const [response, setResponse] = useState([]);
-  const [noMatch, setNoMatch] = useState('');
+  const [response, setResponse] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -44,7 +45,6 @@ const Home = () => {
     const pages = determinePageCount(res);
     setPageCount(pages);
     setResponse(res.data);
-    setNoMatch(`No word matching ${input}`);
   };
 
   /* Paginates to a different page for the same word
@@ -78,7 +78,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <Navbar />
-      <div className="flex flex-col items-center w-11/12 lg:w-7/12">
+      <div className="flex flex-col w-11/12 lg:w-7/12">
         {process.env.NODE_ENV !== 'production' ? (
           <button
             type="button"
@@ -107,20 +107,28 @@ const Home = () => {
           </div>
         </form>
         {
-          response.length > 0
+          response?.length > 0
             ? map(response, (word, idx) => <Word word={word} key={idx} />)
-            : noMatch
+            : !response || lastSearch === ''
+              ? null
+              : (
+                <NoWord
+                    word={lastSearch}
+                    showAddWordModal={showModal}
+                    setDefaultValues={(value) => setDefaultValues(value)}
+                />
+              )
         }
       </div>
       <Modal
-          title="Suggest a New Word"
-          isOpen={visible}
-          onRequestClose={handleCancel}
-          className={`bg-white border-current border-solid border border-gray-200
-          max-h-full h-8/12 w-full lg:w-10/12 p-12 rounded-lg shadow-lg
-          overflow-scroll text-gray-800`}
+        title="Suggest a New Word"
+        isOpen={visible}
+        onRequestClose={handleCancel}
+        className={`bg-white border-current border-solid border border-gray-200
+        max-h-full h-8/12 w-full lg:w-10/12 p-12 rounded-lg shadow-lg
+        overflow-scroll text-gray-800`}
       >
-        <AddWord />
+        <AddWord defaultValues={defaultValues} />
       </Modal>
       {pageCount > 0 ? (
         <div className="py-10">

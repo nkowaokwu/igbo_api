@@ -113,6 +113,30 @@ describe('Homepage', () => {
     });
   });
 
+  describe('No word', () => {
+    it('renders no word component', () => {
+      cy.fixture('constants.json').then(({ NOT_A_WORD }) => {
+        cy.searchDictionary(NOT_A_WORD);
+        cy.get('[data-test="define-word-button"]');
+      });
+    });
+
+    it('opens the add word form', () => {
+      cy.fixture('constants.json').then(({ NOT_A_WORD }) => {
+        cy.searchDictionary(NOT_A_WORD);
+        cy.get('[data-test="define-word-button"]').click();
+        cy.get(`input[value="${NOT_A_WORD}"]`);
+      });
+    });
+  });
+
+  describe('About', () => {
+    it('loads the about page', () => {
+      cy.get('a[href="/about"]').click();
+      cy.get('h1').contains('About');
+    });
+  });
+
   describe('Pagination', () => {
     it('renders the pagination bar', () => {
       const keyword = 'more';
