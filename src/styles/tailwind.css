@@ -22,10 +22,6 @@ h1 {
   font-weight: bold;
 }
 
-body, h2, h3, h4, h5, h6, p {
-  font-family: 'NotoSansJP' !important;
-}
-
 .ReactModal__Overlay {
   display: flex;
   justify-content: center;
@@ -34,4 +30,16 @@ body, h2, h3, h4, h5, h6, p {
 
 .definitionError {
   top: -2.25rem;
+}
+
+.responsive-container {
+  @apply w-11/12;
+}
+
+/* Large (lg) */
+@media (min-width: 1024px) {
+  .responsive-container {
+    @apply w-7/12;
+    min-width: 986px;
+  }
 }
