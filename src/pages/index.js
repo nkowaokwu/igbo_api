@@ -78,7 +78,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center">
       <Navbar />
-      <div className="flex flex-col w-11/12 lg:w-7/12">
+      <div className="responsive-container flex flex-col">
         {process.env.NODE_ENV !== 'production' ? (
           <button
             type="button"
