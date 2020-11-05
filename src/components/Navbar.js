@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Navbar = () => (
-  <ul className="responsive-container w-full justify-between items-center flex px-6 lg:px-0 py-5 text-green-900">
+  <ul className="responsive-container justify-between items-center flex px-6 lg:px-3 py-5 text-green-900">
     <h1 id="logo" className="font-bold text-2xl text-gray-800">
       <a href="/">Nkowa okwu</a>
     </h1>

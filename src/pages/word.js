@@ -5,19 +5,10 @@ import Navbar from '../components/Navbar';
 import NoWord from '../components/NoWord';
 import Modal from '../components/Modal';
 import Select from '../components/Select';
+import SearchBar from '../components/SearchBar';
 import AddWord from '../forms/AddWord';
 import AddExample from '../forms/AddExample';
-
-/* Takes the query string and transform it into an object */
-const parseQueries = (search) => (
-  search
-    .split(/(\?|&)/)
-    .filter((query) => query !== '' && query !== '?' && query !== '&')
-    .reduce((queryMap, query) => {
-      const keyValuePair = query.split('=');
-      return { ...queryMap, [keyValuePair[0]]: keyValuePair[1] };
-    }, {})
-);
+import parseQueries from './utils';
 
 const word = ({ location }) => {
   const queries = location?.search ? parseQueries(location.search) : {};
@@ -70,6 +61,7 @@ const word = ({ location }) => {
   return response?.word ? (
     <div className="page-container">
       <Navbar />
+      <SearchBar />
       {renderNoWord ? (
         <NoWord
           word={queries.word}
@@ -78,7 +70,7 @@ const word = ({ location }) => {
         />
       ) : (
         <div className="w-10/12 px-2 lg:px-5">
-          <div className="flex flex-col lg:flex-row justify-between">
+          <div className="flex flex-col lg:flex-row justify-between mt-2 lg:mt-6">
             <div>
               <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Word</h1>
               <h2 className="text-2xl text-gray-800 mt-3 lg:mt-1">{response?.word}</h2>
@@ -117,10 +109,10 @@ const word = ({ location }) => {
           <div className="h-px bg-gray-300 w-full my-6" />
           <h1 className="text-4xl text-gray-800">Examples</h1>
           {response.examples.length ? map((response.examples), ({ igbo, english }) => (
-            <>
-              <h2 className="text-xl text-gray-800">{igbo}</h2>
+            <div className="my-5">
+              <h2 className="text-xl font-bold text-gray-800">{igbo}</h2>
               <h2 className="text-xl text-gray-600">{english}</h2>
-            </>
+            </div>
           )) : 'No examples'}
         </div>
       )}

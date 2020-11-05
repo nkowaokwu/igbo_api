@@ -64,7 +64,7 @@ h1 {
     @apply w-10/12;
   }
   .responsive-container {
-    @apply w-7/12;
     min-width: 986px;
+    max-width: 986px;
   }
 }
