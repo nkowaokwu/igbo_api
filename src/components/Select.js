@@ -21,6 +21,7 @@ const Select = ({ ContainerComponent, options, className }) => {
         bg-white hover:bg-green-100 rounded-lg w-full h-full`}
         type="button"
         onClick={() => setIsMenuVisible(!isMenuVisible)}
+        data-test="select-actions"
       >
         <ContainerComponent />
       </button>

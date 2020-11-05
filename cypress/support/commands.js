@@ -1,3 +1,5 @@
+import wordsResponse from './constants';
+
 Cypress.Commands.add('searchDictionary', (keyword) => {
   cy.server();
   cy.route({
@@ -6,128 +8,7 @@ Cypress.Commands.add('searchDictionary', (keyword) => {
     headers: {
       'content-range': 12,
     },
-    response: keyword === 'not a word' ? [] : keyword !== '' ? [
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-      {
-        word: 'word',
-        wordClass: 'wordClass',
-        definitions: ['first definitions'],
-        variations: [],
-        examples: [],
-      },
-      {
-        word: 'secondWord',
-        wordClass: 'secondWordClass',
-        definitions: ['first definitions'],
-        variations: ['first variations'],
-        examples: [
-          {
-            igbo: 'igbo text',
-            english: 'english text',
-            associatedWords: [],
-          },
-        ],
-      },
-    ] : [],
+    response: keyword === 'not a word' ? [] : keyword !== '' ? wordsResponse : [],
     status: 200,
   });
   if (keyword !== '') {
