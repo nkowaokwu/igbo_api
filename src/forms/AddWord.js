@@ -41,7 +41,7 @@ const AddWord = ({
       .post(WORD_SUGGESTIONS_API_URL, cleanedData)
       .then(() => {
         reset();
-        onSuccess({ subtitle: 'You\'re word suggestion has been sent for review.' });
+        onSuccess({ subtitle: 'You\'re word edit has been sent for review by editors.' });
       })
       .catch(() => {
         onFailure({ subtitle: 'Double check you have entered all required information.' });

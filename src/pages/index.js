@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { map } from 'lodash';
 import Pagination from '@material-ui/lab/Pagination';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { WORDS_API_URL } from '../config';
+import getWord from '../API';
 import Navbar from '../components/Navbar';
 import NoWord from '../components/NoWord';
 import Word from '../components/Word';
@@ -18,6 +17,7 @@ const Home = () => {
   const [lastSearch, setLastSearch] = useState(input);
   const [response, setResponse] = useState(null);
   const [pageCount, setPageCount] = useState(0);
+  const [totalWordCount, setTotalWordCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const matches = useMediaQuery('(min-width:1024px)');
 
@@ -33,6 +33,7 @@ const Home = () => {
   const determinePageCount = (res) => {
     const WORDS_PER_PAGE = 10;
     const wordCount = parseInt(res.headers['content-range'], 10);
+    setTotalWordCount(wordCount);
     return wordCount % WORDS_PER_PAGE === 0
       ? Math.ceil(wordCount / WORDS_PER_PAGE) - 1
       : Math.ceil(wordCount / WORDS_PER_PAGE);
@@ -40,7 +41,7 @@ const Home = () => {
 
   /* Makes a network request and updates the number of pages */
   const searchWord = async (page = 0) => {
-    const res = await axios.get(`${WORDS_API_URL}?keyword=${lastSearch}&page=${page}`);
+    const res = await getWord(lastSearch, page);
     const pages = determinePageCount(res);
     setPageCount(pages);
     setResponse(res.data);
@@ -75,7 +76,7 @@ const Home = () => {
   }, [lastSearch]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="page-container">
       <Navbar />
       <div className="responsive-container flex flex-col">
         <div className="flex justify-between space-x-2 lg:space-x-5">
@@ -116,14 +117,24 @@ const Home = () => {
         </div>
         {
           response?.length > 0
-            ? map(response, (word, idx) => <Word word={word} key={idx} />)
+            ? (
+              <>
+                <h1 className="text-2xl mt-5">
+                  {'Words - '}
+                  <span className="text-gray-600">
+                    {`${totalWordCount} found`}
+                  </span>
+                </h1>
+                {map(response, (word, idx) => <Word word={word} key={idx} />)}
+              </>
+            )
             : !response || lastSearch === ''
               ? null
               : (
                 <NoWord
-                    word={lastSearch}
-                    showAddWordModal={showModal}
-                    setDefaultValues={(value) => setDefaultValues(value)}
+                  word={lastSearch}
+                  showAddWordModal={showModal}
+                  setDefaultValues={(value) => setDefaultValues(value)}
                 />
               )
         }

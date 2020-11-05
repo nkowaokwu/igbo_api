@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { map } from 'lodash';
 import useEventListener from '../hooks/useEventListener';
+import ChevronIcon from '../assets/icons/downchevron.svg';
 
 const Select = ({ ContainerComponent, options, className }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -23,7 +24,10 @@ const Select = ({ ContainerComponent, options, className }) => {
         onClick={() => setIsMenuVisible(!isMenuVisible)}
         data-test="select-actions"
       >
-        <ContainerComponent />
+        <div className="flex space-x-2 justify-center items-center">
+          <ContainerComponent />
+          <ChevronIcon />
+        </div>
       </button>
       {isMenuVisible ? (
         <div className="border border-solid border-gray-400 bg-white absolute w-48 rounded-lg py-1 mt-2 shadow-md">
