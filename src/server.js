@@ -55,17 +55,17 @@ app.use('/api/v1', router);
 
 // TODO: remove this guard rail when releasing for production
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
+  app.use('/api/v1', authentication, authorization(['editor', 'merger', 'admin']), editorRouter);
 }
 
 // TODO: remove this guard rail when releasing for production
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1', authentication, authorization(['editor', 'merger', 'admin']), editorRouter);
+  app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
 }
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1/test', authentication, authorization(['admin']), testRouter);
+  app.use('/api/v1/test', authentication, authorization(['editor', 'merger', 'admin']), testRouter);
 }
 
 const server = app.listen(PORT, () => {
