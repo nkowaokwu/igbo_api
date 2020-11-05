@@ -13,12 +13,13 @@ import parseQueries from './utils';
 const search = ({ location, navigate }) => {
   const [queries, setQueries] = useState(location?.search ? parseQueries(location.search) : {});
   const [response, setResponse] = useState(null);
-  const [visible, setVisible] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [defaultValues, setDefaultValues] = useState({});
+  const [visible, setVisible] = useState(false);
   const [route, setRoute] = useState(null);
   const [totalWordCount, setTotalWordCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const showModal = () => {
     setVisible(true);
@@ -49,7 +50,9 @@ const search = ({ location, navigate }) => {
   /* Once the route is parsed, we will use it to make a request for words */
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const res = await getWord(queries.word, queries.page);
+      setIsLoading(false);
       const { data: words } = res;
       if (words.length) {
         setResponse(words);
@@ -96,15 +99,13 @@ const search = ({ location, navigate }) => {
                 {map(response, (word, idx) => <Word word={word} key={idx} />)}
               </>
             )
-            : !response || !queries.word || queries.word === ''
-              ? null
-              : (
-                <NoWord
-                  word={queries.word}
-                  showAddWordModal={showModal}
-                  setDefaultValues={(value) => setDefaultValues(value)}
-                />
-              )
+            : response instanceof Object && !isLoading ? (
+              <NoWord
+                word={queries.word}
+                showAddWordModal={showModal}
+                setDefaultValues={(value) => setDefaultValues(value)}
+              />
+            ) : null
           }
       </div>
       <Modal
