@@ -118,7 +118,7 @@ describe('Word', () => {
     });
   });
 
-  describe('No word', () => {
+  describe('No Word', () => {
     it('renders no word component', () => {
       cy.fixture('constants.json').then(({ NOT_A_WORD }) => {
         cy.searchDictionary(NOT_A_WORD);
@@ -132,6 +132,48 @@ describe('Word', () => {
         cy.get('[data-test="define-word-button"]').click();
         cy.get(`input[value="${NOT_A_WORD}"]`);
       });
+    });
+  });
+
+  describe.only('Detailed Word', () => {
+    beforeEach(() => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.contains('Details').first().click();
+    });
+
+    it('renders the detailed view of a word', () => {
+      cy.contains('Word');
+      cy.contains('Part of Speech');
+      cy.contains('Definitions');
+      cy.contains('Examples');
+    });
+
+    it('searches from the detailed view', () => {
+      const keyword = 'secondWord';
+      cy.searchDictionary(keyword);
+      cy.contains('Details').first().click();
+    });
+
+    it('opens the add word modal', () => {
+      cy.get('[data-test="add-button"]').click();
+      cy.get('[data-test="suggestion-modal"]').find('input').then((inputs) => {
+        Array.from(inputs).forEach((input) => {
+          expect(input.value).to.equal('');
+        });
+      });
+    });
+
+    it('interacts with the select actions', () => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.get('[data-test="select-actions"]').first().click();
+      cy.contains('Suggest an Edit').click();
+      cy.get('[data-test="suggestion-modal"]');
+      cy.get('[data-test="suggestion-modal"]').find('button').eq(0).click();
+      cy.get('[data-test="select-actions"]').first().click();
+      cy.contains('Create an Example').click();
+      cy.get('[data-test="suggestion-modal"]');
     });
   });
 });

@@ -4,6 +4,10 @@ describe('Homepage', () => {
     cy.visit('http://localhost:8000');
   });
 
+  it('returns to the homepage', () => {
+    cy.get('h1#logo').click();
+  });
+
   it('searches and wait for words using igbo', () => {
     const keyword = 'bia';
     cy.searchDictionary(keyword);

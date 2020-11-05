@@ -69,7 +69,7 @@ const word = ({ location }) => {
           setDefaultValues={(value) => setDefaultValues(value)}
         />
       ) : (
-        <div className="w-10/12 px-2 lg:px-5">
+        <div className="responsive-container px-2 lg:px-5">
           <div className="flex flex-col lg:flex-row justify-between mt-2 lg:mt-6">
             <div>
               <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Word</h1>
