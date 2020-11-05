@@ -11,10 +11,12 @@ or fallbacks to matching every word */
 export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
 
 /* Sorts all the docs based on the provided searchWord */
-export const sortDocsByDefinitions = (searchWord, docs) => {
+export const sortDocsBy = (searchWord, docs, key) => {
   docs.sort((prevWord, nextWord) => {
-    const prevDocDifference = stringSimilarity.compareTwoStrings(searchWord, prevWord.definitions[0] || '') * -100;
-    const nextDocDifference = stringSimilarity.compareTwoStrings(searchWord, nextWord.definitions[0] || '') * -100;
+    const prevWordValue = Array.isArray(prevWord[key]) ? prevWord[key][0] : prevWord[key];
+    const nextWordValue = Array.isArray(nextWord[key]) ? nextWord[key][0] : nextWord[key];
+    const prevDocDifference = stringSimilarity.compareTwoStrings(searchWord, prevWordValue || '') * -100;
+    const nextDocDifference = stringSimilarity.compareTwoStrings(searchWord, nextWordValue || '') * -100;
     return prevDocDifference - nextDocDifference;
   });
   return docs;
@@ -45,7 +47,8 @@ export const prepResponse = ({
   range,
 }) => {
   const tenDocs = paginate(res, docs, page, range);
-  return res.send(orderBy(tenDocs, [sort.key], [sort.direction]));
+  const sendDocs = sort ? orderBy(tenDocs, [sort.key], [sort.direction]) : tenDocs;
+  return res.send(sendDocs);
 };
 
 /* Converts the filter query into a word to be used as the keyword query */
@@ -80,10 +83,7 @@ const parseSortKeys = (sort = '["", ""]') => {
       direction,
     };
   } catch {
-    return {
-      key: 'id',
-      direction: 'asc',
-    };
+    return null;
   }
 };
 

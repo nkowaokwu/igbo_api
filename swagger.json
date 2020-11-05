@@ -356,7 +356,7 @@
         }
       }
     },
-    "/examples/{wordId}": {
+    "/examples/{exampleId}": {
       "get": {
         "summary": "Get a single Example",
         "description": "Returns a single Example object from the database",
@@ -387,8 +387,8 @@
         "tags": ["Development"],
         "parameters": [
           {
-            "name": "wordId",
-            "description": "The word Id",
+            "name": "exampleId",
+            "description": "The example Id",
             "in": "path",
             "required": true,
             "schema": {
@@ -397,7 +397,7 @@
           },
           {
             "name": "body",
-            "description": "The updated word data",
+            "description": "The updated example data",
             "in": "body",
             "required": true,
             "schema": {
