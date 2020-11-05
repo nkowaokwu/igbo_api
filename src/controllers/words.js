@@ -7,7 +7,7 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import {
-  sortDocsByDefinitions,
+  sortDocsBy,
   prepResponse,
   handleQueries,
   updateDocumentMerge,
@@ -29,28 +29,24 @@ export const getWordData = (req, res) => {
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = (regex) => (
-  Word
+export const searchWordUsingIgbo = async (regex, searchWord) => {
+  const words = await Word
     .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
-    .populate(POPULATE_EXAMPLE)
-);
+    .populate(POPULATE_EXAMPLE);
+  return sortDocsBy(searchWord, words, 'word');
+};
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = (regex) => (
-  Word
+export const searchWordUsingEnglish = async (regex, searchWord) => {
+  const words = await Word
     .find({ definitions: { $in: [regex] } })
-    .populate(POPULATE_EXAMPLE)
-);
+    .populate(POPULATE_EXAMPLE);
+  return sortDocsBy(searchWord, words, 'definitions');
+};
 
 export const findWordById = (id) => (
   Word.findById(id)
 );
-
-const getWordsUsingEnglish = async (regex, searchWord) => {
-  const words = await searchWordUsingEnglish(regex);
-  const sortedWords = sortDocsByDefinitions(searchWord, words);
-  return sortedWords;
-};
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
@@ -60,10 +56,10 @@ export const getWords = async (req, res) => {
     page,
     ...rest
   } = handleQueries(req.query);
-  const words = await searchWordUsingIgbo(regexKeyword);
+  const words = await searchWordUsingIgbo(regexKeyword, searchWord);
 
   if (!words.length) {
-    const englishWords = await getWordsUsingEnglish(regexKeyword, searchWord, page);
+    const englishWords = await searchWordUsingEnglish(regexKeyword, searchWord);
     return prepResponse({
       res,
       docs: englishWords,
