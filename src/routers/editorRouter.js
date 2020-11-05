@@ -20,14 +20,15 @@ import {
   putGenericWord,
   getGenericWord,
 } from '../controllers/genericWords';
+import authorization from '../middleware/authorization';
 
 const editorRouter = express.Router();
 
 /* These routes are used to allow users to suggest new words and examples */
-editorRouter.post('/words', mergeWord);
-editorRouter.put('/words/:id', putWord);
-editorRouter.post('/examples', mergeExample);
-editorRouter.put('/examples/:id', putExample);
+editorRouter.post('/words', authorization(['merger', 'admin']), mergeWord);
+editorRouter.put('/words/:id', authorization(['merger', 'admin']), putWord);
+editorRouter.post('/examples', authorization(['merger', 'admin']), mergeExample);
+editorRouter.put('/examples/:id', authorization(['merger', 'admin']), putExample);
 
 editorRouter.post('/wordSuggestions', postWordSuggestion);
 editorRouter.get('/wordSuggestions', getWordSuggestions);
@@ -44,5 +45,7 @@ editorRouter.post('/genericWords', createGenericWords);
 editorRouter.put('/genericWords/:id', putGenericWord);
 editorRouter.get('/genericWords', getGenericWords);
 editorRouter.get('/genericWords/:id', getGenericWord);
+
+// TODO: Create new users routes that will show all users in Firebase
 
 export default editorRouter;

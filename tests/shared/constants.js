@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+export const ADMIN_ROUTE = '/admin';
 export const API_ROUTE = '/api/v1';
 export const TEST_ROUTE = '/api/v1/test';
 
