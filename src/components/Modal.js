@@ -37,6 +37,11 @@ const EditModal = ({
       isOpen={isOpen}
       onRequestClose={handleClose}
       contentLabel={modalTitle}
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(55, 162, 105, .1)',
+        },
+      }}
       {...rest}
     >
       <div data-test="suggestion-modal">

@@ -11,7 +11,7 @@ const NoWord = ({ word, showAddWordModal, setDefaultValues }) => (
         <button
           type="button"
           data-test="define-word-button"
-          className="transition-all duration-300 bg-green-700 hover:bg-green-500 text-white px-10 py-3 rounded-md"
+          className="transition-all duration-200 bg-green-700 hover:bg-green-600 text-white px-10 py-3 rounded-md"
           onClick={() => {
             setDefaultValues({ word });
             showAddWordModal();

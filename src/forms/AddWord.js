@@ -27,14 +27,15 @@ const AddWord = ({
     control,
     errors,
   } = useForm();
-  const [definitions, setDefinitions] = useState(['']);
-  const [variations, setVariations] = useState([]);
+  const [definitions, setDefinitions] = useState(defaultValues?.definitions || ['']);
+  const [variations, setVariations] = useState(defaultValues?.variations || ['']);
 
   const onSubmit = (data) => {
     const cleanedData = {
       ...data,
       definitions: compact(map(data.definitions, (definition) => trim(definition))),
       variations: compact(map(data.variations, (variation) => trim(variation))),
+      originalWordId: defaultValues?.id || null,
     };
     axios
       .post(WORD_SUGGESTIONS_API_URL, cleanedData)
@@ -49,7 +50,21 @@ const AddWord = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className={formHeader}>New Word</h2>
+      <p className="mt-2">
+        {`By either suggesting a new word or editing an existing one, 
+        you are helping in advancing learning materials for the Igbo language.`}
+      </p>
+      <p className="mt-2">
+        {`Please provide words with their correct part speech, 
+        meaningful definitions, and helpful word variations.`}
+      </p>
+      {defaultValues?.id ? (
+        <p className="mt-4 font-bold">
+          <span role="img" aria-label="Exclamation point">❗️</span>
+          The form is pre-filled because you are editing an existing word. Add new or change existing data.
+        </p>
+      ) : null}
+      <h2 className={formHeader}>Word</h2>
       <Controller
         as={<input className={`${inputStyles}`} placeholder="i.e. biko, igwe, mmiri" data-test="new-word-input" />}
         name="word"
@@ -67,7 +82,7 @@ const AddWord = ({
         as={<input className={inputStyles} placeholder="i.e. noun, verb" data-test="word-class-input" />}
         name="wordClass"
         control={control}
-        defaultValue={getValues().wordClass}
+        defaultValue={defaultValues?.wordClass || getValues().wordClass}
         rules={{
           required: true,
         }}
@@ -106,7 +121,7 @@ const AddWord = ({
                 />
               )}
               name={`definitions[${index}]`}
-              defaultValue={definitions[index]}
+              defaultValue={definition}
               control={control}
               rules={{
                 required: !index,
@@ -159,7 +174,7 @@ const AddWord = ({
               />
             )}
             name={`variations[${index}]`}
-            defaultValue={variations[index]}
+            defaultValue={variation}
             control={control}
           />
           <button
@@ -182,7 +197,16 @@ const AddWord = ({
       )}
       <div className="flex flex-col lg:flex-row-reverse lg:justify-start">
         <button type="submit" className={submitButtonStyles}>Submit</button>
-        <button type="button" className={cancelButtonStyles} onClick={onRequestClose}>Cancel</button>
+        <button
+          type="button"
+          className={cancelButtonStyles}
+          onClick={() => {
+            reset();
+            onRequestClose();
+          }}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

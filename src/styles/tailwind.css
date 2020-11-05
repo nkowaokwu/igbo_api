@@ -32,12 +32,31 @@ h1 {
   top: -2.25rem;
 }
 
+.modal-container {
+  @apply bg-white;
+  @apply border-current;
+  @apply border-solid;
+  @apply border;
+  @apply border-gray-200;
+  @apply max-h-full;
+  @apply w-full;
+  @apply p-12;
+  @apply rounded-lg;
+  @apply shadow-lg;
+  @apply overflow-scroll;
+  @apply text-gray-800;
+}
+
 .responsive-container {
   @apply w-11/12;
+  @apply px-2;
 }
 
 /* Large (lg) */
 @media (min-width: 1024px) {
+  .modal-container {
+    @apply w-10/12;
+  }
   .responsive-container {
     @apply w-7/12;
     min-width: 986px;

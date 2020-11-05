@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { map } from 'lodash';
-import { useForm } from 'react-hook-form';
 import Pagination from '@material-ui/lab/Pagination';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { WORDS_API_URL } from '../config';
 import Navbar from '../components/Navbar';
 import NoWord from '../components/NoWord';
@@ -12,21 +12,20 @@ import AddWord from '../forms/AddWord';
 import SearchIcon from '../assets/icons/search.svg';
 
 const Home = () => {
-  const { reset } = useForm();
+  const [visible, setVisible] = useState(false);
   const [defaultValues, setDefaultValues] = useState({});
   const [input, setInput] = useState('');
-  const [visible, setVisible] = useState(false);
   const [lastSearch, setLastSearch] = useState(input);
   const [response, setResponse] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const matches = useMediaQuery('(min-width:1024px)');
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleCancel = () => {
-    reset();
     setVisible(false);
   };
 
@@ -79,33 +78,42 @@ const Home = () => {
     <div className="flex flex-col items-center">
       <Navbar />
       <div className="responsive-container flex flex-col">
-        {process.env.NODE_ENV !== 'production' ? (
-          <button
-            type="button"
-            onClick={showModal}
-            data-test="add-button"
+        <div className="flex justify-between space-x-2 lg:space-x-5">
+          <form
+            onSubmit={handleSearch}
+            className="flex flex-col lg:flex-row w-10/12 lg:justify-between lg:items-center"
           >
-            add word
-          </button>
-        ) : null}
-        <form onSubmit={handleSearch} className="flex flex-col lg:flex-row w-full lg:justify-between lg:items-center">
-          <div className="flex w-full items-center bg-gray-300 rounded-full h-12 py-3 px-3">
-            <input
-              data-test="search-bar"
-              className="bg-gray-300 rounded-full h-12 py-3 px-3 w-11/12 lg:w-full"
-              placeholder="Search in Igbo or English"
-              onInput={(e) => setInput(e.target.value)}
-              value={input}
-            />
+            <div className="flex w-full items-center bg-gray-300 rounded-lg h-12 py-3 px-3">
+              <input
+                data-test="search-bar"
+                className="bg-gray-300 rounded-full h-12 py-3 px-3 w-11/12 lg:w-full"
+                placeholder="Search in Igbo or English"
+                onInput={(e) => setInput(e.target.value)}
+                value={input}
+              />
+              <button
+                className="lg:mt-0 w-1/12 lg:w-6 rounded"
+                data-test="search-button"
+                type="submit"
+              >
+                <SearchIcon />
+              </button>
+            </div>
+          </form>
+          {process.env.NODE_ENV !== 'production' ? (
             <button
-              className="lg:mt-0 w-1/12 lg:w-6 rounded"
-              data-test="search-button"
-              type="submit"
+              type="button"
+              onClick={() => {
+                setDefaultValues({});
+                showModal();
+              }}
+              data-test="add-button"
+              className="transition-all duration-200 w-2/12 h-12 bg-green-700 hover:bg-green-600 rounded-lg text-white"
             >
-              <SearchIcon />
+              {matches ? '+ Add Word' : '+'}
             </button>
-          </div>
-        </form>
+          ) : null}
+        </div>
         {
           response?.length > 0
             ? map(response, (word, idx) => <Word word={word} key={idx} />)
@@ -124,9 +132,7 @@ const Home = () => {
         title="Suggest a New Word"
         isOpen={visible}
         onRequestClose={handleCancel}
-        className={`bg-white border-current border-solid border border-gray-200
-        max-h-full h-8/12 w-full lg:w-10/12 p-12 rounded-lg shadow-lg
-        overflow-scroll text-gray-800`}
+        className="modal-container"
       >
         <AddWord defaultValues={defaultValues} />
       </Modal>
