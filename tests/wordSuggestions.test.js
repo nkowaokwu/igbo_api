@@ -297,6 +297,14 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
+    it('should return an error for attempting to deleting a non-existing word suggestion', (done) => {
+      deleteWordSuggestion(INVALID_ID)
+        .then((deleteRes) => {
+          expect(deleteRes.status).to.equal(400);
+          done();
+        });
+    });
+
     it('should return error for non existent word suggestion', (done) => {
       getWordSuggestion(wordSuggestionId)
         .end((_, res) => {

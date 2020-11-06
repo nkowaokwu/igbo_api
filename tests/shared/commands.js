@@ -18,6 +18,12 @@ export const getWordSuggestion = (id) => (
     .get(`${API_ROUTE}/wordSuggestions/${id}`)
 );
 
+export const deleteWordSuggestion = (id) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/wordSuggestions/${id}`)
+);
+
 export const getExampleSuggestions = (query = {}) => (
   chai
     .request(server)
@@ -31,6 +37,12 @@ export const getExampleSuggestion = (id) => (
     .get(`${API_ROUTE}/exampleSuggestions/${id}`)
 );
 
+export const deleteExampleSuggestion = (id) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/exampleSuggestions/${id}`)
+);
+
 export const getGenericWords = (query = {}) => (
   chai
     .request(server)
@@ -42,6 +54,12 @@ export const getGenericWord = (id) => (
   chai
     .request(server)
     .get(`${API_ROUTE}/genericWords/${id}`)
+);
+
+export const deleteGenericWord = (id) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/genericWords/${id}`)
 );
 
 export const createWord = (data, query = {}) => (
@@ -79,12 +97,6 @@ export const updateWordSuggestion = (id, data) => (
     .request(server)
     .put(`${API_ROUTE}/wordSuggestions/${id}`)
     .send(data)
-);
-
-export const deleteWordSuggestion = (id) => (
-  chai
-    .request(server)
-    .delete(`${API_ROUTE}/wordSuggestions/${id}`)
 );
 
 export const updateExampleSuggestion = (id, data) => (
