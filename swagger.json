@@ -814,6 +814,30 @@
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Deletes an existing GenericWord document",
+        "description": "Deletes an existing GenericWord document",
+        "tags": ["Development"],
+        "parameters": [
+          {
+            "name": "genericWordId",
+            "description": "The genericWord Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/genericWord"
+            }
+          }
+        }
       }
     },
     "/test/populate": {

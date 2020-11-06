@@ -96,3 +96,20 @@ export const createGenericWords = (_, res) => {
       return res.send({ error: 'An error has occurred while populating generic words' });
     });
 };
+
+/* Deletes a single GenericWord by using an id */
+export const deleteGenericWord = (req, res) => {
+  const { id } = req.params;
+  return GenericWord.findByIdAndDelete(id)
+    .then((genericWord) => {
+      if (!genericWord) {
+        res.status(400);
+        return res.send({ error: 'No generic word exists with the provided id.' });
+      }
+      return res.send(genericWord);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while deleting and return a single generic word' });
+    });
+};
