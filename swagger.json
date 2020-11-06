@@ -98,6 +98,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "editorsNotes": {
+          "type": "string"
+        },
+        "userComments": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
         }
       }
     },
@@ -129,6 +138,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "editorsNotes": {
+          "type": "string"
+        },
+        "userComments": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
         }
       }
     },
@@ -163,6 +181,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "editorsNotes": {
+          "type": "string"
+        },
+        "userComments": {
+          "type": "string"
+        },
+        "userEmail": {
+          "type": "string"
         }
       }
     }
