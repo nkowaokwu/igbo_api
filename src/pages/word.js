@@ -8,7 +8,7 @@ import Select from '../components/Select';
 import SearchBar from '../components/SearchBar';
 import AddWord from '../forms/AddWord';
 import AddExample from '../forms/AddExample';
-import parseQueries from './utils';
+import parseQueries from '../utils/parseQueries';
 
 const word = ({ location }) => {
   const queries = location?.search ? parseQueries(location.search) : {};
