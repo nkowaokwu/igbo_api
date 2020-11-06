@@ -36,6 +36,7 @@
     "@fortawesome/react-fontawesome": "^0.1.12",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "@reach/router": "^1.3.4",
     "axios": "^0.21.0",
     "gatsby": "^2.24.66",
     "gatsby-plugin-offline": "^3.2.34",

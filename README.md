@@ -1,4 +1,4 @@
-# Nkowaokwu Frontend
+# Nkowa ọkwu Frontend
 
 This is the source code that's responsible for the Igbo Dictionary front-site.
 

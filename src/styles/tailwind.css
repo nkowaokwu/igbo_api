@@ -13,6 +13,12 @@ font-family: 'Arvo-Bold';
   src: url('../assets/fonts/Noto_Sans_JP/NotoSansJP-Regular.otf') format('woff');
 }
 
+.page-container {
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+}
+
 #logo {
   font-family: 'Arvo-Bold' !important;
 }
@@ -58,7 +64,7 @@ h1 {
     @apply w-10/12;
   }
   .responsive-container {
-    @apply w-7/12;
     min-width: 986px;
+    max-width: 986px;
   }
 }

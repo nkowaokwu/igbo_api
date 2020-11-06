@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { map } from 'lodash';
 import { WordPropTypes } from '../utils/PropTypeShapes';
-import Example from './Example';
 import Select from './Select';
 import Modal from './Modal';
-import DownChevron from '../assets/icons/downchevron.svg';
 import AddWord from '../forms/AddWord';
 import AddExample from '../forms/AddExample';
 
@@ -52,12 +50,9 @@ const Word = ({ word }) => {
               <Select
                 className="w-32 h-8 mt-5"
                 ContainerComponent={() => (
-                  <div className="flex space-x-2 justify-center items-center">
-                    <div>
-                      <span role="img" aria-label="Hand writing with pen">✍🏾</span>
-                      {' Actions'}
-                    </div>
-                    <DownChevron />
+                  <div>
+                    <span role="img" aria-label="Hand writing with pen">✍🏾</span>
+                    {' Actions'}
                   </div>
                 )}
                 options={options}
@@ -75,12 +70,24 @@ const Word = ({ word }) => {
                 <span className="text-lg">{definition}</span>
               </h2>
             ))}
-          </div>
-          <div className="w-full lg:w-5/12">
-            <h2 className="text-2xl">Examples</h2>
             {word.examples.length ? (
-              map(word.examples.slice(0, 3), (example) => <Example example={example} />)
-            ) : 'No examples'}
+              <div className="pl-3 mt-5">
+                <h1 className="text-2xl lg:text-xl text-gray-800">Example</h1>
+                <h2 className="text-l text-gray-800">{word.examples[0].igbo}</h2>
+                <h2 className="text-l text-gray-600">{word.examples[0].english}</h2>
+              </div>
+            ) : null}
+          </div>
+          <div className="flex w-full justify-end items-end lg:w-5/12">
+            <a
+              className="transition-all duration-300 underline text-green-600 hover:text-green-500"
+              href={`/word?word=${word.word}`}
+            >
+              {'Details '}
+              <span role="img" aria-label="Labeled document">
+                🔖
+              </span>
+            </a>
           </div>
         </div>
       </div>
