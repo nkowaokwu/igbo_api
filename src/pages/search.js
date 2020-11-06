@@ -18,7 +18,6 @@ const search = ({ location, navigate }) => {
   const [visible, setVisible] = useState(false);
   const [route, setRoute] = useState(null);
   const [totalWordCount, setTotalWordCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const showModal = () => {
@@ -37,6 +36,16 @@ const search = ({ location, navigate }) => {
     return wordCount % WORDS_PER_PAGE === 0
       ? Math.ceil(wordCount / WORDS_PER_PAGE) - 1
       : Math.ceil(wordCount / WORDS_PER_PAGE);
+  };
+
+  /* Paginates to a different page for the same word
+   * Shows relevant text in search bar
+   * Set the current page to allow for scrolling back to the top of page
+   */
+  const handlePagination = async (page) => {
+    const searchWordRoute = `/search?word=${queries.word}&page=${page}`;
+    navigate(searchWordRoute, { state: 'ij' });
+    setRoute(searchWordRoute);
   };
 
   /* Parses the route that generated and handed from SearchBar */
@@ -65,21 +74,12 @@ const search = ({ location, navigate }) => {
     })();
   }, [queries]);
 
-  /* Paginates to a different page for the same word
-   * Shows relevant text in search bar
-   * Set the current page to allow for scrolling back to the top of page
-   */
-  const handlePagination = async (page) => {
-    const searchWordRoute = `/search?word=${queries.word}&page=${page}`;
-    navigate(searchWordRoute, { state: 'ij' });
-    setRoute(searchWordRoute);
-    setCurrentPage(page);
-  };
-
-  /* Scrolls to the top of the page after paginating */
+  /* Scrolls to the top of the page after page loads from a pagination request */
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
+    if (!isLoading) {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
 
   return (
     <div className="page-container">

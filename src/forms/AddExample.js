@@ -85,18 +85,27 @@ const AddExample = ({
         control={control}
         defaultValue={defaultValues?.english || getValues().english}
       />
-      <div className="flex flex-col lg:flex-row-reverse lg:justify-start">
-        <button type="submit" className={submitButtonStyles}>Submit</button>
-        <button
-          type="button"
-          className={cancelButtonStyles}
-          onClick={() => {
-            reset();
-            onRequestClose();
-          }}
-        >
-          Cancel
-        </button>
+      <div className="flex flex-col items-start lg:items-end">
+        <div className="flex flex-col w-full lg:flex-row-reverse lg:justify-start">
+          <button type="submit" className={submitButtonStyles}>Submit</button>
+          <button
+            type="button"
+            className={cancelButtonStyles}
+            onClick={() => {
+              reset();
+              onRequestClose();
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+        <p className="font-bold mt-3 text-center lg:text-right">
+          {`By clicking 'Submit' your example suggestion will be sent 
+          to our editors to be reviewed and later approved or denied.`}
+        </p>
+        <p className="font-bold mt-3 underline text-center lg:text-right">
+          Before submitting, double check your edits.
+        </p>
       </div>
     </form>
   );
