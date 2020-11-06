@@ -1,5 +1,5 @@
 /* Takes the query string and transform it into an object */
-const parseQueries = (search) => (
+const parseQueries = (search = '') => (
   search
     .split(/(\?|&)/)
     .filter((query) => query !== '' && query !== '?' && query !== '&')
