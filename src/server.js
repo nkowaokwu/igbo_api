@@ -42,6 +42,10 @@ app.use(cors({
 }));
 
 app.use(express.static('./build/dist'));
+
+/* implementing cors for http requests during pre - flight phase */
+app.options('*', cors());
+
 app.get('/', (_, res) => {
   res.send(path.resolve(__dirname, '/build/dist/index.html'));
 });
