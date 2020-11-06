@@ -108,7 +108,7 @@ export const deleteWordSuggestion = (req, res) => {
     .then((wordSuggestion) => {
       if (!wordSuggestion) {
         res.status(400);
-        return res.send({ error: 'No word suggestion exists with teh provided id.' });
+        return res.send({ error: 'No word suggestion exists with the provided id.' });
       }
       return res.send(wordSuggestion);
     })

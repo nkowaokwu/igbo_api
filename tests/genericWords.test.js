@@ -9,6 +9,7 @@ import {
   getGenericWords,
   getGenericWord,
   updateGenericWord,
+  deleteGenericWord,
 } from './shared/commands';
 import {
   GENERIC_WORD_KEYS,
@@ -256,6 +257,34 @@ describe('MongoDB Generic Words', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE mongodb genericWords', () => {
+    it('should delete an existing generic word', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstGenericWord = res.body[0];
+          deleteGenericWord(firstGenericWord.id)
+            .then((deleteRes) => {
+              expect(deleteRes.status).to.equal(200);
+              getGenericWord(firstGenericWord.id)
+                .end((_, searchGenericWordRes) => {
+                  expect(searchGenericWordRes.status).to.equal(400);
+                  expect(searchGenericWordRes.body.error).to.not.equal(undefined);
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should return an error for attempting to deleting a non-existing generic word', (done) => {
+      deleteGenericWord(INVALID_ID)
+        .then((deleteRes) => {
+          expect(deleteRes.status).to.equal(400);
           done();
         });
     });

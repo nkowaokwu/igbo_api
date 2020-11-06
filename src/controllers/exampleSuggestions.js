@@ -87,3 +87,20 @@ export const getExampleSuggestion = (req, res) => {
       return res.send({ error: 'An error has occurred while returning a single example suggestion' });
     });
 };
+
+/* Deletes a single ExampleSuggestion by using an id */
+export const deleteExampleSuggestion = (req, res) => {
+  const { id } = req.params;
+  return ExampleSuggestion.findByIdAndDelete(id)
+    .then((exampleSuggestion) => {
+      if (!exampleSuggestion) {
+        res.status(400);
+        return res.send({ error: 'No example suggestion exists with the provided id.' });
+      }
+      return res.send(exampleSuggestion);
+    })
+    .catch(() => {
+      res.status(400);
+      return res.send({ error: 'An error has occurred while deleting and return a single example suggestion' });
+    });
+};

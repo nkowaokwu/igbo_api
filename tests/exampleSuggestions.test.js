@@ -9,6 +9,7 @@ import {
   updateExampleSuggestion,
   getExampleSuggestions,
   getExampleSuggestion,
+  deleteExampleSuggestion,
 } from './shared/commands';
 import {
   exampleSuggestionData,
@@ -278,6 +279,34 @@ describe('MongoDB Example Suggestions', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key);
+          done();
+        });
+    });
+  });
+
+  describe('/DELETE mongodb exampleSuggestions', () => {
+    it('should delete an existing example suggestion', (done) => {
+      getExampleSuggestions()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstExample = res.body[0];
+          deleteExampleSuggestion(firstExample.id)
+            .then((deleteRes) => {
+              expect(deleteRes.status).to.equal(200);
+              getExampleSuggestion(firstExample.id)
+                .end((_, searchExampleRes) => {
+                  expect(searchExampleRes.status).to.equal(400);
+                  expect(searchExampleRes.body.error).to.not.equal(undefined);
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should return an error for attempting to deleting a non-existing example suggestion', (done) => {
+      deleteExampleSuggestion(INVALID_ID)
+        .then((deleteRes) => {
+          expect(deleteRes.status).to.equal(400);
           done();
         });
     });

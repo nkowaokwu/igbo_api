@@ -5,7 +5,7 @@ const authorization = (permittedRoles) => (req, res, next) => {
   /* If the user's role is found in the array of permitted roles,
    * the user is granted access
    */
-  if (user && permittedRoles.includes(user.role)) {
+  if ((user && permittedRoles.includes(user.role)) || user.role === 'admin') {
     next();
   } else {
     res.status(403);
