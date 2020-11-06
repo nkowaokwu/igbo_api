@@ -5,12 +5,6 @@ import { map, compact, trim } from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import { EXAMPLE_SUGGESTIONS_API_URL } from '../config';
 
-const inputStyles = 'h-10 w-full border-current border-solid border border-gray-600 rounded-md px-3 py-5';
-const submitButtonStyles = 'h-10 mt-5 lg:h-10 w-full lg:w-32 bg-green-600 rounded text-gray-100';
-const cancelButtonStyles = 'h-10 mt-5 lg:h-10 lg:w-32 text-gray-600';
-const formHeader = 'text-xl mb-2 mt-5';
-const errorStyles = 'text-red-500 mt-3';
-
 const AddExample = ({
   onRequestClose,
   onSuccess,
@@ -56,11 +50,11 @@ const AddExample = ({
         {'Please provide an example, either in Igbo, or English, or both, that contains the associated word '}
         <span className="font-bold underline">{defaultValues?.word}</span>
       </p>
-      <h2 className={formHeader}>Igbo</h2>
+      <h2 className="form-header">Igbo</h2>
       <Controller
         as={(
           <input
-            className={`${inputStyles}`}
+            className="form-input"
             placeholder={`Example in Igbo using ${defaultValues?.word}`}
             data-test="igbo-input"
           />
@@ -70,13 +64,13 @@ const AddExample = ({
         defaultValue={defaultValues?.igbo || getValues().igbo}
       />
       {errors.igbo && (
-        <span className={errorStyles}>Either the Igbo or English sentence if required</span>
+        <span className="error">Either the Igbo or English sentence if required</span>
       )}
-      <h2 className={formHeader}>English</h2>
+      <h2 className="form-header">English</h2>
       <Controller
         as={(
           <input
-            className={inputStyles}
+            className="form-input"
             placeholder={`Example in English using ${defaultValues?.word}`}
             data-test="english-input"
           />
@@ -87,10 +81,10 @@ const AddExample = ({
       />
       <div className="flex flex-col items-start lg:items-end">
         <div className="flex flex-col w-full lg:flex-row-reverse lg:justify-start">
-          <button type="submit" className={submitButtonStyles}>Submit</button>
+          <button type="submit" className="button primary-button">Submit</button>
           <button
             type="button"
-            className={cancelButtonStyles}
+            className="button"
             onClick={() => {
               reset();
               onRequestClose();
