@@ -58,10 +58,57 @@ h1 {
   @apply px-2;
 }
 
+/* Form styles */
+.form-input {
+  @apply h-10;
+  @apply w-full;
+  @apply border-current;
+  @apply border-solid;
+  @apply border;
+  @apply border-gray-600;
+  @apply rounded-md;
+  @apply px-3;
+  @apply py-5;
+}
+
+.list-container {
+  @apply flex;
+  @apply items-center;
+  @apply mb-10;
+}
+
+.button {
+  @apply h-10;
+  @apply mt-5;
+  @apply text-gray-600;
+}
+
+.primary-button {
+  @apply bg-green-600;
+  @apply rounded;
+  @apply text-gray-100 !important;
+}
+
+.form-header {
+  @apply text-xl;
+  @apply mb-2;
+  @apply mt-5;
+}
+
+.error {
+  @apply text-red-500;
+  @apply mt-3;
+}
+
 /* Large (lg) */
 @media (min-width: 1024px) {
   .modal-container {
     @apply w-10/12;
+  }
+  .button {
+    @apply h-10;
+    @apply w-32;
+    @apply text-gray-600;
   }
   .responsive-container {
     min-width: 986px;
