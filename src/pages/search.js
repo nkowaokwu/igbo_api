@@ -8,7 +8,7 @@ import Word from '../components/Word';
 import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
 import getWord from '../API';
-import parseQueries from './utils';
+import parseQueries from '../utils/parseQueries';
 
 const search = ({ location, navigate }) => {
   const [queries, setQueries] = useState(location?.search ? parseQueries(location.search) : {});
