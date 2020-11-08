@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
+import sgMail from '@sendgrid/mail';
 import * as packageJson from '../package.json';
 import swaggerDocument from '../swagger.json';
+
+dotenv.config();
 
 // Database
 const DB_NAME = 'igbo_api';
@@ -28,4 +32,15 @@ export const SWAGGER_DOCS = docs;
 
 // API Homepage
 export const API_ROUTE = process.env.NODE_ENV === 'production' ? 'https://igboapi.com' : `http://localhost:${PORT}`;
-export const DICTIONARY_APP_URL = 'https://ijemmao.github.io/igbo_api';
+
+// Dictionary App
+export const DICTIONARY_APP_URL = process.env.NODE_ENV === 'production'
+  ? 'https://nkowaokwu.com'
+  : 'http://localhost:8000'; // A local instance of the dictionary app must be running
+
+// SendGrid API
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
+export const MERGED_SUGGESTION_TEMPLATE = process.env.MERGED_SUGGESTION_TEMPLATE || '';
+export const REJECTED_SUGGESTION_TEMPLATE = process.env.REJECTED_SUGGESTION_TEMPLATE || '';
+export const FROM_EMAIL = process.env.FROM_EMAIL || '';
+sgMail.setApiKey(SENDGRID_API_KEY);
