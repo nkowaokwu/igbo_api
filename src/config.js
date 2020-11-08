@@ -1,9 +1,12 @@
-import dotenv from 'dotenv';
-import sgMail from '@sendgrid/mail';
 import * as packageJson from '../package.json';
 import swaggerDocument from '../swagger.json';
 
-dotenv.config();
+const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
+const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
+
+if (dotenv) {
+  dotenv.config();
+}
 
 // Database
 const DB_NAME = 'igbo_api';
@@ -43,4 +46,7 @@ export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const MERGED_SUGGESTION_TEMPLATE = process.env.MERGED_SUGGESTION_TEMPLATE || '';
 export const REJECTED_SUGGESTION_TEMPLATE = process.env.REJECTED_SUGGESTION_TEMPLATE || '';
 export const FROM_EMAIL = process.env.FROM_EMAIL || '';
-sgMail.setApiKey(SENDGRID_API_KEY);
+
+if (sgMail) {
+  sgMail.setApiKey(SENDGRID_API_KEY);
+}

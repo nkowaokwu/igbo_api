@@ -1,10 +1,12 @@
 import { omit } from 'lodash';
-import sgMail from '@sendgrid/mail';
 import {
   MERGED_SUGGESTION_TEMPLATE,
   REJECTED_SUGGESTION_TEMPLATE,
   FROM_EMAIL,
 } from '../config';
+
+const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
+
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields) => ({
   from: FROM_EMAIL,
