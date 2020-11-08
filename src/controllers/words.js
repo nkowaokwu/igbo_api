@@ -2,6 +2,7 @@ import { assign, map } from 'lodash';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
+import SuggestionTypes from '../shared/constants/suggestionTypes';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
@@ -15,6 +16,8 @@ import {
 import { createExample } from './examples';
 import { findGenericWordById } from './genericWords';
 import { findWordSuggestionById } from './wordSuggestions';
+import { sendMergedEmail } from './mail';
+import { DICTIONARY_APP_URL } from '../config';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
@@ -129,7 +132,7 @@ export const createWord = async (data) => {
 };
 
 /* Merges new data into an existing Word document */
-const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
+const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => {
   findWordById(data.originalWordID)
     .then((word) => {
       if (!word) {
@@ -147,8 +150,8 @@ const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => (
     })
     .catch((error) => {
       throw new Error(error.message);
-    })
-);
+    });
+};
 
 /* Creates a new Word document from an existing WordSuggestion or GenericWord document */
 const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
@@ -203,11 +206,18 @@ export const mergeWord = async (req, res) => {
   }
 
   try {
-    if (data.originalWordId) {
-      const result = await mergeIntoWord({ data, genericWord, wordSuggestion });
-      return res.send(result);
+    const result = data.originWordId
+      ? await mergeIntoWord({ data, genericWord, wordSuggestion })
+      : await createWordFromSuggestion({ data, genericWord, wordSuggestion });
+    /* Sends confirmation merged email to user if they provided an email */
+    if (result.userEmail) {
+      sendMergedEmail({
+        to: result.userEmail,
+        suggestionType: SuggestionTypes.WORD,
+        submissionLink: `${DICTIONARY_APP_URL}/word?word=${result.word}`,
+        ...result,
+      });
     }
-    const result = await createWordFromSuggestion({ data, genericWord, wordSuggestion });
     return res.send(result);
   } catch (error) {
     res.status(400);

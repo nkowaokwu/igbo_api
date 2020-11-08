@@ -6,8 +6,12 @@ import {
   trim,
 } from 'lodash';
 import Example from '../models/Example';
+import Word from '../models/Word';
+import SuggestionTypes from '../shared/constants/suggestionTypes';
+import { DICTIONARY_APP_URL } from '../config';
 import { prepResponse, handleQueries, updateDocumentMerge } from './utils';
 import { findExampleSuggestionById } from './exampleSuggestions';
+import { sendMergedEmail } from './mail';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -109,11 +113,19 @@ export const mergeExample = async (req, res) => {
   }
 
   try {
-    if (data.originalExampleId) {
-      const result = await mergeIntoExample({ data, exampleSuggestion });
-      return res.send(result);
+    const result = data.originExampleId
+      ? await mergeIntoExample({ data, exampleSuggestion })
+      : await createExampleFromSuggestion({ data, exampleSuggestion });
+    /* Sends confirmation merged email to user if they provided an email */
+    if (result.userEmail) {
+      const word = await Word.findById(result.associatedWords[0] || null) || {};
+      sendMergedEmail({
+        to: result.userEmail,
+        suggestionType: SuggestionTypes.EXAMPLE,
+        submissionLink: `${DICTIONARY_APP_URL}/word?word=${word.word}`,
+        ...result,
+      });
     }
-    const result = await createExampleFromSuggestion({ data, exampleSuggestion });
     return res.send(result);
   } catch (error) {
     res.status(400);

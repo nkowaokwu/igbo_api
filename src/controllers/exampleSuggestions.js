@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import { assign, some } from 'lodash';
+import SuggestionTypes from '../shared/constants/suggestionTypes';
 import ExampleSuggestion from '../models/ExampleSuggestion';
 import { prepResponse, handleQueries } from './utils';
+import { sendRejectedEmail } from './mail';
 
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = (req, res) => {
@@ -96,6 +98,14 @@ export const deleteExampleSuggestion = (req, res) => {
       if (!exampleSuggestion) {
         res.status(400);
         return res.send({ error: 'No example suggestion exists with the provided id.' });
+      }
+      /* Sends rejection email to user if they provided an email and the exampleSuggestion isn't merged */
+      if (exampleSuggestion.userEmail && !exampleSuggestion.merged) {
+        sendRejectedEmail({
+          to: exampleSuggestion.userEmail,
+          suggestionType: SuggestionTypes.WORD,
+          ...exampleSuggestion,
+        });
       }
       return res.send(exampleSuggestion);
     })

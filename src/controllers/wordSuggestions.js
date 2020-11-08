@@ -9,6 +9,8 @@ import {
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
 import { prepResponse, handleQueries } from './utils';
+import SuggestionTypes from '../shared/constants/suggestionTypes';
+import { sendRejectedEmail } from './mail';
 
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
@@ -109,6 +111,14 @@ export const deleteWordSuggestion = (req, res) => {
       if (!wordSuggestion) {
         res.status(400);
         return res.send({ error: 'No word suggestion exists with the provided id.' });
+      }
+      /* Sends rejection email to user if they provided an email and the wordSuggestion isn't merged */
+      if (wordSuggestion.userEmail && !wordSuggestion.merged) {
+        sendRejectedEmail({
+          to: wordSuggestion.userEmail,
+          suggestionType: SuggestionTypes.WORD,
+          ...wordSuggestion,
+        });
       }
       return res.send(wordSuggestion);
     })

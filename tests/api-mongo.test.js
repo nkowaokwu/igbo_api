@@ -16,6 +16,8 @@ import {
   EXCLUDE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
+  MESSAGE,
+  INVALID_MESSAGE,
 } from './shared/constants';
 import {
   malformedWordData,
@@ -34,6 +36,7 @@ import {
   getGenericWord,
   getGenericWords,
   updateGenericWord,
+  sendSendGridEmail,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -200,6 +203,16 @@ describe('MongoDB Words', () => {
                 });
             });
         });
+    });
+
+    it('should send an email with valid message object', (done) => {
+      sendSendGridEmail(MESSAGE)
+        .then(() => done());
+    });
+
+    it('should return an error with invalid message object', (done) => {
+      sendSendGridEmail(INVALID_MESSAGE)
+        .catch(() => done());
     });
 
     it('should throw an error for malformed new word data', (done) => {
