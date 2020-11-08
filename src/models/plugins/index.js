@@ -1,4 +1,5 @@
 /* Code from https://stackoverflow.com/a/30435676 */
+/* Code from https://stackoverflow.com/q/30431262 */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import mongoose from 'mongoose';
@@ -17,3 +18,12 @@ export const toJSONPlugin = (schema) => {
     return json;
   };
 };
+
+export const toObjectPlugin = ({
+  transform: (doc, ret) => {
+    // remove the _id and __v of every document before returning the result
+    ret.id = doc.id.toString();
+    delete ret._id;
+    delete ret.__v;
+  },
+});

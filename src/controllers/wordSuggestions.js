@@ -6,17 +6,26 @@ import {
   partial,
   map,
   trim,
+  pick,
+  differenceBy,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
+import ExampleSuggestion from '../models/ExampleSuggestion';
+import { createExampleSuggestion, updateExampleSuggestion, removeExampleSuggestion } from './exampleSuggestions';
 import { prepResponse, handleQueries } from './utils';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import { sendRejectedEmail } from './mail';
 
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
+/* Picks out the examples key in the data payload */
+const getExamplesFromClientData = (data) => (pick(data, ['examples']) || {}).examples || [];
+
 /* Creates a new WordSuggestion document in the database */
-export const postWordSuggestion = (req, res) => {
+export const postWordSuggestion = async (req, res) => {
   const { body: data } = req;
+
+  const clientExamples = getExamplesFromClientData(data);
 
   if (data.originalWordId && !mongoose.Types.ObjectId.isValid(data.originalWordId)) {
     res.status(400);
@@ -29,9 +38,12 @@ export const postWordSuggestion = (req, res) => {
 
   const newWordSuggestion = new WordSuggestion(data);
   return newWordSuggestion.save()
-    .then((wordSuggestion) => (
-      res.send(wordSuggestion)
-    ))
+    .then(async (wordSuggestion) => {
+      await Promise.all(map(clientExamples, async (example) => (
+        createExampleSuggestion({ ...example, associatedWords: [wordSuggestion.id] })
+      )));
+      return res.send(wordSuggestion);
+    })
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while saving, double check your provided data' });
@@ -42,9 +54,50 @@ export const findWordSuggestionById = (id) => (
   WordSuggestion.findById(id)
 );
 
+/* Adds the example key on each wordSuggestion returned back to the client */
+const placeExampleSuggestionsOnWordSuggestion = async (wordSuggestion) => {
+  const LEAN_EXAMPLE_KEYS = 'igbo english associatedWords id';
+  const examples = await ExampleSuggestion
+    .find({ associatedWords: wordSuggestion.id })
+    .select(LEAN_EXAMPLE_KEYS);
+  return assign(wordSuggestion, { examples }).save();
+};
+
+/* Either deletes exampleSuggestion or updates exampleSuggestion associatedWords */
+const handleDeletingExampleSuggestions = async ({ wordSuggestion, clientExamples }) => {
+  const examples = await ExampleSuggestion.find({ associatedWords: wordSuggestion.id });
+  /* An example on the client side has been removed */
+  if (examples.length > clientExamples.length) {
+    const examplesToDelete = differenceBy(examples, clientExamples, 'id');
+    /* Steps through all examples to either delete exampleSuggestion or
+      * updates the associatedWords list of an existing exampleSuggestion
+      */
+    await Promise.all(map(examplesToDelete, async (exampleToDelete) => {
+      const LAST_ASSOCIATED_WORD = 1;
+      /* Deletes example if there's only one last associated word */
+      if (exampleToDelete.associatedWords.length <= LAST_ASSOCIATED_WORD
+        && exampleToDelete.associatedWords.includes(wordSuggestion.id)) {
+        return removeExampleSuggestion(exampleToDelete.id);
+      }
+
+      /* Filters out wordSuggestion is there are multiple associatedWords */
+      const updatedExample = {
+        ...exampleToDelete,
+        associatedWords: exampleToDelete.associatedWords.filter((associatedWord) => (
+          associatedWord !== wordSuggestion.id
+        )),
+      };
+      return updateExampleSuggestion(exampleToDelete.id, updatedExample);
+    }));
+  }
+};
+
 /* Updates an existing WordSuggestion object */
 export const putWordSuggestion = (req, res) => {
   const { body: data, params: { id } } = req;
+
+  const clientExamples = getExamplesFromClientData(data);
+
   if (!every(REQUIRE_KEYS, partial(has, data))) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
@@ -61,11 +114,23 @@ export const putWordSuggestion = (req, res) => {
         return res.send({ error: 'Word suggestion doesn\'t exist' });
       }
       const updatedWordSuggestion = assign(wordSuggestion, data);
-      return res.send(await updatedWordSuggestion.save());
+      handleDeletingExampleSuggestions({ wordSuggestion, clientExamples });
+
+      /* Updates all the word's children exampleSuggestions */
+      await Promise.all(map(clientExamples, (example) => (
+        !example.id
+          ? createExampleSuggestion({
+            ...example,
+            exampleForWordSuggestion: true,
+            associatedWords: [wordSuggestion.id],
+          }) : updateExampleSuggestion({ id: example.id, data: example })
+      )));
+      const savedWordSuggestions = await placeExampleSuggestionsOnWordSuggestion(updatedWordSuggestion);
+      return res.send(savedWordSuggestions);
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(400);
-      return res.send({ error: 'An error has occurred while updating, double check your provided data' });
+      return res.send({ error: err.message });
     });
 };
 
@@ -73,29 +138,33 @@ export const putWordSuggestion = (req, res) => {
 export const getWordSuggestions = (req, res) => {
   const { regexKeyword, ...rest } = handleQueries(req.query);
   WordSuggestion
-    .find({ word: regexKeyword })
+    .where('word').equals(regexKeyword)
     .sort({ approvals: 'desc' })
-    .then((wordSuggestions) => (
-      prepResponse({ res, docs: wordSuggestions, ...rest })
-    ))
-    .catch(() => {
+    .then(async (wordSuggestions) => {
+      /* Places the exampleSuggestions on the corresponding wordSuggestions */
+      const wordSuggestionsWithExamples = await Promise.all(
+        map(wordSuggestions, placeExampleSuggestionsOnWordSuggestion),
+      );
+      return prepResponse({ res, docs: await wordSuggestionsWithExamples, ...rest });
+    })
+    .catch((err) => {
       res.status(400);
-      return res.send({
-        error: 'An error has occurred while returning word suggestions',
-      });
+      return res.send({ error: err.message });
     });
 };
 
 /* Returns a single WordSuggestion by using an id */
 export const getWordSuggestion = (req, res) => {
   const { id } = req.params;
-  return WordSuggestion.findById(id)
-    .then((wordSuggestion) => {
+  return WordSuggestion
+    .findById(id)
+    .then(async (wordSuggestion) => {
       if (!wordSuggestion) {
         res.status(400);
         return res.send({ error: 'No word suggestion exists with the provided id.' });
       }
-      return res.send(wordSuggestion);
+      const wordSuggestionWithExamples = await placeExampleSuggestionsOnWordSuggestion(wordSuggestion);
+      return res.send(wordSuggestionWithExamples);
     })
     .catch(() => {
       res.status(400);

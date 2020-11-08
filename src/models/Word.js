@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin } from './plugins';
 
 const { Schema, Types } = mongoose;
 const wordSchema = new Schema({
@@ -11,7 +11,7 @@ const wordSchema = new Schema({
   normalized: { type: String, default: '' },
   frequency: { type: Number },
   stems: { type: [{ type: String }], default: [] },
-});
+}, { toObject: toObjectPlugin });
 
 toJSONPlugin(wordSchema);
 
