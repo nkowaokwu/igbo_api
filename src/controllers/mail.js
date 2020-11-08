@@ -12,8 +12,8 @@ const constructMessage = (messageFields) => ({
 });
 
 /* Wrapper around SendGrid function to handle errors */
-const sendEmail = (message) => (
-  sgMail.send(message)
+export const sendEmail = (message) => (
+  process.env.NODE_ENV !== 'test' ? sgMail.send(message)
     .then(() => {
       if (process.env.NODE_ENV !== 'production') {
         console.log('Email successfully sent.');
@@ -25,7 +25,12 @@ const sendEmail = (message) => (
         return Promise.resolve(err);
       }
       throw err;
-    })
+    }) : (async () => {
+    if (!message.to) {
+      throw new Error('\'to\' field must be defined');
+    }
+    return Promise.resolve();
+  })()
 );
 
 /* Email sent when an editor clicks the approve button */

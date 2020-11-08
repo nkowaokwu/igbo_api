@@ -53,3 +53,7 @@ export const WORD_SUGGESTION_KEYS = [
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const INVALID_ID = 'fdsafdsad';
 export const NONEXISTENT_ID = new mongoose.Types.ObjectId();
+export const MESSAGE = {
+  to: 'test@example.com',
+};
+export const INVALID_MESSAGE = {};

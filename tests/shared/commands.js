@@ -3,6 +3,7 @@ import server from '../../src/server';
 import { API_ROUTE, TEST_ROUTE, API_URL } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
+import { sendEmail } from '../../src/controllers/mail';
 import mockedData from '../__mocks__/data.mock.json';
 
 export const getWordSuggestions = (query = {}) => (
@@ -189,6 +190,8 @@ export const searchMockedTerm = (term) => {
   const regexTerm = createRegExp(term);
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
+
+export const sendSendGridEmail = (message) => sendEmail(message);
 
 export const getAPIUrlRoute = (route = '/') => (
   chai
