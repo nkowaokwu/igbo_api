@@ -21,6 +21,15 @@ const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 /* Picks out the examples key in the data payload */
 const getExamplesFromClientData = (data) => (pick(data, ['examples']) || {}).examples || [];
 
+/* Adds the example key on each wordSuggestion returned back to the client */
+const placeExampleSuggestionsOnWordSuggestion = async (wordSuggestion) => {
+  const LEAN_EXAMPLE_KEYS = 'igbo english associatedWords id';
+  const examples = await ExampleSuggestion
+    .find({ associatedWords: wordSuggestion.id })
+    .select(LEAN_EXAMPLE_KEYS);
+  return { ...wordSuggestion.toObject(), examples };
+};
+
 /* Creates a new WordSuggestion document in the database */
 export const postWordSuggestion = async (req, res) => {
   const { body: data } = req;
@@ -42,7 +51,8 @@ export const postWordSuggestion = async (req, res) => {
       await Promise.all(map(clientExamples, async (example) => (
         createExampleSuggestion({ ...example, associatedWords: [wordSuggestion.id] })
       )));
-      return res.send(wordSuggestion);
+      const savedWordSuggestion = await placeExampleSuggestionsOnWordSuggestion(wordSuggestion);
+      return res.send(savedWordSuggestion);
     })
     .catch(() => {
       res.status(400);
@@ -54,15 +64,6 @@ export const findWordSuggestionById = (id) => (
   WordSuggestion.findById(id)
 );
 
-/* Adds the example key on each wordSuggestion returned back to the client */
-const placeExampleSuggestionsOnWordSuggestion = async (wordSuggestion) => {
-  const LEAN_EXAMPLE_KEYS = 'igbo english associatedWords id';
-  const examples = await ExampleSuggestion
-    .find({ associatedWords: wordSuggestion.id })
-    .select(LEAN_EXAMPLE_KEYS);
-  return assign(wordSuggestion, { examples }).save();
-};
-
 /* Either deletes exampleSuggestion or updates exampleSuggestion associatedWords */
 const handleDeletingExampleSuggestions = async ({ wordSuggestion, clientExamples }) => {
   const examples = await ExampleSuggestion.find({ associatedWords: wordSuggestion.id });
@@ -70,25 +71,16 @@ const handleDeletingExampleSuggestions = async ({ wordSuggestion, clientExamples
   if (examples.length > clientExamples.length) {
     const examplesToDelete = differenceBy(examples, clientExamples, 'id');
     /* Steps through all examples to either delete exampleSuggestion or
-      * updates the associatedWords list of an existing exampleSuggestion
-      */
-    await Promise.all(map(examplesToDelete, async (exampleToDelete) => {
+     * updates the associatedWords list of an existing exampleSuggestion
+     */
+    map(examplesToDelete, (exampleToDelete) => {
       const LAST_ASSOCIATED_WORD = 1;
       /* Deletes example if there's only one last associated word */
       if (exampleToDelete.associatedWords.length <= LAST_ASSOCIATED_WORD
         && exampleToDelete.associatedWords.includes(wordSuggestion.id)) {
-        return removeExampleSuggestion(exampleToDelete.id);
+        removeExampleSuggestion(exampleToDelete.id);
       }
-
-      /* Filters out wordSuggestion is there are multiple associatedWords */
-      const updatedExample = {
-        ...exampleToDelete,
-        associatedWords: exampleToDelete.associatedWords.filter((associatedWord) => (
-          associatedWord !== wordSuggestion.id
-        )),
-      };
-      return updateExampleSuggestion(exampleToDelete.id, updatedExample);
-    }));
+    });
   }
 };
 
@@ -114,7 +106,7 @@ export const putWordSuggestion = (req, res) => {
         return res.send({ error: 'Word suggestion doesn\'t exist' });
       }
       const updatedWordSuggestion = assign(wordSuggestion, data);
-      handleDeletingExampleSuggestions({ wordSuggestion, clientExamples });
+      await handleDeletingExampleSuggestions({ wordSuggestion, clientExamples });
 
       /* Updates all the word's children exampleSuggestions */
       await Promise.all(map(clientExamples, (example) => (

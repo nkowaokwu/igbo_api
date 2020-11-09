@@ -103,12 +103,18 @@ const updatedGenericWordData = {
   denials: 1,
 };
 
+const wordSuggestionWithNestedExampleSuggestionData = {
+  ...wordSuggestionData,
+  examples: [exampleSuggestionData],
+};
+
 export {
   wordSuggestionId,
   wordSuggestionData,
   wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
+  wordSuggestionWithNestedExampleSuggestionData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,

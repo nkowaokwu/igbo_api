@@ -10,6 +10,7 @@ import {
   updateWordSuggestion,
   getWordSuggestions,
   getWordSuggestion,
+  getExampleSuggestion,
 } from './shared/commands';
 import {
   wordSuggestionId,
@@ -17,6 +18,7 @@ import {
   wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
+  wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
 import { WORD_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -30,6 +32,16 @@ describe('MongoDB Word Suggestions', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.id).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should save submitted word suggestion with a nested example suggestion', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.id).to.not.equal(undefined);
+          expect(res.body.examples).to.have.lengthOf(1);
           done();
         });
     });
@@ -70,6 +82,109 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
+    it('should update nested exampleSuggestion inside wordSuggestion', (done) => {
+      const updatedIgbo = 'updated example igbo text';
+      const updatedEnglish = 'updated example english text';
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const updatedExampleSuggestion = { ...res.body.examples[0], igbo: updatedIgbo, english: updatedEnglish };
+          const updatedWordSuggestion = {
+            ...wordSuggestionWithNestedExampleSuggestionData,
+            examples: [updatedExampleSuggestion],
+          };
+          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.examples[0].igbo).to.equal(updatedIgbo);
+              expect(result.body.examples[0].english).to.equal(updatedEnglish);
+              done();
+            });
+        });
+    });
+
+    it('should update nested exampleSuggestion inside wordSuggestion despite invalid associatedWords', (done) => {
+      const updatedIgbo = 'updated example igbo text';
+      const updatedEnglish = 'updated example english text';
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const updatedExampleSuggestion = {
+            ...res.body.examples[0],
+            igbo: updatedIgbo,
+            english: updatedEnglish,
+            associateWords: [INVALID_ID],
+          };
+          const updatedWordSuggestion = {
+            ...wordSuggestionWithNestedExampleSuggestionData,
+            examples: [updatedExampleSuggestion],
+          };
+          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.examples[0].igbo).to.equal(updatedIgbo);
+              expect(result.body.examples[0].english).to.equal(updatedEnglish);
+              done();
+            });
+        });
+    });
+
+    it('should delete nested exampleSuggestion inside wordSuggestion', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const exampleSuggestionToDeleteId = res.body.examples[0].id;
+          const updatedWordSuggestion = {
+            ...wordSuggestionWithNestedExampleSuggestionData,
+            examples: [],
+          };
+          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.examples).to.have.lengthOf(0);
+              getExampleSuggestion(exampleSuggestionToDeleteId)
+                .end((_, noExampleSuggestionRes) => {
+                  expect(noExampleSuggestionRes.status).to.equal(400);
+                  expect(noExampleSuggestionRes.body.error).to.not.equal(undefined);
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should throw an error because the nested example suggestion has an invalid id', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const updatedExampleSuggestion = { ...res.body.examples[0], id: INVALID_ID };
+          const updatedWordSuggestion = {
+            ...wordSuggestionWithNestedExampleSuggestionData,
+            examples: [updatedExampleSuggestion],
+          };
+          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.body.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
+
+    it('should throw an error when new yet identical exampleSuggestion data is provided', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const duplicateExampleSuggestionsInWordSuggsetion = res.body;
+          const { igbo, english } = res.body.examples[0];
+          duplicateExampleSuggestionsInWordSuggsetion.examples.push({ igbo, english });
+          updateWordSuggestion(res.body.id, duplicateExampleSuggestionsInWordSuggsetion)
+            .end((_, result) => {
+              expect(result.status).to.equal(400);
+              expect(result.body.error).to.not.equal(undefined);
+              done();
+            });
+        });
+    });
     it('should return an example error because of malformed data', (done) => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {

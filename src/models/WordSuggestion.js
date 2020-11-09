@@ -11,7 +11,6 @@ const wordSuggestionSchema = new Schema({
     validate: (v) => Array.isArray(v) && v.length > 0,
   },
   variations: { type: [{ type: String }], default: [] },
-  examples: { type: [{ type: Types.ObjectId, ref: 'ExampleSuggestion' }], default: [] },
   editorsNotes: { type: String, default: '' },
   userComments: { type: String, default: '' },
   userEmail: { type: String, default: '' },
