@@ -49,7 +49,11 @@ export const postWordSuggestion = async (req, res) => {
   return newWordSuggestion.save()
     .then(async (wordSuggestion) => {
       await Promise.all(map(clientExamples, async (example) => (
-        createExampleSuggestion({ ...example, associatedWords: [wordSuggestion.id] })
+        createExampleSuggestion({
+          ...example,
+          exampleForWordSuggestion: true,
+          associatedWords: [wordSuggestion.id],
+        })
       )));
       const savedWordSuggestion = await placeExampleSuggestionsOnWordSuggestion(wordSuggestion);
       return res.send(savedWordSuggestion);
