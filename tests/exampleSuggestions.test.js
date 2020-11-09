@@ -2,6 +2,7 @@ import chai from 'chai';
 import {
   forEach,
   forIn,
+  every,
   isEqual,
 } from 'lodash';
 import {
@@ -10,12 +11,14 @@ import {
   getExampleSuggestions,
   getExampleSuggestion,
   deleteExampleSuggestion,
+  suggestNewWord,
 } from './shared/commands';
 import {
   exampleSuggestionData,
   exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
+  wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
 import { EXAMPLE_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -72,7 +75,7 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return an example error because of malformed data', (done) => {
+    it('should return an example error because of malformed data after creating and example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
@@ -280,6 +283,21 @@ describe('MongoDB Example Suggestions', () => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key);
           done();
+        });
+    });
+
+    it('should return filtered body excluding nested exampleSuggestions within wordSuggestions', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const wordSuggestionWord = res.body.word;
+          const nestedExampleSuggestionId = res.body.examples[0].id;
+          getExampleSuggestions({ keyword: wordSuggestionWord })
+            .end((_, result) => {
+              expect(result.status).to.equal(200);
+              expect(every(result.body, (exampleSuggestion) => exampleSuggestion.id !== nestedExampleSuggestionId));
+              done();
+            });
         });
     });
   });

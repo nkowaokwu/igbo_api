@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin } from './plugins';
 
 const { Schema, Types } = mongoose;
 const genericWordSchema = new Schema({
@@ -17,7 +17,7 @@ const genericWordSchema = new Schema({
   denials: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
   merged: { type: Types.ObjectId, ref: 'Word', default: null },
-});
+}, { toObject: toObjectPlugin });
 
 toJSONPlugin(genericWordSchema);
 
