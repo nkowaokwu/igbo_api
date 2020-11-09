@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { map } from 'lodash';
-import getWord from '../API';
+import { getWord } from '../API';
 import Navbar from '../components/Navbar';
 import NoWord from '../components/NoWord';
 import Modal from '../components/Modal';

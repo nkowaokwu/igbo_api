@@ -73,8 +73,8 @@ const Word = ({ word }) => {
             {word.examples.length ? (
               <div className="pl-3 mt-5">
                 <h1 className="text-2xl lg:text-xl text-gray-800">Example</h1>
-                <h2 className="text-l text-gray-800">{word.examples[0].igbo}</h2>
-                <h2 className="text-l text-gray-600">{word.examples[0].english}</h2>
+                <h2 className="text-gray-800">{word.examples[0].igbo}</h2>
+                <h2 className="text-gray-600">{word.examples[0].english}</h2>
               </div>
             ) : null}
           </div>

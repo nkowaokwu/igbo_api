@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { map, compact, trim } from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
-import { WORD_SUGGESTIONS_API_URL } from '../config';
+import { postWordSuggestion } from '../API';
 import AddIcon from '../assets/icons/add.svg';
 import DeleteIcon from '../assets/icons/delete.svg';
 
@@ -30,8 +29,7 @@ const AddWord = ({
       variations: compact(map(data.variations, (variation) => trim(variation))),
       originalWordId: defaultValues?.id || null,
     };
-    axios
-      .post(WORD_SUGGESTIONS_API_URL, cleanedData)
+    postWordSuggestion(cleanedData)
       .then(() => {
         reset();
         onSuccess({ subtitle: 'You\'re word edit has been sent for review by editors.' });
@@ -188,6 +186,17 @@ const AddWord = ({
           <p className="text-gray-600">No variations</p>
         </div>
       )}
+      <h2 className="form-header">Email</h2>
+      <p className="form-subheader">
+        By providing your email, you will get notifications about the status of your submission.
+      </p>
+      <Controller
+        as={<input className="form-input" placeholder="uche@gmail.com" data-test="email-input" />}
+        name="userEmail"
+        type="email"
+        control={control}
+        defaultValue={defaultValues?.userEmail || getValues().userEmail}
+      />
       <div className="flex flex-col items-start lg:items-end">
         <div className="flex flex-col w-full lg:flex-row-reverse lg:justify-start">
           <button type="submit" className="button primary-button">Submit</button>

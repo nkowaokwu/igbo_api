@@ -27,7 +27,7 @@ const Result = ({
   <div className="flex flex-col w-full justify-center items-center" data-test={`result-${status}`}>
     <Icon status={status} />
     <h2 className="text-gray-800 text-2xl mt-5">{title}</h2>
-    <h3 className="text-gray-600 text-l mt-5">{subtitle}</h3>
+    <h3 className="text-gray-600 mt-5">{subtitle}</h3>
     <button
       className="border-current border-solid border border-green-600 py-2 px-3 rounded text-green-500 mt-5"
       type="button"

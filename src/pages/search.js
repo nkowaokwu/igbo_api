@@ -7,7 +7,7 @@ import NoWord from '../components/NoWord';
 import Word from '../components/Word';
 import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
-import getWord from '../API';
+import { getWord } from '../API';
 import parseQueries from '../utils/parseQueries';
 
 const search = ({ location, navigate }) => {

@@ -95,6 +95,11 @@ h1 {
   @apply mt-5;
 }
 
+.form-subheader {
+  @apply mb-3;
+  @apply mt-2;
+}
+
 .error {
   @apply text-red-500;
   @apply mt-3;
