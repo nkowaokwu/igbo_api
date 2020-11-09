@@ -84,6 +84,7 @@ const AddExample = ({
       <Controller
         as={<input className="form-input" placeholder="uche@gmail.com" data-test="email-input" />}
         name="userEmail"
+        data-test="user-email"
         type="email"
         control={control}
         defaultValue={defaultValues?.userEmail || getValues().userEmail}

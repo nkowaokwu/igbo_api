@@ -1,3 +1,4 @@
+const DETACH_DELAY = 1000;
 describe('Example', () => {
   beforeEach(() => {
     cy.server();
@@ -57,6 +58,18 @@ describe('Example', () => {
       cy.get('button').contains('Back to Form').click();
       cy.get('[data-test="igbo-input"]');
       cy.get('[data-test="english-input"]');
+    });
+
+    it('handles a user email', () => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.wait(DETACH_DELAY); // eslint-disable-line
+      cy.get('[data-test="select-actions"]').eq(1).click();
+      cy.contains('Suggest an Edit').click();
+      cy.get('[data-test="suggestion-modal"]');
+      cy.get('[data-test="user-email"]').type('test@example.com');
+      cy.contains('Submit').click();
+      cy.get('[data-test="suggestion-modal"]');
     });
   });
 });

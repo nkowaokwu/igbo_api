@@ -1,5 +1,6 @@
 import wordsResponse from '../support/constants';
 
+const DETACH_DELAY = 1000;
 describe('Word', () => {
   beforeEach(() => {
     cy.server();
@@ -173,6 +174,18 @@ describe('Word', () => {
       cy.get('[data-test="suggestion-modal"]').find('button').eq(0).click();
       cy.get('[data-test="select-actions"]').first().click();
       cy.contains('Create an Example').click();
+      cy.get('[data-test="suggestion-modal"]');
+    });
+
+    it('handles a user email', () => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.wait(DETACH_DELAY); // eslint-disable-line
+      cy.get('[data-test="select-actions"]').first().click();
+      cy.contains('Suggest an Edit').click();
+      cy.get('[data-test="suggestion-modal"]');
+      cy.get('[data-test="user-email"]').type('test@example.com');
+      cy.contains('Submit').click();
       cy.get('[data-test="suggestion-modal"]');
     });
   });

@@ -40,7 +40,7 @@ const AddWord = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form data-test="add-word-form" onSubmit={handleSubmit(onSubmit)}>
       <p className="mt-2">
         {`By either suggesting a new word or editing an existing one, 
         you are helping in advancing learning materials for the Igbo language.`}
@@ -194,6 +194,7 @@ const AddWord = ({
         as={<input className="form-input" placeholder="uche@gmail.com" data-test="email-input" />}
         name="userEmail"
         type="email"
+        data-test="user-email"
         control={control}
         defaultValue={defaultValues?.userEmail || getValues().userEmail}
       />
