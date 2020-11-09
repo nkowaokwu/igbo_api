@@ -292,11 +292,18 @@ describe('MongoDB Example Suggestions', () => {
           expect(res.status).to.equal(200);
           const wordSuggestionWord = res.body.word;
           const nestedExampleSuggestionId = res.body.examples[0].id;
-          getExampleSuggestions({ keyword: wordSuggestionWord })
-            .end((_, result) => {
+          getExampleSuggestion(nestedExampleSuggestionId)
+            .then((result) => {
               expect(result.status).to.equal(200);
-              expect(every(result.body, (exampleSuggestion) => exampleSuggestion.id !== nestedExampleSuggestionId));
-              done();
+              expect(result.body.exampleForWordSuggestion).to.equal(true);
+              getExampleSuggestions({ keyword: wordSuggestionWord })
+                .end((_, exampleSuggestionsRes) => {
+                  expect(exampleSuggestionsRes.status).to.equal(200);
+                  expect(every(exampleSuggestionsRes.body, (exampleSuggestion) => (
+                    exampleSuggestion.id !== nestedExampleSuggestionId
+                  )));
+                  done();
+                });
             });
         });
     });
