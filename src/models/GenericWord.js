@@ -21,4 +21,11 @@ const genericWordSchema = new Schema({
 
 toJSONPlugin(genericWordSchema);
 
+genericWordSchema.pre('findOneAndDelete', async function (next) {
+  const genericWord = await this.model.findOne(this.getQuery());
+  await mongoose.model('ExampleSuggestion')
+    .deleteMany({ associatedWords: genericWord.id });
+  next();
+});
+
 export default mongoose.model('GenericWord', genericWordSchema);

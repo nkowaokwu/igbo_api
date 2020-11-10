@@ -1,8 +1,14 @@
 import mongoose from 'mongoose';
-import { assign, some, map } from 'lodash';
+import {
+  assign,
+  some,
+  map,
+  uniq,
+} from 'lodash';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
+import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { prepResponse, handleQueries } from './utils';
+import { prepResponse, handleQueries } from './utils/index';
 import { sendRejectedEmail } from './mail';
 
 export const createExampleSuggestion = async (data) => {
@@ -19,7 +25,9 @@ export const createExampleSuggestion = async (data) => {
       .find({})
       .where('igbo').equals(data.igbo)
       .where('english').equals(data.english)
-      .where('associatedWords').in(associatedWordId);
+      .where('associatedWords').in(associatedWordId)
+      .where('originalExampleId').equals(null)
+      .where('merged').equals(null);
 
     if (identicalExampleSuggestions.length) {
       const exampleSuggestionIds = map(identicalExampleSuggestions, (exampleSuggestion) => exampleSuggestion.id);
@@ -40,6 +48,19 @@ export const postExampleSuggestion = async (req, res) => {
   const { body: data } = req;
 
   try {
+    if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+      throw new Error('Duplicates are not allows in associated words');
+    }
+
+    // TODO: handle duplicated error handling
+    await Promise.all(
+      map(data.associatedWords, async (associatedWordId) => {
+        if (!(await Word.findById(associatedWordId))) {
+          throw new Error('Example suggestion associated words can only contain Word ids');
+        }
+      }),
+    );
+
     const createdExampleSuggestion = createExampleSuggestion(data);
     return res.send(await createdExampleSuggestion);
   } catch (err) {
@@ -66,12 +87,23 @@ export const updateExampleSuggestion = ({ id, data }) => (
 export const putExampleSuggestion = async (req, res) => {
   const { body: data, params: { id } } = req;
 
-  if (!data.igbo && !data.english) {
-    res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
-  }
-
   try {
+    if (!data.igbo && !data.english) {
+      throw new Error('Required information is missing, double check your provided data');
+    }
+
+    if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+      throw new Error('Duplicates are not allows in associated words');
+    }
+
+    await Promise.all(
+      map(data.associatedWords, async (associatedWordId) => {
+        if (!(await Word.findById(associatedWordId))) {
+          throw new Error('Example suggestion associated words can only contain Word ids');
+        }
+      }),
+    );
+
     const updatedExampleSuggestion = updateExampleSuggestion({ id, data });
     return res.send(await updatedExampleSuggestion);
   } catch (err) {
@@ -86,6 +118,7 @@ export const getExampleSuggestions = (req, res) => {
   return ExampleSuggestion
     .find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
     .where('exampleForWordSuggestion').equals(false)
+    .where('merged').equals(null)
     .sort({ approvals: 'desc' })
     .then((exampleSuggestions) => (
       prepResponse({ res, docs: exampleSuggestions, ...rest })

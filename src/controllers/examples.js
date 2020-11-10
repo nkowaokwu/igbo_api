@@ -4,6 +4,7 @@ import {
   some,
   map,
   trim,
+  uniq,
 } from 'lodash';
 import Example from '../models/Example';
 import Word from '../models/Word';
@@ -55,33 +56,53 @@ export const getExample = (req, res) => {
 };
 
 /* Merges new data into an existing Example document */
-const mergeIntoExample = ({ data, exampleSuggestion }) => (
-  findExampleById(data.originalExampleId)
-    .then((example) => {
+const mergeIntoExample = (exampleSuggestion) => (
+  Example.findOneAndUpdate({ _id: exampleSuggestion.originalExampleId }, exampleSuggestion.toObject())
+    .then(async (example) => {
       if (!example) {
         throw new Error('Example doesn\'t exist');
       }
-      const updatedExample = assign(example, data);
-      if (exampleSuggestion) {
-        updateDocumentMerge(exampleSuggestion, example.id);
-      }
-      return updatedExample.save();
+      await updateDocumentMerge(exampleSuggestion, example.id);
+      return example;
     })
 );
 
 /* Creates a new Example document from an existing ExampleSuggestion document */
-const createExampleFromSuggestion = ({ data, exampleSuggestion }) => (
-  createExample(data)
-    .then((example) => {
-      if (exampleSuggestion) {
-        updateDocumentMerge(exampleSuggestion, example.id);
-      }
+const createExampleFromSuggestion = (exampleSuggestion) => (
+  createExample(exampleSuggestion.toObject())
+    .then(async (example) => {
+      await updateDocumentMerge(exampleSuggestion, example.id);
       return example;
     })
     .catch(() => {
       throw new Error('An error occurred while saving the new example.');
     })
 );
+
+/* Executes the logic describe the mergeExample function description */
+export const executeMergeExample = async (exampleSuggestionId) => {
+  const exampleSuggestion = await findExampleSuggestionById(exampleSuggestionId);
+
+  if (!exampleSuggestion) {
+    throw new Error('There is no associated example suggestion, double check your provided data');
+  }
+
+  await Promise.all(
+    map(exampleSuggestion.associatedWords, async (associatedWordId) => {
+      if (!(await Word.findById(associatedWordId))) {
+        throw new Error('Example suggestion associated words can only contain Word ids before merging');
+      }
+    }),
+  );
+
+  if (exampleSuggestion.associatedWords.length !== uniq(exampleSuggestion.associatedWords).length) {
+    throw new Error('Duplicates are not allows in associated words');
+  }
+
+  return exampleSuggestion.originalExampleId
+    ? mergeIntoExample(exampleSuggestion)
+    : createExampleFromSuggestion(exampleSuggestion);
+};
 
 /* Merges the existing ExampleSuggestion into either a brand
  * new Example document or merges into an existing Example document */
@@ -103,19 +124,8 @@ export const mergeExample = async (req, res) => {
     return res.send({ error: 'The id property is missing, double check your provided data' });
   }
 
-  const exampleSuggestion = await findExampleSuggestionById(data.id);
-
-  if (!exampleSuggestion) {
-    res.status(400);
-    return res.send({
-      error: 'There is no associated example suggestion, double check your provided data',
-    });
-  }
-
   try {
-    const result = data.originExampleId
-      ? await mergeIntoExample({ data, exampleSuggestion })
-      : await createExampleFromSuggestion({ data, exampleSuggestion });
+    const result = await executeMergeExample(data.id);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       const word = await Word.findById(result.associatedWords[0] || null) || {};
@@ -149,6 +159,11 @@ export const putExample = (req, res) => {
   if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
     res.status(400);
     return res.send({ error: 'Invalid id found in associatedWords' });
+  }
+
+  if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+    res.status(400);
+    return res.send({ error: 'Duplicates are not allows in associated words' });
   }
 
   return findExampleById(id)

@@ -1,5 +1,8 @@
 import stringSimilarity from 'string-similarity';
-import { assign, orderBy } from 'lodash';
+import {
+  assign,
+  orderBy,
+} from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createRegExp from '../../shared/utils/createRegExp';
 
@@ -112,7 +115,7 @@ export const handleQueries = (query = {}) => {
 };
 
 /* Updates a document's merge property with a document id */
-export const updateDocumentMerge = (doc, id) => {
-  const updatedDoc = assign(doc, { merged: id });
-  updatedDoc.save();
+export const updateDocumentMerge = (suggestionDoc, originalDocId) => {
+  const updatedSuggestion = assign(suggestionDoc, { merged: originalDocId });
+  return updatedSuggestion.save();
 };

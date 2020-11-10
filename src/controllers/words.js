@@ -1,11 +1,17 @@
-import { assign, map } from 'lodash';
+import {
+  assign,
+  map,
+  forEach,
+  filter,
+} from 'lodash';
+import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
+import ExampleSuggestion from '../models/ExampleSuggestion';
 import { findSearchWord } from '../services/words';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
-import { POPULATE_EXAMPLE } from '../shared/constants/populateDocuments';
 import createRegExp from '../shared/utils/createRegExp';
 import {
   sortDocsBy,
@@ -13,7 +19,8 @@ import {
   handleQueries,
   updateDocumentMerge,
 } from './utils';
-import { createExample } from './examples';
+import { findWordsWithMatch } from './utils/buildDocs';
+import { createExample, executeMergeExample } from './examples';
 import { findGenericWordById } from './genericWords';
 import { findWordSuggestionById } from './wordSuggestions';
 import { sendMergedEmail } from './mail';
@@ -33,23 +40,15 @@ export const getWordData = (req, res) => {
 
 /* Searches for a word with Igbo stored in MongoDB */
 export const searchWordUsingIgbo = async (regex, searchWord) => {
-  const words = await Word
-    .find({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] })
-    .populate(POPULATE_EXAMPLE);
+  const words = await findWordsWithMatch({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] });
   return sortDocsBy(searchWord, words, 'word');
 };
 
 /* Searches for word with English stored in MongoDB */
 export const searchWordUsingEnglish = async (regex, searchWord) => {
-  const words = await Word
-    .find({ definitions: { $in: [regex] } })
-    .populate(POPULATE_EXAMPLE);
+  const words = await findWordsWithMatch({ definitions: { $in: [regex] } });
   return sortDocsBy(searchWord, words, 'definitions');
 };
-
-export const findWordById = (id) => (
-  Word.findById(id)
-);
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
@@ -81,8 +80,8 @@ export const getWords = async (req, res) => {
 /* Returns a word from MongoDB using an id */
 export const getWord = (req, res) => {
   const { id } = req.params;
-  return findWordById(id)
-    .then((word) => {
+  return findWordsWithMatch({ _id: mongoose.Types.ObjectId(id) })
+    .then(async ([word]) => {
       if (!word) {
         res.status(400);
         return res.send({ error: 'No word exists with the provided id.' });
@@ -131,38 +130,45 @@ export const createWord = async (data) => {
   return newWord.save();
 };
 
+const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc) => {
+  const updatedSuggestionDoc = await updateDocumentMerge(suggestionDoc, originalWordDoc.id);
+  const exampleSuggestions = await ExampleSuggestion.find({ associatedWords: suggestionDoc.id });
+  forEach(exampleSuggestions, async (exampleSuggestion) => {
+    const removeSuggestionAssociatedIds = assign(exampleSuggestion);
+    /* Before creating new Example from ExampleSuggestion,
+     * all associated word suggestion ids must be removed
+     */
+    removeSuggestionAssociatedIds.associatedWords = filter(
+      exampleSuggestion.associatedWords,
+      (associatedWord) => associatedWord.toString() !== suggestionDoc.id.toString(),
+    );
+    removeSuggestionAssociatedIds.associatedWords.push(originalWordDoc.id);
+    const updatedExampleSuggestion = await removeSuggestionAssociatedIds.save();
+    executeMergeExample(updatedExampleSuggestion.id);
+  });
+  return updatedSuggestionDoc.save();
+};
+
 /* Merges new data into an existing Word document */
-const mergeIntoWord = ({ data, genericWord, wordSuggestion }) => {
-  findWordById(data.originalWordID)
-    .then((word) => {
-      if (!word) {
+const mergeIntoWord = (suggestionDoc) => (
+  Word.findOneAndUpdate({ _id: suggestionDoc.originalWordId }, suggestionDoc.toObject())
+    .then(async (originalWord) => {
+      if (!originalWord) {
         throw new Error('Word doesn\'t exist');
       }
-      const updatedWord = assign(word, data);
-      if (genericWord) {
-        updateDocumentMerge(genericWord, word.id);
-      }
-      if (wordSuggestion) {
-        updateDocumentMerge(wordSuggestion, word.id);
-      }
-      updatedWord.save();
-      return updatedWord;
+      updateSuggestionAfterMerge(suggestionDoc, originalWord.toObject());
+      return (await findWordsWithMatch({ _id: suggestionDoc.originalWordId }))[0];
     })
     .catch((error) => {
       throw new Error(error.message);
-    });
-};
+    })
+);
 
 /* Creates a new Word document from an existing WordSuggestion or GenericWord document */
-const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
-  createWord(data)
+const createWordFromSuggestion = (suggestionDoc) => (
+  createWord(suggestionDoc.toObject())
     .then((word) => {
-      if (genericWord) {
-        updateDocumentMerge(genericWord, word.id);
-      }
-      if (wordSuggestion) {
-        updateDocumentMerge(wordSuggestion, word.id);
-      }
+      updateSuggestionAfterMerge(suggestionDoc, word);
       return word;
     })
     .catch(() => {
@@ -174,41 +180,43 @@ const createWordFromSuggestion = ({ data, genericWord, wordSuggestion }) => (
  * new Word document or merges into an existing Word document */
 export const mergeWord = async (req, res) => {
   const { body: data } = req;
+  const suggestionDoc = data.docType === SuggestionTypes.WORD_SUGGESTIONS
+    ? await findWordSuggestionById(data.id)
+    : data.docType === SuggestionTypes.GENERIC_WORDS
+      ? await findGenericWordById(data.id)
+      : null;
 
-  if (!data.word) {
-    res.status(400);
-    return res.send({ error: 'The word property is missing, double check your provided data' });
-  }
-
-  if (!data.wordClass) {
-    res.status(400);
-    return res.send({ error: 'The word class property is missing, double check your provided data' });
-  }
-
-  if (!data.definitions) {
-    res.status(400);
-    return res.send({ error: 'The definition property is missing, double check your provided data' });
-  }
-
-  if (!data.id) {
-    res.status(400);
-    return res.send({ error: 'The id property is missing, double check your provided data' });
-  }
-
-  const genericWord = await findGenericWordById(data.id);
-  const wordSuggestion = await findWordSuggestionById(data.id);
-
-  if (!genericWord && !wordSuggestion) {
+  if (!suggestionDoc) {
     res.status(400);
     return res.send({
       error: 'There is no associated generic word or word suggestion, double check your provided data',
     });
   }
 
+  if (!suggestionDoc.word) {
+    res.status(400);
+    return res.send({ error: 'The word property is missing, double check your provided data' });
+  }
+
+  if (!suggestionDoc.wordClass) {
+    res.status(400);
+    return res.send({ error: 'The word class property is missing, double check your provided data' });
+  }
+
+  if (!suggestionDoc.definitions) {
+    res.status(400);
+    return res.send({ error: 'The definition property is missing, double check your provided data' });
+  }
+
+  if (!suggestionDoc.id) {
+    res.status(400);
+    return res.send({ error: 'The id property is missing, double check your provided data' });
+  }
+
   try {
-    const result = data.originWordId
-      ? await mergeIntoWord({ data, genericWord, wordSuggestion })
-      : await createWordFromSuggestion({ data, genericWord, wordSuggestion });
+    const result = data.originalWordId
+      ? await mergeIntoWord(suggestionDoc)
+      : await createWordFromSuggestion(suggestionDoc);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       sendMergedEmail({
