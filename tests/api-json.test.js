@@ -16,6 +16,7 @@ chai.use(chaiHttp);
 
 describe('JSON Dictionary', () => {
   before((done) => {
+    server.clearDatabase();
     Promise.all([
       populateAPI(),
       populateGenericWordsAPI(),

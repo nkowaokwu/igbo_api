@@ -5,6 +5,8 @@ export const API_ROUTE = '/api/v1';
 export const TEST_ROUTE = '/api/v1/test';
 export const API_URL = 'https://igboapi.com';
 
+export const SAVE_DOC_DELAY = 2000;
+
 export const WORD_KEYS = ['variations', 'definitions', 'stems', 'examples', 'id', 'normalized', 'word', 'wordClass'];
 export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id'];
 export const EXAMPLE_SUGGESTION_KEYS = [

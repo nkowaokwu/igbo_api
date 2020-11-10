@@ -78,7 +78,7 @@ const updatedExampleData = {
 const genericWordData = {
   word: 'genericWord',
   wordClass: 'noun',
-  definitions: [],
+  definitions: ['definition'],
 };
 
 const genericWordApprovedData = {
@@ -108,6 +108,11 @@ const wordSuggestionWithNestedExampleSuggestionData = {
   examples: [exampleSuggestionData],
 };
 
+const genericWordWithNestedExampleSuggestionData = {
+  ...genericWordData,
+  examples: [exampleSuggestionData],
+};
+
 export {
   wordSuggestionId,
   wordSuggestionData,
@@ -115,6 +120,7 @@ export {
   malformedWordSuggestionData,
   updatedWordSuggestionData,
   wordSuggestionWithNestedExampleSuggestionData,
+  genericWordWithNestedExampleSuggestionData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,
