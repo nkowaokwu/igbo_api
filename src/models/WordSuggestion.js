@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow-callback */
 import mongoose from 'mongoose';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 
@@ -21,5 +22,12 @@ const wordSuggestionSchema = new Schema({
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(wordSuggestionSchema);
+
+wordSuggestionSchema.pre('findOneAndDelete', async function (next) {
+  const wordSuggestion = await this.model.findOne(this.getQuery());
+  await mongoose.model('ExampleSuggestion')
+    .deleteMany({ associatedWords: wordSuggestion.id });
+  next();
+});
 
 export default mongoose.model('WordSuggestion', wordSuggestionSchema);

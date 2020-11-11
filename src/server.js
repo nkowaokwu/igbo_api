@@ -23,8 +23,11 @@ app.use(bodyParser.raw());
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
-  useCreateIndex: true,
   useFindAndModify: false,
+  useCreateIndex: true,
+  poolSize: 10,
+  bufferMaxEntries: 0,
+  useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

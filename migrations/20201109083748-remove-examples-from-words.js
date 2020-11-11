@@ -1,18 +1,18 @@
 module.exports = {
   async up(db) {
-    const collections = ['examplesuggestions'];
+    const collections = ['words'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $set: { exampleForSuggestion: false },
+        $unset: { examples: null },
       })
     ));
   },
 
   async down(db) {
-    const collections = ['examplesuggestions'];
+    const collections = ['words'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $unset: { exampleForSuggestion: false },
+        $set: { examples: [] },
       })
     ));
   },

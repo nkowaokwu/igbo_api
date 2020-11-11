@@ -7,7 +7,7 @@ const exampleSuggestionSchema = new Schema({
   igbo: { type: String, default: '' },
   english: { type: String, default: '' },
   associatedWords: { type: [{ type: Types.ObjectId }], default: [] },
-  exampleForWordSuggestion: { type: Boolean, default: false },
+  exampleForSuggestion: { type: Boolean, default: false },
   editorsNotes: { type: String, default: '' },
   userComments: { type: String, default: '' },
   userEmail: { type: String, default: '' },

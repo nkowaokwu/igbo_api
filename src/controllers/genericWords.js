@@ -9,13 +9,22 @@ import {
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import { prepResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries } from './utils';
+import { searchIgboRegexQuery } from './utils/queries';
+import {
+  handleDeletingExampleSuggestions,
+  getExamplesFromClientData,
+  updateNestedExampleSuggestions,
+  placeExampleSuggestionsOnSuggestionDoc,
+} from './utils/nestedExampleSuggestionUtils';
 
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
 /* Updates an existing WordSuggestion object */
 export const putGenericWord = (req, res) => {
   const { body: data, params: { id } } = req;
+  const clientExamples = getExamplesFromClientData(data);
+
   if (!every(REQUIRE_KEYS, partial(has, data))) {
     res.status(400);
     return res.send({ error: 'Required information is missing, double check your provided data' });
@@ -32,7 +41,14 @@ export const putGenericWord = (req, res) => {
         return res.send({ error: 'Generic word doesn\'t exist' });
       }
       const updatedGenericWord = assign(genericWord, data);
-      return res.send(await updatedGenericWord.save());
+      await handleDeletingExampleSuggestions({ suggestionDoc: genericWord, clientExamples });
+
+      /* Updates all the word's children exampleSuggestions */
+      await updateNestedExampleSuggestions({ suggestionDocId: genericWord.id, clientExamples });
+
+      await updatedGenericWord.save();
+      const savedGenericWord = await placeExampleSuggestionsOnSuggestionDoc(updatedGenericWord);
+      return res.send(savedGenericWord);
     })
     .catch(() => {
       res.status(400);
@@ -42,13 +58,32 @@ export const putGenericWord = (req, res) => {
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchIgboRegexQuery(regexKeyword);
   return GenericWord
-    .find({ $or: [{ word: regexKeyword }, { definitions: regexKeyword }] })
+    .find(regexMatch)
     .sort({ approvals: 'desc' })
-    .then((genericWords) => (
-      prepResponse({ res, docs: genericWords, ...rest })
-    ))
+    .where('merged').equals(null)
+    .skip(skip)
+    .limit(limit)
+    .then(async (genericWords) => {
+      /* Places the exampleSuggestions on the corresponding genericWords */
+      const genericWordsWithExamples = await Promise.all(
+        map(genericWords, placeExampleSuggestionsOnSuggestionDoc),
+      );
+      return packageResponse({
+        res,
+        docs: genericWordsWithExamples,
+        model: GenericWord,
+        query: regexMatch,
+        ...rest,
+      });
+    })
     .catch(() => {
       res.status(400);
       return res.send({ error: 'An error has occurred while returning all generic words' });
@@ -63,12 +98,13 @@ export const findGenericWordById = (id) => (
 export const getGenericWord = (req, res) => {
   const { id } = req.params;
   return findGenericWordById(id)
-    .then((genericWord) => {
+    .then(async (genericWord) => {
       if (!genericWord) {
         res.status(400);
         return res.send({ error: 'No genericWord exists with the provided id.' });
       }
-      return res.send(genericWord);
+      const genericWordWithExamples = await placeExampleSuggestionsOnSuggestionDoc(genericWord);
+      return res.send(genericWordWithExamples);
     })
     .catch(() => {
       res.status(400);
