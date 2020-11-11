@@ -28,7 +28,7 @@ export const getWordData = (req, res) => {
   const searchWord = removePrefix(keyword);
   if (!searchWord) {
     res.status(400);
-    res.send(NO_PROVIDED_TERM);
+    return res.send(NO_PROVIDED_TERM);
   }
   const regexWord = createRegExp(searchWord);
   return res.send(findSearchWord(regexWord, searchWord));
