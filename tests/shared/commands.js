@@ -64,12 +64,13 @@ export const deleteGenericWord = (id) => (
     .delete(`${API_ROUTE}/genericWords/${id}`)
 );
 
+// TODO: #240 only take in ids
 export const createWord = (data, query = {}) => (
   chai
     .request(server)
     .post(`${API_ROUTE}/words`)
     .query(query)
-    .send({ ...data, docType: SuggestionTypes.WORD_SUGGESTIONS })
+    .send({ docType: SuggestionTypes.WORD_SUGGESTIONS, ...data })
 );
 
 export const createExample = (data, query = {}) => (

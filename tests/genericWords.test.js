@@ -58,6 +58,15 @@ describe('MongoDB Generic Words', () => {
           done();
         });
     });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      updateGenericWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
   });
 
   describe('/GET mongodb genericWords', () => {
@@ -260,6 +269,15 @@ describe('MongoDB Generic Words', () => {
           done();
         });
     });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      getGenericWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
   });
 
   describe('/DELETE mongodb genericWords', () => {
@@ -285,6 +303,15 @@ describe('MongoDB Generic Words', () => {
       deleteGenericWord(INVALID_ID)
         .then((deleteRes) => {
           expect(deleteRes.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      deleteGenericWord(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

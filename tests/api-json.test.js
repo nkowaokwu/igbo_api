@@ -67,6 +67,9 @@ describe('JSON Dictionary', () => {
 
 after(() => {
   server.clearDatabase();
-  mongoose.connection.close();
   server.close();
+  console.log('📪 Closing database connection');
+  setTimeout(() => {
+    mongoose.connection.close();
+  }, 5000);
 });

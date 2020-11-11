@@ -19,8 +19,8 @@ import {
   MESSAGE,
   INVALID_MESSAGE,
 } from './shared/constants';
+import SuggestionTypes from '../src/shared/constants/suggestionTypes';
 import {
-  malformedWordData,
   wordSuggestionData,
   updatedWordData,
   updatedWordSuggestionData,
@@ -65,7 +65,6 @@ describe('MongoDB Words', () => {
 
     it('should throw an error for invalid data', (done) => {
       const word = {
-        word: 'word',
         wordClass: 'n.',
         definitions: ['first definition', 'second definition'],
         examples: ['first example'],
@@ -114,7 +113,7 @@ describe('MongoDB Words', () => {
           updateGenericWord(firstGenericWord.id, firstGenericWord)
             .then((saveMergedGenericWord) => {
               expect(saveMergedGenericWord.status).to.equal(200);
-              createWord(firstGenericWord)
+              createWord({ id: firstGenericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
                 .then((result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.id).to.not.equal(undefined);
@@ -180,26 +179,44 @@ describe('MongoDB Words', () => {
         .then((res) => {
           expect(res.status).to.equal(200);
           const firstGenericWord = res.body[0];
+          firstGenericWord.wordClass = 'wordClass';
+          updateGenericWord(firstGenericWord.id, firstGenericWord)
+            .then((updatedGenericWordRes) => {
+              expect(updatedGenericWordRes.status).to.equal(200);
+              createWord({ id: updatedGenericWordRes.body.id, docType: SuggestionTypes.GENERIC_WORDS })
+                .then((wordRes) => {
+                  expect(wordRes.status).to.equal(200);
+                  expect(wordRes.body.word).to.equal(updatedGenericWordRes.body.word);
+                  expect(wordRes.body.wordClass).to.equal(updatedGenericWordRes.body.wordClass);
+                  getGenericWord(updatedGenericWordRes.body.id)
+                    .end((_, genericWordRes) => {
+                      expect(genericWordRes.status).to.equal(200);
+                      expect(genericWordRes.body.merged).to.equal(wordRes.body.id);
+                    });
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should throw error for merging an incomplete genericWord', (done) => {
+      getGenericWords()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstGenericWord = res.body[0];
           getWords()
             .then((wordRes) => {
               const firstWord = wordRes.body[0];
-              const mergingGenericWord = { ...firstGenericWord, originalExampleId: firstWord.id };
-              createWord(mergingGenericWord)
-                .then((result) => {
-                  expect(result.status).to.equal(200);
-                  expect(result.body.id).to.not.equal(undefined);
-                  getWord(result.body.id)
-                    .then((updatedWordRes) => {
-                      expect(updatedWordRes.status).to.equal(200);
-                      getGenericWord(firstGenericWord.id)
-                        .end((_, genericWordRes) => {
-                          expect(genericWordRes.status).to.equal(200);
-                          expect(updatedWordRes.body.word).to.equal(genericWordRes.body.word);
-                          expect(updatedWordRes.body.wordClass).to.equal(genericWordRes.body.wordClass);
-                          expect(updatedWordRes.body.id).to.equal(genericWordRes.body.merged);
-                          done();
-                        });
-                    });
+              const mergingGenericWord = {
+                ...firstGenericWord,
+                wordClass: 'wordClass',
+                originalWordId: firstWord.id,
+              };
+              createWord({ id: mergingGenericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
+                .end((_, result) => {
+                  expect(result.status).to.equal(400);
+                  expect(result.body.error).to.not.equal(undefined);
+                  done();
                 });
             });
         });
@@ -215,14 +232,13 @@ describe('MongoDB Words', () => {
         .catch(() => done());
     });
 
-    it('should throw an error for malformed new word data', (done) => {
+    it('should return a newly created word after merging with just an id', (done) => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
-          const malformedMergingWordSuggestion = { ...res.body, ...malformedWordData };
-          createWord(malformedMergingWordSuggestion)
+          createWord({ id: res.body.id })
             .end((_, result) => {
-              expect(result.status).to.equal(400);
-              expect(result.body.error).to.not.equal(undefined);
+              expect(result.status).to.equal(200);
+              expect(result.body.error).to.equal(undefined);
               done();
             });
         });
@@ -428,7 +444,8 @@ describe('MongoDB Words', () => {
       });
     });
 
-    it('should handle invalid page number', (done) => {
+    // TODO: #239
+    it.skip('should handle invalid page number', (done) => {
       const keyword = 'woman';
       Promise.all([
         getWords({ keyword, page: -1 }).then((res) => {
@@ -444,7 +461,8 @@ describe('MongoDB Words', () => {
       ));
     });
 
-    it('should handle invalid page number with filter query', (done) => {
+    // TODO: #239 Throw errors for invalid queries
+    it.skip('should handle invalid page number with filter query', (done) => {
       const filter = 'woman';
       Promise.all([
         getWords({ filter: { word: filter }, page: -1 }).then((res) => {

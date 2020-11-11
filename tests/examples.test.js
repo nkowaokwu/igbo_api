@@ -79,14 +79,14 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should throw an error for malformed new example data', (done) => {
+    it('should merge into new example despite provided malformed data', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           const malformedMergingExampleSuggestion = { ...res.body, ...malformedExampleSuggestionData };
           createExample(malformedMergingExampleSuggestion)
             .end((_, result) => {
-              expect(result.status).to.equal(400);
-              expect(result.body.error).to.not.equal(undefined);
+              expect(result.status).to.equal(200);
+              expect(result.body.error).to.equal(undefined);
               done();
             });
         });

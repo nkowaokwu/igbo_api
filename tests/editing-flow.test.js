@@ -1,28 +1,30 @@
 import chai from 'chai';
-import { forEach, isEqual } from 'lodash';
+import { forEach, isEqual, uniq } from 'lodash';
 import {
-  getWordSuggestion,
-  deleteWordSuggestion,
-  getWord,
-  getExample,
   createExample,
-  suggestNewWord,
-  suggestNewExample,
   createWord,
-  getExampleSuggestion,
-  updateGenericWord,
   deleteGenericWord,
+  deleteWordSuggestion,
+  getExample,
   getGenericWord,
   getGenericWords,
+  getWord,
+  getWordSuggestion,
+  getExamples,
+  getExampleSuggestion,
+  suggestNewWord,
+  suggestNewExample,
+  updateGenericWord,
   updateWordSuggestion,
 } from './shared/commands';
 import {
+  exampleSuggestionData,
   genericWordData,
+  genericWordWithNestedExampleSuggestionData,
   wordSuggestionData,
   wordSuggestionWithNestedExampleSuggestionData,
-  genericWordWithNestedExampleSuggestionData,
-  exampleSuggestionData,
 } from './__mocks__/documentData';
+import SuggestionTypes from '../src/shared/constants/suggestionTypes';
 import { SAVE_DOC_DELAY } from './shared/constants';
 
 const { expect } = chai;
@@ -231,6 +233,59 @@ describe('Editing Flow', () => {
             expect(res.status).to.equal(200);
             expect(res.body.word).to.equal('newWord');
             done();
+          });
+      });
+  });
+
+  it('should not allow duplicate associated word ids for nested exampleSuggestions', (done) => {
+    const igbo = 'IGBO TEXT';
+    const english = 'ENGLISH TEXT';
+    getGenericWords()
+      .then((genericWordsRes) => {
+        expect(genericWordsRes.status).to.equal(200);
+        const genericWord = genericWordsRes.body[0];
+        genericWord.wordClass = 'wordClass';
+        genericWord.examples = [{
+          igbo,
+          english,
+          associatedWords: [genericWordsRes.body[0].id],
+        }];
+        updateGenericWord(genericWord.id, genericWord)
+          .then((updatedGenericWordRes) => {
+            expect(updatedGenericWordRes.status).to.equal(200);
+            createWord({ id: genericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
+              .then((firstWordRes) => {
+                expect(firstWordRes.status).to.equal(200);
+                setTimeout(() => {
+                  getExamples({ keyword: igbo })
+                    .then((firstExampleRes) => {
+                      expect(firstExampleRes.status).to.equal(200);
+                      const updatingGenericWord = { ...updatedGenericWordRes.body };
+                      const firstExample = { ...firstExampleRes.body[0] };
+                      firstExample.originalExampleId = firstExample.id;
+                      delete firstExample.id;
+                      updatingGenericWord.originalWordId = firstWordRes.body.id;
+                      updatingGenericWord.examples = [firstExample];
+                      suggestNewWord(updatingGenericWord)
+                        .then((secondGenericWordRes) => {
+                          expect(secondGenericWordRes.status).to.equal(200);
+                          setTimeout(() => {
+                            createWord({ id: secondGenericWordRes.body.id })
+                              .then((secondWordRes) => {
+                                expect(secondWordRes.status).to.equal(200);
+                                getExample(secondWordRes.body.examples[0].id)
+                                  .end((_, res) => {
+                                    expect(res.status).to.equal(200);
+                                    expect(res.body.associatedWords.length)
+                                      .to.equal(uniq(res.body.associatedWords).length);
+                                    done();
+                                  });
+                              }, SAVE_DOC_DELAY);
+                          });
+                        });
+                    });
+                }, SAVE_DOC_DELAY);
+              });
           });
       });
   });

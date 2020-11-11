@@ -185,6 +185,7 @@ describe('MongoDB Word Suggestions', () => {
             });
         });
     });
+
     it('should return an example error because of malformed data', (done) => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
@@ -199,6 +200,15 @@ describe('MongoDB Word Suggestions', () => {
 
     it('should return an error because document doesn\'t exist', (done) => {
       getWordSuggestion(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      updateWordSuggestion(INVALID_ID)
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
@@ -391,6 +401,15 @@ describe('MongoDB Word Suggestions', () => {
           done();
         });
     });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      getWordSuggestion(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
   });
 
   describe('/DELETE mongodb wordSuggestions', () => {
@@ -422,6 +441,15 @@ describe('MongoDB Word Suggestions', () => {
 
     it('should return error for non existent word suggestion', (done) => {
       getWordSuggestion(wordSuggestionId)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      deleteWordSuggestion(INVALID_ID)
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
