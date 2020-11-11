@@ -1,9 +1,4 @@
-import {
-  assign,
-  map,
-  forEach,
-  filter,
-} from 'lodash';
+import { assign, map, filter } from 'lodash';
 import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
@@ -15,10 +10,11 @@ import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
 import {
   sortDocsBy,
-  prepResponse,
+  packageResponse,
   handleQueries,
   updateDocumentMerge,
 } from './utils';
+import { searchIgboRegexQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample } from './examples';
 import { findGenericWordById } from './genericWords';
@@ -39,14 +35,14 @@ export const getWordData = (req, res) => {
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = async (regex, searchWord) => {
-  const words = await findWordsWithMatch({ $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }] });
+export const searchWordUsingIgbo = async ({ query, searchWord, ...rest }) => {
+  const words = await findWordsWithMatch({ match: query, ...rest });
   return sortDocsBy(searchWord, words, 'word');
 };
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = async (regex, searchWord) => {
-  const words = await findWordsWithMatch({ definitions: { $in: [regex] } });
+export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => {
+  const words = await findWordsWithMatch({ match: query, ...rest });
   return sortDocsBy(searchWord, words, 'definitions');
 };
 
@@ -55,24 +51,30 @@ export const getWords = async (req, res) => {
   const {
     searchWord,
     regexKeyword,
-    page,
+    range,
+    skip,
+    limit,
     ...rest
   } = handleQueries(req.query);
-  const words = await searchWordUsingIgbo(regexKeyword, searchWord);
-
+  const searchQueries = { searchWord, skip, limit };
+  let regexMatch = searchIgboRegexQuery(regexKeyword);
+  const words = await searchWordUsingIgbo({ query: regexMatch, ...searchQueries });
   if (!words.length) {
-    const englishWords = await searchWordUsingEnglish(regexKeyword, searchWord);
-    return prepResponse({
+    regexMatch = searchEnglishRegexQuery(regexKeyword);
+    const englishWords = await searchWordUsingEnglish({ query: regexMatch, ...searchQueries });
+    return packageResponse({
       res,
       docs: englishWords,
-      page,
+      model: Word,
+      query: regexMatch,
       ...rest,
     });
   }
-  return prepResponse({
+  return packageResponse({
     res,
     docs: words,
-    page,
+    model: Word,
+    query: regexMatch,
     ...rest,
   });
 };
@@ -80,7 +82,8 @@ export const getWords = async (req, res) => {
 /* Returns a word from MongoDB using an id */
 export const getWord = (req, res) => {
   const { id } = req.params;
-  return findWordsWithMatch({ _id: mongoose.Types.ObjectId(id) })
+
+  return findWordsWithMatch({ match: { _id: mongoose.Types.ObjectId(id) }, limit: 1 })
     .then(async ([word]) => {
       if (!word) {
         res.status(400);
@@ -133,7 +136,7 @@ export const createWord = async (data) => {
 const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc) => {
   const updatedSuggestionDoc = await updateDocumentMerge(suggestionDoc, originalWordDoc.id);
   const exampleSuggestions = await ExampleSuggestion.find({ associatedWords: suggestionDoc.id });
-  forEach(exampleSuggestions, async (exampleSuggestion) => {
+  await Promise.all(map(exampleSuggestions, async (exampleSuggestion) => {
     const removeSuggestionAssociatedIds = assign(exampleSuggestion);
     /* Before creating new Example from ExampleSuggestion,
      * all associated word suggestion ids must be removed
@@ -142,10 +145,12 @@ const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc) => {
       exampleSuggestion.associatedWords,
       (associatedWord) => associatedWord.toString() !== suggestionDoc.id.toString(),
     );
-    removeSuggestionAssociatedIds.associatedWords.push(originalWordDoc.id);
+    if (!removeSuggestionAssociatedIds.associatedWords.includes(originalWordDoc.id)) {
+      removeSuggestionAssociatedIds.associatedWords.push(originalWordDoc.id);
+    }
     const updatedExampleSuggestion = await removeSuggestionAssociatedIds.save();
-    executeMergeExample(updatedExampleSuggestion.id);
-  });
+    return executeMergeExample(updatedExampleSuggestion.id);
+  }));
   return updatedSuggestionDoc.save();
 };
 
@@ -156,8 +161,8 @@ const mergeIntoWord = (suggestionDoc) => (
       if (!originalWord) {
         throw new Error('Word doesn\'t exist');
       }
-      updateSuggestionAfterMerge(suggestionDoc, originalWord.toObject());
-      return (await findWordsWithMatch({ _id: suggestionDoc.originalWordId }))[0];
+      await updateSuggestionAfterMerge(suggestionDoc, originalWord.toObject());
+      return (await findWordsWithMatch({ match: { _id: suggestionDoc.originalWordId }, limit: 1 }))[0];
     })
     .catch((error) => {
       throw new Error(error.message);
@@ -167,8 +172,8 @@ const mergeIntoWord = (suggestionDoc) => (
 /* Creates a new Word document from an existing WordSuggestion or GenericWord document */
 const createWordFromSuggestion = (suggestionDoc) => (
   createWord(suggestionDoc.toObject())
-    .then((word) => {
-      updateSuggestionAfterMerge(suggestionDoc, word);
+    .then(async (word) => {
+      await updateSuggestionAfterMerge(suggestionDoc, word);
       return word;
     })
     .catch(() => {
@@ -214,7 +219,7 @@ export const mergeWord = async (req, res) => {
   }
 
   try {
-    const result = data.originalWordId
+    const result = suggestionDoc.originalWordId
       ? await mergeIntoWord(suggestionDoc)
       : await createWordFromSuggestion(suggestionDoc);
     /* Sends confirmation merged email to user if they provided an email */
@@ -228,7 +233,6 @@ export const mergeWord = async (req, res) => {
     }
     return res.send(result);
   } catch (error) {
-    res.status(400);
     return res.send({ error: error.message });
   }
 };

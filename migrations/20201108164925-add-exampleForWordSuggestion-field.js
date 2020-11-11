@@ -3,7 +3,7 @@ module.exports = {
     const collections = ['examplesuggestions'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $set: { exampleForWordSuggestion: false },
+        $set: { exampleForSuggestion: false },
       })
     ));
   },
@@ -12,7 +12,7 @@ module.exports = {
     const collections = ['examplesuggestions'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $unset: { exampleForWordSuggestion: false },
+        $unset: { exampleForSuggestion: false },
       })
     ));
   },

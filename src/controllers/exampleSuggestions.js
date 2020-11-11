@@ -8,7 +8,8 @@ import {
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { prepResponse, handleQueries } from './utils/index';
+import { packageResponse, handleQueries } from './utils/index';
+import { searchExampleSuggestionsRegexQuery, searchPreExistingExampleSuggestionsRegexQuery } from './utils/queries';
 import { sendRejectedEmail } from './mail';
 
 export const createExampleSuggestion = async (data) => {
@@ -21,13 +22,9 @@ export const createExampleSuggestion = async (data) => {
   }
 
   await Promise.all(map(data.associatedWords, async (associatedWordId) => {
+    const query = searchPreExistingExampleSuggestionsRegexQuery({ ...data, associatedWordId });
     const identicalExampleSuggestions = await ExampleSuggestion
-      .find({})
-      .where('igbo').equals(data.igbo)
-      .where('english').equals(data.english)
-      .where('associatedWords').in(associatedWordId)
-      .where('originalExampleId').equals(null)
-      .where('merged').equals(null);
+      .find(query);
 
     if (identicalExampleSuggestions.length) {
       const exampleSuggestionIds = map(identicalExampleSuggestions, (exampleSuggestion) => exampleSuggestion.id);
@@ -48,7 +45,7 @@ export const postExampleSuggestion = async (req, res) => {
   const { body: data } = req;
 
   try {
-    if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
       throw new Error('Duplicates are not allows in associated words');
     }
 
@@ -92,7 +89,7 @@ export const putExampleSuggestion = async (req, res) => {
       throw new Error('Required information is missing, double check your provided data');
     }
 
-    if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
       throw new Error('Duplicates are not allows in associated words');
     }
 
@@ -114,14 +111,26 @@ export const putExampleSuggestion = async (req, res) => {
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
   return ExampleSuggestion
-    .find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
-    .where('exampleForWordSuggestion').equals(false)
-    .where('merged').equals(null)
+    .find(regexMatch)
     .sort({ approvals: 'desc' })
+    .skip(skip)
+    .limit(limit)
     .then((exampleSuggestions) => (
-      prepResponse({ res, docs: exampleSuggestions, ...rest })
+      packageResponse({
+        res,
+        docs: exampleSuggestions,
+        model: ExampleSuggestion,
+        query: regexMatch,
+        ...rest,
+      })
     ))
     .catch(() => {
       res.status(400);

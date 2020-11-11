@@ -60,16 +60,23 @@ export const updateNestedExampleSuggestions = ({ suggestionDocId, clientExamples
     !example.id
       ? createExampleSuggestion({
         ...example,
-        exampleForWordSuggestion: true,
-        associatedWords: [...(Array.isArray(example.associatedWords) ? example.associatedWords : []), suggestionDocId],
-      }) : (async () => {
+        exampleForSuggestion: true,
+        associatedWords: Array.from(
+          new Set( // Filters out duplicates
+            [...(Array.isArray(example.associatedWords) ? example.associatedWords : []), suggestionDocId],
+          ),
+        ),
+      }) : (async () => (
         ExampleSuggestion.findById(example.id)
           .then((exampleSuggestion) => {
             if (!exampleSuggestion) {
               throw new Error('No example suggestion exists with the provided id.');
             }
             return updateExampleSuggestion({ id: example.id, data: example });
-          });
-      })()
+          })
+          .catch(() => {
+            throw new Error('An error occurred while finding nested example suggestion.');
+          })
+      ))()
   )))
 );

@@ -10,7 +10,8 @@ import Example from '../models/Example';
 import Word from '../models/Word';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import { DICTIONARY_APP_URL } from '../config';
-import { prepResponse, handleQueries, updateDocumentMerge } from './utils';
+import { packageResponse, handleQueries, updateDocumentMerge } from './utils';
+import { searchExamplesRegexQuery } from './utils/queries';
 import { findExampleSuggestionById } from './exampleSuggestions';
 import { sendMergedEmail } from './mail';
 
@@ -21,17 +22,31 @@ export const createExample = (data) => {
 };
 
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = (regex) => (
+const searchExamples = ({ query, skip, limit }) => (
   Example
-    .find({ $or: [{ igbo: regex }, { english: regex }] })
+    .find(query)
+    .skip(skip)
+    .limit(limit)
 );
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
-  const examples = await searchExamples(regexKeyword);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchExamplesRegexQuery(regexKeyword);
+  const examples = await searchExamples({ query: regexMatch, skip, limit });
 
-  return prepResponse({ res, docs: examples, ...rest });
+  return packageResponse({
+    res,
+    docs: examples,
+    model: Example,
+    query: regexMatch,
+    ...rest,
+  });
 };
 
 export const findExampleById = (id) => (
@@ -87,6 +102,14 @@ export const executeMergeExample = async (exampleSuggestionId) => {
     throw new Error('There is no associated example suggestion, double check your provided data');
   }
 
+  if (!exampleSuggestion.igbo && !exampleSuggestion.english) {
+    throw new Error('Required information is missing, double check your provided data');
+  }
+
+  if (some(exampleSuggestion.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
+    throw new Error('Invalid id found in associatedWords');
+  }
+
   await Promise.all(
     map(exampleSuggestion.associatedWords, async (associatedWordId) => {
       if (!(await Word.findById(associatedWordId))) {
@@ -109,23 +132,15 @@ export const executeMergeExample = async (exampleSuggestionId) => {
 export const mergeExample = async (req, res) => {
   const { body: data } = req;
 
-  if (!data.igbo && !data.english) {
-    res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
-  }
-
-  if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
-    res.status(400);
-    return res.send({ error: 'Invalid id found in associatedWords' });
-  }
-
   if (!data.id) {
     res.status(400);
     return res.send({ error: 'The id property is missing, double check your provided data' });
   }
 
+  const exampleSuggestion = await findExampleSuggestionById(data.id);
+
   try {
-    const result = await executeMergeExample(data.id);
+    const result = await executeMergeExample(exampleSuggestion.id);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       const word = await Word.findById(result.associatedWords[0] || null) || {};
@@ -161,7 +176,7 @@ export const putExample = (req, res) => {
     return res.send({ error: 'Invalid id found in associatedWords' });
   }
 
-  if (data.associatedWords.length !== uniq(data.associatedWords).length) {
+  if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
     res.status(400);
     return res.send({ error: 'Duplicates are not allows in associated words' });
   }

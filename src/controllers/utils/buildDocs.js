@@ -20,7 +20,7 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
  */
-export const findWordsWithMatch = async (match) => {
+export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
   const words = await Word.aggregate()
     .match(match)
     .lookup({
@@ -29,6 +29,8 @@ export const findWordsWithMatch = async (match) => {
       foreignField: 'associatedWords',
       as: 'examples',
     })
+    .skip(skip)
+    .limit(limit)
     .project({
       id: '$_id',
       _id: 0,

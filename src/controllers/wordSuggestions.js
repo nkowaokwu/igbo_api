@@ -8,8 +8,8 @@ import {
   trim,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
-
-import { prepResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries } from './utils';
+import { searchPreExistingWordSuggestionsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
   getExamplesFromClientData,
@@ -90,17 +90,30 @@ export const putWordSuggestion = (req, res) => {
 
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchPreExistingWordSuggestionsRegexQuery(regexKeyword);
   WordSuggestion
-    .where('word').equals(regexKeyword)
+    .find(regexMatch)
     .sort({ approvals: 'desc' })
-    .where('merged').equals(null)
+    .skip(skip)
+    .limit(limit)
     .then(async (wordSuggestions) => {
       /* Places the exampleSuggestions on the corresponding wordSuggestions */
       const wordSuggestionsWithExamples = await Promise.all(
         map(wordSuggestions, placeExampleSuggestionsOnSuggestionDoc),
       );
-      return prepResponse({ res, docs: await wordSuggestionsWithExamples, ...rest });
+      return packageResponse({
+        res,
+        docs: wordSuggestionsWithExamples,
+        model: WordSuggestion,
+        query: regexMatch,
+        ...rest,
+      });
     })
     .catch((err) => {
       res.status(400);

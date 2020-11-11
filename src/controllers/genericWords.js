@@ -9,7 +9,8 @@ import {
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import { prepResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries } from './utils';
+import { searchIgboRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
   getExamplesFromClientData,
@@ -57,17 +58,31 @@ export const putGenericWord = (req, res) => {
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchIgboRegexQuery(regexKeyword);
   return GenericWord
-    .find({ $or: [{ word: regexKeyword }, { definitions: regexKeyword }] })
+    .find(regexMatch)
     .sort({ approvals: 'desc' })
     .where('merged').equals(null)
+    .skip(skip)
+    .limit(limit)
     .then(async (genericWords) => {
       /* Places the exampleSuggestions on the corresponding genericWords */
       const genericWordsWithExamples = await Promise.all(
         map(genericWords, placeExampleSuggestionsOnSuggestionDoc),
       );
-      return prepResponse({ res, docs: await genericWordsWithExamples, ...rest });
+      return packageResponse({
+        res,
+        docs: genericWordsWithExamples,
+        model: GenericWord,
+        query: regexMatch,
+        ...rest,
+      });
     })
     .catch(() => {
       res.status(400);
