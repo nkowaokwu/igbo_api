@@ -3,13 +3,12 @@ import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
 import { API_ROUTE } from '../config';
-import { headerStyles, transition } from '../shared/constants/styles';
 
 const App = () => (
   <div>
     <Navbar />
     <div>
-      <div className="flex flex-col justify-center h-screen">
+      <div className="flex flex-col justify-center w-screen h-screen p-0 lg:pt-32">
         <h1 className="text-4xl md:text-6xl font-extrabold text-center mt-6 mb-24">The First African Language API</h1>
         <div className="text-xl md:text-2xl text-center text-gray-700 w-9/12 md:w-7/12 self-center mb-24">
           <p>
@@ -20,7 +19,7 @@ const App = () => (
           <p>
             {'Existing as an '}
             <a
-              className={`${transition} text-green-400 hover:text-green-700`}
+              className="transition-element text-green-400 hover:text-green-700"
               href="https://github.com/ijemmao/igbo_api"
             >
               open-source project
@@ -31,7 +30,7 @@ const App = () => (
         </div>
       </div>
       <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-        <h2 id="features" className={headerStyles}>
+        <h2 id="features" className="header">
           Features
         </h2>
       </div>
@@ -55,18 +54,18 @@ const App = () => (
       </div>
 
       <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-        <h2 id="try-it-out" className={headerStyles}>
+        <h2 id="try-it-out" className="header">
           Try it Out
         </h2>
       </div>
       <Demo />
       <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-        <h2 className={headerStyles}>Docs</h2>
+        <h2 className="header">Docs</h2>
       </div>
       <div className="flex flex-col mb-24">
         <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
           {'Are you a developer interested in using the API? Head over to the '}
-          <a className={`${transition} text-green-400 hover:text-green-700`} href={`${API_ROUTE}/docs`}>
+          <a className="transition-element text-green-400 hover:text-green-700" href={`${API_ROUTE}/docs`}>
             docs
           </a>
           {' to get started.'}
