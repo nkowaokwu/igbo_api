@@ -4,6 +4,30 @@
 
 html {
   width: 100vw;
+  font-family: 'Silka', sans-serif;
+  font-weight: normal;
+}
+
+h1 {
+  font-family: 'Silka', sans-serif;
+  font-weight: 900;
+}
+
+h2, h3, a {
+  font-family: 'Silka', sans-serif;
+  font-weight: 700;
+}
+
+.transition-element {
+  @apply transition-all;
+  @apply duration-200;
+  @apply ease-in-out;
+}
+
+.header {
+  @apply text-3xl;
+  @apply font-bold;
+  @apply text-gray-900;
 }
 
 .jsonPretty {
