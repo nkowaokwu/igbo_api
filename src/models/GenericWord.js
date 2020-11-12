@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin, toObjectPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema, Types } = mongoose;
 const genericWordSchema = new Schema({
@@ -20,6 +20,7 @@ const genericWordSchema = new Schema({
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(genericWordSchema);
+updatedOnHook(genericWordSchema);
 
 genericWordSchema.pre('findOneAndDelete', async function (next) {
   const genericWord = await this.model.findOne(this.getQuery());

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin, toObjectPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema, Types } = mongoose;
 const exampleSuggestionSchema = new Schema({
@@ -18,5 +18,6 @@ const exampleSuggestionSchema = new Schema({
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(exampleSuggestionSchema);
+updatedOnHook(exampleSuggestionSchema);
 
 export default mongoose.model('ExampleSuggestion', exampleSuggestionSchema);
