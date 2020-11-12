@@ -83,7 +83,7 @@ describe('MongoDB Generic Words', () => {
     });
 
     it('should return a generic word by searching with filter query', (done) => {
-      const filter = 'mbughari';
+      const filter = 'chicken';
       getGenericWords({ filter: { word: filter } })
         .end((_, res) => {
           expect(res.status).to.equal(200);

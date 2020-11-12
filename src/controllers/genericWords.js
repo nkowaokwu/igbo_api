@@ -10,7 +10,7 @@ import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
 import { packageResponse, handleQueries } from './utils';
-import { searchIgboRegexQuery } from './utils/queries';
+import { searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
   getExamplesFromClientData,
@@ -64,11 +64,10 @@ export const getGenericWords = (req, res) => {
     limit,
     ...rest
   } = handleQueries(req.query);
-  const regexMatch = searchIgboRegexQuery(regexKeyword);
+  const regexMatch = searchPreExistingGenericWordsRegexQuery(regexKeyword);
   return GenericWord
     .find(regexMatch)
     .sort({ approvals: 'desc' })
-    .where('merged').equals(null)
     .skip(skip)
     .limit(limit)
     .then(async (genericWords) => {

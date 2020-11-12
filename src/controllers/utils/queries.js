@@ -16,6 +16,10 @@ export const searchPreExistingWordSuggestionsRegexQuery = (regex) => ({
   $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }],
   merged: null,
 });
+export const searchPreExistingGenericWordsRegexQuery = (regex) => ({
+  $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }, { definitions: { $in: [regex] } }],
+  merged: null,
+});
 export const searchIgboRegexQuery = (regex) => ({
   $or: [{ word: { $regex: regex } }, { variations: { $in: [regex] } }],
 });
