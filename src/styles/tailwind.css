@@ -71,6 +71,17 @@ h1 {
   @apply py-5;
 }
 
+.form-textarea {
+  @apply w-full;
+  @apply border-current;
+  @apply border-solid;
+  @apply border;
+  @apply border-gray-600;
+  @apply rounded-md;
+  @apply px-3;
+  @apply py-2;
+}
+
 .list-container {
   @apply flex;
   @apply items-center;
