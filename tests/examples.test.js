@@ -31,7 +31,7 @@ describe('MongoDB Examples', () => {
         .then((res) => {
           expect(res.status).to.equal(200);
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
-          createExample(mergingExampleSuggestion)
+          createExample(mergingExampleSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
@@ -59,7 +59,7 @@ describe('MongoDB Examples', () => {
             .then((examplesRes) => {
               const firstExample = examplesRes.body[0];
               const mergingExampleSuggestion = { ...res.body, originalExampleId: firstExample.id };
-              createExample(mergingExampleSuggestion)
+              createExample(mergingExampleSuggestion.id)
                 .then((result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.id).to.not.equal(undefined);
@@ -84,7 +84,7 @@ describe('MongoDB Examples', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           const malformedMergingExampleSuggestion = { ...res.body, ...malformedExampleSuggestionData };
-          createExample(malformedMergingExampleSuggestion)
+          createExample(malformedMergingExampleSuggestion.id)
             .end((_, result) => {
               expect(result.status).to.equal(200);
               expect(result.body.error).to.equal(undefined);
@@ -97,7 +97,7 @@ describe('MongoDB Examples', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
-          createExample(mergingExampleSuggestion)
+          createExample(mergingExampleSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
@@ -115,7 +115,7 @@ describe('MongoDB Examples', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
-          createExample(mergingExampleSuggestion)
+          createExample(mergingExampleSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
@@ -135,7 +135,7 @@ describe('MongoDB Examples', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           const mergingExampleSuggestion = { ...res.body, ...exampleSuggestionData };
-          createExample(mergingExampleSuggestion)
+          createExample(mergingExampleSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);

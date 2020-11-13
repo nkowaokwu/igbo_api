@@ -2,7 +2,6 @@ import chai from 'chai';
 import server from '../../src/server';
 import { API_ROUTE, TEST_ROUTE, API_URL } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
-import SuggestionTypes from '../../src/shared/constants/suggestionTypes';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import { sendEmail } from '../../src/controllers/mail';
 import mockedData from '../__mocks__/data.mock.json';
@@ -64,21 +63,20 @@ export const deleteGenericWord = (id) => (
     .delete(`${API_ROUTE}/genericWords/${id}`)
 );
 
-// TODO: #240 only take in ids
-export const createWord = (data, query = {}) => (
+export const createWord = (id, query = {}) => (
   chai
     .request(server)
     .post(`${API_ROUTE}/words`)
     .query(query)
-    .send({ docType: SuggestionTypes.WORD_SUGGESTIONS, ...data })
+    .send({ id })
 );
 
-export const createExample = (data, query = {}) => (
+export const createExample = (id, query = {}) => (
   chai
     .request(server)
     .post(`${API_ROUTE}/examples`)
     .query(query)
-    .send(data)
+    .send({ id })
 );
 
 export const suggestNewWord = (data) => (

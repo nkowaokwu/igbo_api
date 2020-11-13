@@ -29,7 +29,7 @@ describe('MongoDB Example Suggestions', () => {
   before((done) => {
     suggestNewWord(wordSuggestionData)
       .then((res) => {
-        createWord(res.body)
+        createWord(res.body.id)
           .then(() => done());
       });
   });
