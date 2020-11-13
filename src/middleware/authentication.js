@@ -1,11 +1,17 @@
+import * as admin from 'firebase-admin';
+
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+});
+
 /* Validates the user-provided auth token */
-const authentication = (req, res, next) => {
+const authentication = async (req, res, next) => {
   const authHeader = req.headers.Authorization;
 
   /* Overrides user role for local development and testing purposes */
   if (process.env.NODE_ENV !== 'production') {
     const { role = 'admin' } = req.query;
-    req.user = { role }; // TODO: Update the shape of this object to match Firebase's user object
+    req.user = { role };
     return next();
   }
 
@@ -13,9 +19,18 @@ const authentication = (req, res, next) => {
     // eslint-disable-next-line
     const token = authHeader.split(' ')[1];
 
-    // TODO: Verify the Firebase token is valid
-    // If the token is valid place the user object on the req object
-    // Example: req.user = token.user
+    try {
+      const decoded = await admin.auth().verifyIdToken(token);
+
+      // If the token is valid place the user object on the req object
+      req.user = decoded.user;
+      const userRecord = await admin.auth().getUser(decoded.uid);
+      const userRole = userRecord.customClaims?.role;
+      req.user.role = userRole;
+    } catch (err) {
+      res.status(403);
+      return res.send({ error: err });
+    }
 
     return next();
   }
