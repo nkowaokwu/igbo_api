@@ -1,6 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 import mongoose from 'mongoose';
-import { toJSONPlugin, toObjectPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema, Types } = mongoose;
 const wordSuggestionSchema = new Schema({
@@ -22,6 +22,7 @@ const wordSuggestionSchema = new Schema({
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(wordSuggestionSchema);
+updatedOnHook(wordSuggestionSchema);
 
 wordSuggestionSchema.pre('findOneAndDelete', async function (next) {
   const wordSuggestion = await this.model.findOne(this.getQuery());

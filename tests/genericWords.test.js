@@ -62,6 +62,20 @@ describe('MongoDB Generic Words', () => {
           done();
         });
     });
+
+    it('should update the updatedOn field', (done) => {
+      getGenericWords()
+        .then((genericWordsRes) => {
+          expect(genericWordsRes.status).to.equal(200);
+          const genericWord = genericWordsRes.body[0];
+          updateGenericWord(genericWord.id, { ...genericWord, word: 'updated' })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(Date.parse(genericWord.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
+              done();
+            });
+        });
+    });
   });
 
   describe('/GET mongodb genericWords', () => {
