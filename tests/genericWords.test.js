@@ -1,10 +1,5 @@
 import chai from 'chai';
-import {
-  forIn,
-  forEach,
-  isEqual,
-  some,
-} from 'lodash';
+import { forIn, forEach, isEqual } from 'lodash';
 import {
   getGenericWords,
   getGenericWord,
@@ -96,14 +91,14 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return a generic word by searching with filter query', (done) => {
-      const filter = 'mbughari';
-      getGenericWords({ filter: { word: filter } })
+    it.skip('should return a generic word using definition by searching with filter query', (done) => {
+      const filter = 'aal';
+      getGenericWords({ filter: `{"word":"${filter}"}` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.lengthOf.at.least(1);
-          expect(some(res.body, ({ word }) => word === filter)).to.equal(true);
+          expect(res.body[0].definitions.includes(filter)).to.equal(true);
           done();
         });
     });
