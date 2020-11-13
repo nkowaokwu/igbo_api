@@ -24,7 +24,6 @@ import {
   wordSuggestionData,
   wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
-import SuggestionTypes from '../src/shared/constants/suggestionTypes';
 import { SAVE_DOC_DELAY } from './shared/constants';
 
 const { expect } = chai;
@@ -34,7 +33,7 @@ describe('Editing Flow', () => {
     suggestNewWord(wordSuggestionData)
       .then((wordSuggestionRes) => {
         expect(wordSuggestionRes.status).to.equal(200);
-        createWord(wordSuggestionRes.body)
+        createWord(wordSuggestionRes.body.id)
           .then((mergedWordRes) => {
             expect(mergedWordRes.status).to.equal(200);
             getWordSuggestion(wordSuggestionRes.body.id)
@@ -59,7 +58,7 @@ describe('Editing Flow', () => {
     suggestNewWord(genericWordData)
       .then((genericWordRes) => {
         expect(genericWordRes.status).to.equal(200);
-        createWord(genericWordRes.body)
+        createWord(genericWordRes.body.id)
           .then((mergedWordRes) => {
             expect(mergedWordRes.status).to.equal(200);
             getWordSuggestion(genericWordRes.body.id)
@@ -84,7 +83,7 @@ describe('Editing Flow', () => {
     suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
       .then((wordSuggestionRes) => {
         expect(wordSuggestionRes.status).to.equal(200);
-        createWord(wordSuggestionRes.body)
+        createWord(wordSuggestionRes.body.id)
           .then((mergedWordRes) => {
             expect(mergedWordRes.status).to.equal(200);
             setTimeout(() => {
@@ -114,12 +113,12 @@ describe('Editing Flow', () => {
   it('should add a new associatedWordId to exampleSuggestion', (done) => {
     suggestNewWord(wordSuggestionData)
       .then((res) => {
-        createWord(res.body)
+        createWord(res.body.id)
           .then((firstWordRes) => {
             suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
               .then((wordSuggestionRes) => {
                 expect(wordSuggestionRes.status).to.equal(200);
-                createWord(wordSuggestionRes.body)
+                createWord(wordSuggestionRes.body.id)
                   .then((mergedWordRes) => {
                     expect(mergedWordRes.status).to.equal(200);
                     setTimeout(() => {
@@ -134,7 +133,7 @@ describe('Editing Flow', () => {
                           suggestNewExample(newExampleSuggestion)
                             .then((exampleSuggestionRes) => {
                               expect(exampleSuggestionRes.status).to.equal(200);
-                              createExample(exampleSuggestionRes.body)
+                              createExample(exampleSuggestionRes.body.id)
                                 .end((_, finalRes) => {
                                   expect(isEqual(
                                     exampleSuggestionRes.body.associatedWords,
@@ -170,7 +169,7 @@ describe('Editing Flow', () => {
     suggestNewWord(genericWordWithNestedExampleSuggestionData)
       .then((genericWordRes) => {
         expect(genericWordRes.status).to.equal(200);
-        createWord(genericWordRes.body)
+        createWord(genericWordRes.body.id)
           .then((mergedWordRes) => {
             expect(mergedWordRes.status).to.equal(200);
             setTimeout(() => {
@@ -253,7 +252,7 @@ describe('Editing Flow', () => {
         updateGenericWord(genericWord.id, genericWord)
           .then((updatedGenericWordRes) => {
             expect(updatedGenericWordRes.status).to.equal(200);
-            createWord({ id: genericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
+            createWord(genericWord.id)
               .then((firstWordRes) => {
                 expect(firstWordRes.status).to.equal(200);
                 setTimeout(() => {
@@ -270,7 +269,7 @@ describe('Editing Flow', () => {
                         .then((secondGenericWordRes) => {
                           expect(secondGenericWordRes.status).to.equal(200);
                           setTimeout(() => {
-                            createWord({ id: secondGenericWordRes.body.id })
+                            createWord(secondGenericWordRes.body.id)
                               .then((secondWordRes) => {
                                 expect(secondWordRes.status).to.equal(200);
                                 getExample(secondWordRes.body.examples[0].id)
