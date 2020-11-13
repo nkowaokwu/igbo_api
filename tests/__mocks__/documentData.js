@@ -78,7 +78,7 @@ const updatedExampleData = {
 const genericWordData = {
   word: 'genericWord',
   wordClass: 'noun',
-  definitions: [],
+  definitions: ['definition'],
 };
 
 const genericWordApprovedData = {
@@ -103,12 +103,24 @@ const updatedGenericWordData = {
   denials: 1,
 };
 
+const wordSuggestionWithNestedExampleSuggestionData = {
+  ...wordSuggestionData,
+  examples: [exampleSuggestionData],
+};
+
+const genericWordWithNestedExampleSuggestionData = {
+  ...genericWordData,
+  examples: [exampleSuggestionData],
+};
+
 export {
   wordSuggestionId,
   wordSuggestionData,
   wordSuggestionApprovedData,
   malformedWordSuggestionData,
   updatedWordSuggestionData,
+  wordSuggestionWithNestedExampleSuggestionData,
+  genericWordWithNestedExampleSuggestionData,
   malformedWordData,
   updatedWordData,
   exampleSuggestionData,

@@ -1,67 +1,136 @@
 import mongoose from 'mongoose';
-import { assign, some } from 'lodash';
+import {
+  assign,
+  some,
+  map,
+  uniq,
+} from 'lodash';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
+import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { prepResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries } from './utils/index';
+import { searchExampleSuggestionsRegexQuery, searchPreExistingExampleSuggestionsRegexQuery } from './utils/queries';
 import { sendRejectedEmail } from './mail';
 
-/* Creates a new ExampleSuggestion document in the database */
-export const postExampleSuggestion = (req, res) => {
-  const { body: data } = req;
-
+export const createExampleSuggestion = async (data) => {
   if (!data.igbo && !data.english) {
-    res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
+    throw new Error('Required information is missing, double check your provided data');
   }
 
   if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
-    res.status(400);
-    return res.send({ error: 'Invalid id found in associatedWords' });
+    throw new Error('Invalid id found in associatedWords');
   }
+
+  await Promise.all(map(data.associatedWords, async (associatedWordId) => {
+    const query = searchPreExistingExampleSuggestionsRegexQuery({ ...data, associatedWordId });
+    const identicalExampleSuggestions = await ExampleSuggestion
+      .find(query);
+
+    if (identicalExampleSuggestions.length) {
+      const exampleSuggestionIds = map(identicalExampleSuggestions, (exampleSuggestion) => exampleSuggestion.id);
+      throw new Error(`There is already an existing example suggestion with the exact same information. 
+        ExampleSuggestion id(s): ${exampleSuggestionIds}`);
+    }
+  }));
 
   const newExampleSuggestion = new ExampleSuggestion(data);
   return newExampleSuggestion.save()
-    .then((exampleSuggestion) => (
-      res.send(exampleSuggestion)
-    ))
     .catch(() => {
-      res.status(400);
-      return res.send('An error has occurred while saving, double check your provided data');
+      throw new Error('An error has occurred while saving, double check your provided data');
     });
 };
 
-/* Updates an existing ExampleSuggestion object */
-export const putExampleSuggestion = (req, res) => {
-  const { body: data, params: { id } } = req;
+/* Creates a new ExampleSuggestion document in the database */
+export const postExampleSuggestion = async (req, res) => {
+  const { body: data } = req;
 
-  if (!data.igbo && !data.english) {
+  try {
+    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
+      throw new Error('Duplicates are not allows in associated words');
+    }
+
+    // TODO: handle duplicated error handling
+    await Promise.all(
+      map(data.associatedWords, async (associatedWordId) => {
+        if (!(await Word.findById(associatedWordId))) {
+          throw new Error('Example suggestion associated words can only contain Word ids');
+        }
+      }),
+    );
+
+    const createdExampleSuggestion = createExampleSuggestion(data);
+    return res.send(await createdExampleSuggestion);
+  } catch (err) {
     res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
+    return res.send({ error: err.message });
   }
+};
 
-  return ExampleSuggestion.findById(id)
+export const updateExampleSuggestion = ({ id, data }) => (
+  ExampleSuggestion.findById(id)
     .then(async (exampleSuggestion) => {
       if (!exampleSuggestion) {
-        res.status(400);
-        return res.send({ error: 'Example suggestion doesn\'t exist' });
+        throw new Error('Example suggestion doesn\'t exist');
       }
       const updatedExampleSuggestion = assign(exampleSuggestion, data);
-      return res.send(await updatedExampleSuggestion.save());
+      return updatedExampleSuggestion.save();
     })
-    .catch(() => {
-      res.status(400);
-      return res.send('An error has occurred while updating, double check your provided data');
-    });
+    .catch((err) => {
+      throw new Error(err.message);
+    })
+);
+
+/* Updates an existing ExampleSuggestion object */
+export const putExampleSuggestion = async (req, res) => {
+  const { body: data, params: { id } } = req;
+
+  try {
+    if (!data.igbo && !data.english) {
+      throw new Error('Required information is missing, double check your provided data');
+    }
+
+    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
+      throw new Error('Duplicates are not allows in associated words');
+    }
+
+    await Promise.all(
+      map(data.associatedWords, async (associatedWordId) => {
+        if (!(await Word.findById(associatedWordId))) {
+          throw new Error('Example suggestion associated words can only contain Word ids');
+        }
+      }),
+    );
+
+    const updatedExampleSuggestion = updateExampleSuggestion({ id, data });
+    return res.send(await updatedExampleSuggestion);
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const { regexKeyword, ...rest } = handleQueries(req.query);
+  const {
+    regexKeyword,
+    skip,
+    limit,
+    ...rest
+  } = handleQueries(req.query);
+  const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
   return ExampleSuggestion
-    .find({ $or: [{ igbo: regexKeyword }, { english: regexKeyword }] })
+    .find(regexMatch)
     .sort({ approvals: 'desc' })
+    .skip(skip)
+    .limit(limit)
     .then((exampleSuggestions) => (
-      prepResponse({ res, docs: exampleSuggestions, ...rest })
+      packageResponse({
+        res,
+        docs: exampleSuggestions,
+        model: ExampleSuggestion,
+        query: regexMatch,
+        ...rest,
+      })
     ))
     .catch(() => {
       res.status(400);
@@ -90,14 +159,11 @@ export const getExampleSuggestion = (req, res) => {
     });
 };
 
-/* Deletes a single ExampleSuggestion by using an id */
-export const deleteExampleSuggestion = (req, res) => {
-  const { id } = req.params;
-  return ExampleSuggestion.findByIdAndDelete(id)
+export const removeExampleSuggestion = (id) => (
+  ExampleSuggestion.findByIdAndDelete(id)
     .then((exampleSuggestion) => {
       if (!exampleSuggestion) {
-        res.status(400);
-        return res.send({ error: 'No example suggestion exists with the provided id.' });
+        throw new Error('No example suggestion exists with the provided id.');
       }
       /* Sends rejection email to user if they provided an email and the exampleSuggestion isn't merged */
       if (exampleSuggestion.userEmail && !exampleSuggestion.merged) {
@@ -107,10 +173,20 @@ export const deleteExampleSuggestion = (req, res) => {
           ...exampleSuggestion,
         });
       }
-      return res.send(exampleSuggestion);
+      return exampleSuggestion;
     })
     .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while deleting and return a single example suggestion' });
-    });
+      throw new Error('An error has occurred while deleting and return a single example suggestion');
+    })
+);
+
+/* Deletes a single ExampleSuggestion by using an id */
+export const deleteExampleSuggestion = async (req, res) => {
+  const { id } = req.params;
+  try {
+    return res.send(await removeExampleSuggestion(id));
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };

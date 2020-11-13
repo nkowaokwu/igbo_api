@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import JSONPretty from 'react-json-pretty';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../config';
-import { transition } from '../../../shared/constants/styles';
 
 const Demo = () => {
   const [keyword, setKeyword] = useState('');
@@ -39,13 +38,13 @@ const Demo = () => {
             <button
               type="button"
               onClick={onSubmit}
-              className={`${transition} h-12 w-full rounded-md hover:bg-green-600 bg-green-800 text-gray-100`}
+              className="transition-element h-12 w-full rounded-md hover:bg-green-600 bg-green-800 text-gray-100"
             >
               Submit
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a className={`${transition} text-green-400 hover:text-green-700`} href={DICTIONARY_APP_URL}>
+              <a className="transition-element text-green-400 hover:text-green-700" href={DICTIONARY_APP_URL}>
                 dictionary app
               </a>
             </p>

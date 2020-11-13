@@ -1,21 +1,22 @@
 import chai from 'chai';
-import {
-  forEach,
-  forIn,
-  isEqual,
-} from 'lodash';
+import { forEach, every, isEqual } from 'lodash';
 import {
   suggestNewExample,
   updateExampleSuggestion,
   getExampleSuggestions,
   getExampleSuggestion,
   deleteExampleSuggestion,
+  suggestNewWord,
+  createWord,
+  getWords,
 } from './shared/commands';
 import {
+  wordSuggestionData,
   exampleSuggestionData,
   exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
   updatedExampleSuggestionData,
+  wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
 import { EXAMPLE_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -23,6 +24,14 @@ import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils'
 const { expect } = chai;
 
 describe('MongoDB Example Suggestions', () => {
+  /* Create a base word document */
+  before((done) => {
+    suggestNewWord(wordSuggestionData)
+      .then((res) => {
+        createWord(res.body)
+          .then(() => done());
+      });
+  });
   describe('/POST mongodb exampleSuggestions', () => {
     it('should save submitted example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
@@ -58,21 +67,25 @@ describe('MongoDB Example Suggestions', () => {
 
   describe('/PUT mongodb exampleSuggestions', () => {
     it('should update specific exampleSuggestion with provided data', (done) => {
-      suggestNewExample(exampleSuggestionData)
-        .then((res) => {
-          expect(res.status).to.equal(200);
-          updateExampleSuggestion(res.body.id, updatedExampleSuggestionData)
-            .end((_, result) => {
-              expect(result.status).to.equal(200);
-              forIn(updatedExampleSuggestionData, (value, key) => {
-                expect(isEqual(result.body[key].toString(), value.toString())).to.equal(true);
-              });
-              done();
+      const updatedIgboText = 'updated igbo text';
+      getWords()
+        .then((wordsRes) => {
+          expect(wordsRes.status).to.equal(200);
+          const word = wordsRes.body[0];
+          suggestNewExample({ ...exampleSuggestionData, associatedWords: [word.id] })
+            .then((res) => {
+              expect(res.status).to.equal(200);
+              updateExampleSuggestion(res.body.id, { ...res.body, igbo: updatedIgboText })
+                .end((_, result) => {
+                  expect(result.status).to.equal(200);
+                  expect(result.body.igbo).to.equal(updatedIgboText);
+                  done();
+                });
             });
         });
     });
 
-    it('should return an example error because of malformed data', (done) => {
+    it('should return an example error because of malformed data after creating and example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
@@ -90,6 +103,29 @@ describe('MongoDB Example Suggestions', () => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
           done();
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      updateExampleSuggestion(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should update the updatedOn field', (done) => {
+      getExampleSuggestions()
+        .then((exampleSuggestionsRes) => {
+          expect(exampleSuggestionsRes.status).to.equal(200);
+          const exampleSuggestion = exampleSuggestionsRes.body[0];
+          updateExampleSuggestion(exampleSuggestion.id, exampleSuggestion)
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(Date.parse(exampleSuggestion.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
+              done();
+            });
         });
     });
   });
@@ -161,6 +197,7 @@ describe('MongoDB Example Suggestions', () => {
     it('should return one example suggestion', (done) => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
+          expect(res.status).to.equal(200);
           getExampleSuggestion(res.body.id)
             .end((_, result) => {
               expect(result.status).to.equal(200);
@@ -282,6 +319,37 @@ describe('MongoDB Example Suggestions', () => {
           done();
         });
     });
+
+    it('should return filtered body excluding nested exampleSuggestions within wordSuggestions', (done) => {
+      suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const wordSuggestionWord = res.body.word;
+          const nestedExampleSuggestionId = res.body.examples[0].id;
+          getExampleSuggestion(nestedExampleSuggestionId)
+            .then((result) => {
+              expect(result.status).to.equal(200);
+              expect(result.body.exampleForSuggestion).to.equal(true);
+              getExampleSuggestions({ keyword: wordSuggestionWord })
+                .end((_, exampleSuggestionsRes) => {
+                  expect(exampleSuggestionsRes.status).to.equal(200);
+                  expect(every(exampleSuggestionsRes.body, (exampleSuggestion) => (
+                    exampleSuggestion.id !== nestedExampleSuggestionId
+                  )));
+                  done();
+                });
+            });
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      getExampleSuggestion(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
   });
 
   describe('/DELETE mongodb exampleSuggestions', () => {
@@ -307,6 +375,15 @@ describe('MongoDB Example Suggestions', () => {
       deleteExampleSuggestion(INVALID_ID)
         .then((deleteRes) => {
           expect(deleteRes.status).to.equal(400);
+          done();
+        });
+    });
+
+    it('should throw an error for providing an invalid id', (done) => {
+      deleteExampleSuggestion(INVALID_ID)
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

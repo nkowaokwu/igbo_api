@@ -1,5 +1,6 @@
+/* eslint-disable prefer-arrow-callback */
 import mongoose from 'mongoose';
-import { toJSONPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema, Types } = mongoose;
 const wordSuggestionSchema = new Schema({
@@ -18,8 +19,16 @@ const wordSuggestionSchema = new Schema({
   denials: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
   merged: { type: Types.ObjectId, ref: 'Word', default: null },
-});
+}, { toObject: toObjectPlugin });
 
 toJSONPlugin(wordSuggestionSchema);
+updatedOnHook(wordSuggestionSchema);
+
+wordSuggestionSchema.pre('findOneAndDelete', async function (next) {
+  const wordSuggestion = await this.model.findOne(this.getQuery());
+  await mongoose.model('ExampleSuggestion')
+    .deleteMany({ associatedWords: wordSuggestion.id });
+  next();
+});
 
 export default mongoose.model('WordSuggestion', wordSuggestionSchema);
