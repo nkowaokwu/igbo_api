@@ -215,6 +215,20 @@ describe('MongoDB Word Suggestions', () => {
           done();
         });
     });
+
+    it('should update the updatedOn field', (done) => {
+      getWordSuggestions()
+        .then((wordSuggestionsRes) => {
+          expect(wordSuggestionsRes.status).to.equal(200);
+          const wordSuggestion = wordSuggestionsRes.body[0];
+          updateWordSuggestion(wordSuggestion.id, { ...wordSuggestion, word: 'updated' })
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(Date.parse(wordSuggestion.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
+              done();
+            });
+        });
+    });
   });
 
   describe('/GET mongodb wordSuggestions', () => {

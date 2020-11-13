@@ -114,6 +114,20 @@ describe('MongoDB Example Suggestions', () => {
           done();
         });
     });
+
+    it('should update the updatedOn field', (done) => {
+      getExampleSuggestions()
+        .then((exampleSuggestionsRes) => {
+          expect(exampleSuggestionsRes.status).to.equal(200);
+          const exampleSuggestion = exampleSuggestionsRes.body[0];
+          updateExampleSuggestion(exampleSuggestion.id, exampleSuggestion)
+            .end((_, res) => {
+              expect(res.status).to.equal(200);
+              expect(Date.parse(exampleSuggestion.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
+              done();
+            });
+        });
+    });
   });
 
   describe('/GET mongodb exampleSuggestions', () => {
