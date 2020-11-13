@@ -1,3 +1,4 @@
+import { reduce } from 'lodash';
 import wordsResponse from '../support/constants';
 
 describe('Word', () => {
@@ -174,6 +175,38 @@ describe('Word', () => {
       cy.get('[data-test="select-actions"]').first().click();
       cy.contains('Create an Example').click();
       cy.get('[data-test="suggestion-modal"]');
+    });
+
+    it('constructs the correct object shape to send to the server', () => {
+      const word = 'word';
+      const wordClass = 'wordClass';
+      const definition = 'firstDefinition';
+      const variation = 'firstVariation';
+      const email = 'test@example.com';
+      cy.route({
+        method: 'POST',
+        url: '/api/v1/wordSuggestions',
+        response: { id: 'success' },
+        status: 200,
+      }).as('postWordSuggestion');
+      cy.get('[data-test="add-button"]').click();
+      cy.get('[data-test="new-word-input"]').type(word);
+      cy.get('[data-test="word-class-input"]').type(wordClass);
+      cy.get('[aria-label="Add Definition"]').click();
+      cy.get('[data-test="definitions-0-input"]').type(definition);
+      cy.get('[aria-label="Add Variation"]').click();
+      cy.get('[data-test="variations-0-input"]').type(variation);
+      cy.get('[data-test="email-input"]').type(email);
+      cy.get('form[data-test="word-form"]').then((res) => {
+        const formData = reduce(res.serializeArray(), (builtFormData, { name, value }) => (
+          { ...builtFormData, [name]: value }
+        ), {});
+        expect(formData.word).to.equal(word);
+        expect(formData.wordClass).to.equal(wordClass);
+        expect(formData['definitions[0]']).to.include(definition);
+        expect(formData['variations[0]']).to.include(variation);
+        expect(formData.email).to.equal(email);
+      });
     });
   });
 });

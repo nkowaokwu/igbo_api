@@ -1,3 +1,5 @@
+import { reduce } from 'lodash';
+
 describe('Example', () => {
   beforeEach(() => {
     cy.server();
@@ -57,6 +59,29 @@ describe('Example', () => {
       cy.get('button').contains('Back to Form').click();
       cy.get('[data-test="igbo-input"]');
       cy.get('[data-test="english-input"]');
+    });
+
+    it('constructs the correct object shape to send to the server', () => {
+      const igbo = 'igbo';
+      const english = 'english';
+      const email = 'test@example.com';
+      cy.route({
+        method: 'POST',
+        url: '/api/v1/exampleSuggestions',
+        response: { id: 'success' },
+        status: 200,
+      }).as('postExampleSuggestion');
+      cy.get('[data-test="igbo-input"]').type(igbo);
+      cy.get('[data-test="english-input"]').type(english);
+      cy.get('[data-test="email-input').type(email);
+      cy.get('form[data-test="example-form"]').then((res) => {
+        const formData = reduce(res.serializeArray(), (builtFormData, { name, value }) => (
+          { ...builtFormData, [name]: value }
+        ), {});
+        expect(formData.igbo).to.equal(igbo);
+        expect(formData.english).to.equal(english);
+        expect(formData.email).to.equal(email);
+      });
     });
   });
 });
