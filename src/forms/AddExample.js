@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { map, compact, trim } from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
-import { EXAMPLE_SUGGESTIONS_API_URL } from '../config';
+import Email from '../components/Email';
+import { postExampleSuggestion } from '../API';
 
 const AddExample = ({
   onRequestClose,
@@ -22,12 +21,9 @@ const AddExample = ({
   const onSubmit = (data) => {
     const cleanedData = {
       ...data,
-      definitions: compact(map(data.definitions, (definition) => trim(definition))),
-      variations: compact(map(data.variations, (variation) => trim(variation))),
-      originalWordId: defaultValues?.id || null,
+      associatedWords: defaultValues?.id ? [defaultValues?.id] : [],
     };
-    axios
-      .post(EXAMPLE_SUGGESTIONS_API_URL, cleanedData)
+    postExampleSuggestion(cleanedData)
       .then(() => {
         reset();
         onSuccess({ subtitle: 'You\'re example has been sent for review by editors.' });
@@ -38,7 +34,7 @@ const AddExample = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form data-test="example-form" onSubmit={handleSubmit(onSubmit)}>
       <p className="mt-2">
         By suggesting a new example, you are helping in advancing learning materials for the Igbo language.
       </p>
@@ -79,6 +75,7 @@ const AddExample = ({
         control={control}
         defaultValue={defaultValues?.english || getValues().english}
       />
+      <Email defaultValues={defaultValues} getValues={getValues} control={control} />
       <div className="flex flex-col items-start lg:items-end">
         <div className="flex flex-col w-full lg:flex-row-reverse lg:justify-start">
           <button type="submit" className="button primary-button">Submit</button>

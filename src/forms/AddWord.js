@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { map, compact, trim } from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
-import { WORD_SUGGESTIONS_API_URL } from '../config';
 import AddIcon from '../assets/icons/add.svg';
 import DeleteIcon from '../assets/icons/delete.svg';
+import Email from '../components/Email';
+import { postWordSuggestion } from '../API';
 
 const AddWord = ({
   onRequestClose,
@@ -30,8 +30,7 @@ const AddWord = ({
       variations: compact(map(data.variations, (variation) => trim(variation))),
       originalWordId: defaultValues?.id || null,
     };
-    axios
-      .post(WORD_SUGGESTIONS_API_URL, cleanedData)
+    postWordSuggestion(cleanedData)
       .then(() => {
         reset();
         onSuccess({ subtitle: 'You\'re word edit has been sent for review by editors.' });
@@ -42,7 +41,7 @@ const AddWord = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form data-test="word-form" onSubmit={handleSubmit(onSubmit)}>
       <p className="mt-2">
         {`By either suggesting a new word or editing an existing one, 
         you are helping in advancing learning materials for the Igbo language.`}
@@ -105,8 +104,8 @@ const AddWord = ({
             </h3>
             <Controller
               as={(
-                <input
-                  className="form-input"
+                <textarea
+                  className="form-textarea"
                   size="large"
                   placeholder="Definition"
                   defaultValue={definition}
@@ -188,6 +187,7 @@ const AddWord = ({
           <p className="text-gray-600">No variations</p>
         </div>
       )}
+      <Email defaultValues={defaultValues} getValues={getValues} control={control} />
       <div className="flex flex-col items-start lg:items-end">
         <div className="flex flex-col w-full lg:flex-row-reverse lg:justify-start">
           <button type="submit" className="button primary-button">Submit</button>
