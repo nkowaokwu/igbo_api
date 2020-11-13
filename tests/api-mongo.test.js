@@ -137,7 +137,7 @@ describe('MongoDB Words', () => {
           const firstGenericWord = res.body[0];
           delete firstGenericWord.word;
           createWord(firstGenericWord)
-            .then((result) => {
+            .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.body.error).to.not.equal(undefined);
               done();
@@ -192,8 +192,8 @@ describe('MongoDB Words', () => {
                     .end((_, genericWordRes) => {
                       expect(genericWordRes.status).to.equal(200);
                       expect(genericWordRes.body.merged).to.equal(wordRes.body.id);
+                      done();
                     });
-                  done();
                 });
             });
         });

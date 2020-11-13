@@ -75,13 +75,14 @@ export const getGenericWords = (req, res) => {
       const genericWordsWithExamples = await Promise.all(
         map(genericWords, placeExampleSuggestionsOnSuggestionDoc),
       );
-      return packageResponse({
+      const packagedResponse = await packageResponse({
         res,
         docs: genericWordsWithExamples,
         model: GenericWord,
         query: regexMatch,
         ...rest,
       });
+      return packagedResponse;
     })
     .catch(() => {
       res.status(400);
