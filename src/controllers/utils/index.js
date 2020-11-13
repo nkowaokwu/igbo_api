@@ -65,13 +65,13 @@ export const packageResponse = async ({
   sort,
 }) => {
   try {
+    const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
     const count = await model.countDocuments(query);
     res.setHeader('Content-Range', count);
-    const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
-    res.send(sendDocs);
+    return res.send(sendDocs);
   } catch (err) {
     res.status(400);
-    res.send({ error: err.message });
+    return res.send({ error: err.message });
   }
 };
 
