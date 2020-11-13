@@ -22,6 +22,7 @@ import {
 } from './__mocks__/documentData';
 import { WORD_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
+import SortingDirections from '../src/shared/constants/sortingDirections';
 
 const { expect } = chai;
 
@@ -285,7 +286,7 @@ describe('MongoDB Word Suggestions', () => {
         getWordSuggestions()
           .end((_, res) => {
             expect(res.status).to.equal(200);
-            expectArrayIsInOrder(res.body, 'approvals', 'desc');
+            expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
             done();
           });
       });
@@ -342,11 +343,11 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it('should return at most ten word suggestions because of an invalid', (done) => {
+    it('should throw an error due to an invalid range', (done) => {
       getWordSuggestions({ range: 'incorrect' })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.most(10);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
@@ -365,9 +366,9 @@ describe('MongoDB Word Suggestions', () => {
 
     it('should return different sets of word suggestions for pagination', (done) => {
       Promise.all([
-        getWordSuggestions(0),
-        getWordSuggestions(1),
-        getWordSuggestions(2),
+        getWordSuggestions({ page: 0 }),
+        getWordSuggestions({ page: 1 }),
+        getWordSuggestions({ page: 2 }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -386,8 +387,8 @@ describe('MongoDB Word Suggestions', () => {
 
     it('should return a descending sorted list of word suggestions with sort query', (done) => {
       const key = 'word';
-      const direction = 'desc';
-      getWordSuggestions({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.DESCENDING;
+      getWordSuggestions({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -397,8 +398,8 @@ describe('MongoDB Word Suggestions', () => {
 
     it('should return an ascending sorted list of word suggestions with sort query', (done) => {
       const key = 'definitions';
-      const direction = 'asc';
-      getWordSuggestions({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.ASCENDING;
+      getWordSuggestions({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -406,12 +407,12 @@ describe('MongoDB Word Suggestions', () => {
         });
     });
 
-    it('should return ascending sorted list of word suggestions with malformed sort query', (done) => {
+    it('should throw an error due to malformed sort query', (done) => {
       const key = 'wordClass';
       getWordSuggestions({ sort: `["${key}]` })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expectArrayIsInOrder(res.body, key);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

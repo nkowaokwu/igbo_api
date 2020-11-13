@@ -1,5 +1,6 @@
 import chai from 'chai';
 import { forIn, forEach, isEqual } from 'lodash';
+import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
   getGenericWords,
   getGenericWord,
@@ -124,7 +125,7 @@ describe('MongoDB Generic Words', () => {
               getGenericWords()
                 .end((_, result) => {
                   expect(result.status).to.equal(200);
-                  expectArrayIsInOrder(result.body, 'approvals', 'desc');
+                  expectArrayIsInOrder(result.body, 'approvals', SortingDirections.DESCENDING);
                   done();
                 });
             });
@@ -205,11 +206,11 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return at most ten generic words because of an invalid', (done) => {
+    it('should throw an error due to an invalid range', (done) => {
       getGenericWords({ range: 'incorrect' })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.most(10);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
@@ -228,9 +229,9 @@ describe('MongoDB Generic Words', () => {
 
     it('should return different sets of generic words for pagination', (done) => {
       Promise.all([
-        getGenericWords(0),
-        getGenericWords(1),
-        getGenericWords(2),
+        getGenericWords({ page: 0 }),
+        getGenericWords({ page: 1 }),
+        getGenericWords({ page: 2 }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -249,8 +250,8 @@ describe('MongoDB Generic Words', () => {
 
     it('should return a descending sorted list of generic words with sort query', (done) => {
       const key = 'word';
-      const direction = 'desc';
-      getGenericWords({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.DESCENDING;
+      getGenericWords({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -260,8 +261,8 @@ describe('MongoDB Generic Words', () => {
 
     it('should return an ascending sorted list of generic words with sort query', (done) => {
       const key = 'definitions';
-      const direction = 'asc';
-      getGenericWords({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.ASCENDING;
+      getGenericWords({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -269,12 +270,22 @@ describe('MongoDB Generic Words', () => {
         });
     });
 
-    it('should return ascending sorted list of generic words with malformed sort query', (done) => {
+    it('should throw an error due to malformed sort query', (done) => {
       const key = 'wordClass';
       getGenericWords({ sort: `["${key}]` })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expectArrayIsInOrder(res.body, key);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error due to invalid sorting ordering', (done) => {
+      const key = 'word';
+      getGenericWord({ sort: `["${key}", "invalid"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

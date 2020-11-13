@@ -1,5 +1,6 @@
 import chai from 'chai';
 import { isEqual, forIn, some } from 'lodash';
+import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
   createExample,
   getExamples,
@@ -209,9 +210,9 @@ describe('MongoDB Examples', () => {
 
     it('should return different sets of example suggestions for pagination', (done) => {
       Promise.all([
-        getExamples(0),
-        getExamples(1),
-        getExamples(2),
+        getExamples({ page: 0 }),
+        getExamples({ page: 1 }),
+        getExamples({ page: 2 }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -230,8 +231,8 @@ describe('MongoDB Examples', () => {
 
     it('should return a descending sorted list of examples with sort query', (done) => {
       const key = 'igbo';
-      const direction = 'desc';
-      getExamples({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.DESCENDING;
+      getExamples({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -241,8 +242,8 @@ describe('MongoDB Examples', () => {
 
     it('should return an ascending sorted list of examples with sort query', (done) => {
       const key = 'english';
-      const direction = 'asc';
-      getExamples({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.ASCENDING;
+      getExamples({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -250,12 +251,22 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return ascending sorted list of examples with malformed sort query', (done) => {
+    it('should throw an error due to malformed sort query', (done) => {
       const key = 'igbo';
       getExamples({ sort: `["${key}]` })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expectArrayIsInOrder(res.body, key);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error due to invalid sorting ordering', (done) => {
+      const key = 'igbo';
+      getExamples({ sort: `["${key}", "invalid"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
