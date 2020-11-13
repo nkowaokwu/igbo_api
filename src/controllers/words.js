@@ -43,40 +43,45 @@ export const searchWordUsingIgbo = async ({ query, searchWord, ...rest }) => {
 /* Searches for word with English stored in MongoDB */
 export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => {
   const words = await findWordsWithMatch({ match: query, ...rest });
-  return sortDocsBy(searchWord, words, 'definitions');
+  return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
-  const {
-    searchWord,
-    regexKeyword,
-    range,
-    skip,
-    limit,
-    ...rest
-  } = handleQueries(req.query);
-  const searchQueries = { searchWord, skip, limit };
-  let regexMatch = searchIgboRegexQuery(regexKeyword);
-  const words = await searchWordUsingIgbo({ query: regexMatch, ...searchQueries });
-  if (!words.length) {
-    regexMatch = searchEnglishRegexQuery(regexKeyword);
-    const englishWords = await searchWordUsingEnglish({ query: regexMatch, ...searchQueries });
+  try {
+    const {
+      searchWord,
+      regexKeyword,
+      range,
+      skip,
+      limit,
+      ...rest
+    } = handleQueries(req.query);
+    const searchQueries = { searchWord, skip, limit };
+    let regexMatch = searchIgboRegexQuery(regexKeyword);
+    const words = await searchWordUsingIgbo({ query: regexMatch, ...searchQueries });
+    if (!words.length) {
+      regexMatch = searchEnglishRegexQuery(regexKeyword);
+      const englishWords = await searchWordUsingEnglish({ query: regexMatch, ...searchQueries });
+      return packageResponse({
+        res,
+        docs: englishWords,
+        model: Word,
+        query: regexMatch,
+        ...rest,
+      });
+    }
     return packageResponse({
       res,
-      docs: englishWords,
+      docs: words,
       model: Word,
       query: regexMatch,
       ...rest,
     });
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
   }
-  return packageResponse({
-    res,
-    docs: words,
-    model: Word,
-    query: regexMatch,
-    ...rest,
-  });
 };
 
 /* Returns a word from MongoDB using an id */

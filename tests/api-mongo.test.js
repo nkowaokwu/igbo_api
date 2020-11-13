@@ -9,6 +9,7 @@ import {
   every,
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
+import diacriticless from 'diacriticless';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
@@ -19,6 +20,7 @@ import {
   MESSAGE,
   INVALID_MESSAGE,
 } from './shared/constants';
+import SortingDirections from '../src/shared/constants/sortingDirections';
 import SuggestionTypes from '../src/shared/constants/suggestionTypes';
 import {
   wordSuggestionData,
@@ -385,8 +387,8 @@ describe('MongoDB Words', () => {
     it('should return at most ten words because of an invalid', (done) => {
       getWords({ range: 'incorrect' })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.most(10);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
@@ -444,38 +446,24 @@ describe('MongoDB Words', () => {
       });
     });
 
-    // TODO: #239
-    it.skip('should handle invalid page number', (done) => {
+    it('should throw an error due to negative page number', (done) => {
       const keyword = 'woman';
-      Promise.all([
-        getWords({ keyword, page: -1 }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
-        }),
-        getWords({ keyword, page: 'fake' }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(10);
-        }),
-      ]).then(() => (
-        done()
-      ));
+      getWords({ keyword, page: -1 })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
     });
 
-    // TODO: #239 Throw errors for invalid queries
-    it.skip('should handle invalid page number with filter query', (done) => {
+    it('should throw an error due to invalid page number', (done) => {
       const filter = 'woman';
-      Promise.all([
-        getWords({ filter: { word: filter }, page: -1 }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
-        }),
-        getWords({ filter: { word: filter }, page: 'fake' }).then((res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(10);
-        }),
-      ]).then(() => (
-        done()
-      ));
+      getWords({ filter: { word: filter }, page: 'fake' })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
     });
 
     it("should return nothing because it's an incomplete word", (done) => {
@@ -589,28 +577,29 @@ describe('MongoDB Words', () => {
 
     it('should return a sorted list of igbo terms when using english', (done) => {
       const keyword = 'water';
-      getWords({ keyword }).end((_, res) => {
-        expect(res.status).to.be.equal(200);
-        expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf.at.least(5);
-        expect(every(res.body, (word, index) => {
-          if (index === 0) {
-            return true;
-          }
-          const prevWord = res.body[index - 1].definitions[0] || '';
-          const currentWord = word.definitions[0] || '';
-          const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, prevWord) * -100;
-          const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, currentWord) * -100;
-          return prevWordDifference <= nextWordDifference;
-        })).to.equal(true);
-        done();
-      });
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(5);
+          expect(every(res.body, (word, index) => {
+            if (index === 0) {
+              return true;
+            }
+            const prevWord = res.body[index - 1].definitions[0] || '';
+            const currentWord = word.definitions[0] || '';
+            const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(prevWord)) * 100;
+            const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(currentWord)) * 100;
+            return prevWordDifference <= nextWordDifference;
+          })).to.equal(true);
+          done();
+        });
     });
 
     it('should return a descending sorted list of words with sort query', (done) => {
       const key = 'word';
-      const direction = 'desc';
-      getWords({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.DESCENDING;
+      getWords({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -620,8 +609,8 @@ describe('MongoDB Words', () => {
 
     it('should return an ascending sorted list of words with sort query', (done) => {
       const key = 'definitions';
-      const direction = 'asc';
-      getWords({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.ASCENDING;
+      getWords({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -629,12 +618,12 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return ascending sorted list of words with malformed sort query', (done) => {
+    it('should throw an error due to malformed sort query', (done) => {
       const key = 'wordClass';
       getWords({ sort: `["${key}]` })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expectArrayIsInOrder(res.body, key);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
