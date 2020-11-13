@@ -190,11 +190,7 @@ const createWordFromSuggestion = (suggestionDoc) => (
  * new Word document or merges into an existing Word document */
 export const mergeWord = async (req, res) => {
   const { body: data } = req;
-  const suggestionDoc = data.docType === SuggestionTypes.WORD_SUGGESTIONS
-    ? await findWordSuggestionById(data.id)
-    : data.docType === SuggestionTypes.GENERIC_WORDS
-      ? await findGenericWordById(data.id)
-      : null;
+  const suggestionDoc = (await findWordSuggestionById(data.id)) || (await findGenericWordById(data.id));
 
   if (!suggestionDoc) {
     res.status(400);
