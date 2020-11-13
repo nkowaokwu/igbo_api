@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Get current date
-NOW="$(date +'%d-%m-%Y_%H-%M')"
+NOW="$(date +'%m-%d-%Y_%H-%M')"
 
 # Path to a temporary directory
 DIR=./igbo_api_db
