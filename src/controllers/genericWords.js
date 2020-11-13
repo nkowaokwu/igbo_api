@@ -9,6 +9,7 @@ import {
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
+import SortingDirections from '../shared/constants/sortingDirections';
 import { packageResponse, handleQueries } from './utils';
 import { searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
@@ -58,36 +59,41 @@ export const putGenericWord = (req, res) => {
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
-  const {
-    regexKeyword,
-    skip,
-    limit,
-    ...rest
-  } = handleQueries(req.query);
-  const regexMatch = searchPreExistingGenericWordsRegexQuery(regexKeyword);
-  return GenericWord
-    .find(regexMatch)
-    .sort({ approvals: 'desc' })
-    .skip(skip)
-    .limit(limit)
-    .then(async (genericWords) => {
-      /* Places the exampleSuggestions on the corresponding genericWords */
-      const genericWordsWithExamples = await Promise.all(
-        map(genericWords, placeExampleSuggestionsOnSuggestionDoc),
-      );
-      const packagedResponse = await packageResponse({
-        res,
-        docs: genericWordsWithExamples,
-        model: GenericWord,
-        query: regexMatch,
-        ...rest,
+  try {
+    const {
+      regexKeyword,
+      skip,
+      limit,
+      ...rest
+    } = handleQueries(req.query);
+    const regexMatch = searchPreExistingGenericWordsRegexQuery(regexKeyword);
+    // TODO: #251 move out to a seperate function
+    return GenericWord
+      .find(regexMatch)
+      .sort({ approvals: SortingDirections.DESCENDING })
+      .skip(skip)
+      .limit(limit)
+      .then(async (genericWords) => {
+        /* Places the exampleSuggestions on the corresponding genericWords */
+        const genericWordsWithExamples = await Promise.all(
+          map(genericWords, placeExampleSuggestionsOnSuggestionDoc),
+        );
+        const packagedResponse = await packageResponse({
+          res,
+          docs: genericWordsWithExamples,
+          model: GenericWord,
+          query: regexMatch,
+          ...rest,
+        });
+        return packagedResponse;
+      })
+      .catch(() => {
+        throw new Error('An error has occurred while returning all generic words');
       });
-      return packagedResponse;
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while returning all generic words' });
-    });
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };
 
 export const findGenericWordById = (id) => (
