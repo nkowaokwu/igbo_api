@@ -66,6 +66,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-json-pretty": "^2.2.0",
+    "react-scroll": "^1.8.1",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "string-similarity": "^4.0.2",
