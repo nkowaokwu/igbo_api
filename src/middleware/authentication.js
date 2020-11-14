@@ -1,9 +1,5 @@
 import * as admin from 'firebase-admin';
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-});
-
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
   const authHeader = req.headers.Authorization;
