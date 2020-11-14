@@ -20,6 +20,7 @@ import {
 } from './__mocks__/documentData';
 import { EXAMPLE_SUGGESTION_KEYS, INVALID_ID } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
+import SortingDirections from '../src/shared/constants/sortingDirections';
 
 const { expect } = chai;
 
@@ -28,7 +29,7 @@ describe('MongoDB Example Suggestions', () => {
   before((done) => {
     suggestNewWord(wordSuggestionData)
       .then((res) => {
-        createWord(res.body)
+        createWord(res.body.id)
           .then(() => done());
       });
   });
@@ -188,7 +189,7 @@ describe('MongoDB Example Suggestions', () => {
         getExampleSuggestions()
           .end((_, res) => {
             expect(res.status).to.equal(200);
-            expectArrayIsInOrder(res.body, 'approvals', 'desc');
+            expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
             done();
           });
       });
@@ -246,11 +247,11 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return at most ten example suggestions because of an invalid', (done) => {
+    it('should throw an error due to an invalid range', (done) => {
       getExampleSuggestions({ range: 'incorrect' })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.most(10);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });
@@ -269,9 +270,9 @@ describe('MongoDB Example Suggestions', () => {
 
     it('should return different sets of example suggestions for pagination', (done) => {
       Promise.all([
-        getExampleSuggestions(0),
-        getExampleSuggestions(1),
-        getExampleSuggestions(2),
+        getExampleSuggestions({ page: 0 }),
+        getExampleSuggestions({ page: 1 }),
+        getExampleSuggestions({ page: 2 }),
       ]).then((res) => {
         expectUniqSetsOfResponses(res);
         done();
@@ -290,8 +291,8 @@ describe('MongoDB Example Suggestions', () => {
 
     it('should return a descending sorted list of example suggestions with sort query', (done) => {
       const key = 'word';
-      const direction = 'desc';
-      getExampleSuggestions({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.DESCENDING;
+      getExampleSuggestions({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -301,8 +302,8 @@ describe('MongoDB Example Suggestions', () => {
 
     it('should return an ascending sorted list of example suggestions with sort query', (done) => {
       const key = 'definitions';
-      const direction = 'asc';
-      getExampleSuggestions({ sort: `["${key}": "${direction}"]` })
+      const direction = SortingDirections.ASCENDING;
+      getExampleSuggestions({ sort: `["${key}", "${direction}"]` })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expectArrayIsInOrder(res.body, key, direction);
@@ -310,12 +311,22 @@ describe('MongoDB Example Suggestions', () => {
         });
     });
 
-    it('should return ascending sorted list of example suggestions with malformed sort query', (done) => {
+    it('should throw an error due to malformed sort query', (done) => {
       const key = 'wordClass';
       getExampleSuggestions({ sort: `["${key}]` })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expectArrayIsInOrder(res.body, key);
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
+          done();
+        });
+    });
+
+    it('should throw an error due to invalid sorting ordering', (done) => {
+      const key = 'igbo';
+      getExampleSuggestions({ sort: `["${key}", "invalid"]` })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

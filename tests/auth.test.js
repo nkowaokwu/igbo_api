@@ -97,7 +97,7 @@ describe('Auth', () => {
     });
 
     it('should forbid an editor from creating a word', (done) => {
-      createWord({}, { role: 'editor' })
+      createWord('', { role: 'editor' })
         .end((_, res) => {
           expect(res.status).to.equal(403);
           expect(res.body.error).to.not.equal(undefined);
@@ -106,7 +106,7 @@ describe('Auth', () => {
     });
 
     it('should forbid an editor from creating an example', (done) => {
-      createExample({}, { role: 'editor' })
+      createExample('', { role: 'editor' })
         .end((_, res) => {
           expect(res.status).to.equal(403);
           expect(res.body.error).to.not.equal(undefined);

@@ -16,6 +16,7 @@ import {
   updateNestedExampleSuggestions,
   placeExampleSuggestionsOnSuggestionDoc,
 } from './utils/nestedExampleSuggestionUtils';
+import SortingDirections from '../shared/constants/sortingDirections';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import { sendRejectedEmail } from './mail';
 
@@ -90,35 +91,40 @@ export const putWordSuggestion = (req, res) => {
 
 /* Returns all existing WordSuggestion objects */
 export const getWordSuggestions = (req, res) => {
-  const {
-    regexKeyword,
-    skip,
-    limit,
-    ...rest
-  } = handleQueries(req.query);
-  const regexMatch = searchPreExistingWordSuggestionsRegexQuery(regexKeyword);
-  WordSuggestion
-    .find(regexMatch)
-    .sort({ approvals: 'desc' })
-    .skip(skip)
-    .limit(limit)
-    .then(async (wordSuggestions) => {
-      /* Places the exampleSuggestions on the corresponding wordSuggestions */
-      const wordSuggestionsWithExamples = await Promise.all(
-        map(wordSuggestions, placeExampleSuggestionsOnSuggestionDoc),
-      );
-      return packageResponse({
-        res,
-        docs: wordSuggestionsWithExamples,
-        model: WordSuggestion,
-        query: regexMatch,
-        ...rest,
+  try {
+    const {
+      regexKeyword,
+      skip,
+      limit,
+      ...rest
+    } = handleQueries(req.query);
+    const regexMatch = searchPreExistingWordSuggestionsRegexQuery(regexKeyword);
+    // TODO: #251 move out to a seperate function
+    return WordSuggestion
+      .find(regexMatch)
+      .sort({ approvals: SortingDirections.DESCENDING })
+      .skip(skip)
+      .limit(limit)
+      .then(async (wordSuggestions) => {
+        /* Places the exampleSuggestions on the corresponding wordSuggestions */
+        const wordSuggestionsWithExamples = await Promise.all(
+          map(wordSuggestions, placeExampleSuggestionsOnSuggestionDoc),
+        );
+        return packageResponse({
+          res,
+          docs: wordSuggestionsWithExamples,
+          model: WordSuggestion,
+          query: regexMatch,
+          ...rest,
+        });
+      })
+      .catch((err) => {
+        throw err;
       });
-    })
-    .catch((err) => {
-      res.status(400);
-      return res.send({ error: err.message });
-    });
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };
 
 /* Returns a single WordSuggestion by using an id */

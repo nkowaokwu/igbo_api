@@ -31,22 +31,27 @@ const searchExamples = ({ query, skip, limit }) => (
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res) => {
-  const {
-    regexKeyword,
-    skip,
-    limit,
-    ...rest
-  } = handleQueries(req.query);
-  const regexMatch = searchExamplesRegexQuery(regexKeyword);
-  const examples = await searchExamples({ query: regexMatch, skip, limit });
+  try {
+    const {
+      regexKeyword,
+      skip,
+      limit,
+      ...rest
+    } = handleQueries(req.query);
+    const regexMatch = searchExamplesRegexQuery(regexKeyword);
+    const examples = await searchExamples({ query: regexMatch, skip, limit });
 
-  return packageResponse({
-    res,
-    docs: examples,
-    model: Example,
-    query: regexMatch,
-    ...rest,
-  });
+    return packageResponse({
+      res,
+      docs: examples,
+      model: Example,
+      query: regexMatch,
+      ...rest,
+    });
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };
 
 export const findExampleById = (id) => (

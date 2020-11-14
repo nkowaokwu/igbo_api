@@ -6,6 +6,7 @@ import {
   uniq,
 } from 'lodash';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
+import SortingDirections from '../shared/constants/sortingDirections';
 import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
 import { packageResponse, handleQueries } from './utils/index';
@@ -111,31 +112,36 @@ export const putExampleSuggestion = async (req, res) => {
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
-  const {
-    regexKeyword,
-    skip,
-    limit,
-    ...rest
-  } = handleQueries(req.query);
-  const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
-  return ExampleSuggestion
-    .find(regexMatch)
-    .sort({ approvals: 'desc' })
-    .skip(skip)
-    .limit(limit)
-    .then((exampleSuggestions) => (
-      packageResponse({
-        res,
-        docs: exampleSuggestions,
-        model: ExampleSuggestion,
-        query: regexMatch,
-        ...rest,
-      })
-    ))
-    .catch(() => {
-      res.status(400);
-      return res.send('An error has occurred while return example suggestions, double check your provided data');
-    });
+  try {
+    const {
+      regexKeyword,
+      skip,
+      limit,
+      ...rest
+    } = handleQueries(req.query);
+    const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
+    // TODO: #251 move out to a seperate function
+    return ExampleSuggestion
+      .find(regexMatch)
+      .sort({ approvals: SortingDirections.DESCENDING })
+      .skip(skip)
+      .limit(limit)
+      .then((exampleSuggestions) => (
+        packageResponse({
+          res,
+          docs: exampleSuggestions,
+          model: ExampleSuggestion,
+          query: regexMatch,
+          ...rest,
+        })
+      ))
+      .catch(() => {
+        throw new Error('An error has occurred while return example suggestions, double check your provided data');
+      });
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
+  }
 };
 
 export const findExampleSuggestionById = (id) => (

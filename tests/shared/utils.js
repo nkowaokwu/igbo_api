@@ -5,6 +5,7 @@ import {
   map,
   every,
 } from 'lodash';
+import SortingDirections from '../../src/shared/constants/sortingDirections';
 
 const { expect } = chai;
 
@@ -20,13 +21,13 @@ const expectUniqSetsOfResponses = (res, responseLength = 10) => {
   });
 };
 
-const expectArrayIsInOrder = (array, key, direction = 'asc') => {
+const expectArrayIsInOrder = (array, key, direction = SortingDirections.ASCENDING) => {
   const isOrdered = every(map(array, (item) => item[key]), (value, index) => {
     if (index === 0) {
       return true;
     }
     return (
-      direction === 'asc'
+      direction === SortingDirections.ASCENDING
         ? String(array[index - 1][key] <= String(value))
         : String(array[index - 1][key] >= String(value))
     );
