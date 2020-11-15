@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { Link } from 'react-scroll';
 import downchevron from '../../assets/downchevron.svg';
 import { API_ROUTE } from '../../../config';
 
@@ -14,10 +15,30 @@ const SubMenu = () => (
       <a href="#about">About</a>
     </li>
     <li className="transition-element hover:text-gray-500">
-      <a href="#features">Features</a>
+      <Link
+        activeClass="nav-item-active"
+        className="cursor-pointer"
+        to="features"
+        spy
+        smooth
+        offset={-100}
+        duration={600}
+      >
+        Features
+      </Link>
     </li>
     <li className="transition-element hover:text-gray-500">
-      <a href="#try-it-out">Try it Out</a>
+      <Link
+        activeClass="nav-item-active"
+        className="cursor-pointer"
+        to="try-it-out"
+        spy
+        smooth
+        offset={-100}
+        duration={600}
+      >
+        Try it Out
+      </Link>
     </li>
     <li className="transition-element hover:text-gray-500">
       <a href={`${API_ROUTE}/docs`}>Docs</a>
