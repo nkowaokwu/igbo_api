@@ -21,6 +21,13 @@ font-family: 'Arvo-Bold';
 
 #logo {
   font-family: 'Arvo-Bold' !important;
+  @apply transition-all;
+  @apply duration-200;
+  width: 150px;
+}
+
+#logo:hover {
+  opacity: .6;
 }
 
 h1 {
@@ -113,6 +120,13 @@ h1 {
 
 /* Large (lg) */
 @media (min-width: 1024px) {
+  #logo {
+    font-family: 'Arvo-Bold' !important;
+    @apply transition-all;
+    @apply duration-200;
+    width: 170px;
+  }
+
   .modal-container {
     @apply w-10/12;
   }
