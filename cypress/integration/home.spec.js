@@ -5,7 +5,7 @@ describe('Homepage', () => {
   });
 
   it('returns to the homepage', () => {
-    cy.get('h1#logo').click();
+    cy.get('img#logo').click();
   });
 
   it('searches and wait for words using igbo', () => {
