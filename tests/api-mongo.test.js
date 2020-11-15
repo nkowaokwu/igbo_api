@@ -21,7 +21,6 @@ import {
   INVALID_MESSAGE,
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
-import SuggestionTypes from '../src/shared/constants/suggestionTypes';
 import {
   wordSuggestionData,
   updatedWordData,
@@ -86,7 +85,7 @@ describe('MongoDB Words', () => {
         .then((res) => {
           expect(res.status).to.equal(200);
           const mergingWordSuggestion = { ...res.body, ...updatedWordSuggestionData };
-          createWord(mergingWordSuggestion)
+          createWord(mergingWordSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
@@ -115,7 +114,7 @@ describe('MongoDB Words', () => {
           updateGenericWord(firstGenericWord.id, firstGenericWord)
             .then((saveMergedGenericWord) => {
               expect(saveMergedGenericWord.status).to.equal(200);
-              createWord({ id: firstGenericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
+              createWord(firstGenericWord.id)
                 .then((result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.id).to.not.equal(undefined);
@@ -138,7 +137,7 @@ describe('MongoDB Words', () => {
           expect(res.status).to.equal(200);
           const firstGenericWord = res.body[0];
           delete firstGenericWord.word;
-          createWord(firstGenericWord)
+          createWord(firstGenericWord.id)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.body.error).to.not.equal(undefined);
@@ -155,7 +154,7 @@ describe('MongoDB Words', () => {
             .then((wordRes) => {
               const firstWord = wordRes.body[0];
               const mergingWordSuggestion = { ...res.body, originalExampleId: firstWord.id };
-              createWord(mergingWordSuggestion)
+              createWord(mergingWordSuggestion.id)
                 .then((result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.id).to.not.equal(undefined);
@@ -185,7 +184,7 @@ describe('MongoDB Words', () => {
           updateGenericWord(firstGenericWord.id, firstGenericWord)
             .then((updatedGenericWordRes) => {
               expect(updatedGenericWordRes.status).to.equal(200);
-              createWord({ id: updatedGenericWordRes.body.id, docType: SuggestionTypes.GENERIC_WORDS })
+              createWord(updatedGenericWordRes.body.id)
                 .then((wordRes) => {
                   expect(wordRes.status).to.equal(200);
                   expect(wordRes.body.word).to.equal(updatedGenericWordRes.body.word);
@@ -214,7 +213,7 @@ describe('MongoDB Words', () => {
                 wordClass: 'wordClass',
                 originalWordId: firstWord.id,
               };
-              createWord({ id: mergingGenericWord.id, docType: SuggestionTypes.GENERIC_WORDS })
+              createWord(mergingGenericWord.id)
                 .end((_, result) => {
                   expect(result.status).to.equal(400);
                   expect(result.body.error).to.not.equal(undefined);
@@ -237,7 +236,7 @@ describe('MongoDB Words', () => {
     it('should return a newly created word after merging with just an id', (done) => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
-          createWord({ id: res.body.id })
+          createWord(res.body.id)
             .end((_, result) => {
               expect(result.status).to.equal(200);
               expect(result.body.error).to.equal(undefined);
@@ -250,7 +249,7 @@ describe('MongoDB Words', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
-          createWord(mergingWordSuggestion)
+          createWord(mergingWordSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
@@ -270,7 +269,7 @@ describe('MongoDB Words', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
-          createWord(mergingWordSuggestion)
+          createWord(mergingWordSuggestion.id)
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
