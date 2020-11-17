@@ -9,9 +9,10 @@ import SearchIcon from '../assets/icons/search.svg';
 const SearchBar = ({
   setDefaultValues,
   setRoute,
-  defaultValue,
+  defaultWord,
+  defaultPage,
 }) => {
-  const [input, setInput] = useState(defaultValue || '');
+  const [input, setInput] = useState(defaultWord || '');
   const [lastSearch, setLastSearch] = useState(input);
   const [visible, setVisible] = useState(false);
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
@@ -25,7 +26,7 @@ const SearchBar = ({
   };
 
   /* Navigates to the search route to make network request */
-  const navigateToSearch = async (page = 0) => {
+  const navigateToSearch = async (page = defaultPage) => {
     setRoute(`/search?word=${lastSearch}&page=${page}`);
   };
 
@@ -93,13 +94,15 @@ const SearchBar = ({
 SearchBar.propTypes = {
   setDefaultValues: PropTypes.func,
   setRoute: PropTypes.func,
-  defaultValue: PropTypes.string,
+  defaultWord: PropTypes.string,
+  defaultPage: PropTypes.number,
 };
 
 SearchBar.defaultProps = {
   setDefaultValues: () => {},
   setRoute: navigate,
-  defaultValue: '',
+  defaultWord: '',
+  defaultPage: 0,
 };
 
 export default SearchBar;

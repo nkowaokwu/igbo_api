@@ -46,5 +46,32 @@ describe('Homepage', () => {
       cy.searchDictionary(keyword);
       cy.get('[data-test="pagination"]').should('not.exist');
     });
+
+    it('selects the default page', () => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.get('button[aria-current="true"]').contains('1');
+    });
+  });
+
+  // TODO: remove skip once feature is released in production
+  describe.skip('Details', () => {
+    it('renders the correct results page from details page', () => {
+      const keyword = 'word';
+      cy.searchDictionary(keyword);
+      cy.get('button[aria-label="Go to page 2"]').click();
+      cy.get('a').contains('Details').first().click();
+      cy.go('back');
+      cy.location('search');
+    });
+
+    it('renders the details page', () => {
+      const keyword = 'word';
+      cy.visit(`http://localhost:8000/word?word=${keyword}`);
+      cy.get('h1').contains('Word');
+      cy.get('h1').contains('Part of Speech');
+      cy.get('h1').contains('Variations');
+      cy.get('h1').contains('Definitions');
+    });
   });
 });

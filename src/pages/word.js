@@ -71,22 +71,28 @@ const word = ({ location }) => {
       ) : (
         <div className="responsive-container px-2 lg:px-5">
           <div className="flex flex-col lg:flex-row justify-between mt-2 lg:mt-6">
-            <div>
+            <div className="w-4/12">
               <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Word</h1>
               <h2 className="text-2xl text-gray-800 mt-3 lg:mt-1">{response?.word}</h2>
               <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Part of Speech</h1>
               <h2 className="text-2xl text-gray-800 mt-3 lg:mt-1">{response?.wordClass}</h2>
+              <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Variations</h1>
+              <h2 className="text-xl text-gray-500 mt-3 lg:mt-1 italic">
+                {response?.variations.join(', ') || 'No variations'}
+              </h2>
             </div>
-            <div>
+            <div className="w-8/12">
               <h1 className="text-4xl text-gray-800 mt-3 lg:mt-1">Definitions</h1>
-              {response.definitions.length ? map(response.definitions, (definition, index) => (
-                <h2 className="text-xl text-gray-800">
-                  <span className="text-gray-600 mr-2">
-                    {`${index + 1}.`}
-                  </span>
-                  {definition}
-                </h2>
-              )) : null}
+              <div className="max-w-6xl w-9/12">
+                {response.definitions.length ? map(response.definitions, (definition, index) => (
+                  <h2 className="text-xl text-gray-800">
+                    <span className="text-gray-600 mr-2">
+                      {`${index + 1}.`}
+                    </span>
+                    {definition}
+                  </h2>
+                )) : null}
+              </div>
             </div>
           </div>
           {process.env.NODE_ENV !== 'production' ? (
