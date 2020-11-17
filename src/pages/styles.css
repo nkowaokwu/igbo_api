@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+*::selection {
+  @apply bg-green-400;
+  @apply text-white ;
+}
+
 html {
   width: 100vw;
   font-family: 'Silka', sans-serif;
@@ -28,6 +33,11 @@ h2, h3, a {
   @apply text-3xl;
   @apply font-bold;
   @apply text-gray-900;
+}
+
+.nav-item-active {
+  @apply text-gray-500;
+  @apply line-through;
 }
 
 .jsonPretty {

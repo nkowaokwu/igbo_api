@@ -589,7 +589,7 @@ describe('MongoDB Words', () => {
             const currentWord = word.definitions[0] || '';
             const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(prevWord)) * 100;
             const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(currentWord)) * 100;
-            return prevWordDifference <= nextWordDifference;
+            return prevWordDifference >= nextWordDifference;
           })).to.equal(true);
           done();
         });

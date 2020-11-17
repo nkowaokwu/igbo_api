@@ -27,7 +27,7 @@ export const sortDocsBy = (searchWord, docs, key) => (
     if (prevDocDifference === nextDocDifference) {
       return 0;
     }
-    return prevDocDifference < nextDocDifference ? -1 : 1;
+    return prevDocDifference > nextDocDifference ? -1 : 1;
   })
 );
 
