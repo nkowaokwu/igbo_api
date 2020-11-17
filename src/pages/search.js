@@ -48,6 +48,11 @@ const search = ({ location, navigate }) => {
     setRoute(searchWordRoute);
   };
 
+  const setDefaultPage = () => {
+    const page = parseInt(queries.page, 10);
+    return page >= 0 ? page + 1 : page;
+  };
+
   /* Parses the route that generated and handed from SearchBar */
   useEffect(() => {
     if (route) {
@@ -84,7 +89,7 @@ const search = ({ location, navigate }) => {
   return (
     <div className="page-container">
       <Navbar />
-      <SearchBar setRoute={setRoute} defaultValue={queries.word} />
+      <SearchBar setRoute={setRoute} defaultWord={queries.word} defaultPage={queries.page} />
       <div className="responsive-container w-10/12">
         {
           response?.length > 0
@@ -123,6 +128,7 @@ const search = ({ location, navigate }) => {
             count={pageCount}
             onChange={(_, page) => handlePagination(page - 1)}
             shape="rounded"
+            defaultPage={setDefaultPage()}
           />
         </div>
       ) : null}
