@@ -21,8 +21,12 @@ const authentication = async (req, res, next) => {
       // If the token is valid place the user object on the req object
       req.user = decoded.user;
       const userRecord = await admin.auth().getUser(decoded.uid);
-      const userRole = userRecord.customClaims?.role;
-      req.user.role = userRole;
+      // TODO: try optional chaining
+      if (!userRecord.customClaims) {
+        res.status(400);
+        return res.send({ error: 'Invalid auth token' });
+      }
+      req.user.role = userRecord;
     } catch (err) {
       res.status(403);
       return res.send({ error: err });
