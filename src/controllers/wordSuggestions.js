@@ -54,6 +54,14 @@ export const findWordSuggestionById = (id) => (
   WordSuggestion.findById(id)
 );
 
+const findWordSuggestions = ({ regexMatch, skip, limit }) => (
+  WordSuggestion
+    .find(regexMatch)
+    .sort({ approvals: SortingDirections.DESCENDING })
+    .skip(skip)
+    .limit(limit)
+);
+
 /* Updates an existing WordSuggestion object */
 export const putWordSuggestion = (req, res) => {
   const { body: data, params: { id } } = req;
@@ -99,12 +107,7 @@ export const getWordSuggestions = (req, res) => {
       ...rest
     } = handleQueries(req.query);
     const regexMatch = searchPreExistingWordSuggestionsRegexQuery(regexKeyword);
-    // TODO: #251 move out to a seperate function
-    return WordSuggestion
-      .find(regexMatch)
-      .sort({ approvals: SortingDirections.DESCENDING })
-      .skip(skip)
-      .limit(limit)
+    return findWordSuggestions({ regexMatch, skip, limit })
       .then(async (wordSuggestions) => {
         /* Places the exampleSuggestions on the corresponding wordSuggestions */
         const wordSuggestionsWithExamples = await Promise.all(
