@@ -22,7 +22,7 @@ import {
   SERVICE_ACCOUNT,
 } from './config';
 
-admin.initializeApp({
+admin.default.initializeApp({
   credential: admin.credential.cert(SERVICE_ACCOUNT),
 });
 
