@@ -57,6 +57,18 @@ export const putGenericWord = (req, res) => {
     });
 };
 
+export const findGenericWordById = (id) => (
+  GenericWord.findById(id)
+);
+
+export const findGenericWords = ({ regexMatch, skip, limit }) => (
+  GenericWord
+    .find(regexMatch)
+    .sort({ approvals: SortingDirections.DESCENDING })
+    .skip(skip)
+    .limit(limit)
+);
+
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
   try {
@@ -67,12 +79,7 @@ export const getGenericWords = (req, res) => {
       ...rest
     } = handleQueries(req.query);
     const regexMatch = searchPreExistingGenericWordsRegexQuery(regexKeyword);
-    // TODO: #251 move out to a seperate function
-    return GenericWord
-      .find(regexMatch)
-      .sort({ approvals: SortingDirections.DESCENDING })
-      .skip(skip)
-      .limit(limit)
+    return findGenericWords({ regexMatch, skip, limit })
       .then(async (genericWords) => {
         /* Places the exampleSuggestions on the corresponding genericWords */
         const genericWordsWithExamples = await Promise.all(
@@ -95,10 +102,6 @@ export const getGenericWords = (req, res) => {
     return res.send({ error: err.message });
   }
 };
-
-export const findGenericWordById = (id) => (
-  GenericWord.findById(id)
-);
 
 /* Returns a single WordSuggestion by using an id */
 export const getGenericWord = (req, res) => {
