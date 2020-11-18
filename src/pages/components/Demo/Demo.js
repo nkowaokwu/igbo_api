@@ -56,7 +56,7 @@ const Demo = () => {
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a className="transition-element text-green-400 hover:text-green-700" href={DICTIONARY_APP_URL}>
+              <a className="link" href={DICTIONARY_APP_URL}>
                 dictionary app
               </a>
             </p>
