@@ -5,6 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import sslRedirect from 'heroku-ssl-redirect';
+import * as admin from 'firebase-admin';
 import {
   adminRouter,
   editorRouter,
@@ -14,7 +15,16 @@ import {
 import logger from './middleware/logger';
 import authentication from './middleware/authentication';
 import authorization from './middleware/authorization';
-import { PORT, MONGO_URI, SWAGGER_DOCS } from './config';
+import {
+  PORT,
+  MONGO_URI,
+  SWAGGER_DOCS,
+  SERVICE_ACCOUNT,
+} from './config';
+
+admin.default.initializeApp({
+  credential: admin.credential.cert(SERVICE_ACCOUNT),
+});
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
