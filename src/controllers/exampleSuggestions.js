@@ -110,6 +110,18 @@ export const putExampleSuggestion = async (req, res) => {
   }
 };
 
+export const findExampleSuggestionById = (id) => (
+  ExampleSuggestion.findById(id)
+);
+
+const findExampleSuggestions = ({ regexMatch, skip, limit }) => (
+  ExampleSuggestion
+    .find(regexMatch)
+    .sort({ approvals: SortingDirections.DESCENDING })
+    .skip(skip)
+    .limit(limit)
+);
+
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {
   try {
@@ -120,12 +132,7 @@ export const getExampleSuggestions = (req, res) => {
       ...rest
     } = handleQueries(req.query);
     const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
-    // TODO: #251 move out to a seperate function
-    return ExampleSuggestion
-      .find(regexMatch)
-      .sort({ approvals: SortingDirections.DESCENDING })
-      .skip(skip)
-      .limit(limit)
+    return findExampleSuggestions({ regexMatch, skip, limit })
       .then((exampleSuggestions) => (
         packageResponse({
           res,
@@ -143,10 +150,6 @@ export const getExampleSuggestions = (req, res) => {
     return res.send({ error: err.message });
   }
 };
-
-export const findExampleSuggestionById = (id) => (
-  ExampleSuggestion.findById(id)
-);
 
 /* Returns a single ExampleSuggestion by using an id */
 export const getExampleSuggestion = (req, res) => {
