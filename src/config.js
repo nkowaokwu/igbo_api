@@ -50,3 +50,7 @@ export const FROM_EMAIL = process.env.FROM_EMAIL || '';
 if (sgMail) {
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
+
+// Firebase service account
+
+export const SERVICE_ACCOUNT = JSON.parse(process.env.SA_KEY || '{}');

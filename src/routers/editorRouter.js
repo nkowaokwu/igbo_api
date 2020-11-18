@@ -51,6 +51,4 @@ editorRouter.get('/genericWords', getGenericWords);
 editorRouter.get('/genericWords/:id', validId, getGenericWord);
 editorRouter.delete('/genericWords/:id', validId, authorization(['merger', 'admin']), deleteGenericWord);
 
-// TODO: Create new users routes that will show all users in Firebase
-
 export default editorRouter;
