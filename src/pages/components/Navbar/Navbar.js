@@ -52,7 +52,15 @@ const Navbar = () => {
   return (
     <div className="flex relative lg:fixed items-center justify-between w-full py-5 lg:px-10 bg-white bg-opacity-75">
       <h1 className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900 ml-5 lg:ml-0">
-        <a href="/">Igbo API</a>
+        <Link
+          className="cursor-pointer"
+          to="homepage-container"
+          smooth
+          offset={-100}
+          duration={600}
+        >
+          Igbo API
+        </Link>
       </h1>
       {!matchesLargeScreenQuery ? (
         <button

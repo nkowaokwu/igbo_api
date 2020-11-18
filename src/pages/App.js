@@ -5,7 +5,7 @@ import Card from './components/Card';
 import { API_ROUTE } from '../config';
 
 const App = () => (
-  <div>
+  <div id="homepage-container">
     <Navbar />
     <div>
       <div className="flex flex-col justify-center w-screen h-screen p-0 lg:pt-32">
