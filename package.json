@@ -17,7 +17,7 @@
     "mongodump": "shx rm -rf dump/ && mongodump -d igbo_api -o dump",
     "mocha": "cross-env NODE_ENV=test mocha --timeout 60000 --retries 3 -r esm ./tests",
     "precommit": "lint-staged",
-    "prestart:database": "shx [ ! -d \"./db\" ] && mkdir ./db || echo 'Database directory exists'",
+    "prestart:database": "[ ! -d \"./db\" ] && shx mkdir ./db || echo 'Database directory exists'",
     "start": "node ./build/server.js",
     "test:build": "NODE_ENV=build yarn start",
     "dev:site": "cross-env NODE_ENV=development next",
