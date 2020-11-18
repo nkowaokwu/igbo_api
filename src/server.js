@@ -15,10 +15,15 @@ import {
 import logger from './middleware/logger';
 import authentication from './middleware/authentication';
 import authorization from './middleware/authorization';
-import { PORT, MONGO_URI, SWAGGER_DOCS } from './config';
+import {
+  PORT,
+  MONGO_URI,
+  SWAGGER_DOCS,
+  SERVICE_ACCOUNT,
+} from './config';
 
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert(SERVICE_ACCOUNT),
 });
 
 const app = express();
