@@ -52,5 +52,4 @@ if (sgMail) {
 }
 
 // Firebase service account
-
-export const SERVICE_ACCOUNT = JSON.parse(process.env.SA_KEY || '{}');
+export const SERVICE_ACCOUNT = JSON.parse(process.env.FIREBASE_CONFIG);

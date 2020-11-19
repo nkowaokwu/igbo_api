@@ -25,13 +25,15 @@ import SortingDirections from '../src/shared/constants/sortingDirections';
 const { expect } = chai;
 
 describe('MongoDB Example Suggestions', () => {
-  /* Create a base word document */
+  /* Create a base word and exampleSuggestion document */
   before((done) => {
-    suggestNewWord(wordSuggestionData)
-      .then((res) => {
-        createWord(res.body.id)
-          .then(() => done());
-      });
+    Promise.all([
+      suggestNewWord(wordSuggestionData)
+        .then((res) => createWord(res.body.id)),
+      suggestNewExample(exampleSuggestionData)
+        .then(() => {}),
+    ])
+      .then(setTimeout(() => done(), 1000));
   });
   describe('/POST mongodb exampleSuggestions', () => {
     it('should save submitted example suggestion', (done) => {

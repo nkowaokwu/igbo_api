@@ -1,39 +1,51 @@
 import * as admin from 'firebase-admin';
+import { forIn } from 'lodash';
+import AUTH_TOKEN from '../shared/constants/testAuthTokens';
 
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
-  const authHeader = req.headers.Authorization;
-
-  /* Overrides user role for local development and testing purposes */
-  if (process.env.NODE_ENV !== 'production') {
-    const { role = 'admin' } = req.query;
-    req.user = { role };
-    return next();
-  }
-
-  if (authHeader) {
-    // eslint-disable-next-line
-    const token = authHeader.split(' ')[1];
-
-    try {
-      const decoded = await admin.auth().verifyIdToken(token);
-
-      // If the token is valid place the user object on the req object
-      req.user = decoded.user;
-      const userRecord = await admin.auth().getUser(decoded.uid);
-      // TODO: try optional chaining
-      if (!userRecord.customClaims) {
-        res.status(400);
-        return res.send({ error: 'Invalid auth token' });
-      }
-      req.user.role = userRecord;
-    } catch (err) {
-      res.status(403);
-      return res.send({ error: err });
+  try {
+    const authHeader = req.headers.Authorization || req.headers.authorization;
+    /* Overrides user role for local development and testing purposes */
+    if (!authHeader && process.env.NODE_ENV !== 'production') {
+      const { role = 'admin', uid = AUTH_TOKEN.ADMIN_AUTH_TOKEN } = req.query;
+      req.user = { role, uid };
+      return next();
     }
 
-    return next();
+    if (authHeader) {
+      if (!authHeader.startsWith('Bearer ')) {
+        throw new Error('Malformed authorization header. Must start with \'Bearer\'');
+      }
+      const token = authHeader.split(' ')[1];
+
+      /* Handles injecting user roles for tests */
+      if (process.env.NODE_ENV === 'test') {
+        forIn(AUTH_TOKEN, (value) => {
+          if (token === value) {
+            req.user = { role: value.split('-')[0], uid: token };
+          }
+        });
+        if (!req.user) {
+          res.status(401);
+          return res.send({ error: 'Invalid auth token' });
+        }
+      } else {
+        const decoded = await admin.auth().verifyIdToken(token);
+        req.user = { role: decoded.role, uid: decoded.uid };
+      }
+      // TODO: try optional chaining
+      if (req.user && !req.user.role) {
+        res.status(401);
+        return res.send({ error: 'Invalid auth token' });
+      }
+      return next();
+    }
+  } catch (err) {
+    res.status(400);
+    return res.send({ error: err.message });
   }
+
   /* No auth token provided */
   res.status(403);
   return res.send({ error: 'Unauthorized to access this resource' });

@@ -30,4 +30,4 @@ jobs:
         yarn mocha
       env:
         CI: test
-        SA_KEY: ${{ secrets.SA_KEY }}
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}

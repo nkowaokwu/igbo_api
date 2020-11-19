@@ -19,6 +19,7 @@ import {
   NONEXISTENT_ID,
   MESSAGE,
   INVALID_MESSAGE,
+  AUTH_TOKEN,
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
@@ -30,6 +31,7 @@ import {
   getWords,
   getWord,
   getWordSuggestion,
+  getWordSuggestions,
   createWord,
   updateWord,
   getAPIUrlRoute,
@@ -38,6 +40,7 @@ import {
   getGenericWords,
   updateGenericWord,
   sendSendGridEmail,
+  updateWordSuggestion,
 } from './shared/commands';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
@@ -46,6 +49,11 @@ const { expect } = chai;
 const { ObjectId } = mongoose.Types;
 
 describe('MongoDB Words', () => {
+  /* Create a base wordSuggestion document */
+  before((done) => {
+    suggestNewWord(wordSuggestionData)
+      .then(setTimeout(() => done(), 1000));
+  });
   describe('mongodb collection', () => {
     it('should populate mongodb with words', (done) => {
       const word = {
@@ -95,6 +103,7 @@ describe('MongoDB Words', () => {
                   getWordSuggestion(res.body.id)
                     .end((_, wordRes) => {
                       expect(wordRes.status).to.equal(200);
+                      expect(wordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(updatedWordRes.body.word).to.equal(wordRes.body.word);
                       expect(updatedWordRes.body.wordClass).to.equal(wordRes.body.wordClass);
                       expect(updatedWordRes.body.id).to.equal(wordRes.body.merged);
@@ -121,6 +130,7 @@ describe('MongoDB Words', () => {
                   getGenericWord(firstGenericWord.id)
                     .end((_, genericWordRes) => {
                       expect(genericWordRes.status).to.equal(200);
+                      expect(genericWordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(result.body.word).to.equal(genericWordRes.body.word);
                       expect(result.body.wordClass).to.equal(genericWordRes.body.wordClass);
                       expect(result.body.id).to.equal(genericWordRes.body.merged);
@@ -146,7 +156,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should merge into an existing word with wordSuggestions', (done) => {
+    it('should merge into an existing word with new wordSuggestion', (done) => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
@@ -164,11 +174,38 @@ describe('MongoDB Words', () => {
                       getWordSuggestion(res.body.id)
                         .end((_, updatedWordSuggestionRes) => {
                           expect(updatedWordRes.status).to.equal(200);
+                          expect(updatedWordSuggestionRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                           expect(updatedWordRes.body.word).to.equal(updatedWordSuggestionRes.body.word);
                           expect(updatedWordRes.body.wordClass).to.equal(updatedWordSuggestionRes.body.wordClass);
                           expect(updatedWordRes.body.id).to.equal(updatedWordSuggestionRes.body.merged);
                           done();
                         });
+                    });
+                });
+            });
+        });
+    });
+
+    it('should merge into an existing word with existing wordSuggestion', (done) => {
+      getWordSuggestions()
+        .then((res) => {
+          expect(res.status).to.equal(200);
+          const firstWordSuggestion = res.body[0];
+          firstWordSuggestion.wordClass = 'wordClass';
+          updateWordSuggestion(firstWordSuggestion.id, firstWordSuggestion)
+            .then((updatedWordSuggestionRes) => {
+              expect(updatedWordSuggestionRes.status).to.equal(200);
+              createWord(updatedWordSuggestionRes.body.id)
+                .then((wordRes) => {
+                  expect(wordRes.status).to.equal(200);
+                  expect(wordRes.body.word).to.equal(updatedWordSuggestionRes.body.word);
+                  expect(wordRes.body.wordClass).to.equal(updatedWordSuggestionRes.body.wordClass);
+                  getWordSuggestion(updatedWordSuggestionRes.body.id)
+                    .end((_, wordSuggestionRes) => {
+                      expect(wordSuggestionRes.status).to.equal(200);
+                      expect(wordSuggestionRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
+                      expect(wordSuggestionRes.body.merged).to.equal(wordRes.body.id);
+                      done();
                     });
                 });
             });
@@ -192,6 +229,7 @@ describe('MongoDB Words', () => {
                   getGenericWord(updatedGenericWordRes.body.id)
                     .end((_, genericWordRes) => {
                       expect(genericWordRes.status).to.equal(200);
+                      expect(genericWordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(genericWordRes.body.merged).to.equal(wordRes.body.id);
                       done();
                     });
