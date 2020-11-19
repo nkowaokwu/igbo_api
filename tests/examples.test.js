@@ -10,6 +10,7 @@ import {
   getExampleSuggestion,
 } from './shared/commands';
 import {
+  AUTH_TOKEN,
   EXAMPLE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -41,6 +42,7 @@ describe('MongoDB Examples', () => {
                   getExampleSuggestion(res.body.id)
                     .end((_, exampleRes) => {
                       expect(exampleRes.status).to.equal(200);
+                      expect(exampleRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
                       expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
                       expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);
@@ -69,6 +71,7 @@ describe('MongoDB Examples', () => {
                       getExampleSuggestion(res.body.id)
                         .end((_, exampleRes) => {
                           expect(exampleRes.status).to.equal(200);
+                          expect(exampleRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                           expect(updatedExampleRes.body.igbo).to.equal(exampleRes.body.igbo);
                           expect(updatedExampleRes.body.english).to.equal(exampleRes.body.english);
                           expect(updatedExampleRes.body.id).to.equal(exampleRes.body.merged);

@@ -41,3 +41,8 @@ export const getUser = async (req, res) => {
     res.send({ error: 'An error occurred while grabbing a single user' });
   }
 };
+
+export const testGetUsers = (_, res) => {
+  res.status(200);
+  return res.send([{}]);
+};

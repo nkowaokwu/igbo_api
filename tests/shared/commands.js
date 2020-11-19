@@ -1,6 +1,11 @@
 import chai from 'chai';
 import server from '../../src/server';
-import { API_ROUTE, TEST_ROUTE, API_URL } from './constants';
+import {
+  API_ROUTE,
+  TEST_ROUTE,
+  API_URL,
+  AUTH_TOKEN,
+} from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import { sendEmail } from '../../src/controllers/mail';
@@ -156,12 +161,12 @@ export const getExamples = (query = {}) => (
     .query(query)
 );
 
-/* Grabs all users from Firebase */
-export const getUsers = (query = {}) => (
+/* Mocks grabbing all users from Firebase */
+export const getUsers = (token = AUTH_TOKEN.ADMIN_AUTH_TOKEN) => (
   chai
     .request(server)
     .get(`${API_ROUTE}/users`)
-    .query(query)
+    .set('Authorization', `Bearer ${token}`)
 );
 
 /* Hits the POST /populate route to seed the local MongoDB database */

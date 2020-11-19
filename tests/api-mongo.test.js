@@ -19,6 +19,7 @@ import {
   NONEXISTENT_ID,
   MESSAGE,
   INVALID_MESSAGE,
+  AUTH_TOKEN,
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
@@ -95,6 +96,7 @@ describe('MongoDB Words', () => {
                   getWordSuggestion(res.body.id)
                     .end((_, wordRes) => {
                       expect(wordRes.status).to.equal(200);
+                      expect(wordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(updatedWordRes.body.word).to.equal(wordRes.body.word);
                       expect(updatedWordRes.body.wordClass).to.equal(wordRes.body.wordClass);
                       expect(updatedWordRes.body.id).to.equal(wordRes.body.merged);
@@ -121,6 +123,7 @@ describe('MongoDB Words', () => {
                   getGenericWord(firstGenericWord.id)
                     .end((_, genericWordRes) => {
                       expect(genericWordRes.status).to.equal(200);
+                      expect(genericWordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(result.body.word).to.equal(genericWordRes.body.word);
                       expect(result.body.wordClass).to.equal(genericWordRes.body.wordClass);
                       expect(result.body.id).to.equal(genericWordRes.body.merged);
@@ -164,6 +167,7 @@ describe('MongoDB Words', () => {
                       getWordSuggestion(res.body.id)
                         .end((_, updatedWordSuggestionRes) => {
                           expect(updatedWordRes.status).to.equal(200);
+                          expect(updatedWordSuggestionRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                           expect(updatedWordRes.body.word).to.equal(updatedWordSuggestionRes.body.word);
                           expect(updatedWordRes.body.wordClass).to.equal(updatedWordSuggestionRes.body.wordClass);
                           expect(updatedWordRes.body.id).to.equal(updatedWordSuggestionRes.body.merged);
@@ -192,6 +196,7 @@ describe('MongoDB Words', () => {
                   getGenericWord(updatedGenericWordRes.body.id)
                     .end((_, genericWordRes) => {
                       expect(genericWordRes.status).to.equal(200);
+                      expect(genericWordRes.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(genericWordRes.body.merged).to.equal(wordRes.body.id);
                       done();
                     });
