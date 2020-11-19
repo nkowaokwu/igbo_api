@@ -2,31 +2,30 @@ import * as admin from 'firebase-admin';
 
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
-  const authHeader = req.headers.Authorization;
+  const authHeader = req.headers.Authorization || req.headers.authorization;
 
   /* Overrides user role for local development and testing purposes */
-  if (process.env.NODE_ENV !== 'production') {
+  if (!authHeader.startsWith('Bearer ') && process.env.NODE_ENV !== 'production') {
     const { role = 'admin' } = req.query;
     req.user = { role };
     return next();
   }
 
   if (authHeader) {
-    // eslint-disable-next-line
+    if (!authHeader.startsWith('Bearer ')) {
+      res.status(400);
+      return res.send({ error: 'Malformed authorization header. Must start with \'Bearer\'' });
+    }
     const token = authHeader.split(' ')[1];
 
     try {
       const decoded = await admin.auth().verifyIdToken(token);
-
-      // If the token is valid place the user object on the req object
-      req.user = decoded.user;
-      const userRecord = await admin.auth().getUser(decoded.uid);
+      req.user = { role: decoded.role, uid: decoded.uid };
       // TODO: try optional chaining
-      if (!userRecord.customClaims) {
+      if (req.user && !req.user.role) {
         res.status(400);
         return res.send({ error: 'Invalid auth token' });
       }
-      req.user.role = userRecord;
     } catch (err) {
       res.status(403);
       return res.send({ error: err });

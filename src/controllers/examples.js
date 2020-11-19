@@ -136,6 +136,12 @@ export const executeMergeExample = async (exampleSuggestionId, mergedBy) => {
  * new Example document or merges into an existing Example document */
 export const mergeExample = async (req, res) => {
   const { body: data } = req;
+  const { user } = req;
+
+  if (!user || (user && !user.uid)) {
+    res.status(400);
+    return res.send({ error: 'User uid is required' });
+  }
 
   if (!data.id) {
     res.status(400);
@@ -145,7 +151,7 @@ export const mergeExample = async (req, res) => {
   const exampleSuggestion = await findExampleSuggestionById(data.id);
 
   try {
-    const result = await executeMergeExample(exampleSuggestion.id, data.mergedBy);
+    const result = await executeMergeExample(exampleSuggestion.id, user.uid);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       const word = await Word.findById(result.associatedWords[0] || null) || {};

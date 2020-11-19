@@ -1,11 +1,43 @@
 /* Get all users from Firebase */
 import * as admin from 'firebase-admin';
 
-export const getUsers = async (req, res) => {
-  // Use Firebase functions to get all user objects
-  // This will allow for selecting individual users and updating their user roles
-  const result = await admin.default.auth().listUsers();
-  const users = result.users.map((userRecord) => userRecord.toJSON());
-  res.status(200);
-  res.send(users);
+const formatUser = (user) => {
+  const customClaims = (user.customClaims || { role: '' });
+  const role = customClaims.role ? customClaims.role : '';
+  return {
+    uid: user.uid,
+    id: user.uid,
+    email: user.email || '',
+    displayName: user.displayName || '',
+    role,
+    lastSignInTime: user.metadata.lastSignInTime,
+    creationTime: user.metadata.creationTime,
+  };
+};
+
+/* Grab all users in the Firebase database */
+export const getUsers = async (_, res) => {
+  try {
+    const result = await admin.default.auth().listUsers();
+    const users = result.users.map((user) => formatUser(user));
+    res.setHeader('Content-Range', users.length);
+    res.status(200);
+    res.send(users);
+  } catch {
+    res.status(400);
+    res.send({ error: 'An error occurred while grabbing all users' });
+  }
+};
+
+/* Grab a single user from the Firebase dataabase */
+export const getUser = async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const user = await admin.auth().getUser(uid);
+    res.status(200);
+    res.send({ user: formatUser(user) });
+  } catch {
+    res.status(400);
+    res.send({ error: 'An error occurred while grabbing a single user' });
+  }
 };

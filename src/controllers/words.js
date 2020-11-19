@@ -190,7 +190,13 @@ const createWordFromSuggestion = (suggestionDoc, mergedBy) => (
  * new Word document or merges into an existing Word document */
 export const mergeWord = async (req, res) => {
   const { body: data } = req;
+  const { user } = req;
   const suggestionDoc = (await findWordSuggestionById(data.id)) || (await findGenericWordById(data.id));
+
+  if (!user || (user && !user.uid)) {
+    res.status(400);
+    return res.send({ error: 'User uid is required' });
+  }
 
   if (!suggestionDoc) {
     res.status(400);
@@ -221,8 +227,8 @@ export const mergeWord = async (req, res) => {
 
   try {
     const result = suggestionDoc.originalWordId
-      ? await mergeIntoWord(suggestionDoc, data.mergedBy)
-      : await createWordFromSuggestion(suggestionDoc, data.mergedBy);
+      ? await mergeIntoWord(suggestionDoc, user.uid)
+      : await createWordFromSuggestion(suggestionDoc, user.uid);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       sendMergedEmail({
