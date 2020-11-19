@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 import { forIn } from 'lodash';
-import { AUTH_TOKEN } from '../../tests/shared/constants';
+import AUTH_TOKEN from '../shared/constants/testAuthTokens';
 
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
