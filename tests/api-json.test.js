@@ -21,7 +21,7 @@ describe('JSON Dictionary', () => {
       populateAPI(),
       populateGenericWordsAPI(),
     ]).then(() => {
-      setTimeout(done, 30000);
+      setTimeout(() => done(), 30000);
     });
   });
 

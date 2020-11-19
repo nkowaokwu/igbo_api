@@ -159,7 +159,7 @@ export const handleQueries = (query = {}) => {
 };
 
 /* Updates a document's merge property with a document id */
-export const updateDocumentMerge = (suggestionDoc, originalDocId) => {
-  const updatedSuggestion = assign(suggestionDoc, { merged: originalDocId });
+export const updateDocumentMerge = (suggestionDoc, originalDocId, mergedBy = null) => {
+  const updatedSuggestion = assign(suggestionDoc, { merged: originalDocId, mergedBy });
   return updatedSuggestion.save();
 };

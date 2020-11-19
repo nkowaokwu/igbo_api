@@ -17,6 +17,7 @@ const genericWordSchema = new Schema({
   denials: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
   merged: { type: Types.ObjectId, ref: 'Word', default: null },
+  mergedBy: { type: String, default: null },
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(genericWordSchema);

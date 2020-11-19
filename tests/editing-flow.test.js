@@ -24,7 +24,7 @@ import {
   wordSuggestionData,
   wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
-import { SAVE_DOC_DELAY } from './shared/constants';
+import { AUTH_TOKEN, SAVE_DOC_DELAY } from './shared/constants';
 
 const { expect } = chai;
 
@@ -39,6 +39,7 @@ describe('Editing Flow', () => {
             getWordSuggestion(wordSuggestionRes.body.id)
               .end((_, res) => {
                 expect(res.status).to.equal(200);
+                expect(res.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                 expect(res.body.merged).to.equal(mergedWordRes.body.id);
                 done();
               });
@@ -64,6 +65,7 @@ describe('Editing Flow', () => {
             getWordSuggestion(genericWordRes.body.id)
               .end((_, res) => {
                 expect(res.status).to.equal(200);
+                expect(res.body.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                 expect(res.body.merged).to.equal(mergedWordRes.body.id);
                 done();
               });
@@ -99,6 +101,7 @@ describe('Editing Flow', () => {
                       const mergedExample = res[0].body;
                       const wordSuggestion = res[1].body;
                       expect(mergedExample.associatedWords).includes(mergedWord.id);
+                      expect(wordSuggestion.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(wordSuggestion.merged).to.equal(mergedWord.id);
                       expect(mergedWord.examples[0].associatedWords).includes(mergedWord.id);
                       expect(mergedWord.examples[0].id).equal(mergedExample.id);
@@ -115,6 +118,7 @@ describe('Editing Flow', () => {
       .then((res) => {
         createWord(res.body.id)
           .then((firstWordRes) => {
+            expect(firstWordRes.status).to.equal(200);
             suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
               .then((wordSuggestionRes) => {
                 expect(wordSuggestionRes.status).to.equal(200);
@@ -185,6 +189,7 @@ describe('Editing Flow', () => {
                       const mergedExample = res[0].body;
                       const wordSuggestion = res[1].body;
                       expect(mergedExample.associatedWords).includes(mergedWord.id);
+                      expect(wordSuggestion.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
                       expect(wordSuggestion.merged).to.equal(mergedWord.id);
                       expect(mergedWord.examples[0].associatedWords).includes(mergedWord.id);
                       expect(mergedWord.examples[0].id).equal(mergedExample.id);

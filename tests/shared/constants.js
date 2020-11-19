@@ -22,6 +22,7 @@ export const EXAMPLE_SUGGESTION_KEYS = [
   'denials',
   'updatedOn',
   'merged',
+  'mergedBy',
   'id',
 ];
 export const GENERIC_WORD_KEYS = [
@@ -37,6 +38,7 @@ export const GENERIC_WORD_KEYS = [
   'denials',
   'updatedOn',
   'merged',
+  'mergedBy',
   'id',
 ];
 export const WORD_SUGGESTION_KEYS = [
@@ -53,6 +55,7 @@ export const WORD_SUGGESTION_KEYS = [
   'denials',
   'updatedOn',
   'merged',
+  'mergedBy',
   'id',
 ];
 export const EXCLUDE_KEYS = ['__v', '_id'];
@@ -62,3 +65,9 @@ export const MESSAGE = {
   to: 'test@example.com',
 };
 export const INVALID_MESSAGE = {};
+export const AUTH_TOKEN = {
+  ADMIN_AUTH_TOKEN: 'admin-auth-token',
+  MERGER_AUTH_TOKEN: 'merger-auth-token',
+  EDITOR_AUTH_TOKEN: 'editor-auth-token',
+  USER_AUTH_TOKEN: 'user-auth-token',
+};

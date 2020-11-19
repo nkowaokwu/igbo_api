@@ -138,8 +138,8 @@ export const createWord = async (data) => {
   return newWord.save();
 };
 
-const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc) => {
-  const updatedSuggestionDoc = await updateDocumentMerge(suggestionDoc, originalWordDoc.id);
+const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc, mergedBy) => {
+  const updatedSuggestionDoc = await updateDocumentMerge(suggestionDoc, originalWordDoc.id, mergedBy);
   const exampleSuggestions = await ExampleSuggestion.find({ associatedWords: suggestionDoc.id });
   await Promise.all(map(exampleSuggestions, async (exampleSuggestion) => {
     const removeSuggestionAssociatedIds = assign(exampleSuggestion);
@@ -160,13 +160,13 @@ const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc) => {
 };
 
 /* Merges new data into an existing Word document */
-const mergeIntoWord = (suggestionDoc) => (
+const mergeIntoWord = (suggestionDoc, mergedBy) => (
   Word.findOneAndUpdate({ _id: suggestionDoc.originalWordId }, suggestionDoc.toObject())
     .then(async (originalWord) => {
       if (!originalWord) {
         throw new Error('Word doesn\'t exist');
       }
-      await updateSuggestionAfterMerge(suggestionDoc, originalWord.toObject());
+      await updateSuggestionAfterMerge(suggestionDoc, originalWord.toObject(), mergedBy);
       return (await findWordsWithMatch({ match: { _id: suggestionDoc.originalWordId }, limit: 1 }))[0];
     })
     .catch((error) => {
@@ -175,10 +175,10 @@ const mergeIntoWord = (suggestionDoc) => (
 );
 
 /* Creates a new Word document from an existing WordSuggestion or GenericWord document */
-const createWordFromSuggestion = (suggestionDoc) => (
+const createWordFromSuggestion = (suggestionDoc, mergedBy) => (
   createWord(suggestionDoc.toObject())
     .then(async (word) => {
-      await updateSuggestionAfterMerge(suggestionDoc, word);
+      await updateSuggestionAfterMerge(suggestionDoc, word, mergedBy);
       return word;
     })
     .catch(() => {
@@ -190,7 +190,13 @@ const createWordFromSuggestion = (suggestionDoc) => (
  * new Word document or merges into an existing Word document */
 export const mergeWord = async (req, res) => {
   const { body: data } = req;
+  const { user } = req;
   const suggestionDoc = (await findWordSuggestionById(data.id)) || (await findGenericWordById(data.id));
+
+  if (!user || (user && !user.uid)) {
+    res.status(400);
+    return res.send({ error: 'User uid is required' });
+  }
 
   if (!suggestionDoc) {
     res.status(400);
@@ -221,8 +227,8 @@ export const mergeWord = async (req, res) => {
 
   try {
     const result = suggestionDoc.originalWordId
-      ? await mergeIntoWord(suggestionDoc)
-      : await createWordFromSuggestion(suggestionDoc);
+      ? await mergeIntoWord(suggestionDoc, user.uid)
+      : await createWordFromSuggestion(suggestionDoc, user.uid);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       sendMergedEmail({

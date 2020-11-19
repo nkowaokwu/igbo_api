@@ -76,22 +76,22 @@ export const getExample = (req, res) => {
 };
 
 /* Merges new data into an existing Example document */
-const mergeIntoExample = (exampleSuggestion) => (
+const mergeIntoExample = (exampleSuggestion, mergedBy) => (
   Example.findOneAndUpdate({ _id: exampleSuggestion.originalExampleId }, exampleSuggestion.toObject())
     .then(async (example) => {
       if (!example) {
         throw new Error('Example doesn\'t exist');
       }
-      await updateDocumentMerge(exampleSuggestion, example.id);
+      await updateDocumentMerge(exampleSuggestion, example.id, mergedBy);
       return example;
     })
 );
 
 /* Creates a new Example document from an existing ExampleSuggestion document */
-const createExampleFromSuggestion = (exampleSuggestion) => (
+const createExampleFromSuggestion = (exampleSuggestion, mergedBy) => (
   createExample(exampleSuggestion.toObject())
     .then(async (example) => {
-      await updateDocumentMerge(exampleSuggestion, example.id);
+      await updateDocumentMerge(exampleSuggestion, example.id, mergedBy);
       return example;
     })
     .catch(() => {
@@ -100,7 +100,7 @@ const createExampleFromSuggestion = (exampleSuggestion) => (
 );
 
 /* Executes the logic describe the mergeExample function description */
-export const executeMergeExample = async (exampleSuggestionId) => {
+export const executeMergeExample = async (exampleSuggestionId, mergedBy) => {
   const exampleSuggestion = await findExampleSuggestionById(exampleSuggestionId);
 
   if (!exampleSuggestion) {
@@ -128,14 +128,20 @@ export const executeMergeExample = async (exampleSuggestionId) => {
   }
 
   return exampleSuggestion.originalExampleId
-    ? mergeIntoExample(exampleSuggestion)
-    : createExampleFromSuggestion(exampleSuggestion);
+    ? mergeIntoExample(exampleSuggestion, mergedBy)
+    : createExampleFromSuggestion(exampleSuggestion, mergedBy);
 };
 
 /* Merges the existing ExampleSuggestion into either a brand
  * new Example document or merges into an existing Example document */
 export const mergeExample = async (req, res) => {
   const { body: data } = req;
+  const { user } = req;
+
+  if (!user || (user && !user.uid)) {
+    res.status(400);
+    return res.send({ error: 'User uid is required' });
+  }
 
   if (!data.id) {
     res.status(400);
@@ -145,7 +151,7 @@ export const mergeExample = async (req, res) => {
   const exampleSuggestion = await findExampleSuggestionById(data.id);
 
   try {
-    const result = await executeMergeExample(exampleSuggestion.id);
+    const result = await executeMergeExample(exampleSuggestion.id, user.uid);
     /* Sends confirmation merged email to user if they provided an email */
     if (result.userEmail) {
       const word = await Word.findById(result.associatedWords[0] || null) || {};

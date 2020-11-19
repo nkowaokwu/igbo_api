@@ -1,8 +1,9 @@
 import express from 'express';
-import { getUsers } from '../controllers/users';
+import { getUser, getUsers, testGetUsers } from '../controllers/users';
 
 const adminRouter = express.Router();
 
-adminRouter.get('/users', getUsers);
+adminRouter.get('/users', process.env.NODE_ENV === 'test' ? testGetUsers : getUsers);
+adminRouter.get('/users/:uid', getUser);
 
 export default adminRouter;
