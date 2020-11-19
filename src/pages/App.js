@@ -5,7 +5,7 @@ import Card from './components/Card';
 import { API_ROUTE } from '../config';
 
 const App = () => (
-  <div>
+  <div id="homepage-container">
     <Navbar />
     <div>
       <div className="flex flex-col justify-center w-screen h-screen p-0 lg:pt-32">
@@ -19,7 +19,7 @@ const App = () => (
           <p>
             {'Existing as an '}
             <a
-              className="transition-element text-green-400 hover:text-green-700"
+              className="link"
               href="https://github.com/ijemmao/igbo_api"
             >
               open-source project
@@ -65,7 +65,7 @@ const App = () => (
       <div className="flex flex-col mb-24">
         <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
           {'Are you a developer interested in using the API? Head over to the '}
-          <a className="transition-element text-green-400 hover:text-green-700" href={`${API_ROUTE}/docs`}>
+          <a className="link" href={`${API_ROUTE}/docs`}>
             docs
           </a>
           {' to get started.'}

@@ -40,6 +40,15 @@ h2, h3, a {
   @apply line-through;
 }
 
+.link {
+  @apply transition-element;
+  @apply text-green-400;
+}
+
+.link:hover {
+  @apply text-green-700;
+}
+
 .jsonPretty {
   height: 600px;
   max-height: 600px;

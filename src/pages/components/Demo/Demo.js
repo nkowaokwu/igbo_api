@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import JSONPretty from 'react-json-pretty';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../config';
 
 const Demo = () => {
   const [keyword, setKeyword] = useState('');
   const [responseBody, setResponseBody] = useState(null);
+  const [productionUrl, setProductionUrl] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line
+      setProductionUrl(window.origin);
+    }
+  });
 
   const onSubmit = () => {
     // eslint-disable-next-line no-undef
@@ -34,7 +42,11 @@ const Demo = () => {
               className="h-12 w-full border-current border-solid border-2 rounded-md px-3 py-5"
               placeholder="i.e. please or biko"
             />
-            <input disabled value={`${API_ROUTE}/api/v1/words?keyword=${keyword}`} className="w-full py-3 px-5" />
+            <input
+              disabled
+              value={`${API_ROUTE || productionUrl}/api/v1/words?keyword=${keyword}`}
+              className="w-full py-3 px-5"
+            />
             <button
               type="button"
               onClick={onSubmit}
@@ -44,7 +56,7 @@ const Demo = () => {
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a className="transition-element text-green-400 hover:text-green-700" href={DICTIONARY_APP_URL}>
+              <a className="link" href={DICTIONARY_APP_URL}>
                 dictionary app
               </a>
             </p>
