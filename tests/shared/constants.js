@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const ADMIN_ROUTE = '/admin';
+export const LOCAL_ROUTE = '/';
 export const API_ROUTE = '/api/v1';
 export const TEST_ROUTE = '/api/v1/test';
 export const API_URL = 'https://igboapi.com';
@@ -59,6 +59,7 @@ export const WORD_SUGGESTION_KEYS = [
   'id',
 ];
 export const EXCLUDE_KEYS = ['__v', '_id'];
+export const SITE_TITLE = 'The First African Language API';
 export const INVALID_ID = 'fdsafdsad';
 export const NONEXISTENT_ID = new mongoose.Types.ObjectId();
 export const MESSAGE = {
