@@ -5,6 +5,7 @@ import {
   TEST_ROUTE,
   API_URL,
   AUTH_TOKEN,
+  LOCAL_ROUTE,
 } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
@@ -190,6 +191,18 @@ export const searchTerm = (term) => (
     .query({ keyword: term })
 );
 
+export const getAPIUrlRoute = (route = LOCAL_ROUTE) => (
+  chai
+    .request(API_URL)
+    .get(route)
+);
+
+export const getLocalUrlRoute = (route = LOCAL_ROUTE) => (
+  chai
+    .request(server)
+    .get(route)
+);
+
 /* Uses data in __mocks__ folder */
 export const searchMockedTerm = (term) => {
   const regexTerm = createRegExp(term);
@@ -197,9 +210,3 @@ export const searchMockedTerm = (term) => {
 };
 
 export const sendSendGridEmail = (message) => sendEmail(message);
-
-export const getAPIUrlRoute = (route = '/') => (
-  chai
-    .request(API_URL)
-    .get(route)
-);

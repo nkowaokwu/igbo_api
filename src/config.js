@@ -45,7 +45,7 @@ export const DICTIONARY_APP_URL = process.env.NODE_ENV === 'production'
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const MERGED_SUGGESTION_TEMPLATE = process.env.MERGED_SUGGESTION_TEMPLATE || '';
 export const REJECTED_SUGGESTION_TEMPLATE = process.env.REJECTED_SUGGESTION_TEMPLATE || '';
-export const FROM_EMAIL = process.env.FROM_EMAIL || '';
+export const FROM_EMAIL = process.env.FROM_EMAIL || 'igboapi@gmail.com';
 
 if (sgMail) {
   sgMail.setApiKey(SENDGRID_API_KEY);
