@@ -52,4 +52,7 @@ if (sgMail) {
 }
 
 // Firebase service account
-export const SERVICE_ACCOUNT = JSON.parse(process.env.FIREBASE_CONFIG);
+export const SERVICE_ACCOUNT = process.env.FIREBASE_CONFIG ? JSON.parse(process.env.FIREBASE_CONFIG) : '';
+if (!SERVICE_ACCOUNT) {
+  console.warn('Firebase config failed to load');
+}
