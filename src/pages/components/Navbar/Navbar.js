@@ -12,9 +12,6 @@ const SubMenu = ({ isHomepage }) => (
     lg:relative text-gray-800 space-y-5 lg:space-y-0 lg:space-x-5 list-none bg-white lg:bg-transparent
     top-0 py-10 lg:py-0 mt-16 lg:mt-0 px-5 lg:px-0 shadow-md lg:shadow-none rounded-md`}
   >
-    <li className="transition-element hover:text-gray-500">
-      <a href="/about">About</a>
-    </li>
     {isHomepage ? (
       <>
         <li className="transition-element hover:text-gray-500">

@@ -2,10 +2,10 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
-import { API_ROUTE } from '../config';
+import { API_ROUTE, FROM_EMAIL } from '../config';
 
 const App = () => (
-  <div id="homepage-container">
+  <div className="overflow-x-hidden" id="homepage-container">
     <Navbar />
     <div>
       <div className="flex flex-col justify-center w-screen h-screen p-0 lg:pt-32">
@@ -62,7 +62,7 @@ const App = () => (
       <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
         <h2 className="header">Docs</h2>
       </div>
-      <div className="flex flex-col mb-24">
+      <div className="flex flex-col mb-12">
         <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
           {'Are you a developer interested in using the API? Head over to the '}
           <a className="link" href={`${API_ROUTE}/docs`}>
@@ -71,6 +71,17 @@ const App = () => (
           {' to get started.'}
         </p>
       </div>
+      <footer className={`flex flex-col text-center lg:text-left lg:flex-row
+       justify-center items-center h-40 w-full bg-gray-900`}
+      >
+        <div className="text-gray-300 w-11/12 lg:w-9/12">
+          <h1 className="text-3xl mb-2">Igbo API</h1>
+          <p>
+            {'Email: '}
+            <a href={`mailto:${FROM_EMAIL}`}>{FROM_EMAIL}</a>
+          </p>
+        </div>
+      </footer>
     </div>
   </div>
 );

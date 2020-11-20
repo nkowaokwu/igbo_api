@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 
+// TODO: Repurpose this page
 const About = () => (
   <div className="flex flex-col items-center">
     <Navbar to="/" isHomepage={false} />
