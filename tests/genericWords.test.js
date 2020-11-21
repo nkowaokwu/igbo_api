@@ -80,7 +80,7 @@ describe('MongoDB Generic Words', () => {
   });
 
   describe('/GET mongodb genericWords', () => {
-    it('should return a generic word by searching', (done) => {
+    it.skip('should return a generic word by searching', (done) => {
       const keyword = 'mbughari';
       getGenericWords({ keyword })
         .end((_, res) => {
