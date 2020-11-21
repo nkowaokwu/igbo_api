@@ -240,7 +240,7 @@
       "post": {
         "summary": "Creates a new Word document via merging",
         "description": "Merges an existing WordSuggestion or GenericWord document into either an existing Word document or create a new Word document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "body",
@@ -289,7 +289,7 @@
       "put": {
         "summary": "Updates a Word object from the database",
         "description": "Updates a Word object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "wordId",
@@ -362,7 +362,7 @@
       "post": {
         "summary": "Creates a new Example document via merging",
         "description": "Merges an existing ExampleSuggestion document into either an existing Example document or create a new Example document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "body",
@@ -411,7 +411,7 @@
       "put": {
         "summary": "Updates a Example object from the database",
         "description": "Updates a Example object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "exampleId",
@@ -446,7 +446,7 @@
       "get": {
         "summary": "Get WordSuggestion objects in the database",
         "description": "Get WordSuggestion objects in the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "keyword",
@@ -484,7 +484,7 @@
       "post": {
         "summary": "Creates a new WordSuggestion document",
         "description": "Creates a new WordSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "body",
@@ -509,7 +509,7 @@
       "get": {
         "summary": "Get a single WordSuggestion",
         "description": "Returns a single WordSuggestion object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "wordSuggestionId",
@@ -533,7 +533,7 @@
       "put": {
         "summary": "Updates an existing WordSuggestion document",
         "description": "Updates an existing WordSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "wordSuggestionId",
@@ -566,7 +566,7 @@
       "delete": {
         "summary": "Deletes an existing WordSuggestion document",
         "description": "Deletes an existing WordSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "wordSuggestionId",
@@ -592,7 +592,7 @@
       "get": {
         "summary": "Get ExampleSuggestion objects in the database",
         "description": "Get ExampleSuggestion objects in the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "keyword",
@@ -630,7 +630,7 @@
       "post": {
         "summary": "Creates a new ExampleSuggestion document",
         "description": "Creates a new ExampleSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "body",
@@ -655,7 +655,7 @@
       "get": {
         "summary": "Get a single ExampleSuggestion",
         "description": "Returns a single ExampleSuggestion object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "exampleSuggestionId",
@@ -679,7 +679,7 @@
       "put": {
         "summary": "Updates an existing ExampleSuggestion document",
         "description": "Updates an existing ExampleSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "exampleSuggestionId",
@@ -712,7 +712,7 @@
       "delete": {
         "summary": "Deletes an existing ExampleSuggestion document",
         "description": "Deletes an existing ExampleSuggestion document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "exampleSuggestionId",
@@ -738,7 +738,7 @@
       "get": {
         "summary": "Get GenericWord objects from the database",
         "description": "Get GenericWord objects from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "keyword",
@@ -776,7 +776,7 @@
       "post": {
         "summary": "Populates GenericWord collection",
         "description": "Populates the database with GenericWords using ig-en_normalized_expanded.json",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "response": {
           "200": {
             "description": "OK"
@@ -788,7 +788,7 @@
       "get": {
         "summary": "Get a single GenericWord",
         "description": "Returns a single GenericWord object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "genericWordId",
@@ -812,7 +812,7 @@
       "put": {
         "summary": "Updates a GenericWord object from the database",
         "description": "Updates a GenericWord object from the database",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "genericWordId",
@@ -845,7 +845,7 @@
       "delete": {
         "summary": "Deletes an existing GenericWord document",
         "description": "Deletes an existing GenericWord document",
-        "tags": ["Development"],
+        "tags": ["Production"],
         "parameters": [
           {
             "name": "genericWordId",

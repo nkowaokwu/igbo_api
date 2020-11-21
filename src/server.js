@@ -70,16 +70,8 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);
-
-// TODO: remove this guard rail when releasing for production
-if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1', authentication, authorization(['editor', 'merger', 'admin']), editorRouter);
-}
-
-// TODO: remove this guard rail when releasing for production
-if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
-}
+app.use('/api/v1', authentication, authorization(['editor', 'merger', 'admin']), editorRouter);
+app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
