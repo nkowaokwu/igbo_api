@@ -5,10 +5,12 @@ import {
   isNaN,
   orderBy,
   get,
+  map,
 } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createRegExp from '../../shared/utils/createRegExp';
 import SortingDirections from '../../shared/constants/sortingDirections';
+import { findUser } from '../users';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -16,6 +18,16 @@ const MAX_RESPONSE_LIMIT = 25;
 /* Either creates a regex pattern for provided searchWord
 or fallbacks to matching every word */
 export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
+
+/* Given a list of keys, where each key's value is a list of Firebase uids,
+ * replace each uid with a user object */
+export const populateFirebaseUsers = async (doc, keys) => {
+  const docWithPopulateFirebaseUsers = { ...doc };
+  await Promise.all(map(keys, async (key) => {
+    docWithPopulateFirebaseUsers[key] = await Promise.all(map(docWithPopulateFirebaseUsers[key], findUser));
+  }));
+  return docWithPopulateFirebaseUsers;
+};
 
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key) => (
