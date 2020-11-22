@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - 27017:27017
+  server:
+    container_name: igbo_api_server
+    restart: on-failure
+    build: .
+    image: ijemmao/igbo_api_server
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
+volumes: 
+  mongodb-data:
