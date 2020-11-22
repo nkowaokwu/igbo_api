@@ -1,6 +1,9 @@
 name: docker_contain_app
 
-on: pull_request
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   dockerize:
@@ -20,15 +23,13 @@ jobs:
       - name: Log into Docker Account
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         env:
-          DOCKER_USERNAME: ${{ DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build Docker Image
         run: docker build -t igbo_api
-      - name: Build Composed Docker Images
-        run: docker-compose build
       - name: Push Docker Image
         run: |
           docker tag igbo_api $DOCKER_USERNAME/igbo_api_server
-          docker push igbo_api_server:latest
+          docker push $DOCKER_USERNAME/igbo_api_server
         env:
-          DOCKER_USERNAME: ${{ DOCKER_USERNAME }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
