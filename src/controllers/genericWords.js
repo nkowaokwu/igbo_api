@@ -121,7 +121,7 @@ export const getGenericWord = (req, res) => {
     })
     .catch(() => {
       res.status(400);
-      return res.send({ error: 'An error has occurred while return a single word suggestion' });
+      return res.send({ error: 'An error has occurred while return a single generic word' });
     });
 };
 

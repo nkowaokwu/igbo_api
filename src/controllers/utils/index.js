@@ -22,7 +22,7 @@ export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegEx
 /* Given a list of keys, where each key's value is a list of Firebase uids,
  * replace each uid with a user object */
 export const populateFirebaseUsers = async (doc, keys) => {
-  const docWithPopulateFirebaseUsers = { ...doc };
+  const docWithPopulateFirebaseUsers = assign(doc);
   await Promise.all(map(keys, async (key) => {
     docWithPopulateFirebaseUsers[key] = await Promise.all(map(docWithPopulateFirebaseUsers[key], findUser));
   }));

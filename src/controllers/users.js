@@ -32,8 +32,11 @@ export const getUsers = async (_, res) => {
 // TODO: Hide certain fields depending on user role
 /* Looks into Firebase for user */
 export const findUser = async (uid) => {
-  const user = await admin.auth().getUser(uid);
-  return formatUser(user);
+  if (process.env.NODE_ENV !== 'test') {
+    const user = await admin.auth().getUser(uid);
+    return formatUser(user);
+  }
+  return uid;
 };
 
 /* Grab a single user from the Firebase dataabase */

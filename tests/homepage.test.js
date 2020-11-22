@@ -10,7 +10,7 @@ describe('API Homepage', () => {
       .end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.type).to.equal('text/html');
-        expect(res.charset).to.equal('UTF-8');
+        expect(res.charset.toLowerCase()).to.equal('utf-8');
         expect(res.body).to.be.an('object');
         expect(res.text).to.not.contain('An unexpected error has occurred.');
         expect(res.text).to.contain('Igbo API');
@@ -35,7 +35,7 @@ describe('API Requests For Home Directory \'/\'', () => {
       .end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.type).to.equal('text/html');
-        expect(res.charset).to.equal('UTF-8');
+        expect(res.charset.toLowerCase()).to.equal('utf-8');
         expect(res.body).to.be.an('object');
         expect(res.text).to.contain(SITE_TITLE);
         done();
