@@ -41,6 +41,7 @@ export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
       stems: 1,
       normalized: 1,
       examples: 1,
+      updatedOn: 1,
     });
 
   return removeKeysInNestedDoc(words, 'examples');

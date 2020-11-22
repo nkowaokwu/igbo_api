@@ -178,6 +178,8 @@ describe('MongoDB Examples', () => {
               updateExample(result.body.id, updatedExampleData)
                 .end((_, exampleRes) => {
                   expect(exampleRes.status).to.equal(200);
+                  expect(new Date(result.body.updatedOn))
+                    .to.be.lessThan(new Date(exampleRes.body.updatedOn));
                   forIn(updatedExampleData, (value, key) => {
                     expect(isEqual(exampleRes.body[key], value)).to.equal(true);
                   });

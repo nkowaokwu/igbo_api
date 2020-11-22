@@ -10,7 +10,7 @@ import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
 import SortingDirections from '../shared/constants/sortingDirections';
-import { packageResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
 import { searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
@@ -113,11 +113,15 @@ export const getGenericWord = (req, res) => {
         return res.send({ error: 'No genericWord exists with the provided id.' });
       }
       const genericWordWithExamples = await placeExampleSuggestionsOnSuggestionDoc(genericWord);
-      return res.send(genericWordWithExamples);
+      const populatedUsersGenricWordWithExamples = await populateFirebaseUsers(
+        genericWordWithExamples,
+        ['approvals', 'denials'],
+      );
+      return res.send(populatedUsersGenricWordWithExamples);
     })
     .catch(() => {
       res.status(400);
-      return res.send({ error: 'An error has occurred while return a single word suggestion' });
+      return res.send({ error: 'An error has occurred while return a single generic word' });
     });
 };
 

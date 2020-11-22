@@ -8,7 +8,7 @@ import {
   trim,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
-import { packageResponse, handleQueries } from './utils';
+import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
 import { searchPreExistingWordSuggestionsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
@@ -141,7 +141,11 @@ export const getWordSuggestion = (req, res) => {
         return res.send({ error: 'No word suggestion exists with the provided id.' });
       }
       const wordSuggestionWithExamples = await placeExampleSuggestionsOnSuggestionDoc(wordSuggestion);
-      return res.send(wordSuggestionWithExamples);
+      const populatedUsersWordSuggestionWithExamples = await populateFirebaseUsers(
+        wordSuggestionWithExamples,
+        ['approvals', 'denials'],
+      );
+      return res.send(populatedUsersWordSuggestionWithExamples);
     })
     .catch(() => {
       res.status(400);

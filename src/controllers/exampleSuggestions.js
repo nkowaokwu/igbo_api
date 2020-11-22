@@ -9,7 +9,7 @@ import SuggestionTypes from '../shared/constants/suggestionTypes';
 import SortingDirections from '../shared/constants/sortingDirections';
 import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
-import { packageResponse, handleQueries } from './utils/index';
+import { packageResponse, handleQueries, populateFirebaseUsers } from './utils/index';
 import { searchExampleSuggestionsRegexQuery, searchPreExistingExampleSuggestionsRegexQuery } from './utils/queries';
 import { sendRejectedEmail } from './mail';
 
@@ -155,12 +155,13 @@ export const getExampleSuggestions = (req, res) => {
 export const getExampleSuggestion = (req, res) => {
   const { id } = req.params;
   return findExampleSuggestionById(id)
-    .then((exampleSuggestion) => {
+    .then(async (exampleSuggestion) => {
       if (!exampleSuggestion) {
         res.status(400);
         return res.send({ error: 'No example suggestion exists with the provided id.' });
       }
-      return res.send(exampleSuggestion);
+      const populatedUserExampleSuggestion = await populateFirebaseUsers(exampleSuggestion, ['approvals', 'denials']);
+      return res.send(populatedUserExampleSuggestion);
     })
     .catch(() => {
       res.status(400);

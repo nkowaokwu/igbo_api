@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin, toObjectPlugin } from './plugins';
+import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema } = mongoose;
 const wordSchema = new Schema({
@@ -10,8 +10,10 @@ const wordSchema = new Schema({
   normalized: { type: String, default: '' },
   frequency: { type: Number },
   stems: { type: [{ type: String }], default: [] },
+  updatedOn: { type: Date, default: Date.now() },
 }, { toObject: toObjectPlugin });
 
 toJSONPlugin(wordSchema);
+updatedOnHook(wordSchema);
 
 export default mongoose.model('Word', wordSchema);
