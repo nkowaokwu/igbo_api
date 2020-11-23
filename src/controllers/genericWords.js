@@ -136,7 +136,7 @@ export const createGenericWords = (_, res) => {
     return newGenericWord.save();
   });
 
-  Promise.all(genericWordsPromises)
+  return Promise.all(genericWordsPromises)
     .then(() => (
       res.send({ message: 'Successfully populated generic words' })
     ))
