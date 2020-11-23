@@ -125,17 +125,20 @@ export const getGenericWord = (req, res) => {
     });
 };
 
-/* Populates the MongoDB database with GenericWords */
-export const createGenericWords = (_, res) => {
-  const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
-  const genericWordsPromises = map(dictionary, (value, key) => {
+const seedGenericWords = async (dictionary) => (
+  map(dictionary, (value, key) => {
     const newGenericWord = new GenericWord({
       word: key,
       definitions: value,
     });
     return newGenericWord.save();
-  });
+  })
+);
 
+/* Populates the MongoDB database with GenericWords */
+export const createGenericWords = async (_, res) => {
+  const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
+  const genericWordsPromises = await seedGenericWords(dictionary);
   return Promise.all(genericWordsPromises)
     .then(() => (
       res.send({ message: 'Successfully populated generic words' })
