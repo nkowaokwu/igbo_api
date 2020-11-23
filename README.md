@@ -46,6 +46,17 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
+### Docker
+If you don't want to run a local Node and MongoDB, you can use [Docker](https://docker.com)
+
+Run the following command:
+
+```
+yarn start:docker
+```
+
+Navigate to [localhost:8080](http://localhost:8080) to see the API
+
 ### API Site
 
 To start up the front site for the API, run:

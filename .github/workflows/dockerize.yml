@@ -1,0 +1,35 @@
+name: docker_contain_app
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  dockerize:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js @${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Log into Docker Account
+        run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: docker build -t igbo_api
+      - name: Push Docker Image
+        run: |
+          docker tag igbo_api $DOCKER_USERNAME/igbo_api_server
+          docker push $DOCKER_USERNAME/igbo_api_server
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
