@@ -171,9 +171,7 @@ To populate the database complete the following steps:
 
 ### 1. Build a Dictionary
 
-[`dictionary.html`](./src/dictionaries/html/dictionary.html) is an HTML representation of the Columbia PDF that contains all the words and their information.
-
-The following command parses the `html` file and builds a number JSON files:
+The following command places the JSON dictionaries in the `build/` directory:
 
 ```
 yarn build:dictionaries
