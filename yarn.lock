@@ -3874,6 +3874,11 @@ diffie-hellman@^5.0.0:
     miller-rabin "^4.0.0"
     randombytes "^2.0.0"
 
+docker-secret@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/docker-secret/-/docker-secret-1.1.2.tgz#5e8f7823f1c2dbd88f30d3a2337a9fdf9ddcb076"
+  integrity sha512-RoXA+auTRFsWSy1tQoJw2mAXhlGbBwOrlZiTTlk5lPKqmjrD6S7Gm0e0d3WPwhIkUR2AY/AzjCVmcrpHNRhUMw==
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"

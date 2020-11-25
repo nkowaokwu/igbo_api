@@ -25,6 +25,11 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Create Docker Secrets 
+        run: echo $FIREBASE_CONFIG | docker secret create FIREBASE_CONFIG
+        env:
+          CI: test
+          FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
       - name: Build Docker Image
         run: docker build -t igbo_api .
       - name: Push Docker Image
