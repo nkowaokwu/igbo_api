@@ -26,12 +26,10 @@ const authentication = async (req, res, next) => {
             req.user = { role: value.split('-')[0], uid: token };
           }
         });
-        if (!req.user) {
-          res.status(401);
-          return res.send({ error: 'Invalid auth token' });
-        }
-      } else {
-        const decoded = await admin.auth().verifyIdToken(token);
+      }
+
+      const decoded = await admin.auth().verifyIdToken(token);
+      if (decoded && !req.user) {
         req.user = { role: decoded.role, uid: decoded.uid };
       }
       // TODO: try optional chaining
