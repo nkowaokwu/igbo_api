@@ -56,6 +56,8 @@ if (sgMail) {
 // Firebase service account
 export const SERVICE_ACCOUNT = process.env.FIREBASE_CONFIG
   ? JSON.parse(process.env.FIREBASE_CONFIG)
-  : process.env.NODE_ENV === 'test'
-    ? dockerSecrets.FIREBASE_CONFIG
-    : '';
+  : process.env.CI === 'test'
+    ? JSON.parse(process.env.FIREBASE_CONFIG)
+    : process.env.NODE_ENV === 'test'
+      ? dockerSecrets.FIREBASE_CONFIG
+      : '';
