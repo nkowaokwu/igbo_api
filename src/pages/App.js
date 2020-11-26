@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
-import { API_ROUTE, FROM_EMAIL } from '../config';
+import { API_ROUTE, FROM_EMAIL } from '../siteConstants';
 
 const App = () => (
   <div className="overflow-x-hidden" id="homepage-container">
