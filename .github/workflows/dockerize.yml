@@ -28,7 +28,7 @@ jobs:
       - name: Create Docker Secrets 
         run: |
           docker swarm init
-          echo $FIREBASE_CONFIG | docker secret create FIREBASE_CONFIG
+          echo $FIREBASE_CONFIG | docker secret create FIREBASE_CONFIG -
         env:
           CI: test
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
