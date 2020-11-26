@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import JSONPretty from 'react-json-pretty';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../../config';
+import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 
 const Demo = () => {
   const [keyword, setKeyword] = useState('');

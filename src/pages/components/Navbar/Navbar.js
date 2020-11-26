@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import downchevron from '../../assets/downchevron.svg';
-import { API_ROUTE } from '../../../config';
+import { API_ROUTE } from '../../../siteConstants';
 
 const menuIcon = process.env.NODE_ENV !== 'production' ? downchevron : `${API_ROUTE}/assets/downchevron.svg`;
 
