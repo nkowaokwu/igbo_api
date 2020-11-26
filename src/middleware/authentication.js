@@ -28,9 +28,16 @@ const authentication = async (req, res, next) => {
         });
       }
 
-      const decoded = await admin.auth().verifyIdToken(token);
-      if (decoded && !req.user) {
-        req.user = { role: decoded.role, uid: decoded.uid };
+      if (!req.user) {
+        try {
+          const decoded = await admin.auth().verifyIdToken(token);
+          if (decoded && !req.user) {
+            req.user = { role: decoded.role, uid: decoded.uid };
+          }
+        } catch {
+          res.status(401);
+          return res.send({ error: 'Invalid auth token' });
+        }
       }
       // TODO: try optional chaining
       if (req.user && !req.user.role) {
