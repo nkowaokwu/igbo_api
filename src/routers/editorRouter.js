@@ -27,6 +27,8 @@ import authorization from '../middleware/authorization';
 
 const editorRouter = express.Router();
 
+// TODO: #272 create middleware to parse stringified JSON
+
 /* These routes are used to allow users to suggest new words and examples */
 editorRouter.post('/words', authorization(['merger', 'admin']), mergeWord);
 editorRouter.put('/words/:id', validId, authorization(['merger', 'admin']), putWord);
