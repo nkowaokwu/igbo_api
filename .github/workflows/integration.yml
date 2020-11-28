@@ -22,12 +22,16 @@ jobs:
       uses: supercharge/mongodb-github-action@1.3.0
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
-    - name: Build and Test Server
+    - name: Build Server
       run: |
         yarn install
         yarn build
-        yarn test:build
-        yarn mocha
+    - name: Test Server Build Process
+      run: yarn test:build
+    - name: Test API
+      run: yarn mocha
+    - name: Test API Homepage
+      run: yarn cypress
       env:
         CI: test
         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}

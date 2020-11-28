@@ -1,0 +1,6 @@
+{
+  "video": false,
+  "execTimeout": 5000,
+  "pageLoadTimeout": 30000,
+  "taskTimeout": 30000
+}
