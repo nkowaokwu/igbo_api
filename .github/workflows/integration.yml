@@ -28,8 +28,14 @@ jobs:
         yarn build
     - name: Test Server Build Process
       run: yarn test:build
+      env:
+        CI: test
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
     - name: Test API
       run: yarn mocha
+      env:
+        CI: test
+        FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
     - name: Test API Homepage
       run: yarn cypress
       env:
