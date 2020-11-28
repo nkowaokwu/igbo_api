@@ -203,6 +203,15 @@ export const getLocalUrlRoute = (route = LOCAL_ROUTE) => (
     .get(route)
 );
 
+/* Sends an email to all editors, mergers, and admins about
+ * merged words and examples.
+ */
+export const sendEmailJob = () => (
+  chai
+    .request(server)
+    .post(`${TEST_ROUTE}/email/mergedStats`)
+);
+
 /* Uses data in __mocks__ folder */
 export const searchMockedTerm = (term) => {
   const regexTerm = createRegExp(term);

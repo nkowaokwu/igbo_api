@@ -22,6 +22,12 @@ const getMergedWords = async () => (
 const getMergedExamples = async () => (
   compact(flatten([await getExampleSuggestionsFromLastWeek()]))
 );
+const handleFinalMessage = (message) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(message);
+  }
+  return message;
+};
 
 const sendEmailJob = async () => {
   let userEmails = process.env.NODE_ENV === 'test' ? ['admin@example.com'] : [];
@@ -33,7 +39,7 @@ const sendEmailJob = async () => {
         || user.role === UserRoles.ADMIN
       ));
       userEmails = compact(reduce(users, (emails, user) => {
-        emails.push(user?.email);
+        emails.push(user.email);
         return emails;
       }, []));
     }
@@ -50,15 +56,21 @@ const sendEmailJob = async () => {
       };
 
       await sendMergedStats(emailData);
-      console.log('Successfully sent emails.');
-    } else {
-      console.log('No emails to send to.');
+      const success = 'Success: Sent emails.';
+      return handleFinalMessage(success);
     }
+    const noEmails = 'Success: No emails to send to.';
+    return handleFinalMessage(noEmails);
   } catch (err) {
     console.log(err.stack);
-    console.log('Unsuccessfully sent emails.');
+    const unsuccess = 'Unsuccessfully sent emails.';
+    return handleFinalMessage(unsuccess);
   }
 };
 
-cron.schedule('0 9 * * 1', sendEmailJob);
-// cron.schedule('* * * * *', sendEmailJob);
+if (process.env.NODE_ENV === 'production') {
+  /* Runs every Monday at 9AM */
+  cron.schedule('0 9 * * 1', sendEmailJob);
+}
+
+export default sendEmailJob;
