@@ -11,7 +11,7 @@ import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
 import SortingDirections from '../shared/constants/sortingDirections';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
-import { searchPreExistingGenericWordsRegexQuery } from './utils/queries';
+import { searchForLastWeekQuery, searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
   getExamplesFromClientData,
@@ -165,3 +165,11 @@ export const deleteGenericWord = (req, res) => {
       return res.send({ error: 'An error has occurred while deleting and return a single generic word' });
     });
 };
+
+/* Returns all the GenericWords from last week */
+export const getGenericWordsFromLastWeek = () => (
+  GenericWord
+    .find(searchForLastWeekQuery())
+    .lean()
+    .exec()
+);

@@ -9,7 +9,7 @@ import {
 } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
-import { sendEmail } from '../../src/controllers/mail';
+import { sendEmail } from '../../src/controllers/email';
 import mockedData from '../__mocks__/data.mock.json';
 
 export const getWordSuggestions = (query = {}) => (
@@ -201,6 +201,15 @@ export const getLocalUrlRoute = (route = LOCAL_ROUTE) => (
   chai
     .request(server)
     .get(route)
+);
+
+/* Sends an email to all editors, mergers, and admins about
+ * merged words and examples.
+ */
+export const sendEmailJob = () => (
+  chai
+    .request(server)
+    .post(`${TEST_ROUTE}/email/mergedStats`)
 );
 
 /* Uses data in __mocks__ folder */

@@ -13,7 +13,7 @@ import { DICTIONARY_APP_URL } from '../config';
 import { packageResponse, handleQueries, updateDocumentMerge } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
 import { findExampleSuggestionById } from './exampleSuggestions';
-import { sendMergedEmail } from './mail';
+import { sendMergedEmail } from './email';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {

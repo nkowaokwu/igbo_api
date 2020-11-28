@@ -21,6 +21,8 @@ import {
   SWAGGER_DOCS,
   SERVICE_ACCOUNT,
 } from './config';
+import UserRoles from './shared/constants/userRoles';
+import './services/sendEmail';
 
 admin.default.initializeApp({
   ...SERVICE_ACCOUNT,
@@ -70,12 +72,17 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);
-app.use('/api/v1', authentication, authorization(['editor', 'merger', 'admin']), editorRouter);
-app.use('/api/v1', authentication, authorization(['admin']), adminRouter);
+app.use('/api/v1', authentication, authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]), editorRouter);
+app.use('/api/v1', authentication, authorization([UserRoles.ADMIN]), adminRouter);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
-  app.use('/api/v1/test', authentication, authorization(['editor', 'merger', 'admin']), testRouter);
+  app.use(
+    '/api/v1/test',
+    authentication,
+    authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]),
+    testRouter,
+  );
 }
 
 const server = app.listen(PORT, () => {

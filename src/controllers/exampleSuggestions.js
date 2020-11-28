@@ -10,8 +10,12 @@ import SortingDirections from '../shared/constants/sortingDirections';
 import Word from '../models/Word';
 import ExampleSuggestion from '../models/ExampleSuggestion';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils/index';
-import { searchExampleSuggestionsRegexQuery, searchPreExistingExampleSuggestionsRegexQuery } from './utils/queries';
-import { sendRejectedEmail } from './mail';
+import {
+  searchExampleSuggestionsRegexQuery,
+  searchForLastWeekQuery,
+  searchPreExistingExampleSuggestionsRegexQuery,
+} from './utils/queries';
+import { sendRejectedEmail } from './email';
 
 export const createExampleSuggestion = async (data) => {
   if (!data.igbo && !data.english) {
@@ -200,3 +204,11 @@ export const deleteExampleSuggestion = async (req, res) => {
     return res.send({ error: err.message });
   }
 };
+
+/* Returns all the ExampleSuggestions from last week */
+export const getExampleSuggestionsFromLastWeek = () => (
+  ExampleSuggestion
+    .find(searchForLastWeekQuery())
+    .lean()
+    .exec()
+);

@@ -1,0 +1,9 @@
+{
+  "video": false,
+  "execTimeout": 5000,
+  "integrationFolder": "tests/cypress/integration",
+  "pluginsFile": "tests/cypress/plugins",
+  "supportFile": "tests/cypress/support",
+  "pageLoadTimeout": 30000,
+  "taskTimeout": 30000
+}
