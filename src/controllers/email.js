@@ -2,6 +2,7 @@ import { omit } from 'lodash';
 import {
   MERGED_SUGGESTION_TEMPLATE,
   REJECTED_SUGGESTION_TEMPLATE,
+  MERGED_STATS_TEMPLATE,
   FROM_EMAIL,
 } from '../config';
 
@@ -62,6 +63,16 @@ export const sendRejectedEmail = (data) => {
   const message = constructMessage({
     to: data.to,
     templateId: REJECTED_SUGGESTION_TEMPLATE,
+    dynamic_template_data: omit(data, ['to']),
+  });
+  return sendEmail(message);
+};
+
+/* Email sent every week to editors, mergers, and admins */
+export const sendMergedStats = (data) => {
+  const message = constructMessage({
+    to: data.to,
+    templateId: MERGED_STATS_TEMPLATE,
     dynamic_template_data: omit(data, ['to']),
   });
   return sendEmail(message);

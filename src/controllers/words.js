@@ -19,7 +19,7 @@ import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample } from './examples';
 import { findGenericWordById } from './genericWords';
 import { findWordSuggestionById } from './wordSuggestions';
-import { sendMergedEmail } from './mail';
+import { sendMergedEmail } from './email';
 import { DICTIONARY_APP_URL } from '../config';
 
 /* Gets words from JSON dictionary */

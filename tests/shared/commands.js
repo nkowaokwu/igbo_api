@@ -9,7 +9,7 @@ import {
 } from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
-import { sendEmail } from '../../src/controllers/mail';
+import { sendEmail } from '../../src/controllers/email';
 import mockedData from '../__mocks__/data.mock.json';
 
 export const getWordSuggestions = (query = {}) => (

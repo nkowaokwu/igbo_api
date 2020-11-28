@@ -1,6 +1,7 @@
 import * as admin from 'firebase-admin';
 import { forIn } from 'lodash';
 import AUTH_TOKEN from '../shared/constants/testAuthTokens';
+import UserRoles from '../shared/constants/userRoles';
 
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
@@ -8,7 +9,7 @@ const authentication = async (req, res, next) => {
     const authHeader = req.headers.Authorization || req.headers.authorization;
     /* Overrides user role for local development and testing purposes */
     if (!authHeader && process.env.NODE_ENV !== 'production') {
-      const { role = 'admin', uid = AUTH_TOKEN.ADMIN_AUTH_TOKEN } = req.query;
+      const { role = UserRoles.ADMIN, uid = AUTH_TOKEN.ADMIN_AUTH_TOKEN } = req.query;
       req.user = { role, uid };
       return next();
     }
@@ -39,8 +40,7 @@ const authentication = async (req, res, next) => {
           return res.send({ error: 'Invalid auth token' });
         }
       }
-      // TODO: try optional chaining
-      if (req.user && !req.user.role) {
+      if (!req?.user?.role) {
         res.status(401);
         return res.send({ error: 'Invalid auth token' });
       }

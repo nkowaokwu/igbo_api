@@ -9,7 +9,7 @@ import {
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
-import { searchPreExistingWordSuggestionsRegexQuery } from './utils/queries';
+import { searchForLastWeekQuery, searchPreExistingWordSuggestionsRegexQuery } from './utils/queries';
 import {
   handleDeletingExampleSuggestions,
   getExamplesFromClientData,
@@ -18,7 +18,7 @@ import {
 } from './utils/nestedExampleSuggestionUtils';
 import SortingDirections from '../shared/constants/sortingDirections';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
-import { sendRejectedEmail } from './mail';
+import { sendRejectedEmail } from './email';
 
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
@@ -188,3 +188,11 @@ export const deleteWordSuggestion = (req, res) => {
       return res.send({ error: 'An error has occurred while deleting and return a single word suggestion' });
     });
 };
+
+/* Returns all the WordSuggestions from last week */
+export const getWordSuggestionsFromLastWeek = () => (
+  WordSuggestion
+    .find(searchForLastWeekQuery())
+    .lean()
+    .exec()
+);

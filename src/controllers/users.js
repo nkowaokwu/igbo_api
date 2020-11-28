@@ -15,11 +15,17 @@ const formatUser = (user) => {
   };
 };
 
+/* Looks into Firebase for users */
+export const findUsers = async () => {
+  const result = await admin.default.auth().listUsers();
+  const users = result.users.map((user) => formatUser(user));
+  return users;
+};
+
 /* Grab all users in the Firebase database */
 export const getUsers = async (_, res) => {
   try {
-    const result = await admin.default.auth().listUsers();
-    const users = result.users.map((user) => formatUser(user));
+    const users = await findUsers();
     res.setHeader('Content-Range', users.length);
     res.status(200);
     res.send(users);
