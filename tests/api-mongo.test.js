@@ -665,5 +665,32 @@ describe('MongoDB Words', () => {
           done();
         });
     });
+
+    it('should return words with no keyword as admin', (done) => {
+      getWords()
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.most(10);
+          done();
+        });
+    });
+
+    it('should return no words with no keyword as user', (done) => {
+      getWords({ token: AUTH_TOKEN.USER_AUTH_TOKEN })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
+
+    it('should return no words with no keyword as unauthed user', (done) => {
+      getWords({ token: 'null' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
   });
 });

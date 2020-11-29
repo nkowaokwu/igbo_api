@@ -140,6 +140,7 @@ export const getWords = (query = {}) => (
     .request(server)
     .get(`${API_ROUTE}/words`)
     .query(query)
+    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
 );
 
 export const getWord = (id) => (
@@ -160,6 +161,7 @@ export const getExamples = (query = {}) => (
     .request(server)
     .get(`${API_ROUTE}/examples`)
     .query(query)
+    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
 );
 
 /* Mocks grabbing all users from Firebase */
