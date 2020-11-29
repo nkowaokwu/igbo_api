@@ -11,6 +11,7 @@ import removePrefix from '../../shared/utils/removePrefix';
 import createRegExp from '../../shared/utils/createRegExp';
 import SortingDirections from '../../shared/constants/sortingDirections';
 import { findUser } from '../users';
+import UserRoles from '../../shared/constants/userRoles';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -18,6 +19,21 @@ const MAX_RESPONSE_LIMIT = 25;
 /* Either creates a regex pattern for provided searchWord
 or fallbacks to matching every word */
 export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
+
+/* Determines if an empty response should be returned
+ * if the request comes from an unauthed user in production
+ */
+const constructRegexQuery = ({ user, searchWord }) => (
+  user.role && (
+    user.role === UserRoles.EDITOR
+    || user.role === UserRoles.MERGER
+    || user.role === UserRoles.ADMIN
+  )
+    ? createQueryRegex(searchWord)
+    : searchWord
+      ? createQueryRegex(searchWord)
+      : /^[.{0,}\n{0,}]/
+);
 
 /* Given a list of keys, where each key's value is a list of Firebase uids,
  * replace each uid with a user object */
@@ -145,7 +161,7 @@ const parseSortKeys = (sort) => {
 };
 
 /* Handles all the queries for searching in the database */
-export const handleQueries = (query = {}) => {
+export const handleQueries = ({ query = {}, user = {} }) => {
   const {
     keyword = '',
     page: pageQuery = 0,
@@ -155,7 +171,7 @@ export const handleQueries = (query = {}) => {
   } = query;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-  const regexKeyword = createQueryRegex(searchWord);
+  const regexKeyword = constructRegexQuery({ user, searchWord });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });

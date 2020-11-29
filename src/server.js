@@ -71,7 +71,7 @@ app.use('*', logger);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', router);
+app.use('/api/v1', authentication, router);
 app.use('/api/v1', authentication, authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]), editorRouter);
 app.use('/api/v1', authentication, authorization([UserRoles.ADMIN]), adminRouter);
 

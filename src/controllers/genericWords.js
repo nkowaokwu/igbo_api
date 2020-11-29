@@ -77,7 +77,7 @@ export const getGenericWords = (req, res) => {
       skip,
       limit,
       ...rest
-    } = handleQueries(req.query);
+    } = handleQueries(req);
     const regexMatch = searchPreExistingGenericWordsRegexQuery(regexKeyword);
     return findGenericWords({ regexMatch, skip, limit })
       .then(async (genericWords) => {
