@@ -134,7 +134,7 @@ export const getExampleSuggestions = (req, res) => {
       skip,
       limit,
       ...rest
-    } = handleQueries(req.query);
+    } = handleQueries(req);
     const regexMatch = searchExampleSuggestionsRegexQuery(regexKeyword);
     return findExampleSuggestions({ regexMatch, skip, limit })
       .then((exampleSuggestions) => (

@@ -116,7 +116,7 @@ export const getWordSuggestions = (req, res) => {
       skip,
       limit,
       ...rest
-    } = handleQueries(req.query);
+    } = handleQueries(req);
     const regexMatch = searchPreExistingWordSuggestionsRegexQuery(regexKeyword);
     return findWordSuggestions({ regexMatch, skip, limit })
       .then(async (wordSuggestions) => {

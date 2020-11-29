@@ -18,7 +18,7 @@ const authentication = async (req, res, next) => {
       if (!authHeader.startsWith('Bearer ')) {
         throw new Error('Malformed authorization header. Must start with \'Bearer\'');
       }
-      const token = authHeader.split(' ')[1];
+      const token = authHeader.split(' ')[1] || '';
 
       /* Handles injecting user roles for tests */
       if (process.env.NODE_ENV === 'test') {
@@ -29,20 +29,13 @@ const authentication = async (req, res, next) => {
         });
       }
 
-      if (!req.user) {
-        try {
-          const decoded = await admin.auth().verifyIdToken(token);
-          if (decoded && !req.user) {
-            req.user = { role: decoded.role, uid: decoded.uid };
-          }
-        } catch {
-          res.status(401);
-          return res.send({ error: 'Invalid auth token' });
+      try {
+        const decoded = await admin.auth().verifyIdToken(token);
+        if (decoded && !req.user) {
+          req.user = { role: decoded.role, uid: decoded.uid };
         }
-      }
-      if (!req?.user?.role) {
-        res.status(401);
-        return res.send({ error: 'Invalid auth token' });
+      } catch {
+        console.warn('Error while authing Firebase token');
       }
       return next();
     }
@@ -50,10 +43,7 @@ const authentication = async (req, res, next) => {
     res.status(400);
     return res.send({ error: err.message });
   }
-
-  /* No auth token provided */
-  res.status(403);
-  return res.send({ error: 'Unauthorized to access this resource' });
+  return next();
 };
 
 export default authentication;

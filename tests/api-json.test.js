@@ -15,7 +15,8 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('JSON Dictionary', () => {
-  before((done) => {
+  before(function (done) {
+    this.timeout(60000);
     server.clearDatabase();
     Promise.all([
       populateAPI(),

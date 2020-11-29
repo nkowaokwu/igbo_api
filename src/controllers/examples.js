@@ -37,7 +37,7 @@ export const getExamples = async (req, res) => {
       skip,
       limit,
       ...rest
-    } = handleQueries(req.query);
+    } = handleQueries(req);
     const regexMatch = searchExamplesRegexQuery(regexKeyword);
     const examples = await searchExamples({ query: regexMatch, skip, limit });
 

@@ -56,7 +56,7 @@ export const getWords = async (req, res) => {
       skip,
       limit,
       ...rest
-    } = handleQueries(req.query);
+    } = handleQueries(req);
     const searchQueries = { searchWord, skip, limit };
     let regexMatch = searchIgboRegexQuery(regexKeyword);
     const words = await searchWordUsingIgbo({ query: regexMatch, ...searchQueries });
