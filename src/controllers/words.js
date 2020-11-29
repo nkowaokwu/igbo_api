@@ -154,7 +154,7 @@ const updateSuggestionAfterMerge = async (suggestionDoc, originalWordDoc, merged
       removeSuggestionAssociatedIds.associatedWords.push(originalWordDoc.id);
     }
     const updatedExampleSuggestion = await removeSuggestionAssociatedIds.save();
-    return executeMergeExample(updatedExampleSuggestion.id);
+    return executeMergeExample(updatedExampleSuggestion.id, mergedBy);
   }));
   return updatedSuggestionDoc.save();
 };
