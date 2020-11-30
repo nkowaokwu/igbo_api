@@ -1,4 +1,4 @@
-import { omit } from 'lodash';
+import { map, omit } from 'lodash';
 import {
   MERGED_SUGGESTION_TEMPLATE,
   REJECTED_SUGGESTION_TEMPLATE,
@@ -10,8 +10,10 @@ const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {}
 
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields) => ({
-  from: FROM_EMAIL,
   ...messageFields,
+  from: { email: FROM_EMAIL, name: 'Igbo API' },
+  reply_to: { email: FROM_EMAIL, name: 'Igbo API' },
+  personalizations: map(messageFields.to, (to) => ({ to: [{ email: to }] })),
 });
 
 /* Wrapper around SendGrid function to handle errors */
