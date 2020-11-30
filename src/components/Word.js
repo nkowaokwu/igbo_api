@@ -80,7 +80,7 @@ const Word = ({ word }) => {
           </div>
           <div className="flex w-full justify-end items-end lg:w-5/12">
             <a
-              className="transition-all duration-300 underline text-green-600 hover:text-green-500"
+              className="link"
               href={`/word?word=${word.word}`}
             >
               {'Details '}

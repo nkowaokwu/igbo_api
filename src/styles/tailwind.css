@@ -4,8 +4,15 @@
 @tailwind utilities;
 
 @font-face {
-font-family: 'Arvo-Bold';
+  font-family: 'Arvo';
+  src: url('../assets/fonts/Arvo/Arvo-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Arvo';
   src: url('../assets/fonts/Arvo/Arvo-Bold.ttf') format('truetype');
+  font-weight: 700;
 }
 
 @font-face {
@@ -20,7 +27,8 @@ font-family: 'Arvo-Bold';
 }
 
 #logo {
-  font-family: 'Arvo-Bold' !important;
+  font-family: 'Arvo' !important;
+  font-weight: 700;
   @apply transition-all;
   @apply duration-200;
   width: 150px;
@@ -32,7 +40,7 @@ font-family: 'Arvo-Bold';
 
 h1 {
   font-family: 'EB Garamond' !important;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .ReactModal__Overlay {
@@ -53,14 +61,15 @@ h1 {
   @apply border-gray-200;
   @apply max-h-full;
   @apply w-full;
-  @apply p-12;
+  @apply p-10;
   @apply rounded-lg;
   @apply shadow-lg;
-  @apply overflow-scroll;
+  @apply overflow-auto;
   @apply text-gray-800;
 }
 
 .responsive-container {
+  @apply items-center;
   @apply w-11/12;
   @apply px-2;
 }
@@ -118,10 +127,79 @@ h1 {
   @apply mt-3;
 }
 
+.welcomeSceneContainer {
+  @apply flex !important;
+  @apply flex-col;
+  @apply justify-center;
+  @apply items-center;
+  @apply outline-none;
+  @apply text-center;
+}
+
+.welcomeSceneContainer h1 {
+  @apply text-2xl;
+  @apply text-gray-700;
+  font-family: 'Arvo' !important;
+  font-weight: 700;
+}
+
+.welcomeSceneContainer p {
+  @apply text-gray-500;
+  @apply w-full;
+  @apply my-3;
+  font-family: 'Arvo' !important;
+  font-weight: 400;
+}
+
+.welcomeSceneContainer img {
+  @apply w-full;
+}
+
+.slick-slider {
+  @apply flex !important;
+  @apply flex-row;
+  @apply items-end;
+}
+
+.slick-next, .slick-prev {
+  @apply text-white;
+}
+
+.slick-next:before, [dir=rtl] .slick-prev:before {
+  content: '→';
+}
+
+.slick-prev:before, [dir=rtl] .slick-next:before {
+  content: 'Back';
+}
+
+.slick-next:before, .slick-prev:before {
+  font-size: 20px;
+  line-height: 1;
+  @apply text-green-500;
+}
+
+.slick-prev:before {
+  font-size: 20px;
+  line-height: 1;
+  opacity: .75;
+  @apply text-gray-500;
+}
+.link {
+  @apply transition-all;
+  @apply duration-300;
+  @apply underline;
+  @apply text-green-600;
+}
+.link:hover {
+  @apply text-green-500;
+}
+
 /* Large (lg) */
 @media (min-width: 1024px) {
   #logo {
-    font-family: 'Arvo-Bold' !important;
+    font-family: 'Arvo' !important;
+    font-weight: 700;
     @apply transition-all;
     @apply duration-200;
     width: 170px;
@@ -129,6 +207,7 @@ h1 {
 
   .modal-container {
     @apply w-10/12;
+    @apply p-12;
   }
   .button {
     @apply h-10;
@@ -138,5 +217,24 @@ h1 {
   .responsive-container {
     min-width: 986px;
     max-width: 986px;
+  }
+
+  .welcomeSceneContainer h1 {
+    @apply text-3xl;
+    @apply text-gray-700;
+    font-family: 'Arvo' !important;
+    font-weight: 700;
+  }
+  
+  .welcomeSceneContainer p {
+    @apply text-gray-500;
+    @apply w-10/12;
+    @apply my-3;
+    font-family: 'Arvo' !important;
+    font-weight: 400;
+  }
+
+  .welcomeSceneContainer img {
+    @apply w-6/12;
   }
 }

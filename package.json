@@ -48,6 +48,8 @@
     "react-dom": "^16.12.0",
     "react-hook-form": "^6.9.6",
     "react-modal": "^3.11.2",
+    "react-slick": "^0.27.13",
+    "slick-carousel": "^1.8.1",
     "start-server-and-test": "^1.11.5",
     "tailwindcss": "^1.8.12",
     "urlencode": "^1.1.0"
