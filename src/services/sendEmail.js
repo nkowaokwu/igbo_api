@@ -69,8 +69,8 @@ const sendEmailJob = async () => {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  /* Runs every Monday at 9AM */
-  cron.schedule('0 9 * * 1', sendEmailJob);
+  /* Runs every Monday at 6AM PST */
+  cron.schedule('0 14 * * 1', sendEmailJob);
 }
 
 export default sendEmailJob;
