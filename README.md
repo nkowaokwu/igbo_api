@@ -9,7 +9,7 @@
 This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
 ## Try it Out
-For a demo, check out this link [https://igboapi.com/api/v1/words](https://www.igboapi.com/api/v1/words)
+**For a demo, check out this link [https://igboapi.com](https://www.igboapi.com)**
 
 ## Getting Started
 
