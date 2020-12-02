@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
-import { API_ROUTE, FROM_EMAIL } from '../siteConstants';
+import { API_ROUTE, API_FROM_EMAIL } from '../siteConstants';
 
 const App = () => (
   <div className="overflow-x-hidden" id="homepage-container">
@@ -78,7 +78,7 @@ const App = () => (
           <h1 className="text-3xl mb-2">Igbo API</h1>
           <p>
             {'Email: '}
-            <a href={`mailto:${FROM_EMAIL}`}>{FROM_EMAIL}</a>
+            <a href={`mailto:${API_FROM_EMAIL}`}>{API_FROM_EMAIL}</a>
           </p>
         </div>
       </footer>
