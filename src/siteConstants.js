@@ -4,4 +4,4 @@ export const API_ROUTE = process.env.NODE_ENV === 'production' ? '' : `http://lo
 export const DICTIONARY_APP_URL = process.env.NODE_ENV === 'production'
   ? 'https://nkowaokwu.com'
   : 'http://localhost:8000'; // A local instance of the dictionary app must be running
-export const FROM_EMAIL = process.env.FROM_EMAIL || 'igboapi@gmail.com';
+export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'igboapi@gmail.com';

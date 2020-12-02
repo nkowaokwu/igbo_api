@@ -3,16 +3,17 @@ import {
   MERGED_SUGGESTION_TEMPLATE,
   REJECTED_SUGGESTION_TEMPLATE,
   MERGED_STATS_TEMPLATE,
-  FROM_EMAIL,
+  API_FROM_EMAIL,
+  NKOWAOKWU_FROM_EMAIL,
 } from '../config';
 
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
 
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields) => ({
+  from: { email: NKOWAOKWU_FROM_EMAIL, name: 'Nkowaokwu' },
   ...messageFields,
-  from: { email: FROM_EMAIL, name: 'Igbo API' },
-  reply_to: { email: FROM_EMAIL, name: 'Igbo API' },
+  reply_to: { email: API_FROM_EMAIL, name: 'Igbo API' },
   personalizations: map(messageFields.to, (to) => ({ to: [{ email: to }] })),
 });
 
@@ -73,6 +74,7 @@ export const sendRejectedEmail = (data) => {
 /* Email sent every week to editors, mergers, and admins */
 export const sendMergedStats = (data) => {
   const message = constructMessage({
+    from: { email: API_FROM_EMAIL, name: 'Igbo API' },
     to: data.to,
     templateId: MERGED_STATS_TEMPLATE,
     dynamic_template_data: omit(data, ['to']),
