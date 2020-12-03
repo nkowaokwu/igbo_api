@@ -232,7 +232,7 @@ describe('Editing Flow', () => {
           ...wordSuggestionRes.body,
           word: 'newWord',
         };
-        updateWordSuggestion(updatedWordSuggestion.id, updatedWordSuggestion)
+        updateWordSuggestion(updatedWordSuggestion)
           .end((_, res) => {
             expect(res.status).to.equal(200);
             expect(res.body.word).to.equal('newWord');
@@ -254,7 +254,7 @@ describe('Editing Flow', () => {
           english,
           associatedWords: [genericWordsRes.body[0].id],
         }];
-        updateGenericWord(genericWord.id, genericWord)
+        updateGenericWord(genericWord)
           .then((updatedGenericWordRes) => {
             expect(updatedGenericWordRes.status).to.equal(200);
             createWord(genericWord.id)
@@ -298,7 +298,7 @@ describe('Editing Flow', () => {
     getGenericWords({ keyword: 'meru' })
       .then((genericWordsRes) => {
         expect(genericWordsRes.status).to.equal(200);
-        updateGenericWord(genericWordsRes.body[0].id, genericWordWithNestedExampleSuggestionData)
+        updateGenericWord({ id: genericWordsRes.body[0].id, ...genericWordWithNestedExampleSuggestionData })
           .then((genericWordRes) => {
             expect(genericWordRes.status).to.equal(200);
             const nestedExampleSuggestion = genericWordRes.body.examples[0];

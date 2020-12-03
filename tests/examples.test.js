@@ -175,7 +175,7 @@ describe('MongoDB Examples', () => {
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
-              updateExample(result.body.id, updatedExampleData)
+              updateExample({ id: result.body.id, ...updatedExampleData })
                 .end((_, exampleRes) => {
                   expect(exampleRes.status).to.equal(200);
                   expect(new Date(result.body.updatedOn))

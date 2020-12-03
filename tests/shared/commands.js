@@ -99,40 +99,58 @@ export const suggestNewExample = (data) => (
     .send(data)
 );
 
-export const updateWordSuggestion = (id, data) => (
+export const updateWordSuggestion = (data) => (
   chai
     .request(server)
-    .put(`${API_ROUTE}/wordSuggestions/${id}`)
+    .put(`${API_ROUTE}/wordSuggestions/${data.id}`)
     .send(data)
 );
 
-export const updateExampleSuggestion = (id, data) => (
+export const updateExampleSuggestion = (data) => (
   chai
     .request(server)
-    .put(`${API_ROUTE}/exampleSuggestions/${id}`)
+    .put(`${API_ROUTE}/exampleSuggestions/${data.id}`)
     .send(data)
 );
 
-export const updateGenericWord = (id, data) => (
+export const updateGenericWord = (data) => (
   chai
     .request(server)
-    .put(`${API_ROUTE}/genericWords/${id}`)
+    .put(`${API_ROUTE}/genericWords/${data.id}`)
     .send(data)
 );
 
-export const updateWord = (id, data) => (
+export const updateWord = (data) => (
   chai
     .request(server)
-    .put(`${API_ROUTE}/words/${id}`)
+    .put(`${API_ROUTE}/words/${data.id}`)
     .send(data)
 );
 
-export const updateExample = (id, data) => (
+export const updateExample = (data) => (
   chai
     .request(server)
-    .put(`${API_ROUTE}/examples/${id}`)
+    .put(`${API_ROUTE}/examples/${data.id}`)
     .send(data)
 );
+
+export const approveWordSuggestion = (data) => {
+  const approvedData = data;
+  approvedData.approvals.push('approval');
+  return updateWordSuggestion(data.id, data);
+};
+
+export const approveExampleSuggestion = (data) => {
+  const approvedData = data;
+  approvedData.approvals.push('approval');
+  return updateExampleSuggestion(data.id, data);
+};
+
+export const approveGenericWord = (data) => {
+  const approvedData = data;
+  approvedData.approvals.push('approval');
+  return updateGenericWord(data.id, data);
+};
 
 /* Searches for words using the data in MongoDB */
 export const getWords = (query = {}) => (

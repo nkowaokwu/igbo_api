@@ -35,7 +35,9 @@ const authentication = async (req, res, next) => {
           req.user = { role: decoded.role, uid: decoded.uid };
         }
       } catch {
-        console.warn('Error while authing Firebase token');
+        if (process.env.NODE_ENV === 'production') {
+          throw new Error('Error while authing Firebase token');
+        }
       }
       return next();
     }

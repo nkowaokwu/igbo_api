@@ -115,7 +115,7 @@ describe('Auth', () => {
         });
     });
 
-    it.skip('should allow an admin to get all users', (done) => {
+    it('should allow an admin to get all users', (done) => {
       getUsers()
         .end((_, res) => {
           expect(res.status).to.equal(200);
@@ -123,7 +123,7 @@ describe('Auth', () => {
         });
     });
 
-    it.skip('should forbid a non-admin from getting users', (done) => {
+    it('should forbid a non-admin from getting users', (done) => {
       getUsers({ role: 'merger' })
         .end((_, res) => {
           expect(res.status).to.equal(403);

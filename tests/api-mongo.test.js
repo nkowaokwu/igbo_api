@@ -119,7 +119,7 @@ describe('MongoDB Words', () => {
           expect(res.status).to.equal(200);
           const firstGenericWord = res.body[0];
           firstGenericWord.wordClass = 'something new';
-          updateGenericWord(firstGenericWord.id, firstGenericWord)
+          updateGenericWord(firstGenericWord)
             .then((saveMergedGenericWord) => {
               expect(saveMergedGenericWord.status).to.equal(200);
               createWord(firstGenericWord.id)
@@ -191,7 +191,7 @@ describe('MongoDB Words', () => {
           expect(res.status).to.equal(200);
           const firstWordSuggestion = res.body[0];
           firstWordSuggestion.wordClass = 'wordClass';
-          updateWordSuggestion(firstWordSuggestion.id, firstWordSuggestion)
+          updateWordSuggestion(firstWordSuggestion)
             .then((updatedWordSuggestionRes) => {
               expect(updatedWordSuggestionRes.status).to.equal(200);
               createWord(updatedWordSuggestionRes.body.id)
@@ -217,7 +217,7 @@ describe('MongoDB Words', () => {
           expect(res.status).to.equal(200);
           const firstGenericWord = res.body[0];
           firstGenericWord.wordClass = 'wordClass';
-          updateGenericWord(firstGenericWord.id, firstGenericWord)
+          updateGenericWord(firstGenericWord)
             .then((updatedGenericWordRes) => {
               expect(updatedGenericWordRes.status).to.equal(200);
               createWord(updatedGenericWordRes.body.id)
@@ -310,7 +310,7 @@ describe('MongoDB Words', () => {
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
-              updateWord(result.body.id, updatedWordData)
+              updateWord({ id: result.body.id, ...updatedWordData })
                 .end((_, updateWordRes) => {
                   expect(updateWordRes.status).to.equal(200);
                   forIn(updatedWordData, (value, key) => {

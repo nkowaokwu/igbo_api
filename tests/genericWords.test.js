@@ -2,6 +2,7 @@ import chai from 'chai';
 import { forIn, forEach, isEqual } from 'lodash';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
+  approveGenericWord,
   getGenericWords,
   getGenericWord,
   updateGenericWord,
@@ -13,7 +14,7 @@ import {
   NONEXISTENT_ID,
 } from './shared/constants';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
-import { genericWordApprovedData, malformedGenericWordData, updatedGenericWordData } from './__mocks__/documentData';
+import { malformedGenericWordData, updatedGenericWordData } from './__mocks__/documentData';
 
 const { expect } = chai;
 
@@ -23,7 +24,7 @@ describe('MongoDB Generic Words', () => {
       getGenericWords()
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateGenericWord(res.body[0].id, updatedGenericWordData)
+          updateGenericWord({ id: res.body[0].id, ...updatedGenericWordData })
             .end((_, result) => {
               expect(result.status).to.equal(200);
               forIn(updatedGenericWordData, (value, key) => {
@@ -38,7 +39,7 @@ describe('MongoDB Generic Words', () => {
       getGenericWords()
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateGenericWord(res.body[0].id, malformedGenericWordData)
+          updateGenericWord({ id: res.body[0].id, ...malformedGenericWordData })
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
@@ -56,7 +57,7 @@ describe('MongoDB Generic Words', () => {
     });
 
     it('should throw an error for providing an invalid id', (done) => {
-      updateGenericWord(INVALID_ID)
+      updateGenericWord({ id: INVALID_ID })
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
@@ -69,7 +70,7 @@ describe('MongoDB Generic Words', () => {
         .then((genericWordsRes) => {
           expect(genericWordsRes.status).to.equal(200);
           const genericWord = genericWordsRes.body[0];
-          updateGenericWord(genericWord.id, { ...genericWord, word: 'updated' })
+          updateGenericWord({ ...genericWord, word: 'updated' })
             .end((_, res) => {
               expect(res.status).to.equal(200);
               expect(Date.parse(genericWord.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
@@ -120,7 +121,7 @@ describe('MongoDB Generic Words', () => {
       getGenericWords()
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateGenericWord(res.body[0].id, genericWordApprovedData)
+          approveGenericWord(res.body[0])
             .then(() => {
               getGenericWords()
                 .end((_, result) => {

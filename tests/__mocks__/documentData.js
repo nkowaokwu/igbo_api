@@ -81,13 +81,6 @@ const genericWordData = {
   definitions: ['definition'],
 };
 
-const genericWordApprovedData = {
-  word: 'genericWord',
-  wordClass: 'noun',
-  definitions: [],
-  approvals: ['first user', 'second user'],
-};
-
 const malformedGenericWordData = {
   word: 'newGenericWord',
   wordClass: '',
@@ -130,7 +123,6 @@ export {
   exampleData,
   updatedExampleData,
   genericWordData,
-  genericWordApprovedData,
   malformedGenericWordData,
   updatedGenericWordData,
 };
