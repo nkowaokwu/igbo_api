@@ -20,6 +20,7 @@ import {
   MONGO_URI,
   SWAGGER_DOCS,
   SERVICE_ACCOUNT,
+  CORS_CONFIG,
 } from './config';
 import UserRoles from './shared/constants/userRoles';
 import './services/sendEmail';
@@ -53,14 +54,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(sslRedirect());
 }
 
-app.use(cors({
-  exposedHeaders: ['Content-Range', 'X-Content-Range'],
-}));
+app.options('*', cors());
 
 app.use(express.static('./build/dist'));
-
-/* implementing cors for http requests during pre - flight phase */
-app.options('*', cors());
 
 app.get('/', (_, res) => {
   res.send(path.resolve(__dirname, '/build/dist/index.html'));
@@ -71,14 +67,20 @@ app.use('*', logger);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', authentication, router);
-app.use('/api/v1', authentication, authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]), editorRouter);
-app.use('/api/v1', authentication, authorization([UserRoles.ADMIN]), adminRouter);
+app.use('/api/v1', cors({ ...CORS_CONFIG, origin: true }), authentication, router);
+app.use('/api/v1',
+  cors(CORS_CONFIG),
+  authentication,
+  authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]),
+  editorRouter,
+);
+app.use('/api/v1', cors(CORS_CONFIG), authentication, authorization([UserRoles.ADMIN]), adminRouter);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
   app.use(
     '/api/v1/test',
+    cors({ ...CORS_CONFIG, origin: true }),
     authentication,
     authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]),
     testRouter,

@@ -23,6 +23,12 @@ export const MONGO_URI = process.env.NODE_ENV === 'test'
   : process.env.NODE_ENV === 'development'
     ? LOCAL_MONGO_URI
     : process.env.MONGO_URI || LOCAL_MONGO_URI;
+const PROD_CORS_ORIGINS = [/\.igboapi\.com$/, /nkowaokwu\.com$/, /igbo-api-admin.web.app$/];
+/* Prevents non-approved cross-origin sites from accessing certain routes */
+export const CORS_CONFIG = {
+  origin: process.env.NODE_ENV === 'production' ? PROD_CORS_ORIGINS : true,
+  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+};
 
 // Documentation
 const SWAGGER_OPTIONS = {
