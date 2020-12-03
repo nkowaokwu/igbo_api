@@ -1,6 +1,7 @@
 import chai from 'chai';
 import { forEach, every, isEqual } from 'lodash';
 import {
+  approveExampleSuggestion,
   suggestNewExample,
   updateExampleSuggestion,
   getExampleSuggestions,
@@ -78,7 +79,7 @@ describe('MongoDB Example Suggestions', () => {
           suggestNewExample({ ...exampleSuggestionData, associatedWords: [word.id] })
             .then((res) => {
               expect(res.status).to.equal(200);
-              updateExampleSuggestion(res.body.id, { ...res.body, igbo: updatedIgboText })
+              updateExampleSuggestion({ ...res.body, igbo: updatedIgboText })
                 .end((_, result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.igbo).to.equal(updatedIgboText);
@@ -92,7 +93,7 @@ describe('MongoDB Example Suggestions', () => {
       suggestNewExample(exampleSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateExampleSuggestion(res.body.id, malformedExampleSuggestionData)
+          updateExampleSuggestion(malformedExampleSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
@@ -110,7 +111,7 @@ describe('MongoDB Example Suggestions', () => {
     });
 
     it('should throw an error for providing an invalid id', (done) => {
-      updateExampleSuggestion(INVALID_ID)
+      updateExampleSuggestion({ id: INVALID_ID })
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
@@ -123,7 +124,7 @@ describe('MongoDB Example Suggestions', () => {
         .then((exampleSuggestionsRes) => {
           expect(exampleSuggestionsRes.status).to.equal(200);
           const exampleSuggestion = exampleSuggestionsRes.body[0];
-          updateExampleSuggestion(exampleSuggestion.id, exampleSuggestion)
+          updateExampleSuggestion(exampleSuggestion)
             .end((_, res) => {
               expect(res.status).to.equal(200);
               expect(Date.parse(exampleSuggestion.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
@@ -187,12 +188,15 @@ describe('MongoDB Example Suggestions', () => {
       Promise.all([
         suggestNewExample(exampleSuggestionData),
         suggestNewExample(exampleSuggestionApprovedData),
-      ]).then(() => {
-        getExampleSuggestions()
-          .end((_, res) => {
-            expect(res.status).to.equal(200);
-            expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
-            done();
+      ]).then((exampleSuggestionsRes) => {
+        approveExampleSuggestion(exampleSuggestionsRes[0].body)
+          .then(() => {
+            getExampleSuggestions()
+              .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
+                done();
+              });
           });
       });
     });

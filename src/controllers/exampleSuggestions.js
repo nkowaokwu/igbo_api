@@ -4,6 +4,7 @@ import {
   some,
   map,
   uniq,
+  orderBy,
 } from 'lodash';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import SortingDirections from '../shared/constants/sortingDirections';
@@ -118,13 +119,13 @@ export const findExampleSuggestionById = (id) => (
   ExampleSuggestion.findById(id)
 );
 
-const findExampleSuggestions = ({ regexMatch, skip, limit }) => (
-  ExampleSuggestion
-    .find(regexMatch)
-    .sort({ approvals: SortingDirections.DESCENDING })
-    .skip(skip)
-    .limit(limit)
-);
+/* Grabs ExampleSugestions and sorts them by number of approvals in descending order */
+const findExampleSuggestions = async ({ regexMatch, skip, limit }) => {
+  const exampleSuggestions = await ExampleSuggestion
+    .find(regexMatch);
+  const sortedExampleSuggestions = orderBy(exampleSuggestions, ['approvals'], SortingDirections.DESCENDING);
+  return sortedExampleSuggestions.slice(skip, skip + limit);
+};
 
 /* Returns all existing ExampleSuggestion objects */
 export const getExampleSuggestions = (req, res) => {

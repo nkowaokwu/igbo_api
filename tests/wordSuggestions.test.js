@@ -5,6 +5,7 @@ import {
   isEqual,
 } from 'lodash';
 import {
+  approveWordSuggestion,
   deleteWordSuggestion,
   suggestNewWord,
   updateWordSuggestion,
@@ -72,7 +73,7 @@ describe('MongoDB Word Suggestions', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateWordSuggestion(res.body.id, updatedWordSuggestionData)
+          updateWordSuggestion({ id: res.body.id, ...updatedWordSuggestionData })
             .end((_, result) => {
               expect(result.status).to.equal(200);
               forIn(updatedWordSuggestionData, (value, key) => {
@@ -94,7 +95,7 @@ describe('MongoDB Word Suggestions', () => {
             ...wordSuggestionWithNestedExampleSuggestionData,
             examples: [updatedExampleSuggestion],
           };
-          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+          updateWordSuggestion({ id: res.body.id, ...updatedWordSuggestion })
             .end((_, result) => {
               expect(result.status).to.equal(200);
               expect(result.body.examples[0].igbo).to.equal(updatedIgbo);
@@ -120,7 +121,7 @@ describe('MongoDB Word Suggestions', () => {
             ...wordSuggestionWithNestedExampleSuggestionData,
             examples: [updatedExampleSuggestion],
           };
-          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+          updateWordSuggestion({ id: res.body.id, ...updatedWordSuggestion })
             .end((_, result) => {
               expect(result.status).to.equal(200);
               expect(result.body.examples[0].igbo).to.equal(updatedIgbo);
@@ -139,7 +140,7 @@ describe('MongoDB Word Suggestions', () => {
             ...wordSuggestionWithNestedExampleSuggestionData,
             examples: [],
           };
-          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+          updateWordSuggestion({ id: res.body.id, ...updatedWordSuggestion })
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.examples).to.have.lengthOf(0);
@@ -162,7 +163,7 @@ describe('MongoDB Word Suggestions', () => {
             ...wordSuggestionWithNestedExampleSuggestionData,
             examples: [updatedExampleSuggestion],
           };
-          updateWordSuggestion(res.body.id, updatedWordSuggestion)
+          updateWordSuggestion(updatedWordSuggestion)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.body.error).to.not.equal(undefined);
@@ -178,7 +179,7 @@ describe('MongoDB Word Suggestions', () => {
           const duplicateExampleSuggestionsInWordSuggsetion = res.body;
           const { igbo, english } = res.body.examples[0];
           duplicateExampleSuggestionsInWordSuggsetion.examples.push({ igbo, english });
-          updateWordSuggestion(res.body.id, duplicateExampleSuggestionsInWordSuggsetion)
+          updateWordSuggestion(duplicateExampleSuggestionsInWordSuggsetion)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               expect(result.body.error).to.not.equal(undefined);
@@ -191,7 +192,7 @@ describe('MongoDB Word Suggestions', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
-          updateWordSuggestion(res.body.id, malformedWordSuggestionData)
+          updateWordSuggestion(malformedWordSuggestionData)
             .end((_, result) => {
               expect(result.status).to.equal(400);
               done();
@@ -209,7 +210,7 @@ describe('MongoDB Word Suggestions', () => {
     });
 
     it('should throw an error for providing an invalid id', (done) => {
-      updateWordSuggestion(INVALID_ID)
+      updateWordSuggestion({ id: INVALID_ID })
         .end((_, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
@@ -222,7 +223,7 @@ describe('MongoDB Word Suggestions', () => {
         .then((wordSuggestionsRes) => {
           expect(wordSuggestionsRes.status).to.equal(200);
           const wordSuggestion = wordSuggestionsRes.body[0];
-          updateWordSuggestion(wordSuggestion.id, { ...wordSuggestion, word: 'updated' })
+          updateWordSuggestion({ ...wordSuggestion, word: 'updated' })
             .end((_, res) => {
               expect(res.status).to.equal(200);
               expect(Date.parse(wordSuggestion.updatedOn)).to.be.lessThan(Date.parse(res.body.updatedOn));
@@ -282,12 +283,15 @@ describe('MongoDB Word Suggestions', () => {
       Promise.all([
         suggestNewWord(wordSuggestionData),
         suggestNewWord(wordSuggestionApprovedData),
-      ]).then(() => {
-        getWordSuggestions()
-          .end((_, res) => {
-            expect(res.status).to.equal(200);
-            expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
-            done();
+      ]).then((wordSuggestionsRes) => {
+        approveWordSuggestion(wordSuggestionsRes[0].body)
+          .then(() => {
+            getWordSuggestions()
+              .end((_, res) => {
+                expect(res.status).to.equal(200);
+                expectArrayIsInOrder(res.body, 'approvals', SortingDirections.DESCENDING);
+                done();
+              });
           });
       });
     });

@@ -5,6 +5,7 @@ import {
   partial,
   map,
   trim,
+  orderBy,
 } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
@@ -61,13 +62,13 @@ export const findGenericWordById = (id) => (
   GenericWord.findById(id)
 );
 
-export const findGenericWords = ({ regexMatch, skip, limit }) => (
-  GenericWord
-    .find(regexMatch)
-    .sort({ approvals: SortingDirections.DESCENDING })
-    .skip(skip)
-    .limit(limit)
-);
+/* Grabs GenericWords and sorts them by number of approvals in descending order */
+export const findGenericWords = async ({ regexMatch, skip, limit }) => {
+  const genericWords = await GenericWord
+    .find(regexMatch);
+  const sortedGenericWords = orderBy(genericWords, ['approvals'], [SortingDirections.DESCENDING]);
+  return sortedGenericWords.slice(skip, skip + limit);
+};
 
 /* Returns all existing GenericWord objects */
 export const getGenericWords = (req, res) => {
