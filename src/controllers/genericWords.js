@@ -5,12 +5,12 @@ import {
   partial,
   map,
   trim,
-  orderBy,
+  // orderBy,
 } from 'lodash';
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import SortingDirections from '../shared/constants/sortingDirections';
+// import SortingDirections from '../shared/constants/sortingDirections';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
 import { searchForLastWeekQuery, searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
@@ -66,8 +66,9 @@ export const findGenericWordById = (id) => (
 export const findGenericWords = async ({ regexMatch, skip, limit }) => {
   const genericWords = await GenericWord
     .find(regexMatch);
-  const sortedGenericWords = orderBy(genericWords, ['approvals'], [SortingDirections.DESCENDING]);
-  return sortedGenericWords.slice(skip, skip + limit);
+  // const sortedGenericWords = orderBy(genericWords, ['approvals'], [SortingDirections.DESCENDING]);
+  // return sortedGenericWords.slice(skip, skip + limit);
+  return genericWords.slice(skip, skip + limit);
 };
 
 /* Returns all existing GenericWord objects */
