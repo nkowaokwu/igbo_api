@@ -51,7 +51,7 @@ const SearchBar = ({
           <div className="flex w-full items-center bg-gray-300 rounded-lg h-12 py-3 px-3">
             <input
               data-test="search-bar"
-              className="bg-gray-300 rounded-full h-12 py-3 px-3 w-11/12 lg:w-full"
+              className="search-bar bg-gray-300 rounded-full h-12 py-3 px-3 w-11/12 lg:w-full"
               placeholder="Search in Igbo or English"
               onInput={(e) => setInput(e.target.value)}
               value={input}
@@ -73,7 +73,8 @@ const SearchBar = ({
               showModal();
             }}
             data-test="add-button"
-            className="transition-all duration-200 w-2/12 h-12 bg-green-700 hover:bg-green-600 rounded-lg text-white"
+            className={`add-button transition-all duration-200 w-2/12 h-12
+            bg-green-700 hover:bg-green-600 rounded-lg text-white`}
           >
             {matchesLargeScreenQuery ? '+ Add Word' : '+'}
           </button>

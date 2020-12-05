@@ -6,6 +6,8 @@ import WelcomeSceneOne from '../assets/images/welcomeSceneOne.svg';
 import WelcomeSceneTwo from '../assets/images/welcomeSceneTwo.svg';
 import WelcomeSceneThree from '../assets/images/welcomeSceneThree.svg';
 import WelcomeSceneFour from '../assets/images/welcomeSceneFour.svg';
+import LocalStorageKeys from '../shared/constants/LocalStorageKeys';
+import CheckLocalStorage from '../utils/CheckLocalStorage';
 
 const WelcomeScene = ({
   title,
@@ -27,12 +29,11 @@ WelcomeScene.propTypes = {
   alt: PropTypes.string.isRequired,
 };
 
-const WelcomeCarousel = () => {
+const WelcomeCarousel = ({ tour }) => {
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
 
   useEffect(() => {
-    const isWelcomeWizardCompleted = localStorage.getItem('nkowaokwu_welcome_wizard_completed');
-    if (isWelcomeWizardCompleted !== 'true') {
+    if (CheckLocalStorage(LocalStorageKeys.WELCOME_ONBOARDING_WIZARD_COMPLETED)) {
       setIsWelcomeModalOpen(true);
     }
   }, []);
@@ -50,8 +51,9 @@ const WelcomeCarousel = () => {
       title=""
       isOpen={isWelcomeModalOpen}
       onRequestClose={() => {
-        localStorage.setItem('nkowaokwu_welcome_wizard_completed', true);
+        localStorage.setItem(LocalStorageKeys.WELCOME_ONBOARDING_WIZARD_COMPLETED, true);
         setIsWelcomeModalOpen(false);
+        tour.start();
       }}
       className="modal-container"
     >
@@ -90,6 +92,10 @@ const WelcomeCarousel = () => {
       </div>
     </Modal>
   );
+};
+
+WelcomeCarousel.propTypes = {
+  tour: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default WelcomeCarousel;

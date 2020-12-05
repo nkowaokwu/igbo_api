@@ -36,7 +36,7 @@ const Word = ({ word }) => {
   ];
 
   return (
-    <div className="w-full" data-test="word">
+    <div className="word w-full" data-test="word">
       <div className="flex flex-col lg:flex-row py-5">
         <div className="w-full lg:w-3/12">
           <div className="flex flex-col lg:flex-row lg:items-end">
@@ -48,7 +48,7 @@ const Word = ({ word }) => {
             <h3 className="text-gray-500 italic">{word.variations.join(', ')}</h3>
             {process.env.NODE_ENV !== 'production' ? (
               <Select
-                className="w-32 h-8 mt-5"
+                className="word-select-options w-32 h-8 mt-5"
                 ContainerComponent={() => (
                   <div>
                     <span role="img" aria-label="Hand writing with pen">✍🏾</span>
@@ -80,7 +80,7 @@ const Word = ({ word }) => {
           </div>
           <div className="flex w-full justify-end items-end lg:w-5/12">
             <a
-              className="link"
+              className="word-details link"
               href={`/word?word=${word.word}`}
             >
               {'Details '}

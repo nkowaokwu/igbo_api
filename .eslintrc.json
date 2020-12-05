@@ -21,6 +21,7 @@
         "eslint-plugin-import"
     ],
     "rules": {
+      "import/no-named-as-default-member": "off",
       "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off",
       "max-len": ["error", { "code": 120 }],

@@ -195,6 +195,76 @@ h1 {
   @apply text-green-500;
 }
 
+/* Shepherd.js styles */
+.shepherd-modal-overlay-container {
+  @apply h-0;
+  @apply left-0;
+  @apply top-0;
+  @apply overflow-hidden;
+  @apply pointer-events-none;
+  @apply fixed;
+  @apply w-screen;
+  @apply z-10;
+}
+.shepherd-modal-is-visible {
+  @apply h-screen;
+  @apply opacity-50;
+}
+.shepherd-header {
+  @apply flex;
+  @apply flex-row;
+  @apply font-bold;
+  @apply text-gray-800;
+  @apply justify-between;
+  @apply mt-3;
+  @apply mx-3;
+  @apply h-6;
+  @apply bg-white;
+}
+.shepherd-cancel-icon {
+  display: none;
+}
+.shepherd-text {
+  @apply m-3;
+}
+.shepherd-arrow,.shepherd-arrow:before{position:absolute;width:16px;height:16px;z-index:-1}.shepherd-arrow:before{content:"";transform:rotate(45deg);background:#fff}.shepherd-element[data-popper-placement^=top]>.shepherd-arrow{bottom:-8px}.shepherd-element[data-popper-placement^=bottom]>.shepherd-arrow{top:-8px}.shepherd-element[data-popper-placement^=left]>.shepherd-arrow{right:-8px}.shepherd-element[data-popper-placement^=right]>.shepherd-arrow{left:-8px}.shepherd-element.shepherd-centered>.shepherd-arrow{opacity:0}.shepherd-element.shepherd-has-title[data-popper-placement^=bottom]>.shepherd-arrow:before{@apply bg-white}.shepherd-target-click-disabled.shepherd-enabled.shepherd-target,.shepherd-target-click-disabled.shepherd-enabled.shepherd-target *{pointer-events:none}
+.shepherd-title {
+  font-family: 'Arvo';
+  @apply text-gray-800;
+}
+.shepherd-footer {
+  @apply flex;
+  @apply flex-row;
+  @apply justify-end;
+  @apply mb-3;
+  @apply mx-3;
+}
+.shepherd-element {
+  @apply bg-white;
+  @apply rounded-lg;
+  @apply shadow-lg;
+  @apply z-20;
+  top: 10px !important;
+}
+.shepherd-button {
+  @apply flex;
+  @apply justify-center;
+  @apply items-center;
+  @apply h-8;
+  @apply w-20;
+}
+.shepherd-button-primary {
+  @apply text-green-500;
+  @apply font-bold;
+  @apply rounded-md;
+}
+.shepherd-button-secondary {
+  @apply text-gray-500;
+}
+.highlight {
+  pointer-events: none;
+}
+
 /* Large (lg) */
 @media (min-width: 1024px) {
   #logo {

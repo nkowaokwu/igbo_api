@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { ShepherdTour, ShepherdTourContext } from 'react-shepherd';
 import { map } from 'lodash';
 import Pagination from '@material-ui/lab/Pagination';
 import Navbar from '../components/Navbar';
@@ -9,8 +11,11 @@ import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
 import { getWord } from '../API';
 import parseQueries from '../utils/parseQueries';
+import { tourOptions, searchTourSteps } from '../shared/constants/tours';
+import LocalStorageKeys from '../shared/constants/LocalStorageKeys';
+import CheckLocalStorage from '../utils/CheckLocalStorage';
 
-const search = ({ location, navigate }) => {
+const Search = ({ location, navigate }) => {
   const [queries, setQueries] = useState(location?.search ? parseQueries(location.search) : {});
   const [response, setResponse] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -19,6 +24,7 @@ const search = ({ location, navigate }) => {
   const [route, setRoute] = useState(null);
   const [totalWordCount, setTotalWordCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const tour = useContext(ShepherdTourContext);
 
   const showModal = () => {
     setVisible(true);
@@ -53,6 +59,21 @@ const search = ({ location, navigate }) => {
     return page >= 0 ? page + 1 : page;
   };
 
+  /* Bind handlers to events when the tour is canceled or finished */
+  const handleFinishedTour = () => {
+    tour.once('cancel', () => localStorage.setItem(LocalStorageKeys.TUTORIAL_GUIDE_COMPLETED, 'true'));
+    tour.once('complete', () => localStorage.setItem(LocalStorageKeys.TUTORIAL_GUIDE_COMPLETED, 'true'));
+  };
+
+  /* Checks to see if the tour can begin */
+  const canStartTour = () => (
+    process.env.NODE_ENV !== 'production'
+    && tour
+    && !tour.isActive()
+    && document.querySelector('.word')
+    && CheckLocalStorage(LocalStorageKeys.TUTORIAL_GUIDE_COMPLETED)
+  );
+
   /* Parses the route that generated and handed from SearchBar */
   useEffect(() => {
     if (route) {
@@ -83,6 +104,13 @@ const search = ({ location, navigate }) => {
   useEffect(() => {
     if (!isLoading) {
       window.scrollTo(0, 0);
+      /* Starts the tour after finding the first word result */
+      setTimeout(() => {
+        if (canStartTour()) {
+          handleFinishedTour();
+          tour.start();
+        }
+      }, 200);
     }
   }, [isLoading]);
 
@@ -136,4 +164,13 @@ const search = ({ location, navigate }) => {
   );
 };
 
-export default search;
+Search.propTypes = {
+  location: Location.isRequired,
+  navigate: PropTypes.func.isRequired,
+};
+
+export default process.env.NODE_ENV !== 'production' ? (props) => (
+  <ShepherdTour steps={searchTourSteps} tourOptions={tourOptions}>
+    <Search {...props} />
+  </ShepherdTour>
+) : Search;
