@@ -118,11 +118,11 @@ export const findExampleSuggestionById = (id) => (
   ExampleSuggestion.findById(id)
 );
 
-/* Grabs ExampleSugestions and sorts them by number of approvals in descending order */
+/* Grabs ExampleSugestions and sorts them by their last update in descending order */
 const findExampleSuggestions = ({ regexMatch, skip, limit }) => (
   ExampleSuggestion
     .find(regexMatch)
-    .sort({ approvals: SortingDirections.DESCENDING })
+    .sort({ updatedOn: SortingDirections.DESCENDING })
     .skip(skip)
     .limit(limit)
 );

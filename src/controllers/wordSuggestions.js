@@ -59,11 +59,11 @@ export const findWordSuggestionById = (id) => (
   WordSuggestion.findById(id)
 );
 
-/* Grabs WordSuggestions and sorts them by number of approvals in descending order */
+/* Grabs WordSuggestions and sorts them by their last update in descending order */
 const findWordSuggestions = async ({ regexMatch, skip, limit }) => (
   WordSuggestion
     .find(regexMatch)
-    .sort({ approvals: SortingDirections.DESCENDING })
+    .sort({ updatedOn: SortingDirections.DESCENDING })
     .skip(skip)
     .limit(limit)
 );
