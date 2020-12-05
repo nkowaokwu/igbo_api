@@ -6,7 +6,6 @@ import {
   partial,
   map,
   trim,
-  orderBy,
 } from 'lodash';
 import WordSuggestion from '../models/WordSuggestion';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
@@ -61,12 +60,13 @@ export const findWordSuggestionById = (id) => (
 );
 
 /* Grabs WordSuggestions and sorts them by number of approvals in descending order */
-const findWordSuggestions = async ({ regexMatch, skip, limit }) => {
-  const wordSuggestions = await WordSuggestion
-    .find(regexMatch);
-  const sortedWordSuggestions = orderBy(wordSuggestions, ['approvals'], [SortingDirections.DESCENDING]);
-  return sortedWordSuggestions.slice(skip, skip + limit);
-};
+const findWordSuggestions = async ({ regexMatch, skip, limit }) => (
+  WordSuggestion
+    .find(regexMatch)
+    .sort({ approvals: SortingDirections.DESCENDING })
+    .skip(skip)
+    .limit(limit)
+);
 
 /* Updates an existing WordSuggestion object */
 // TODO: #272 handle this elsewhere
