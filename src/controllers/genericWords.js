@@ -61,11 +61,11 @@ export const findGenericWordById = (id) => (
   GenericWord.findById(id)
 );
 
-/* Grabs GenericWords and sorts them by number of approvals in descending order */
+/* Grabs GenericWords and sorts them by their last update in descending order */
 export const findGenericWords = async ({ regexMatch, skip, limit }) => (
   GenericWord
     .find(regexMatch)
-    .sort({ approvals: SortingDirections.DESCENDING })
+    .sort({ updatedOn: SortingDirections.DESCENDING })
     .skip(skip)
     .limit(limit)
 );

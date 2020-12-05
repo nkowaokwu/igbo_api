@@ -143,7 +143,8 @@ const parseSortKeys = (sort) => {
   try {
     if (sort) {
       const parsedSort = JSON.parse(sort);
-      const [key] = parsedSort;
+      const [key] = parsedSort[0] === 'approvals' || parsedSort[0] === 'denials'
+        ? [`${parsedSort[0]}.length`] : parsedSort;
       const direction = parsedSort[1].toLowerCase();
       if (direction.toLowerCase() !== SortingDirections.ASCENDING
         && direction.toLowerCase() !== SortingDirections.DESCENDING) {
