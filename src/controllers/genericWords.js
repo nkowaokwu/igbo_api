@@ -9,7 +9,7 @@ import {
 import GenericWord from '../models/GenericWord';
 import testGenericWordsDictionary from '../../tests/__mocks__/genericWords.mock.json';
 import genericWordsDictionary from '../dictionaries/ig-en/ig-en_normalized_expanded.json';
-import SortingDirections from '../shared/constants/sortingDirections';
+// import SortingDirections from '../shared/constants/sortingDirections';
 import { packageResponse, handleQueries, populateFirebaseUsers } from './utils';
 import { searchForLastWeekQuery, searchPreExistingGenericWordsRegexQuery } from './utils/queries';
 import {
