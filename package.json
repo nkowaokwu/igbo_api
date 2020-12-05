@@ -15,7 +15,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "start-server-and-test develop http://localhost:8000 cypress:open",
-    "test:run": "yarn build && start-server-and-test develop http://localhost:8000 cypress:run"
+    "test:ci": "start-server-and-test develop http://localhost:8000 cypress:run"
   },
   "husky": {
     "hooks": {
@@ -48,8 +48,8 @@
     "react-dom": "^16.12.0",
     "react-hook-form": "^6.9.6",
     "react-modal": "^3.11.2",
-    "react-shepherd": "^3.3.2",
     "react-slick": "^0.27.13",
+    "shepherd.js": "^8.1.0",
     "slick-carousel": "^1.8.1",
     "start-server-and-test": "^1.11.5",
     "tailwindcss": "^1.8.12",

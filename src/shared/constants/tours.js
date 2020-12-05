@@ -36,15 +36,6 @@ const constructSteps = (stepsAttributes) => (
   }))
 );
 
-export const tourOptions = {
-  defaultStepOptions: {
-    cancelIcon: {
-      enabled: true,
-    },
-  },
-  useModalOverlay: true,
-};
-
 export const homeTourSteps = constructSteps([
   {
     attachTo: { element: '.search-bar', on: 'bottom' },

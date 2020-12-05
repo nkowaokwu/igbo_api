@@ -11197,13 +11197,6 @@ react-remove-scroll@^2.3.0:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
-react-shepherd@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/react-shepherd/-/react-shepherd-3.3.2.tgz#989decdfa0ea2413044cc4b5bb70a77954333371"
-  integrity sha512-Nyn5yjT6a8uVwMfperTYLc5whNXbDxtHqM0E9ZySeDPeu983D85crO7QOSyXbepsOEJZ0yn5eog66g7UA0960g==
-  dependencies:
-    shepherd.js "^8.0.2"
-
 react-slick@^0.27.13:
   version "0.27.13"
   resolved "https://registry.yarnpkg.com/react-slick/-/react-slick-0.27.13.tgz#1fdb60f56b1a08ffbafaa2251924845f1e192230"
@@ -12043,7 +12036,7 @@ shell-quote@1.6.1:
     array-reduce "~0.0.0"
     jsonify "~0.0.0"
 
-shepherd.js@^8.0.2:
+shepherd.js@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/shepherd.js/-/shepherd.js-8.1.0.tgz#810b72a6ddf16f6e953126a1315108cc5709f7ce"
   integrity sha512-mWab5hn2cdSdv5XF3IbBYyT2wPejAjK0flycbkRxqS1c+4epkKRMhpW9Eco6swDCu65wUP7PcecdjayokwI+Vg==

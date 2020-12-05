@@ -33,7 +33,7 @@ const WelcomeCarousel = ({ tour }) => {
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false);
 
   useEffect(() => {
-    if (CheckLocalStorage(LocalStorageKeys.WELCOME_ONBOARDING_WIZARD_COMPLETED)) {
+    if (!CheckLocalStorage(LocalStorageKeys.WELCOME_ONBOARDING_WIZARD_COMPLETED)) {
       setIsWelcomeModalOpen(true);
     }
   }, []);

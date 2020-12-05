@@ -2,11 +2,15 @@ import { reduce } from 'lodash';
 import wordsResponse from '../support/constants';
 
 describe('Word', () => {
-  beforeEach(() => {
+  before(() => {
     cy.server();
-    cy.visit('http://localhost:8000');
+    cy.visit('http://localhost:8000', {
+      onBeforeLoad: () => {
+        localStorage.setItem('nkowaokwu_welcome_wizard_completed', 'true');
+        localStorage.setItem('nkowaokwu_tutorial_guide_completed', 'true');
+      },
+    });
   });
-
   describe('Add Word', () => {
     it('renders the add new word modal', () => {
       cy.get('[data-test="add-button"]').click();
@@ -115,7 +119,7 @@ describe('Word', () => {
       const firstWord = wordsResponse[0];
       cy.get(`[value="${firstWord.word}"]`);
       cy.get(`[value="${firstWord.wordClass}"]`);
-      cy.get(`[value="${firstWord.definitions[0]}"]`);
+      cy.contains(firstWord.definitions[0]);
     });
   });
 
@@ -136,7 +140,7 @@ describe('Word', () => {
     });
   });
 
-  describe.only('Detailed Word', () => {
+  describe('Detailed Word', () => {
     beforeEach(() => {
       const keyword = 'word';
       cy.searchDictionary(keyword);

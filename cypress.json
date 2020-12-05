@@ -3,5 +3,6 @@
     "runMode": 3,
     "openMode": 0
   },
-  "video": false
+  "video": false,
+  "screenshotOnRunFailure": false
 }

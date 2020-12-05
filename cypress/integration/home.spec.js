@@ -1,9 +1,13 @@
 describe('Homepage', () => {
-  beforeEach(() => {
+  before(() => {
     cy.server();
-    cy.visit('http://localhost:8000');
+    cy.visit('http://localhost:8000', {
+      onBeforeLoad: () => {
+        localStorage.setItem('nkowaokwu_welcome_wizard_completed', 'true');
+        localStorage.setItem('nkowaokwu_tutorial_guide_completed', 'true');
+      },
+    });
   });
-
   it('returns to the homepage', () => {
     cy.get('img#logo').click();
   });

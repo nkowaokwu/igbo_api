@@ -1,9 +1,14 @@
 import { reduce } from 'lodash';
 
 describe('Example', () => {
-  beforeEach(() => {
+  before(() => {
     cy.server();
-    cy.visit('http://localhost:8000');
+    cy.visit('http://localhost:8000', {
+      onBeforeLoad: () => {
+        localStorage.setItem('nkowaokwu_welcome_wizard_completed', 'true');
+        localStorage.setItem('nkowaokwu_tutorial_guide_completed', 'true');
+      },
+    });
   });
   describe('Add Example', () => {
     beforeEach(() => {

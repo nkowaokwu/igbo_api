@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ShepherdTour, ShepherdTourContext } from 'react-shepherd';
 import { map } from 'lodash';
 import Pagination from '@material-ui/lab/Pagination';
 import Navbar from '../components/Navbar';
@@ -11,11 +10,12 @@ import Modal from '../components/Modal';
 import AddWord from '../forms/AddWord';
 import { getWord } from '../API';
 import parseQueries from '../utils/parseQueries';
-import { tourOptions, searchTourSteps } from '../shared/constants/tours';
+import { searchTourSteps } from '../shared/constants/tours';
 import LocalStorageKeys from '../shared/constants/LocalStorageKeys';
 import CheckLocalStorage from '../utils/CheckLocalStorage';
+import useShepherd from '../hooks/useShepherd';
 
-const Search = ({ location, navigate }) => {
+const Search = ({ location, navigate, tour }) => {
   const [queries, setQueries] = useState(location?.search ? parseQueries(location.search) : {});
   const [response, setResponse] = useState(null);
   const [pageCount, setPageCount] = useState(0);
@@ -24,7 +24,6 @@ const Search = ({ location, navigate }) => {
   const [route, setRoute] = useState(null);
   const [totalWordCount, setTotalWordCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const tour = useContext(ShepherdTourContext);
 
   const showModal = () => {
     setVisible(true);
@@ -71,7 +70,7 @@ const Search = ({ location, navigate }) => {
     && tour
     && !tour.isActive()
     && document.querySelector('.word')
-    && CheckLocalStorage(LocalStorageKeys.TUTORIAL_GUIDE_COMPLETED)
+    && !CheckLocalStorage(LocalStorageKeys.TUTORIAL_GUIDE_COMPLETED)
   );
 
   /* Parses the route that generated and handed from SearchBar */
@@ -165,12 +164,9 @@ const Search = ({ location, navigate }) => {
 };
 
 Search.propTypes = {
-  location: Location.isRequired,
+  location: PropTypes.object.isRequired, // eslint-disable-line
   navigate: PropTypes.func.isRequired,
+  tour: PropTypes.object.isRequired, // eslint-disable-line
 };
 
-export default process.env.NODE_ENV !== 'production' ? (props) => (
-  <ShepherdTour steps={searchTourSteps} tourOptions={tourOptions}>
-    <Search {...props} />
-  </ShepherdTour>
-) : Search;
+export default process.env.NODE_ENV !== 'production' ? useShepherd(Search, searchTourSteps) : Search;

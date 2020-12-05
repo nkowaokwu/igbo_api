@@ -49,7 +49,7 @@ const EditModal = ({
           <>
             <div className="flex justify-between">
               <h1 className="text-2xl">{modalTitle}</h1>
-              <button type="button" onClick={handleClose}>
+              <button data-test="modal-exit-button" type="button" onClick={handleClose}>
                 <ExitIcon />
               </button>
             </div>
