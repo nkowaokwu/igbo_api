@@ -95,8 +95,7 @@ export const getGenericWords = (req, res) => {
         });
         return packagedResponse;
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(() => {
         throw new Error('An error has occurred while returning all generic words');
       });
   } catch (err) {
