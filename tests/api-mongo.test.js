@@ -10,6 +10,7 @@ import {
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
+import accents from 'remove-accents';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
@@ -574,7 +575,7 @@ describe('MongoDB Words', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf(1);
-        expect(res.body[0].word).to.equal('-mụ-mù');
+        expect(res.body[0].word).to.equal(accents.remove('-mụ-mù'));
         expect(some(res.body, (word) => isEqual(word.variations, ['-mu-mù']))).to.equal(true);
         done();
       });
@@ -689,6 +690,18 @@ describe('MongoDB Words', () => {
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
+
+    it('should return accented field and normalized word', (done) => {
+      getWords()
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          forEach(res.body, (word) => {
+            expect(word.word).to.equal(accents.remove(word.word));
+            expect(word.accented).to.not.equal(undefined);
+          });
           done();
         });
     });

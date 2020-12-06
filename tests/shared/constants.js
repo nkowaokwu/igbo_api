@@ -8,6 +8,7 @@ export const API_URL = 'https://igboapi.com';
 export const SAVE_DOC_DELAY = 2000;
 
 export const WORD_KEYS = [
+  'accented',
   'variations',
   'definitions',
   'stems',
@@ -18,7 +19,7 @@ export const WORD_KEYS = [
   'wordClass',
   'updatedOn',
 ];
-export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'updatedOn'];
+export const EXAMPLE_KEYS = ['accented', 'igbo', 'english', 'associatedWords', 'id', 'updatedOn'];
 export const EXAMPLE_SUGGESTION_KEYS = [
   'originalExampleId',
   'igbo',
