@@ -705,6 +705,35 @@ describe('MongoDB Words', () => {
           done();
         });
     });
+
+    it('should return hard matched words with strict query', (done) => {
+      const keyword = 'akwa';
+      getWords({ keyword, strict: true })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            const wordRegex = createRegExp(word.word);
+            expect(word.word).to.match(wordRegex);
+            expect(word.word.length).to.equal(keyword.length);
+          });
+          done();
+        });
+    });
+
+    it('should return loosely matched words without strict query', (done) => {
+      const keyword = 'akwa';
+      getWords({ keyword, strict: false })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(4);
+          forEach(res.body, (word) => {
+            const wordRegex = createRegExp(word.word);
+            expect(word.word).to.match(wordRegex);
+          });
+          done();
+        });
+    });
   });
 });
 
