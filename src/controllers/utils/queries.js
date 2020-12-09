@@ -1,4 +1,5 @@
 import { LOOK_BACK_DATE } from '../../shared/constants/emailDates';
+import createRegExp from '../../shared/utils/createRegExp';
 
 const wordQuery = (regex) => ({ word: { $regex: regex } });
 const variationsQuery = (regex) => ({ variations: { $in: [regex] } });
@@ -28,6 +29,11 @@ export const searchPreExistingGenericWordsRegexQuery = (regex) => ({
 });
 export const searchIgboRegexQuery = (regex) => ({
   $or: [wordQuery(regex), variationsQuery(regex)],
+});
+/* Since the word field is not non-accented yet,
+ * a strict regex search for words has to be used as a workaround */
+export const searchIgboQuery = (word) => ({
+  word: createRegExp(word, true),
 });
 export const searchEnglishRegexQuery = definitionsQuery;
 export const searchForLastWeekQuery = () => ({
