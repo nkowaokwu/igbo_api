@@ -169,6 +169,7 @@ export const handleQueries = ({ query = {}, user = {} }) => {
     range: rangeQuery = '',
     sort: sortQuery,
     filter: filterQuery,
+    strict: strictQuery,
   } = query;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
@@ -177,6 +178,7 @@ export const handleQueries = ({ query = {}, user = {} }) => {
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
   const sort = parseSortKeys(sortQuery);
+  const strict = strictQuery === 'true';
   return {
     searchWord,
     regexKeyword,
@@ -184,6 +186,7 @@ export const handleQueries = ({ query = {}, user = {} }) => {
     sort,
     skip,
     limit,
+    strict,
   };
 };
 

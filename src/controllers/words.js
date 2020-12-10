@@ -14,7 +14,7 @@ import {
   handleQueries,
   updateDocumentMerge,
 } from './utils';
-import { searchIgboRegexQuery, searchEnglishRegexQuery } from './utils/queries';
+import { searchIgboRegexQuery, searchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample } from './examples';
 import { findGenericWordById } from './genericWords';
@@ -55,19 +55,20 @@ export const getWords = async (req, res) => {
       range,
       skip,
       limit,
+      strict,
       ...rest
     } = handleQueries(req);
     const searchQueries = { searchWord, skip, limit };
-    let regexMatch = searchIgboRegexQuery(regexKeyword);
-    const words = await searchWordUsingIgbo({ query: regexMatch, ...searchQueries });
+    let query = !strict ? searchIgboRegexQuery(regexKeyword) : searchIgboQuery(searchWord);
+    const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
-      regexMatch = searchEnglishRegexQuery(regexKeyword);
-      const englishWords = await searchWordUsingEnglish({ query: regexMatch, ...searchQueries });
+      query = searchEnglishRegexQuery(regexKeyword);
+      const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
       return packageResponse({
         res,
         docs: englishWords,
         model: Word,
-        query: regexMatch,
+        query,
         ...rest,
       });
     }
@@ -75,7 +76,7 @@ export const getWords = async (req, res) => {
       res,
       docs: words,
       model: Word,
-      query: regexMatch,
+      query,
       ...rest,
     });
   } catch (err) {

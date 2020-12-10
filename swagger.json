@@ -223,6 +223,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "strict",
+            "description": "Searches for matching words that start and end with the provided keyword's letters",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
