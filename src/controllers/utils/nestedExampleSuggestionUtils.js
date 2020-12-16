@@ -29,6 +29,7 @@ export const getExamplesFromClientData = (data) => {
     if (!cleanedExample.originalExampleId) {
       delete cleanedExample.originalExampleId;
     }
+    cleanedExample.authorId = data.authorId;
     return [...cleanedExamples, cleanedExample];
   }, []);
 };

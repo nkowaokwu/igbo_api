@@ -48,13 +48,15 @@ export const createExampleSuggestion = async (data) => {
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = async (req, res) => {
   const { body: data } = req;
+  const { user } = req;
+
+  data.authorId = user.uid;
 
   try {
     if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
       throw new Error('Duplicates are not allows in associated words');
     }
 
-    // TODO: handle duplicated error handling
     await Promise.all(
       map(data.associatedWords, async (associatedWordId) => {
         if (!(await Word.findById(associatedWordId))) {
@@ -71,8 +73,10 @@ export const postExampleSuggestion = async (req, res) => {
   }
 };
 
-export const updateExampleSuggestion = ({ id, data }) => (
-  ExampleSuggestion.findById(id)
+export const updateExampleSuggestion = ({ id, data: clientData }) => {
+  const data = assign(clientData);
+  delete data.authorId;
+  return ExampleSuggestion.findById(id)
     .then(async (exampleSuggestion) => {
       if (!exampleSuggestion) {
         throw new Error('Example suggestion doesn\'t exist');
@@ -82,8 +86,8 @@ export const updateExampleSuggestion = ({ id, data }) => (
     })
     .catch((err) => {
       throw new Error(err.message);
-    })
-);
+    });
+};
 
 /* Updates an existing ExampleSuggestion object */
 export const putExampleSuggestion = async (req, res) => {
@@ -91,7 +95,7 @@ export const putExampleSuggestion = async (req, res) => {
 
   try {
     if (!data.igbo && !data.english) {
-      throw new Error('Required information is missing, double check your provided data');
+      throw new Error('Required igbo or english field is empty, double check they are both provided');
     }
 
     if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {

@@ -3,7 +3,6 @@ import {
   deleteWordSuggestion,
   getWordSuggestion,
   getWordSuggestions,
-  postWordSuggestion,
   putWordSuggestion,
 } from '../controllers/wordSuggestions';
 import { putWord, mergeWord } from '../controllers/words';
@@ -12,7 +11,6 @@ import {
   deleteExampleSuggestion,
   getExampleSuggestion,
   getExampleSuggestions,
-  postExampleSuggestion,
   putExampleSuggestion,
 } from '../controllers/exampleSuggestions';
 import {
@@ -36,7 +34,6 @@ editorRouter.put('/words/:id', validId, authorization([UserRoles.MERGER, UserRol
 editorRouter.post('/examples', authorization([UserRoles.MERGER, UserRoles.ADMIN]), mergeExample);
 editorRouter.put('/examples/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), putExample);
 
-editorRouter.post('/wordSuggestions', postWordSuggestion);
 editorRouter.get('/wordSuggestions', getWordSuggestions);
 editorRouter.put('/wordSuggestions/:id', validId, putWordSuggestion);
 editorRouter.get('/wordSuggestions/:id', validId, getWordSuggestion);
@@ -47,7 +44,6 @@ editorRouter.delete(
   deleteWordSuggestion,
 );
 
-editorRouter.post('/exampleSuggestions', postExampleSuggestion);
 editorRouter.get('/exampleSuggestions', getExampleSuggestions);
 editorRouter.put('/exampleSuggestions/:id', validId, putExampleSuggestion);
 editorRouter.get('/exampleSuggestions/:id', validId, getExampleSuggestion);

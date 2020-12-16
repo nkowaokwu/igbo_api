@@ -12,7 +12,6 @@ const genericWordSchema = new Schema({
   variations: { type: [{ type: String }], default: [] },
   editorsNotes: { type: String, default: '' },
   userComments: { type: String, default: '' },
-  userEmail: { type: String, default: '' },
   approvals: { type: [{ type: String }], default: [] },
   denials: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
