@@ -73,12 +73,14 @@ describe('MongoDB Word Suggestions', () => {
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           expect(res.status).to.equal(200);
+          expect(res.body.authorId).to.not.be.oneOf([undefined, null, '']);
           updateWordSuggestion({ id: res.body.id, ...updatedWordSuggestionData })
             .end((_, result) => {
               expect(result.status).to.equal(200);
               forIn(updatedWordSuggestionData, (value, key) => {
                 expect(isEqual(result.body[key], value)).to.equal(true);
               });
+              expect(result.body.authorId).to.equal(res.body.authorId);
               done();
             });
         });

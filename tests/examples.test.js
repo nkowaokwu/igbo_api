@@ -48,6 +48,7 @@ describe('MongoDB Examples', () => {
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
+              expect(result.body.authorId).to.equal(undefined);
               getExample(result.body.id)
                 .then((updatedExampleRes) => {
                   expect(updatedExampleRes.status).to.equal(200);
@@ -75,6 +76,7 @@ describe('MongoDB Examples', () => {
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
+              expect(result.body.authorId).to.equal(undefined);
               getExample(result.body.id)
                 .then((updatedExampleRes) => {
                   expect(updatedExampleRes.status).to.equal(200);

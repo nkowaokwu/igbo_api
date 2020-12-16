@@ -97,6 +97,7 @@ describe('MongoDB Words', () => {
             .then((result) => {
               expect(result.status).to.equal(200);
               expect(result.body.id).to.not.equal(undefined);
+              expect(result.body.authorId).to.equal(undefined);
               getWord(result.body.id)
                 .then((updatedWordRes) => {
                   expect(updatedWordRes.status).to.equal(200);
@@ -168,6 +169,7 @@ describe('MongoDB Words', () => {
                 .then((result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.id).to.not.equal(undefined);
+                  expect(result.body.authorId).to.equal(undefined);
                   getWord(result.body.id)
                     .then((updatedWordRes) => {
                       expect(updatedWordRes.status).to.equal(200);

@@ -79,10 +79,12 @@ describe('MongoDB Example Suggestions', () => {
           suggestNewExample({ ...exampleSuggestionData, associatedWords: [word.id] })
             .then((res) => {
               expect(res.status).to.equal(200);
+              expect(res.body.authorId).to.not.be.oneOf([undefined, null, '']);
               updateExampleSuggestion({ ...res.body, igbo: updatedIgboText })
                 .end((_, result) => {
                   expect(result.status).to.equal(200);
                   expect(result.body.igbo).to.equal(updatedIgboText);
+                  expect(result.body.authorId).to.equal(res.body.authorId);
                   done();
                 });
             });
