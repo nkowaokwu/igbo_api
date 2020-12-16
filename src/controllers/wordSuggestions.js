@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import {
   assign,
   every,
@@ -31,16 +30,6 @@ export const postWordSuggestion = async (req, res) => {
     data.authorId = user.uid;
 
     const clientExamples = getExamplesFromClientData(data);
-
-    if (data.originalWordId && !mongoose.Types.ObjectId.isValid(data.originalWordId)) {
-      res.status(400);
-      return res.send({ error: 'Invalid word id provided' });
-    }
-
-    if (!Array.isArray(data.definitions)) {
-      data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
-    }
-
     const newWordSuggestion = new WordSuggestion(data);
     return newWordSuggestion.save()
       .then(async (wordSuggestion) => {
@@ -72,7 +61,6 @@ const findWordSuggestions = async ({ regexMatch, skip, limit }) => (
 );
 
 /* Updates an existing WordSuggestion object */
-// TODO: #272 handle this elsewhere
 export const putWordSuggestion = (req, res) => {
   try {
     const { body: data, params: { id } } = req;

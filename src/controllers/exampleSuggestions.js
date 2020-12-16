@@ -1,10 +1,5 @@
 import mongoose from 'mongoose';
-import {
-  assign,
-  some,
-  map,
-  uniq,
-} from 'lodash';
+import { assign, some, map } from 'lodash';
 import SuggestionTypes from '../shared/constants/suggestionTypes';
 import SortingDirections from '../shared/constants/sortingDirections';
 import Word from '../models/Word';
@@ -47,15 +42,8 @@ export const createExampleSuggestion = async (data) => {
 
 /* Creates a new ExampleSuggestion document in the database */
 export const postExampleSuggestion = async (req, res) => {
-  const { body: data } = req;
-  const { user } = req;
-
-  data.authorId = user.uid;
-
   try {
-    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
-      throw new Error('Duplicates are not allows in associated words');
-    }
+    const { body: data } = req;
 
     await Promise.all(
       map(data.associatedWords, async (associatedWordId) => {
@@ -91,16 +79,8 @@ export const updateExampleSuggestion = ({ id, data: clientData }) => {
 
 /* Updates an existing ExampleSuggestion object */
 export const putExampleSuggestion = async (req, res) => {
-  const { body: data, params: { id } } = req;
-
   try {
-    if (!data.igbo && !data.english) {
-      throw new Error('Required igbo or english field is empty, double check they are both provided');
-    }
-
-    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
-      throw new Error('Duplicates are not allows in associated words');
-    }
+    const { body: data, params: { id } } = req;
 
     await Promise.all(
       map(data.associatedWords, async (associatedWordId) => {

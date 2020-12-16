@@ -152,22 +152,11 @@ const handleSendingMergedEmail = async (result) => {
 /* Merges the existing ExampleSuggestion into either a brand
  * new Example document or merges into an existing Example document */
 export const mergeExample = async (req, res) => {
-  const { body: data } = req;
-  const { user } = req;
-
-  if (!user || (user && !user.uid)) {
-    res.status(400);
-    return res.send({ error: 'User uid is required' });
-  }
-
-  if (!data.id) {
-    res.status(400);
-    return res.send({ error: 'The id property is missing, double check your provided data' });
-  }
-
-  const exampleSuggestion = await findExampleSuggestionById(data.id);
-
   try {
+    const { body: data } = req;
+    const { user } = req;
+
+    const exampleSuggestion = await findExampleSuggestionById(data.id);
     const result = await executeMergeExample(exampleSuggestion.id, user.uid);
     await handleSendingMergedEmail(result);
     return res.send(result);
