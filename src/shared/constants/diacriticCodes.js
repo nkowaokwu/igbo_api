@@ -64,4 +64,5 @@ export default {
   u: caseInsensitiveU,
   U: caseInsensitiveU,
   ' ': '[\\s\u0027]',
+  '?': '\\?',
 };

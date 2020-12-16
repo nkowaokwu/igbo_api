@@ -26,6 +26,9 @@ const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 export const postWordSuggestion = async (req, res) => {
   try {
     const { body: data } = req;
+    const { user } = req;
+
+    data.authorId = user.uid;
 
     const clientExamples = getExamplesFromClientData(data);
 
@@ -90,6 +93,7 @@ export const putWordSuggestion = (req, res) => {
           res.status(400);
           return res.send({ error: 'Word suggestion doesn\'t exist' });
         }
+        delete data.authorId;
         const updatedWordSuggestion = assign(wordSuggestion, data);
         await handleDeletingExampleSuggestions({ suggestionDoc: wordSuggestion, clientExamples });
 

@@ -21,6 +21,7 @@ import { findGenericWordById } from './genericWords';
 import { findWordSuggestionById } from './wordSuggestions';
 import { sendMergedEmail } from './email';
 import { DICTIONARY_APP_URL } from '../config';
+import { findUser } from './users';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res) => {
@@ -187,6 +188,21 @@ const createWordFromSuggestion = (suggestionDoc, mergedBy) => (
     })
 );
 
+/* Sends confirmation merged email to user if they provided an email */
+const handleSendingMergedEmail = async (result) => {
+  if (result.authorId) {
+    const { email: userEmail } = await findUser(result.authorId);
+    if (userEmail) {
+      sendMergedEmail({
+        to: userEmail,
+        suggestionType: SuggestionTypes.WORD,
+        submissionLink: `${DICTIONARY_APP_URL}/word?word=${result.word}`,
+        ...result,
+      });
+    }
+  }
+};
+
 /* Merges the existing WordSuggestion of GenericWord into either a brand
  * new Word document or merges into an existing Word document */
 export const mergeWord = async (req, res) => {
@@ -230,15 +246,7 @@ export const mergeWord = async (req, res) => {
     const result = suggestionDoc.originalWordId
       ? await mergeIntoWord(suggestionDoc, user.uid)
       : await createWordFromSuggestion(suggestionDoc, user.uid);
-    /* Sends confirmation merged email to user if they provided an email */
-    if (result.userEmail) {
-      sendMergedEmail({
-        to: result.userEmail,
-        suggestionType: SuggestionTypes.WORD,
-        submissionLink: `${DICTIONARY_APP_URL}/word?word=${result.word}`,
-        ...result,
-      });
-    }
+    await handleSendingMergedEmail(result);
     return res.send(result);
   } catch (error) {
     return res.send({ error: error.message });

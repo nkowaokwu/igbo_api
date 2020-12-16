@@ -14,6 +14,7 @@ import { packageResponse, handleQueries, updateDocumentMerge } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
 import { findExampleSuggestionById } from './exampleSuggestions';
 import { sendMergedEmail } from './email';
+import { findUser } from './users';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -132,6 +133,22 @@ export const executeMergeExample = async (exampleSuggestionId, mergedBy) => {
     : createExampleFromSuggestion(exampleSuggestion, mergedBy);
 };
 
+/* Sends confirmation merged email to user if they provided an email */
+const handleSendingMergedEmail = async (result) => {
+  if (result.authorId) {
+    const { email: userEmail } = await findUser(result.authorId);
+    const word = await Word.findById(result.associatedWords[0] || null) || {};
+    if (userEmail) {
+      sendMergedEmail({
+        to: userEmail,
+        suggestionType: SuggestionTypes.EXAMPLE,
+        submissionLink: `${DICTIONARY_APP_URL}/word?word=${word.word}`,
+        ...result,
+      });
+    }
+  }
+};
+
 /* Merges the existing ExampleSuggestion into either a brand
  * new Example document or merges into an existing Example document */
 export const mergeExample = async (req, res) => {
@@ -152,16 +169,7 @@ export const mergeExample = async (req, res) => {
 
   try {
     const result = await executeMergeExample(exampleSuggestion.id, user.uid);
-    /* Sends confirmation merged email to user if they provided an email */
-    if (result.userEmail) {
-      const word = await Word.findById(result.associatedWords[0] || null) || {};
-      sendMergedEmail({
-        to: result.userEmail,
-        suggestionType: SuggestionTypes.EXAMPLE,
-        submissionLink: `${DICTIONARY_APP_URL}/word?word=${word.word}`,
-        ...result,
-      });
-    }
+    await handleSendingMergedEmail(result);
     return res.send(result);
   } catch (error) {
     res.status(400);
