@@ -35,17 +35,30 @@ export const getWordData = (req, res) => {
   return res.send(findSearchWord(regexWord, searchWord));
 };
 
-/* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = async ({ query, searchWord, ...rest }) => {
-  const words = await findWordsWithMatch({ match: query, ...rest });
-  return sortDocsBy(searchWord, words, 'word');
+/**
+ * A helper function for searching words and sorting them with a
+ * provided sortBy key
+ */
+const useWordFieldToSortSearchedWords = async ({
+  query,
+  searchWord,
+  skip,
+  limit,
+  sortBy,
+}) => {
+  const words = await findWordsWithMatch({ match: query });
+  return sortDocsBy(searchWord, words, sortBy).slice(skip, skip + limit);
 };
 
+/* Searches for a word with Igbo stored in MongoDB */
+export const searchWordUsingIgbo = (query) => (
+  useWordFieldToSortSearchedWords({ ...query, sortBy: 'word' })
+);
+
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => {
-  const words = await findWordsWithMatch({ match: query, ...rest });
-  return sortDocsBy(searchWord, words, 'definitions[0]');
-};
+export const searchWordUsingEnglish = async (query) => (
+  useWordFieldToSortSearchedWords({ ...query, sortBy: 'definitions[0]' })
+);
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
