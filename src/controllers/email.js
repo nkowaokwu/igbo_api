@@ -22,12 +22,12 @@ export const sendEmail = (message) => (
   process.env.NODE_ENV !== 'test' ? sgMail.send(message)
     .then(() => {
       if (process.env.NODE_ENV !== 'production') {
-        console.log('Email successfully sent.');
+        console.green('Email successfully sent.');
       }
     })
     .catch((err) => {
       if (process.env.NODE_ENV !== 'production') {
-        console.log(err);
+        console.red(err);
         return Promise.resolve(err);
       }
       throw err;

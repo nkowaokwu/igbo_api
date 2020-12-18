@@ -36,7 +36,7 @@ const authentication = async (req, res, next) => {
         }
       } catch {
         if (process.env.NODE_ENV === 'production') {
-          console.log('Error while authing Firebase token');
+          console.red('Error while authing Firebase token');
         }
       }
       return next();
