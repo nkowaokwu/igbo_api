@@ -113,7 +113,8 @@ describe('Editing Flow', () => {
       });
   });
 
-  it('should add a new associatedWordId to exampleSuggestion', (done) => {
+  it('should add a new associatedWordId to exampleSuggestion', function (done) {
+    this.timeout(15000);
     suggestNewWord(wordSuggestionData)
       .then((res) => {
         createWord(res.body.id)
