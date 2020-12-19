@@ -14,7 +14,7 @@ import {
   handleQueries,
   updateDocumentMerge,
 } from './utils';
-import { searchIgboRegexQuery, searchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
+import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample } from './examples';
 import { findGenericWordById } from './genericWords';
@@ -35,30 +35,17 @@ export const getWordData = (req, res) => {
   return res.send(findSearchWord(regexWord, searchWord));
 };
 
-/**
- * A helper function for searching words and sorting them with a
- * provided sortBy key
- */
-const useWordFieldToSortSearchedWords = async ({
-  query,
-  searchWord,
-  skip,
-  limit,
-  sortBy,
-}) => {
-  const words = await findWordsWithMatch({ match: query });
-  return sortDocsBy(searchWord, words, sortBy).slice(skip, skip + limit);
+/* Searches for a word with Igbo stored in MongoDB */
+export const searchWordUsingIgbo = async ({ query, searchWord, ...rest }) => {
+  const words = await findWordsWithMatch({ match: query, ...rest });
+  return sortDocsBy(searchWord, words, 'word');
 };
 
-/* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = (query) => (
-  useWordFieldToSortSearchedWords({ ...query, sortBy: 'word' })
-);
-
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = async (query) => (
-  useWordFieldToSortSearchedWords({ ...query, sortBy: 'definitions[0]' })
-);
+export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => {
+  const words = await findWordsWithMatch({ match: query, ...rest });
+  return sortDocsBy(searchWord, words, 'definitions[0]');
+};
 
 /* Gets words from MongoDB */
 export const getWords = async (req, res) => {
@@ -73,7 +60,7 @@ export const getWords = async (req, res) => {
       ...rest
     } = handleQueries(req);
     const searchQueries = { searchWord, skip, limit };
-    let query = !strict ? searchIgboRegexQuery(regexKeyword) : searchIgboQuery(searchWord);
+    let query = !strict ? searchIgboTextSearch(searchWord, regexKeyword) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);
