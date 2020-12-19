@@ -24,7 +24,7 @@ const getMergedExamples = async () => (
 );
 const handleFinalMessage = (message) => {
   if (process.env.NODE_ENV === 'development') {
-    console.log(message);
+    console.blue(message);
   }
   return message;
 };
@@ -62,7 +62,7 @@ const sendEmailJob = async () => {
     const noEmails = 'Success: No emails to send to.';
     return handleFinalMessage(noEmails);
   } catch (err) {
-    console.log(err.stack);
+    console.red(err.stack);
     const unsuccess = 'Unsuccessfully sent emails.';
     return handleFinalMessage(unsuccess);
   }

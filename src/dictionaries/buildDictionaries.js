@@ -36,7 +36,7 @@ const updateJSONDictionary = () => {
   flatten([dictionaryFilePaths, buildDictionaryFilePaths]).forEach((config) => {
     fs.writeFileSync(...config, () => {
       if (process.env.NODE_ENV !== 'test') {
-        console.log(`${config[0]} has been updated`);
+        console.green(`${config[0]} has been updated`);
       }
     });
   });
