@@ -7,7 +7,9 @@ import swaggerUI from 'swagger-ui-express';
 import sslRedirect from 'heroku-ssl-redirect';
 import morgan from 'morgan';
 import * as admin from 'firebase-admin';
+import { assign } from 'lodash';
 import './shared/utils/wrapConsole';
+import models from './models';
 import {
   adminRouter,
   editorRouter,
@@ -33,6 +35,7 @@ admin.default.initializeApp({
 });
 
 const app = express();
+const server = {};
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
@@ -41,6 +44,7 @@ mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useCreateIndex: true,
+  autoIndex: false,
   poolSize: 10,
   bufferMaxEntries: 0,
   useUnifiedTopology: true,
@@ -49,6 +53,28 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.green('🗄 Database is connected');
+
+  /* Ensures that all indexes have been created before starting server */
+  Object.keys(models).forEach((key) => {
+    models[key].ensureIndexes((err) => {
+      if (err) {
+        console.red('An error occurred while creating indexes');
+      }
+    });
+  });
+  const initalizedServer = app.listen(PORT, () => {
+    console.green(`🟢 Server started on port ${PORT}`);
+
+    /* Used to test server build */
+    if (process.env.NODE_ENV === 'build') {
+      console.blue('🧪 Testing server build');
+      setTimeout(() => {
+        console.green('✅ Build test passed');
+        process.exit(0);
+      }, 5000);
+    }
+  });
+  assign(server, initalizedServer);
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -91,19 +117,6 @@ if (process.env.NODE_ENV !== 'production') {
     testRouter,
   );
 }
-
-const server = app.listen(PORT, () => {
-  console.green(`🟢 Server started on port ${PORT}`);
-
-  /* Used to test server build */
-  if (process.env.NODE_ENV === 'build') {
-    console.blue('🧪 Testing server build');
-    setTimeout(() => {
-      console.green('✅ Build test passed');
-      process.exit(0);
-    }, 5000);
-  }
-});
 
 app.get('*', (_, res) => {
   res
