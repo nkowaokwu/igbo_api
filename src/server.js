@@ -7,6 +7,7 @@ import swaggerUI from 'swagger-ui-express';
 import sslRedirect from 'heroku-ssl-redirect';
 import morgan from 'morgan';
 import * as admin from 'firebase-admin';
+import compression from 'compression';
 import './shared/utils/wrapConsole';
 import {
   adminRouter,
@@ -33,6 +34,7 @@ admin.default.initializeApp({
 });
 
 const app = express();
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
