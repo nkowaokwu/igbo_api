@@ -5,7 +5,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import sslRedirect from 'heroku-ssl-redirect';
+import morgan from 'morgan';
 import * as admin from 'firebase-admin';
+import compression from 'compression';
+import './shared/utils/wrapConsole';
 import {
   adminRouter,
   editorRouter,
@@ -31,6 +34,7 @@ admin.default.initializeApp({
 });
 
 const app = express();
+app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
@@ -46,12 +50,17 @@ mongoose.connect(MONGO_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('🗄 Database is connected');
+  console.green('🗄 Database is connected');
 });
 
 if (process.env.NODE_ENV === 'production') {
   // enable ssl redirect
   app.use(sslRedirect());
+}
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+  app.use('*', logger);
 }
 
 app.options('*', cors());
@@ -61,8 +70,6 @@ app.use(express.static('./build/dist'));
 app.get('/', (_, res) => {
   res.send(path.resolve(__dirname, '/build/dist/index.html'));
 });
-
-app.use('*', logger);
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
@@ -87,23 +94,23 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-const server = app.listen(PORT, () => {
-  console.log(`🟢 Server started on port ${PORT}`);
-
-  /* Used to test server build */
-  if (process.env.NODE_ENV === 'build') {
-    console.log('🧪 Testing server build');
-    setTimeout(() => {
-      console.log('✅ Build test passed');
-      process.exit(0);
-    }, 5000);
-  }
-});
-
 app.get('*', (_, res) => {
   res
     .status(404)
     .sendFile(path.resolve(__dirname, 'dist/404.html'));
+});
+
+const server = app.listen(PORT, () => {
+  console.green(`🟢 Server started on port ${PORT}`);
+
+  /* Used to test server build */
+  if (process.env.NODE_ENV === 'build') {
+    console.blue('🧪 Testing server build');
+    setTimeout(() => {
+      console.green('✅ Build test passed');
+      process.exit(0);
+    }, 5000);
+  }
 });
 
 server.clearDatabase = () => {

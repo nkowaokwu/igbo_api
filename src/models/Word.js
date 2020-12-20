@@ -19,8 +19,13 @@ const wordSchema = new Schema({
   updatedOn: { type: Date, default: Date.now() },
 }, { toObject: toObjectPlugin });
 
+wordSchema.index({ word: 'text', variations: 'text' });
+
 toJSONPlugin(wordSchema);
 updatedOnHook(wordSchema);
 normalizeWordHook(wordSchema);
 
-export default mongoose.model('Word', wordSchema);
+const WordModel = mongoose.model('Word', wordSchema);
+WordModel.syncIndexes();
+
+export default WordModel;

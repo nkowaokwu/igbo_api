@@ -14,7 +14,7 @@ import {
   handleQueries,
   updateDocumentMerge,
 } from './utils';
-import { searchIgboRegexQuery, searchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
+import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample } from './examples';
 import { sendMergedEmail } from './email';
@@ -58,7 +58,7 @@ export const getWords = async (req, res) => {
       ...rest
     } = handleQueries(req);
     const searchQueries = { searchWord, skip, limit };
-    let query = !strict ? searchIgboRegexQuery(regexKeyword) : searchIgboQuery(searchWord);
+    let query = !strict ? searchIgboTextSearch(searchWord, regexKeyword) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);

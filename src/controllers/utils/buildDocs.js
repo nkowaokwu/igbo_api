@@ -33,14 +33,13 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
 export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
   const words = await Word.aggregate()
     .match(match)
+    .sort(match.$text ? { word: { $meta: 'textScore' } } : { 'definitions.0': 1 })
     .lookup({
       from: 'examples',
       localField: '_id',
       foreignField: 'associatedWords',
       as: 'examples',
     })
-    .skip(skip)
-    .limit(limit)
     .project({
       id: '$_id',
       _id: 0,
@@ -53,7 +52,9 @@ export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
       examples: 1,
       updatedOn: 1,
       accented: 1,
-    });
+    })
+    .skip(skip)
+    .limit(limit);
 
   return removeKeysInNestedDoc(words, 'examples');
 };

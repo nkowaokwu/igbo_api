@@ -9,7 +9,7 @@ const WRITE_DB_DELAY = 15000;
 const populate = async () => {
   /* This route will populate a local MongoDB database */
   if (process.env.NODE_ENV !== 'production') {
-    console.log('🌱 Seeding database...');
+    console.blue('🌱 Seeding database...');
     mongoose.connection.db.dropDatabase();
     const wordPromises = flatten(
       map(keys(dictionary), (key) => {
@@ -26,14 +26,14 @@ const populate = async () => {
       .then(() => {
         /* Wait 15 seconds to allow the data to be written to database */
         setTimeout(() => {
-          console.log('✅ Seeding successful');
+          console.green('✅ Seeding successful');
           if (process.env.NODE_ENV !== 'test') {
             process.exit(0);
           }
         }, WRITE_DB_DELAY);
       })
       .catch((err) => {
-        console.log('🔴 Seeding failed', err);
+        console.red('🔴 Seeding failed', err);
       });
   }
 };
@@ -48,7 +48,7 @@ const seed = () => {
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', async () => {
-      console.log('🗄 Database is connected');
+      console.green('🗄 Database is connected');
       populate();
     });
   } else {
