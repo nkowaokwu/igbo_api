@@ -44,6 +44,9 @@ export const createExampleSuggestion = async (data) => {
 export const postExampleSuggestion = async (req, res) => {
   try {
     const { body: data } = req;
+    const { user } = req;
+
+    data.authorId = user.uid;
 
     await Promise.all(
       map(data.associatedWords, async (associatedWordId) => {
