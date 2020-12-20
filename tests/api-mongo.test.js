@@ -147,7 +147,6 @@ describe('MongoDB Words', () => {
         .then((res) => {
           expect(res.status).to.equal(200);
           const firstGenericWord = res.body[0];
-          delete firstGenericWord.word;
           createWord(firstGenericWord.id)
             .end((_, result) => {
               expect(result.status).to.equal(400);
@@ -287,7 +286,8 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return newly created word by searching with keyword', (done) => {
+    it('should return newly created word by searching with keyword', function (done) {
+      this.timeout(15000);
       suggestNewWord(wordSuggestionData)
         .then((res) => {
           const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
