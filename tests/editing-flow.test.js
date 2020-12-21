@@ -81,7 +81,8 @@ describe('Editing Flow', () => {
       });
   });
 
-  it('should create a new wordSuggestion with a nested exampleSuggestion then merge', (done) => {
+  it('should create a new wordSuggestion with a nested exampleSuggestion then merge', function (done) {
+    this.timeout(15000);
     suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
       .then((wordSuggestionRes) => {
         expect(wordSuggestionRes.status).to.equal(200);

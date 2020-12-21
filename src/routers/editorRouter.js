@@ -22,20 +22,22 @@ import {
 } from '../controllers/genericWords';
 import validId from '../middleware/validId';
 import authorization from '../middleware/authorization';
+import validateExampleBody from '../middleware/validateExampleBody';
+import validateExampleMerge from '../middleware/validateExampleMerge';
+import validateWordBody from '../middleware/validateWordBody';
+import validateWordMerge from '../middleware/validateWordMerge';
 import UserRoles from '../shared/constants/userRoles';
 
 const editorRouter = express.Router();
 
-// TODO: #272 create middleware to parse stringified JSON
-
 /* These routes are used to allow users to suggest new words and examples */
-editorRouter.post('/words', authorization([UserRoles.MERGER, UserRoles.ADMIN]), mergeWord);
+editorRouter.post('/words', authorization([UserRoles.MERGER, UserRoles.ADMIN]), validateWordMerge, mergeWord);
 editorRouter.put('/words/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), putWord);
-editorRouter.post('/examples', authorization([UserRoles.MERGER, UserRoles.ADMIN]), mergeExample);
+editorRouter.post('/examples', authorization([UserRoles.MERGER, UserRoles.ADMIN]), validateExampleMerge, mergeExample);
 editorRouter.put('/examples/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), putExample);
 
 editorRouter.get('/wordSuggestions', getWordSuggestions);
-editorRouter.put('/wordSuggestions/:id', validId, putWordSuggestion);
+editorRouter.put('/wordSuggestions/:id', validId, validateWordBody, putWordSuggestion);
 editorRouter.get('/wordSuggestions/:id', validId, getWordSuggestion);
 editorRouter.delete(
   '/wordSuggestions/:id',
@@ -45,7 +47,7 @@ editorRouter.delete(
 );
 
 editorRouter.get('/exampleSuggestions', getExampleSuggestions);
-editorRouter.put('/exampleSuggestions/:id', validId, putExampleSuggestion);
+editorRouter.put('/exampleSuggestions/:id', validId, validateExampleBody, putExampleSuggestion);
 editorRouter.get('/exampleSuggestions/:id', validId, getExampleSuggestion);
 editorRouter.delete(
   '/exampleSuggestions/:id',
