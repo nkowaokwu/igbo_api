@@ -41,7 +41,7 @@ export const createExampleSuggestion = async (data) => {
 };
 
 /* Creates a new ExampleSuggestion document in the database */
-export const postExampleSuggestion = async (req, res) => {
+export const postExampleSuggestion = async (req, res, next) => {
   try {
     const { body: data } = req;
     const { user } = req;
@@ -59,8 +59,7 @@ export const postExampleSuggestion = async (req, res) => {
     const createdExampleSuggestion = createExampleSuggestion(data);
     return res.send(await createdExampleSuggestion);
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
@@ -76,12 +75,12 @@ export const updateExampleSuggestion = ({ id, data: clientData }) => {
       return updatedExampleSuggestion.save();
     })
     .catch((err) => {
-      throw new Error(err.message);
+      throw err;
     });
 };
 
 /* Updates an existing ExampleSuggestion object */
-export const putExampleSuggestion = async (req, res) => {
+export const putExampleSuggestion = async (req, res, next) => {
   try {
     const { body: data, params: { id } } = req;
 
@@ -96,8 +95,7 @@ export const putExampleSuggestion = async (req, res) => {
     const updatedExampleSuggestion = updateExampleSuggestion({ id, data });
     return res.send(await updatedExampleSuggestion);
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
@@ -115,7 +113,7 @@ const findExampleSuggestions = ({ regexMatch, skip, limit }) => (
 );
 
 /* Returns all existing ExampleSuggestion objects */
-export const getExampleSuggestions = (req, res) => {
+export const getExampleSuggestions = (req, res, next) => {
   try {
     const {
       regexKeyword,
@@ -138,27 +136,26 @@ export const getExampleSuggestions = (req, res) => {
         throw new Error('An error has occurred while return example suggestions, double check your provided data');
       });
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
 /* Returns a single ExampleSuggestion by using an id */
-export const getExampleSuggestion = (req, res) => {
-  const { id } = req.params;
-  return findExampleSuggestionById(id)
-    .then(async (exampleSuggestion) => {
-      if (!exampleSuggestion) {
-        res.status(400);
-        return res.send({ error: 'No example suggestion exists with the provided id.' });
-      }
-      const populatedUserExampleSuggestion = await populateFirebaseUsers(exampleSuggestion, ['approvals', 'denials']);
-      return res.send(populatedUserExampleSuggestion);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while returning a single example suggestion' });
-    });
+export const getExampleSuggestion = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const populatedUser = await findExampleSuggestionById(id)
+      .then(async (exampleSuggestion) => {
+        if (!exampleSuggestion) {
+          throw new Error('No example suggestion exists with the provided id.');
+        }
+        const populatedUserExampleSuggestion = await populateFirebaseUsers(exampleSuggestion, ['approvals', 'denials']);
+        return populatedUserExampleSuggestion;
+      });
+    return res.send(populatedUser);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 export const removeExampleSuggestion = (id) => (
@@ -183,13 +180,12 @@ export const removeExampleSuggestion = (id) => (
 );
 
 /* Deletes a single ExampleSuggestion by using an id */
-export const deleteExampleSuggestion = async (req, res) => {
-  const { id } = req.params;
+export const deleteExampleSuggestion = async (req, res, next) => {
   try {
+    const { id } = req.params;
     return res.send(await removeExampleSuggestion(id));
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 

@@ -31,7 +31,7 @@ const searchExamples = ({ query, skip, limit }) => (
 );
 
 /* Returns examples from MongoDB */
-export const getExamples = async (req, res) => {
+export const getExamples = async (req, res, next) => {
   try {
     const {
       regexKeyword,
@@ -50,8 +50,7 @@ export const getExamples = async (req, res) => {
       ...rest,
     });
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
@@ -59,21 +58,25 @@ export const findExampleById = (id) => (
   Example.findById(id)
 );
 
+export const findExampleByAssociatedWordId = (id) => (
+  Example.find({ associatedWords: { $in: [id] } })
+);
+
 /* Returns an example from MongoDB using an id */
-export const getExample = (req, res) => {
-  const { id } = req.params;
-  return findExampleById(id)
-    .then((example) => {
-      if (!example) {
-        res.status(400);
-        return res.send({ error: 'No example exists with the provided id.' });
-      }
-      return res.send(example);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while return a single example.' });
-    });
+export const getExample = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const foundExample = await findExampleById(id)
+      .then((example) => {
+        if (!example) {
+          throw new Error('No example exists with the provided id.');
+        }
+        return example;
+      });
+    return res.send(foundExample);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* Merges new data into an existing Example document */
@@ -151,7 +154,7 @@ const handleSendingMergedEmail = async (result) => {
 
 /* Merges the existing ExampleSuggestion into either a brand
  * new Example document or merges into an existing Example document */
-export const mergeExample = async (req, res) => {
+export const mergeExample = async (req, res, next) => {
   try {
     const { body: data } = req;
     const { user } = req;
@@ -160,46 +163,42 @@ export const mergeExample = async (req, res) => {
     const result = await executeMergeExample(exampleSuggestion.id, user.uid);
     await handleSendingMergedEmail(result);
     return res.send(result);
-  } catch (error) {
-    res.status(400);
-    return res.send({ error: error.message });
+  } catch (err) {
+    return next(err);
   }
 };
 
 /* Updates an Example document in the database */
-export const putExample = (req, res) => {
-  const { body: data, params: { id } } = req;
+export const putExample = async (req, res, next) => {
+  try {
+    const { body: data, params: { id } } = req;
 
-  if (!data.igbo && !data.english) {
-    res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
+    if (!data.igbo && !data.english) {
+      return next(new Error('Required information is missing, double check your provided data'));
+    }
+
+    if (!Array.isArray(data.associatedWords)) {
+      data.associatedWords = map(data.associatedWords.split(','), (associatedWord) => trim(associatedWord));
+    }
+
+    if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
+      return next(new Error('Invalid id found in associatedWords'));
+    }
+
+    if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
+      return next(new Error('Duplicates are not allows in associated words'));
+    }
+
+    const savedExample = await findExampleById(id)
+      .then(async (example) => {
+        if (!example) {
+          throw new Error('Example doesn\'t exist');
+        }
+        const updatedExample = assign(example, data);
+        return updatedExample.save();
+      });
+    return res.send(savedExample);
+  } catch (err) {
+    return next(err);
   }
-
-  if (!Array.isArray(data.associatedWords)) {
-    data.associatedWords = map(data.associatedWords.split(','), (associatedWord) => trim(associatedWord));
-  }
-
-  if (some(data.associatedWords, (associatedWord) => !mongoose.Types.ObjectId.isValid(associatedWord))) {
-    res.status(400);
-    return res.send({ error: 'Invalid id found in associatedWords' });
-  }
-
-  if (data.associatedWords && data.associatedWords.length !== uniq(data.associatedWords).length) {
-    res.status(400);
-    return res.send({ error: 'Duplicates are not allows in associated words' });
-  }
-
-  return findExampleById(id)
-    .then(async (example) => {
-      if (!example) {
-        res.status(400);
-        return res.send({ error: 'Example doesn\'t exist' });
-      }
-      const updatedExample = assign(example, data);
-      return res.send(await updatedExample.save());
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while updating the example, double check your provided data.' });
-    });
 };

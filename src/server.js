@@ -18,6 +18,7 @@ import {
 import logger from './middleware/logger';
 import authentication from './middleware/authentication';
 import authorization from './middleware/authorization';
+import errorHandler from './middleware/errorHandler';
 import {
   PORT,
   MONGO_URI,
@@ -94,11 +95,13 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
+/* Catches all invalid routes and displays the 404 page */
 app.get('*', (_, res) => {
   res
     .status(404)
     .sendFile(path.resolve(__dirname, 'dist/404.html'));
 });
+app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
   console.green(`🟢 Server started on port ${PORT}`);

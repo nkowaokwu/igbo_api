@@ -5,7 +5,7 @@ import {
   getWordSuggestions,
   putWordSuggestion,
 } from '../controllers/wordSuggestions';
-import { putWord, mergeWord } from '../controllers/words';
+import { deleteWord, putWord, mergeWord } from '../controllers/words';
 import { putExample, mergeExample } from '../controllers/examples';
 import {
   deleteExampleSuggestion,
@@ -33,6 +33,8 @@ const editorRouter = express.Router();
 /* These routes are used to allow users to suggest new words and examples */
 editorRouter.post('/words', authorization([UserRoles.MERGER, UserRoles.ADMIN]), validateWordMerge, mergeWord);
 editorRouter.put('/words/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), putWord);
+editorRouter.delete('/words/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), deleteWord);
+
 editorRouter.post('/examples', authorization([UserRoles.MERGER, UserRoles.ADMIN]), validateExampleMerge, mergeExample);
 editorRouter.put('/examples/:id', validId, authorization([UserRoles.MERGER, UserRoles.ADMIN]), putExample);
 
