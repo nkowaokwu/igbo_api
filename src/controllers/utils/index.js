@@ -32,7 +32,7 @@ const constructRegexQuery = ({ user, searchWord }) => (
     ? createQueryRegex(searchWord)
     : searchWord
       ? createQueryRegex(searchWord)
-      : /^[.{0,}\n{0,}]/
+      : /.{0,}/
 );
 
 /* Given a list of keys, where each key's value is a list of Firebase uids,
