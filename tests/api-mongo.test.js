@@ -24,6 +24,7 @@ import {
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import {
+  exampleSuggestionData,
   wordSuggestionData,
   updatedWordData,
   updatedWordSuggestionData,
@@ -34,6 +35,7 @@ import {
   getWordSuggestion,
   getWordSuggestions,
   createWord,
+  deleteWord,
   updateWord,
   suggestNewWord,
   getGenericWord,
@@ -41,9 +43,15 @@ import {
   updateGenericWord,
   sendSendGridEmail,
   updateWordSuggestion,
+  getExample,
 } from './shared/commands';
+import {
+  expectUniqSetsOfResponses,
+  expectArrayIsInOrder,
+  createWordFromSuggestion,
+  createExampleFromSuggestion,
+} from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
-import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 
 const { expect } = chai;
 const { ObjectId } = mongoose.Types;
@@ -359,6 +367,7 @@ describe('MongoDB Words', () => {
     it('should return one word', (done) => {
       getWords()
         .then((res) => {
+          expect(res.status).to.equal(200);
           getWord(res.body[0].id)
             .end((_, result) => {
               expect(result.status).to.equal(200);
@@ -371,10 +380,11 @@ describe('MongoDB Words', () => {
 
     it('should return an error for incorrect word id', (done) => {
       getWords()
-        .then(() => {
+        .then((res) => {
+          expect(res.status).to.equal(200);
           getWord(NONEXISTENT_ID)
             .end((_, result) => {
-              expect(result.status).to.equal(400);
+              expect(result.status).to.equal(404);
               expect(result.error).to.not.equal(undefined);
               done();
             });
@@ -740,6 +750,121 @@ describe('MongoDB Words', () => {
         });
     });
   });
-});
 
+  describe('/DELETE mongodb words', () => {
+    it('should delete the word document and move its contents to a new word with associated examples', function (done) {
+      this.timeout(15000);
+      createWordFromSuggestion(updatedWordSuggestionData)
+        .then((firstWord) => {
+          createExampleFromSuggestion({ ...exampleSuggestionData, associatedWords: [firstWord.id] })
+            .then((firstExample) => {
+              createWordFromSuggestion({ ...updatedWordSuggestionData, word: 'combine into word' })
+                .then((secondWord) => {
+                  createExampleFromSuggestion({
+                    ...exampleSuggestionData,
+                    associatedWords: [firstWord.id, secondWord.id],
+                  })
+                    .then((secondExample) => {
+                      expect(firstWord.id).to.not.be.oneOf([null, undefined, '']);
+                      expect(secondWord.id).to.not.be.oneOf([null, undefined, '']);
+                      deleteWord(firstWord.id, secondWord.id)
+                        .then((combinedWordRes) => {
+                          const { definitions, variations, stems } = combinedWordRes.body;
+                          expect(combinedWordRes.status).to.equal(200);
+                          expect(isEqual(definitions, uniqBy(definitions, (definition) => definition))).to.equal(true);
+                          expect(isEqual(variations, uniqBy(variations, (variation) => variation))).to.equal(true);
+                          expect(isEqual(stems, uniqBy(stems, (stem) => stem))).to.equal(true);
+                          expect(definitions).to.have.include.members(firstWord.definitions);
+                          expect(definitions).to.have.include.members(secondWord.definitions);
+                          expect(variations).to.have.include.members(firstWord.variations);
+                          expect(variations).to.have.include.members(secondWord.variations);
+                          expect(stems).to.have.include.members(firstWord.stems);
+                          expect(stems).to.have.include.members(secondWord.stems);
+                          getExample(firstExample.id)
+                            .then((firstExampleRes) => {
+                              expect(firstExampleRes.status).to.equal(200);
+                              getExample(secondExample.id)
+                                .then((secondExampleRes) => {
+                                  const { associatedWords: firstExampleAssociatedWords } = firstExampleRes.body;
+                                  const { associatedWords: secondExampleAssociatedWords } = secondExampleRes.body;
+                                  expect(secondExampleRes.status).to.equal(200);
+                                  expect(firstExampleRes.body.associatedWords).to.include(combinedWordRes.body.id);
+                                  expect(firstExampleRes.body.associatedWords).to.not.include(firstWord.id);
+                                  expect(secondExampleRes.body.associatedWords).to.include(combinedWordRes.body.id);
+                                  expect(secondExampleRes.body.associatedWords).to.not.include(firstWord.id);
+                                  expect(isEqual(
+                                    firstExampleAssociatedWords,
+                                    uniqBy(firstExampleAssociatedWords, (associatedWord) => associatedWord),
+                                  )).to.equal(true);
+                                  expect(isEqual(
+                                    secondExampleAssociatedWords,
+                                    uniqBy(secondExampleAssociatedWords, (associatedWord) => associatedWord),
+                                  )).to.equal(true);
+                                  getWord(firstWord.id)
+                                    .end((_, res) => {
+                                      expect(res.status).to.equal(404);
+                                      done();
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
+
+    it('should return an error deleting a word with an invalid primary word id', (done) => {
+      createWordFromSuggestion(updatedWordSuggestionData)
+        .then((firstWord) => {
+          expect(firstWord.id).to.not.be.oneOf([null, undefined, '']);
+          deleteWord(firstWord.id, INVALID_ID)
+            .end((_, combinedWordRes) => {
+              expect(combinedWordRes.status).to.equal(400);
+              expect(combinedWordRes.body.error).to.not.be.oneOf([undefined, null, '']);
+              done();
+            });
+        });
+    });
+
+    it('should return an error deleting a word with an invalid secondary word id', (done) => {
+      createWordFromSuggestion(updatedWordSuggestionData)
+        .then((firstWord) => {
+          expect(firstWord.id).to.not.be.oneOf([null, undefined, '']);
+          deleteWord(INVALID_ID, firstWord.id)
+            .then((combinedWordRes) => {
+              expect(combinedWordRes.status).to.equal(400);
+              expect(combinedWordRes.body.error).to.not.be.oneOf([null, undefined, '']);
+              done();
+            });
+        });
+    });
+
+    it('should handle a word with a null stems field', (done) => {
+      getWords({ range: '[0, 24]' })
+        .then((wordsRes) => {
+          expect(wordsRes.status).to.equal(200);
+          const wordWithNullStems = wordsRes.body[0];
+          createWordFromSuggestion({ ...updatedWordSuggestionData, stems: null })
+            .then((firstWord) => {
+              deleteWord(firstWord.id, wordWithNullStems.id)
+                .then((combinedWordRes) => {
+                  const { definitions, variations, stems } = combinedWordRes.body;
+                  expect(combinedWordRes.status).to.equal(200);
+                  expect(isEqual(definitions, uniqBy(definitions, (definition) => definition))).to.equal(true);
+                  expect(isEqual(variations, uniqBy(variations, (variation) => variation))).to.equal(true);
+                  expect(isEqual(stems, uniqBy(stems, (stem) => stem))).to.equal(true);
+                  expect(definitions).to.have.include.members(firstWord.definitions);
+                  expect(definitions).to.have.include.members(wordWithNullStems.definitions);
+                  expect(variations).to.have.include.members(firstWord.variations);
+                  expect(variations).to.have.include.members(wordWithNullStems.variations);
+                  expect(stems).to.have.include.members(firstWord.stems);
+                  expect(stems).to.have.include.members(wordWithNullStems.stems);
+                  done();
+                });
+            });
+        });
+    });
+  });
+});
 // TODO: write test to check if mergedBy field for nested examples gets populated

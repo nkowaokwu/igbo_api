@@ -77,6 +77,13 @@ export const createWord = (id, query = {}) => (
     .send({ id })
 );
 
+export const deleteWord = (id, primaryWordId) => (
+  chai
+    .request(server)
+    .delete(`${API_ROUTE}/words/${id}`)
+    .send({ primaryWordId })
+);
+
 export const createExample = (id, query = {}) => (
   chai
     .request(server)

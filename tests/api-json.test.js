@@ -41,7 +41,7 @@ describe('JSON Dictionary', () => {
     it('should return an error for searching no word', (done) => {
       searchTerm().end((_, res) => {
         expect(res.status).to.equal(400);
-        expect(res.text).to.equal(NO_PROVIDED_TERM);
+        expect(res.body.error).to.equal(NO_PROVIDED_TERM);
         done();
       });
     });
