@@ -148,7 +148,7 @@ describe('MongoDB Word Suggestions', () => {
               expect(result.body.examples).to.have.lengthOf(0);
               getExampleSuggestion(exampleSuggestionToDeleteId)
                 .end((_, noExampleSuggestionRes) => {
-                  expect(noExampleSuggestionRes.status).to.equal(400);
+                  expect(noExampleSuggestionRes.status).to.equal(404);
                   expect(noExampleSuggestionRes.body.error).to.not.equal(undefined);
                   done();
                 });
@@ -444,7 +444,7 @@ describe('MongoDB Word Suggestions', () => {
               expect(result.body.id).to.not.equal(undefined);
               getWordSuggestion(result.body.id)
                 .end((_, resError) => {
-                  expect(resError.status).to.equal(400);
+                  expect(resError.status).to.equal(404);
                   expect(resError.body.error).to.not.equal(undefined);
                   done();
                 });
@@ -463,7 +463,7 @@ describe('MongoDB Word Suggestions', () => {
     it('should return error for non existent word suggestion', (done) => {
       getWordSuggestion(wordSuggestionId)
         .end((_, res) => {
-          expect(res.status).to.equal(400);
+          expect(res.status).to.equal(404);
           expect(res.body.error).to.not.equal(undefined);
           done();
         });

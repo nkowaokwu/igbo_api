@@ -22,39 +22,38 @@ import {
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
 /* Updates an existing WordSuggestion object */
-export const putGenericWord = (req, res) => {
-  const { body: data, params: { id } } = req;
-  const clientExamples = getExamplesFromClientData(data);
+export const putGenericWord = async (req, res, next) => {
+  try {
+    const { body: data, params: { id } } = req;
+    const clientExamples = getExamplesFromClientData(data);
 
-  if (!every(REQUIRE_KEYS, partial(has, data))) {
-    res.status(400);
-    return res.send({ error: 'Required information is missing, double check your provided data' });
+    if (!every(REQUIRE_KEYS, partial(has, data))) {
+      throw new Error('Required information is missing, double check your provided data');
+    }
+
+    if (!Array.isArray(data.definitions)) {
+      data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
+    }
+
+    const updatedAndSavedGenericWord = await GenericWord.findById(id)
+      .then(async (genericWord) => {
+        if (!genericWord) {
+          throw new Error('Generic word doesn\'t exist');
+        }
+        const updatedGenericWord = assign(genericWord, data);
+        await handleDeletingExampleSuggestions({ suggestionDoc: genericWord, clientExamples });
+
+        /* Updates all the word's children exampleSuggestions */
+        await updateNestedExampleSuggestions({ suggestionDocId: genericWord.id, clientExamples });
+
+        await updatedGenericWord.save();
+        const savedGenericWord = await placeExampleSuggestionsOnSuggestionDoc(updatedGenericWord);
+        return savedGenericWord;
+      });
+    return res.send(updatedAndSavedGenericWord);
+  } catch (err) {
+    return next(err);
   }
-
-  if (!Array.isArray(data.definitions)) {
-    data.definitions = map(data.definitions.split(','), (definition) => trim(definition));
-  }
-
-  return GenericWord.findById(id)
-    .then(async (genericWord) => {
-      if (!genericWord) {
-        res.status(400);
-        return res.send({ error: 'Generic word doesn\'t exist' });
-      }
-      const updatedGenericWord = assign(genericWord, data);
-      await handleDeletingExampleSuggestions({ suggestionDoc: genericWord, clientExamples });
-
-      /* Updates all the word's children exampleSuggestions */
-      await updateNestedExampleSuggestions({ suggestionDocId: genericWord.id, clientExamples });
-
-      await updatedGenericWord.save();
-      const savedGenericWord = await placeExampleSuggestionsOnSuggestionDoc(updatedGenericWord);
-      return res.send(savedGenericWord);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while updating, double check your provided data' });
-    });
 };
 
 export const findGenericWordById = (id) => (
@@ -71,7 +70,7 @@ export const findGenericWords = async ({ regexMatch, skip, limit }) => (
 );
 
 /* Returns all existing GenericWord objects */
-export const getGenericWords = (req, res) => {
+export const getGenericWords = (req, res, next) => {
   try {
     const {
       regexKeyword,
@@ -99,31 +98,30 @@ export const getGenericWords = (req, res) => {
         throw new Error('An error has occurred while returning all generic words');
       });
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
 /* Returns a single WordSuggestion by using an id */
-export const getGenericWord = (req, res) => {
-  const { id } = req.params;
-  return findGenericWordById(id)
-    .then(async (genericWord) => {
-      if (!genericWord) {
-        res.status(400);
-        return res.send({ error: 'No genericWord exists with the provided id.' });
-      }
-      const genericWordWithExamples = await placeExampleSuggestionsOnSuggestionDoc(genericWord);
-      const populatedUsersGenricWordWithExamples = await populateFirebaseUsers(
-        genericWordWithExamples,
-        ['approvals', 'denials'],
-      );
-      return res.send(populatedUsersGenricWordWithExamples);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while return a single generic word' });
-    });
+export const getGenericWord = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const populatedGenericWord = await findGenericWordById(id)
+      .then(async (genericWord) => {
+        if (!genericWord) {
+          throw new Error('No genericWord exists with the provided id.');
+        }
+        const genericWordWithExamples = await placeExampleSuggestionsOnSuggestionDoc(genericWord);
+        const populatedUsersGenricWordWithExamples = await populateFirebaseUsers(
+          genericWordWithExamples,
+          ['approvals', 'denials'],
+        );
+        return populatedUsersGenricWordWithExamples;
+      });
+    return res.send(populatedGenericWord);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 const seedGenericWords = async (dictionary) => (
@@ -137,34 +135,35 @@ const seedGenericWords = async (dictionary) => (
 );
 
 /* Populates the MongoDB database with GenericWords */
-export const createGenericWords = async (_, res) => {
-  const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
-  const genericWordsPromises = await seedGenericWords(dictionary);
-  return Promise.all(genericWordsPromises)
-    .then(() => (
-      res.send({ message: 'Successfully populated generic words' })
-    ))
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while populating generic words' });
-    });
+export const createGenericWords = async (_, res, next) => {
+  try {
+    const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
+    const genericWordsPromises = await seedGenericWords(dictionary);
+    const genericWords = await Promise.all(genericWordsPromises)
+      .then(() => (
+        res.send({ message: 'Successfully populated generic words' })
+      ));
+    return res.send(genericWords);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* Deletes a single GenericWord by using an id */
-export const deleteGenericWord = (req, res) => {
-  const { id } = req.params;
-  return GenericWord.findByIdAndDelete(id)
-    .then((genericWord) => {
-      if (!genericWord) {
-        res.status(400);
-        return res.send({ error: 'No generic word exists with the provided id.' });
-      }
-      return res.send(genericWord);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while deleting and return a single generic word' });
-    });
+export const deleteGenericWord = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deletedGenericWord = await GenericWord.findByIdAndDelete(id)
+      .then((genericWord) => {
+        if (!genericWord) {
+          throw new Error('No generic word exists with the provided id.');
+        }
+        return genericWord;
+      });
+    return res.send(deletedGenericWord);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* Returns all the GenericWords from last week */

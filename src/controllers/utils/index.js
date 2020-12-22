@@ -103,15 +103,10 @@ export const packageResponse = async ({
   query,
   sort,
 }) => {
-  try {
-    const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
-    const count = await model.countDocuments(query);
-    res.setHeader('Content-Range', count);
-    return res.send(sendDocs);
-  } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
-  }
+  const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
+  const count = await model.countDocuments(query);
+  res.setHeader('Content-Range', count);
+  return res.send(sendDocs);
 };
 
 /* Converts the filter query into a word to be used as the keyword query */

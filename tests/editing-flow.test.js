@@ -1,7 +1,6 @@
 import chai from 'chai';
-import { forEach, isEqual, uniq } from 'lodash';
+import { forEach, uniq } from 'lodash';
 import {
-  createExample,
   createWord,
   deleteGenericWord,
   deleteWordSuggestion,
@@ -25,6 +24,7 @@ import {
   wordSuggestionWithNestedExampleSuggestionData,
 } from './__mocks__/documentData';
 import { AUTH_TOKEN, SAVE_DOC_DELAY } from './shared/constants';
+import { createExampleFromSuggestion } from './shared/utils';
 
 const { expect } = chai;
 
@@ -84,9 +84,9 @@ describe('Editing Flow', () => {
   it('should create a new wordSuggestion with a nested exampleSuggestion then merge', function (done) {
     this.timeout(15000);
     suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
-      .then((wordSuggestionRes) => {
-        expect(wordSuggestionRes.status).to.equal(200);
-        createWord(wordSuggestionRes.body.id)
+      .then((suggestionRes) => {
+        expect(suggestionRes.status).to.equal(200);
+        createWord(suggestionRes.body.id)
           .then((mergedWordRes) => {
             expect(mergedWordRes.status).to.equal(200);
             setTimeout(() => {
@@ -94,19 +94,19 @@ describe('Editing Flow', () => {
                 .then((wordRes) => {
                   const mergedWord = wordRes.body;
                   const nestedExample = mergedWord.examples[0];
-                  Promise.all([
-                    getExample(nestedExample.id),
-                    getWordSuggestion(wordSuggestionRes.body.id),
-                  ])
-                    .then((res) => {
-                      const mergedExample = res[0].body;
-                      const wordSuggestion = res[1].body;
-                      expect(mergedExample.associatedWords).includes(mergedWord.id);
-                      expect(wordSuggestion.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
-                      expect(wordSuggestion.merged).to.equal(mergedWord.id);
-                      expect(mergedWord.examples[0].associatedWords).includes(mergedWord.id);
-                      expect(mergedWord.examples[0].id).equal(mergedExample.id);
-                      done();
+                  getExample(nestedExample.id)
+                    .then((exampleRes) => {
+                      getWordSuggestion(suggestionRes.body.id)
+                        .end((_, wordSuggestionRes) => {
+                          const mergedExample = exampleRes.body;
+                          const wordSuggestion = wordSuggestionRes.body;
+                          expect(mergedExample.associatedWords).includes(mergedWord.id);
+                          expect(wordSuggestion.mergedBy).to.equal(AUTH_TOKEN.ADMIN_AUTH_TOKEN);
+                          expect(wordSuggestion.merged).to.equal(mergedWord.id);
+                          expect(mergedWord.examples[0].associatedWords).includes(mergedWord.id);
+                          expect(mergedWord.examples[0].id).equal(mergedExample.id);
+                          done();
+                        });
                     });
                 });
             }, SAVE_DOC_DELAY);
@@ -136,17 +136,9 @@ describe('Editing Flow', () => {
                             ...example,
                             associatedWords: [...example.associatedWords, firstWordRes.body.id],
                           };
-                          suggestNewExample(newExampleSuggestion)
-                            .then((exampleSuggestionRes) => {
-                              expect(exampleSuggestionRes.status).to.equal(200);
-                              createExample(exampleSuggestionRes.body.id)
-                                .end((_, finalRes) => {
-                                  expect(isEqual(
-                                    exampleSuggestionRes.body.associatedWords,
-                                    finalRes.body.associatedWords,
-                                  )).to.equal(true);
-                                  done();
-                                });
+                          createExampleFromSuggestion(newExampleSuggestion)
+                            .then(() => {
+                              done();
                             });
                         });
                     }, SAVE_DOC_DELAY);
@@ -203,7 +195,8 @@ describe('Editing Flow', () => {
       });
   });
 
-  it('should delete a new wordSuggestion with a nested exampleSuggestions', (done) => {
+  it('should delete a new wordSuggestion with a nested exampleSuggestions', function (done) {
+    this.timeout(15000);
     suggestNewWord(wordSuggestionWithNestedExampleSuggestionData)
       .then((wordSuggestionRes) => {
         expect(wordSuggestionRes.status).to.equal(200);
@@ -211,16 +204,16 @@ describe('Editing Flow', () => {
         deleteWordSuggestion(wordSuggestionRes.body.id)
           .then((deleteWordSuggestionRes) => {
             expect(deleteWordSuggestionRes.status).to.equal(200);
-            Promise.all([
-              getWordSuggestion(wordSuggestionRes.body.id),
-              getExampleSuggestion(nestedExampleSuggestion.id),
-            ])
+            getWordSuggestion(wordSuggestionRes.body.id)
               .then((res) => {
-                forEach(res, ({ status, body }) => {
-                  expect(status).to.equal(400);
-                  expect(body.error).to.not.equal(undefined);
-                });
-                done();
+                expect(res.status).to.equal(404);
+                expect(res.body.error).to.not.equal(undefined);
+                getExampleSuggestion(nestedExampleSuggestion.id)
+                  .end((_, result) => {
+                    expect(result.status).to.equal(404);
+                    expect(result.body.error).to.not.equal(undefined);
+                    done();
+                  });
               });
           });
       });

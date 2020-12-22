@@ -56,12 +56,11 @@ const seed = () => {
   }
 };
 
-export const seedDatabase = async (_, res) => {
+export const seedDatabase = async (_, res, next) => {
   try {
     seed();
     return res.redirect('/');
   } catch (err) {
-    res.status(400);
-    return res.send('An error occurred during seeding');
+    return next(new Error('An error occurred during seeding'));
   }
 };

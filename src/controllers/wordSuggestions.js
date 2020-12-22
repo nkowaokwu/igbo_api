@@ -22,7 +22,7 @@ import { sendRejectedEmail } from './email';
 const REQUIRE_KEYS = ['word', 'wordClass', 'definitions'];
 
 /* Creates a new WordSuggestion document in the database */
-export const postWordSuggestion = async (req, res) => {
+export const postWordSuggestion = async (req, res, next) => {
   try {
     const { body: data } = req;
     const { user } = req;
@@ -31,19 +31,14 @@ export const postWordSuggestion = async (req, res) => {
 
     const clientExamples = getExamplesFromClientData(data);
     const newWordSuggestion = new WordSuggestion(data);
-    return newWordSuggestion.save()
+    const savedWordSuggestion = await newWordSuggestion.save()
       .then(async (wordSuggestion) => {
         await updateNestedExampleSuggestions({ suggestionDocId: wordSuggestion.id, clientExamples });
-        const savedWordSuggestion = await placeExampleSuggestionsOnSuggestionDoc(wordSuggestion);
-        return res.send(savedWordSuggestion);
-      })
-      .catch((err) => {
-        res.status(400);
-        return res.send({ error: err.message });
+        return placeExampleSuggestionsOnSuggestionDoc(wordSuggestion);
       });
+    return res.send(savedWordSuggestion);
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
@@ -61,14 +56,13 @@ const findWordSuggestions = async ({ regexMatch, skip, limit }) => (
 );
 
 /* Updates an existing WordSuggestion object */
-export const putWordSuggestion = (req, res) => {
+export const putWordSuggestion = (req, res, next) => {
   try {
     const { body: data, params: { id } } = req;
     const clientExamples = getExamplesFromClientData(data);
 
     if (!every(REQUIRE_KEYS, partial(has, data))) {
-      res.status(400);
-      return res.send({ error: 'Required information is missing, double check your provided data' });
+      throw new Error('Required information is missing, double check your provided data');
     }
 
     if (!Array.isArray(data.definitions)) {
@@ -78,8 +72,7 @@ export const putWordSuggestion = (req, res) => {
     return findWordSuggestionById(id)
       .then(async (wordSuggestion) => {
         if (!wordSuggestion) {
-          res.status(400);
-          return res.send({ error: 'Word suggestion doesn\'t exist' });
+          throw new Error('Word suggestion doesn\'t exist');
         }
         delete data.authorId;
         const updatedWordSuggestion = assign(wordSuggestion, data);
@@ -91,18 +84,14 @@ export const putWordSuggestion = (req, res) => {
         const savedWordSuggestion = await placeExampleSuggestionsOnSuggestionDoc(updatedWordSuggestion);
         return res.send(savedWordSuggestion);
       })
-      .catch((err) => {
-        res.status(400);
-        return res.send({ error: err.message });
-      });
+      .catch(next);
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
 /* Returns all existing WordSuggestion objects */
-export const getWordSuggestions = (req, res) => {
+export const getWordSuggestions = (req, res, next) => {
   try {
     const {
       regexKeyword,
@@ -125,61 +114,60 @@ export const getWordSuggestions = (req, res) => {
           ...rest,
         });
       })
-      .catch((err) => {
-        throw err;
-      });
+      .catch(next);
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    return next(err);
   }
 };
 
 /* Returns a single WordSuggestion by using an id */
-export const getWordSuggestion = (req, res) => {
-  const { id } = req.params;
-  return WordSuggestion
-    .findById(id)
-    .then(async (wordSuggestion) => {
-      if (!wordSuggestion) {
-        res.status(400);
-        return res.send({ error: 'No word suggestion exists with the provided id.' });
-      }
-      const wordSuggestionWithExamples = await placeExampleSuggestionsOnSuggestionDoc(wordSuggestion);
-      const populatedUsersWordSuggestionWithExamples = await populateFirebaseUsers(
-        wordSuggestionWithExamples,
-        ['approvals', 'denials'],
-      );
-      return res.send(populatedUsersWordSuggestionWithExamples);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while returning a single word suggestion' });
-    });
+export const getWordSuggestion = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const populatedWordSuggestion = await WordSuggestion
+      .findById(id)
+      .then(async (wordSuggestion) => {
+        if (!wordSuggestion) {
+          throw new Error('No word suggestion exists with the provided id.');
+        }
+        const wordSuggestionWithExamples = await placeExampleSuggestionsOnSuggestionDoc(wordSuggestion);
+        const populatedUsersWordSuggestionWithExamples = await populateFirebaseUsers(
+          wordSuggestionWithExamples,
+          ['approvals', 'denials'],
+        );
+        return populatedUsersWordSuggestionWithExamples;
+      });
+    return res.send(populatedWordSuggestion);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* Deletes a single WordSuggestion by using an id */
-export const deleteWordSuggestion = (req, res) => {
-  const { id } = req.params;
-  return WordSuggestion.findByIdAndDelete(id)
-    .then((wordSuggestion) => {
-      if (!wordSuggestion) {
-        res.status(400);
-        return res.send({ error: 'No word suggestion exists with the provided id.' });
-      }
-      /* Sends rejection email to user if they provided an email and the wordSuggestion isn't merged */
-      if (wordSuggestion.userEmail && !wordSuggestion.merged) {
-        sendRejectedEmail({
-          to: wordSuggestion.userEmail,
-          suggestionType: SuggestionTypes.WORD,
-          ...wordSuggestion,
-        });
-      }
-      return res.send(wordSuggestion);
-    })
-    .catch(() => {
-      res.status(400);
-      return res.send({ error: 'An error has occurred while deleting and return a single word suggestion' });
-    });
+export const deleteWordSuggestion = (req, res, next) => {
+  try {
+    const { id } = req.params;
+    return WordSuggestion.findByIdAndDelete(id)
+      .then((wordSuggestion) => {
+        if (!wordSuggestion) {
+          throw new Error('No word suggestion exists with the provided id.');
+        }
+        /* Sends rejection email to user if they provided an email and the wordSuggestion isn't merged */
+        if (wordSuggestion.userEmail && !wordSuggestion.merged) {
+          sendRejectedEmail({
+            to: wordSuggestion.userEmail,
+            suggestionType: SuggestionTypes.WORD,
+            ...wordSuggestion,
+          });
+        }
+        return res.send(wordSuggestion);
+      })
+      .catch(() => {
+        throw new Error('An error has occurred while deleting and return a single word suggestion');
+      });
+  } catch (err) {
+    return next(err);
+  }
 };
 
 /* Returns all the WordSuggestions from last week */

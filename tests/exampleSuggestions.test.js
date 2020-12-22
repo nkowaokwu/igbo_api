@@ -382,7 +382,7 @@ describe('MongoDB Example Suggestions', () => {
               expect(deleteRes.status).to.equal(200);
               getExampleSuggestion(firstExample.id)
                 .end((_, searchExampleRes) => {
-                  expect(searchExampleRes.status).to.equal(400);
+                  expect(searchExampleRes.status).to.equal(404);
                   expect(searchExampleRes.body.error).to.not.equal(undefined);
                   done();
                 });

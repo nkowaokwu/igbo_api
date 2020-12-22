@@ -23,15 +23,14 @@ export const findUsers = async () => {
 };
 
 /* Grab all users in the Firebase database */
-export const getUsers = async (_, res) => {
+export const getUsers = async (_, res, next) => {
   try {
     const users = await findUsers();
     res.setHeader('Content-Range', users.length);
     res.status(200);
-    res.send(users);
+    return res.send(users);
   } catch {
-    res.status(400);
-    res.send({ error: 'An error occurred while grabbing all users' });
+    return next(new Error('An error occurred while grabbing all users'));
   }
 };
 
@@ -46,15 +45,14 @@ export const findUser = async (uid) => {
 };
 
 /* Grab a single user from the Firebase dataabase */
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
   try {
     const { uid } = req.params;
     const user = await findUser(uid);
     res.status(200);
-    res.send(user);
+    return res.send(user);
   } catch {
-    res.status(400);
-    res.send({ error: 'An error occurred while grabbing a single user' });
+    return next(new Error('An error occurred while grabbing a single user'));
   }
 };
 

@@ -153,7 +153,7 @@ describe('MongoDB Generic Words', () => {
         .then(() => {
           getGenericWord(NONEXISTENT_ID)
             .end((_, result) => {
-              expect(result.status).to.equal(400);
+              expect(result.status).to.equal(404);
               expect(result.error).to.not.equal(undefined);
               done();
             });
@@ -312,7 +312,7 @@ describe('MongoDB Generic Words', () => {
               expect(deleteRes.status).to.equal(200);
               getGenericWord(firstGenericWord.id)
                 .end((_, searchGenericWordRes) => {
-                  expect(searchGenericWordRes.status).to.equal(400);
+                  expect(searchGenericWordRes.status).to.equal(404);
                   expect(searchGenericWordRes.body.error).to.not.equal(undefined);
                   done();
                 });
