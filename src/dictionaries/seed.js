@@ -22,7 +22,7 @@ const populate = async () => {
       }),
     );
     /* Waits for all the MongoDB document save promises to resolve */
-    await Promise.all(wordPromises)
+    const savedWords = await Promise.all(wordPromises)
       .then(() => {
         /* Wait 15 seconds to allow the data to be written to database */
         setTimeout(() => {
@@ -35,7 +35,9 @@ const populate = async () => {
       .catch((err) => {
         console.red('🔴 Seeding failed', err);
       });
+    return savedWords;
   }
+  return Promise.resolve();
 };
 
 const seed = () => {
@@ -47,18 +49,27 @@ const seed = () => {
     });
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', async () => {
+    return db.once('open', async () => {
       console.green('🗄 Database is connected');
-      populate();
+      return populate();
     });
-  } else {
-    populate();
   }
+  return populate();
+};
+
+const sendResponseAndEndServer = (res) => {
+  res.redirect('/');
+  return setTimeout(() => process.exit(0), 2000);
 };
 
 export const seedDatabase = async (_, res, next) => {
   try {
-    seed();
+    await seed();
+    /* Ends the docker container to restart. Necessary for
+     * Text Indexes to be created for testing purposes */
+    if (process.env.CONTAINER_HOST === 'mongodb') {
+      return sendResponseAndEndServer(res);
+    }
     return res.redirect('/');
   } catch (err) {
     return next(new Error('An error occurred during seeding'));

@@ -9,7 +9,7 @@ services:
       - 27017:27017
   server:
     container_name: igbo_api_server
-    restart: on-failure
+    restart: always
     build: .
     image: ijemmao/igbo_api_server
     ports:
