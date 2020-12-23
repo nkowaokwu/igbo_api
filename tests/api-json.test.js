@@ -18,12 +18,13 @@ describe('JSON Dictionary', () => {
   before(function (done) {
     this.timeout(120000);
     server.clearDatabase();
-    Promise.all([
-      populateAPI(),
-      populateGenericWordsAPI(),
-    ]).then(() => {
-      setTimeout(() => done(), 30000);
-    });
+    populateAPI()
+      .then(() => {
+        populateGenericWordsAPI()
+          .end(() => {
+            setTimeout(() => done(), 10000);
+          });
+      });
   });
 
   describe('/GET words', () => {

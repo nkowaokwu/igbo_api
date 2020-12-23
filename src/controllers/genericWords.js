@@ -140,9 +140,12 @@ export const createGenericWords = async (_, res, next) => {
     const dictionary = process.env.NODE_ENV === 'test' ? testGenericWordsDictionary : genericWordsDictionary;
     const genericWordsPromises = await seedGenericWords(dictionary);
     const genericWords = await Promise.all(genericWordsPromises)
-      .then(() => (
-        res.send({ message: 'Successfully populated generic words' })
-      ));
+      .then(() => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.green('✅ Seeding successful');
+        }
+        return 'Successfully populated generic words';
+      });
     return res.send(genericWords);
   } catch (err) {
     return next(err);
