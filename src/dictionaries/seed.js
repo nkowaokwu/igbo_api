@@ -59,7 +59,10 @@ const seed = () => {
 
 const sendResponseAndEndServer = (res) => {
   res.redirect('/');
-  return setTimeout(() => process.exit(0), 2000);
+  return setTimeout(() => {
+    console.log('💡 Restarting the server');
+    return process.exit(0);
+  }, 2000);
 };
 
 export const seedDatabase = async (_, res, next) => {
