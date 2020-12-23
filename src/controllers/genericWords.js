@@ -142,7 +142,7 @@ export const createGenericWords = async (_, res, next) => {
     const genericWords = await Promise.all(genericWordsPromises)
       .then(() => {
         if (process.env.NODE_ENV !== 'production') {
-          console.green('✅ Seeding successful');
+          console.green('✅ Seeding successful for genericWords');
         }
         return 'Successfully populated generic words';
       });
