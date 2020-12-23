@@ -59,9 +59,7 @@ const createWordFromSuggestion = (wordSuggestionData) => (
               return wordRes.body;
             });
         })
-        .catch((err) => {
-          console.log({ err: err.message });
-        });
+        .catch(() => {});
     })
 );
 
