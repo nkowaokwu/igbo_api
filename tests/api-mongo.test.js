@@ -865,6 +865,42 @@ describe('MongoDB Words', () => {
             });
         });
     });
+
+    it('should delete all wordSuggestions that are associated with the combined word', (done) => {
+      createWordFromSuggestion(updatedWordSuggestionData)
+        .then((word) => {
+          suggestNewWord({ ...wordSuggestionData, originalWordId: word.id })
+            .then((wordSuggestionRes) => {
+              suggestNewWord({ ...wordSuggestionData, originalWordId: word.id })
+                .then((secondWordSuggestionRes) => {
+                  expect(wordSuggestionRes.status).to.equal(200);
+                  createWordFromSuggestion(updatedWordSuggestionData)
+                    .then((secondWord) => {
+                      suggestNewWord({ ...wordSuggestionData, originalWordId: secondWord.id })
+                        .then((thirdWordSuggestionRes) => {
+                          deleteWord(word.id, secondWord.id)
+                            .then((combinedWordRes) => {
+                              expect(combinedWordRes.status).to.equal(200);
+                              getWordSuggestion(wordSuggestionRes.body.id)
+                                .then((firstNonExistentWordSuggestionRes) => {
+                                  expect(firstNonExistentWordSuggestionRes.status).to.equal(404);
+                                  getWordSuggestion(secondWordSuggestionRes.body.id)
+                                    .then((secondNonExistentWordSuggestionRes) => {
+                                      expect(secondNonExistentWordSuggestionRes.status).to.equal(404);
+                                      getWordSuggestion(thirdWordSuggestionRes.body.id)
+                                        .then((thirdExistentWordSuggestionRes) => {
+                                          expect(thirdExistentWordSuggestionRes.status).to.equal(200);
+                                          expect(thirdExistentWordSuggestionRes.body.id).to.not.equal(undefined);
+                                          done();
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    });
   });
 });
-// TODO: write test to check if mergedBy field for nested examples gets populated
