@@ -46,6 +46,10 @@ export const findWordSuggestionById = (id) => (
   WordSuggestion.findById(id)
 );
 
+export const deleteWordSuggestionsByOriginalWordId = (id) => (
+  WordSuggestion.deleteMany({ originalWordId: id })
+);
+
 /* Grabs WordSuggestions and sorts them by their last update in descending order */
 const findWordSuggestions = async ({ regexMatch, skip, limit }) => (
   WordSuggestion
