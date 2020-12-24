@@ -63,12 +63,14 @@ const App = () => (
         <h2 className="header">Docs</h2>
       </div>
       <div className="flex flex-col mb-12">
-        <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
+        <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-12">
           {'Are you a developer interested in using the API? Head over to the '}
-          <a className="link" href={`${API_ROUTE}/docs`}>
-            docs
-          </a>
+          <a className="link" href={`${API_ROUTE}/docs`}>docs</a>
           {' to get started.'}
+        </p>
+        <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
+          {'If you would like to use this API for production purposes, request access by sending us an email at '}
+          <a className="link" href={`mailto:${API_FROM_EMAIL}`}>{API_FROM_EMAIL}</a>
         </p>
       </div>
       <footer className={`flex flex-col text-center lg:text-left lg:flex-row

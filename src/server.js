@@ -75,7 +75,7 @@ app.get('/', (_, res) => {
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', cors({ ...CORS_CONFIG, origin: true }), authentication, router);
+app.use('/api/v1', cors(CORS_CONFIG), authentication, router);
 app.use('/api/v1',
   cors(CORS_CONFIG),
   authentication,
