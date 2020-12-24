@@ -22,8 +22,7 @@ import {
 import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample, executeMergeExample, findExampleByAssociatedWordId } from './examples';
-import { findGenericWordById } from './genericWords';
-import { findWordSuggestionById } from './wordSuggestions';
+import { deleteWordSuggestionsByOriginalWordId } from './wordSuggestions';
 import { sendMergedEmail } from './email';
 import { DICTIONARY_APP_URL } from '../config';
 import { findUser } from './users';
@@ -299,8 +298,9 @@ export const deleteWord = async (req, res, next) => {
       );
       updatedWord.stems = uniqBy([...(updatedWord.stems || []), ...(stems || [])], (stem) => stem);
 
-      // Deletes the specified word
+      /* Deletes the specified word and connected wordSuggestions regardless of their merged status */
       await Word.deleteOne({ _id: toBeDeletedWordId });
+      await deleteWordSuggestionsByOriginalWordId(toBeDeletedWordId);
       await replaceWordIdsFromExampleAssociatedWords(toBeDeletedWordExamples, toBeDeletedWordId, primaryWordId);
       // Returns the result
       return updatedWord.save();
