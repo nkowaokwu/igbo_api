@@ -99,7 +99,8 @@ if (process.env.NODE_ENV !== 'production') {
 app.get('*', (_, res) => {
   res
     .status(404)
-    .sendFile(path.resolve(__dirname, 'dist/404.html'));
+    // .sendFile(path.resolve(__dirname, './build/dist/404.html'));
+    .send({ err: 'You have requested a non-existent route' });
 });
 app.use(errorHandler);
 

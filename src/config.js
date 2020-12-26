@@ -69,3 +69,7 @@ export const SERVICE_ACCOUNT = process.env.FIREBASE_CONFIG
     : process.env.NODE_ENV === 'test'
       ? JSON.parse(dockerSecrets.FIREBASE_CONFIG)
       : '';
+
+// API Key Secrets
+export const DEVELOPER_SECRET = process.env.DEVELOPER_SECRET || 'developer_secret';
+export const { MAIN_KEY } = process.env;

@@ -5,6 +5,7 @@ const wordQuery = (regex) => ({ word: { $regex: regex } });
 const fullTextSearchQuery = (keyword) => ({ $text: { $search: keyword } });
 const variationsQuery = (regex) => ({ variations: { $in: [regex] } });
 const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
+const hostsQuery = (host) => ({ hosts: { $in: [host] } });
 
 /* Regex match query used to later to defined the Content-Range response header */
 export const searchExamplesRegexQuery = (regex) => ({ $or: [{ igbo: regex }, { english: regex }] });
@@ -39,3 +40,4 @@ export const searchForLastWeekQuery = () => ({
   updatedOn: { $gte: LOOK_BACK_DATE.valueOf() },
   merged: { $ne: null },
 });
+export const searchDeveloperWithHostsQuery = hostsQuery;
