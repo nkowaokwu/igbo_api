@@ -18,7 +18,9 @@ router.get('/words/:id', validateApiKey, validId, getWord);
 router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);
 
-router.post('/developers', validateDeveloperBody, postDeveloper);
+if (process.env.NODE_ENV !== 'production') {
+  router.post('/developers', validateDeveloperBody, postDeveloper);
+}
 
 router.post('/wordSuggestions', authorization([]), validateWordBody, postWordSuggestion);
 router.post('/exampleSuggestions', authorization([]), validateExampleBody, postExampleSuggestion);

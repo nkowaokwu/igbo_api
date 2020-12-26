@@ -42,6 +42,11 @@ const SubMenu = ({ isHomepage }) => (
         </li>
       </>
     ) : null}
+    {process.env.NODE_ENV !== 'production' ? (
+      <li className="transition-element hover:text-gray-500">
+        <button type="button">Register API Key</button>
+      </li>
+    ) : null}
     <li className="transition-element hover:text-gray-500">
       <a href={`${API_ROUTE}/docs`}>Docs</a>
     </li>
