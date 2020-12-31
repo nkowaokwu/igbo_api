@@ -13,6 +13,7 @@ import {
   adminRouter,
   editorRouter,
   router,
+  siteRouter,
   testRouter,
 } from './routers';
 import logger from './middleware/logger';
@@ -35,6 +36,7 @@ admin.default.initializeApp({
 });
 
 const app = express();
+
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -68,10 +70,8 @@ app.options('*', cors());
 
 app.use(express.static('./build/dist'));
 
-app.get('/', (_, res) => {
-  res.send(path.resolve(__dirname, '/build/dist/index.html'));
-});
-
+/* Renders the API Site */
+app.use(siteRouter);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
@@ -96,11 +96,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /* Catches all invalid routes and displays the 404 page */
-app.get('*', (_, res) => {
+app.get('**', (_, res) => {
   res
     .status(404)
-    // .sendFile(path.resolve(__dirname, './build/dist/404.html'));
-    .send({ err: 'You have requested a non-existent route' });
+    .sendFile(path.resolve(__dirname, './dist/404.html'));
 });
 app.use(errorHandler);
 

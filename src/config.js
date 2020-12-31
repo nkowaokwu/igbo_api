@@ -51,6 +51,7 @@ export const DICTIONARY_APP_URL = process.env.NODE_ENV === 'production'
 
 // SendGrid API
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
+export const NEW_DEVELOPER_ACCOUNT_TEMPLATE = process.env.NEW_DEVELOPER_ACCOUNT_TEMPLATE || '';
 export const MERGED_SUGGESTION_TEMPLATE = process.env.MERGED_SUGGESTION_TEMPLATE || '';
 export const REJECTED_SUGGESTION_TEMPLATE = process.env.REJECTED_SUGGESTION_TEMPLATE || '';
 export const MERGED_STATS_TEMPLATE = process.env.MERGED_STATS_TEMPLATE || '';
@@ -72,4 +73,4 @@ export const SERVICE_ACCOUNT = process.env.FIREBASE_CONFIG
 
 // API Key Secrets
 export const DEVELOPER_SECRET = process.env.DEVELOPER_SECRET || 'developer_secret';
-export const { MAIN_KEY } = process.env;
+export const MAIN_KEY = process.env.MAIN_KEY || 'main_key';

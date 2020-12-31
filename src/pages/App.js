@@ -6,7 +6,7 @@ import { API_ROUTE, API_FROM_EMAIL } from '../siteConstants';
 
 const App = () => (
   <div className="overflow-x-hidden" id="homepage-container">
-    <Navbar />
+    <Navbar isHomepage />
     <div>
       <div className="flex flex-col justify-center w-screen h-screen p-0 lg:pt-32">
         <h1 className="text-4xl md:text-6xl font-extrabold text-center mt-6 mb-24">The First African Language API</h1>

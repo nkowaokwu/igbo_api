@@ -1,12 +1,17 @@
-import { assign } from 'lodash';
 import Developer from '../models/Developer';
 import { hash } from '../controllers/developers';
 import { searchDeveloperWithHostsQuery } from '../controllers/utils/queries';
 import { MAIN_KEY } from '../config';
 
-const LIMIT = 2500;
+const PROD_LIMIT = 2500;
 const FALLBACK_HOST = 'http://localhost:8000';
 const FALLBACK_API_KEY = 'fallback_api_key';
+
+const determineLimit = (apiLimit) => (
+  process.env.NODE_ENV === 'test'
+    ? apiLimit || PROD_LIMIT
+    : PROD_LIMIT
+);
 
 const isSameDate = (first, second) => (
   first.getFullYear() === second.getFullYear()
@@ -21,8 +26,8 @@ const isHashedValueKey = (value, hashedValue) => {
 };
 
 /* Increments usage count and updates usage date */
-const handleDeveloperUsage = (developer) => {
-  const updatedDeveloper = assign(developer);
+const handleDeveloperUsage = async (developer) => {
+  const updatedDeveloper = developer;
   const isNewDay = !isSameDate(updatedDeveloper.usage.date, new Date());
   updatedDeveloper.usage.date = Date.now();
 
@@ -35,12 +40,25 @@ const handleDeveloperUsage = (developer) => {
   return updatedDeveloper.save();
 };
 
+/* Finds a developer with provided information */
+const findDeveloper = async ({ host, apiKey }) => {
+  /* Developer is a development environment */
+  if (host.match(/localhost/)) {
+    const hashedApiKey = hash(apiKey);
+    return Developer.findOne({ apiKey: hashedApiKey });
+  }
+  const hostsQuery = searchDeveloperWithHostsQuery(host);
+  const developers = await Developer.find(hostsQuery);
+  return developers.find((dev) => isHashedValueKey(apiKey, dev.apiKey));
+};
+
 export default async (req, res, next) => {
   try {
+    const { apiLimit } = req.query;
     let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
     let host = req.headers.Origin || req.headers.origin;
 
-    if ((!apiKey || !host) && process.env.NODE_ENV !== 'production') {
+    if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
       if (!host) {
         host = FALLBACK_HOST;
       }
@@ -60,23 +78,15 @@ export default async (req, res, next) => {
       return next();
     }
 
+    /* While in development or testing, using the FALLBACK_API_KEY will grant access */
     if (apiKey === FALLBACK_API_KEY && process.env.NODE_ENV !== 'production') {
       return next();
     }
 
-    let developer;
-    /* Developer is a development environment */
-    if (host.match(/localhost/)) {
-      const hashedApiKey = hash(apiKey);
-      developer = Developer.findOne({ apiKey: hashedApiKey });
-    } else {
-      const hostsQuery = searchDeveloperWithHostsQuery(host);
-      const developers = await Developer.find(hostsQuery);
-      developer = developers.find((dev) => isHashedValueKey(apiKey, dev.apiKey));
-    }
+    const developer = await findDeveloper({ host, apiKey });
 
     if (developer) {
-      if (developer.usage.count >= LIMIT) {
+      if (developer.usage.count >= determineLimit(apiLimit)) {
         res.status(403);
         return res.send({ error: 'You have exceeded your limit of requests for the day' });
       }

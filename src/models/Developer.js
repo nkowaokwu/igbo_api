@@ -3,6 +3,7 @@ import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 
 const { Schema } = mongoose;
 const developerSchema = new Schema({
+  name: { type: String, default: '', required: true },
   apiKey: { type: String, default: '', required: true },
   email: { type: String, default: '', required: true },
   password: { type: String, default: '', required: true },

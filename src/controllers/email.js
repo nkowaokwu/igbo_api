@@ -1,5 +1,6 @@
 import { map, omit } from 'lodash';
 import {
+  NEW_DEVELOPER_ACCOUNT_TEMPLATE,
   MERGED_SUGGESTION_TEMPLATE,
   REJECTED_SUGGESTION_TEMPLATE,
   MERGED_STATS_TEMPLATE,
@@ -77,6 +78,17 @@ export const sendMergedStats = (data) => {
     from: { email: API_FROM_EMAIL, name: 'Igbo API' },
     to: data.to,
     templateId: MERGED_STATS_TEMPLATE,
+    dynamic_template_data: omit(data, ['to']),
+  });
+  return sendEmail(message);
+};
+
+/* Email sent out to newly signed up Developers */
+export const sendNewDeveloper = (data) => {
+  const message = constructMessage({
+    from: { email: API_FROM_EMAIL, name: 'Igbo API' },
+    to: [data.to],
+    templateId: NEW_DEVELOPER_ACCOUNT_TEMPLATE,
     dynamic_template_data: omit(data, ['to']),
   });
   return sendEmail(message);

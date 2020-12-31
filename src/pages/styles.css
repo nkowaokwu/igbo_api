@@ -13,6 +13,10 @@ html {
   font-weight: normal;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 h1 {
   font-family: 'Silka', sans-serif;
   font-weight: 900;
