@@ -8,17 +8,13 @@ import {
   map,
 } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
-import createRegExp from '../../shared/utils/createRegExp';
+import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
 import { findUser } from '../users';
 import UserRoles from '../../shared/constants/userRoles';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
-
-/* Either creates a regex pattern for provided searchWord
-or fallbacks to matching every word */
-export const createQueryRegex = (searchWord) => (!searchWord ? /./ : createRegExp(searchWord));
 
 /* Determines if an empty response should be returned
  * if the request comes from an unauthed user in production
