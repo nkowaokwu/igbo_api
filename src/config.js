@@ -44,19 +44,10 @@ export const SWAGGER_DOCS = docs;
 // API Homepage
 export const API_ROUTE = process.env.NODE_ENV === 'production' ? '' : `http://localhost:${PORT}`;
 
-// Dictionary App
-export const DICTIONARY_APP_URL = process.env.NODE_ENV === 'production'
-  ? 'https://nkowaokwu.com'
-  : 'http://localhost:8000'; // A local instance of the dictionary app must be running
-
 // SendGrid API
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const NEW_DEVELOPER_ACCOUNT_TEMPLATE = process.env.NEW_DEVELOPER_ACCOUNT_TEMPLATE || '';
-export const MERGED_SUGGESTION_TEMPLATE = process.env.MERGED_SUGGESTION_TEMPLATE || '';
-export const REJECTED_SUGGESTION_TEMPLATE = process.env.REJECTED_SUGGESTION_TEMPLATE || '';
-export const MERGED_STATS_TEMPLATE = process.env.MERGED_STATS_TEMPLATE || '';
 export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'igboapi@gmail.com';
-export const NKOWAOKWU_FROM_EMAIL = process.env.NKOWAOKWU_FROM_EMAIL || 'nkowaokwu@gmail.com';
 
 if (sgMail) {
   sgMail.setApiKey(SENDGRID_API_KEY);

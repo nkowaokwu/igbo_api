@@ -1,18 +1,14 @@
 import { map, omit } from 'lodash';
 import {
   NEW_DEVELOPER_ACCOUNT_TEMPLATE,
-  MERGED_SUGGESTION_TEMPLATE,
-  REJECTED_SUGGESTION_TEMPLATE,
-  MERGED_STATS_TEMPLATE,
   API_FROM_EMAIL,
-  NKOWAOKWU_FROM_EMAIL,
 } from '../config';
 
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
 
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields) => ({
-  from: { email: NKOWAOKWU_FROM_EMAIL, name: 'Nkowaokwu' },
+  from: { email: API_FROM_EMAIL, name: 'Igbo API' },
   ...messageFields,
   reply_to: { email: API_FROM_EMAIL, name: 'Igbo API' },
   personalizations: map(messageFields.to, (to) => ({ to: [{ email: to }] })),
@@ -40,53 +36,9 @@ export const sendEmail = (message) => (
   })()
 );
 
-/* Email sent when an editor clicks the approve button */
-export const sendApprovedEmail = (data) => {
-  const message = constructMessage(data);
-  return sendEmail(message);
-};
-
-/* Email sent when an editor clicks the deny button */
-export const sendDeniedEmail = (data) => {
-  const message = constructMessage(data);
-  return sendEmail(message);
-};
-
-/* Email sent when suggestion gets merged */
-export const sendMergedEmail = (data) => {
-  const message = constructMessage({
-    to: data.to,
-    templateId: MERGED_SUGGESTION_TEMPLATE,
-    dynamic_template_data: omit(data, ['to']),
-  });
-  return sendEmail(message);
-};
-
-/* Email sent when a suggestion has been deleted without getting merged */
-export const sendRejectedEmail = (data) => {
-  const message = constructMessage({
-    to: data.to,
-    templateId: REJECTED_SUGGESTION_TEMPLATE,
-    dynamic_template_data: omit(data, ['to']),
-  });
-  return sendEmail(message);
-};
-
-/* Email sent every week to editors, mergers, and admins */
-export const sendMergedStats = (data) => {
-  const message = constructMessage({
-    from: { email: API_FROM_EMAIL, name: 'Igbo API' },
-    to: data.to,
-    templateId: MERGED_STATS_TEMPLATE,
-    dynamic_template_data: omit(data, ['to']),
-  });
-  return sendEmail(message);
-};
-
 /* Email sent out to newly signed up Developers */
 export const sendNewDeveloper = (data) => {
   const message = constructMessage({
-    from: { email: API_FROM_EMAIL, name: 'Igbo API' },
     to: [data.to],
     templateId: NEW_DEVELOPER_ACCOUNT_TEMPLATE,
     dynamic_template_data: omit(data, ['to']),

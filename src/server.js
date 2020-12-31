@@ -9,16 +9,9 @@ import morgan from 'morgan';
 import * as admin from 'firebase-admin';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
-import {
-  adminRouter,
-  editorRouter,
-  router,
-  siteRouter,
-  testRouter,
-} from './routers';
+import { router, siteRouter, testRouter } from './routers';
 import logger from './middleware/logger';
 import authentication from './middleware/authentication';
-import authorization from './middleware/authorization';
 import errorHandler from './middleware/errorHandler';
 import {
   PORT,
@@ -27,8 +20,6 @@ import {
   SERVICE_ACCOUNT,
   CORS_CONFIG,
 } from './config';
-import UserRoles from './shared/constants/userRoles';
-import './services/sendEmail';
 
 admin.default.initializeApp({
   ...SERVICE_ACCOUNT,
@@ -75,14 +66,7 @@ app.use(siteRouter);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', cors(CORS_CONFIG), authentication, router);
-app.use('/api/v1',
-  cors(CORS_CONFIG),
-  authentication,
-  authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]),
-  editorRouter,
-);
-app.use('/api/v1', cors(CORS_CONFIG), authentication, authorization([UserRoles.ADMIN]), adminRouter);
+app.use('/api/v1', authentication, router);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
@@ -90,7 +74,6 @@ if (process.env.NODE_ENV !== 'production') {
     '/api/v1/test',
     cors({ ...CORS_CONFIG, origin: true }),
     authentication,
-    authorization([UserRoles.EDITOR, UserRoles.MERGER, UserRoles.ADMIN]),
     testRouter,
   );
 }

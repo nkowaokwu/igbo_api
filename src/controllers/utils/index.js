@@ -1,16 +1,9 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import {
-  assign,
-  isNaN,
-  orderBy,
-  get,
-  map,
-} from 'lodash';
+import { isNaN, orderBy, get } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
-import { findUser } from '../users';
 import UserRoles from '../../shared/constants/userRoles';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
@@ -30,16 +23,6 @@ const constructRegexQuery = ({ user, searchWord }) => (
       ? createQueryRegex(searchWord)
       : /^[.{0,}\n{0,}]/
 );
-
-/* Given a list of keys, where each key's value is a list of Firebase uids,
- * replace each uid with a user object */
-export const populateFirebaseUsers = async (doc, keys) => {
-  const docWithPopulateFirebaseUsers = assign(doc);
-  await Promise.all(map(keys, async (key) => {
-    docWithPopulateFirebaseUsers[key] = await Promise.all(map(docWithPopulateFirebaseUsers[key], findUser));
-  }));
-  return docWithPopulateFirebaseUsers;
-};
 
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key) => (
@@ -179,10 +162,4 @@ export const handleQueries = ({ query = {}, user = {} }) => {
     limit,
     strict,
   };
-};
-
-/* Updates a document's merge property with a document id */
-export const updateDocumentMerge = (suggestionDoc, originalDocId, mergedBy = null) => {
-  const updatedSuggestion = assign(suggestionDoc, { merged: originalDocId, mergedBy });
-  return updatedSuggestion.save();
 };
