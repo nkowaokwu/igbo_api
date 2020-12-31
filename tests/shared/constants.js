@@ -82,3 +82,5 @@ export const AUTH_TOKEN = {
   EDITOR_AUTH_TOKEN: 'editor-auth-token',
   USER_AUTH_TOKEN: 'user-auth-token',
 };
+export const API_KEY = 'fallback_api_key';
+export const ORIGIN_HEADER = 'test.com';

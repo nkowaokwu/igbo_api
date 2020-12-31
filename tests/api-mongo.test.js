@@ -840,7 +840,8 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should handle a word with a null stems field', (done) => {
+    it('should handle a word with a null stems field', function (done) {
+      this.timeout(15000);
       getWords({ range: '[0, 24]' })
         .then((wordsRes) => {
           expect(wordsRes.status).to.equal(200);

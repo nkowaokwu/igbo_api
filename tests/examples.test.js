@@ -226,7 +226,7 @@ describe('MongoDB Examples', () => {
         .then(() => {
           getExample(NONEXISTENT_ID)
             .end((_, result) => {
-              expect(result.status).to.equal(400);
+              expect(result.status).to.equal(404);
               expect(result.error).to.not.equal(undefined);
               done();
             });

@@ -36,8 +36,9 @@ jobs:
       env:
         CI: test
         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+        MAIN_KEY: ${{ secrets.MAIN_KEY }}
     - name: Test API Homepage
-      run: yarn cypress
+      run: yarn cypress:ci
       env:
         CI: test
         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}

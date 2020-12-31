@@ -106,7 +106,21 @@ const genericWordWithNestedExampleSuggestionData = {
   examples: [exampleSuggestionData],
 };
 
+const developerData = {
+  name: 'Developer',
+  email: 'developer@example.com',
+  password: 'password',
+  host: 'test.com',
+};
+
+const malformedDeveloperData = {
+  name: 'Developer',
+  email: 'developer@example.com',
+  password: 'password',
+};
+
 export {
+  wordId,
   wordSuggestionId,
   wordSuggestionData,
   wordSuggestionApprovedData,
@@ -116,6 +130,7 @@ export {
   genericWordWithNestedExampleSuggestionData,
   malformedWordData,
   updatedWordData,
+  exampleId,
   exampleSuggestionData,
   exampleSuggestionApprovedData,
   malformedExampleSuggestionData,
@@ -125,4 +140,6 @@ export {
   genericWordData,
   malformedGenericWordData,
   updatedGenericWordData,
+  developerData,
+  malformedDeveloperData,
 };

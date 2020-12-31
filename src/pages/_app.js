@@ -29,7 +29,7 @@ MainApp.getInitialProps = async (appContext) => {
       method: 'get',
       url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}`,
       headers: {
-        'X-API-Key': process.env.MAIN_KEY, // TODO: double check this works!!!
+        'X-API-Key': process.env.MAIN_KEY,
       }
     });
     return { ...appProps, searchWord, words: res.data };

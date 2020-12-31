@@ -12,7 +12,10 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["eslint-plugin-jsx-a11y"],
+  "plugins": [
+    "eslint-plugin-jsx-a11y",
+    "cypress"
+  ],
   "rules": {
     "function-paren-newline": ["off"],
     "import/prefer-default-export": ["off"],

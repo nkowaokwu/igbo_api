@@ -1,4 +1,5 @@
 {
+  "baseUrl": "http://localhost:8080",
   "video": false,
   "execTimeout": 5000,
   "integrationFolder": "tests/cypress/integration",
