@@ -11,7 +11,6 @@ import compression from 'compression';
 import './shared/utils/wrapConsole';
 import { router, siteRouter, testRouter } from './routers';
 import logger from './middleware/logger';
-import authentication from './middleware/authentication';
 import errorHandler from './middleware/errorHandler';
 import {
   PORT,
@@ -66,14 +65,13 @@ app.use(siteRouter);
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', authentication, router);
+app.use('/api/v1', router);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
   app.use(
     '/api/v1/test',
     cors({ ...CORS_CONFIG, origin: true }),
-    authentication,
     testRouter,
   );
 }

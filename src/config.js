@@ -1,7 +1,6 @@
 import { secrets as dockerSecrets } from 'docker-secret';
 import * as packageJson from '../package.json';
-import devSwaggerDocument from '../dev.swagger.json';
-import prodSwaggerDocument from '../prod.swagger.json';
+import swaggerConfig from '../swagger.json';
 
 const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
@@ -40,7 +39,7 @@ const SWAGGER_OPTIONS = {
   basePath: '/api/v1/',
 };
 
-const docs = { ...(process.env.NODE_ENV === 'production' ? prodSwaggerDocument : devSwaggerDocument), SWAGGER_OPTIONS };
+const docs = { ...swaggerConfig, SWAGGER_OPTIONS };
 export const SWAGGER_DOCS = docs;
 
 // API Homepage

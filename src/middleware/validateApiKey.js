@@ -58,6 +58,11 @@ export default async (req, res, next) => {
     let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
     let host = req.headers.Origin || req.headers.origin;
 
+    /* Official sites can bypass validation */
+    if (apiKey === MAIN_KEY) {
+      return next();
+    }
+
     if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
       if (!host) {
         host = FALLBACK_HOST;
@@ -71,11 +76,6 @@ export default async (req, res, next) => {
     }
     if (!host) {
       throw new Error('Origin Header doesn\'t exist');
-    }
-
-    /* Official sites can bypass validation */
-    if (apiKey === MAIN_KEY) {
-      return next();
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
