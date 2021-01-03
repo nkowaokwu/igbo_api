@@ -60,7 +60,9 @@ export const normalizeExampleHook = (schema) => {
     })
   ));
   schema.post('findOne', (doc) => {
-    doc.igbo = accents.remove(doc.igbo);
+    if (doc) {
+      doc.igbo = accents.remove(doc?.igbo || '');
+    }
     return doc;
   });
 };

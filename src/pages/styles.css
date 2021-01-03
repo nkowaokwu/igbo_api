@@ -1,26 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './general.css';
 
 *::selection {
   @apply bg-green-400;
   @apply text-white ;
-}
-
-html {
-  width: 100vw;
-  font-family: 'Silka', sans-serif;
-  font-weight: normal;
-}
-
-h1 {
-  font-family: 'Silka', sans-serif;
-  font-weight: 900;
-}
-
-h2, h3, a {
-  font-family: 'Silka', sans-serif;
-  font-weight: 700;
 }
 
 .transition-element {
@@ -47,6 +32,60 @@ h2, h3, a {
 
 .link:hover {
   @apply text-green-700;
+}
+
+.primary-button {
+  @apply h-12;
+  @apply bg-gradient-to-r;
+  @apply from-green-400;
+  @apply to-green-500;
+  @apply text-lg;
+  @apply text-white;
+  @apply rounded-md;
+  @apply font-thin;
+  @apply transition-all;
+  @apply duration-300;
+  @apply select-none;
+}
+
+.primary-button:hover {
+  @apply bg-gradient-to-r;
+  @apply from-green-500;
+  @apply to-green-600;
+}
+
+.navbar {
+  @apply transition-all;
+  @apply flex;
+  @apply flex-col;
+  @apply absolute;
+  @apply w-screen;
+  @apply text-gray-800;
+  @apply list-none;
+  @apply bg-white;
+  @apply top-0;
+  @apply py-10;
+  @apply mt-16;
+  @apply px-5;
+  @apply shadow-md;
+  @apply rounded-md;
+  @apply select-none;
+}
+
+.navbar li:hover {
+  @apply text-gray-500;
+}
+
+.transparent-navbar {
+  @apply text-white;
+}
+.transparent-navbar li:hover {
+  @apply text-green-200;
+}
+
+
+.error {
+  @apply text-red-600;
 }
 
 .jsonPretty {
@@ -86,6 +125,23 @@ h2, h3, a {
     overflow: scroll;
     font-size: 1em;
     background-color: rgb(249, 249, 249);
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar {
+    @apply flex-row;
+    @apply w-auto;
+    @apply relative;
+    @apply bg-transparent;
+    @apply py-0;
+    @apply mt-0;
+    @apply px-0;
+    @apply shadow-none;
+  }
+
+  .transparent-navbar, .transition-navbar:hover {
+    @apply text-white;
   }
 }
 
