@@ -70,14 +70,15 @@ export const WORD_SUGGESTION_KEYS = [
 ];
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const SITE_TITLE = 'The First African Language API';
-export const DOCS_SITE_TITLE = 'Swagger UI';
 export const INVALID_ID = 'fdsafdsad';
 export const NONEXISTENT_ID = new mongoose.Types.ObjectId();
+export const MESSAGE = {
+  to: 'test@example.com',
+};
+export const INVALID_MESSAGE = {};
 export const AUTH_TOKEN = {
   ADMIN_AUTH_TOKEN: 'admin-auth-token',
   MERGER_AUTH_TOKEN: 'merger-auth-token',
   EDITOR_AUTH_TOKEN: 'editor-auth-token',
   USER_AUTH_TOKEN: 'user-auth-token',
 };
-export const API_KEY = 'fallback_api_key';
-export const ORIGIN_HEADER = 'test.com';

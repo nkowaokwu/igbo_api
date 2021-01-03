@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 
+// TODO: Repurpose this page
 const About = () => (
-  <div className="flex flex-col items-center h-screen">
+  <div className="flex flex-col items-center">
     <Navbar to="/" isHomepage={false} />
     <div className={`flex flex-col items-center lg:items-start lg:justify-center
-    lg:flex-row pt-10 lg:pt-32 w-10/12 lg:w-10/12 h-full text-gray-800 lg:text-xl`}
+    lg:flex-row pt-10 lg:pt-32 w-10/12 lg:w-10/12 text-gray-800 lg:text-xl`}
     >
       <div className="w-full lg:w-8/12">
         <h1 className="text-3xl text-gray-800 lg:mt-0">About</h1>
@@ -27,7 +27,7 @@ const About = () => (
         </p>
         <p>
           {'This is a '}
-          <a className="link" href="https://github.com/ijemmao/igbo_api">open-source passion project</a>
+          <a className="link" href="https://github/ijemmao/igbo_api">open-source passion project</a>
           {' by '}
           <a
             className="link"
@@ -46,7 +46,6 @@ const About = () => (
         </p>
       </div>
     </div>
-    <Footer />
   </div>
 );
 

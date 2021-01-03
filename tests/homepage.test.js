@@ -1,6 +1,6 @@
 import chai from 'chai';
 import { getAPIUrlRoute, getLocalUrlRoute } from './shared/commands';
-import { SITE_TITLE, DOCS_SITE_TITLE } from './shared/constants';
+import { SITE_TITLE } from './shared/constants';
 
 const { expect } = chai;
 
@@ -15,19 +15,6 @@ describe('API Homepage', () => {
         expect(res.text).to.not.contain('An unexpected error has occurred.');
         expect(res.text).to.contain('Igbo API');
         expect(res.text).to.contain(SITE_TITLE);
-        done();
-      });
-  });
-
-  it.only('should render the docs site', (done) => {
-    getLocalUrlRoute('/docs')
-      .end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.type).to.equal('text/html');
-        expect(res.charset.toLowerCase()).to.equal('utf-8');
-        expect(res.body).to.be.an('object');
-        expect(res.text).to.not.contain('An unexpected error has occurred.');
-        expect(res.text).to.contain(DOCS_SITE_TITLE);
         done();
       });
   });

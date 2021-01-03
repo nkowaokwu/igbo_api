@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import JSONPretty from 'react-json-pretty';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 
-const Demo = ({ searchWord, words }) => {
-  const [keyword, setKeyword] = useState(searchWord);
+const Demo = () => {
+  const [keyword, setKeyword] = useState('');
+  const [responseBody, setResponseBody] = useState(null);
   const [productionUrl, setProductionUrl] = useState('');
-  const responseBody = JSON.stringify(words, null, 4);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // eslint-disable-next-line
       setProductionUrl(window.origin);
-      window.location.hash = 'try-it-out';
     }
   });
 
-  const onSubmit = (e) => {
-    e?.preventDefault();
-    window.location.href = `/?word=${keyword}`;
+  const onSubmit = () => {
+    // eslint-disable-next-line no-undef
+    fetch(`${API_ROUTE}/api/v1/words?keyword=${keyword}`).then(async (res) => {
+      const text = await res.text();
+      setResponseBody(text, null, 4);
+    });
   };
 
   const onEnter = (e) => {
@@ -30,7 +32,7 @@ const Demo = ({ searchWord, words }) => {
     <div className="flex justify-center">
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10">
         <div className="demo-inputs-container space-y-5">
-          <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
+          <div className="flex flex-col w-full space-y-5">
             <p className="self-center md:self-start">
               {'Enter a word in either English or Igbo to see it\'s information'}
             </p>
@@ -39,7 +41,6 @@ const Demo = ({ searchWord, words }) => {
               onKeyPress={onEnter}
               className="h-12 w-full border-current border-solid border-2 rounded-md px-3 py-5"
               placeholder="i.e. please or biko"
-              defaultValue={searchWord}
             />
             <input
               disabled
@@ -47,8 +48,9 @@ const Demo = ({ searchWord, words }) => {
               className="w-full py-3 px-5"
             />
             <button
-              type="submit"
-              className="primary-button w-full"
+              type="button"
+              onClick={onSubmit}
+              className="transition-element h-12 w-full rounded-md hover:bg-green-600 bg-green-800 text-gray-100"
             >
               Submit
             </button>
@@ -58,7 +60,7 @@ const Demo = ({ searchWord, words }) => {
                 dictionary app
               </a>
             </p>
-          </form>
+          </div>
         </div>
         <div className="flex flex-col w-full lg:w-auto">
           <h3
@@ -71,16 +73,6 @@ const Demo = ({ searchWord, words }) => {
       </div>
     </div>
   );
-};
-
-Demo.propTypes = {
-  searchWord: PropTypes.string,
-  words: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-Demo.defaultProps = {
-  searchWord: '',
-  words: [],
 };
 
 export default Demo;
