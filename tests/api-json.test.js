@@ -6,6 +6,7 @@ import server from '../src/server';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
 import {
   populateAPI,
+  populateGenericWordsAPI,
   searchTerm,
 } from './shared/commands';
 
@@ -18,8 +19,11 @@ describe('JSON Dictionary', () => {
     this.timeout(120000);
     server.clearDatabase();
     populateAPI()
-      .end(() => {
-        setTimeout(() => done(), 10000);
+      .then(() => {
+        populateGenericWordsAPI()
+          .end(() => {
+            setTimeout(() => done(), 10000);
+          });
       });
   });
 
