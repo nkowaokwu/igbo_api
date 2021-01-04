@@ -58,7 +58,10 @@ if (process.env.NODE_ENV === 'development') {
 
 app.options('*', cors());
 
+/* Provides static assets for the API Homepage */
 app.use('/_next', express.static('./build/dist'));
+app.use('/assets', express.static('./build/dist/assets'));
+app.use('/fonts', express.static('./build/dist/fonts'));
 
 /* Renders the API Site */
 app.use(siteRouter);
