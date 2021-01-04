@@ -3,7 +3,6 @@ import server from '../../src/server';
 import {
   API_ROUTE,
   API_KEY,
-  API_URL,
   AUTH_TOKEN,
   ORIGIN_HEADER,
   LOCAL_ROUTE,
@@ -75,12 +74,6 @@ export const searchTerm = (term) => (
     .request(server)
     .get(`${TEST_ROUTE}/words`)
     .query({ keyword: term })
-);
-
-export const getAPIUrlRoute = (route = LOCAL_ROUTE) => (
-  chai
-    .request(API_URL)
-    .get(route)
 );
 
 export const getLocalUrlRoute = (route = LOCAL_ROUTE) => (
