@@ -13,11 +13,11 @@ const MAX_RESPONSE_LIMIT = 25;
  * if the request comes from an unauthed user in production
  */
 const constructRegexQuery = ({ user, searchWord }) => (
-  user.role && (
+  (user.role && (
     user.role === UserRoles.EDITOR
     || user.role === UserRoles.MERGER
     || user.role === UserRoles.ADMIN
-  )
+  )) || process.env.NODE_ENV === 'test'
     ? createQueryRegex(searchWord)
     : searchWord
       ? createQueryRegex(searchWord)
