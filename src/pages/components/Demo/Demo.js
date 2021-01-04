@@ -9,11 +9,11 @@ const Demo = ({ searchWord, words }) => {
   const responseBody = JSON.stringify(words, null, 4);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && keyword) {
       setProductionUrl(window.origin);
       window.location.hash = 'try-it-out';
     }
-  });
+  }, []);
 
   const onSubmit = (e) => {
     e?.preventDefault();

@@ -1,5 +1,4 @@
 import express from 'express';
-import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -58,7 +57,10 @@ if (process.env.NODE_ENV === 'development') {
 
 app.options('*', cors());
 
+/* Provides static assets for the API Homepage */
 app.use('/_next', express.static('./build/dist'));
+app.use('/assets', express.static('./build/dist/assets'));
+app.use('/fonts', express.static('./build/dist/fonts'));
 
 /* Renders the API Site */
 app.use(siteRouter);
@@ -77,11 +79,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /* Catches all invalid routes and displays the 404 page */
-app.get('**', (_, res) => {
-  res
-    .status(404)
-    .sendFile(path.resolve(__dirname, './dist/404.html'));
-});
+app.get('**', (_, res) => (
+  res.redirect('/')
+));
 app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
