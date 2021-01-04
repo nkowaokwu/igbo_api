@@ -58,7 +58,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.options('*', cors());
 
-app.use(express.static('./build/dist'));
+app.use('/_next', express.static('./build/dist'));
 
 /* Renders the API Site */
 app.use(siteRouter);

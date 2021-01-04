@@ -19,7 +19,7 @@ describe('API Homepage', () => {
       });
   });
 
-  it.only('should render the docs site', (done) => {
+  it('should render the docs site', (done) => {
     getLocalUrlRoute('/docs')
       .end((_, res) => {
         expect(res.status).to.equal(200);
