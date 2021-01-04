@@ -17,7 +17,7 @@
     "heroku-postbuild": "NODE_ENV=production yarn build && npm-run-all -p -r start migrate-up",
     "mongodump": "shx rm -rf dump/ && mongodump -d igbo_api -o dump",
     "mocha": "cross-env NODE_ENV=test mocha --require @babel/register --timeout 10000 --retries 2 -r esm ./tests",
-    "cypress": "cross-env NODE_ENV=test npm-run-all -p start start:database cypress:open",
+    "cypress": "cross-env NODE_ENV=test npm-run-all -p dev start:database cypress:open",
     "cypress:ci": "cross-env NODE_ENV=test npm-run-all -p -r start cypress:run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",

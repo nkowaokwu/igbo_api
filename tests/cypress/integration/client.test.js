@@ -29,7 +29,7 @@ describe('Igbo API Homepage', () => {
       cy.findByText('Sign up.');
     });
 
-    it('fill out the sign up form and submit for developer account', () => {
+    it.skip('fill out the sign up form and submit for developer account', () => {
       cy.intercept({
         method: 'POST',
         url: '**developers',
