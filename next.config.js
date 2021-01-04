@@ -2,7 +2,7 @@
 const withCSS = require('@zeit/next-css');
 
 module.exports = withCSS({
-  distDir: 'build',
+  distDir: 'build/dist',
   generateBuildId: async () => 'api-homepage',
   webpack: (config, { isServer }) => {
     config.module.rules.push({

@@ -1,21 +1,23 @@
 import express from 'express';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
-import { postWordSuggestion } from '../controllers/wordSuggestions';
-import { postExampleSuggestion } from '../controllers/exampleSuggestions';
+import { postDeveloper } from '../controllers/developers';
+import authentication from '../middleware/authentication';
 import validId from '../middleware/validId';
-import authorization from '../middleware/authorization';
-import validateWordBody from '../middleware/validateWordBody';
-import validateExampleBody from '../middleware/validateExampleBody';
+import validateDeveloperBody from '../middleware/validateDeveloperBody';
+import validateApiKey from '../middleware/validateApiKey';
 
 const router = express.Router();
 
-router.get('/words', getWords);
-router.get('/words/:id', validId, getWord);
-router.get('/examples', getExamples);
-router.get('/examples/:id', validId, getExample);
+router.use(authentication);
 
-router.post('/wordSuggestions', authorization([]), validateWordBody, postWordSuggestion);
-router.post('/exampleSuggestions', authorization([]), validateExampleBody, postExampleSuggestion);
+router.get('/words', validateApiKey, getWords);
+router.get('/words/:id', validateApiKey, validId, getWord);
+router.get('/examples', validateApiKey, getExamples);
+router.get('/examples/:id', validateApiKey, validId, getExample);
+
+if (process.env.NODE_ENV !== 'production') {
+  router.post('/developers', validateDeveloperBody, postDeveloper);
+}
 
 export default router;

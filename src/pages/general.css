@@ -1,0 +1,43 @@
+/* Style sheet dedicated to element tag styling */
+html {
+  width: 100vw;
+  font-family: 'Silka', sans-serif;
+  font-weight: normal;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: 'Silka', sans-serif;
+  font-weight: 900;
+}
+
+h2, h3, a, button {
+  font-family: 'Silka', sans-serif;
+  font-weight: 700;
+}
+
+h1, h2, h3, button, input {
+  @apply select-none
+}
+
+input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]), textarea {
+  @apply transition-all;
+  @apply duration-100;
+} 
+input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]):hover, textarea:hover {
+  border-color: rgba(41, 123, 48, 0.4);
+  box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
+}
+
+input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]):focus, textarea:focus {
+  border-color: rgba(41, 123, 48, 0.4);
+  box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
+  outline: rgba(41, 123, 48, 0.4);
+}
+
+*, button:focus {
+  outline: rgba(41, 123, 48, 0.4);
+}

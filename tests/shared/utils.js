@@ -4,15 +4,7 @@ import {
   forEach,
   map,
   every,
-  isEqual,
 } from 'lodash';
-import {
-  suggestNewWord,
-  suggestNewExample,
-  createWord,
-  createExample,
-  getWord,
-} from './commands';
 import SortingDirections from '../../src/shared/constants/sortingDirections';
 
 const { expect } = chai;
@@ -43,44 +35,7 @@ const expectArrayIsInOrder = (array, key, direction = SortingDirections.ASCENDIN
   expect(isOrdered).to.equal(true);
 };
 
-const createWordFromSuggestion = (wordSuggestionData) => (
-  suggestNewWord(wordSuggestionData)
-    .then((res) => {
-      expect(res.status).to.equal(200);
-      const mergingWordSuggestion = { ...res.body, ...wordSuggestionData };
-      return createWord(mergingWordSuggestion.id)
-        .then((result) => {
-          expect(result.status).to.equal(200);
-          expect(result.body.id).to.not.equal(undefined);
-          expect(result.body.authorId).to.equal(undefined);
-          return getWord(result.body.id)
-            .then((wordRes) => {
-              expect(wordRes.status).to.equal(200);
-              return wordRes.body;
-            });
-        })
-        .catch(() => {});
-    })
-);
-
-const createExampleFromSuggestion = (exampleSuggestionData) => (
-  suggestNewExample(exampleSuggestionData)
-    .then((exampleSuggestionRes) => {
-      expect(exampleSuggestionRes.status).to.equal(200);
-      return createExample(exampleSuggestionRes.body.id)
-        .then((finalRes) => {
-          expect(isEqual(
-            exampleSuggestionRes.body.associatedWords,
-            finalRes.body.associatedWords,
-          )).to.equal(true);
-          return finalRes.body;
-        });
-    })
-);
-
 export {
   expectUniqSetsOfResponses,
   expectArrayIsInOrder,
-  createWordFromSuggestion,
-  createExampleFromSuggestion,
 };

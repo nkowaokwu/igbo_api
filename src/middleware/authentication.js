@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import { forIn } from 'lodash';
 import AUTH_TOKEN from '../shared/constants/testAuthTokens';
-import UserRoles from '../shared/constants/userRoles';
+import UserRoles from '../shared/constants/UserRoles';
 
 /* Validates the user-provided auth token */
 const authentication = async (req, res, next) => {
@@ -36,7 +36,7 @@ const authentication = async (req, res, next) => {
         }
       } catch {
         if (process.env.NODE_ENV === 'production') {
-          console.red('Error while authing Firebase token');
+          console.log('Error while authing Firebase token');
         }
       }
       return next();
