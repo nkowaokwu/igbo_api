@@ -14,6 +14,13 @@ const SignUp = () => {
     errors,
   } = useForm();
 
+  /* Changes the button text depending on the response */
+  const handleCreateDeveloperResponse = (text) => {
+    setButtonText(text);
+    setIsButtonDisabled(true);
+  };
+
+  /* Sends a POST request to the Igbo API to create a new Developer */
   const createDeveloper = (data) => (
     axios({
       method: 'post',
@@ -21,15 +28,16 @@ const SignUp = () => {
       data,
     }).then((res) => {
       if (res.status === 200) {
-        setButtonText('Success! Check your email');
-        setIsButtonDisabled(true);
+        handleCreateDeveloperResponse('Success! Check your email');
       } else if (res.status >= 400) {
-        setButtonText('An error occurred');
-        setIsButtonDisabled(true);
+        handleCreateDeveloperResponse('An error occurred');
       }
+    }, (err) => {
+      handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
     })
   );
 
+  /* Once the user submits the form, a new Developer account will be created */
   const onSubmit = createDeveloper;
 
   return (
