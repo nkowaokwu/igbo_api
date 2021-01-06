@@ -46,7 +46,7 @@ db.once('open', () => {
   console.green('🗄 Database is connected');
 });
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.HEROKU) {
   // enable ssl redirect
   app.use(sslRedirect());
 }
@@ -57,6 +57,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.options('*', cors());
+app.use(cors(CORS_CONFIG));
 app.set('trust proxy', 1);
 
 /* Provides static assets for the API Homepage */
@@ -76,7 +77,6 @@ app.use('/api/v1', router);
 if (process.env.NODE_ENV !== 'production') {
   app.use(
     '/api/v1/test',
-    cors({ ...CORS_CONFIG, origin: true }),
     testRouter,
   );
 }

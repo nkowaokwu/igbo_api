@@ -59,20 +59,21 @@
           }
         }
       }
+    },
+    "error": {
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
     }
   },
   "securityDefinitions": {
-    "BasicAuth": {
-      "type": "basic"
-    },
     "ApiKeyAuth": {
       "type": "apiKey",
       "in": "header",
       "name": "X-API-Key"
     }
-  },
-  "security": {
-    "ApiKeyAuth": []
   },
   "schemes": ["http"],
   "consumes": ["application/json"],
@@ -82,6 +83,9 @@
       "get": {
         "summary": "Get words in dictionary",
         "description": "Get words in dictionary",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
         "tags": ["Production"],
         "parameters": [
           {
@@ -114,35 +118,30 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "schema": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/word"
               }
             }
-          }
-        }
-      },
-      "post": {
-        "summary": "Creates a new Word document via merging",
-        "description": "Merges an existing WordSuggestion or GenericWord document into either an existing Word document or create a new Word document",
-        "tags": ["Production"],
-        "parameters": [
-          {
-            "name": "body",
-            "description": "The word that will be created in the database",
-            "in": "body",
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/word"
+              "$ref": "#/definitions/error"
             }
-          }
-        ],
-        "response": {
-          "200": {
-            "description": "OK",
+          },
+          "403": {
+            "description": "Invalid API Key",
             "schema": {
-              "$ref": "#/definitions/word"
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
             }
           }
         }
@@ -151,6 +150,9 @@
     "/words/{wordId}": {
       "get": {
         "summary": "Get a single Word",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
         "description": "Returns a single Word object from the database",
         "tags": ["Production"],
         "parameters": [
@@ -170,38 +172,23 @@
             "schema": {
               "$ref": "#/definitions/word"
             }
-          }
-        }
-      },
-      "put": {
-        "summary": "Updates a Word object from the database",
-        "description": "Updates a Word object from the database",
-        "tags": ["Production"],
-        "parameters": [
-          {
-            "name": "wordId",
-            "description": "The word Id",
-            "in": "path",
-            "required": true,
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             }
           },
-          {
-            "name": "body",
-            "description": "The updated word data",
-            "in": "body",
-            "required": true,
+          "403": {
+            "description": "Invalid API Key",
             "schema": {
-              "$ref": "#/definitions/word"
+              "$ref": "#/definitions/error"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
+          },
+          "404": {
+            "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/word"
+              "$ref": "#/definitions/error"
             }
           }
         }
@@ -210,6 +197,9 @@
     "/examples": {
       "get": {
         "summary": "Get examples in dictionary",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
         "description": "Get examples in dictionary",
         "tags": ["Production"],
         "parameters": [
@@ -243,28 +233,23 @@
                 "$ref": "#/definitions/example"
               }
             }
-          }
-        }
-      },
-      "post": {
-        "summary": "Creates a new Example document via merging",
-        "description": "Merges an existing ExampleSuggestion document into either an existing Example document or create a new Example document",
-        "tags": ["Production"],
-        "parameters": [
-          {
-            "name": "body",
-            "description": "The example that will be created in the database",
-            "in": "body",
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/example"
+              "$ref": "#/definitions/error"
             }
-          }
-        ],
-        "response": {
-          "200": {
-            "description": "OK",
+          },
+          "403": {
+            "description": "Invalid API Key",
             "schema": {
-              "$ref": "#/definitions/example"
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
             }
           }
         }
@@ -273,6 +258,9 @@
     "/examples/{exampleId}": {
       "get": {
         "summary": "Get a single Example",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
         "description": "Returns a single Example object from the database",
         "tags": ["Production"],
         "parameters": [
@@ -292,38 +280,23 @@
             "schema": {
               "$ref": "#/definitions/example"
             }
-          }
-        }
-      },
-      "put": {
-        "summary": "Updates a Example object from the database",
-        "description": "Updates a Example object from the database",
-        "tags": ["Production"],
-        "parameters": [
-          {
-            "name": "exampleId",
-            "description": "The example Id",
-            "in": "path",
-            "required": true,
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
-              "type": "string"
+              "$ref": "#/definitions/error"
             }
           },
-          {
-            "name": "body",
-            "description": "The updated example data",
-            "in": "body",
-            "required": true,
+          "403": {
+            "description": "Invalid API Key",
             "schema": {
-              "$ref": "#/definitions/example"
+              "$ref": "#/definitions/error"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
+          },
+          "404": {
+            "description": "Not Found",
             "schema": {
-              "$ref": "#/definitions/example"
+              "$ref": "#/definitions/error"
             }
           }
         }

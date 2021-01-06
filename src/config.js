@@ -23,10 +23,8 @@ export const MONGO_URI = process.env.NODE_ENV === 'test'
   : process.env.NODE_ENV === 'development'
     ? LOCAL_MONGO_URI
     : process.env.MONGO_URI || LOCAL_MONGO_URI;
-const PROD_CORS_ORIGINS = [/localhost/, /\.igboapi\.com$/, /nkowaokwu\.com$/, /igbo-api-admin.web.app$/];
-/* Prevents non-approved cross-origin sites from accessing certain routes */
 export const CORS_CONFIG = {
-  origin: process.env.NODE_ENV === 'production' ? PROD_CORS_ORIGINS : true,
+  origin: true,
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
 };
 
@@ -35,11 +33,11 @@ const SWAGGER_SETTINGS = {
   title: packageJson.name,
   version: packageJson.version,
   description: packageJson.description,
-  host: `${!process.env.HEROKU ? `localhost:${PORT}` : process.env.DOMAIN_NAME}`,
+  host: `${process.env.HEROKU ? process.env.DOMAIN_NAME : `localhost:${PORT}`}`,
   basePath: '/api/v1/',
 };
 
-const docs = { ...swaggerConfig, SWAGGER_SETTINGS };
+const docs = { ...swaggerConfig, ...SWAGGER_SETTINGS };
 export const SWAGGER_DOCS = docs;
 export const SWAGGER_OPTIONS = {
   customSiteTitle: 'Igbo API Documentation',
