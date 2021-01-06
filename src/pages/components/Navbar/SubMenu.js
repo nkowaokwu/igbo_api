@@ -28,21 +28,19 @@ const SubMenu = ({ isHomepage, transparent }) => {
               Features
             </Link>
           </li>
-          {process.env.NODE_ENV !== 'production' ? (
-            <li className="transition-element">
-              <Link
-                activeClass="nav-item-active"
-                className="cursor-pointer"
-                to="try-it-out"
-                spy
-                smooth
-                offset={-100}
-                duration={600}
-              >
-                Try it Out
-              </Link>
-            </li>
-          ) : null}
+          <li className="transition-element">
+            <Link
+              activeClass="nav-item-active"
+              className="cursor-pointer"
+              to="try-it-out"
+              spy
+              smooth
+              offset={-100}
+              duration={600}
+            >
+              Try it Out
+            </Link>
+          </li>
         </>
       ) : null}
       <li className="transition-element">
@@ -53,16 +51,14 @@ const SubMenu = ({ isHomepage, transparent }) => {
           About
         </a>
       </li>
-      {process.env.NODE_ENV !== 'production' ? (
-        <li className="transition-element">
-          <a
-            href="/signup"
-            onClick={(e) => navigate(e, '/signup')}
-          >
-            Register API Key
-          </a>
-        </li>
-      ) : null}
+      <li className="transition-element">
+        <a
+          href="/signup"
+          onClick={(e) => navigate(e, '/signup')}
+        >
+          Register API Key
+        </a>
+      </li>
       <li className="transition-element">
         <a href={`${API_ROUTE}/docs`}>Docs</a>
       </li>
