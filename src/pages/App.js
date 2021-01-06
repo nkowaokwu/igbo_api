@@ -7,7 +7,6 @@ import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
 import Footer from './components/Footer';
-import { API_FROM_EMAIL } from '../siteConstants';
 
 const App = ({ searchWord, words }) => {
   const router = useRouter();
@@ -71,7 +70,7 @@ const App = ({ searchWord, words }) => {
             </FadeReveal>
           </div>
           <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center">
-            As more words and examples get added to the API, the more information this API can expose.
+            {'With each API key, you\'ll get 2,500 requests per day.'}
           </p>
         </div>
         <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
@@ -80,15 +79,6 @@ const App = ({ searchWord, words }) => {
           </h2>
         </div>
         <Demo searchWord={searchWord} words={words} />
-        <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-          <h2 className="header">Use in Production</h2>
-        </div>
-        <div className="flex flex-col mb-12">
-          <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center mb-24">
-            {'If you would like to use this API for production purposes, request access by sending us an email at '}
-            <a className="link" href={`mailto:${API_FROM_EMAIL}`}>{API_FROM_EMAIL}</a>
-          </p>
-        </div>
         <Footer />
       </div>
     </div>

@@ -31,16 +31,19 @@ export const CORS_CONFIG = {
 };
 
 // Documentation
-const SWAGGER_OPTIONS = {
+const SWAGGER_SETTINGS = {
   title: packageJson.name,
   version: packageJson.version,
   description: packageJson.description,
-  host: `${process.env.NODE_ENV !== 'production' ? `localhost:${PORT}` : process.env.DOMAIN_NAME}`,
+  host: `${!process.env.HEROKU ? `localhost:${PORT}` : process.env.DOMAIN_NAME}`,
   basePath: '/api/v1/',
 };
 
-const docs = { ...swaggerConfig, SWAGGER_OPTIONS };
+const docs = { ...swaggerConfig, SWAGGER_SETTINGS };
 export const SWAGGER_DOCS = docs;
+export const SWAGGER_OPTIONS = {
+  customSiteTitle: 'Igbo API Documentation',
+};
 
 // API Homepage
 export const API_ROUTE = process.env.NODE_ENV === 'production' ? '' : `http://localhost:${PORT}`;
