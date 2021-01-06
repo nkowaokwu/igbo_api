@@ -20,7 +20,7 @@ describe('Igbo API Homepage', () => {
     });
 
     describe('Register Account', () => {
-      it('render the Sign up page', () => {
+      it('render the Sign Up page', () => {
         cy.get('li').contains('Register API Key').click();
         cy.findByText('Sign up.');
       });
