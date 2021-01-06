@@ -56,6 +56,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.options('*', cors());
+app.set('trust proxy', 1);
 
 /* Provides static assets for the API Homepage */
 app.use('/_next', express.static('./build/dist'));
