@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Link } from 'react-scroll';
-import { API_ROUTE } from '../../../siteConstants';
 
 const SubMenu = ({ isHomepage, transparent }) => {
   const router = useRouter();
@@ -60,7 +59,7 @@ const SubMenu = ({ isHomepage, transparent }) => {
         </a>
       </li>
       <li className="transition-element">
-        <a href={`${API_ROUTE}/docs`}>Docs</a>
+        <a href="/docs">Docs</a>
       </li>
     </nav>
   );

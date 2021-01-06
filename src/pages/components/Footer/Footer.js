@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_ROUTE, API_FROM_EMAIL } from '../../../siteConstants';
+import { API_FROM_EMAIL } from '../../../siteConstants';
 
 const Footer = () => (
   <footer className={`flex flex-col text-center lg:text-left lg:flex-row
@@ -10,7 +10,7 @@ const Footer = () => (
         <h1 className="text-2xl mb-2">Igbo API</h1>
         <ul>
           <li><a className="transition-all duration-100 hover:text-gray-100" href="/about">About</a></li>
-          <li><a className="transition-all duration-100 hover:text-gray-100" href={`${API_ROUTE}/docs`}>Docs</a></li>
+          <li><a className="transition-all duration-100 hover:text-gray-100" href="/docs">Docs</a></li>
         </ul>
       </div>
       <div>

@@ -9,9 +9,11 @@ const Demo = ({ searchWord, words }) => {
   const responseBody = JSON.stringify(words, null, 4);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && keyword) {
+    if (typeof window !== 'undefined') {
       setProductionUrl(window.origin);
-      window.location.hash = 'try-it-out';
+      if (keyword) {
+        window.location.hash = 'try-it-out';
+      }
     }
   }, []);
 
@@ -43,7 +45,7 @@ const Demo = ({ searchWord, words }) => {
             />
             <input
               disabled
-              value={`${API_ROUTE || productionUrl}/api/v1/words?keyword=${keyword}`}
+              value={`${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword}`}
               className="w-full py-3 px-5"
             />
             <button
