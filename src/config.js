@@ -34,7 +34,7 @@ const SWAGGER_SETTINGS = {
   version: packageJson.version,
   description: packageJson.description,
   host: `${process.env.HEROKU ? process.env.DOMAIN_NAME : `localhost:${PORT}`}`,
-  basePath: '/api/v1/',
+  schemes: `${process.env.HEROKU ? ['https'] : ['http']}`,
 };
 
 const docs = { ...swaggerConfig, ...SWAGGER_SETTINGS };

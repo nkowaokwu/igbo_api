@@ -10,7 +10,7 @@
     }
   },
   "host": "localhost:8080",
-  "basePath": "/api/v1",
+  "basePath": "/api/v1/",
   "tags": [
     {
       "name": "Production",
