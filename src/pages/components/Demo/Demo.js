@@ -9,9 +9,11 @@ const Demo = ({ searchWord, words }) => {
   const responseBody = JSON.stringify(words, null, 4);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && keyword) {
+    if (typeof window !== 'undefined') {
       setProductionUrl(window.origin);
-      window.location.hash = 'try-it-out';
+      if (keyword) {
+        window.location.hash = 'try-it-out';
+      }
     }
   }, []);
 
@@ -27,7 +29,7 @@ const Demo = ({ searchWord, words }) => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-16">
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10">
         <div className="demo-inputs-container space-y-5">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
@@ -43,7 +45,7 @@ const Demo = ({ searchWord, words }) => {
             />
             <input
               disabled
-              value={`${API_ROUTE || productionUrl}/api/v1/words?keyword=${keyword}`}
+              value={`${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword}`}
               className="w-full py-3 px-5"
             />
             <button

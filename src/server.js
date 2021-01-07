@@ -17,6 +17,7 @@ import {
   SWAGGER_DOCS,
   SERVICE_ACCOUNT,
   CORS_CONFIG,
+  SWAGGER_OPTIONS,
 } from './config';
 
 admin.default.initializeApp({
@@ -45,7 +46,7 @@ db.once('open', () => {
   console.green('🗄 Database is connected');
 });
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.HEROKU) {
   // enable ssl redirect
   app.use(sslRedirect());
 }
@@ -56,16 +57,18 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.options('*', cors());
+app.use(cors(CORS_CONFIG));
 app.set('trust proxy', 1);
 
 /* Provides static assets for the API Homepage */
 app.use('/_next', express.static('./build/dist'));
 app.use('/assets', express.static('./build/dist/assets'));
 app.use('/fonts', express.static('./build/dist/fonts'));
+app.use('/services', express.static('./services'));
 
 /* Renders the API Site */
 app.use(siteRouter);
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS));
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS, SWAGGER_OPTIONS));
 
 /* Grabs data from MongoDB */
 app.use('/api/v1', router);
@@ -74,7 +77,6 @@ app.use('/api/v1', router);
 if (process.env.NODE_ENV !== 'production') {
   app.use(
     '/api/v1/test',
-    cors({ ...CORS_CONFIG, origin: true }),
     testRouter,
   );
 }
