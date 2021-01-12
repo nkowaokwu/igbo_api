@@ -4,7 +4,7 @@ import accents from 'remove-accents';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import { getExamples, getExample } from './shared/commands';
 import {
-  AUTH_TOKEN,
+  MAIN_KEY,
   EXAMPLE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
@@ -133,8 +133,8 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return words with no keyword as admin', (done) => {
-      getExamples()
+    it('should return words with no keyword as an application using MAIN_KEY', (done) => {
+      getExamples({ apiKey: MAIN_KEY })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.most(10);
@@ -142,17 +142,8 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return no words with no keyword as user', (done) => {
-      getExamples({ token: AUTH_TOKEN.USER_AUTH_TOKEN })
-        .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
-          done();
-        });
-    });
-
-    it('should return no words with no keyword as unauthed user', (done) => {
-      getExamples({ token: 'null' })
+    it('should return no words with no keyword as a developer', (done) => {
+      getExamples()
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(0);

@@ -2,8 +2,7 @@ import chai from 'chai';
 import server from '../../src/server';
 import {
   API_ROUTE,
-  API_KEY,
-  AUTH_TOKEN,
+  FALLBACK_API_KEY,
   ORIGIN_HEADER,
   LOCAL_ROUTE,
   TEST_ROUTE,
@@ -25,8 +24,7 @@ export const getWords = (query = {}, options = {}) => (
     .request(server)
     .get(`${API_ROUTE}/words`)
     .query(query)
-    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
-    .set('X-API-Key', options.apiKey || API_KEY)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
     .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
@@ -35,8 +33,7 @@ export const getWord = (id, query = {}, options = {}) => (
     .request(server)
     .get(`${API_ROUTE}/words/${id}`)
     .query(query)
-    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
-    .set('X-API-Key', options.apiKey || API_KEY)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
     .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
@@ -45,8 +42,7 @@ export const getExample = (id, query = {}, options = {}) => (
     .request(server)
     .get(`${API_ROUTE}/examples/${id}`)
     .query(query)
-    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
-    .set('X-API-Key', options.apiKey || API_KEY)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
     .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
@@ -56,8 +52,7 @@ export const getExamples = (query = {}, options = {}) => (
     .request(server)
     .get(`${API_ROUTE}/examples`)
     .query(query)
-    .set('Authorization', `Bearer ${query.token || AUTH_TOKEN.ADMIN_AUTH_TOKEN}`)
-    .set('X-API-Key', options.apiKey || API_KEY)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
     .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
