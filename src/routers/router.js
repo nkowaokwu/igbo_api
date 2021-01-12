@@ -3,7 +3,6 @@ import rateLimit from 'express-rate-limit';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
-import authentication from '../middleware/authentication';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
 import validateApiKey from '../middleware/validateApiKey';
@@ -16,8 +15,6 @@ const createDeveloperLimiter = rateLimit({
   windowMs: FIFTEEN_MINUTES,
   max: REQUESTS_PER_MS,
 });
-
-router.use(authentication);
 
 router.get('/words', validateApiKey, getWords);
 router.get('/words/:id', validateApiKey, validId, getWord);
