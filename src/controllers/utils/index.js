@@ -4,20 +4,15 @@ import { isNaN, orderBy, get } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
-import UserRoles from '../../shared/constants/UserRoles';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
 
 /* Determines if an empty response should be returned
- * if the request comes from an unauthed user in production
+ * if the request comes from an application not using MAIN_KEY
  */
-const constructRegexQuery = ({ user, searchWord }) => (
-  user.role && (
-    user.role === UserRoles.EDITOR
-    || user.role === UserRoles.MERGER
-    || user.role === UserRoles.ADMIN
-  )
+const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
+  isUsingMainKey
     ? createQueryRegex(searchWord)
     : searchWord
       ? createQueryRegex(searchWord)
@@ -136,7 +131,7 @@ const parseSortKeys = (sort) => {
 };
 
 /* Handles all the queries for searching in the database */
-export const handleQueries = ({ query = {}, user = {} }) => {
+export const handleQueries = ({ query = {}, isUsingMainKey }) => {
   const {
     keyword = '',
     page: pageQuery = 0,
@@ -147,7 +142,7 @@ export const handleQueries = ({ query = {}, user = {} }) => {
   } = query;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-  const regexKeyword = constructRegexQuery({ user, searchWord });
+  const regexKeyword = constructRegexQuery({ isUsingMainKey, searchWord });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
