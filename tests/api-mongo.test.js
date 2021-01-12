@@ -87,7 +87,7 @@ describe('MongoDB Words', () => {
     });
 
     it('should return one word', (done) => {
-      getWords()
+      getWords({}, { apiKey: MAIN_KEY })
         .then((res) => {
           expect(res.status).to.equal(200);
           getWord(res.body[0].id)

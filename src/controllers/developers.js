@@ -29,7 +29,11 @@ export const postDeveloper = async (req, res, next) => {
     } = data;
 
     const developers = await Developer.find({ email });
-    if (developers.length && process.env.NODE_ENV !== 'test' && email !== TEST_EMAIL) {
+    if (developers.length && email !== TEST_EMAIL) {
+      throw new Error('This email is already used');
+    }
+
+    if ((process.env.NODE_ENV === 'production' || process.env.CLIENT_TEST) && email === TEST_EMAIL) {
       throw new Error('This email is already used');
     }
 

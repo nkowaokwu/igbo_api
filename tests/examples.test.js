@@ -15,8 +15,17 @@ const { expect } = chai;
 
 describe('MongoDB Examples', () => {
   describe('/GET mongodb examples', () => {
-    it('should return an example by searching', (done) => {
+    it('should return no examples by searching', (done) => {
       getExamples()
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
+
+    it('should return an example by searching', (done) => {
+      getExamples({}, { apiKey: MAIN_KEY })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.most(10);
@@ -25,7 +34,7 @@ describe('MongoDB Examples', () => {
     });
 
     it('should return one example', (done) => {
-      getExamples()
+      getExamples({}, { apiKey: MAIN_KEY })
         .then((res) => {
           getExample(res.body[0].id)
             .end((_, result) => {
@@ -83,8 +92,8 @@ describe('MongoDB Examples', () => {
 
     it('should return prioritize range over page', (done) => {
       Promise.all([
-        getExamples({ page: '1' }),
-        getExamples({ page: '1', range: '[100,109]' }),
+        getExamples({ page: '1' }, { apiKey: MAIN_KEY }),
+        getExamples({ page: '1', range: '[100,109]' }, { apiKey: MAIN_KEY }),
       ]).then((res) => {
         expect(isEqual(res[0].body, res[1].body)).to.equal(false);
         done();
