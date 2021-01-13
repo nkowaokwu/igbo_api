@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
 import sslRedirect from 'heroku-ssl-redirect';
 import morgan from 'morgan';
-import * as admin from 'firebase-admin';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
 import { router, siteRouter, testRouter } from './routers';
@@ -15,15 +14,9 @@ import {
   PORT,
   MONGO_URI,
   SWAGGER_DOCS,
-  SERVICE_ACCOUNT,
   CORS_CONFIG,
   SWAGGER_OPTIONS,
 } from './config';
-
-admin.default.initializeApp({
-  ...SERVICE_ACCOUNT,
-  credential: admin.credential.cert(SERVICE_ACCOUNT),
-});
 
 const app = express();
 

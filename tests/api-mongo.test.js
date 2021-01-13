@@ -17,7 +17,7 @@ import {
   EXCLUDE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
-  AUTH_TOKEN,
+  MAIN_KEY,
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import { getWords, getWord } from './shared/commands';
@@ -87,7 +87,7 @@ describe('MongoDB Words', () => {
     });
 
     it('should return one word', (done) => {
-      getWords()
+      getWords({}, { apiKey: MAIN_KEY })
         .then((res) => {
           expect(res.status).to.equal(200);
           getWord(res.body[0].id)
@@ -405,8 +405,8 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return words with no keyword as admin', (done) => {
-      getWords()
+    it('should return words with no keyword as an application using MAIN_KEY', (done) => {
+      getWords({ apiKey: MAIN_KEY })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.most(10);
@@ -414,17 +414,8 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return no words with no keyword as user', (done) => {
-      getWords({ token: AUTH_TOKEN.USER_AUTH_TOKEN })
-        .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
-          done();
-        });
-    });
-
-    it('should return no words with no keyword as unauthed user', (done) => {
-      getWords({ token: 'null' })
+    it('should return no words with no keyword as a developer', (done) => {
+      getWords()
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf(0);

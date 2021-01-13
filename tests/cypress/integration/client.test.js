@@ -27,18 +27,30 @@ describe('Igbo API Homepage', () => {
 
       it('fill out the sign up form and submit for developer account', () => {
         cy.visit('/signup');
-        cy.intercept({
-          method: 'POST',
-          url: '**developers',
-        }).as('postDeveloper');
+        cy.intercept('POST', '**developers').as('postDeveloper');
         cy.findByTestId('signup-name-input').clear().type('Developer');
-        cy.findByTestId('signup-email-input').clear().type('developer@example.com');
+        cy.findByTestId('signup-email-input').clear().type('developer@test.com');
         cy.findByTestId('signup-password-input').clear().type('password');
         cy.findByTestId('signup-host-input').clear().type('test.com');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
           expect(res.response.statusCode).to.equal(200);
           cy.findByText('Success! Check your email');
+        });
+      });
+
+      it('fill out the sign up form and submit for developer account and get an error', () => {
+        cy.visit('/signup');
+        cy.intercept('POST', '**developers').as('postDeveloper');
+        cy.findByTestId('signup-name-input').clear().type('Developer');
+        cy.findByTestId('signup-email-input').clear().type('developer@example.com');
+        cy.findByTestId('signup-password-input').clear().type('password');
+        cy.findByTestId('signup-host-input').clear().type('test.com');
+        cy.findByText('Create account').click();
+        cy.wait('@postDeveloper').then((res) => {
+          expect(res.response.statusCode).to.equal(400);
+          cy.findByText('Create account').should('not.exist');
+          cy.findByText('Success! Check your email').should('not.exist');
         });
       });
     });

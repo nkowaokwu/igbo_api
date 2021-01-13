@@ -1,4 +1,3 @@
-import { secrets as dockerSecrets } from 'docker-secret';
 import * as packageJson from '../package.json';
 import swaggerConfig from '../swagger.json';
 
@@ -54,15 +53,6 @@ export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'igboapi@gmail.com';
 if (sgMail) {
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
-
-// Firebase service account
-export const SERVICE_ACCOUNT = process.env.FIREBASE_CONFIG
-  ? JSON.parse(process.env.FIREBASE_CONFIG)
-  : process.env.CI === 'test'
-    ? JSON.parse(process.env.FIREBASE_CONFIG)
-    : process.env.NODE_ENV === 'test'
-      ? JSON.parse(dockerSecrets.FIREBASE_CONFIG)
-      : '';
 
 // API Key Secrets
 export const DEVELOPER_SECRET = process.env.DEVELOPER_SECRET || 'developer_secret';

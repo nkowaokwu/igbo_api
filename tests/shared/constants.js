@@ -73,11 +73,6 @@ export const SITE_TITLE = 'The First African Language API';
 export const DOCS_SITE_TITLE = 'Igbo API Documentation';
 export const INVALID_ID = 'fdsafdsad';
 export const NONEXISTENT_ID = new mongoose.Types.ObjectId();
-export const AUTH_TOKEN = {
-  ADMIN_AUTH_TOKEN: 'admin-auth-token',
-  MERGER_AUTH_TOKEN: 'merger-auth-token',
-  EDITOR_AUTH_TOKEN: 'editor-auth-token',
-  USER_AUTH_TOKEN: 'user-auth-token',
-};
-export const API_KEY = 'fallback_api_key';
+export const MAIN_KEY = 'main_key';
+export const FALLBACK_API_KEY = 'fallback_api_key';
 export const ORIGIN_HEADER = 'test.com';

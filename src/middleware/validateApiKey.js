@@ -60,8 +60,10 @@ export default async (req, res, next) => {
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
+      req.isUsingMainKey = true;
       return next();
     }
+    req.isUsingMainKey = false;
 
     if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
       if (!host) {
