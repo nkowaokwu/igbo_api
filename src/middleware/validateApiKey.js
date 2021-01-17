@@ -1,5 +1,5 @@
+import { compare } from 'bcrypt';
 import Developer from '../models/Developer';
-import { hash } from '../controllers/developers';
 import { searchDeveloperWithHostsQuery } from '../controllers/utils/queries';
 import { MAIN_KEY } from '../config';
 
@@ -18,12 +18,6 @@ const isSameDate = (first, second) => (
     && first.getMonth() === second.getMonth()
     && first.getDate() === second.getDate()
 );
-
-/* Checks to see if provided value is the key to generate the hashedValue */
-const isHashedValueKey = (value, hashedValue) => {
-  const providedHashedValue = hash(value);
-  return providedHashedValue === hashedValue;
-};
 
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer) => {
@@ -44,12 +38,12 @@ const handleDeveloperUsage = async (developer) => {
 const findDeveloper = async ({ host, apiKey }) => {
   /* Developer is a development environment */
   if (host.match(/localhost/)) {
-    const hashedApiKey = hash(apiKey);
-    return Developer.findOne({ apiKey: hashedApiKey });
+    const developers = Developer.find({});
+    return developers.find((dev) => compare(apiKey, dev.apiKey));
   }
   const hostsQuery = searchDeveloperWithHostsQuery(host);
   const developers = await Developer.find(hostsQuery);
-  return developers.find((dev) => isHashedValueKey(apiKey, dev.apiKey));
+  return developers.find((dev) => compare(apiKey, dev.apiKey));
 };
 
 export default async (req, res, next) => {

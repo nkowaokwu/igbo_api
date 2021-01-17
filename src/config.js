@@ -55,5 +55,4 @@ if (sgMail) {
 }
 
 // API Key Secrets
-export const DEVELOPER_SECRET = process.env.DEVELOPER_SECRET || 'developer_secret';
 export const MAIN_KEY = process.env.MAIN_KEY || 'main_key';

@@ -1,7 +1,6 @@
-import crypto from 'crypto';
+import { hash } from 'bcrypt';
 import { flatten } from 'lodash';
 import { v4 as uuid } from 'uuid';
-import { DEVELOPER_SECRET } from '../config';
 import Developer from '../models/Developer';
 import { sendNewDeveloper } from './email';
 
@@ -9,13 +8,6 @@ const TEST_EMAIL = 'developer@example.com';
 
 /* Creates a new apiKey to be associated with a developer */
 const generateApiKey = uuid;
-
-/* Hashes any value */
-export const hash = (value) => {
-  const algorithm = 'sha512';
-  const secret = DEVELOPER_SECRET;
-  return crypto.createHmac(algorithm, secret).update(value).digest('hex');
-};
 
 /* Creates a new Developer in the database */
 export const postDeveloper = async (req, res, next) => {
@@ -38,8 +30,8 @@ export const postDeveloper = async (req, res, next) => {
     }
 
     const apiKey = generateApiKey();
-    const hashedApiKey = hash(apiKey);
-    const hashedPassword = hash(password);
+    const hashedApiKey = await hash(apiKey, 10);
+    const hashedPassword = await hash(password, 10);
     const hosts = flatten([host]);
     const developer = new Developer({
       name,
