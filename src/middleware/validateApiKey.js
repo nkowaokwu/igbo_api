@@ -1,4 +1,4 @@
-import { compare } from 'bcrypt';
+import { compareSync } from 'bcrypt';
 import Developer from '../models/Developer';
 import { searchDeveloperWithHostsQuery } from '../controllers/utils/queries';
 import { MAIN_KEY } from '../config';
@@ -36,14 +36,9 @@ const handleDeveloperUsage = async (developer) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async ({ host, apiKey }) => {
-  /* Developer is a development environment */
-  if (host.match(/localhost/)) {
-    const developers = Developer.find({});
-    return developers.find((dev) => compare(apiKey, dev.apiKey));
-  }
   const hostsQuery = searchDeveloperWithHostsQuery(host);
-  const developers = await Developer.find(hostsQuery);
-  return developers.find((dev) => compare(apiKey, dev.apiKey));
+  const developers = await Developer.find(host.match(/localhost/) ? {} : hostsQuery);
+  return developers.find((dev) => compareSync(apiKey, dev.apiKey));
 };
 
 export default async (req, res, next) => {
@@ -60,11 +55,11 @@ export default async (req, res, next) => {
     req.isUsingMainKey = false;
 
     if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
-      if (!host) {
-        host = FALLBACK_HOST;
-      }
       if (!apiKey) {
         apiKey = FALLBACK_API_KEY;
+      }
+      if (!host) {
+        host = FALLBACK_HOST;
       }
     }
     if (!apiKey) {

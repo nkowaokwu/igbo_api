@@ -37,8 +37,8 @@ export const postDeveloper = async (req, res, next) => {
       name,
       email,
       hosts,
-      password: hashedPassword,
       apiKey: hashedApiKey,
+      password: hashedPassword,
     });
     await developer.save();
     if (process.env.NODE_ENV !== 'test') {
