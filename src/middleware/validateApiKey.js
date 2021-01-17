@@ -1,5 +1,5 @@
+import { compareSync } from 'bcrypt';
 import Developer from '../models/Developer';
-import { hash } from '../controllers/developers';
 import { searchDeveloperWithHostsQuery } from '../controllers/utils/queries';
 import { MAIN_KEY } from '../config';
 
@@ -19,12 +19,6 @@ const isSameDate = (first, second) => (
     && first.getDate() === second.getDate()
 );
 
-/* Checks to see if provided value is the key to generate the hashedValue */
-const isHashedValueKey = (value, hashedValue) => {
-  const providedHashedValue = hash(value);
-  return providedHashedValue === hashedValue;
-};
-
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer) => {
   const updatedDeveloper = developer;
@@ -42,14 +36,9 @@ const handleDeveloperUsage = async (developer) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async ({ host, apiKey }) => {
-  /* Developer is a development environment */
-  if (host.match(/localhost/)) {
-    const hashedApiKey = hash(apiKey);
-    return Developer.findOne({ apiKey: hashedApiKey });
-  }
   const hostsQuery = searchDeveloperWithHostsQuery(host);
-  const developers = await Developer.find(hostsQuery);
-  return developers.find((dev) => isHashedValueKey(apiKey, dev.apiKey));
+  const developers = await Developer.find(host.match(/localhost/) ? {} : hostsQuery);
+  return developers.find((dev) => compareSync(apiKey, dev.apiKey));
 };
 
 export default async (req, res, next) => {
@@ -66,11 +55,11 @@ export default async (req, res, next) => {
     req.isUsingMainKey = false;
 
     if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
-      if (!host) {
-        host = FALLBACK_HOST;
-      }
       if (!apiKey) {
         apiKey = FALLBACK_API_KEY;
+      }
+      if (!host) {
+        host = FALLBACK_HOST;
       }
     }
     if (!apiKey) {
