@@ -12,21 +12,12 @@ if (dotenv) {
 const DB_NAME = 'igbo_api';
 const TEST_DB_NAME = 'test_igbo_api';
 
-// If running inside Docker container, it will fallback to using test_igbo_api database
-const isTestingEnvironment = (
-  process.env.NODE_ENV === 'test'
-  || (
-    process.env.CONTAINER_HOST === 'mongodb'
-    && process.env.NODE_ENV !== 'development'
-    && process.env.NODE_ENV !== 'production'
-  )
-);
 export const PORT = process.env.PORT || 8080;
 export const MONGO_HOST = process.env.CONTAINER_HOST || 'localhost';
 export const MONGO_ROOT = `mongodb://${MONGO_HOST}:27017`;
 const TEST_MONGO_URI = `${MONGO_ROOT}/${TEST_DB_NAME}`;
 const LOCAL_MONGO_URI = `${MONGO_ROOT}/${DB_NAME}`;
-export const MONGO_URI = isTestingEnvironment
+export const MONGO_URI = process.env.NODE_ENV === 'test'
   ? TEST_MONGO_URI
   : process.env.NODE_ENV === 'development'
     ? LOCAL_MONGO_URI
