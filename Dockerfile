@@ -11,6 +11,7 @@ COPY . .
 RUN yarn build
 
 ENV PORT=8080
+ENV NODE_ENV=test
 ENV CONTAINER_HOST=mongodb
 
 EXPOSE 8080
