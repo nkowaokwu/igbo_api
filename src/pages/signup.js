@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import Navbar from './components/Navbar';
@@ -8,14 +8,28 @@ import { PORT } from '../siteConstants';
 const SignUp = () => {
   const [buttonText, setButtonText] = useState('Create account');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [igboApiRoute, setIgboApiRoute] = useState('');
   const {
     handleSubmit,
     control,
     errors,
   } = useForm();
-  const API_ROUTE = window.location.hostname === 'igboapi.com' && process.env.NODE_ENV === 'production'
-    ? 'https://igboapi.com'
-    : `http://localhost:${PORT}`;
+
+  useEffect(() => {
+    const productionApiRoute = 'https://igboapi.com';
+    const developmentApiRoute = `http://localhost:${PORT}`;
+    let apiRoute = developmentApiRoute;
+    if (typeof window !== 'undefined') {
+      apiRoute = window.location.hostname === 'igboapi.com' && process.env.NODE_ENV === 'production'
+        ? productionApiRoute
+        : developmentApiRoute;
+    } else {
+      apiRoute = process.env.NODE_ENV === 'production'
+        ? productionApiRoute
+        : developmentApiRoute;
+    }
+    setIgboApiRoute(apiRoute);
+  }, []);
 
   /* Changes the button text depending on the response */
   const handleCreateDeveloperResponse = (text) => {
@@ -27,7 +41,7 @@ const SignUp = () => {
   const createDeveloper = (data) => (
     axios({
       method: 'post',
-      url: `${API_ROUTE}/api/v1/developers`,
+      url: `${igboApiRoute}/api/v1/developers`,
       data,
     }).then((res) => {
       if (res.status === 200) {
