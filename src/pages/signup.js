@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useForm, Controller } from 'react-hook-form';
 import Navbar from './components/Navbar';
 import Input from './components/Input';
-import { API_ROUTE } from '../siteConstants';
+import { PORT } from '../siteConstants';
 
 const SignUp = () => {
   const [buttonText, setButtonText] = useState('Create account');
@@ -13,6 +13,9 @@ const SignUp = () => {
     control,
     errors,
   } = useForm();
+  const API_ROUTE = window.location.hostname === 'igboapi.com' && process.env.NODE_ENV === 'production'
+    ? 'https://igboapi.com'
+    : `http://localhost:${PORT}`;
 
   /* Changes the button text depending on the response */
   const handleCreateDeveloperResponse = (text) => {
