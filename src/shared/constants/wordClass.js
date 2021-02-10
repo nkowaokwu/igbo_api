@@ -1,62 +1,62 @@
 export default {
   ADJ: {
+    value: 'ADJ',
     label: 'Adjective',
-    description: 'Adjective',
   },
   ADV: {
+    value: 'ADV',
     label: 'Adverb',
-    description: 'Adverb',
   },
   CD: {
+    value: 'CD',
     label: 'Number',
-    description: 'Number',
   },
   CJN: {
+    value: 'CJN',
     label: 'Conjunction',
-    description: 'Conjunction',
   },
   DEM: {
+    value: 'DEM',
     label: 'Demonstration',
-    description: 'Demonstration',
   },
   FW: {
+    value: 'FW',
     label: 'Foreign word',
-    description: 'Foreign word',
   },
   INTJ: {
+    value: 'INTJ',
     label: 'Interjection',
-    description: 'Interjection',
   },
   NNC: {
+    value: 'NNC',
     label: 'Common noun',
-    description: 'Common noun',
   },
   NNP: {
+    value: 'NNP',
     label: 'Proper noun',
-    description: 'Proper noun',
   },
   PREP: {
+    value: 'PREP',
     label: 'Preposition',
-    description: 'Preposition',
   },
   PRN: {
+    value: 'PRN',
     label: 'Pronoun',
-    description: 'Pronoun',
   },
   QTF: {
+    value: 'QTF',
     label: 'Quantifer',
-    description: 'Quantifer',
   },
   SYM: {
+    value: 'SYM',
     label: 'Punctuations',
-    description: 'Punctuations',
   },
   V: {
+    value: 'V',
     label: 'Verb',
-    description: 'Verb',
   },
   WH: {
+    value: 'WH',
     label: 'Interrogative',
-    description: 'Interrogative',
   },
 };
