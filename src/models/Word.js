@@ -4,6 +4,7 @@ import {
   toJSONPlugin,
   toObjectPlugin,
   updatedOnHook,
+  wordClassValidationHook,
 } from './plugins';
 
 const { Schema } = mongoose;
@@ -24,6 +25,7 @@ wordSchema.index({ word: 'text', variations: 'text' });
 toJSONPlugin(wordSchema);
 updatedOnHook(wordSchema);
 normalizeWordHook(wordSchema);
+wordClassValidationHook(wordSchema);
 
 const WordModel = mongoose.model('Word', wordSchema);
 WordModel.syncIndexes();

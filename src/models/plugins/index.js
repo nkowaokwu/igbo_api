@@ -1,10 +1,12 @@
+/* eslint-disable func-names */
 /* Code from https://stackoverflow.com/a/30435676 */
 /* Code from https://stackoverflow.com/q/30431262 */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import { map } from 'lodash';
+import { map, keys } from 'lodash';
 import mongoose from 'mongoose';
 import accents from 'remove-accents';
+import wordClass from '../../shared/constants/wordClass';
 
 /* Replaces the _id key with id */
 export const toJSONPlugin = (schema) => {
@@ -66,3 +68,14 @@ export const normalizeExampleHook = (schema) => {
     return doc;
   });
 };
+
+/* Validates word class field before saving to the database */
+export const wordClassValidationHook = (schema) => (
+  schema.pre('save', function () {
+    if (!keys(wordClass).includes(this.wordClass)) {
+      throw new Error('invalid word class specified');
+    }
+
+    return this;
+  })
+);
