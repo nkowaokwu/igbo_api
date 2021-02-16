@@ -1,9 +1,10 @@
-name: integration
+name: Test Suite
 
 on: pull_request
 
 jobs:
   test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     strategy:
