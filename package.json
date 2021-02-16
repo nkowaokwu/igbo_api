@@ -129,7 +129,9 @@
   },
   "standard-version": {
     "skip": {
-      "commit": true
+      "commit": true,
+      "changelog": true,
+      "tag": true
     }
   }
 }
