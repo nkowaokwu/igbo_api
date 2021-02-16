@@ -3,13 +3,14 @@ name: Release
 on:
   push:
     branches:
-      - io/use-semantic-release
+      - master
   
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
 
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,8 +19,10 @@ jobs:
         with:
           node-version: 12
       - name: Install dependencies
-        run: yarn Install
+        run: yarn install
       - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          yarn release
+          git push --follow-tags origin master && npm publish
