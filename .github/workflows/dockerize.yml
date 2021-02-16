@@ -1,4 +1,4 @@
-name: docker_contain_app
+name: Dockerize Igbo API
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   dockerize:
+    name: Dockerize
     runs-on: ubuntu-latest
 
     strategy:

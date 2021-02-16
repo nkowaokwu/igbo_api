@@ -1,4 +1,4 @@
-name: backup_production
+name: Backup Database
 
 on:
   schedule:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   backup:
+    name: Backup
     runs-on: ubuntu-latest
       
     steps:
