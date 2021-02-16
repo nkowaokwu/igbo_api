@@ -73,7 +73,10 @@ export const normalizeExampleHook = (schema) => {
 export const wordClassValidationHook = (schema) => (
   schema.pre('save', function () {
     if (!keys(wordClass).includes(this.wordClass)) {
-      throw new Error('invalid word class specified');
+      // throw new Error('invalid word class specified');
+      return new Promise((resolve, reject) => {
+        reject(new Error('invalid word class specified'));
+      });
     }
 
     return this;
