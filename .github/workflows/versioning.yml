@@ -24,4 +24,6 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           yarn release
+          git add .
+          git commit -m "Bumping package version [ci skip]"
           git push --follow-tags origin master && npm publish

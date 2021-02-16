@@ -126,5 +126,10 @@
     "postcss-preset-env": "^6.7.0",
     "shx": "^0.3.3",
     "standard-version": "^9.1.0"
+  },
+  "standard-version": {
+    "skip": {
+      "commit": true
+    }
   }
 }
