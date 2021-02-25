@@ -139,6 +139,7 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     sort: sortQuery,
     filter: filterQuery,
     strict: strictQuery,
+    dialects: dialectsQuery,
   } = query;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
@@ -148,6 +149,7 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
   const { skip, limit } = convertToSkipAndLimit({ page, range });
   const sort = parseSortKeys(sortQuery);
   const strict = strictQuery === 'true';
+  const dialects = dialectsQuery === 'true';
   return {
     searchWord,
     regexKeyword,
@@ -156,5 +158,6 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     skip,
     limit,
     strict,
+    dialects,
   };
 };

@@ -13,6 +13,7 @@ import accents from 'remove-accents';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
+  DIALECT_KEYS,
   EXAMPLE_KEYS,
   EXCLUDE_KEYS,
   INVALID_ID,
@@ -34,16 +35,20 @@ describe('MongoDB Words', () => {
         word: 'word',
         wordClass: 'noun',
         definitions: ['first definition', 'second definition'],
+        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({ ...dialectsObject, [key]: {} }), {}),
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
       };
       const validWord = new Word(word);
-      validWord.save().then((savedWord) => {
-        expect(savedWord.id).to.not.equal(undefined);
-        expect(savedWord.word).to.equal('word');
-        expect(savedWord.wordClass).to.equal('noun');
-        done();
-      });
+      validWord.save()
+        .then((savedWord) => {
+          expect(savedWord.id).to.not.equal(undefined);
+          expect(savedWord.word).to.equal('word');
+          expect(savedWord.wordClass).to.equal('noun');
+          expect(savedWord.dialects).to.not.equal(undefined);
+          expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
+          done();
+        });
     });
 
     it('should throw an error for invalid data', (done) => {
@@ -64,26 +69,55 @@ describe('MongoDB Words', () => {
   describe('/GET mongodb words', () => {
     it('should return word information', (done) => {
       const keyword = 'bia';
-      getWords({ keyword }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.lengthOf.at.least(2);
-        forEach(res.body, (word) => {
-          expect(word).to.have.all.keys(WORD_KEYS);
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word).to.have.all.keys(WORD_KEYS);
+          });
+          done();
         });
-        done();
-      });
+    });
+
+    it('should return word information with dialects query', (done) => {
+      const keyword = 'bia';
+      getWords({ keyword, dialects: true })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word.dialects).to.not.equal(undefined);
+            expect(word.dialects).to.have.all.keys(DIALECT_KEYS);
+          });
+          done();
+        });
+    });
+
+    it('should return word information without dialects with malformed dialects query', (done) => {
+      const keyword = 'bia';
+      getWords({ keyword, dialects: 'fdsafds' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word.dialects).to.equal(undefined);
+          });
+          done();
+        });
     });
 
     it('should return word information with the filter query', (done) => {
       const filter = 'bia';
-      getWords({ filter: { word: filter } }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.lengthOf.at.least(2);
-        forEach(res.body, (word) => {
-          expect(word).to.have.all.keys(WORD_KEYS);
+      getWords({ filter: { word: filter } })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word).to.have.all.keys(WORD_KEYS);
+          });
+          done();
         });
-        done();
-      });
     });
 
     it('should return one word', (done) => {
