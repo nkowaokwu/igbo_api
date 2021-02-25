@@ -123,7 +123,7 @@ export const createWord = async (data) => {
       variations: '',
       accented: '',
       dialect: key,
-      pronounciation: '',
+      pronunciation: '',
     },
   }), {});
 

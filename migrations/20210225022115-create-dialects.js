@@ -26,7 +26,7 @@ const createDialects = () => (
       variations: '',
       accented: '',
       dialect: key,
-      pronounciation: '',
+      pronunciation: '',
     },
   }), {})
 );
@@ -37,7 +37,7 @@ module.exports = {
     const collections = ['words'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $set: { pronounciation: '', dialects },
+        $set: { pronunciation: '', dialects },
       })
     ));
   },
@@ -46,7 +46,7 @@ module.exports = {
     const collections = ['words'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $unset: { prounciation: null, dialects: null },
+        $unset: { pronunciation: null, dialects: null },
       })
     ));
   },
