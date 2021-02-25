@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
+import Dialects from '../shared/constants/Dialects';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
@@ -52,9 +53,15 @@ export const getWords = async (req, res, next) => {
       skip,
       limit,
       strict,
+      dialects,
       ...rest
     } = handleQueries(req);
-    const searchQueries = { searchWord, skip, limit };
+    const searchQueries = {
+      searchWord,
+      skip,
+      limit,
+      dialects,
+    };
     let query = !strict ? searchIgboTextSearch(searchWord) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
@@ -108,13 +115,27 @@ export const createWord = async (data) => {
     variations,
     stems,
   } = data;
+
+  const dialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
+    ...dialectsObject,
+    [key]: {
+      word: '',
+      variations: '',
+      accented: '',
+      dialect: key,
+      pronounciation: '',
+    },
+  }), {});
+
   const wordData = {
     word,
     wordClass,
     definitions,
     variations,
     stems,
+    dialects,
   };
+
   const newWord = new Word(wordData);
   await newWord.save();
 

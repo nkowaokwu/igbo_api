@@ -30,7 +30,12 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
  */
-export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
+export const findWordsWithMatch = async ({
+  match,
+  skip = 0,
+  limit = 10,
+  dialects,
+}) => {
   const words = await Word.aggregate()
     .match(match)
     .sort(match.$text ? { word: { $meta: 'textScore' } } : { 'definitions.0': 1 })
@@ -52,6 +57,7 @@ export const findWordsWithMatch = async ({ match, skip = 0, limit = 10 }) => {
       examples: 1,
       updatedOn: 1,
       accented: 1,
+      ...(dialects ? { dialects: 1 } : {}),
     })
     .skip(skip)
     .limit(limit);
