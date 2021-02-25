@@ -114,6 +114,13 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "dialects",
+            "description": "Includes dialect information in returned document",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
