@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+  
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+    - name: Use Node.js v14
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14
+    - name: Install Dependencies
+      run: yarn install
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_ACCESS_TOKEN }}
+      run: npx semantic-release

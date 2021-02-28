@@ -91,8 +91,9 @@ export const getWords = async (req, res, next) => {
 export const getWord = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const { dialects } = handleQueries(req);
 
-    const updatedWord = await findWordsWithMatch({ match: { _id: mongoose.Types.ObjectId(id) }, limit: 1 })
+    const updatedWord = await findWordsWithMatch({ match: { _id: mongoose.Types.ObjectId(id) }, limit: 1, dialects })
       .then(async ([word]) => {
         if (!word) {
           throw new Error('No word exists with the provided id.');
