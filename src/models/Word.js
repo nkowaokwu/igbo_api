@@ -1,17 +1,32 @@
 import mongoose from 'mongoose';
+import { every, has, partial } from 'lodash';
 import {
   normalizeWordHook,
   toJSONPlugin,
   toObjectPlugin,
   updatedOnHook,
 } from './plugins';
+import Dialects from '../shared/constants/Dialects';
+
+const REQUIRED_DIALECT_KEYS = ['word', 'variations', 'accented', 'dialect', 'pronunciation'];
+const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
 
 const { Schema } = mongoose;
 const wordSchema = new Schema({
   word: { type: String, required: true },
   wordClass: { type: String, default: '' },
   definitions: { type: [{ type: String }], default: [] },
-  dialects: { type: Object, required: true },
+  dialects: {
+    type: Object,
+    validate: (v) => {
+      const dialectValues = Object.values(v);
+      return dialectValues.every((dialectValue) => (
+        every(REQUIRED_DIALECT_KEYS, partial(has, dialectValue))
+        && every(REQUIRED_DIALECT_CONSTANT_KEYS, partial(has, Dialects[dialectValue.dialect]))
+        && dialectValue.dialect === Dialects[dialectValue.dialect].value
+      ));
+    },
+  },
   variations: { type: [{ type: String }], default: [] },
   normalized: { type: String, default: '' },
   frequency: { type: Number },

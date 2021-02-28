@@ -35,7 +35,16 @@ describe('MongoDB Words', () => {
         word: 'word',
         wordClass: 'noun',
         definitions: ['first definition', 'second definition'],
-        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({ ...dialectsObject, [key]: {} }), {}),
+        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
+          ...dialectsObject,
+          [key]: {
+            word: '',
+            variations: [],
+            accented: '',
+            dialect: key,
+            pronunciation: '',
+          },
+        }), {}),
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
       };
@@ -47,6 +56,31 @@ describe('MongoDB Words', () => {
           expect(savedWord.wordClass).to.equal('noun');
           expect(savedWord.dialects).to.not.equal(undefined);
           expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
+          done();
+        });
+    });
+    it('should fail populate mongodb with incorrect variations', (done) => {
+      const word = {
+        word: 'word',
+        wordClass: 'noun',
+        definitions: ['first definition', 'second definition'],
+        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
+          ...dialectsObject,
+          [key]: {
+            word: '',
+            variations: [],
+            accented: '',
+            dialect: 'mismatch',
+            pronunciation: '',
+          },
+        }), {}),
+        examples: [new ObjectId(), new ObjectId()],
+        stems: [],
+      };
+      const validWord = new Word(word);
+      validWord.save()
+        .catch((err) => {
+          expect(err.message.includes('`dialects`')).to.equal(true);
           done();
         });
     });
