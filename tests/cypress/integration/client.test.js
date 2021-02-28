@@ -20,13 +20,15 @@ describe('Igbo API Homepage', () => {
     });
 
     describe('Register Account', () => {
-      it('render the Sign Up page', () => {
+      beforeEach(() => {
         cy.visit('/signup');
+      });
+
+      it('render the Sign Up page', () => {
         cy.findByText('Sign up.');
       });
 
       it('fill out the sign up form and submit for developer account', () => {
-        cy.visit('/signup');
         cy.intercept('POST', '**developers').as('postDeveloper');
         cy.findByTestId('signup-name-input').clear().type('Developer');
         cy.findByTestId('signup-email-input').clear().type('developer@test.com');
@@ -40,7 +42,6 @@ describe('Igbo API Homepage', () => {
       });
 
       it('fill out the sign up form and submit for developer account and get an error', () => {
-        cy.visit('/signup');
         cy.intercept('POST', '**developers').as('postDeveloper');
         cy.findByTestId('signup-name-input').clear().type('Developer');
         cy.findByTestId('signup-email-input').clear().type('developer@example.com');
@@ -70,6 +71,7 @@ describe('Igbo API Homepage', () => {
     it('render the Sign up page', () => {
       cy.findByAltText('down arrow as menu icon').click();
       cy.get('a').contains('Register API Key').click();
+      cy.findByText('Sign up.');
     });
   });
 });
