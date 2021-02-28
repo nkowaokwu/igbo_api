@@ -2,7 +2,7 @@
   "branches": ["master"],
   "plugins": [
     ["@semantic-release/commit-analyzer", {
-      "preset": "eslint",
+      "preset": "angular",
       "releaseRules": [
         {"type": "docs", "release": "patch"},
         {"type": "refactor", "release": "patch"},
@@ -14,7 +14,7 @@
       }
     }],
     ["@semantic-release/release-notes-generator", {
-      "preset": "eslint",
+      "preset": "angular",
       "parserOpts": {
         "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
       },
