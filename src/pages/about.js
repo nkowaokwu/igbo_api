@@ -15,17 +15,6 @@ const About = () => (
           One of our goals is to make a language resource that is so robust that it can be used to help solve a variety
           of complex problems from education to machine learning.
         </p>
-        <p className="mb-6">
-          {`The initial words and examples that populated this API came 
-          from Kay Williamson's Igbo Dictionary entitled `}
-          <a
-            className="link"
-            href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf"
-          >
-            {'Dictionary of Ònìchà Igbo. '}
-          </a>
-            All efinitions come from the Igbo community.
-        </p>
         <p>
           {'This is a '}
           <a className="link" href="https://github.com/ijemmao/igbo_api">open-source passion project</a>
