@@ -23,8 +23,7 @@ const About = () => (
             href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf"	
           >	
             {'Dictionary of Ònìchà Igbo. '}	
-          </a>	
-            All definitions come from contributions in the Igbo community.	
+          </a>
         </p>
         <p>
           {'This is a '}
