@@ -121,7 +121,7 @@ export const createWord = async (data) => {
     ...dialectsObject,
     [key]: {
       word: '',
-      variations: '',
+      variations: [],
       accented: '',
       dialect: key,
       pronunciation: '',
