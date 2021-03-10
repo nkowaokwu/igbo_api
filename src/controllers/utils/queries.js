@@ -1,6 +1,9 @@
 import createRegExp from '../../shared/utils/createRegExp';
 
-const fullTextSearchQuery = (keyword) => ({ $text: { $search: keyword } });
+const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !keyword
+  ? { word: { $regex: /./ } }
+  : { $text: { $search: keyword } }
+);
 const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
 const hostsQuery = (host) => ({ hosts: { $in: [host] } });
 

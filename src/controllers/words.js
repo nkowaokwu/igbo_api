@@ -54,6 +54,7 @@ export const getWords = async (req, res, next) => {
       limit,
       strict,
       dialects,
+      isUsingMainKey,
       ...rest
     } = handleQueries(req);
     const searchQueries = {
@@ -62,7 +63,7 @@ export const getWords = async (req, res, next) => {
       limit,
       dialects,
     };
-    let query = !strict ? searchIgboTextSearch(searchWord) : strictSearchIgboQuery(searchWord);
+    let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);

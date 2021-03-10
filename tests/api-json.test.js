@@ -1,12 +1,13 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import { isEqual } from 'lodash';
+import { isEqual, sortBy } from 'lodash';
 import mongoose from 'mongoose';
 import server from '../src/server';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
 import {
   populateAPI,
   searchTerm,
+  getWords,
 } from './shared/commands';
 
 const { expect } = chai;
@@ -54,9 +55,19 @@ describe('JSON Dictionary', () => {
     });
 
     it('should return term using variation', (done) => {
-      searchTerm('-mu-mù').end(async (_, res) => {
+      searchTerm('-mu-mù').end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body['-mụ-mù']).to.have.lengthOf(1);
+        done();
+      });
+    });
+
+    it('should return words in alphabetical order', (done) => {
+      getWords().end((_, res) => {
+        expect(res.status).to.equal(200);
+        const resWords = res.body.map(({ word }) => word);
+        const sortedWords = sortBy(resWords, [(word) => word]);
+        expect(isEqual(resWords, sortedWords)).to.equal(true);
         done();
       });
     });

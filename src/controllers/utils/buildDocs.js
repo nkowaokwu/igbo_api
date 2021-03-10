@@ -27,6 +27,18 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
   return docs;
 };
 
+/* Depending on whether or not a search term is provided,
+ * the sort by key will be determined */
+const determineSorting = (match) => {
+  if (match.$text) {
+    if (match.$text.$search) {
+      return { word: { $meta: 'textScore' } };
+    }
+    return { word: 1 };
+  }
+  return { 'definitions.0': 1 };
+};
+
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
  */
@@ -38,7 +50,7 @@ export const findWordsWithMatch = async ({
 }) => {
   const words = await Word.aggregate()
     .match(match)
-    .sort(match.$text ? { word: { $meta: 'textScore' } } : { 'definitions.0': 1 })
+    .sort(determineSorting(match))
     .lookup({
       from: 'examples',
       localField: '_id',
