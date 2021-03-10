@@ -159,5 +159,6 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     limit,
     strict,
     dialects,
+    isUsingMainKey,
   };
 };
