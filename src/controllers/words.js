@@ -1,6 +1,5 @@
 import { map } from 'lodash';
 import mongoose from 'mongoose';
-import accents from 'remove-accents';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
@@ -64,11 +63,7 @@ export const getWords = async (req, res, next) => {
       limit,
       dialects,
     };
-    let query = !strict
-      // Removing diacritics to make query diacritic insensitive
-      // MongoDB indexes don't natively support diacritic insensitivity
-      ? searchIgboTextSearch(accents.remove(searchWord), isUsingMainKey)
-      : strictSearchIgboQuery(searchWord);
+    let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);
