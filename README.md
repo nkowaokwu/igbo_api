@@ -216,7 +216,16 @@ http://localhost:8080/api/v1/genericWords // POST
 
 After about 30 seconds, you should get a message returned back saying `Successfully populated generic words`.
 
-### 3. See Data in Database (Optional)
+### 3. Migrate Data (Optional)
+
+The database has gone through a number of migrations since the beginning of this project. To ensure that local testing data is the same
+shape as the data in the production MongoDB database, run all MongoDB migration scripts with the following command:
+
+```
+yarn migrate-up
+```
+
+### 4. View Data in Database (Optional)
 
 Now that the data is living in a local database, you can see it either using the `mongo` command line tool, or through [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
