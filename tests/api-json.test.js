@@ -31,7 +31,7 @@ describe('JSON Dictionary', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.keys(keyword);
-        expect(res.body[keyword][0].wordClass).to.equal('noun');
+        expect(res.body[keyword][0].wordClass).to.equal('NNC');
         done();
       });
     });
