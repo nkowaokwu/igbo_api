@@ -69,6 +69,7 @@ const Demo = ({ searchWord, words }) => {
               onKeyPress={onEnter}
               className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
               placeholder="i.e. please or biko"
+              data-test="try-it-out-input"
               defaultValue={searchWord}
             />
             <Input
@@ -82,6 +83,7 @@ const Demo = ({ searchWord, words }) => {
                 className="flex items-center space-x-2"
                 defaultChecked={initialQueries.dialects}
                 onChange={handleDialects}
+                data-test="dialects-flag"
               >
                 Dialects
               </Checkbox>
