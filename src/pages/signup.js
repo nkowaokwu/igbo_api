@@ -43,15 +43,19 @@ const SignUp = () => {
       method: 'post',
       url: `${igboApiRoute}/api/v1/developers`,
       data,
-    }).then((res) => {
-      if (res.status === 200) {
-        handleCreateDeveloperResponse('Success! Check your email');
-      } else if (res.status >= 400) {
-        handleCreateDeveloperResponse('An error occurred');
-      }
-    }, (err) => {
-      handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
     })
+      .then((res) => {
+        if (res.status === 200) {
+          handleCreateDeveloperResponse('Success! Check your email');
+        } else if (res.status >= 400) {
+          handleCreateDeveloperResponse('An error occurred');
+        }
+      }, (err) => {
+        handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
+      })
+      .catch((err) => {
+        handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
+      })
   );
 
   /* Once the user submits the form, a new Developer account will be created */

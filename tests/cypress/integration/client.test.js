@@ -19,6 +19,16 @@ describe('Igbo API Homepage', () => {
       cy.contains('Email:');
     });
 
+    describe('Try it Out', () => {
+      it('enter a word and select flag', () => {
+        cy.visit('/');
+        cy.findByTestId('try-it-out-input').clear().type('biko');
+        cy.findByTestId('dialects-flag').click();
+        cy.get('button').contains('Submit').click();
+        cy.get('input[value="http://localhost:8080/api/v1/words?keyword=biko"]');
+      });
+    });
+
     describe('Register Account', () => {
       beforeEach(() => {
         cy.visit('/signup');
