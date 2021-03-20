@@ -21,6 +21,7 @@ describe('Igbo API Homepage', () => {
 
     describe('Try it Out', () => {
       it('enter a word and select flag', () => {
+        cy.visit('/');
         cy.findByTestId('try-it-out-input').clear().type('biko');
         cy.findByTestId('dialects-flag').click();
         cy.get('button').contains('Submit').click();
