@@ -20,12 +20,11 @@ describe('Igbo API Homepage', () => {
     });
 
     describe('Try it Out', () => {
-      it.only('enter a word and select flag', () => {
+      it('enter a word and select flag', () => {
         cy.findByTestId('try-it-out-input').clear().type('biko');
         cy.findByTestId('dialects-flag').click();
         cy.get('button').contains('Submit').click();
-        cy.get('pre').contains('"word":');
-        cy.get('pre').contains('"dialects":');
+        cy.get('input[value="http://localhost:8080/api/v1/words?keyword=biko"]');
       });
     });
 
