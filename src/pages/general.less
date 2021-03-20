@@ -1,7 +1,7 @@
 /* Style sheet dedicated to element tag styling */
 html {
   width: 100vw;
-  font-family: 'Silka', sans-serif;
+  font-family: sans-serif;
   font-weight: normal;
 }
 
@@ -20,7 +20,7 @@ h2, h3, a, button {
 }
 
 h1, h2, h3, button, input {
-  @apply select-none
+  @apply select-none;
 }
 
 input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]), textarea {
@@ -40,4 +40,8 @@ input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]):focus
 
 *, button:focus {
   outline: rgba(41, 123, 48, 0.4);
+}
+
+.ant-checkbox-inner, .ant-checkbox-input {
+  transform: scale(1.3)
 }
