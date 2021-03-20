@@ -29,17 +29,21 @@ MainApp.getInitialProps = async (appContext) => {
   const queries = omit(query, ['word']);
   const queriesString = queryString.stringify(queries);
   const appendQueries = queriesString ? `&${queriesString}` : '';
-  if (pathname === '/' && searchWord) {
-    const res = await axios({
-      method: 'get',
-      url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${appendQueries}`,
-      headers: {
-        'X-API-Key': process.env.MAIN_KEY || 'main_key',
-      }
-    });
-    return { ...appProps, searchWord, words: res.data };
+  try {
+    if (pathname === '/' && searchWord) {
+      const res = await axios({
+        method: 'get',
+        url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${appendQueries}`,
+        headers: {
+          'X-API-Key': process.env.MAIN_KEY || 'main_key',
+        }
+      });
+      return { ...appProps, searchWord, words: res.data };
+    }
+    return appProps;
+  } catch (err) {
+    return { ...appProps, searchWord, words: [] };
   }
-  return appProps;
 };
 
 export default MainApp;
