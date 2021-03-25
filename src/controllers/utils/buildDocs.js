@@ -66,7 +66,7 @@ export const findWordsWithMatch = async ({
       definitions: 1,
       variations: 1,
       stems: 1,
-      normalized: 1,
+      normalized: 0,
       examples: 1,
       updatedOn: 1,
       accented: 1,
