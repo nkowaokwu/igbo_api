@@ -58,6 +58,12 @@ export const findWordsWithMatch = async ({
       foreignField: 'associatedWords',
       as: 'examples',
     })
+    .collation({
+      locale: 'ig',
+      caseFirst: 'upper',
+      alternate: 'shifted',
+      maxVariable: 'punct',
+    })
     .project({
       id: '$_id',
       _id: 0,
