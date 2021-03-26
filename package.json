@@ -28,7 +28,7 @@
     "start:docker": "docker-compose up",
     "test:build": "NODE_ENV=build yarn start",
     "dev:site": "cross-env NODE_ENV=development next",
-    "start:server": "cross-env NODE_ENV=test nodemon --exec babel-node -- ./src/server.js",
+    "start:server": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./src/server.js",
     "start:database": "mongod --dbpath ./db",
     "test": "npm-run-all -p -r start:database mocha"
   },
