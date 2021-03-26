@@ -35,7 +35,7 @@ const determineSorting = (match) => {
       return { word: { $meta: 'textScore' } };
     }
   } else if (match.word) {
-    return { word: 1 };
+    return { word: 1, _id: 1 };
   }
   return { 'definitions.0': 1 };
 };
