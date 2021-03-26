@@ -27,6 +27,7 @@ const wordSchema = new Schema({
       ));
     },
   },
+  isCentralIgbo: { type: Boolean, default: false },
   variations: { type: [{ type: String }], default: [] },
   normalized: { type: String, default: '' },
   frequency: { type: Number },

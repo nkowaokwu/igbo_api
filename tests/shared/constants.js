@@ -14,7 +14,6 @@ export const WORD_KEYS = [
   'stems',
   'examples',
   'id',
-  'normalized',
   'word',
   'wordClass',
   'updatedOn',
