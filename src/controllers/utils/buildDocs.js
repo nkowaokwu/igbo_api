@@ -62,7 +62,7 @@ export const findWordsWithMatch = async ({
       locale: 'ig',
       caseFirst: 'upper',
       alternate: 'shifted',
-      maxVariable: 'space',
+      maxVariable: 'punct',
     })
     .project({
       id: '$_id',
