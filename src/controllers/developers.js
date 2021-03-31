@@ -1,5 +1,4 @@
 import { hash } from 'bcrypt';
-import { flatten } from 'lodash';
 import { v4 as uuid } from 'uuid';
 import Developer from '../models/Developer';
 import { sendNewDeveloper } from './email';
@@ -15,7 +14,6 @@ export const postDeveloper = async (req, res, next) => {
     const { body: data } = req;
     const {
       email,
-      host,
       password,
       name,
     } = data;
@@ -32,11 +30,9 @@ export const postDeveloper = async (req, res, next) => {
     const apiKey = generateApiKey();
     const hashedApiKey = await hash(apiKey, 10);
     const hashedPassword = await hash(password, 10);
-    const hosts = flatten([host]);
     const developer = new Developer({
       name,
       email,
-      hosts,
       apiKey: hashedApiKey,
       password: hashedPassword,
     });
