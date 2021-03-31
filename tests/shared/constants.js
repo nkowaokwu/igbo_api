@@ -45,4 +45,3 @@ export const INVALID_ID = 'fdsafdsad';
 export const NONEXISTENT_ID = new mongoose.Types.ObjectId();
 export const MAIN_KEY = 'main_key';
 export const FALLBACK_API_KEY = 'fallback_api_key';
-export const ORIGIN_HEADER = 'test.com';

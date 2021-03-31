@@ -18,7 +18,7 @@
     "mongodump": "shx rm -rf dump/ && mongodump -d igbo_api -o dump",
     "mocha": "cross-env NODE_ENV=test mocha --require @babel/register --timeout 10000 --retries 2 -r esm ./tests",
     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-    "cypress": "cross-env NODE_ENV=test CLIENT_TEST=true npm-run-all -p start cypress:open",
+    "cypress": "cross-env NODE_ENV=test CLIENT_TEST=true npm-run-all -p start start:database cypress:open",
     "cypress:ci": "cross-env NODE_ENV=test CLIENT_TEST=true npm-run-all -p -r start cypress:run",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",

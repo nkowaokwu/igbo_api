@@ -3,7 +3,6 @@ import server from '../../src/server';
 import {
   API_ROUTE,
   FALLBACK_API_KEY,
-  ORIGIN_HEADER,
   LOCAL_ROUTE,
   TEST_ROUTE,
 } from './constants';
@@ -25,7 +24,6 @@ export const getWords = (query = {}, options = {}) => (
     .get(`${API_ROUTE}/words`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-    .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
 export const getWord = (id, query = {}, options = {}) => (
@@ -34,7 +32,6 @@ export const getWord = (id, query = {}, options = {}) => (
     .get(`${API_ROUTE}/words/${id}`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-    .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
 export const getExample = (id, query = {}, options = {}) => (
@@ -43,7 +40,6 @@ export const getExample = (id, query = {}, options = {}) => (
     .get(`${API_ROUTE}/examples/${id}`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-    .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
 /* Searches for examples using the data in MongoDB */
@@ -53,7 +49,6 @@ export const getExamples = (query = {}, options = {}) => (
     .get(`${API_ROUTE}/examples`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-    .set('Origin', options.origin || ORIGIN_HEADER)
 );
 
 /* Hits the POST /populate route to seed the local MongoDB database */

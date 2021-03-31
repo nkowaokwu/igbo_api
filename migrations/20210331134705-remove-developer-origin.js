@@ -1,9 +1,9 @@
 module.exports = {
   async up(db) {
     return [
-      db.collection('developers').updateMany({}, [{
+      db.collection('developers').updateMany({}, {
         $unset: { hosts: null },
-      }]),
+      }),
     ];
   },
 

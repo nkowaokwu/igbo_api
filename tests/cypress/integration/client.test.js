@@ -43,7 +43,6 @@ describe('Igbo API Homepage', () => {
         cy.findByTestId('signup-name-input').clear().type('Developer');
         cy.findByTestId('signup-email-input').clear().type('developer@test.com');
         cy.findByTestId('signup-password-input').clear().type('password');
-        cy.findByTestId('signup-host-input').clear().type('test.com');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
           expect(res.response.statusCode).to.equal(200);
@@ -56,7 +55,6 @@ describe('Igbo API Homepage', () => {
         cy.findByTestId('signup-name-input').clear().type('Developer');
         cy.findByTestId('signup-email-input').clear().type('developer@example.com');
         cy.findByTestId('signup-password-input').clear().type('password');
-        cy.findByTestId('signup-host-input').clear().type('test.com');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
           expect(res.response.statusCode).to.equal(400);
