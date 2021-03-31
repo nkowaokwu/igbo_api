@@ -8,11 +8,9 @@ const developerData = {
   name: 'Developer',
   email: 'developer@example.com',
   password: 'password',
-  host: 'test.com',
 };
 
 const malformedDeveloperData = {
-  name: 'Developer',
   email: 'developer@example.com',
   password: 'password',
 };

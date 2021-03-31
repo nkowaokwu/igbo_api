@@ -16,10 +16,5 @@ export default (req, res, next) => {
     return res.send({ error: 'Password is required' });
   }
 
-  if (!data.host) {
-    res.status(400);
-    return res.send({ error: 'Host is required' });
-  }
-
   return next();
 };

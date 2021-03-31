@@ -51,7 +51,7 @@ const SignUp = () => {
           handleCreateDeveloperResponse('An error occurred');
         }
       }, (err) => {
-        handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
+        handleCreateDeveloperResponse(`An error occurred: ${err.response.data.error}`);
       })
       .catch((err) => {
         handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
@@ -128,23 +128,6 @@ const SignUp = () => {
               }}
             />
             {errors.password ? <span className="error">Password is required</span> : null}
-            <Controller
-              render={(props) => (
-                <Input
-                  {...props}
-                  header="Project Domain"
-                  type="text"
-                  placeholder="i.e. localhost or myapp.com"
-                  data-test="signup-host-input"
-                />
-              )}
-              name="host"
-              control={control}
-              rules={{
-                required: true,
-              }}
-            />
-            {errors.host ? <span className="error">Project domain is required</span> : null}
             <button
               type="submit"
               className="primary-button w-full mt-6"

@@ -29,16 +29,6 @@ describe('Developers', () => {
         });
     });
 
-    it('should create a new developer with multiple hosts', (done) => {
-      const hosts = ['localhost', 'test.com', 'more.com'];
-      createDeveloper({ ...developerData, host: hosts })
-        .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.message).to.not.equal(undefined);
-          done();
-        });
-    });
-
     it('should throw an error while creating a new developer', (done) => {
       createDeveloper(malformedDeveloperData)
         .end((_, res) => {
@@ -151,53 +141,13 @@ describe('Developers', () => {
         });
     });
 
-    it('should throw an error getting words with mismatching origin', (done) => {
-      createDeveloper(developerData)
-        .then((developerRes) => {
-          expect(developerRes.status).to.equal(200);
-          getWords({}, { apiKey: developerRes.body.apiKey, origin: 'invalid' })
-            .end((_, res) => {
-              expect(res.status).to.equal(401);
-              expect(res.body.error).to.not.equal(undefined);
-              done();
-            });
-        });
-    });
-
-    it('should throw an error getting a word with mismatching origin', (done) => {
-      createDeveloper(developerData)
-        .then((developerRes) => {
-          expect(developerRes.status).to.equal(200);
-          getWord(wordId, {}, { apiKey: developerRes.body.apiKey, origin: 'invalid' })
-            .end((_, res) => {
-              expect(res.status).to.equal(401);
-              expect(res.body.error).to.not.equal(undefined);
-              done();
-            });
-        });
-    });
-
-    it('should throw an error getting examples with mismatching origin', (done) => {
+    it('should throw no error getting examples with mismatching origin', (done) => {
       createDeveloper(developerData)
         .then((developerRes) => {
           expect(developerRes.status).to.equal(200);
           getExamples({}, { apiKey: developerRes.body.apiKey, origin: 'invalid' })
             .end((_, res) => {
-              expect(res.status).to.equal(401);
-              expect(res.body.error).to.not.equal(undefined);
-              done();
-            });
-        });
-    });
-
-    it('should throw an error getting an example with mismatching origin', (done) => {
-      createDeveloper(developerData)
-        .then((developerRes) => {
-          expect(developerRes.status).to.equal(200);
-          getExample(exampleId, {}, { apiKey: developerRes.body.apiKey, origin: 'invalid' })
-            .end((_, res) => {
-              expect(res.status).to.equal(401);
-              expect(res.body.error).to.not.equal(undefined);
+              expect(res.status).to.equal(200);
               done();
             });
         });

@@ -5,7 +5,6 @@ const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !key
   : { $text: { $search: keyword } }
 );
 const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
-const hostsQuery = (host) => ({ hosts: { $in: [host] } });
 
 /* Regex match query used to later to defined the Content-Range response header */
 export const searchExamplesRegexQuery = (regex) => ({ $or: [{ igbo: regex }, { english: regex }] });
@@ -16,4 +15,3 @@ export const strictSearchIgboQuery = (word) => ({
   word: createRegExp(word, true),
 });
 export const searchEnglishRegexQuery = definitionsQuery;
-export const searchDeveloperWithHostsQuery = hostsQuery;

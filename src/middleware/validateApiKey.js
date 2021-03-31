@@ -1,10 +1,8 @@
 import { compareSync } from 'bcrypt';
 import Developer from '../models/Developer';
-import { searchDeveloperWithHostsQuery } from '../controllers/utils/queries';
 import { MAIN_KEY } from '../config';
 
 const PROD_LIMIT = 2500;
-const FALLBACK_HOST = 'http://localhost:8000';
 const FALLBACK_API_KEY = 'fallback_api_key';
 
 const determineLimit = (apiLimit) => (
@@ -35,9 +33,8 @@ const handleDeveloperUsage = async (developer) => {
 };
 
 /* Finds a developer with provided information */
-const findDeveloper = async ({ host, apiKey }) => {
-  const hostsQuery = searchDeveloperWithHostsQuery(host);
-  const developers = await Developer.find(host.match(/localhost/) ? {} : hostsQuery);
+const findDeveloper = async (apiKey) => {
+  const developers = await Developer.find({});
   return developers.find((dev) => compareSync(apiKey, dev.apiKey));
 };
 
@@ -45,7 +42,6 @@ export default async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
     let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
-    let host = req.headers.Origin || req.headers.origin;
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
@@ -54,19 +50,13 @@ export default async (req, res, next) => {
     }
     req.isUsingMainKey = false;
 
-    if ((!apiKey || !host) && process.env.NODE_ENV === 'development') {
+    if ((!apiKey) && process.env.NODE_ENV === 'development') {
       if (!apiKey) {
         apiKey = FALLBACK_API_KEY;
-      }
-      if (!host) {
-        host = FALLBACK_HOST;
       }
     }
     if (!apiKey) {
       throw new Error('X-API-Key Header doesn\'t exist');
-    }
-    if (!host) {
-      throw new Error('Origin Header doesn\'t exist');
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
@@ -74,7 +64,7 @@ export default async (req, res, next) => {
       return next();
     }
 
-    const developer = await findDeveloper({ host, apiKey });
+    const developer = await findDeveloper(apiKey);
 
     if (developer) {
       if (developer.usage.count >= determineLimit(apiLimit)) {
