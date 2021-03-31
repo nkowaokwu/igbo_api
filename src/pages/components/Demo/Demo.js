@@ -96,7 +96,11 @@ const Demo = ({ searchWord, words }) => {
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a className="link" href={DICTIONARY_APP_URL}>
+              <a
+                className="link"
+                href={window.location.hostname === 'localhost'
+                  ? 'http://localhost:8000' : DICTIONARY_APP_URL}
+              >
                 dictionary app
               </a>
             </p>
