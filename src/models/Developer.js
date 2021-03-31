@@ -7,7 +7,6 @@ const developerSchema = new Schema({
   apiKey: { type: String, default: '', required: true },
   email: { type: String, default: '', required: true },
   password: { type: String, default: '', required: true },
-  hosts: [{ type: String, default: '' }],
   usage: {
     date: { type: Date, default: Date.now() },
     count: { type: Number, default: 0 },
