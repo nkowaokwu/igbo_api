@@ -12,8 +12,8 @@ const Demo = ({ searchWord, words }) => {
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState({});
   const [productionUrl, setProductionUrl] = useState('');
+  const [redirectUrl, setRedirectUrl] = useState('');
   const responseBody = JSON.stringify(words, null, 4);
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setProductionUrl(window.origin);
@@ -23,6 +23,9 @@ const Demo = ({ searchWord, words }) => {
         window.location.hash = 'try-it-out';
       }
     }
+    setRedirectUrl(window.location.hostname === 'localhost'
+      ? 'http://localhost:8000'
+      : DICTIONARY_APP_URL);
   }, []);
 
   const constructQueryString = () => {
@@ -98,8 +101,7 @@ const Demo = ({ searchWord, words }) => {
               {'Want to see how this data is getting used? Take a look at the '}
               <a
                 className="link"
-                href={window.location.hostname === 'localhost'
-                  ? 'http://localhost:8000' : DICTIONARY_APP_URL}
+                href={redirectUrl}
               >
                 dictionary app
               </a>
