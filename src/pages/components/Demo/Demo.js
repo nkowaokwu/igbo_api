@@ -19,13 +19,13 @@ const Demo = ({ searchWord, words }) => {
       setProductionUrl(window.origin);
       setInitialQueries(queryString.parse(window.location.search));
       setIsLoading(false);
+      setRedirectUrl(window.location.hostname === 'localhost'
+        ? 'http://localhost:8000'
+        : DICTIONARY_APP_URL);
       if (keyword) {
         window.location.hash = 'try-it-out';
       }
     }
-    setRedirectUrl(window.location.hostname === 'localhost'
-      ? 'http://localhost:8000'
-      : DICTIONARY_APP_URL);
   }, []);
 
   const constructQueryString = () => {
