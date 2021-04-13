@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { Input, Checkbox } from 'antd';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
+import { API_ROUTE } from '../../../siteConstants';
 
 const Demo = ({ searchWord, words }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +14,7 @@ const Demo = ({ searchWord, words }) => {
   const [productionUrl, setProductionUrl] = useState('');
   const [redirectUrl, setRedirectUrl] = useState('');
   const responseBody = JSON.stringify(words, null, 4);
+  const DICTIONARY_APP_URL = 'https://nkowaokwu.com/';
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setProductionUrl(window.origin);
