@@ -4,7 +4,7 @@ import { omit } from 'lodash';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { Input, Checkbox } from 'antd';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
+import { API_ROUTE } from '../../../siteConstants';
 
 const Demo = ({ searchWord, words }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,13 +12,17 @@ const Demo = ({ searchWord, words }) => {
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState({});
   const [productionUrl, setProductionUrl] = useState('');
+  const [redirectUrl, setRedirectUrl] = useState('');
   const responseBody = JSON.stringify(words, null, 4);
-
+  const DICTIONARY_APP_URL = 'https://nkowaokwu.com/';
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setProductionUrl(window.origin);
       setInitialQueries(queryString.parse(window.location.search));
       setIsLoading(false);
+      setRedirectUrl(window.location.hostname === 'localhost'
+        ? 'http://localhost:8000'
+        : DICTIONARY_APP_URL);
       if (keyword) {
         window.location.hash = 'try-it-out';
       }
@@ -96,7 +100,10 @@ const Demo = ({ searchWord, words }) => {
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a className="link" href={DICTIONARY_APP_URL}>
+              <a
+                className="link"
+                href={redirectUrl}
+              >
                 dictionary app
               </a>
             </p>
