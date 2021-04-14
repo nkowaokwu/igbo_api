@@ -27,6 +27,10 @@ export default {
     value: 'INTJ',
     label: 'Interjection',
   },
+  NM: {
+    value: 'NM',
+    label: 'Name',
+  },
   NNC: {
     value: 'NNC',
     label: 'Common noun',
