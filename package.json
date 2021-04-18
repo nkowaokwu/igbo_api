@@ -33,7 +33,7 @@
     "test": "npm-run-all -p -r start:database mocha"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "husky": {
     "hooks": {
