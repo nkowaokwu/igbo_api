@@ -59,6 +59,14 @@ const Demo = ({ searchWord, words }) => {
     }
   };
 
+  const handleExamples = ({ target }) => {
+    if (target.checked) {
+      setQueries({ ...queries, examples: target.checked });
+    } else {
+      setQueries(omit(queries, ['examples']));
+    }
+  };
+
   return !isLoading ? (
     <div className="flex justify-center mb-16">
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10">
@@ -90,6 +98,16 @@ const Demo = ({ searchWord, words }) => {
                 data-test="dialects-flag"
               >
                 Dialects
+              </Checkbox>
+            </div>
+            <div className="px-3 ">
+              <Checkbox
+                className="flex items-center space-x-2"
+                defaultChecked={initialQueries.examples}
+                onChange={handleExamples}
+                data-test="examples-flag"
+              >
+                Examples
               </Checkbox>
             </div>
             <button
