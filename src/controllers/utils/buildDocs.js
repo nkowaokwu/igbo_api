@@ -48,16 +48,23 @@ export const findWordsWithMatch = async ({
   skip = 0,
   limit = 10,
   dialects,
+  examples,
 }) => {
-  const words = await Word.aggregate()
+  let words = Word.aggregate()
     .match(match)
-    .sort(determineSorting(match))
-    .lookup({
-      from: 'examples',
-      localField: '_id',
-      foreignField: 'associatedWords',
-      as: 'examples',
-    })
+    .sort(determineSorting(match));
+
+  if (examples) {
+    words = words
+      .lookup({
+        from: 'examples',
+        localField: '_id',
+        foreignField: 'associatedWords',
+        as: 'examples',
+      });
+  }
+
+  words = words
     .collation({
       locale: 'ig',
       caseFirst: 'upper',
@@ -72,13 +79,13 @@ export const findWordsWithMatch = async ({
       definitions: 1,
       variations: 1,
       stems: 1,
-      examples: 1,
       updatedOn: 1,
       accented: 1,
+      ...(examples ? { examples: 1 } : {}),
       ...(dialects ? { dialects: 1 } : {}),
     })
     .skip(skip)
     .limit(limit);
 
-  return removeKeysInNestedDoc(words, 'examples');
+  return examples ? removeKeysInNestedDoc(await words, 'examples') : words;
 };
