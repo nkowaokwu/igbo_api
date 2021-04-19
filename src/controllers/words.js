@@ -49,11 +49,11 @@ export const getWords = async (req, res, next) => {
     const {
       searchWord,
       regexKeyword,
-      range,
       skip,
       limit,
       strict,
       dialects,
+      examples,
       isUsingMainKey,
       ...rest
     } = handleQueries(req);
@@ -62,6 +62,7 @@ export const getWords = async (req, res, next) => {
       skip,
       limit,
       dialects,
+      examples,
     };
     let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
     const words = await searchWordUsingIgbo({ query, ...searchQueries });
@@ -92,9 +93,14 @@ export const getWords = async (req, res, next) => {
 export const getWord = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { dialects } = handleQueries(req);
+    const { dialects, examples } = handleQueries(req);
 
-    const updatedWord = await findWordsWithMatch({ match: { _id: mongoose.Types.ObjectId(id) }, limit: 1, dialects })
+    const updatedWord = await findWordsWithMatch({
+      match: { _id: mongoose.Types.ObjectId(id) },
+      limit: 1,
+      dialects,
+      examples,
+    })
       .then(async ([word]) => {
         if (!word) {
           throw new Error('No word exists with the provided id.');

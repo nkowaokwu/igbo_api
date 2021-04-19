@@ -12,7 +12,6 @@ export const WORD_KEYS = [
   'variations',
   'definitions',
   'stems',
-  'examples',
   'id',
   'word',
   'wordClass',

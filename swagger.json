@@ -121,6 +121,13 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "examples",
+            "description": "Includes examples associated with returned document",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {

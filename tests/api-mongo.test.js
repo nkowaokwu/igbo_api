@@ -141,6 +141,32 @@ describe('MongoDB Words', () => {
         });
     });
 
+    it('should return word information with examples query', (done) => {
+      const keyword = 'bia';
+      getWords({ keyword, examples: true })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word.examples).to.have.lengthOf.at.least(0);
+          });
+          done();
+        });
+    });
+
+    it('should return word information without examples with malformed examples query', (done) => {
+      const keyword = 'bia';
+      getWords({ keyword, examples: 'fdsafds' })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(2);
+          forEach(res.body, (word) => {
+            expect(word.examples).to.equal(undefined);
+          });
+          done();
+        });
+    });
+
     it('should return word information with the filter query', (done) => {
       const filter = 'bia';
       getWords({ filter: { word: filter } })
@@ -380,7 +406,7 @@ describe('MongoDB Words', () => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
         expect(res.body).to.have.lengthOf.at.most(10);
-        expect(res.body[0].word).to.equal(accents.remove('-mụ-mù'));
+        expect(res.body[0].word).to.equal('-mụ-mù');
         expect(some(res.body, (word) => isEqual(word.variations, ['-mu-mù']))).to.equal(true);
         done();
       });
