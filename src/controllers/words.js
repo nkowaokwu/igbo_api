@@ -43,6 +43,11 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
   return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
+function getWordSearchFunction(searchWord) {
+  if (searchWord.match(/".*"/)) { return searchWordUsingEnglish; }
+  return searchWordUsingIgbo;
+}
+
 /* Gets words from MongoDB */
 export const getWords = async (req, res, next) => {
   try {
@@ -65,7 +70,7 @@ export const getWords = async (req, res, next) => {
       examples,
     };
     let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
-    const words = await searchWordUsingIgbo({ query, ...searchQueries });
+    const words = await getWordSearchFunction(searchWord)({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);
       const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
