@@ -44,7 +44,7 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 };
 
 function getWordSearchFunction(searchWord) {
-  if (searchWord.match(/".*"/)) { return searchWordUsingEnglish; }
+  if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) { return searchWordUsingEnglish; }
   return searchWordUsingIgbo;
 }
 
