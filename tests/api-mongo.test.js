@@ -466,6 +466,26 @@ describe('MongoDB Words', () => {
         });
     });
 
+    it('should return no words searching when using english by using single qoutes', (done) => {
+      const keyword = '\'biko\'';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
+
+    it('should also return no words searching when using english by using double qoutes', (done) => {
+      const keyword = '"biko"';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf(0);
+          done();
+        });
+    });
+
     // TODO: Remove lingering sorting direction logic
     it('should return a descending sorted list of words with sort query', (done) => {
       const key = 'word';
