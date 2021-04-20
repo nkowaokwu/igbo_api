@@ -36,6 +36,15 @@
             "type": "string"
           }
         },
+        "pronunciation": {
+          "type": "string"
+        },
+        "isCentralIgbo": {
+          "type": "string"
+        },
+        "accented": {
+          "type": "string"
+        },
         "variations": {
           "type": "array",
           "items": {
