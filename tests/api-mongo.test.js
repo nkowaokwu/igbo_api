@@ -466,22 +466,26 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return no words searching when using english by using single qoutes', (done) => {
-      const keyword = '\'biko\'';
+    it('should return a sorted list of igbo terms when using english by using single qoutes', (done) => {
+      const keyword = '\'water\'';
       getWords({ keyword })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(5);
+          expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
           done();
         });
     });
 
-    it('should also return no words searching when using english by using double qoutes', (done) => {
-      const keyword = '"biko"';
+    it('should also return a sorted list of igbo terms when using english by using double qoutes', (done) => {
+      const keyword = '"water"';
       getWords({ keyword })
         .end((_, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf(0);
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(5);
+          expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
           done();
         });
     });
