@@ -43,11 +43,6 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
   return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
-function getWordSearchFunction(searchWord) {
-  if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) { return searchWordUsingEnglish; }
-  return searchWordUsingIgbo;
-}
-
 /* Gets words from MongoDB */
 export const getWords = async (req, res, next) => {
   try {
@@ -69,31 +64,38 @@ export const getWords = async (req, res, next) => {
       dialects,
       examples,
     };
-    let query = !strict
-      ? searchIgboTextSearch(
-        searchWord
-          .split('')
-          .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
-          .join(''),
-        isUsingMainKey,
-      )
-      : strictSearchIgboQuery(
-        searchWord
-          .split('')
-          .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
-          .join(''),
-      );
-    const words = await getWordSearchFunction(searchWord)({ query, ...searchQueries });
-    if (!words.length) {
-      query = searchEnglishRegexQuery(regexKeyword);
-      const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
-      return packageResponse({
-        res,
-        docs: englishWords,
-        model: Word,
-        query,
-        ...rest,
-      });
+    let words;
+    let query;
+    if (searchWord.match(/".*/) || searchWord.match(/'.*'/)) {
+      query = searchEnglishRegexQuery(searchWord);
+      words = await searchWordUsingEnglish({ query, ...searchQueries });
+    } else {
+      query = !strict
+        ? searchIgboTextSearch(
+          searchWord
+            .split('')
+            .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
+            .join(''),
+          isUsingMainKey,
+        )
+        : strictSearchIgboQuery(
+          searchWord
+            .split('')
+            .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
+            .join(''),
+        );
+      words = await searchWordUsingIgbo({ query, ...searchQueries });
+      if (!words.length) {
+        query = searchEnglishRegexQuery(regexKeyword);
+        const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
+        return packageResponse({
+          res,
+          docs: englishWords,
+          model: Word,
+          query,
+          ...rest,
+        });
+      }
     }
     return packageResponse({
       res,
@@ -118,13 +120,12 @@ export const getWord = async (req, res, next) => {
       limit: 1,
       dialects,
       examples,
-    })
-      .then(async ([word]) => {
-        if (!word) {
-          throw new Error('No word exists with the provided id.');
-        }
-        return word;
-      });
+    }).then(async ([word]) => {
+      if (!word) {
+        throw new Error('No word exists with the provided id.');
+      }
+      return word;
+    });
     return res.send(updatedWord);
   } catch (err) {
     return next(err);
@@ -143,16 +144,19 @@ export const createWord = async (data) => {
     dialects,
   } = data;
 
-  const emptyDialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
-    ...dialectsObject,
-    [key]: {
-      word: '',
-      variations: [],
-      accented: '',
-      dialect: key,
-      pronunciation: '',
-    },
-  }), {});
+  const emptyDialects = Object.keys(Dialects).reduce(
+    (dialectsObject, key) => ({
+      ...dialectsObject,
+      [key]: {
+        word: '',
+        variations: [],
+        accented: '',
+        dialect: key,
+        pronunciation: '',
+      },
+    }),
+    {},
+  );
 
   const wordData = {
     word,
