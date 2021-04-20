@@ -66,23 +66,21 @@ export const getWords = async (req, res, next) => {
     };
     let words;
     let query;
-    if (searchWord.match(/".*/) || searchWord.match(/'.*'/)) {
-      query = searchEnglishRegexQuery(searchWord);
+    if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) {
+      const searchWordWithoutQuotes = searchWord
+        .split('')
+        .filter((c) => c !== '"' && c !== "'")
+        .join('');
+      query = searchEnglishRegexQuery(searchWordWithoutQuotes);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
       query = !strict
         ? searchIgboTextSearch(
-          searchWord
-            .split('')
-            .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
-            .join(''),
+          searchWord,
           isUsingMainKey,
         )
         : strictSearchIgboQuery(
-          searchWord
-            .split('')
-            .filter((c) => c !== '"' && c !== "'" && !(searchWord.match(/'.*'/) || searchWord.match(/".*"/)))
-            .join(''),
+          searchWord,
         );
       words = await searchWordUsingIgbo({ query, ...searchQueries });
       if (!words.length) {
