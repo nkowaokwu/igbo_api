@@ -80,7 +80,7 @@ export const getWords = async (req, res, next) => {
       : strictSearchIgboQuery(
         searchWord
           .split('')
-          .filter((c) => c !== '"' && c !== "'" && (searchWord.matches(/'.*'/) || searchWord.matches(/'.*'/)))
+          .filter((c) => c !== '"' && c !== "'" && (searchWord.match(/'.*'/) || searchWord.match(/'.*'/)))
           .join(''),
       );
     const words = await getWordSearchFunction(searchWord)({ query, ...searchQueries });
