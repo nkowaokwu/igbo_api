@@ -69,7 +69,20 @@ export const getWords = async (req, res, next) => {
       dialects,
       examples,
     };
-    let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
+    let query = !strict
+      ? searchIgboTextSearch(
+        searchWord
+          .split('')
+          .filter((c) => c !== '"' && c !== "'")
+          .join(''),
+        isUsingMainKey,
+      )
+      : strictSearchIgboQuery(
+        searchWord
+          .split('')
+          .filter((c) => c !== '"' && c !== "'")
+          .join(''),
+      );
     const words = await getWordSearchFunction(searchWord)({ query, ...searchQueries });
     if (!words.length) {
       query = searchEnglishRegexQuery(regexKeyword);
