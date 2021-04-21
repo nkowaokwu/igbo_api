@@ -472,7 +472,7 @@ describe('MongoDB Words', () => {
         .end((_, res) => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
-          expect(res.body).to.have.lengthOf.at.least(5);
+          expect(res.body).to.have.lengthOf.at.least(1);
           expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
           done();
         });
@@ -484,8 +484,19 @@ describe('MongoDB Words', () => {
         .end((_, res) => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
-          expect(res.body).to.have.lengthOf.at.least(5);
+          expect(res.body).to.have.lengthOf.at.least(1);
           expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
+          done();
+        });
+    });
+
+    it('should not return any words when wrapping an igbo word in quotes', (done) => {
+      const keyword = '"mmili"';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.most(0);
           done();
         });
     });

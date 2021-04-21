@@ -67,10 +67,7 @@ export const getWords = async (req, res, next) => {
     let words;
     let query;
     if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) {
-      const searchWordWithoutQuotes = searchWord
-        .split('')
-        .filter((c) => c !== '"' && c !== "'")
-        .join('');
+      const searchWordWithoutQuotes = searchWord.replaceAll(/[',"]/, '');
       query = searchEnglishRegexQuery(searchWordWithoutQuotes);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
@@ -118,12 +115,13 @@ export const getWord = async (req, res, next) => {
       limit: 1,
       dialects,
       examples,
-    }).then(async ([word]) => {
-      if (!word) {
-        throw new Error('No word exists with the provided id.');
-      }
-      return word;
-    });
+    })
+      .then(async ([word]) => {
+        if (!word) {
+          throw new Error('No word exists with the provided id.');
+        }
+        return word;
+      });
     return res.send(updatedWord);
   } catch (err) {
     return next(err);
@@ -142,18 +140,17 @@ export const createWord = async (data) => {
     dialects,
   } = data;
 
-  const emptyDialects = Object.keys(Dialects).reduce(
-    (dialectsObject, key) => ({
-      ...dialectsObject,
-      [key]: {
-        word: '',
-        variations: [],
-        accented: '',
-        dialect: key,
-        pronunciation: '',
-      },
-    }),
-    {},
+  const emptyDialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
+    ...dialectsObject,
+    [key]: {
+      word: '',
+      variations: [],
+      accented: '',
+      dialect: key,
+      pronunciation: '',
+    },
+  }),
+  {},
   );
 
   const wordData = {
