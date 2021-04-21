@@ -494,7 +494,7 @@ describe('MongoDB Words', () => {
       const keyword = '"mmili"';
       getWords({ keyword })
         .end((_, res) => {
-          expect(res.status).to.be.equal(200);
+          expect(res.status).to.be.equal(400);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.lengthOf.at.most(0);
           done();
