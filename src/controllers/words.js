@@ -46,6 +46,10 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 /* Gets words from MongoDB */
 export const getWords = async (req, res, next) => {
   try {
+    const hasQuotes = req.keyword.match(/^["'].*["']$/) !== null;
+    if (hasQuotes) {
+      req.keyword = req.keyword.replaceAll(/["']/g, '');
+    }
     const {
       searchWord,
       regexKeyword,
@@ -66,15 +70,8 @@ export const getWords = async (req, res, next) => {
     };
     let words;
     let query;
-    if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) {
-      const regexKeywordWithoutQuotes = new RegExp(
-        (regexKeyword + [])
-          .replaceAll(/["']/g, '')
-          .replaceAll(/^\//g, '')
-          .replaceAll(/\/i$/g, ''),
-        'i',
-      );
-      query = searchEnglishRegexQuery(regexKeywordWithoutQuotes);
+    if (hasQuotes) {
+      query = searchEnglishRegexQuery(regexKeyword);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
       query = !strict
