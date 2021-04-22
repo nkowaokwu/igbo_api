@@ -254,7 +254,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return at most ten words because of an invalid', (done) => {
+    it('should return at most ten words because of an invalid range', (done) => {
       getWords({ range: 'incorrect' })
         .end((_, res) => {
           expect(res.status).to.equal(400);

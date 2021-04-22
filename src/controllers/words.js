@@ -46,7 +46,9 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 /* Gets words from MongoDB */
 export const getWords = async (req, res, next) => {
   try {
-    const hasQuotes = req.query.keyword.match(/["'].*["']/) !== null;
+    const hasQuotes = req.query.keyword
+      ? (req.query.keyword.match(/["'].*["']/) !== null)
+      : false;
     if (hasQuotes) {
       req.query.keyword = req.query.keyword.replaceAll(/["']/g, '');
     }
