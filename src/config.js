@@ -60,7 +60,7 @@ export const NEW_DEVELOPER_ACCOUNT_TEMPLATE = process.env.NEW_DEVELOPER_ACCOUNT_
 export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'igboapi@gmail.com';
 
 if (sgMail) {
-//  sgMail.setApiKey(SENDGRID_API_KEY);
+  sgMail.setApiKey(SENDGRID_API_KEY);
 }
 
 // API Key Secrets
