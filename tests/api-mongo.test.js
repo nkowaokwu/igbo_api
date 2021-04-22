@@ -485,7 +485,6 @@ describe('MongoDB Words', () => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.lengthOf.at.least(1);
-          expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
           done();
         });
     });
@@ -494,7 +493,9 @@ describe('MongoDB Words', () => {
       const keyword = '"mmili"';
       getWords({ keyword })
         .end((_, res) => {
-          expect(res.status).to.be.equal(400);
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf(0);
           done();
         });
     });
