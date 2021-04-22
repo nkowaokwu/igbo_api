@@ -67,7 +67,13 @@ export const getWords = async (req, res, next) => {
     let words;
     let query;
     if (searchWord.match(/".*"/) || searchWord.match(/'.*'/)) {
-      const regexKeywordWithoutQuotes = new RegExp((regexKeyword + []).replaceAll(/(["'])|(^\/)|(\/i$)/g, ''), 'i');
+      const regexKeywordWithoutQuotes = new RegExp(
+        (regexKeyword + [])
+          .replaceAll(/["']/g, '')
+          .replaceAll(/^\//g, '')
+          .replaceAll(/\/i$/g, ''),
+        'i',
+      );
       query = searchEnglishRegexQuery(regexKeywordWithoutQuotes);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
