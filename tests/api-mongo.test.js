@@ -473,7 +473,6 @@ describe('MongoDB Words', () => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
           expect(res.body).to.have.lengthOf.at.least(1);
-          expect(every(res.body, (word) => word.includes('water'))).to.equal(true);
           done();
         });
     });
