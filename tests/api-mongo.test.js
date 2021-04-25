@@ -466,7 +466,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return a list of igbo terms when using english by using single qoutes', (done) => {
+    it('should return a list of igbo terms when using english by using single quotes', (done) => {
       const keyword = '\'water\'';
       getWords({ keyword })
         .end((_, res) => {
@@ -477,7 +477,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should also return a list of igbo terms when using english by using double qoutes', (done) => {
+    it('should also return a list of igbo terms when using english by using double quotes', (done) => {
       const keyword = '"water"';
       getWords({ keyword })
         .end((_, res) => {
@@ -488,7 +488,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should not return any words when wrapping an igbo word in qoutes', (done) => {
+    it('should not return any words when wrapping an igbo word in quotes', (done) => {
       const keyword = '"mmili"';
       getWords({ keyword })
         .end((_, res) => {
