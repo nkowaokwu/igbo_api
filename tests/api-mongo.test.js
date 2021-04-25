@@ -488,7 +488,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should not return any words when wrapping an igbo word in quotes', (done) => {
+    it('should not return any words when wrapping an igbo word in qoutes', (done) => {
       const keyword = '"mmili"';
       getWords({ keyword })
         .end((_, res) => {
