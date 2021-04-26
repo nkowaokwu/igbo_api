@@ -48,7 +48,7 @@ export const getWords = async (req, res, next) => {
   try {
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
-      req.query.keyword = req.query.keyword.replaceAll(/["']/g, '');
+      req.query.keyword = req.query.keyword.replace(/["']/g, '');
     }
     const {
       searchWord,
