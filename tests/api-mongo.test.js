@@ -254,7 +254,7 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return at most ten words because of an invalid', (done) => {
+    it('should return at most ten words because of an invalid range', (done) => {
       getWords({ range: 'incorrect' })
         .end((_, res) => {
           expect(res.status).to.equal(400);
@@ -462,6 +462,39 @@ describe('MongoDB Words', () => {
             const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(currentWord)) * 100;
             return prevWordDifference >= nextWordDifference;
           })).to.equal(true);
+          done();
+        });
+    });
+
+    it('should return a list of igbo terms when using english by using single quotes', (done) => {
+      const keyword = '\'water\'';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
+          done();
+        });
+    });
+
+    it('should also return a list of igbo terms when using english by using double quotes', (done) => {
+      const keyword = '"water"';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
+          done();
+        });
+    });
+
+    it('should not return any words when wrapping an igbo word in quotes', (done) => {
+      const keyword = '"mmili"';
+      getWords({ keyword })
+        .end((_, res) => {
+          expect(res.status).to.be.equal(200);
+          expect(res.body).to.be.an('array');
+          expect(res.body).to.have.lengthOf(0);
           done();
         });
     });
