@@ -15,6 +15,7 @@ export const WORD_KEYS = [
   'id',
   'word',
   'wordClass',
+  'pronunciation',
   'updatedOn',
 ];
 export const EXAMPLE_KEYS = ['accented', 'igbo', 'english', 'associatedWords', 'id', 'updatedOn'];
