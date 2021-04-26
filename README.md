@@ -37,6 +37,12 @@ cd igbo_api/
 yarn install
 ```
 
+Build the frontend for the site:
+
+```
+yarn build
+```
+
 To start the dev API server run the following command:
 
 ```
