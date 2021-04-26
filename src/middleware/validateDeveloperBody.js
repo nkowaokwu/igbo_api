@@ -1,19 +1,17 @@
+import Joi from 'joi';
+
+const developersJoiSchema = Joi.object().keys({
+  name: Joi.string().required(),
+  email: Joi.string().required(),
+  password: Joi.string().required(),
+});
+
 export default (req, res, next) => {
   const { body: data } = req;
 
-  if (!data.name) {
-    res.status(400);
-    return res.send({ error: 'Name is required' });
-  }
-
-  if (!data.email) {
-    res.status(400);
-    return res.send({ error: 'Email is required' });
-  }
-
-  if (!data.password) {
-    res.status(400);
-    return res.send({ error: 'Password is required' });
+  const validationResult = developersJoiSchema.validate(data);
+  if (validationResult.error) {
+    return res.send({ error: validationResult.error.message });
   }
 
   return next();
