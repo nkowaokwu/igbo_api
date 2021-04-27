@@ -11,7 +11,7 @@ export default (req, res, next) => {
 
   const validationResult = developersJoiSchema.validate(data);
   if (validationResult.error) {
-    return res.send({ error: validationResult.error.message });
+    return res.status(400).json({ error: validationResult.error.message });
   }
 
   return next();
