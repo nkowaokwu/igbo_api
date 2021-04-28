@@ -46,6 +46,10 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 /* Gets words from MongoDB */
 export const getWords = async (req, res, next) => {
   try {
+    const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
+    if (hasQuotes) {
+      req.query.keyword = req.query.keyword.replace(/["']/g, '');
+    }
     const {
       searchWord,
       regexKeyword,
@@ -64,18 +68,32 @@ export const getWords = async (req, res, next) => {
       dialects,
       examples,
     };
-    let query = !strict ? searchIgboTextSearch(searchWord, isUsingMainKey) : strictSearchIgboQuery(searchWord);
-    const words = await searchWordUsingIgbo({ query, ...searchQueries });
-    if (!words.length) {
+    let words;
+    let query;
+    if (hasQuotes) {
       query = searchEnglishRegexQuery(regexKeyword);
-      const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
-      return packageResponse({
-        res,
-        docs: englishWords,
-        model: Word,
-        query,
-        ...rest,
-      });
+      words = await searchWordUsingEnglish({ query, ...searchQueries });
+    } else {
+      query = !strict
+        ? searchIgboTextSearch(
+          searchWord,
+          isUsingMainKey,
+        )
+        : strictSearchIgboQuery(
+          searchWord,
+        );
+      words = await searchWordUsingIgbo({ query, ...searchQueries });
+      if (!words.length) {
+        query = searchEnglishRegexQuery(regexKeyword);
+        const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
+        return packageResponse({
+          res,
+          docs: englishWords,
+          model: Word,
+          query,
+          ...rest,
+        });
+      }
     }
     return packageResponse({
       res,
