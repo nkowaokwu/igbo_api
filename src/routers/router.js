@@ -1,6 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import { getWords, getWord } from '../controllers/words';
+import { getWords, getWord, getWordsFilteredByWordClass } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
 import validId from '../middleware/validId';
@@ -16,7 +16,9 @@ const createDeveloperLimiter = rateLimit({
   max: REQUESTS_PER_MS,
 });
 
+
 router.get('/words', validateApiKey, getWords);
+router.get('/words/wordClass/:wordClass', validateApiKey, getWordsFilteredByWordClass)
 router.get('/words/:id', validateApiKey, validId, getWord);
 router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);

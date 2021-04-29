@@ -4,6 +4,11 @@ const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !key
   ? { word: { $regex: /./ } }
   : { $text: { $search: keyword } }
 );
+
+export const searchIgboTextWithWordClass = (keyword, wordClass, isUsingMainKey) => (isUsingMainKey && !keyword
+  ? {$and: [{ word: { $regex: /./ } }, {wordClass: wordClass}]}
+  : {$and: [{$text: {$search: keyword}},{wordClass: wordClass}]}
+);
 const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
 
 /* Regex match query used to later to defined the Content-Range response header */

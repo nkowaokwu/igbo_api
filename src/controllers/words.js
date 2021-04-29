@@ -12,7 +12,12 @@ import {
   packageResponse,
   handleQueries,
 } from './utils';
-import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
+import { 
+  searchIgboTextSearch,
+  strictSearchIgboQuery,
+  searchEnglishRegexQuery,
+  searchIgboTextWithWordClass
+ } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
 
@@ -107,6 +112,71 @@ export const getWords = async (req, res, next) => {
   }
 };
 
+// 
+export const getWordsFilteredByWordClass =  async (req, res, next) =>{
+  try {
+    const wordClass = req.params.wordClass; 
+    const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
+    if (hasQuotes) {
+      req.query.keyword = req.query.keyword.replace(/["']/g, '');
+    }
+    const {
+      searchWord,
+      regexKeyword,
+      skip,
+      limit,
+      strict,
+      dialects,
+      examples,
+      isUsingMainKey,
+      ...rest
+    } = handleQueries(req);
+    const searchQueries = {
+      searchWord,
+      skip,
+      limit,
+      dialects,
+      examples,
+    };
+    let words;
+    let query;
+    if (hasQuotes) {
+      query = searchEnglishRegexQuery(regexKeyword);
+      words = await searchWordUsingEnglish({ query, ...searchQueries });
+    } else {
+      query = !strict
+        ? searchIgboTextWithWordClass(
+          searchWord,
+          wordClass,
+          isUsingMainKey,
+        )
+        : strictSearchIgboQuery(
+          searchWord,
+        );
+      words = await searchWordUsingIgbo({ query, ...searchQueries });
+      if (!words.length) {
+        query = searchEnglishRegexQuery(regexKeyword);
+        const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
+        return packageResponse({
+          res,
+          docs: englishWords,
+          model: Word,
+          query,
+          ...rest,
+        });
+      }
+    }
+    return packageResponse({
+      res,
+      docs: words,
+      model: Word,
+      query,
+      ...rest,
+    });
+  } catch (err) {
+    return next(err);
+  }
+}
 /* Returns a word from MongoDB using an id */
 export const getWord = async (req, res, next) => {
   try {
