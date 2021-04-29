@@ -11,6 +11,7 @@ import {
   sortDocsBy,
   packageResponse,
   handleQueries,
+  parseWordClass
 } from './utils';
 import { 
   searchIgboTextSearch,
@@ -115,7 +116,7 @@ export const getWords = async (req, res, next) => {
 /* Gets words from MongoDB by the searched keywords and specified wordClass */
 export const getWordsFilteredByWordClass =  async (req, res, next) =>{
   try {
-    const wordClass = req.params.wordClass; 
+    const wordClass = parseWordClass(req.params.wordClass);
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
       req.query.keyword = req.query.keyword.replace(/["']/g, '');
@@ -127,7 +128,7 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
       limit,
       strict,
       dialects,
-      examples,
+      examples, 
       isUsingMainKey,
       ...rest
     } = handleQueries(req);
@@ -177,6 +178,7 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
     return next(err);
   }
 }
+
 /* Returns a word from MongoDB using an id */
 export const getWord = async (req, res, next) => {
   try {
