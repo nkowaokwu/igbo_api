@@ -5,6 +5,7 @@ const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !key
   : { $text: { $search: keyword } }
 );
 
+/* Searching for words that match the keyword and also the wordClass*/
 export const searchIgboTextWithWordClass = (keyword, wordClass, isUsingMainKey) => (isUsingMainKey && !keyword
   ? {$and: [{ word: { $regex: /./ } }, {wordClass: wordClass}]}
   : {$and: [{$text: {$search: keyword}},{wordClass: wordClass}]}

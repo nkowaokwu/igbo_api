@@ -112,7 +112,7 @@ export const getWords = async (req, res, next) => {
   }
 };
 
-// 
+/* Gets words from MongoDB by the searched keywords and specified wordClass */
 export const getWordsFilteredByWordClass =  async (req, res, next) =>{
   try {
     const wordClass = req.params.wordClass; 
