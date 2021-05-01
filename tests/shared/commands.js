@@ -9,7 +9,6 @@ import {
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
-import { options } from 'less';
 import wordClass from '../../src/shared/constants/wordClass';
 
 export const createDeveloper = (data) => (

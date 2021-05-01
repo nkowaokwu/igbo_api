@@ -146,11 +146,11 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
       query = !strict
-        ? searchIgboTextWithWordClass(
+        ? searchIgboTextWithWordClass({
           searchWord,
           wordClass,
           isUsingMainKey,
-        )
+        })
         : strictSearchIgboQuery(
           searchWord,
         );

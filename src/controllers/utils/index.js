@@ -26,11 +26,11 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
 */
 export const parseWordClass = (param) =>{
   if(!param){
-    throw new Error('No WordClass specified');
+    throw new Error('No wordClass specified');
   }
  const valueOfWordClass =  findKey(wordClass, { value: param });
   if(valueOfWordClass === undefined){
-    throw new Error('Not a valid WordClass');
+    throw new Error('Not a valid wordClass');
   }
   return param
 }
