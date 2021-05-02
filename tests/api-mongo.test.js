@@ -597,6 +597,9 @@ describe('MongoDB Words', () => {
       getWordsFilteredByWordClass(wordClass, { keyword })
         .end((_, res) => {
           expect(res.status).to.equal(200)
+          forEach(res.body, (word) => {
+            expect(word.wordClass).to.equal(wordClass);
+          });
           done();
         });
     });

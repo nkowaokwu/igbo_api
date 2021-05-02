@@ -49,74 +49,9 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
   return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
-/* Gets words from MongoDB */
-export const getWords = async (req, res, next) => {
+/* Reuseable base controller function for getting words*/
+const getWordsBaseFunction = async (req, res, next, wordClass) =>{
   try {
-    const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
-    if (hasQuotes) {
-      req.query.keyword = req.query.keyword.replace(/["']/g, '');
-    }
-    const {
-      searchWord,
-      regexKeyword,
-      skip,
-      limit,
-      strict,
-      dialects,
-      examples,
-      isUsingMainKey,
-      ...rest
-    } = handleQueries(req);
-    const searchQueries = {
-      searchWord,
-      skip,
-      limit,
-      dialects,
-      examples,
-    };
-    let words;
-    let query;
-    if (hasQuotes) {
-      query = searchEnglishRegexQuery(regexKeyword);
-      words = await searchWordUsingEnglish({ query, ...searchQueries });
-    } else {
-      query = !strict
-        ? searchIgboTextSearch(
-          searchWord,
-          isUsingMainKey,
-        )
-        : strictSearchIgboQuery(
-          searchWord,
-        );
-      words = await searchWordUsingIgbo({ query, ...searchQueries });
-      if (!words.length) {
-        query = searchEnglishRegexQuery(regexKeyword);
-        const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
-        return packageResponse({
-          res,
-          docs: englishWords,
-          model: Word,
-          query,
-          ...rest,
-        });
-      }
-    }
-    return packageResponse({
-      res,
-      docs: words,
-      model: Word,
-      query,
-      ...rest,
-    });
-  } catch (err) {
-    return next(err);
-  }
-};
-
-/* Gets words from MongoDB by the searched keywords and specified wordClass */
-export const getWordsFilteredByWordClass =  async (req, res, next) =>{
-  try {
-    const wordClass = parseWordClass(req.params.wordClass);
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
       req.query.keyword = req.query.keyword.replace(/["']/g, '');
@@ -145,12 +80,16 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
       query = searchEnglishRegexQuery(regexKeyword);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
+      let regularSearchFunction = wordClass ?  searchIgboTextWithWordClass({
+            searchWord,
+            wordClass,
+            isUsingMainKey,
+           }) : searchIgboTextSearch(
+            searchWord,
+            isUsingMainKey,
+          )
       query = !strict
-        ? searchIgboTextWithWordClass({
-          searchWord,
-          wordClass,
-          isUsingMainKey,
-        })
+        ? regularSearchFunction
         : strictSearchIgboQuery(
           searchWord,
         );
@@ -167,6 +106,7 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
         });
       }
     }
+    console.log(res.body)
     return packageResponse({
       res,
       docs: words,
@@ -175,6 +115,24 @@ export const getWordsFilteredByWordClass =  async (req, res, next) =>{
       ...rest,
     });
   } catch (err) {
+    return next(err);
+  }
+}
+/* Gets words from MongoDB */
+export const getWords = async (req, res, next) => {
+  try{
+      getWordsBaseFunction(req, res, next)
+  }catch(err) {
+    return next(err);
+  }
+};
+
+/* Gets words from MongoDB by the searched keywords and specified wordClass */
+export const getWordsFilteredByWordClass =  async (req, res, next) =>{
+  try{
+      let wordClass = parseWordClass(req.params.wordClass);
+      getWordsBaseFunction(req, res, next, wordClass)
+    }catch (err) {
     return next(err);
   }
 }
