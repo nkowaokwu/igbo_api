@@ -36,7 +36,13 @@ const wordSchema = new Schema({
   updatedOn: { type: Date, default: Date.now() },
 }, { toObject: toObjectPlugin });
 
-wordSchema.index({ word: 'text', variations: 'text' });
+/* Create text indexes for each dialect word field */
+const dialectsIndexFields = Object.keys(Dialects)
+  .reduce((indexFields, key) => (
+    { ...indexFields, [`dialects.${key}.word`]: 'text' }
+  ), {});
+
+wordSchema.index({ word: 'text', variations: 'text', ...dialectsIndexFields });
 
 toJSONPlugin(wordSchema);
 updatedOnHook(wordSchema);
