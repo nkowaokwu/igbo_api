@@ -13,7 +13,7 @@ const MainApp = ({ Component, pageProps, searchWord, words }) => {
   return (
     <>
       <Head>
-        <title>Igbo API - The First Afrifcan Language API</title>
+        <title>Igbo API - The First African Language API</title>
       </Head>
       <Component {...pageProps} searchWord={searchWord} words={words} />
     </>
