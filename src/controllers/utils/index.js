@@ -1,11 +1,6 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import {
-  isNaN,
-  orderBy,
-  get,
-  findKey,
-} from 'lodash';
+import { isNaN, orderBy, get } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
@@ -32,8 +27,8 @@ export const parseWordClass = (param) => {
   if (!param) {
     throw new Error('No wordClass specified');
   }
-  const valueOfWordClass = findKey(wordClass, { value: param });
-  if (valueOfWordClass === undefined) {
+  const wordClassValue = wordClass[param];
+  if (!wordClassValue) {
     throw new Error('Not a valid wordClass');
   }
   return param;
