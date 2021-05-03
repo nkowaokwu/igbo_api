@@ -604,7 +604,6 @@ describe('MongoDB Words', () => {
         });
     });
 
-
     it('should return word information when searched with wordClass filter', (done) => {
       const keyword = 'bia';
       const wordClass = 'V';
@@ -614,7 +613,7 @@ describe('MongoDB Words', () => {
           expect(res.body).to.have.lengthOf.at.least(4);
           forEach(res.body, (word) => {
             expect(word.wordClass).to.equal(wordClass);
-               });
+          });
           done();
         });
     });
