@@ -1,10 +1,15 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import { isNaN, orderBy, get, findKey } from 'lodash';
+import {
+  isNaN,
+  orderBy,
+  get,
+  findKey,
+} from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
-import wordClass from '../../shared/constants/wordClass'
+import wordClass from '../../shared/constants/wordClass';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -20,20 +25,19 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
       : /^[.{0,}\n{0,}]/
 );
 
-/*
- Determines that the parameter gotten as a wordClass when 
- searching for words from a given wordClass is actually valid
-*/
-export const parseWordClass = (param) =>{
-  if(!param){
+/* Determines that the parameter gotten as a wordClass when
+ * searching for words from a given wordClass is actually valid
+ */
+export const parseWordClass = (param) => {
+  if (!param) {
     throw new Error('No wordClass specified');
   }
- const valueOfWordClass =  findKey(wordClass, { value: param });
-  if(valueOfWordClass === undefined){
+  const valueOfWordClass = findKey(wordClass, { value: param });
+  if (valueOfWordClass === undefined) {
     throw new Error('Not a valid wordClass');
   }
-  return param
-}
+  return param;
+};
 
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key) => (

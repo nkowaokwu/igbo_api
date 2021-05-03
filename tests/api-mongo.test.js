@@ -592,11 +592,12 @@ describe('MongoDB Words', () => {
     });
 
     it('should return word information when searched with wordClass filter', (done) => {
-      const keyword = 'biko';
-      const wordClass = 'V'
+      const keyword = 'bia';
+      const wordClass = 'V';
       getWordsFilteredByWordClass(wordClass, { keyword })
         .end((_, res) => {
-          expect(res.status).to.equal(200)
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(4);
           forEach(res.body, (word) => {
             expect(word.wordClass).to.equal(wordClass);
           });
@@ -606,10 +607,10 @@ describe('MongoDB Words', () => {
 
     it('should throw error of invalid wordClass when searched with wordClass filter with unknown wordClass', (done) => {
       const keyword = 'biko';
-      const wordClass = 'InvalidWordClass'
+      const wordClass = 'InvalidWordClass';
       getWordsFilteredByWordClass(wordClass, { keyword })
         .end((_, res) => {
-          expect(res.status).to.equal(400)
+          expect(res.status).to.equal(400);
           expect(res.body.error).to.not.equal(undefined);
           done();
         });

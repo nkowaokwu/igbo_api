@@ -9,7 +9,6 @@ import {
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
-import wordClass from '../../src/shared/constants/wordClass';
 
 export const createDeveloper = (data) => (
   chai
@@ -42,13 +41,13 @@ export const getExample = (id, query = {}, options = {}) => (
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
-export const getWordsFilteredByWordClass = (wordClass, query = {}, options = {}) =>(
+export const getWordsFilteredByWordClass = (wordClass, query = {}, options = {}) => (
   chai
-  .request(server)
-  .get(`${API_ROUTE}/words/wordClass/${wordClass}`)
-  .query(query)
-  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-)
+    .request(server)
+    .get(`${API_ROUTE}/words/wordClass/${wordClass}`)
+    .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
 /* Searches for examples using the data in MongoDB */
 export const getExamples = (query = {}, options = {}) => (
   chai
