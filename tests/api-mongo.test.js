@@ -591,6 +591,20 @@ describe('MongoDB Words', () => {
         });
     });
 
+    it('should return a word by searching with nested dialect word', (done) => {
+      const keyword = 'akwa-ONI';
+      getWords({ keyword, dialects: true })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(1);
+          forEach(res.body, (word) => {
+            expect(word.dialects.ONI.word).to.equal(`${word.word}-ONI`);
+          });
+          done();
+        });
+    });
+
+
     it('should return word information when searched with wordClass filter', (done) => {
       const keyword = 'bia';
       const wordClass = 'V';
@@ -600,7 +614,7 @@ describe('MongoDB Words', () => {
           expect(res.body).to.have.lengthOf.at.least(4);
           forEach(res.body, (word) => {
             expect(word.wordClass).to.equal(wordClass);
-          });
+               });
           done();
         });
     });
