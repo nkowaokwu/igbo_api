@@ -80,7 +80,7 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
       query = searchEnglishRegexQuery(regexKeyword);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
-      const regularSearchFunction = wordClass ? searchIgboTextWithWordClass({
+      const regularSearchIgboQuery = wordClass ? searchIgboTextWithWordClass({
         searchWord,
         wordClass,
         isUsingMainKey,
@@ -89,7 +89,7 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
         isUsingMainKey,
       );
       query = !strict
-        ? regularSearchFunction
+        ? regularSearchIgboQuery
         : strictSearchIgboQuery(
           searchWord,
         );
