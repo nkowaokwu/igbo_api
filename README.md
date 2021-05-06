@@ -138,7 +138,7 @@ http://localhost:8080/api/v1/test/words?keyword=agụū
 
 The responses for both routes will be a plain JSON object similar to this:
 
-```
+```json
 [
     {
         "wordClass": "noun",
