@@ -17,7 +17,7 @@ const createDeveloperLimiter = rateLimit({
 });
 
 router.get('/words', validateApiKey, getWords);
-router.get('/words/wordClass/:wordClass', validateApiKey, getWordsFilteredByWordClass)
+router.get('/words/wordClass/:wordClass', validateApiKey, getWordsFilteredByWordClass);
 router.get('/words/:id', validateApiKey, validId, getWord);
 router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);
