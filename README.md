@@ -16,7 +16,7 @@ These instructions will get a copy of the project up and running on your machine
 
 ### Prerequisites
 
-To run this project locally, the follow tools need to be installed:
+To run this project locally, the following tools need to be installed:
 
 * [Node.js](https://nodejs.org/en/download/)
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
