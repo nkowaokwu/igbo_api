@@ -14,7 +14,7 @@ const About = () => (
         <p className="mb-6">
           Igbo API is the first African Language API that focuses on making the Igbo language accessible to the world.
           One of our goals is to make a language resource that is so robust that it can be used to help solve a variety
-          of complex problems from education to machine learning
+          of complex problems from education to machine learning.
         </p>
         <p className="mb-6">
           {`The initial words and examples that populated this API came
