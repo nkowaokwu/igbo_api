@@ -1,7 +1,7 @@
 # Igbo Dictionary API
 ![backup_production](https://github.com/ijemmao/igbo_api/workflows/backup_production/badge.svg?event=schedule)
 
-[Contributing](./.github/CONTRIBUTING.md) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
+[Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://github.com/ijemmao/igbo_api/wiki) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
 > Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people in at least 20 different dialects.
 
@@ -16,7 +16,7 @@ These instructions will get a copy of the project up and running on your machine
 
 ### Prerequisites
 
-To run this project locally, the follow tools need to be installed:
+To run this project locally, the following tools need to be installed:
 
 * [Node.js](https://nodejs.org/en/download/)
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
@@ -138,7 +138,7 @@ http://localhost:8080/api/v1/test/words?keyword=agụū
 
 The responses for both routes will be a plain JSON object similar to this:
 
-```
+```json
 [
     {
         "wordClass": "noun",

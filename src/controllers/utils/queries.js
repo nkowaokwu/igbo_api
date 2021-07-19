@@ -4,6 +4,12 @@ const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !key
   ? { word: { $regex: /./ } }
   : { $text: { $search: keyword } }
 );
+
+/* Searching for words that match the keyword and also the wordClass */
+export const searchIgboTextWithWordClass = ({ searchWord, wordClass, isUsingMainKey }) => (isUsingMainKey && !searchWord
+  ? { $and: [{ word: { $regex: /./ } }, { wordClass }] }
+  : { $and: [{ $text: { $search: searchWord } }, { wordClass }] }
+);
 const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
 
 /* Regex match query used to later to defined the Content-Range response header */

@@ -1,0 +1,42 @@
+name: Backup AWS Audio Pronunciations
+
+on:
+  schedule:
+    # Backs up AWS audio pronunciations every Sunday at 12:00 AM UTC
+    - cron: '0 0 * * 0'
+
+on:
+  push
+
+env:
+  AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+  DIR: aws_pronunciations
+
+jobs:
+  backup_aws:
+    name: Backup AWS
+    # https://github.com/actions/checkout/issues/440#issuecomment-778899551
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - name: Skipping steps
+        run: echo "Skipping steps"
+      # Skipping the following steps to prioritize using AWS S3 Glacier
+
+      # - name: Git checkout files and create aws db directory
+      #   uses: actions/checkout@v2
+      # - name: Set up network configurations
+      #   run: sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+      # - name: Create temporary directory
+      #   run: mkdir $DIR
+      # - name: Dump the AWS audio pronunciations
+      #   run: aws s3 cp $AWS_S3_BUCKET ./$DIR --recursive --storage-class STANDARD --force-glacier-transfer
+      # - name: Upload to Dropbox
+      #   run: ./scripts/aws_sync.sh $DROPBOX_TOKEN

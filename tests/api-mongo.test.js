@@ -21,7 +21,7 @@ import {
   MAIN_KEY,
 } from './shared/constants';
 import SortingDirections from '../src/shared/constants/sortingDirections';
-import { getWords, getWord } from './shared/commands';
+import { getWords, getWord, getWordsFilteredByWordClass } from './shared/commands';
 import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
 
@@ -600,6 +600,31 @@ describe('MongoDB Words', () => {
           forEach(res.body, (word) => {
             expect(word.dialects.ONI.word).to.equal(`${word.word}-ONI`);
           });
+          done();
+        });
+    });
+
+    it('should return word information when searched with wordClass filter', (done) => {
+      const keyword = 'bia';
+      const wordClass = 'V';
+      getWordsFilteredByWordClass(wordClass, { keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.lengthOf.at.least(4);
+          forEach(res.body, (word) => {
+            expect(word.wordClass).to.equal(wordClass);
+          });
+          done();
+        });
+    });
+
+    it('should throw error of invalid wordClass when searched with wordClass filter with unknown wordClass', (done) => {
+      const keyword = 'biko';
+      const wordClass = 'InvalidWordClass';
+      getWordsFilteredByWordClass(wordClass, { keyword })
+        .end((_, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.error).to.not.equal(undefined);
           done();
         });
     });

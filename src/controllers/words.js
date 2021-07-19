@@ -11,8 +11,14 @@ import {
   sortDocsBy,
   packageResponse,
   handleQueries,
+  parseWordClass,
 } from './utils';
-import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
+import {
+  searchIgboTextSearch,
+  strictSearchIgboQuery,
+  searchEnglishRegexQuery,
+  searchIgboTextWithWordClass,
+} from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
 
@@ -43,8 +49,8 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
   return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
-/* Gets words from MongoDB */
-export const getWords = async (req, res, next) => {
+/* Reuseable base controller function for getting words */
+const getWordsFromDatabase = async (req, res, next, wordClass) => {
   try {
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
@@ -74,11 +80,16 @@ export const getWords = async (req, res, next) => {
       query = searchEnglishRegexQuery(regexKeyword);
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
+      const regularSearchIgboQuery = wordClass ? searchIgboTextWithWordClass({
+        searchWord,
+        wordClass,
+        isUsingMainKey,
+      }) : searchIgboTextSearch(
+        searchWord,
+        isUsingMainKey,
+      );
       query = !strict
-        ? searchIgboTextSearch(
-          searchWord,
-          isUsingMainKey,
-        )
+        ? regularSearchIgboQuery
         : strictSearchIgboQuery(
           searchWord,
         );
@@ -102,6 +113,24 @@ export const getWords = async (req, res, next) => {
       query,
       ...rest,
     });
+  } catch (err) {
+    return next(err);
+  }
+};
+/* Gets words from MongoDB */
+export const getWords = async (req, res, next) => {
+  try {
+    return getWordsFromDatabase(req, res, next);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+/* Gets words from MongoDB by the searched keywords and specified wordClass */
+export const getWordsFilteredByWordClass = async (req, res, next) => {
+  try {
+    const wordClass = parseWordClass(req.params.wordClass);
+    return getWordsFromDatabase(req, res, next, wordClass);
   } catch (err) {
     return next(err);
   }
