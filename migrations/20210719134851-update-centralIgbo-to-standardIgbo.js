@@ -7,7 +7,7 @@ module.exports = {
       })
     ));
   },
-  
+
   async down(db) {
     const collections = ['words', 'wordsuggestions', 'genericwords'];
     return collections.map((collection) => (
@@ -17,5 +17,3 @@ module.exports = {
     ));
   },
 };
-
-
