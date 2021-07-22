@@ -8,6 +8,7 @@ import Demo from './components/Demo';
 import Card from './components/Card';
 import Footer from './components/Footer';
 
+
 const App = ({ searchWord, words }) => {
   const router = useRouter();
   return (
@@ -20,7 +21,7 @@ const App = ({ searchWord, words }) => {
               The First African
             </h1>
             <h1 className="text-4xl md:text-6xl ml-20 font-extrabold">
-              Language
+              Language  
               <span className="text-green-500">
                 API
               </span>
@@ -40,28 +41,30 @@ const App = ({ searchWord, words }) => {
               <div className="">
                 <button
                   type="button"
-                  className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 mr-8 hover:bg-transparent
-                  hover:text-black hover:border-green-500 "
-                  onClick={() => router.push('/signup')}
-                >
-                  Check on GitHub
+                  className="mt-4 rounded-full bg-green-500 text-white border-2	 py-2 px-4 mr-8 hover:bg-transparent hover:text-black hover:border-green-500 "
+                  onClick={() => router.push('/signup')}>
+                  Check on GitHub 
                 </button>
                 <button
                   type="button"
-                  className="mt-4 rounded-full w-56 border-green-500 border-2 bg-transparent
-                  hover:bg-green-500 hover:text-white py-2 px-4"
-                  onClick={() => router.push('/signup')}
-                >
+                  className="mt-4 rounded-full w-56	 border-green-500 border-2 bg-transparent hover:bg-green-500 hover:text-white	 py-2 px-4"
+                  onClick={() => router.push('/signup')} >
                   Get API Key
                 </button>
               </div>
             </FadeIn>
           </div>
         </div>
-        <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-          <h2 id="features" className="header">
+        <div className="flex w-full justify-center md:justify-center md:w-3/12 my-12">
+          <h2 id="features" className=" text-green-500 text-4xl">
             Features
           </h2>
+        </div>
+        <div className="text-xl  md:w-7/12 ml-20 mb-4 mt-8 leading-10">
+          <p >
+            {`Existing as an open-source project, the Igbo API aims to change this by making the 
+                process of learning Igbo more accessible to the Nigerian diaspora and beyond.`}
+          </p>
         </div>
         <div className="flex flex-col mb-24">
           <div className="flex flex-col items-center lg:flex-row justify-evenly mt-10 mb-24 lg:space-x-10">
