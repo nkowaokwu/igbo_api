@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
 import Footer from './components/Footer';
-
+import Statistics from './components/Statistics/Statistics';
 
 const App = ({ searchWord, words }) => {
   const router = useRouter();
@@ -21,10 +21,8 @@ const App = ({ searchWord, words }) => {
               The First African
             </h1>
             <h1 className="text-4xl md:text-6xl ml-20 font-extrabold">
-              Language  
-              <span className="text-green-500">
-                API
-              </span>
+              Language
+              <span className="text-green-500">API</span>
             </h1>
           </FadeIn>
           <div className="text-xl md:text-1xl w-9/12 md:w-7/12 ml-20 mb-4 mt-8 leading-10">
@@ -41,14 +39,18 @@ const App = ({ searchWord, words }) => {
               <div className="">
                 <button
                   type="button"
-                  className="mt-4 rounded-full bg-green-500 text-white border-2	 py-2 px-4 mr-8 hover:bg-transparent hover:text-black hover:border-green-500 "
-                  onClick={() => router.push('/signup')}>
-                  Check on GitHub 
+                  className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 mr-8 hover:bg-transparent
+                  hover:text-black hover:border-green-500"
+                  onClick={() => router.push('/signup')}
+                >
+                  Check on GitHub
                 </button>
                 <button
                   type="button"
-                  className="mt-4 rounded-full w-56	 border-green-500 border-2 bg-transparent hover:bg-green-500 hover:text-white	 py-2 px-4"
-                  onClick={() => router.push('/signup')} >
+                  className="mt-4 rounded-full w-56 border-green-500 border-2 bg-transparent
+                  hover:bg-green-500 hover:text-white py-2 px-4"
+                  onClick={() => router.push('/signup')}
+                >
                   Get API Key
                 </button>
               </div>
@@ -61,12 +63,12 @@ const App = ({ searchWord, words }) => {
           </h2>
         </div>
         <div className="text-xl  md:w-7/12 ml-20 mb-4 mt-8 leading-10">
-          <p >
+          <p>
             {`Existing as an open-source project, the Igbo API aims to change this by making the 
                 process of learning Igbo more accessible to the Nigerian diaspora and beyond.`}
           </p>
         </div>
-        <div className="flex flex-col mb-24">
+        <div className="flex flex-col">
           <div className="flex flex-col items-center lg:flex-row justify-evenly mt-10 mb-24 lg:space-x-10">
             <FadeReveal>
               <Card title="Definitions" description="Each word is provided with at least one definition." />
@@ -82,16 +84,31 @@ const App = ({ searchWord, words }) => {
               />
             </FadeReveal>
           </div>
-          <p className="text-2xl text-center text-gray-700 w-9/12 md:w-1/2 self-center">
-            {'With each API key, you\'ll get 2,500 requests per day.'}
-          </p>
         </div>
-        <div className="flex w-full justify-center md:justify-center md:w-3/12 my-10">
-          <h2 id="try-it-out" className="header">
+        <div className="flex w-full justify-center md:justify-center md:w-3/12">
+          <h2 id="try-it-out" className="text-4xl text-green-500">
             Try it Out
           </h2>
         </div>
+        <div className="text-xl md:text-1xl w-9/12 md:w-7/12 ml-20 mb-4 mt-8 leading-10 mb-48">
+          <p>
+            With each API key, you will get 2,500 requests per day.
+          </p>
+        </div>
         <Demo searchWord={searchWord} words={words} />
+        <div className="flex w-full justify-center md:justify-center md:w-2/5">
+          <h2 id="try-it-out" className="text-4xl text-green-500">
+            Community Growth
+          </h2>
+        </div>
+        <div className="text-xl md:text-1xl w-9/12  ml-20 mb-4 mt-8 leading-10">
+          <p>
+            Want to see how this data is getting used?
+            Take a look at the Nkọwa okwu, our official online Igbo dictionary.
+          </p>
+        </div>
+        <Statistics />
+
         <Footer />
       </div>
     </div>

@@ -69,12 +69,36 @@ const Demo = ({ searchWord, words }) => {
 
   return !isLoading ? (
     <div className="flex justify-center mb-16">
-      <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10">
-        <div className="demo-inputs-container space-y-5">
+      <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10 p-4 bg-gray-500">
+        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-48 shadow-2xl rounded-md">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
+            <h2>Enter a word below</h2>
             <p className="self-center md:self-start">
               {'Enter a word in either English or Igbo to see it\'s information'}
             </p>
+            <h2 className="text-2xl">Flags</h2>
+            <div className="flex">
+              <div className="mr-8">
+                <Checkbox
+                  className="flex items-center space-x-2"
+                  defaultChecked={initialQueries.dialects}
+                  onChange={handleDialects}
+                  data-test="dialects-flag"
+                >
+                  Dialects
+                </Checkbox>
+              </div>
+              <div className="ml-8">
+                <Checkbox
+                  className="flex items-center space-x-2"
+                  defaultChecked={initialQueries.examples}
+                  onChange={handleExamples}
+                  data-test="examples-flag"
+                >
+                  Examples
+                </Checkbox>
+              </div>
+            </div>
             <Input
               size="large"
               onInput={(e) => setKeyword(e.target.value)}
@@ -89,27 +113,6 @@ const Demo = ({ searchWord, words }) => {
               value={constructRequestUrl()}
               className="w-full py-3 px-5"
             />
-            <h2 className="text-2xl">Flags</h2>
-            <div className="px-3 ">
-              <Checkbox
-                className="flex items-center space-x-2"
-                defaultChecked={initialQueries.dialects}
-                onChange={handleDialects}
-                data-test="dialects-flag"
-              >
-                Dialects
-              </Checkbox>
-            </div>
-            <div className="px-3 ">
-              <Checkbox
-                className="flex items-center space-x-2"
-                defaultChecked={initialQueries.examples}
-                onChange={handleExamples}
-                data-test="examples-flag"
-              >
-                Examples
-              </Checkbox>
-            </div>
             <button
               type="submit"
               className="primary-button w-full"
@@ -127,13 +130,17 @@ const Demo = ({ searchWord, words }) => {
             </p>
           </form>
         </div>
-        <div className="flex flex-col w-full lg:w-auto">
+        <div className="flex flex-col w-full lg:w-auto -mt-64">
           <h3
             className="text-center lg:text-left self-center w-full lg:w-auto lg:self-start text-2xl mb-5 mt-10 lg:mt-0"
           >
             Response
           </h3>
-          <JSONPretty className="w-full self-center lg:w-auto jsonPretty" id="json-pretty" data={responseBody} />
+          <JSONPretty
+            className="w-full self-center lg:w-auto jsonPretty bg-gray-800 rounded-md"
+            id="json-pretty"
+            data={responseBody}
+          />
         </div>
       </div>
     </div>
