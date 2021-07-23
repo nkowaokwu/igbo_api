@@ -89,12 +89,13 @@
 }
 
 .jsonPretty {
-  height: 600px;
+  height: 500px;
   max-height: 600px;
   max-width: 95vw;
   overflow: scroll;
   font-size: 1em;
-  background-color: rgb(249, 249, 249);
+  color: white;
+  // background-color: rgb(249, 249, 249);
 }
 
 .__json-key__ {
@@ -118,13 +119,13 @@
 
 @media (min-width: 768px) {
   .jsonPretty {
-    height: 600px;
+    height: 440px;
     max-height: 600px;
     max-width: 600px !important;
     width: 600px !important;
     overflow: scroll;
     font-size: 1em;
-    background-color: rgb(249, 249, 249);
+    // background-color: rgb(249, 249, 249);
   }
 }
 
@@ -145,9 +146,15 @@
   }
 }
 
-.card-container {
+.card-custom-border {
   width: 250px;
   height: 250px;
   background: rgba(221, 229, 239, 0.35);
   border-radius: 50px 0px;
+}
+
+.custom-border {
+  border-radius: 30px 0px 30px 30px;
+  background: #DDE5EF;
+  height: 210px;
 }
