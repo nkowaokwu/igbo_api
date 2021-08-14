@@ -23,7 +23,7 @@ const populate = async () => {
             [dialectKey]: {
               word: `${key}-${dialectKey}`,
               variations: [],
-              accented: '',
+              accented: `${key}-${dialectKey}-accented`,
               dialect: dialectKey,
               pronunciation: '',
             },
