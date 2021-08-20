@@ -85,7 +85,6 @@
     "react-json-pretty": "^2.2.0",
     "react-reveal": "^1.2.2",
     "react-scroll": "^1.8.1",
-    "remove-accents": "^0.4.2",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "string-similarity": "^4.0.2",

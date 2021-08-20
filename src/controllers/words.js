@@ -169,7 +169,6 @@ export const createWord = async (data) => {
     definitions,
     variations,
     stems,
-    accented,
     dialects,
     ...rest
   } = data;
@@ -181,8 +180,7 @@ export const createWord = async (data) => {
       dialect: key,
       pronunciation: '',
       ...dialects[key],
-      word: dialects[key].word || accented || word,
-      accented: dialects[key].accented || accented || word,
+      word: dialects[key].word || word,
     },
   }), {});
 
@@ -192,7 +190,6 @@ export const createWord = async (data) => {
     definitions,
     variations,
     stems,
-    accented: accented || word,
     dialects: filledDialects,
     ...rest,
   };

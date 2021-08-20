@@ -2,9 +2,7 @@
 /* Code from https://stackoverflow.com/q/30431262 */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import { map } from 'lodash';
 import mongoose from 'mongoose';
-import accents from 'remove-accents';
 
 /* Replaces the _id key with id */
 export const toJSONPlugin = (schema) => {
@@ -36,33 +34,3 @@ export const updatedOnHook = (schema) => (
     return this;
   })
 );
-
-/* Removes accent marks found in the word field before sending to client */
-export const normalizeWordHook = (schema) => {
-  schema.post('find', (docs) => (
-    map(docs, (doc) => {
-      doc.word = accents.remove(doc.word);
-      return doc;
-    })
-  ));
-  schema.post('findOne', (doc) => {
-    doc.word = accents.remove(doc.word);
-    return doc;
-  });
-};
-
-/* Removes accent marks found in the igbo text before sending to client */
-export const normalizeExampleHook = (schema) => {
-  schema.post('find', (docs) => (
-    map(docs, (doc) => {
-      doc.igbo = accents.remove(doc.igbo);
-      return doc;
-    })
-  ));
-  schema.post('findOne', (doc) => {
-    if (doc) {
-      doc.igbo = accents.remove(doc?.igbo || '');
-    }
-    return doc;
-  });
-};
