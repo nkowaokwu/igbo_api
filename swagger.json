@@ -42,9 +42,6 @@
         "isCentralIgbo": {
           "type": "string"
         },
-        "accented": {
-          "type": "string"
-        },
         "variations": {
           "type": "array",
           "items": {
