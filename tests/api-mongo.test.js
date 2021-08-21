@@ -9,7 +9,6 @@ import {
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import accents from 'remove-accents';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
@@ -40,7 +39,6 @@ describe('MongoDB Words', () => {
           [key]: {
             word: '',
             variations: [],
-            accented: '',
             dialect: key,
             pronunciation: '',
           },
@@ -69,7 +67,6 @@ describe('MongoDB Words', () => {
           [key]: {
             word: '',
             variations: [],
-            accented: '',
             dialect: 'mismatch',
             pronunciation: '',
           },
@@ -550,13 +547,12 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return accented field and normalized word', (done) => {
+    it('should return accented word', (done) => {
       getWords()
         .end((_, res) => {
           expect(res.status).to.equal(200);
           forEach(res.body, (word) => {
-            expect(word.word).to.equal(accents.remove(word.word));
-            expect(word.accented).to.not.equal(undefined);
+            expect(word.word).to.not.equal(undefined);
           });
           done();
         });

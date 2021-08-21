@@ -2,7 +2,6 @@
 /* eslint-disable no-underscore-dangle */
 
 import { assign, map, forEach } from 'lodash';
-import accents from 'remove-accents';
 import Word from '../../models/Word';
 
 /**
@@ -11,14 +10,8 @@ import Word from '../../models/Word';
  */
 const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
   forEach(docs, (doc) => {
-    // Handles removing accent marks for word
-    doc.word = accents.remove(doc.word);
     doc[nestedDocsKey] = map(doc[nestedDocsKey], (nestedDoc) => {
       const updatedNestedDoc = assign(nestedDoc, { id: nestedDoc._id });
-      if (nestedDocsKey === 'examples') {
-        // Handles remove accent marks for example's igbo
-        updatedNestedDoc.igbo = accents.remove(updatedNestedDoc.igbo);
-      }
       delete updatedNestedDoc._id;
       delete updatedNestedDoc.__v;
       return updatedNestedDoc;
@@ -80,7 +73,6 @@ export const findWordsWithMatch = async ({
       variations: 1,
       stems: 1,
       updatedOn: 1,
-      accented: 1,
       pronunciation: 1,
       isCentralIgbo: 1,
       ...(examples ? { examples: 1 } : {}),
