@@ -44,6 +44,7 @@ const App = ({ searchWord, words }) => {
                   onClick={() => router.push('/signup')}
                 >
                   Check on GitHub
+                  <i className="fa fa-github text-4xl pl-3 text-black" />
                 </button>
                 <button
                   type="button"
@@ -71,16 +72,26 @@ const App = ({ searchWord, words }) => {
         <div className="flex flex-col">
           <div className="flex flex-col items-center lg:flex-row justify-evenly mt-10 mb-24 lg:space-x-10">
             <FadeReveal>
-              <Card title="Definitions" description="Each word is provided with at least one definition." />
-              <Card title="Examples" description="Certain words are accompanied by contextual examples." />
+              <Card
+                title="Definitions"
+                description="Each word is provided with at least one definition."
+                icon="fa fa-volume-up text-4xl mt-3 text-green-500"
+              />
+              <Card
+                title="Examples"
+                description="Certain words are accompanied by contextual examples."
+                icon="fa fa-list-alt text-4xl mt-3 text-green-500"
+              />
               <Card
                 title="Tone Marks"
                 description="Diacritics are used to convey the different tones present in the Igbo language."
+                icon="fa fa-check text-4xl mt-3 text-green-500"
               />
               <Card
                 title="Variations"
                 description={`The Igbo language has many dialects, 
                 some words capture this nuance by providing variant spellings.`}
+                icon="fa fa-window-restore text-4xl mt-3 text-green-500"
               />
             </FadeReveal>
           </div>
@@ -108,7 +119,6 @@ const App = ({ searchWord, words }) => {
           </p>
         </div>
         <Statistics />
-
         <Footer />
       </div>
     </div>
