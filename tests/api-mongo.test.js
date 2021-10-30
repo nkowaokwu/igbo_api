@@ -32,7 +32,7 @@ describe('MongoDB Words', () => {
     it('should populate mongodb with words', (done) => {
       const word = {
         word: 'word',
-        wordClass: 'noun',
+        wordClass: 'N',
         definitions: ['first definition', 'second definition'],
         dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
           ...dialectsObject,
@@ -51,7 +51,7 @@ describe('MongoDB Words', () => {
         .then((savedWord) => {
           expect(savedWord.id).to.not.equal(undefined);
           expect(savedWord.word).to.equal('word');
-          expect(savedWord.wordClass).to.equal('noun');
+          expect(savedWord.wordClass).to.equal('N');
           expect(savedWord.dialects).to.not.equal(undefined);
           expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
           done();
@@ -60,7 +60,7 @@ describe('MongoDB Words', () => {
     it('should fail populate mongodb with incorrect variations', (done) => {
       const word = {
         word: 'word',
-        wordClass: 'noun',
+        wordClass: 'N',
         definitions: ['first definition', 'second definition'],
         dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
           ...dialectsObject,
