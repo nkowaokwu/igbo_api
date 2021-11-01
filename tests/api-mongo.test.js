@@ -32,7 +32,7 @@ describe('MongoDB Words', () => {
     it('should populate mongodb with words', (done) => {
       const word = {
         word: 'word',
-        wordClass: 'N',
+        wordClass: 'NNC',
         definitions: ['first definition', 'second definition'],
         dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
           ...dialectsObject,
@@ -51,7 +51,7 @@ describe('MongoDB Words', () => {
         .then((savedWord) => {
           expect(savedWord.id).to.not.equal(undefined);
           expect(savedWord.word).to.equal('word');
-          expect(savedWord.wordClass).to.equal('N');
+          expect(savedWord.wordClass).to.equal('NNC');
           expect(savedWord.dialects).to.not.equal(undefined);
           expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
           done();
@@ -602,7 +602,7 @@ describe('MongoDB Words', () => {
 
     it('should return word information when searched with wordClass filter', (done) => {
       const keyword = 'bia';
-      const wordClass = 'V';
+      const wordClass = 'AV';
       getWordsFilteredByWordClass(wordClass, { keyword })
         .end((_, res) => {
           expect(res.status).to.equal(200);
