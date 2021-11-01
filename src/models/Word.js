@@ -12,7 +12,7 @@ const wordSchema = new Schema({
   word: { type: String, required: true },
   wordClass: {
     type: String,
-    default: '',
+    default: wordClass.NNC.value,
     enum: Object.values(wordClass).map(({ value }) => value),
   },
   definitions: { type: [{ type: String }], default: [] },
