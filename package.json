@@ -33,7 +33,9 @@
     "test": "npm-run-all -p -r start:database mocha"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": "<=16",
+    "npm": "6.x",
+    "yarn": "1.22.x"
   },
   "husky": {
     "hooks": {
