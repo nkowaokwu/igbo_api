@@ -1,5 +1,6 @@
 import * as packageJson from '../package.json';
 import swaggerConfig from '../swagger.json';
+import './shared/utils/wrapConsole';
 
 const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
@@ -7,6 +8,8 @@ const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : nu
 if (dotenv) {
   dotenv.config();
 }
+
+const useReplicatSet = !!process.env.REPLICA_SET;
 
 // Database
 export const DB_NAME = 'igbo_api';
@@ -24,10 +27,18 @@ const isTestingEnvironment = (
 export const PORT = process.env.PORT || 8080;
 export const MONGO_HOST = process.env.CONTAINER_HOST || 'localhost';
 export const REPLICA_SET_NAME = 'rs0';
-export const MONGO_ROOT = (
-  `mongodb://${MONGO_HOST}:2717,${MONGO_HOST}:2727,${MONGO_HOST}:2737`
+export const FIRST_REPLICA_SET_PORT = '2717';
+export const SECOND_REPLICA_SET_PORT = '2727';
+export const THIRD_REPLICA_SET_PORT = '2737';
+export const FALLBACK_MONGO_PORT = '27017';
+export const REPLICA_SET_MONGO_ROOT = (
+  `mongodb://${MONGO_HOST}:${FIRST_REPLICA_SET_PORT},`
+  + `${MONGO_HOST}:${SECOND_REPLICA_SET_PORT},`
+  + `${MONGO_HOST}:${THIRD_REPLICA_SET_PORT}`
 );
-export const QUERIES = `?replicaSet=${REPLICA_SET_NAME}`;
+export const FALLBACK_MONGO_ROOT = `mongodb://${MONGO_HOST}:${FALLBACK_MONGO_PORT}`;
+export const MONGO_ROOT = useReplicatSet ? REPLICA_SET_MONGO_ROOT : FALLBACK_MONGO_ROOT;
+export const QUERIES = useReplicatSet ? `?replicaSet=${REPLICA_SET_NAME}` : '';
 const TEST_MONGO_URI = `${MONGO_ROOT}/${TEST_DB_NAME}`;
 const LOCAL_MONGO_URI = `${MONGO_ROOT}/${DB_NAME}`;
 export const MONGO_URI = isTestingEnvironment
@@ -36,6 +47,9 @@ export const MONGO_URI = isTestingEnvironment
     ? LOCAL_MONGO_URI.concat(QUERIES)
     : process.env.MONGO_URI
       || LOCAL_MONGO_URI.concat(QUERIES);
+
+console.green('🛣  MongoDB URI:', MONGO_URI);
+
 export const CORS_CONFIG = {
   origin: true,
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
