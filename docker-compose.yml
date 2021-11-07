@@ -1,12 +1,29 @@
 version: '3.7'
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongo
+  mongo1:
+    image: mongo:4.2
+    container_name: mongo1
+    command: ["--replSet", "rs0", "--port", "2717"]
     volumes:
-      - mongodb-data:/data/db
+      - mongodb-data:/data/mongos/db1
     ports:
-      - 27017:27017
+      - 2717:2717
+  mongo2:
+    image: mongo:4.2
+    container_name: mongo2
+    command: ["--replSet", "rs0", "--port", "2727"]
+    volumes:
+      - mongodb-data:/data/mongos/db2
+    ports:
+      - 2727:2727
+  mongo3:
+    image: mongo:4.2
+    container_name: mongo3
+    command: ["--replSet", "rs0", "--port", "2737"]
+    volumes:
+      - mongodb-data:/data/mongos/db3
+    ports:
+      - 2737:2737
   server:
     container_name: igbo_api_server
     restart: always
@@ -14,6 +31,8 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - mongodb
+      - mongo1
+      - mongo2
+      - mongo3
 volumes: 
   mongodb-data:

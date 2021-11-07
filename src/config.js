@@ -9,8 +9,8 @@ if (dotenv) {
 }
 
 // Database
-const DB_NAME = 'igbo_api';
-const TEST_DB_NAME = 'test_igbo_api';
+export const DB_NAME = 'igbo_api';
+export const TEST_DB_NAME = 'test_igbo_api';
 
 // If running inside Docker container, it will fallback to using test_igbo_api database
 const isTestingEnvironment = (
@@ -23,14 +23,19 @@ const isTestingEnvironment = (
 );
 export const PORT = process.env.PORT || 8080;
 export const MONGO_HOST = process.env.CONTAINER_HOST || 'localhost';
-export const MONGO_ROOT = `mongodb://${MONGO_HOST}:27017`;
+export const REPLICA_SET_NAME = 'rs0';
+export const MONGO_ROOT = (
+  `mongodb://${MONGO_HOST}:2717,${MONGO_HOST}:2727,${MONGO_HOST}:2737`
+);
+export const QUERIES = `?replicaSet=${REPLICA_SET_NAME}`;
 const TEST_MONGO_URI = `${MONGO_ROOT}/${TEST_DB_NAME}`;
 const LOCAL_MONGO_URI = `${MONGO_ROOT}/${DB_NAME}`;
 export const MONGO_URI = isTestingEnvironment
-  ? TEST_MONGO_URI
+  ? TEST_MONGO_URI.concat(QUERIES)
   : process.env.NODE_ENV === 'development'
-    ? LOCAL_MONGO_URI
-    : process.env.MONGO_URI || LOCAL_MONGO_URI;
+    ? LOCAL_MONGO_URI.concat(QUERIES)
+    : process.env.MONGO_URI
+      || LOCAL_MONGO_URI.concat(QUERIES);
 export const CORS_CONFIG = {
   origin: true,
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
