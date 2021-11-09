@@ -51,6 +51,17 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
+**Alternative dev start command**:
+
+To start the dev API server while running [MongoDB Replica sets](https://docs.mongodb.com/manual/replication/), run:
+
+```
+yarn dev:full
+```
+
+**Warning**: Running replica sets locally is machine intensive and should only
+be ran for testing or specific-feature development purposes.
+
 ### Docker
 If you don't want to run a local Node and MongoDB, you can use [Docker](https://docker.com)
 
