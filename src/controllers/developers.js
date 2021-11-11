@@ -37,14 +37,19 @@ export const postDeveloper = async (req, res, next) => {
       password: hashedPassword,
     });
     await developer.save();
+    console.log('Saved the developer!');
     if (process.env.NODE_ENV !== 'test') {
+      console.log('Attempting to send email');
       await sendNewDeveloper({ to: email, apiKey, name });
     }
+    console.log('Respond to client');
     return res.send({
       message: `Success email sent to ${email}`,
       ...(process.env.NODE_ENV === 'test' ? { apiKey } : {}),
     });
   } catch (err) {
+    console.log('Here is an error');
+    console.trace(err);
     return next(err);
   }
 };
