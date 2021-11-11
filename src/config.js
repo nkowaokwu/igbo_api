@@ -48,8 +48,6 @@ export const MONGO_URI = isTestingEnvironment
     : process.env.MONGO_URI
       || LOCAL_MONGO_URI.concat(QUERIES);
 
-console.green('🛣  MongoDB URI:', MONGO_URI);
-
 export const CORS_CONFIG = {
   origin: true,
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
