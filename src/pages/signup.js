@@ -51,10 +51,12 @@ const SignUp = () => {
           handleCreateDeveloperResponse('An error occurred');
         }
       }, (err) => {
-        handleCreateDeveloperResponse(`An error occurred: ${err.response.data.error}`);
+        console.log(err);
+        handleCreateDeveloperResponse('An error occurred');
       })
       .catch((err) => {
-        handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
+        console.log(err);
+        handleCreateDeveloperResponse('An error occurred');
       })
   );
 
