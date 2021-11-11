@@ -23632,14 +23632,19 @@
     "NNC": [
         {
             "word": "NNC",
-            "wordClass": "AV",
+            "wordClass": "NNC",
             "definitions": [
-                "support; rest back on"
+                "large size"
             ],
-            "examples": [],
+            "examples": [
+                {
+                    "igbo": "Ọ dì ukwu",
+                    "english": "It is big"
+                }
+            ],
             "variations": [],
             "stems": [
-                "-dà"
+                "ukwu"
             ]
         }
     ],
@@ -116179,25 +116184,6 @@
                 "leprosy"
             ],
             "examples": [],
-            "variations": [],
-            "stems": [
-                "ukwu"
-            ]
-        }
-    ],
-    "NNC": [
-        {
-            "word": "NNC",
-            "wordClass": "NNC",
-            "definitions": [
-                "large size"
-            ],
-            "examples": [
-                {
-                    "igbo": "Ọ dì ukwu",
-                    "english": "It is big"
-                }
-            ],
             "variations": [],
             "stems": [
                 "ukwu"

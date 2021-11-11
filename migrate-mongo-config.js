@@ -1,9 +1,7 @@
-import { MONGO_ROOT, DB_NAME } from './src/config';
-
 const config = {
   mongodb: {
-    url: process.env.MONGO_URI || MONGO_ROOT,
-    databaseName: process.env.DB_NAME || DB_NAME,
+    url: process.env.MONGO_URI || 'mongodb://localhost:27017',
+    databaseName: process.env.DB_NAME || 'igbo_api',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,
