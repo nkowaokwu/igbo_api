@@ -17,9 +17,7 @@ const App = ({ searchWord, words }) => {
       <div>
         <div className="flex flex-col justify-center w-screen h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl ml-16 font-extrabold mt-24">
-              The First African
-            </h1>
+            <h1 className="text-4xl md:text-6xl ml-16 font-extrabold mt-24">The First African</h1>
             <h1 className="text-4xl md:text-6xl ml-20 font-extrabold">
               Language
               <span className="text-green-500">API</span>
@@ -102,9 +100,7 @@ const App = ({ searchWord, words }) => {
           </h2>
         </div>
         <div className="text-xl md:text-1xl w-9/12 md:w-7/12 ml-20 mb-4 mt-8 leading-10 mb-48">
-          <p>
-            With each API key, you will get 2,500 requests per day.
-          </p>
+          <p>With each API key, you will get 2,500 requests per day.</p>
         </div>
         <Demo searchWord={searchWord} words={words} />
         <div className="flex w-full justify-center md:justify-center md:w-2/5">
@@ -114,8 +110,8 @@ const App = ({ searchWord, words }) => {
         </div>
         <div className="text-xl md:text-1xl w-9/12  ml-20 mb-4 mt-8 leading-10">
           <p>
-            Want to see how this data is getting used?
-            Take a look at the Nkọwa okwu, our official online Igbo dictionary.
+            Want to see how this data is getting used? Take a look at the Nkọwa okwu, our official online Igbo
+            dictionary.
           </p>
         </div>
         <Statistics />
