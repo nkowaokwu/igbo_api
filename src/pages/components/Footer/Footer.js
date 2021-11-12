@@ -19,7 +19,8 @@ const Footer = () => {
           </button>
         </div>
       </div>
-      <footer className={`flex flex-col text-center lg:text-left lg:flex-row
+      <footer
+        className={`flex flex-col text-center lg:text-left lg:flex-row
           justify-center items-center h-40 w-full bg-gray-400`}
       >
         <div className="flex flex-row   items-center justify-center text-white">
@@ -36,7 +37,10 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-            <p className="text-black">Copyright © 2021 Igbo API</p>
+            <p className="text-black">
+              Copyright ©<span className="m-1">{new Date().getFullYear()}</span>
+              Igbo API
+            </p>
           </div>
         </div>
       </footer>
