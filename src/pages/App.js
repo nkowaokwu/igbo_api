@@ -18,12 +18,12 @@ const App = ({ searchWord, words }) => {
         <div className="flex flex-col justify-center w-screen h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>
             <h1 className="text-4xl md:text-6xl ml-16 font-extrabold mt-24">The First African</h1>
-            <h1 className="text-4xl md:text-6xl ml-20 font-extrabold">
+            <h1 className="text-4xl md:text-6xl sm:text-2xl   ml-20 font-extrabold">
               Language
               <span className="text-green-500">API</span>
             </h1>
           </FadeIn>
-          <div className="text-xl md:text-1xl w-9/12 md:w-7/12 ml-20 mb-4 mt-8 leading-10">
+          <div className="text-xl md:text-xl w-9/12 md:w-7/12 ml-20 mb-4 mt-8 leading-10">
             <FadeIn>
               <p>
                 {`Igbo is a rich Nigerian language that’s spoken by approximately 45 million people.
@@ -50,7 +50,7 @@ const App = ({ searchWord, words }) => {
                   hover:bg-green-500 hover:text-white py-2 px-4"
                   onClick={() => router.push('/signup')}
                 >
-                  Get API Key
+                  Get an API Key
                 </button>
               </div>
             </FadeIn>
