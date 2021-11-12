@@ -93,7 +93,7 @@
   max-width: 95vw;
   overflow: scroll;
   font-size: 1em;
-  color: white;
+  @apply text-white;
 }
 
 .__json-key__ {
@@ -117,7 +117,7 @@
 
 @media (min-width: 768px) {
   .jsonPretty {
-    height: 440px;
+    height: 450px;
     max-height: 600px;
     max-width: 600px !important;
     width: 600px !important;
@@ -145,31 +145,16 @@
 }
 
 .card-custom-border {
-  width: 250px;
-  height: 250px;
-  background: rgba(221, 229, 239, 0.35);
+  @apply w-64;
+  @apply h-64;
+  @apply bg-gray-200;
   border-radius: 50px 0px;
 }
 
 .custom-border {
   border-radius: 30px 0px 30px 30px;
-  background: #dde5ef;
-  height: 210px;
-}
-
-.img-container {
-  border-radius: 50px;
-  height: 40px;
-  width: 40px;
-  background: red;
-  position: relative;
-}
-
-.rotate {
-  -webkit-transform: perspective(100px) rotateX(-25deg);
-  -webkit-transform-origin: left center;
-  -moz-transform: perspective(100px) rotateX(-25deg);
-  -moz-transform-origin: left center;
+  @apply bg-gray-400;
+  @apply h-56;
 }
 
 .rFix {
