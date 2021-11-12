@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { GITHUB_CONTRIBUTORS } from '../../../siteConstants';
 
 const Statistics = () => {
   const [contributorDetails, setContributorsDetails] = useState(null);
 
   useEffect(() => {
     axios
-      .get('https://api.github.com/repos/ijemmao/igbo_api/contributors')
+      .get(`${GITHUB_CONTRIBUTORS}`)
       .then((response) => {
         setContributorsDetails(response.data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   }, []);
   return (
     <div>
