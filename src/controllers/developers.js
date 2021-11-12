@@ -37,18 +37,20 @@ export const postDeveloper = async (req, res, next) => {
       password: hashedPassword,
     });
     await developer.save();
-    console.log('Saved the developer!');
     if (process.env.NODE_ENV !== 'test') {
-      console.log('Attempting to send email');
-      await sendNewDeveloper({ to: email, apiKey, name });
+      // eslint-disable-next-line
+      try {
+        await sendNewDeveloper({ to: email, apiKey, name });
+      } catch (err) {
+        console.log(err.response.body.errors);
+        throw err.response.body.errors;
+      }
     }
-    console.log('Respond to client');
     return res.send({
       message: `Success email sent to ${email}`,
-      ...(process.env.NODE_ENV === 'test' ? { apiKey } : {}),
+      apiKey,
     });
   } catch (err) {
-    console.log('Here is an error');
     console.trace(err);
     return next(err);
   }

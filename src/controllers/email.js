@@ -2,9 +2,15 @@ import { map, omit } from 'lodash';
 import {
   NEW_DEVELOPER_ACCOUNT_TEMPLATE,
   API_FROM_EMAIL,
+  SENDGRID_API_KEY,
 } from '../config';
 
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
+
+if (sgMail && sgMail.setApiKey) {
+  console.log('setting the sendgrid api key', SENDGRID_API_KEY);
+  sgMail.setApiKey(SENDGRID_API_KEY);
+}
 
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields) => ({
