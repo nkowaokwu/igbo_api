@@ -83,18 +83,17 @@
   @apply text-green-200;
 }
 
-
 .error {
   @apply text-red-600;
 }
 
 .jsonPretty {
-  height: 600px;
+  height: 500px;
   max-height: 600px;
   max-width: 95vw;
   overflow: scroll;
   font-size: 1em;
-  background-color: rgb(249, 249, 249);
+  @apply text-white;
 }
 
 .__json-key__ {
@@ -112,19 +111,17 @@
 @media (max-width: 768px) {
   .demo-inputs-container {
     max-width: 600px;
-    width: 80%;
   }
 }
 
 @media (min-width: 768px) {
   .jsonPretty {
-    height: 600px;
+    height: 450px;
     max-height: 600px;
     max-width: 600px !important;
     width: 600px !important;
     overflow: scroll;
     font-size: 1em;
-    background-color: rgb(249, 249, 249);
   }
 }
 
@@ -140,12 +137,27 @@
     @apply shadow-none;
   }
 
-  .transparent-navbar, .transition-navbar:hover {
+  .transparent-navbar,
+  .transition-navbar:hover {
     @apply text-white;
   }
 }
 
-.card-container {
-  width: 250px;
-  height: 250px;
+.card-custom-border {
+  @apply w-64;
+  @apply h-64;
+  @apply bg-gray-200;
+  border-radius: 50px 0px;
+}
+
+.custom-border {
+  border-radius: 30px 0px 30px 30px;
+  @apply bg-gray-400;
+  min-height: 14rem;
+  min-width: 16rem;
+  max-width: 24rem;
+}
+
+.rFix {
+  transform: rotateX(25deg);
 }

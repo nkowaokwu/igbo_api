@@ -134,7 +134,8 @@ const SignUp = () => {
             {errors.password ? <span className="error">Password is required</span> : null}
             <button
               type="submit"
-              className="primary-button w-full mt-6"
+              className="cursor-pointer rounded-full w-full mt-6 bg-green-500 text-white border-2
+              py-2 px-4 hover:bg-transparent hover:text-black border-green-500 transition-all duration-200"
               disabled={isButtonDisabled}
             >
               {buttonText}

@@ -27,19 +27,6 @@ const SubMenu = ({ isHomepage, transparent }) => {
               Features
             </Link>
           </li>
-          <li className="transition-element">
-            <Link
-              activeClass="nav-item-active"
-              className="cursor-pointer"
-              to="try-it-out"
-              spy
-              smooth
-              offset={-100}
-              duration={600}
-            >
-              Try it Out
-            </Link>
-          </li>
         </>
       ) : null}
       <li className="transition-element">
@@ -51,15 +38,24 @@ const SubMenu = ({ isHomepage, transparent }) => {
         </a>
       </li>
       <li className="transition-element">
-        <a
-          href="/signup"
-          onClick={(e) => navigate(e, '/signup')}
-        >
-          Register API Key
-        </a>
+        <a href="/docs">Docs</a>
       </li>
       <li className="transition-element">
-        <a href="/docs">Docs</a>
+        <a href="/signup">Get an API Key</a>
+      </li>
+      <li className="transition-element">
+        <Link
+          activeClass="nav-item-active"
+          className="cursor-pointer rounded-full bg-green-500 text-white border-2
+          py-2 px-4 mr-8 hover:bg-transparent hover:text-black border-green-500"
+          to="try-it-out"
+          spy
+          smooth
+          offset={-100}
+          duration={600}
+        >
+          Try it Out
+        </Link>
       </li>
     </nav>
   );
