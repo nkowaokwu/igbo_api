@@ -5,7 +5,7 @@ import { API_FROM_EMAIL } from '../../../siteConstants';
 const Footer = () => {
   const router = useRouter();
   return (
-    <div>
+    <div className="w-full">
       <div className="flex flex-row items-center justify-center bg-gray-800 text-white h-56">
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-2xl text-center items-center p-5">

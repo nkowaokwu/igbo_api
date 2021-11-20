@@ -41,7 +41,15 @@ const SubMenu = ({ isHomepage, transparent }) => {
         <a href="/docs">Docs</a>
       </li>
       <li className="transition-element">
-        <a href="/signup">Get an API Key</a>
+        <button
+          onClick={() => {
+            router.push('/signup');
+          }}
+          role="link"
+          type="button"
+        >
+          Get an API Key
+        </button>
       </li>
       <li className="transition-element">
         <Link

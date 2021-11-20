@@ -9,7 +9,7 @@ import Card from './components/Card';
 import Footer from './components/Footer';
 import WorkersAroundHeart from './assets/workers-around-heart.svg';
 import Statistics from './components/Statistics/Statistics';
-import { DICTIONARY_APP_URL } from '../siteConstants';
+import { GITHUB_REPO, DICTIONARY_APP_URL } from '../siteConstants';
 
 const App = ({ searchWord, words }) => {
   const router = useRouter();
@@ -44,7 +44,9 @@ const App = ({ searchWord, words }) => {
                   className="mt-4 rounded-full bg-green-500 lg:w-auto text-white border-2 py-2 md:px-4
                   hover:bg-transparent hover:text-black border-green-500 transition-all duration-200
                   flex flex-row justify-center items-center"
-                  onClick={() => router.push('/signup')}
+                  onClick={() => {
+                    window.location = GITHUB_REPO;
+                  }}
                   style={{ minWidth: '18rem' }}
                 >
                   Check on GitHub
