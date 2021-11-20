@@ -44,7 +44,7 @@ const SubMenu = ({ isHomepage, transparent }) => {
         <Link
           activeClass="nav-item-active"
           className="cursor-pointer rounded-full bg-green-500 text-white border-2
-          py-2 px-4 mr-8 hover:bg-transparent hover:text-black hover:border-green-500"
+          py-2 px-4 mr-8 hover:bg-transparent hover:text-black border-green-500"
           to="try-it-out"
           spy
           smooth
