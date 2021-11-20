@@ -7,12 +7,12 @@ const Footer = () => {
   return (
     <div>
       <div className="flex flex-row   items-center justify-center bg-gray-800 text-white h-56 mb-4">
-        <div>
-          <h1 className="text-2xl mb-2">Interested in what you see? Register for an API Key!</h1>
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-2xl items-center p-5">Interested in what you see? Register for an API Key!</h1>
           <button
             type="button"
             className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 mr-8 hover:bg-transparent
-            hover:text-white hover:border-green-500 ml-56 rFix"
+            hover:text-white hover:border-green-500 "
             onClick={() => router.push('/signup')}
           >
             Register API Key
