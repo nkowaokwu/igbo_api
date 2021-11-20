@@ -65,7 +65,7 @@ const Demo = ({ searchWord, words }) => {
   return !isLoading ? (
     <div className="flex justify-center mb-16">
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10 p-4 bg-gray-500 rounded-md">
-        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-24">
+        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-8">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
             <h2>Enter a word below</h2>
             <p className="self-center md:self-start">

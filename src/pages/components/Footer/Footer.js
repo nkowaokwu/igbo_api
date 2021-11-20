@@ -17,7 +17,7 @@ const Footer = () => {
             hover:text-white hover:border-green-500 transition-all duration-200"
             onClick={() => router.push('/signup')}
           >
-            Register API Key
+            Get an API Key
           </button>
         </div>
       </div>

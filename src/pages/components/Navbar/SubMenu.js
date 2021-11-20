@@ -41,6 +41,9 @@ const SubMenu = ({ isHomepage, transparent }) => {
         <a href="/docs">Docs</a>
       </li>
       <li className="transition-element">
+        <a href="/signup">Get an API Key</a>
+      </li>
+      <li className="transition-element">
         <Link
           activeClass="nav-item-active"
           className="cursor-pointer rounded-full bg-green-500 text-white border-2
