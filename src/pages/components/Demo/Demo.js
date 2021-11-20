@@ -20,9 +20,7 @@ const Demo = ({ searchWord, words }) => {
       setProductionUrl(window.origin);
       setInitialQueries(queryString.parse(window.location.search));
       setIsLoading(false);
-      setRedirectUrl(window.location.hostname === 'localhost'
-        ? 'http://localhost:8000'
-        : DICTIONARY_APP_URL);
+      setRedirectUrl(window.location.hostname === 'localhost' ? 'http://localhost:8000' : DICTIONARY_APP_URL);
       if (keyword) {
         window.location.hash = 'try-it-out';
       }
@@ -70,11 +68,11 @@ const Demo = ({ searchWord, words }) => {
   return !isLoading ? (
     <div className="flex justify-center mb-16">
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10 p-4 bg-gray-500">
-        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-48 shadow-2xl rounded-md">
+        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-48 shadow-2xl rounded-md mb-48">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
             <h2>Enter a word below</h2>
             <p className="self-center md:self-start">
-              {'Enter a word in either English or Igbo to see it\'s information'}
+              {"Enter a word in either English or Igbo to see it's information"}
             </p>
             <h2 className="text-2xl">Flags</h2>
             <div className="flex">
@@ -108,23 +106,13 @@ const Demo = ({ searchWord, words }) => {
               data-test="try-it-out-input"
               defaultValue={searchWord}
             />
-            <Input
-              disabled
-              value={constructRequestUrl()}
-              className="w-full py-3 px-5"
-            />
-            <button
-              type="submit"
-              className="primary-button w-full"
-            >
+            <Input disabled value={constructRequestUrl()} className="w-full py-3 px-5" />
+            <button type="submit" className="primary-button w-full">
               Submit
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {'Want to see how this data is getting used? Take a look at the '}
-              <a
-                className="link"
-                href={redirectUrl}
-              >
+              <a className="link" href={redirectUrl}>
                 dictionary app
               </a>
             </p>
@@ -132,7 +120,8 @@ const Demo = ({ searchWord, words }) => {
         </div>
         <div className="flex flex-col w-full lg:w-auto -mt-64">
           <h3
-            className="text-center lg:text-left self-center w-full lg:w-auto lg:self-start text-2xl mb-5 mt-10 lg:mt-0"
+            className="text-center lg:text-left self-center w-full
+          lg:w-auto lg:self-start text-2xl mb-5 mt-16 lg:mt-0 mt-4"
           >
             Response
           </h3>

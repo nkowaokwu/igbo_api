@@ -15,9 +15,9 @@ const App = ({ searchWord, words }) => {
     <div className="overflow-x-hidden" id="homepage-container">
       <Navbar isHomepage />
       <div>
-        <div className="flex flex-col justify-center w-screen h-screen p-0 pt-10 lg:pt-16">
+        <div className="flex flex-col justify-center w-screen md:h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>
-            <h1 className="text-4xl md:text-6xl ml-16 font-extrabold mt-24">The First African</h1>
+            <h1 className="text-4xl md:text-6xl ml-16 font-extrabold md:mt-24">The First African</h1>
             <h1 className="text-4xl md:text-6xl sm:text-2xl   ml-20 font-extrabold">
               Language
               <span className="text-green-500">API</span>
@@ -37,12 +37,13 @@ const App = ({ searchWord, words }) => {
               <div className="">
                 <button
                   type="button"
-                  className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 mr-8 hover:bg-transparent
+                  className="mt-4 rounded-full bg-green-500  md:w-auto w-56 text-white border-2 py-2 md:px-4
+                  mr-8 hover:bg-transparent
                   hover:text-black hover:border-green-500"
                   onClick={() => router.push('/signup')}
                 >
                   Check on GitHub
-                  <i className="fa fa-github text-4xl pl-3 text-black" />
+                  <i className="fa fa-github text-3xl pl-3 text-black" />
                 </button>
                 <button
                   type="button"
@@ -110,7 +111,7 @@ const App = ({ searchWord, words }) => {
         </div>
         <div className="text-xl md:text-1xl w-9/12  ml-20 mb-4 mt-8 leading-10">
           <p>
-            Want to see how this data is getting used? Take a look at the Nkọwa okwu, our official online Igbo
+            Want t o see how this data is getting used? Take a look at the Nkọwa okwu, our official online Igbo
             dictionary.
           </p>
         </div>
