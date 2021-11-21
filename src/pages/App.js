@@ -50,7 +50,7 @@ const App = ({ searchWord, words }) => {
                   style={{ minWidth: '18rem' }}
                 >
                   Check on GitHub
-                  <i className="fa fa-github text-3xl pl-3 text-black" />
+                  <i className="fa fa-github text-3xl pl-3" />
                 </button>
                 <button
                   type="button"
