@@ -15,6 +15,10 @@ export const WORD_KEYS = [
   'word',
   'wordClass',
   'pronunciation',
+  'synonyms',
+  'antonyms',
+  'hypernyms',
+  'hyponyms',
   'isStandardIgbo',
   'updatedOn',
 ];

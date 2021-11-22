@@ -7,7 +7,7 @@ import wordClass from '../shared/constants/wordClass';
 const REQUIRED_DIALECT_KEYS = ['word', 'variations', 'dialect', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
 
-const { Schema } = mongoose;
+const { Schema, Types } = mongoose;
 const wordSchema = new Schema({
   word: { type: String, required: true },
   wordClass: {
@@ -31,6 +31,10 @@ const wordSchema = new Schema({
   isStandardIgbo: { type: Boolean, default: false },
   variations: { type: [{ type: String }], default: [] },
   frequency: { type: Number },
+  synonyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+  antonyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+  hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+  hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   stems: { type: [{ type: String }], default: [] },
   updatedOn: { type: Date, default: Date.now() },
 }, { toObject: toObjectPlugin });
