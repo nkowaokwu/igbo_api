@@ -21,7 +21,7 @@ const Statistics = () => {
         <Stat value="8,000" header="Words in the database" />
         <Stat value="2,000" header="Example Igbo sentences" />
         <Stat value="1,400" header="Word audio pronunciations" />
-        <Stat value="500" header="Central Igbo words" />
+        <Stat value="500" header="Standard Igbo words" />
       </div>
       <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center bg-gray-200 py-6">
         {contributorDetails ? (

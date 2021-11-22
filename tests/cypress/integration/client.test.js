@@ -78,7 +78,7 @@ describe('Igbo API Homepage', () => {
     });
     it('render the Sign up page', () => {
       cy.findByAltText('down arrow as menu icon').click();
-      cy.get('a').contains('Get an API Key').click();
+      cy.get('button').contains('Get an API Key').click();
       cy.findByText('Sign up.');
     });
   });
