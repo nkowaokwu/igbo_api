@@ -123,7 +123,7 @@ const Demo = ({ searchWord, words }) => {
             Response
           </h3>
           <JSONPretty
-            className="w-full self-center lg:w-auto jsonPretty bg-gray-800 rounded-md p-2"
+            className="jsonPretty w-full self-center lg:w-auto bg-gray-800 rounded-md p-2"
             id="json-pretty"
             data={responseBody}
           />
