@@ -30,10 +30,7 @@ const SubMenu = ({ isHomepage, transparent }) => {
         </>
       ) : null}
       <li className="transition-element">
-        <a
-          href="/about"
-          onClick={(e) => navigate(e, '/about')}
-        >
+        <a href="/about" onClick={(e) => navigate(e, '/about')}>
           About
         </a>
       </li>
@@ -41,10 +38,21 @@ const SubMenu = ({ isHomepage, transparent }) => {
         <a href="/docs">Docs</a>
       </li>
       <li className="transition-element">
+        <button
+          onClick={() => {
+            router.push('/signup');
+          }}
+          role="link"
+          type="button"
+        >
+          Get an API Key
+        </button>
+      </li>
+      <li className="transition-element">
         <Link
           activeClass="nav-item-active"
           className="cursor-pointer rounded-full bg-green-500 text-white border-2
-          py-2 px-4 mr-8 hover:bg-transparent hover:text-black hover:border-green-500"
+          py-2 px-4 mr-8 hover:bg-transparent hover:text-black border-green-500"
           to="try-it-out"
           spy
           smooth

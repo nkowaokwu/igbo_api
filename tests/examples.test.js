@@ -1,6 +1,5 @@
 import chai from 'chai';
 import { isEqual, forEach } from 'lodash';
-import accents from 'remove-accents';
 import SortingDirections from '../src/shared/constants/sortingDirections';
 import { getExamples, getExample } from './shared/commands';
 import {
@@ -160,25 +159,23 @@ describe('MongoDB Examples', () => {
         });
     });
 
-    it('should return accented field with keyword', (done) => {
+    it('should return accented keyword', (done) => {
       const keyword = 'Òbìàgèlì bì n’Àba';
       getExamples({ keyword })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           forEach(res.body, (example) => {
-            expect(example.igbo).to.equal(accents.remove(keyword));
             expect(example.igbo).to.not.equal(undefined);
           });
           done();
         });
     });
 
-    it('should return accented field and normalized example', (done) => {
+    it('should return accented example', (done) => {
       getExamples()
         .end((_, res) => {
           expect(res.status).to.equal(200);
           forEach(res.body, (example) => {
-            expect(example.igbo).to.equal(accents.remove(example.igbo));
             expect(example.igbo).to.not.equal(undefined);
           });
           done();

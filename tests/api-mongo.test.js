@@ -9,7 +9,6 @@ import {
 } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import accents from 'remove-accents';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
@@ -33,14 +32,13 @@ describe('MongoDB Words', () => {
     it('should populate mongodb with words', (done) => {
       const word = {
         word: 'word',
-        wordClass: 'noun',
+        wordClass: 'NNC',
         definitions: ['first definition', 'second definition'],
         dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
           ...dialectsObject,
           [key]: {
             word: '',
             variations: [],
-            accented: '',
             dialect: key,
             pronunciation: '',
           },
@@ -53,7 +51,7 @@ describe('MongoDB Words', () => {
         .then((savedWord) => {
           expect(savedWord.id).to.not.equal(undefined);
           expect(savedWord.word).to.equal('word');
-          expect(savedWord.wordClass).to.equal('noun');
+          expect(savedWord.wordClass).to.equal('NNC');
           expect(savedWord.dialects).to.not.equal(undefined);
           expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
           done();
@@ -62,14 +60,13 @@ describe('MongoDB Words', () => {
     it('should fail populate mongodb with incorrect variations', (done) => {
       const word = {
         word: 'word',
-        wordClass: 'noun',
+        wordClass: 'N',
         definitions: ['first definition', 'second definition'],
         dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
           ...dialectsObject,
           [key]: {
             word: '',
             variations: [],
-            accented: '',
             dialect: 'mismatch',
             pronunciation: '',
           },
@@ -550,13 +547,12 @@ describe('MongoDB Words', () => {
         });
     });
 
-    it('should return accented field and normalized word', (done) => {
+    it('should return accented word', (done) => {
       getWords()
         .end((_, res) => {
           expect(res.status).to.equal(200);
           forEach(res.body, (word) => {
-            expect(word.word).to.equal(accents.remove(word.word));
-            expect(word.accented).to.not.equal(undefined);
+            expect(word.word).to.not.equal(undefined);
           });
           done();
         });
@@ -606,7 +602,7 @@ describe('MongoDB Words', () => {
 
     it('should return word information when searched with wordClass filter', (done) => {
       const keyword = 'bia';
-      const wordClass = 'V';
+      const wordClass = 'AV';
       getWordsFilteredByWordClass(wordClass, { keyword })
         .end((_, res) => {
           expect(res.status).to.equal(200);

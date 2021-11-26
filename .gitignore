@@ -9,6 +9,7 @@ lerna-debug.log*
 # MongoDB Database
 db/
 dump/
+mongos/
 
 # Transpiled code
 build/
@@ -139,3 +140,6 @@ dist
 # Backup directories
 ./igbo_api_db
 ./aws_pronunciations
+
+# misc
+.DS_Store

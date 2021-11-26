@@ -9,6 +9,7 @@ const SignUp = () => {
   const [buttonText, setButtonText] = useState('Create account');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [igboApiRoute, setIgboApiRoute] = useState('');
+  const [apiKey, setApiKey] = useState('');
   const {
     handleSubmit,
     control,
@@ -47,14 +48,17 @@ const SignUp = () => {
       .then((res) => {
         if (res.status === 200) {
           handleCreateDeveloperResponse('Success! Check your email');
+          setApiKey(res.data.apiKey);
         } else if (res.status >= 400) {
           handleCreateDeveloperResponse('An error occurred');
         }
       }, (err) => {
-        handleCreateDeveloperResponse(`An error occurred: ${err.response.data.error}`);
+        console.log(err);
+        handleCreateDeveloperResponse('An error occurred');
       })
       .catch((err) => {
-        handleCreateDeveloperResponse(`An error occurred: ${err.message}`);
+        console.log(err);
+        handleCreateDeveloperResponse('An error occurred');
       })
   );
 
@@ -64,7 +68,7 @@ const SignUp = () => {
   return (
     <>
       <Navbar transparent />
-      <div className="w-screen h-screen flex flex-row overflow-hidden select-none">
+      <div className="w-screen h-screen flex flex-row overflow-hidden">
         <div className="flex flex-col justify-center items-center w-full lg:w-6/12">
           <div className="w-10/12 lg:w-7/12">
             <h1 className="text-5xl mb-6">Sign up.</h1>
@@ -130,14 +134,28 @@ const SignUp = () => {
             {errors.password ? <span className="error">Password is required</span> : null}
             <button
               type="submit"
-              className="primary-button w-full mt-6"
+              className="cursor-pointer rounded-full w-full mt-6 bg-green-500 text-white border-2
+              py-2 px-4 hover:bg-transparent hover:text-black border-green-500 transition-all duration-200"
               disabled={isButtonDisabled}
             >
               {buttonText}
             </button>
-            <p className="text-gray-600 mt-6 w-11/12">
-              {'We\'ll send you an email with your account information along with your API key.'}
-            </p>
+            {apiKey ? (
+              <div className="my-4 text-center space-y-6">
+                <h2 className="mb-4 text-gray-800 text-2xl">Custom Igbo API Key:</h2>
+                <div className="w-full space-x-2">
+                  <code className="bg-gray-100 text-gray-600 p-1 w-full">
+                    {apiKey}
+                  </code>
+                </div>
+                <p className="text-red-600">
+                  Please save this key in a secure location. This key will disappear once you leave this page
+                </p>
+                <p className="text-gray-600">
+                  {'We\'ll also send you an email with your account information along with your API key.'}
+                </p>
+              </div>
+            ) : null}
           </form>
         </div>
         <div className="flex flex-col w-0/12 lg:w-6/12 bg-gradient-to-r from-green-400 to-blue-500" />

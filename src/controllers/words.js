@@ -170,16 +170,17 @@ export const createWord = async (data) => {
     variations,
     stems,
     dialects,
+    ...rest
   } = data;
 
-  const emptyDialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
+  const filledDialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
     ...dialectsObject,
     [key]: {
-      word: '',
       variations: [],
-      accented: '',
       dialect: key,
       pronunciation: '',
+      ...dialects[key],
+      word: dialects[key].word || word,
     },
   }), {});
 
@@ -189,10 +190,8 @@ export const createWord = async (data) => {
     definitions,
     variations,
     stems,
-    dialects: {
-      ...emptyDialects,
-      ...dialects,
-    },
+    dialects: filledDialects,
+    ...rest,
   };
 
   const newWord = new Word(wordData);

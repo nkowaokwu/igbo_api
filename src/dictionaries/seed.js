@@ -4,6 +4,7 @@ import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
 import { MONGO_URI } from '../config';
 import Dialects from '../shared/constants/Dialects';
+import wordClass from '../shared/constants/wordClass';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -18,12 +19,12 @@ const populate = async () => {
         return map(value, (term) => {
           const word = { ...term };
           word.word = key;
+          word.wordClass = word.wordClass || wordClass.NNC.value;
           word.dialects = Object.keys(Dialects).reduce((dialectsObject, dialectKey) => ({
             ...dialectsObject,
             [dialectKey]: {
               word: `${key}-${dialectKey}`,
               variations: [],
-              accented: '',
               dialect: dialectKey,
               pronunciation: '',
             },

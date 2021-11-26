@@ -1,68 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { GITHUB_CONTRIBUTORS } from '../../../siteConstants';
+import { GITHUB_INFO } from '../../../siteConstants';
+import Stat from './Stat';
 
 const Statistics = () => {
   const [contributorDetails, setContributorsDetails] = useState(null);
+  const [githubStars, setGithubStars] = useState(null);
 
   useEffect(() => {
     axios
-      .get(`${GITHUB_CONTRIBUTORS}`)
+      .get(`${GITHUB_INFO}/contributors`)
       .then((response) => {
         setContributorsDetails(response.data);
       })
       .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(`${GITHUB_INFO}`)
+      .then((response) => {
+        setGithubStars(response.data);
+      })
+      .catch(() => {});
+  }, []);
   return (
     <div>
-      <div className="md:flex bg-gray-200">
-        <div className="md:flex-auto text-gray-700 text-center custom-border bg-gray-400 px-4 py-4 m-8">
-          <h1 className="text-6xl">8,000+</h1>
-          Words in the database
-        </div>
-        <div className="flex-auto text-gray-700 text-center custom-border bg-gray-400 px-4 py-2 m-8">
-          <h1 className="text-6xl">2,000+</h1>
-          Example sentences
-        </div>
-
-        <div className="md:flex text-gray-700 text-center custom-border bg-gray-400 px-4 py-2 m-8">
-          <div className="flex-auto text-gray-700 px-4 py-2 m-1">
-            <h1 className="md:text-6xl text-4xl ">750+</h1>
-            Audio pronunciations for words
-          </div>
-          <div className="flex-auto text-gray-700 px-4 py-2 m-1">
-            <h1 className="md:text-6xl text-4xl">250+</h1>
-            Words marked as Central Igbo
-          </div>
-        </div>
+      <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center bg-gray-200 py-6">
+        {/* TODO: dynamically pull all data */}
+        <Stat value="8,000" header="Words in the database" />
+        <Stat value="2,000" header="Example Igbo sentences" />
+        <Stat value="1,400" header="Word audio pronunciations" />
+        <Stat value="500" header="Central Igbo words" />
       </div>
-      <div className="md:flex bg-gray-200">
-        <div className="md:flex text-gray-700 text-center custom-border bg-gray-400 px-4 py-2 m-8">
-          <div className="flex-auto text-gray-700 px-4 py-2 m-2">
-            {contributorDetails && <h1 className="text-6xl">{contributorDetails.length}+</h1>}
-            Github Contributors
-          </div>
-          <div className="grid md:grid-rows-2 grid-flow-col gap-0">
-            {contributorDetails &&
-              contributorDetails.slice(0, 10).map((contr) => (
+      <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center bg-gray-200 py-6">
+        {contributorDetails ? (
+          <Stat value={contributorDetails.length} header="GitHub Contributors">
+            <div className="flex flex-row flex-wrap justify-center items-center">
+              {contributorDetails.slice(0, 10).map((contributor) => (
                 <div>
                   <img
-                    src={contr.avatar_url}
+                    src={contributor.avatar_url}
                     className=" text-gray-700 bg-gray-400  w-12  m-2 rounded-full"
                     alt="github avatar"
                   />
                 </div>
               ))}
-          </div>
-        </div>
-        <div className="text-gray-700 text-center custom-border md:w-64 bg-gray-400 px-4 py-4 m-8">
-          <h1 className="text-6xl">80+</h1>
-          Members in the Slack
-        </div>
-        <div className=" text-gray-700 text-center custom-border md:w-64 bg-gray-400 px-4 py-2 m-8">
-          <h1 className="text-6xl">16+</h1>
-          GitHub stars
-        </div>
+            </div>
+          </Stat>
+        ) : null}
+        <Stat value="80" header="Members in Slack" />
+        {/* TODO: dynamically pull data */}
+        <Stat value={githubStars.stargazers_count} header="GitHub stars" />
       </div>
     </div>
   );

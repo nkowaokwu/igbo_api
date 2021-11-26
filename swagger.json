@@ -39,10 +39,7 @@
         "pronunciation": {
           "type": "string"
         },
-        "isCentralIgbo": {
-          "type": "string"
-        },
-        "accented": {
+        "isStandardIgbo": {
           "type": "string"
         },
         "variations": {
