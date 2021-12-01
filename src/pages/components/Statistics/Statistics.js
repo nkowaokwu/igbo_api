@@ -50,16 +50,17 @@ const Statistics = () => {
           </Stat>
         ) : null}
         <Stat value="80" header="Members in Slack" />
-        {/* TODO: dynamically pull data */}
-        <Stat value={githubStars.stargazers_count} header="GitHub stars" />
+
+        {/* <Stat value={githubStars.stargazers_count} header="GitHub stars" /> */}
       </div>
     </div>
   );
 };
 
-Statistics.defaultProps = {
-  title: '',
-  description: '',
-};
+export async function getServerSideProps() {
+  const res = await axios.get(`http://localhost:8080/api/v1/stats`);
+  const data = await res.json();
+  return { props: { data } };
+}
 
 export default Statistics;

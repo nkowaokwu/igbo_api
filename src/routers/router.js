@@ -3,6 +3,7 @@ import rateLimit from 'express-rate-limit';
 import { getWords, getWord, getWordsFilteredByWordClass } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
+import { APIStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
 import validateApiKey from '../middleware/validateApiKey';
@@ -21,6 +22,7 @@ router.get('/words/wordClass/:wordClass', validateApiKey, getWordsFilteredByWord
 router.get('/words/:id', validateApiKey, validId, getWord);
 router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);
+router.get('/stats', validateApiKey, APIStats);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
 
