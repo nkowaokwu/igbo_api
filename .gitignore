@@ -50,7 +50,6 @@ build/Release
 
 # Built files
 build/
-public/
 
 # Dependency directories
 node_modules/

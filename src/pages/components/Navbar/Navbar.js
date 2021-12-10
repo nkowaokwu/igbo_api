@@ -4,9 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import SubMenu from './SubMenu';
 import IgboAPI from '../../assets/igboAPI.svg';
-import downchevron from '../../assets/downchevron.svg';
-
-const MenuIcon = process.env.NODE_ENV !== 'production' ? downchevron : '/assets/downchevron.svg';
+import MenuIcon from '../../assets/downchevron.svg';
 
 const Navbar = ({ to, isHomepage, transparent }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);

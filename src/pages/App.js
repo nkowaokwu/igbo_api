@@ -61,7 +61,7 @@ const App = ({
                 <button
                   type="button"
                   className="mt-4 rounded-full border-green-500 border-2 bg-transparent
-                  hover:bg-green-500 hover:text-white py-2 px-4 transition-all duration-200"
+                  hover:bg-green-500 hover:text-white py-3 px-4 transition-all duration-200"
                   style={{ minWidth: '18rem' }}
                   onClick={() => router.push('/signup')}
                 >

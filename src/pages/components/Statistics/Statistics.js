@@ -44,7 +44,7 @@ Statistics.propTypes = {
   totalExamples: PropTypes.number,
   totalAudioPronunciations: PropTypes.number,
   totalStandardIgboWords: PropTypes.number,
-  contributors: PropTypes.number,
+  contributors: PropTypes.arrayOf(PropTypes.shape({})),
   stars: PropTypes.number,
 };
 
@@ -53,7 +53,7 @@ Statistics.defaultProps = {
   totalExamples: 0,
   totalAudioPronunciations: 0,
   totalStandardIgboWords: 0,
-  contributors: 0,
+  contributors: [],
   stars: 0,
 };
 

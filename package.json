@@ -8,7 +8,7 @@
     "build:src": "./node_modules/.bin/babel -d build/ ./src -s",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "build:site": "next build && yarn build:fonts && yarn build:assets",
-    "build:fonts": "shx cp -r ./src/pages/fonts/ ./build/dist/fonts",
+    "build:fonts": "shx cp -r ./src/public/fonts/ ./build/dist/fonts",
     "build:assets": "shx cp -r ./src/pages/assets/ ./build/dist/assets",
     "clean": "shx rm -rf node_modules/ build/ out/ yarn.lock package-lock.json *.log",
     "dev": "npm-run-all -p start:database start:server",
