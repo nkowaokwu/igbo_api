@@ -6,8 +6,8 @@ import queryString from 'query-string';
 import Head from 'next/head';
 import App from 'next/app';
 import { API_ROUTE } from '../siteConstants';
-import './fonts.less';
-import './styles.less';
+import '../fonts.css';
+import '../styles.css';
 
 const MainApp = ({ Component, pageProps, searchWord, words }) => {
   return (

@@ -7,9 +7,13 @@ module.exports = {
     './src/**/*.js',
     './public/**/*.html',
   ],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['Inter', 'sans-serif'],
+    },
   },
-  variants: {},
   plugins: [],
 };

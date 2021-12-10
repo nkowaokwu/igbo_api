@@ -15,7 +15,7 @@ const Stat = ({ value, header, children }) => (
 Stat.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   header: PropTypes.string.isRequired,
-  children: PropTypes.shape({}),
+  children: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.arrayOf(PropTypes.shape({}))]),
 };
 
 Stat.defaultProps = {

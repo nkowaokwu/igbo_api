@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './general.less';
+@import './general.css';
 
 *::selection {
   @apply bg-green-400;
@@ -35,23 +35,20 @@
 }
 
 .primary-button {
-  @apply h-12;
-  @apply bg-gradient-to-r;
-  @apply from-green-400;
-  @apply to-green-500;
-  @apply text-lg;
+  @apply cursor-pointer;
+  @apply rounded-full;
+  @apply w-full;
+  @apply mt-6;
+  @apply bg-green-500;
   @apply text-white;
-  @apply rounded-md;
-  @apply font-thin;
+  @apply border-2;
+  @apply py-2;
+  @apply px-4;
+  @apply hover:bg-white;
+  @apply hover:text-black;
+  @apply border-green-500;
   @apply transition-all;
-  @apply duration-300;
-  @apply select-none;
-}
-
-.primary-button:hover {
-  @apply bg-gradient-to-r;
-  @apply from-green-500;
-  @apply to-green-600;
+  @apply duration-200;
 }
 
 .navbar {
@@ -91,7 +88,7 @@
   height: 500px;
   max-height: 600px;
   max-width: 95vw;
-  overflow: scroll;
+  overflow: overlay;
   font-size: 1em;
   color: rgb(153, 218, 255);
 }
@@ -120,7 +117,7 @@
     max-height: 600px;
     max-width: 600px !important;
     width: 600px !important;
-    overflow: scroll;
+    overflow: overlay;
     font-size: 1em;
   }
 }
@@ -160,4 +157,21 @@
 
 .rFix {
   transform: rotateX(25deg);
+}
+
+.mentioned-in svg {
+  @apply my-6;
+  @apply mx-4;
+  transition: all .1s ease;
+}
+
+.mentioned-in svg:hover {
+  filter: invert(44%) sepia(25%) saturate(728%) hue-rotate(89deg) brightness(94%) contrast(81%);
+}
+
+@media (min-width: 768px) {
+  .mentioned-in svg {
+    @apply my-0;
+    transition: all .1s ease;
+  }
 }

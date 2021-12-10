@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { Link } from 'react-scroll';
 
-const SubMenu = ({ isHomepage, transparent }) => {
+const SubMenu = ({ isVisible, isHomepage, transparent }) => {
   const router = useRouter();
   const navigate = (e, url) => {
     e.preventDefault();
@@ -11,7 +11,11 @@ const SubMenu = ({ isHomepage, transparent }) => {
   };
 
   return (
-    <nav className={`navbar ${transparent ? 'transparent-navbar' : ''} space-y-5 lg:space-y-0 lg:space-x-5`}>
+    <nav
+      className={`navbar ${transparent ? 'transparent-navbar' : ''} 
+      ${isVisible ? 'visible opacity-1' : 'hidden opacity-0'}
+      space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100`}
+    >
       {isHomepage ? (
         <>
           <li className="transition-element">
@@ -70,6 +74,7 @@ const SubMenu = ({ isHomepage, transparent }) => {
 };
 
 SubMenu.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
   isHomepage: PropTypes.bool,
   transparent: PropTypes.bool,
 };

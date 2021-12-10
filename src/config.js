@@ -74,7 +74,7 @@ export const API_ROUTE = process.env.NODE_ENV === 'production' ? '' : `http://lo
 // SendGrid API
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const NEW_DEVELOPER_ACCOUNT_TEMPLATE = process.env.NEW_DEVELOPER_ACCOUNT_TEMPLATE || '';
-export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'igboapi@gmail.com';
+export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'kedu@nkowaokwu.com';
 
 if (sgMail) {
   sgMail.setApiKey(SENDGRID_API_KEY);

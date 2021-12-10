@@ -81,8 +81,8 @@ const Demo = ({ searchWord, words }) => {
               data-test="try-it-out-input"
               defaultValue={searchWord}
             />
-            <div className="flex">
-              <div className="mr-8">
+            <div className="flex space-x-8">
+              <div>
                 <Checkbox
                   className="flex items-center space-x-2"
                   defaultChecked={initialQueries.dialects}
@@ -92,7 +92,7 @@ const Demo = ({ searchWord, words }) => {
                   Dialects
                 </Checkbox>
               </div>
-              <div className="ml-8">
+              <div>
                 <Checkbox
                   className="flex items-center space-x-2"
                   defaultChecked={initialQueries.examples}
@@ -104,7 +104,10 @@ const Demo = ({ searchWord, words }) => {
               </div>
             </div>
             <Input disabled value={constructRequestUrl()} className="w-full py-3 px-5" />
-            <button type="submit" className="primary-button w-full">
+            <button
+              type="submit"
+              className="primary-button w-full transition-all duration-100"
+            >
               Submit
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
@@ -118,7 +121,7 @@ const Demo = ({ searchWord, words }) => {
         <div className="flex flex-col w-full lg:w-auto -mt-32">
           <h3
             className="text-center lg:text-left self-center w-full
-          lg:w-auto lg:self-start text-2xl mb-5 mt-16 lg:mt-0 mt-4"
+          lg:w-auto lg:self-start text-2xl mb-5 mt-28 lg:mt-0 text-white lg:text-gray-800"
           >
             Response
           </h3>

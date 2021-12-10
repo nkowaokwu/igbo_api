@@ -8,7 +8,8 @@ import Demo from './components/Demo';
 import Card from './components/Card';
 import Footer from './components/Footer';
 import WorkersAroundHeart from './assets/workers-around-heart.svg';
-import Statistics from './components/Statistics/Statistics';
+import Statistics from './components/Statistics';
+import MentionedIn from './components/MentionedIn';
 import { GITHUB_REPO, DICTIONARY_APP_URL } from '../siteConstants';
 
 const App = ({ searchWord, words }) => {
@@ -54,7 +55,7 @@ const App = ({ searchWord, words }) => {
                 </button>
                 <button
                   type="button"
-                  className="mt-4 rounded-full border-green-500 border-2 bg-transparent
+                  className="mt-4 rounded-full border-green-500 border-2 bg-transparent py-3
                   hover:bg-green-500 hover:text-white py-2 px-4 transition-all duration-200"
                   style={{ minWidth: '18rem' }}
                   onClick={() => router.push('/signup')}
@@ -127,11 +128,17 @@ const App = ({ searchWord, words }) => {
         <Demo searchWord={searchWord} words={words} />
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
           <h2 id="try-it-out" className="text-4xl text-green-500">
+            Mentioned In
+          </h2>
+        </div>
+        <MentionedIn />
+        <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
+          <h2 id="try-it-out" className="text-4xl text-green-500">
             Community Growth
           </h2>
         </div>
         <div className="text-xl md:text-1xl w-full lg:ml-20 mb-4 mt-8 leading-10">
-          <p className="px-6 lg:px-0">
+          <p className="px-6 lg:px-0 lg:pb-12">
             {'Want to see how this data is getting used? Take a look at the '}
             <a className="link" href={DICTIONARY_APP_URL}>
               Nkọwa okwu

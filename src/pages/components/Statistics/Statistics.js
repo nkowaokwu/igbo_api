@@ -28,7 +28,7 @@ const Statistics = () => {
           <Stat value={contributorDetails.length} header="GitHub Contributors">
             <div className="flex flex-row flex-wrap justify-center items-center">
               {contributorDetails.slice(0, 10).map((contributor) => (
-                <div>
+                <div key={contributor.avatar_url}>
                   <img
                     src={contributor.avatar_url}
                     className=" text-gray-700 bg-gray-400  w-12  m-2 rounded-full"
