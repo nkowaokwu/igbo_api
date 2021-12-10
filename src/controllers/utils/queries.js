@@ -21,3 +21,11 @@ export const strictSearchIgboQuery = (word) => ({
   word: createRegExp(word, true),
 });
 export const searchEnglishRegexQuery = definitionsQuery;
+
+export const searchForAllWordsWithAudioPronunciations = () => ({
+  pronunciation: { $exists: true },
+  $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
+});
+export const searchForAllWordsWithIsStandardIgbo = () => ({
+  isStandardIgbo: true,
+});

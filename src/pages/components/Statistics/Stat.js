@@ -1,12 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Stat = ({ value, header, children }) => (
+const numberWithCommas = (x) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+const Stat = ({
+  value,
+  header,
+  exact,
+  children,
+}) => (
   <div
     className="flex flex-col justify-center items-center h-auto
     text-gray-700 text-center custom-border bg-gray-400 px-4 py-4 m-8"
   >
-    <h1 className="text-6xl">{`${value}+`}</h1>
+    <h1 className="text-6xl">{`${numberWithCommas(value)}${exact ? '' : '+'}`}</h1>
     <p>{header}</p>
     {children}
   </div>
@@ -15,11 +22,13 @@ const Stat = ({ value, header, children }) => (
 Stat.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   header: PropTypes.string.isRequired,
+  exact: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.arrayOf(PropTypes.shape({}))]),
 };
 
 Stat.defaultProps = {
   children: [],
+  exact: true,
 };
 
 export default Stat;

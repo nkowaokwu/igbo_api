@@ -12,7 +12,12 @@ import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
 import { GITHUB_REPO, DICTIONARY_APP_URL } from '../siteConstants';
 
-const App = ({ searchWord, words }) => {
+const App = ({
+  searchWord,
+  words,
+  databaseStats,
+  gitHubStats,
+}) => {
   const router = useRouter();
   return (
     <div className="overflow-x-hidden" id="homepage-container">
@@ -55,7 +60,7 @@ const App = ({ searchWord, words }) => {
                 </button>
                 <button
                   type="button"
-                  className="mt-4 rounded-full border-green-500 border-2 bg-transparent py-3
+                  className="mt-4 rounded-full border-green-500 border-2 bg-transparent
                   hover:bg-green-500 hover:text-white py-2 px-4 transition-all duration-200"
                   style={{ minWidth: '18rem' }}
                   onClick={() => router.push('/signup')}
@@ -147,7 +152,7 @@ const App = ({ searchWord, words }) => {
             dictionary.
           </p>
         </div>
-        <Statistics />
+        <Statistics {...databaseStats} {...gitHubStats} />
         <Footer />
       </div>
     </div>
@@ -157,11 +162,15 @@ const App = ({ searchWord, words }) => {
 App.propTypes = {
   searchWord: PropTypes.string,
   words: PropTypes.arrayOf(PropTypes.shape({})),
+  databaseStats: PropTypes.shape({}),
+  gitHubStats: PropTypes.shape({}),
 };
 
 App.defaultProps = {
   searchWord: '',
   words: [],
+  databaseStats: {},
+  gitHubStats: {},
 };
 
 export default App;
