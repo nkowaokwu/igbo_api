@@ -15,9 +15,9 @@ export const getServerSideProps = async (context) => {
           'X-API-Key': process.env.MAIN_KEY || 'main_key',
         },
       });
-      return { props: { searchWord, words: words || [] } };
+      return { props: { searchWord: '', words: words || [] } };
     }
-    return { props: { searchWord, words: [] } };
+    return { props: { searchWord: '', words: [] } };
   } catch (err) {
     console.log(err);
     return {

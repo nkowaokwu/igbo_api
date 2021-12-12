@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 describe('Igbo API Homepage', () => {
   before(() => {
     cy.visit('/');
@@ -25,7 +27,7 @@ describe('Igbo API Homepage', () => {
         cy.findByTestId('try-it-out-input').clear().type('biko');
         cy.findByTestId('dialects-flag').click();
         cy.get('button').contains('Submit').click();
-        cy.get('input[value="http://localhost:8080/api/v1/words?keyword=biko"]');
+        cy.get('input[value="http://localhost:8080/api/v1/words?keyword=biko&dialects=true"]');
       });
     });
 
@@ -39,9 +41,10 @@ describe('Igbo API Homepage', () => {
       });
 
       it('fill out the sign up form and submit for developer account', () => {
+        const email = `${uuid()}@testing.com`;
         cy.intercept('POST', '**developers').as('postDeveloper');
         cy.findByTestId('signup-name-input').clear().type('Developer');
-        cy.findByTestId('signup-email-input').clear().type('developer@test.com');
+        cy.findByTestId('signup-email-input').clear().type(email);
         cy.findByTestId('signup-password-input').clear().type('password');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
@@ -51,9 +54,16 @@ describe('Igbo API Homepage', () => {
       });
 
       it('fill out the sign up form and submit for developer account and get an error', () => {
+        const email = `${uuid()}@testing.com`;
         cy.intercept('POST', '**developers').as('postDeveloper');
         cy.findByTestId('signup-name-input').clear().type('Developer');
-        cy.findByTestId('signup-email-input').clear().type('developer@example.com');
+        cy.findByTestId('signup-email-input').clear().type(email);
+        cy.findByTestId('signup-password-input').clear().type('password');
+        cy.findByText('Create account').click();
+        cy.wait('@postDeveloper');
+        cy.reload();
+        cy.findByTestId('signup-name-input').clear().type('Developer');
+        cy.findByTestId('signup-email-input').clear().type(email);
         cy.findByTestId('signup-password-input').clear().type('password');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
