@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import FadeIn from 'react-fade-in';
 import FadeReveal from 'react-reveal/Reveal';
+import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
@@ -70,17 +71,12 @@ const App = ({
               </div>
             </FadeIn>
           </div>
-          <WorkersAroundHeart
-            className="absolute r-0 invisible xl:visible"
-            style={{
-              position: 'absolute',
-              right: '6rem',
-              zIndex: -1,
-            }}
-          />
+          <span className="workers-image absolute r-0 invisible xl:visible">
+            <Image {...WorkersAroundHeart} />
+          </span>
         </div>
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="features" className="text-green-500 text-4xl">
+          <h2 id="features" className="text-4xl text-green-500 font-bold">
             Features
           </h2>
         </div>
@@ -121,7 +117,7 @@ const App = ({
           </div>
         </div>
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             Try it Out
           </h2>
         </div>
@@ -132,13 +128,13 @@ const App = ({
         </div>
         <Demo searchWord={searchWord} words={words} />
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             Mentioned In
           </h2>
         </div>
         <MentionedIn />
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             Community Growth
           </h2>
         </div>

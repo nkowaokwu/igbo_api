@@ -59,8 +59,7 @@ app.use('/assets', express.static('./build/dist/assets'));
 app.use('/fonts', express.static('./build/dist/fonts'));
 app.use('/services', express.static('./services'));
 
-/* Renders the API Site */
-app.use(siteRouter);
+/* Sets up the doc site */
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS, SWAGGER_OPTIONS));
 
 /* Grabs data from MongoDB */
@@ -74,10 +73,10 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-/* Catches all invalid routes and displays the 404 page */
-app.get('**', (_, res) => (
-  res.redirect('/')
-));
+/* Renders the API Site */
+app.use(siteRouter);
+
+/* Handles all uncaught errors */
 app.use(errorHandler);
 
 const server = app.listen(PORT, () => {

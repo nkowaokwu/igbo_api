@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import Stat from './Stat';
 
 const Statistics = ({
@@ -23,7 +24,7 @@ const Statistics = ({
           <div className="flex flex-row flex-wrap justify-center items-center">
             {contributors.slice(0, 10).map((contributor) => (
               <div key={contributor.avatar_url}>
-                <img
+                <Image
                   src={contributor.avatar_url}
                   className=" text-gray-700 bg-gray-400  w-12  m-2 rounded-full"
                   alt="github avatar"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import SubMenu from './SubMenu';
@@ -18,7 +19,7 @@ const Navbar = ({ to, isHomepage, transparent }) => {
       <h1 className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900 ml-5 lg:ml-0">
         {to ? (
           <a href={to}>
-            <IgboAPI />
+            <Image {...IgboAPI} alt="Igbo API logo" />
           </a>
         ) : (
           <Link
@@ -38,7 +39,7 @@ const Navbar = ({ to, isHomepage, transparent }) => {
           className={`transition-element mr-5 lg:mr-0 ${isMenuVisible ? 'transform rotate-90' : ''}`}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <MenuIcon alt="down arrow as menu icon" />
+          <Image {...MenuIcon} alt="down arrow as menu icon" />
         </button>
       ) : null}
       <SubMenu

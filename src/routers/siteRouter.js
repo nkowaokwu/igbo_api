@@ -4,6 +4,7 @@ import { compact } from 'lodash';
 import { parse } from 'url';
 
 const nextApp = nextjs({});
+const handle = nextApp.getRequestHandler();
 
 const routes = compact([
   /^\/$/,
@@ -21,7 +22,7 @@ siteRouter.use((req, res, next) => {
     if (routes.find((route) => pathname.match(route))) {
       return nextApp.render(req, res, pathname, query);
     }
-    return next();
+    return handle(req, res, parsedUrl);
   } catch (err) {
     return next(err);
   }

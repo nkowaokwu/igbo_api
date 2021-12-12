@@ -19,10 +19,6 @@ h2, h3, a, button {
   font-weight: 700;
 }
 
-h1, h2, h3, button, input {
-  @apply select-none;
-}
-
 input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]), textarea {
   @apply transition-all;
   @apply duration-100;

@@ -22,7 +22,7 @@ const Demo = ({ searchWord, words }) => {
         window.location.hash = 'try-it-out';
       }
     }
-  }, []);
+  }, [keyword]);
 
   const constructQueryString = () => {
     const queriesString = queryString.stringify(queries);
@@ -120,7 +120,7 @@ const Demo = ({ searchWord, words }) => {
         </div>
         <div className="flex flex-col w-full lg:w-auto -mt-32">
           <h3
-            className="text-center lg:text-left self-center w-full
+            className="text-center lg:text-left self-center w-full font-bold
           lg:w-auto lg:self-start text-2xl mb-5 mt-28 lg:mt-0 text-white lg:text-gray-800"
           >
             Response

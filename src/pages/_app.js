@@ -29,8 +29,8 @@ const getGitHubContributors = async () => {
       ...(gitHubAuthorization ? { 'Authorization': `token ${gitHubAuthorization}` } : {}),
     }
   })
-  .catch(() => ({ data: 0 }));
-  return res.data || 0;
+  .catch(() => ({ data: [] }));
+  return res.data || [];
 }
 
 const getGitHubStars = async () => {
@@ -59,43 +59,20 @@ const getDatabaseStats = async (apiKey) => {
   return res.data || {};
 };
 
-const getWordsData = async ({ appContext, apiKey }) => {
-  const { pathname, query } = appContext.router;
-  const searchWord = query.word;
-  const queries = omit(query, ['word']);
-  const queriesString = queryString.stringify(queries);
-  const appendQueries = queriesString ? `&${queriesString}` : '';
-  if (pathname === '/' && searchWord) {
-    const res = await axios({
-      method: 'get',
-      url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${appendQueries}`,
-      headers: {
-        'X-API-Key': apiKey,
-      }
-    })
-    .catch(() => ({}));
-    return { ...appProps, searchWord, words: res.data };
-  }
-  return {};
-}
-
 MainApp.getInitialProps = async (appContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(appContext);
-  const { query } = appContext.router;
-  const searchWord = query.word;
   const apiKey = process.env.MAIN_KEY || 'main_key';
 
   try {
-    const wordsData = await getWordsData({ appContext, apiKey });
     const databaseStats = await getDatabaseStats(apiKey);
     const gitHubStats = {
       contributors: await getGitHubContributors(),
       stars: await getGitHubStars(),
     }
-    return { ...appProps, ...wordsData, databaseStats, gitHubStats };
+    return { ...appProps, databaseStats, gitHubStats };
   } catch (err) {
-    return { ...appProps, searchWord, words: [], databaseStats: {}, gitHubStats: {} };
+    return { ...appProps, databaseStats: {}, gitHubStats: {} };
   }
 };
 

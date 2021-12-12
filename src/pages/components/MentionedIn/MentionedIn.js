@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import NigerianTribune from '../../../public/icons/nigerianTribune.svg';
 import UmuIgboUnite from '../../../public/icons/umuIgboUnite.svg';
 import BuiltInAfrica from '../../../public/icons/builtInAfrica.svg';
@@ -29,19 +30,19 @@ const MentionedIn = () => (
     flex-wrap items-center justify-evenly`}
     >
       <a href={NIGERIAN_TRIBUNE} target="_blank" rel="noreferrer">
-        <NigerianTribune alt="Nigerian Tribune logo" />
+        <Image {...NigerianTribune} alt="Nigerian Tribune logo" />
       </a>
       <a href={UIU} target="_blank" rel="noreferrer">
-        <UmuIgboUnite alt="Umu Igbo Unite logo" />
+        <Image {...UmuIgboUnite} alt="Umu Igbo Unite logo" />
       </a>
       <a href={BUILT_IN_AFRICA} target="_blank" rel="noreferrer">
-        <BuiltInAfrica alt="Built in Africa logo" />
+        <Image {...BuiltInAfrica} alt="Built in Africa logo" />
       </a>
       <a href={NUESROOM} target="_blank" rel="noreferrer">
-        <Nuesroom alt="Nuesroom logo" />
+        <Image {...Nuesroom} alt="Nuesroom logo" />
       </a>
       <a href={WEDEYCODE} target="_blank" rel="noreferrer">
-        <WeDeyCode alt="WeDeyCode logo" />
+        <Image {...WeDeyCode} alt="WeDeyCode logo" />
       </a>
     </div>
   </div>

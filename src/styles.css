@@ -159,18 +159,24 @@
   transform: rotateX(25deg);
 }
 
-.mentioned-in svg {
+.workers-image {
+  @apply absolute;
+  right: 6rem;
+  z-index: -1;
+}
+
+.mentioned-in img {
   @apply my-6;
   @apply mx-4;
   transition: all .1s ease;
 }
 
-.mentioned-in svg:hover {
+.mentioned-in img:hover {
   filter: invert(44%) sepia(25%) saturate(728%) hue-rotate(89deg) brightness(94%) contrast(81%);
 }
 
 @media (min-width: 768px) {
-  .mentioned-in svg {
+  .mentioned-in img {
     @apply my-0;
     transition: all .1s ease;
   }
