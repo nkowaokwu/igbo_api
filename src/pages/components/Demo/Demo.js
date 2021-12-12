@@ -22,7 +22,7 @@ const Demo = ({ searchWord, words }) => {
         window.location.hash = 'try-it-out';
       }
     }
-  }, [keyword]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const constructQueryString = () => {
     const queriesString = queryString.stringify(queries);
@@ -42,8 +42,8 @@ const Demo = ({ searchWord, words }) => {
   };
 
   const constructRequestUrl = () => {
-    const appendQueries = constructQueryString();
-    return `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword}${appendQueries}`;
+    const appendQueries = constructQueryString() || `&${queryString.stringify(omit(initialQueries, ['word']))}`;
+    return `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || initialQueries.word}${appendQueries}`;
   };
 
   const handleDialects = ({ target }) => {
@@ -79,7 +79,7 @@ const Demo = ({ searchWord, words }) => {
               className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
               placeholder="i.e. please or biko"
               data-test="try-it-out-input"
-              defaultValue={searchWord}
+              defaultValue={searchWord || initialQueries.word}
             />
             <div className="flex space-x-8">
               <div>

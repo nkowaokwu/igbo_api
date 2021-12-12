@@ -27,7 +27,7 @@ const MentionedIn = () => (
   <div className="mentioned-in w-full flex justify-center items-center lg:py-24">
     <div
       className={`w-full lg:w-10/12 flex flex-col md:flex-row 
-    flex-wrap items-center justify-evenly`}
+    flex-wrap items-center justify-evenly space-y-12 my-8 md:space-y-0 md:my-0`}
     >
       <a href={NIGERIAN_TRIBUNE} target="_blank" rel="noreferrer">
         <Image {...NigerianTribune} alt="Nigerian Tribune logo" />

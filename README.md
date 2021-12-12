@@ -248,7 +248,24 @@ Now that the data is living in a local database, you can see it either using the
 
 ## Testing
 
-Tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same time, run:
+### Frontend
+
+Frontend tests focus specifically on the Igbo API homepage using Cypress. First, run:
+
+
+```
+yarn build
+```
+
+To watch frontend tests, run:
+
+```
+yarn cypress
+```
+
+### Backend
+
+Backend tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same time, run:
 
 ```
 yarn test
