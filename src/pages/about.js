@@ -39,8 +39,8 @@ const About = () => (
         <h1 className="text-3xl">Contact</h1>
         <p>
           {'Email: '}
-          <a className="link" href="mailto:igboapi@gmail.com">
-            igboapi@gmail.com
+          <a className="link" href="mailto:kedu@nkowaokwu.com">
+            kedu@nkowaokwu.com
           </a>
         </p>
       </div>

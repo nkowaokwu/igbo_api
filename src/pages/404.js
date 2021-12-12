@@ -1,3 +1,5 @@
 import React from 'react';
 
-export default () => <div>whoops</div>;
+const Error = () => <div>whoops</div>;
+
+export default Error;

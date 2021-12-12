@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Card = ({ title, description, icon }) => (
   <div
     className={`card-container  card-custom-border flex flex-col justify-center 
-    shadow-xl rounded-lg py-3 px-5 my-10 select-none`}
+    shadow-xl rounded-lg py-3 px-5 my-10`}
   >
     <span className="rounded-full h-16 w-16 bg-white my-4 justify-center text-center">
       <i className={icon} />

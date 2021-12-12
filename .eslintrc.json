@@ -5,6 +5,7 @@
     "mocha": true
   },
   "extends": [
+    "next",
     "airbnb",
     "plugin:cypress/recommended"
   ],

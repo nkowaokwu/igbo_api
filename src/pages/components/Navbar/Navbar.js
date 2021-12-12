@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import SubMenu from './SubMenu';
 import IgboAPI from '../../assets/igboAPI.svg';
-import downchevron from '../../assets/downchevron.svg';
-
-const menuIcon = process.env.NODE_ENV !== 'production' ? downchevron : '/assets/downchevron.svg';
+import MenuIcon from '../../assets/downchevron.svg';
 
 const Navbar = ({ to, isHomepage, transparent }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -20,7 +19,7 @@ const Navbar = ({ to, isHomepage, transparent }) => {
       <h1 className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900 ml-5 lg:ml-0">
         {to ? (
           <a href={to}>
-            <IgboAPI />
+            <Image {...IgboAPI} alt="Igbo API logo" />
           </a>
         ) : (
           <Link
@@ -40,14 +39,14 @@ const Navbar = ({ to, isHomepage, transparent }) => {
           className={`transition-element mr-5 lg:mr-0 ${isMenuVisible ? 'transform rotate-90' : ''}`}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <img src={menuIcon} alt="down arrow as menu icon" />
+          <Image {...MenuIcon} alt="down arrow as menu icon" />
         </button>
       ) : null}
-      {matchesLargeScreenQuery ? (
-        <SubMenu isHomepage={isHomepage} transparent={transparent} />
-      ) : isMenuVisible ? (
-        <SubMenu isHomepage={isHomepage} transparent={transparent} />
-      ) : null}
+      <SubMenu
+        isVisible={matchesLargeScreenQuery || isMenuVisible}
+        isHomepage={isHomepage}
+        transparent={transparent}
+      />
     </div>
   );
 };

@@ -12,13 +12,14 @@ export const getServerSideProps = async (context) => {
         method: 'get',
         url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}`,
         headers: {
-          ...(process.env.MAIN_KEY ? { 'X-API-Key': process.env.MAIN_KEY } : {}),
+          'X-API-Key': process.env.MAIN_KEY || 'main_key',
         },
       });
-      return { props: { searchWord, words } };
+      return { props: { searchWord, words: words || [] } };
     }
-    return { props: {} };
-  } catch {
+    return { props: { searchWord, words: [] } };
+  } catch (err) {
+    console.log(err);
     return {
       props: {
         searchWord: '',
@@ -28,4 +29,6 @@ export const getServerSideProps = async (context) => {
   }
 };
 
-export default (props) => <App {...props} />;
+const IgboAPIApp = (props) => <App {...props} />;
+
+export default IgboAPIApp;

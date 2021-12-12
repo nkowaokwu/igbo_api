@@ -1,7 +1,7 @@
 /* Style sheet dedicated to element tag styling */
 html {
   width: 100vw;
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: normal;
 }
 
@@ -17,10 +17,6 @@ h1 {
 h2, h3, a, button {
   font-family: 'Silka', sans-serif;
   font-weight: 700;
-}
-
-h1, h2, h3, button, input {
-  @apply select-none;
 }
 
 input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]), textarea {

@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import FadeIn from 'react-fade-in';
 import FadeReveal from 'react-reveal/Reveal';
+import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
 import Card from './components/Card';
 import Footer from './components/Footer';
 import WorkersAroundHeart from './assets/workers-around-heart.svg';
-import Statistics from './components/Statistics/Statistics';
+import Statistics from './components/Statistics';
+import MentionedIn from './components/MentionedIn';
 import { GITHUB_REPO, DICTIONARY_APP_URL } from '../siteConstants';
 
-const App = ({ searchWord, words }) => {
+const App = ({
+  searchWord,
+  words,
+  databaseStats,
+  gitHubStats,
+}) => {
   const router = useRouter();
   return (
     <div className="overflow-x-hidden" id="homepage-container">
@@ -55,7 +62,7 @@ const App = ({ searchWord, words }) => {
                 <button
                   type="button"
                   className="mt-4 rounded-full border-green-500 border-2 bg-transparent
-                  hover:bg-green-500 hover:text-white py-2 px-4 transition-all duration-200"
+                  hover:bg-green-500 hover:text-white py-3 px-4 transition-all duration-200"
                   style={{ minWidth: '18rem' }}
                   onClick={() => router.push('/signup')}
                 >
@@ -64,17 +71,12 @@ const App = ({ searchWord, words }) => {
               </div>
             </FadeIn>
           </div>
-          <WorkersAroundHeart
-            className="absolute r-0 invisible xl:visible"
-            style={{
-              position: 'absolute',
-              right: '6rem',
-              zIndex: -1,
-            }}
-          />
+          <span className="workers-image absolute r-0 invisible xl:visible">
+            <Image {...WorkersAroundHeart} />
+          </span>
         </div>
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="features" className="text-green-500 text-4xl">
+          <h2 id="features" className="text-4xl text-green-500 font-bold">
             Features
           </h2>
         </div>
@@ -115,7 +117,7 @@ const App = ({ searchWord, words }) => {
           </div>
         </div>
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             Try it Out
           </h2>
         </div>
@@ -126,12 +128,18 @@ const App = ({ searchWord, words }) => {
         </div>
         <Demo searchWord={searchWord} words={words} />
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
+            Mentioned In
+          </h2>
+        </div>
+        <MentionedIn />
+        <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
+          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             Community Growth
           </h2>
         </div>
         <div className="text-xl md:text-1xl w-full lg:ml-20 mb-4 mt-8 leading-10">
-          <p className="px-6 lg:px-0">
+          <p className="px-6 lg:px-0 lg:pb-12">
             {'Want to see how this data is getting used? Take a look at the '}
             <a className="link" href={DICTIONARY_APP_URL}>
               Nkọwa okwu
@@ -140,7 +148,7 @@ const App = ({ searchWord, words }) => {
             dictionary.
           </p>
         </div>
-        <Statistics />
+        <Statistics {...databaseStats} {...gitHubStats} />
         <Footer />
       </div>
     </div>
@@ -150,11 +158,15 @@ const App = ({ searchWord, words }) => {
 App.propTypes = {
   searchWord: PropTypes.string,
   words: PropTypes.arrayOf(PropTypes.shape({})),
+  databaseStats: PropTypes.shape({}),
+  gitHubStats: PropTypes.shape({}),
 };
 
 App.defaultProps = {
   searchWord: '',
   words: [],
+  databaseStats: {},
+  gitHubStats: {},
 };
 
 export default App;

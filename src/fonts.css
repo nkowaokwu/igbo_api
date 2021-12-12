@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Silka';
+  src: url('./public/fonts/silka-regular-webfont.eot');
+  src: url('./public/fonts/silka-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./public/fonts/silka-regular-webfont.woff2') format('woff2'),
+       url('./public/fonts/silka-regular-webfont.woff') format('woff'),
+       url('./public/fonts/silka-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+
+}
+
+@font-face {
+  font-family: 'Silka';
+  src: url('./public/fonts/silka-bold-webfont.eot');
+  src: url('./public/fonts/silka-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./public/fonts/silka-bold-webfont.woff2') format('woff2'),
+       url('./public/fonts/silka-bold-webfont.woff') format('woff'),
+       url('./public/fonts/silka-bold-webfont.ttf') format('truetype');
+  font-weight: 700;
+
+}
+
+@font-face {
+  font-family: 'Silka';
+  src: url('./public/fonts/silka-black-webfont.eot');
+  src: url('./public/fonts/silka-black-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./public/fonts/silka-black-webfont.woff2') format('woff2'),
+       url('./public/fonts/silka-black-webfont.woff') format('woff'),
+       url('./public/fonts/silka-black-webfont.ttf') format('truetype');
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('./public/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf');
+}

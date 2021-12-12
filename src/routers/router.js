@@ -3,9 +3,11 @@ import rateLimit from 'express-rate-limit';
 import { getWords, getWord, getWordsFilteredByWordClass } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
+import { getStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
 import validateApiKey from '../middleware/validateApiKey';
+import validateAdminApiKey from '../middleware/validateAdminApiKey';
 
 const router = express.Router();
 
@@ -23,5 +25,7 @@ router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
+
+router.get('/stats', validateAdminApiKey, getStats);
 
 export default router;
