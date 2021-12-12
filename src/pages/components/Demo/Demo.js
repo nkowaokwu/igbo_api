@@ -8,17 +8,20 @@ import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 
 const Demo = ({ searchWord, words }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [keyword, setKeyword] = useState(searchWord);
+  const [keyword, setKeyword] = useState(searchWord || '');
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState({});
   const [productionUrl, setProductionUrl] = useState('');
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const loadedInitialQueries = queryString.parse(window.location.search);
       setProductionUrl(window.origin);
-      setInitialQueries(queryString.parse(window.location.search));
+      setInitialQueries(loadedInitialQueries);
       setIsLoading(false);
-      if (keyword) {
+      setQueries(omit(loadedInitialQueries, ['word']));
+      setKeyword(loadedInitialQueries.word);
+      if (keyword || loadedInitialQueries.word) {
         window.location.hash = 'try-it-out';
       }
     }
@@ -29,7 +32,7 @@ const Demo = ({ searchWord, words }) => {
     return queriesString ? `&${queriesString}` : '';
   };
 
-  const onSubmit = (e = {}) => {
+  const onSubmit = (e = { preventDefault: () => {} }) => {
     e.preventDefault();
     const appendQueries = constructQueryString();
     window.location.href = `/?word=${keyword}${appendQueries}`;
@@ -42,8 +45,11 @@ const Demo = ({ searchWord, words }) => {
   };
 
   const constructRequestUrl = () => {
-    const appendQueries = constructQueryString() || `&${queryString.stringify(omit(initialQueries, ['word']))}`;
-    return `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || initialQueries.word}${appendQueries}`;
+    const appendQueries = constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
+    const requestUrl = `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword}`
+    + `${keyword && appendQueries ? '&' : ''}`
+    + `${appendQueries.replace('&', '')}`;
+    return requestUrl;
   };
 
   const handleDialects = ({ target }) => {
