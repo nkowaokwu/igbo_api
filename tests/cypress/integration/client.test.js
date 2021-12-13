@@ -91,5 +91,10 @@ describe('Igbo API Homepage', () => {
       cy.get('button').contains('Get an API Key').click();
       cy.findByText('Sign up.');
     });
+
+    it('navigate to Nkọwa okwu', () => {
+      cy.visit('/');
+      cy.get('.demo-inputs-container').contains('Nkọwa okwu').click();
+    });
   });
 });

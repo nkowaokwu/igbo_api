@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:8080",
   "video": false,
+  "chromeWebSecurity": false,
   "execTimeout": 5000,
   "retries": {
     "runMode": 2
