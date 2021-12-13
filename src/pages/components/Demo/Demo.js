@@ -124,10 +124,10 @@ const Demo = ({ searchWord, words }) => {
             </p>
           </form>
         </div>
-        <div className="flex flex-col w-full lg:w-auto -mt-32">
+        <div className="flex flex-col w-full lg:w-auto lg:-mt-24">
           <h3
-            className="text-center lg:text-left self-center w-full font-bold
-          lg:w-auto lg:self-start text-2xl mb-5 mt-28 lg:mt-0 text-white lg:text-gray-800"
+            className="text-center lg:text-left self-center w-full font-bold lg:mt-4
+          lg:w-auto lg:self-start text-2xl mb-5text-white lg:text-gray-800"
           >
             Response
           </h3>
