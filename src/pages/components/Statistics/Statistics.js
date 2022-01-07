@@ -10,14 +10,15 @@ const Statistics = ({
   contributors,
   stars,
 }) => (
-  <div>
-    <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center bg-gray-200 py-6">
+  <div className="w-full flex flex-col justify-center items-center bg-gray-200 space-y-6">
+    <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
       <Stat value={totalWords} header="Words in the database" />
       <Stat value={totalExamples} header="Example Igbo sentences" />
       <Stat value={totalAudioPronunciations} header="Word audio pronunciations" />
       <Stat value={totalStandardIgboWords} header="Standard Igbo words" />
+      <Stat value={10} header="Words with Nsịbịdị" />
     </div>
-    <div className="flex flex-col lg:flex-row flex-wrap justify-center items-center bg-gray-200 py-6">
+    <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
       {contributors ? (
         <Stat value={contributors.length} header="GitHub Contributors">
           <div className="flex flex-row flex-wrap justify-center items-center">
@@ -33,7 +34,7 @@ const Statistics = ({
           </div>
         </Stat>
       ) : null}
-      <Stat value="80" header="Members in Slack" exact={false} />
+      <Stat value="95" header="Members in Slack" exact={false} />
       <Stat value={stars} header="GitHub stars" />
     </div>
   </div>

@@ -11,7 +11,7 @@ import Footer from './components/Footer';
 import WorkersAroundHeart from './assets/workers-around-heart.svg';
 import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
-import { GITHUB_REPO, DICTIONARY_APP_URL } from '../siteConstants';
+import { GITHUB_REPO } from '../siteConstants';
 
 const App = ({
   searchWord,
@@ -135,17 +135,13 @@ const App = ({
         <MentionedIn />
         <div className="lg:w-7/12 lg:ml-20 w-full text-center lg:text-left my-6">
           <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
-            Community Growth
+            Database Stats
           </h2>
         </div>
         <div className="text-xl md:text-1xl w-full lg:ml-20 mb-4 mt-8 leading-10">
           <p className="px-6 lg:px-0 lg:pb-12">
-            {'Want to see how this data is getting used? Take a look at the '}
-            <a className="link" href={DICTIONARY_APP_URL}>
-              Nkọwa okwu
-            </a>
-            , our official online Igbo
-            dictionary.
+            The Igbo API is the most robust, Igbo-English dictionary API that is maintained
+            by our wonderful volunteer community.
           </p>
         </div>
         <Statistics {...databaseStats} {...gitHubStats} />
