@@ -14,6 +14,7 @@ const SubMenu = ({ isVisible, isHomepage, transparent }) => {
     <nav
       className={`navbar ${transparent ? 'transparent-navbar' : ''} 
       ${isVisible ? 'visible opacity-1' : 'hidden opacity-0'}
+      ${isVisible ? '' : 'pointer-events-none'}
       space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100`}
     >
       {isHomepage ? (
@@ -59,7 +60,7 @@ const SubMenu = ({ isVisible, isHomepage, transparent }) => {
         <Link
           activeClass="nav-item-active"
           className="cursor-pointer rounded-full bg-green-500 text-white border-2
-          py-2 px-4 mr-8 hover:bg-transparent hover:text-black border-green-500"
+          py-2 px-4 mr-8 hover:bg-transparent hover:text-black border-green-500 transition-all duration-200"
           to="try-it-out"
           spy
           smooth

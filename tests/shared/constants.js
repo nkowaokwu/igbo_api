@@ -19,6 +19,7 @@ export const WORD_KEYS = [
   'antonyms',
   'hypernyms',
   'hyponyms',
+  'nsibidi',
   'isStandardIgbo',
   'updatedOn',
 ];

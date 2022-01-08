@@ -151,8 +151,7 @@
   border-radius: 30px 0px 30px 30px;
   @apply bg-gray-400;
   min-height: 14rem;
-  min-width: 16rem;
-  max-width: 24rem;
+  width: 16rem;
 }
 
 .rFix {
