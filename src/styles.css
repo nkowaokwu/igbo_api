@@ -9,6 +9,8 @@
 }
 
 .transition-element {
+  @apply flex;
+  @apply items-center;
   @apply transition-all;
   @apply duration-200;
   @apply ease-in-out;
@@ -142,7 +144,7 @@
 
 .card-custom-border {
   @apply w-64;
-  @apply h-64;
+  @apply h-72;
   @apply bg-gray-200;
   border-radius: 50px 0px;
 }

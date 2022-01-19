@@ -1,15 +1,17 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { API_FROM_EMAIL } from '../../../siteConstants';
 
 const Footer = () => {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <div className="w-full">
       <div className="flex flex-row items-center justify-center bg-gray-800 text-white h-56">
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-2xl text-center items-center p-5">
-            Interested in what you see? Register for an API Key!
+            {t('Interested in what you see? Register for an API Key!')}
           </h1>
           <button
             type="button"
@@ -17,7 +19,7 @@ const Footer = () => {
             hover:text-white hover:border-green-500 transition-all duration-200"
             onClick={() => router.push('/signup')}
           >
-            Get an API Key
+            {t('Get an API Key')}
           </button>
         </div>
       </div>
@@ -48,7 +50,8 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-black">
-              {'Copyright © '}
+              {t('Copyright')}
+              {' © '}
               <span className="m-1">{new Date().getFullYear()}</span>
               Igbo API
             </p>

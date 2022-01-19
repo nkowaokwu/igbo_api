@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { omit } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { Input, Checkbox } from 'antd';
@@ -12,6 +13,7 @@ const Demo = ({ searchWord, words }) => {
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState({});
   const [productionUrl, setProductionUrl] = useState('');
+  const { t } = useTranslation();
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -73,11 +75,11 @@ const Demo = ({ searchWord, words }) => {
       <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10 p-4 bg-gray-500 rounded-md">
         <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-8">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
-            <h2>Enter a word below</h2>
+            <h2>{t('Enter a word below')}</h2>
             <p className="self-center md:self-start">
-              {'Enter a word in either English or Igbo to see it\'s information'}
+              {t('Enter a word in either English or Igbo to see it\'s information')}
             </p>
-            <h2 className="text-2xl">Flags</h2>
+            <h2 className="text-2xl">{t('Flags')}</h2>
             <Input
               size="large"
               onInput={(e) => setKeyword(e.target.value)}
@@ -95,7 +97,7 @@ const Demo = ({ searchWord, words }) => {
                   onChange={handleDialects}
                   data-test="dialects-flag"
                 >
-                  Dialects
+                  {t('Dialects')}
                 </Checkbox>
               </div>
               <div>
@@ -105,7 +107,7 @@ const Demo = ({ searchWord, words }) => {
                   onChange={handleExamples}
                   data-test="examples-flag"
                 >
-                  Examples
+                  {t('Examples')}
                 </Checkbox>
               </div>
             </div>
@@ -114,10 +116,10 @@ const Demo = ({ searchWord, words }) => {
               type="submit"
               className="primary-button w-full transition-all duration-100"
             >
-              Submit
+              {t('Submit')}
             </button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
-              {'Want to see how this data is getting used? Take a look at '}
+              {t('Want to see how this data is getting used? Take a look at ')}
               <a className="link" href={DICTIONARY_APP_URL}>
                 Nkọwa okwu
               </a>
@@ -129,7 +131,7 @@ const Demo = ({ searchWord, words }) => {
             className="text-center lg:text-left self-center w-full font-bold lg:mt-4
           lg:w-auto lg:self-start text-2xl mb-5 text-white lg:text-gray-800"
           >
-            Response
+            {t('Response')}
           </h3>
           <JSONPretty
             className="jsonPretty w-full self-center lg:w-auto bg-gray-800 rounded-md p-2"

@@ -1,0 +1,15 @@
+{
+  "Sign up.": "Sign up.",
+  "Provide some of your information so we can grant you access to the Igbo API.": "Provide some of your information so we can grant you access to the Igbo API.",
+  "Your name": "Your name",
+  "Full name": "Full name",
+  "Your email": "Your email",
+  "Email": "Email",
+  "Password": "Password",
+  "Create account": "Create account",
+  "Custom Igbo API Key:": "Custom Igbo API Key:",
+  "Please save this key in a secure location. This key will disappear once you leave this page": "Please save this key in a secure location. This key will disappear once you leave this page",
+  "We'll also send you an email with your account information along with your API key.": "We'll also send you an email with your account information along with your API key.",
+  "Success! Check your email": "Success! Check your email",
+  "An error occurred": "An error occurred"
+}

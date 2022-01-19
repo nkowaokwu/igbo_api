@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Akagu';
+  src:  url("public/fonts/Akagu2020.ttf");
+}
+
+.akagu {
+  font-family: 'Akagu', 'sans-serif' !important;
+}
+
 /* Style sheet dedicated to element tag styling */
 html {
   width: 100vw;

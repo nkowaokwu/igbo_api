@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import Stat from './Stat';
 
 const Statistics = ({
@@ -9,36 +10,53 @@ const Statistics = ({
   totalStandardIgboWords,
   contributors,
   stars,
-}) => (
-  <div className="w-full flex flex-col justify-center items-center bg-gray-200 space-y-6">
-    <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
-      <Stat value={totalWords} header="Words in the database" />
-      <Stat value={totalExamples} header="Example Igbo sentences" />
-      <Stat value={totalAudioPronunciations} header="Word audio pronunciations" />
-      <Stat value={totalStandardIgboWords} header="Standard Igbo words" />
-      <Stat value={10} header="Words with Nsịbịdị" />
+}) => {
+  const { t } = useTranslation();
+  const totalSlackMembers = 100;
+  return (
+    <div className="w-full flex flex-col justify-center items-center bg-gray-200 space-y-6">
+      <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
+        <Stat value={totalWords} header={t('Words in the database').replace('{{number}}', totalWords)} />
+        <Stat value={totalExamples} header={t('Example Igbo sentences').replace('{{number}}', totalExamples)} />
+        <Stat
+          value={totalAudioPronunciations}
+          header={t('Word audio pronunciations').replace('{{number}}', totalAudioPronunciations)}
+        />
+        <Stat
+          value={totalStandardIgboWords}
+          header={t('Standard Igbo words').replace('{{number}}', totalStandardIgboWords)}
+        />
+        {/* <Stat value={10} header={t('Words in Nsịbịdị').replace('{{number}}', 10)} /> */}
+      </div>
+      <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
+        {contributors ? (
+          <Stat
+            value={contributors.length}
+            header={t('GitHub Contributors').replace('{{number}}', contributors.length)}
+          >
+            <div className="flex flex-row flex-wrap justify-center items-center">
+              {contributors.slice(0, 10).map((contributor) => (
+                <div key={contributor.avatar_url}>
+                  <img
+                    src={contributor.avatar_url}
+                    className=" text-gray-700 bg-gray-400 w-12  m-2 rounded-full"
+                    alt="github avatar"
+                  />
+                </div>
+              ))}
+            </div>
+          </Stat>
+        ) : null}
+        <Stat
+          value={totalSlackMembers}
+          header={t('Members in Slack').replace('{{number}}', totalSlackMembers)}
+          exact={false}
+        />
+        <Stat value={stars} header={t('GitHub stars').replace('{{number}}', stars)} />
+      </div>
     </div>
-    <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
-      {contributors ? (
-        <Stat value={contributors.length} header="GitHub Contributors">
-          <div className="flex flex-row flex-wrap justify-center items-center">
-            {contributors.slice(0, 10).map((contributor) => (
-              <div key={contributor.avatar_url}>
-                <img
-                  src={contributor.avatar_url}
-                  className=" text-gray-700 bg-gray-400 w-12  m-2 rounded-full"
-                  alt="github avatar"
-                />
-              </div>
-            ))}
-          </div>
-        </Stat>
-      ) : null}
-      <Stat value="95" header="Members in Slack" exact={false} />
-      <Stat value={stars} header="GitHub stars" />
-    </div>
-  </div>
-);
+  );
+};
 
 Statistics.propTypes = {
   totalWords: PropTypes.number,
