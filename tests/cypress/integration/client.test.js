@@ -82,7 +82,7 @@ describe('Igbo API Homepage', () => {
 
     it('render the About page', () => {
       cy.findByAltText('down arrow as menu icon').click();
-      cy.get('a').contains('About').click();
+      cy.get('button').contains('About').click();
       cy.findByText('Contact');
       cy.contains('Email:');
     });
