@@ -1,0 +1,15 @@
+{
+  "Sign up.": "Sonye.",
+  "Provide some of your information so we can grant you access to the Igbo API.": "Debanye ụfọdụ ihe banyere gị ka anyị nwee ike hapụ ka ị banye na API Igbo.",
+  "Your name": "Aha gị",
+  "Full name": "Aha gị niile",
+  "Your email": "Iimeelụ gị",
+  "Email": "Iimeelụ",
+  "Password": "Otughe",
+  "Create account": "Mepee akaụntụ",
+  "Custom Igbo API Key:": "Akara API Igbo pụrụ iche:",
+  "Please save this key in a secure location. This key will disappear once you leave this page": "Biko dokwaa akara a n’ebe anya ọzọ agaghị ahụ ya. Ya bụ akara ga-apụ ozugbo ị pụrụ na peeji a",
+  "We'll also send you an email with your account information along with your API key.": "Anyị ga ezitekwara gị iimeelụ bu ihe gbasara akaụntụ gị, ya na akara API gị.",
+  "Success! Check your email": "Ọ gara nke ọma! Chọọ ozi anyị na iimeelụ gị",
+  "An error occurred": "Ọ gaghị nke ọma. Nsogbu daputara"
+}

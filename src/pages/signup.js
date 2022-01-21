@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
 import Navbar from './components/Navbar';
 import Input from './components/Input';
 import { PORT } from '../siteConstants';
 
 const SignUp = () => {
+  const { t } = useTranslation('signup');
   const [buttonText, setButtonText] = useState('Create account');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [igboApiRoute, setIgboApiRoute] = useState('');
@@ -47,18 +49,18 @@ const SignUp = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          handleCreateDeveloperResponse('Success! Check your email');
+          handleCreateDeveloperResponse(t('Success! Check your email'));
           setApiKey(res.data.apiKey);
         } else if (res.status >= 400) {
-          handleCreateDeveloperResponse('An error occurred');
+          handleCreateDeveloperResponse(t('An error occurred'));
         }
       }, (err) => {
         console.log(err);
-        handleCreateDeveloperResponse('An error occurred');
+        handleCreateDeveloperResponse(t('An error occurred'));
       })
       .catch((err) => {
         console.log(err);
-        handleCreateDeveloperResponse('An error occurred');
+        handleCreateDeveloperResponse(t('An error occurred'));
       })
   );
 
@@ -71,9 +73,9 @@ const SignUp = () => {
       <div className="w-screen h-screen flex flex-row overflow-hidden">
         <div className="flex flex-col justify-center items-center w-full lg:w-6/12">
           <div className="w-10/12 lg:w-7/12">
-            <h1 className="text-5xl mb-6">Sign up.</h1>
+            <h1 className="text-5xl mb-6">{t('Sign up.')}</h1>
             <h2 className="text-gray-600 font-normal mb-4">
-              Provide some of your information so we can grant you access to the Igbo API.
+              {t('Provide some of your information so we can grant you access to the Igbo API.')}
             </h2>
           </div>
           <form
@@ -85,9 +87,9 @@ const SignUp = () => {
               render={(props) => (
                 <Input
                   {...props}
-                  header="Your name"
+                  header={t('Your name')}
                   type="text"
-                  placeholder="Full name"
+                  placeholder={t('Full name')}
                   data-test="signup-name-input"
                 />
               )}
@@ -102,9 +104,9 @@ const SignUp = () => {
               render={(props) => (
                 <Input
                   {...props}
-                  header="Your email"
+                  header={t('Your email')}
                   type="email"
-                  placeholder="Email"
+                  placeholder={t('Email')}
                   data-test="signup-email-input"
                 />
               )}
@@ -119,9 +121,9 @@ const SignUp = () => {
               render={(props) => (
                 <Input
                   {...props}
-                  header="Password"
+                  header={t('Password')}
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('Password')}
                   data-test="signup-password-input"
                 />
               )}
@@ -137,21 +139,21 @@ const SignUp = () => {
               className="primary-button"
               disabled={isButtonDisabled}
             >
-              {buttonText}
+              {t(buttonText)}
             </button>
             {apiKey ? (
               <div className="my-4 text-center space-y-6">
-                <h2 className="mb-4 text-gray-800 text-2xl">Custom Igbo API Key:</h2>
+                <h2 className="mb-4 text-gray-800 text-2xl">{t('Custom Igbo API Key:')}</h2>
                 <div className="w-full space-x-2">
                   <code className="bg-gray-100 text-gray-600 p-1 w-full">
                     {apiKey}
                   </code>
                 </div>
                 <p className="text-red-600">
-                  Please save this key in a secure location. This key will disappear once you leave this page
+                  {t('Please save this key in a secure location. This key will disappear once you leave this page')}
                 </p>
                 <p className="text-gray-600">
-                  {'We\'ll also send you an email with your account information along with your API key.'}
+                  {t("We'll also send you an email with your account information along with your API key.")}
                 </p>
               </div>
             ) : null}
