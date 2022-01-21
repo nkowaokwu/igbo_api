@@ -34,7 +34,7 @@ const App = ({
   }, [i18n?.language]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div className="overflow-x-hidden" id="homepage-container">
-      <Navbar isHomepage />
+      <Navbar />
       <div>
         <div className="relative flex flex-col justify-center w-screen md:h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>

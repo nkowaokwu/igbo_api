@@ -12,9 +12,8 @@ import { CheckIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'react-i18next';
 import i18n, { changeLanguage } from 'i18next';
 import { useRouter } from 'next/router';
-import { Link } from 'react-scroll';
 
-const SubMenu = ({ isVisible, isHomepage, transparent }) => {
+const SubMenu = ({ isVisible, transparent }) => {
   const [language, setLanguage] = useState(i18n.language);
   const router = useRouter();
   const { t } = useTranslation();
@@ -38,30 +37,25 @@ const SubMenu = ({ isVisible, isHomepage, transparent }) => {
       ${isVisible ? '' : 'pointer-events-none'}
       space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100`}
     >
-      {isHomepage ? (
-        <>
-          <li className="transition-element">
-            <Link
-              activeClass="nav-item-active"
-              className="cursor-pointer"
-              to="features"
-              spy
-              smooth
-              offset={-100}
-              duration={600}
-            >
-              {t('Features')}
-            </Link>
-          </li>
-        </>
-      ) : null}
       <li className="transition-element">
-        <a
-          href="/about"
+        <button
+          className="cursor-pointer"
+          onClick={() => {
+            router.push('/#features');
+            window.scrollBy({ top: -100, behavior: 'smooth' });
+          }}
+          type="button"
+        >
+          {t('Features')}
+        </button>
+      </li>
+      <li className="transition-element">
+        <button
           onClick={(e) => navigate(e, '/about')}
+          type="button"
         >
           {t('About')}
-        </a>
+        </button>
       </li>
       <li className="transition-element">
         <a href="/docs">Docs</a>
@@ -78,18 +72,17 @@ const SubMenu = ({ isVisible, isHomepage, transparent }) => {
         </button>
       </li>
       <li className="transition-element">
-        <Link
-          activeClass="nav-item-active"
+        <button
           className="cursor-pointer rounded-full bg-green-500 text-white border-2
           py-2 px-4 hover:bg-transparent hover:text-black border-green-500 transition-all duration-200"
-          to="try-it-out"
-          spy
-          smooth
-          offset={-100}
-          duration={600}
+          onClick={() => {
+            router.push('/#try-it-out');
+            window.scrollBy({ top: -100, behavior: 'smooth' });
+          }}
+          type="button"
         >
           {t('Try it Out')}
-        </Link>
+        </button>
       </li>
       <li className="transition-element">
         <Menu>
@@ -140,12 +133,10 @@ const SubMenu = ({ isVisible, isHomepage, transparent }) => {
 
 SubMenu.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  isHomepage: PropTypes.bool,
   transparent: PropTypes.bool,
 };
 
 SubMenu.defaultProps = {
-  isHomepage: false,
   transparent: false,
 };
 

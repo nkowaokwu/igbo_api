@@ -7,7 +7,7 @@ import SubMenu from './SubMenu';
 import IgboAPI from '../../assets/igboAPI.svg';
 import MenuIcon from '../../assets/downchevron.svg';
 
-const Navbar = ({ to, isHomepage, transparent }) => {
+const Navbar = ({ to, transparent }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
@@ -44,7 +44,6 @@ const Navbar = ({ to, isHomepage, transparent }) => {
       ) : null}
       <SubMenu
         isVisible={matchesLargeScreenQuery || isMenuVisible}
-        isHomepage={isHomepage}
         transparent={transparent}
       />
     </div>
@@ -53,13 +52,11 @@ const Navbar = ({ to, isHomepage, transparent }) => {
 
 Navbar.propTypes = {
   to: PropTypes.string,
-  isHomepage: PropTypes.bool,
   transparent: PropTypes.bool,
 };
 
 Navbar.defaultProps = {
   to: '/',
-  isHomepage: false,
   transparent: false,
 };
 

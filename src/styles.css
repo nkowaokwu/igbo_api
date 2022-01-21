@@ -22,11 +22,6 @@
   @apply text-gray-900;
 }
 
-.nav-item-active {
-  @apply text-gray-500;
-  @apply line-through;
-}
-
 .link {
   @apply transition-element;
   @apply text-green-400;

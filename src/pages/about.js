@@ -19,7 +19,7 @@ const About = () => {
 
   return (
     <div className="flex flex-col items-center h-screen">
-      <Navbar to="/" isHomepage={false} />
+      <Navbar to="/" />
       <div
         className="flex flex-col px-8 mb-6 lg:justify-between xl:flex-row pt-10
       lg:pt-32 max-w-2xl lg:max-w-6xl h-full text-gray-800 text-lg lg:text-xl w-full"

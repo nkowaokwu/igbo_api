@@ -24,7 +24,7 @@ h1 {
 }
 
 h2, h3, a, button {
-  font-family: 'Silka', sans-serif;
+  font-family: 'Silka', sans-serif !important;
   font-weight: 700;
 }
 
