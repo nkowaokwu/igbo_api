@@ -86,7 +86,7 @@ const About = () => {
         </div>
       </div>
       <div
-        className="flex flex-col px-8 lg:justify-between max-w-2xl lg:max-w-6xl
+        className="flex flex-col px-8 max-w-2xl lg:max-w-6xl
         mb-10 lg:mb-24 h-full text-gray-800 text-lg lg:text-xl w-full"
       >
         <h1 className="text-3xl">{t('Contact')}</h1>

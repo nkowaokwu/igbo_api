@@ -39,6 +39,7 @@ const App = ({
         <div className="relative flex flex-col justify-center w-screen md:h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>
             <h1
+              style={{ fontFamily: language !== 'en' ? 'inherit' : '' }}
               className="text-center lg:text-left text-4xl md:text-6xl font-extrabold
               lg:ml-16 lg:mt-24 w-full lg:w-4/12"
             >
