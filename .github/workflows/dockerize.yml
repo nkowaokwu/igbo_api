@@ -10,17 +10,13 @@ jobs:
     name: Dockerize
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Use Node.js @${{ matrix.node-version }}
+      - name: Use Node.js @16
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16
       - name: Log into Docker Account
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         env:
