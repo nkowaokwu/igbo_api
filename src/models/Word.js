@@ -47,7 +47,12 @@ const dialectsIndexFields = Object.keys(Dialects)
     { ...indexFields, [`dialects.${key}.word`]: 'text' }
   ), {});
 
-wordSchema.index({ word: 'text', variations: 'text', ...dialectsIndexFields });
+wordSchema.index({
+  word: 'text',
+  variations: 'text',
+  ...dialectsIndexFields,
+  nsibidi: 'text',
+});
 
 toJSONPlugin(wordSchema);
 updatedOnHook(wordSchema);
