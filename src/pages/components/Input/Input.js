@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Input = ({ header, type, ...rest }) => (
+const Input = React.forwardRef(({ header, type, ...rest }) => (
   <div className="flex flex-col items-left w-full my-3">
     <h3 className="text-gray-600 font-normal mb-3">{header}</h3>
     <input
@@ -10,7 +10,7 @@ const Input = ({ header, type, ...rest }) => (
       type={type}
     />
   </div>
-);
+));
 
 Input.propTypes = {
   header: PropTypes.string.isRequired,
