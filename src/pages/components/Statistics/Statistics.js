@@ -39,7 +39,7 @@ const Statistics = ({
                 <div key={contributor.avatar_url}>
                   <img
                     src={contributor.avatar_url}
-                    className=" text-gray-700 bg-gray-400 w-12  m-2 rounded-full"
+                    className=" text-gray-700 bg-gray-400 w-12 m-2 rounded-full"
                     alt="github avatar"
                   />
                 </div>

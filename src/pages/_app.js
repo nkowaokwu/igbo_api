@@ -12,7 +12,7 @@ import App from 'next/app';
 import { API_ROUTE, GITHUB_CONTRIBUTORS, GITHUB_STARS } from '../siteConstants';
 import en from '../public/locales/en';
 import ig from '../public/locales/ig';
-import * as gtag from './gtag';
+import * as gtag from '../lib/gtag';
 import '../antd-extend.css';
 import '../fonts.css';
 import '../styles.css';
