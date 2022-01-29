@@ -22,10 +22,9 @@ const populate = async () => {
           word.wordClass = word.wordClass || wordClass.NNC.value;
           word.dialects = Object.keys(Dialects).reduce((dialectsObject, dialectKey) => ({
             ...dialectsObject,
-            [dialectKey]: {
-              word: `${key}-${dialectKey}`,
+            [`${key}-${dialectKey}`]: {
               variations: [],
-              dialect: dialectKey,
+              dialects: [dialectKey],
               pronunciation: '',
             },
           }), {});

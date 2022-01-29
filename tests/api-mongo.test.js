@@ -62,15 +62,13 @@ describe('MongoDB Words', () => {
         word: 'word',
         wordClass: 'N',
         definitions: ['first definition', 'second definition'],
-        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
-          ...dialectsObject,
-          [key]: {
-            word: '',
+        dialects: {
+          dialectalWord: {
             variations: [],
-            dialect: 'mismatch',
+            dialects: ['mismatch'],
             pronunciation: '',
           },
-        }), {}),
+        },
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
       };
