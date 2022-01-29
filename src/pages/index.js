@@ -6,7 +6,7 @@ import App from './App';
 export const getServerSideProps = async (context) => {
   try {
     const { query } = context;
-    const searchWord = query.word;
+    const searchWord = encodeURI(query.word);
     if (searchWord) {
       const { data: words } = await axios({
         method: 'get',
