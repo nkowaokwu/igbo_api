@@ -84,4 +84,9 @@ export default {
     value: 'UNW',
     label: 'Unwana; Ungwana Lordji',
   },
+  OBO: {
+    code: 'ibo-obo',
+    value: 'OBO',
+    label: 'Obosi',
+  },
 };
