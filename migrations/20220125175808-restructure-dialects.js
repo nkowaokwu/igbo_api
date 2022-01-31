@@ -103,7 +103,7 @@ module.exports = {
         const wordDocs = await (await db.collection(collection).aggregate(wordsMigrationPipeline)).toArray();
         await Promise.all(wordDocs.map((wordDoc) => (
           db.collection(collection).updateOne(
-            // eslint-diable-next-line
+            // eslint-disable-next-line
             { _id: wordDoc._id },
             { $set: { dialects: wordDoc.dialects } },
           )
@@ -118,7 +118,7 @@ module.exports = {
         const wordDocs = await (await db.collection(collection).aggregate(wordsRevertPipeline)).toArray();
         await Promise.all(wordDocs.map((wordDoc) => (
           db.collection(collection).updateOne(
-            // eslint-diable-next-line
+            // eslint-disable-next-line
             { _id: wordDoc._id },
             { $set: { dialects: wordDoc.dialects } },
           )
