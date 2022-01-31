@@ -41,16 +41,10 @@ const wordSchema = new Schema({
   updatedOn: { type: Date, default: Date.now() },
 }, { toObject: toObjectPlugin });
 
-/* Create text indexes for each dialect word field */
-const dialectsIndexFields = Object.keys(Dialects)
-  .reduce((indexFields, key) => (
-    { ...indexFields, [`dialects.${key}.word`]: 'text' }
-  ), {});
-
 wordSchema.index({
   word: 'text',
   variations: 'text',
-  ...dialectsIndexFields,
+  dialects: 'text',
   nsibidi: 'text',
 });
 
