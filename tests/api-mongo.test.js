@@ -12,7 +12,6 @@ import diacriticless from 'diacriticless';
 import Word from '../src/models/Word';
 import {
   WORD_KEYS,
-  DIALECT_KEYS,
   EXAMPLE_KEYS,
   EXCLUDE_KEYS,
   INVALID_ID,
@@ -34,15 +33,7 @@ describe('MongoDB Words', () => {
         word: 'word',
         wordClass: 'NNC',
         definitions: ['first definition', 'second definition'],
-        dialects: DIALECT_KEYS.reduce((dialectsObject, key) => ({
-          ...dialectsObject,
-          [key]: {
-            word: '',
-            variations: [],
-            dialect: key,
-            pronunciation: '',
-          },
-        }), {}),
+        dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
       };
@@ -53,7 +44,6 @@ describe('MongoDB Words', () => {
           expect(savedWord.word).to.equal('word');
           expect(savedWord.wordClass).to.equal('NNC');
           expect(savedWord.dialects).to.not.equal(undefined);
-          expect(savedWord.dialects).to.have.all.keys(DIALECT_KEYS);
           done();
         });
     });
@@ -117,7 +107,6 @@ describe('MongoDB Words', () => {
           expect(res.body).to.have.lengthOf.at.least(2);
           forEach(res.body, (word) => {
             expect(word.dialects).to.not.equal(undefined);
-            expect(word.dialects).to.have.all.keys(DIALECT_KEYS);
           });
           done();
         });
@@ -586,13 +575,13 @@ describe('MongoDB Words', () => {
     });
 
     it('should return a word by searching with nested dialect word', (done) => {
-      const keyword = 'akwa-ONI';
+      const keyword = 'akwa-dialect';
       getWords({ keyword, dialects: true })
         .end((_, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.lengthOf.at.least(1);
           forEach(res.body, (word) => {
-            expect(word.dialects.ONI.word).to.equal(`${word.word}-ONI`);
+            expect(word.dialects[`${word.word}-dialect`]).to.not.equal(undefined);
           });
           done();
         });
