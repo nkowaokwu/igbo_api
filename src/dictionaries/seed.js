@@ -18,17 +18,16 @@ const populate = async () => {
         const value = dictionary[key];
         return map(value, (term) => {
           const word = { ...term };
+          const cleanedKey = key.replace(/\./g, '');
           word.word = key;
           word.wordClass = word.wordClass || wordClass.NNC.value;
-          word.dialects = Object.keys(Dialects).reduce((dialectsObject, dialectKey) => ({
-            ...dialectsObject,
-            [dialectKey]: {
-              word: `${key}-${dialectKey}`,
+          word.dialects = {
+            [`${cleanedKey}-dialect`]: {
+              dialects: [Dialects.NSA.value],
               variations: [],
-              dialect: dialectKey,
               pronunciation: '',
             },
-          }), {});
+          };
           return createWord(word);
         });
       }),

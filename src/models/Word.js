@@ -4,7 +4,7 @@ import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
 import Dialects from '../shared/constants/Dialects';
 import wordClass from '../shared/constants/wordClass';
 
-const REQUIRED_DIALECT_KEYS = ['word', 'variations', 'dialect', 'pronunciation'];
+const REQUIRED_DIALECT_KEYS = ['variations', 'dialects', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
 
 const { Schema, Types } = mongoose;
@@ -22,10 +22,17 @@ const wordSchema = new Schema({
       const dialectValues = Object.values(v);
       return dialectValues.every((dialectValue) => (
         every(REQUIRED_DIALECT_KEYS, partial(has, dialectValue))
-        && every(REQUIRED_DIALECT_CONSTANT_KEYS, partial(has, Dialects[dialectValue.dialect]))
-        && dialectValue.dialect === Dialects[dialectValue.dialect].value
+        && every(dialectValue.dialects, (dialect) => (
+          every(REQUIRED_DIALECT_CONSTANT_KEYS, partial(has, Dialects[dialect]))
+        ))
+        && Array.isArray(dialectValue.dialects)
+        && every(dialectValue.dialects, (dialect) => Dialects[dialect].value)
+        && typeof dialectValue.pronunciation === 'string'
+        && Array.isArray(dialectValue.variations)
       ));
     },
+    required: false,
+    default: {},
   },
   pronunciation: { type: String, default: '' },
   isStandardIgbo: { type: Boolean, default: false },

@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
-import Dialects from '../shared/constants/Dialects';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
@@ -173,24 +172,13 @@ export const createWord = async (data) => {
     ...rest
   } = data;
 
-  const filledDialects = Object.keys(Dialects).reduce((dialectsObject, key) => ({
-    ...dialectsObject,
-    [key]: {
-      variations: [],
-      dialect: key,
-      pronunciation: '',
-      ...dialects[key],
-      word: dialects[key].word || word,
-    },
-  }), {});
-
   const wordData = {
     word,
     wordClass,
     definitions,
     variations,
     stems,
-    dialects: filledDialects,
+    dialects,
     ...rest,
   };
 

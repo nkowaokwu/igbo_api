@@ -24,25 +24,6 @@ export const WORD_KEYS = [
   'updatedOn',
 ];
 export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'updatedOn'];
-export const DIALECT_KEYS = [
-  'NSA',
-  'UMU',
-  'ANI',
-  'OKA',
-  'AFI',
-  'MBA',
-  'EGB',
-  'OHU',
-  'ORL',
-  'NGW',
-  'OWE',
-  'NSU',
-  'BON',
-  'OGU',
-  'ONI',
-  'ECH',
-  'UNW',
-];
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const SITE_TITLE = 'The First African Language API';
 export const DOCS_SITE_TITLE = 'Igbo API Documentation';
