@@ -41,13 +41,6 @@ export const getExample = (id, query = {}, options = {}) => (
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
-export const getWordsFilteredByWordClass = (wordClass, query = {}, options = {}) => (
-  chai
-    .request(server)
-    .get(`${API_ROUTE}/words/wordClass/${wordClass}`)
-    .query(query)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-);
 /* Searches for examples using the data in MongoDB */
 export const getExamples = (query = {}, options = {}) => (
   chai
