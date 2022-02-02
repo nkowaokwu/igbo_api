@@ -4,7 +4,6 @@ import { isNaN, orderBy, get } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
-import wordClass from '../../shared/constants/wordClass';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -19,20 +18,6 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
       ? createQueryRegex(searchWord)
       : /^[.{0,}\n{0,}]/
 );
-
-/* Determines that the parameter gotten as a wordClass when
- * searching for words from a given wordClass is actually valid
- */
-export const parseWordClass = (param) => {
-  if (!param) {
-    throw new Error('No wordClass specified');
-  }
-  const wordClassValue = wordClass[param];
-  if (!wordClassValue) {
-    throw new Error('Not a valid wordClass');
-  }
-  return param;
-};
 
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key) => (

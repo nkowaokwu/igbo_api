@@ -6,12 +6,7 @@ import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
-import {
-  sortDocsBy,
-  packageResponse,
-  handleQueries,
-  parseWordClass,
-} from './utils';
+import { sortDocsBy, packageResponse, handleQueries } from './utils';
 import {
   searchIgboTextSearch,
   strictSearchIgboQuery,
@@ -120,16 +115,6 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
 export const getWords = async (req, res, next) => {
   try {
     return getWordsFromDatabase(req, res, next);
-  } catch (err) {
-    return next(err);
-  }
-};
-
-/* Gets words from MongoDB by the searched keywords and specified wordClass */
-export const getWordsFilteredByWordClass = async (req, res, next) => {
-  try {
-    const wordClass = parseWordClass(req.params.wordClass);
-    return getWordsFromDatabase(req, res, next, wordClass);
   } catch (err) {
     return next(err);
   }

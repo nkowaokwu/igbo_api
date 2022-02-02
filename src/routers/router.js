@@ -1,6 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import { getWords, getWord, getWordsFilteredByWordClass } from '../controllers/words';
+import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
 import { getStats } from '../controllers/stats';
@@ -8,6 +8,7 @@ import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
 import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
+import analytics from '../middleware/analytics';
 
 const router = express.Router();
 
@@ -18,8 +19,10 @@ const createDeveloperLimiter = rateLimit({
   max: REQUESTS_PER_MS,
 });
 
+// Google Analytics
+router.use(analytics);
+
 router.get('/words', validateApiKey, getWords);
-router.get('/words/wordClass/:wordClass', validateApiKey, getWordsFilteredByWordClass);
 router.get('/words/:id', validateApiKey, validId, getWord);
 router.get('/examples', validateApiKey, getExamples);
 router.get('/examples/:id', validateApiKey, validId, getExample);

@@ -82,3 +82,7 @@ if (sgMail) {
 
 // API Key Secrets
 export const MAIN_KEY = process.env.MAIN_KEY || 'main_key';
+
+// Google Analytics
+export const GA_TRACKING_ID = process.env.GA_TRACKING_ID || 'ga_tracking_id';
+export const GA_URL = 'http://www.google-analytics.com/debug/collect';
