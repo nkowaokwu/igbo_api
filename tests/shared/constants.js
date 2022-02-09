@@ -23,7 +23,7 @@ export const WORD_KEYS = [
   'isStandardIgbo',
   'updatedOn',
 ];
-export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'updatedOn'];
+export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'pronunciation', 'updatedOn'];
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const SITE_TITLE = 'The First African Language API';
 export const DOCS_SITE_TITLE = 'Igbo API Documentation';
