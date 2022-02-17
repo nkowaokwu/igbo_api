@@ -134,7 +134,7 @@ const Demo = ({ searchWord, words }) => {
             {t('Response')}
           </h3>
           <JSONPretty
-            className="jsonPretty w-full self-center lg:w-auto bg-gray-800 rounded-md p-2"
+            className="jsonPretty w-full self-center lg:w-auto bg-gray-800 rounded-md p-2 overflow-auto"
             id="json-pretty"
             data={responseBody}
           />
