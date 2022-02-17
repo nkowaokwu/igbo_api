@@ -7,10 +7,17 @@ export const getServerSideProps = async (context) => {
   try {
     const { query } = context;
     const searchWord = encodeURI(query.word);
+    const queries = Object.entries(query).reduce((finalQueries, [key, value]) => {
+      let updatedQueries = finalQueries;
+      if (key !== 'word') {
+        updatedQueries += `&${key}=${value}`;
+      }
+      return updatedQueries;
+    }, '');
     if (searchWord) {
       const { data: words } = await axios({
         method: 'get',
-        url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}`,
+        url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${queries}`,
         headers: {
           'X-API-Key': process.env.MAIN_KEY || 'main_key',
         },
