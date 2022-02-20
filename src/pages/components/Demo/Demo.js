@@ -48,7 +48,7 @@ const Demo = ({ searchWord, words }) => {
 
   const constructRequestUrl = () => {
     const appendQueries = constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
-    const requestUrl = `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword}`
+    const requestUrl = `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || ''}`
     + `${keyword && appendQueries ? '&' : ''}`
     + `${appendQueries.replace('&', '')}`;
     return requestUrl;
@@ -79,7 +79,6 @@ const Demo = ({ searchWord, words }) => {
             <p className="self-center md:self-start">
               {t('Enter a word in either English or Igbo to see it\'s information')}
             </p>
-            <h2 className="text-2xl">{t('Flags')}</h2>
             <Input
               size="large"
               onInput={(e) => setKeyword(e.target.value)}
@@ -89,6 +88,7 @@ const Demo = ({ searchWord, words }) => {
               data-test="try-it-out-input"
               defaultValue={searchWord || initialQueries.word}
             />
+            <h2 className="text-2xl">{t('Flags')}</h2>
             <div className="flex space-x-8">
               <div>
                 <Checkbox
