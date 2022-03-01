@@ -21,9 +21,9 @@ export const WORD_KEYS = [
   'hyponyms',
   'nsibidi',
   'isStandardIgbo',
-  'updatedOn',
+  'updatedAt',
 ];
-export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'pronunciation', 'updatedOn'];
+export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'pronunciation', 'updatedAt', 'createdAt'];
 export const EXCLUDE_KEYS = ['__v', '_id'];
 export const SITE_TITLE = 'The First African Language API';
 export const DOCS_SITE_TITLE = 'Igbo API Documentation';
