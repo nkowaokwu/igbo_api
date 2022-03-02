@@ -72,7 +72,7 @@ export const findWordsWithMatch = async ({
       definitions: 1,
       variations: 1,
       stems: 1,
-      updatedOn: 1,
+      updatedAt: 1,
       pronunciation: 1,
       isStandardIgbo: 1,
       synonyms: 1,

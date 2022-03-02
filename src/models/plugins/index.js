@@ -27,10 +27,3 @@ export const toObjectPlugin = ({
     delete ret.__v;
   },
 });
-
-export const updatedOnHook = (schema) => (
-  schema.pre('save', function () {
-    this.updatedOn = Date.now();
-    return this;
-  })
-);
