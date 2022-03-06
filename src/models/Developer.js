@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
+import { toJSONPlugin, toObjectPlugin } from './plugins';
 
 const { Schema } = mongoose;
 const developerSchema = new Schema({
@@ -8,13 +8,11 @@ const developerSchema = new Schema({
   email: { type: String, default: '', required: true },
   password: { type: String, default: '', required: true },
   usage: {
-    date: { type: Date, default: Date.now() },
+    date: { type: Date, default: new Date().toISOString() },
     count: { type: Number, default: 0 },
   },
-  updatedOn: { type: Date, default: Date.now() },
-}, { toObject: toObjectPlugin });
+}, { toObject: toObjectPlugin, timestamps: true });
 
 toJSONPlugin(developerSchema);
-updatedOnHook(developerSchema);
 
 export default mongoose.model('Developer', developerSchema);

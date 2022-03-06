@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { every, has, partial } from 'lodash';
-import { toJSONPlugin, toObjectPlugin, updatedOnHook } from './plugins';
+import { toJSONPlugin, toObjectPlugin } from './plugins';
 import Dialects from '../shared/constants/Dialects';
 import wordClass from '../shared/constants/wordClass';
 
@@ -45,8 +45,7 @@ const wordSchema = new Schema({
   stems: { type: [{ type: String }], default: [] },
   nsibidi: { type: String, default: '' },
   isComplete: { type: Boolean, default: false },
-  updatedOn: { type: Date, default: Date.now() },
-}, { toObject: toObjectPlugin });
+}, { toObject: toObjectPlugin, timestamps: true });
 
 wordSchema.index({
   word: 'text',
@@ -56,7 +55,6 @@ wordSchema.index({
 });
 
 toJSONPlugin(wordSchema);
-updatedOnHook(wordSchema);
 
 const WordModel = mongoose.model('Word', wordSchema);
 WordModel.syncIndexes();
