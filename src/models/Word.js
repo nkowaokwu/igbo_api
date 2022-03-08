@@ -35,6 +35,7 @@ const wordSchema = new Schema({
     default: {},
   },
   pronunciation: { type: String, default: '' },
+  isAccented: { type: Boolean, default: false },
   isStandardIgbo: { type: Boolean, default: false },
   variations: { type: [{ type: String }], default: [] },
   frequency: { type: Number },

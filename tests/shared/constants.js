@@ -20,6 +20,7 @@ export const WORD_KEYS = [
   'hypernyms',
   'hyponyms',
   'nsibidi',
+  'isAccented',
   'isStandardIgbo',
   'updatedAt',
 ];
