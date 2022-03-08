@@ -74,6 +74,7 @@ export const findWordsWithMatch = async ({
       stems: 1,
       updatedAt: 1,
       pronunciation: 1,
+      isAccented: 1,
       isStandardIgbo: 1,
       synonyms: 1,
       antonyms: 1,
