@@ -1,0 +1,15 @@
+{
+  "Sign up.": "Registrieren.",
+  "Provide some of your information so we can grant you access to the Igbo API.": "Geben Sie ein paar Ihrer Informationen, damit wir Ihnen ZUgriff geben können.",
+  "Your name": "Ihr Name",
+  "Full name": "Vollständiger Name",
+  "Your email": "Ihre E-Mail-Adresse",
+  "Email": "E-Mail",
+  "Password": "Passwort",
+  "Create account": "Account erstellen",
+  "Custom Igbo API Key:": "Ihr persönlicher Igbo-API-Schlüssel:",
+  "Please save this key in a secure location. This key will disappear once you leave this page": "Bitte bewahren Sie diesen Schlüssel sicher auf! Sobald sie diese Seite verlassen, wird er von hier verschwinden.",
+  "We'll also send you an email with your account information along with your API key.": "Wir werden ihnen außerdem eine E-Mail mit ihren Account-Daten und ihrem API-Schlüssel schicken.",
+  "Success! Check your email": "Erfolg! Schauen sie in ihr E-Mail-Postfach",
+  "An error occurred": "Ein Fehler ist aufgetreten."
+}

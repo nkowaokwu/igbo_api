@@ -12,6 +12,7 @@ import App from 'next/app';
 import { API_ROUTE, GITHUB_CONTRIBUTORS, GITHUB_STARS } from '../siteConstants';
 import en from '../public/locales/en';
 import ig from '../public/locales/ig';
+import de from '../public/locales/de';
 import * as gtag from '../lib/gtag';
 import '../antd-extend.css';
 import '../fonts.css';
@@ -23,6 +24,7 @@ i18n
     resources: {
       en,
       ig,
+      de,
     },
     lng: 'en',
     fallbackLng: 'en',

@@ -124,6 +124,17 @@ const SubMenu = ({ isVisible, transparent }) => {
               </chakra.span>
               {language === 'ig' ? <chakra.span><CheckIcon /></chakra.span> : null}
             </MenuItem>
+            <MenuItem
+              textTransform="uppercase"
+              onClick={() => handleChangeLocale('de')}
+              className="flex flex-row justify-between items-center"
+            >
+              <chakra.span>
+                <chakra.span className="mr-3">🇩🇪</chakra.span>
+                {' Deutsch'}
+              </chakra.span>
+              {language === 'de' ? <chakra.span><CheckIcon /></chakra.span> : null}
+            </MenuItem>
           </MenuList>
         </Menu>
       </li>
