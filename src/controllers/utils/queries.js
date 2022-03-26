@@ -1,16 +1,14 @@
 import createRegExp from '../../shared/utils/createRegExp';
 
-const fullTextSearchQuery = (keyword, isUsingMainKey) => (isUsingMainKey && !keyword
-  ? { word: { $regex: /./ } }
-  : { $text: { $search: keyword } }
+const fullTextSearchQuery = ({ keyword, isUsingMainKey, requiredAttributes }) => (isUsingMainKey && !keyword
+  ? { word: { $regex: /./ }, ...requiredAttributes }
+  : { $text: { $search: keyword }, ...requiredAttributes }
 );
 
-/* Searching for words that match the keyword and also the wordClass */
-export const searchIgboTextWithWordClass = ({ searchWord, wordClass, isUsingMainKey }) => (isUsingMainKey && !searchWord
-  ? { $and: [{ word: { $regex: /./ } }, { wordClass }] }
-  : { $and: [{ $text: { $search: searchWord } }, { wordClass }] }
-);
-const definitionsQuery = (regex) => ({ definitions: { $in: [regex] } });
+const definitionsQuery = ({ regex, requiredAttributes }) => ({
+  definitions: { $in: [regex] },
+  ...requiredAttributes,
+});
 
 /* Regex match query used to later to defined the Content-Range response header */
 export const searchExamplesRegexQuery = (regex) => ({ $or: [{ igbo: regex }, { english: regex }] });

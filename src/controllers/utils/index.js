@@ -141,6 +141,9 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     strict: strictQuery,
     dialects: dialectsQuery,
     examples: examplesQuery,
+    isStandardIgbo,
+    pronunciation,
+    nsibidi,
   } = query;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
@@ -163,5 +166,10 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     dialects,
     examples,
     isUsingMainKey,
+    wordFields: {
+      isStandardIgbo,
+      pronunciation,
+      nsibidi,
+    },
   };
 };
