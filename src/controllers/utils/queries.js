@@ -29,3 +29,6 @@ export const searchForAllWordsWithAudioPronunciations = () => ({
 export const searchForAllWordsWithIsStandardIgbo = () => ({
   isStandardIgbo: true,
 });
+export const searchForAllWordsWithNsibidi = () => ({
+  nsibidi: { $ne: '' },
+});
