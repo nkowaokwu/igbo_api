@@ -47,6 +47,7 @@ describe('MongoDB Words', () => {
           done();
         });
     });
+
     it('should fail populate mongodb with incorrect variations', (done) => {
       const word = {
         word: 'word',
@@ -483,7 +484,6 @@ describe('MongoDB Words', () => {
         });
     });
 
-    // TODO: Remove lingering sorting direction logic
     it('should return a descending sorted list of words with sort query', (done) => {
       const key = 'word';
       const direction = SortingDirections.DESCENDING;
@@ -585,6 +585,93 @@ describe('MongoDB Words', () => {
           });
           done();
         });
+    });
+
+    it('should return a word marked as isStandardIgbo', (done) => {
+      const word = {
+        word: 'standardIgboWord',
+        wordClass: 'NNC',
+        definitions: ['first definition', 'second definition'],
+        dialects: {},
+        examples: [new ObjectId(), new ObjectId()],
+        isStandardIgbo: true,
+        stems: [],
+      };
+      const validWord = new Word(word);
+      validWord.save().then(() => {
+        getWords({ keyword: word.word, isStandardIgbo: true })
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.have.lengthOf.at.least(1);
+            forEach(res.body, (wordRes) => {
+              expect(wordRes.isStandardIgbo).to.be.equal(true);
+            });
+            getWords({ keyword: word.word, pronunciation: true })
+              .end((error, noRes) => {
+                expect(noRes.status).to.equal(200);
+                expect(noRes.body).to.have.lengthOf(0);
+                done();
+              });
+          });
+      });
+    });
+
+    it('should return a word marked with nsibidi', (done) => {
+      const word = {
+        word: 'nsibidi',
+        wordClass: 'NNC',
+        definitions: ['first definition', 'second definition'],
+        dialects: {},
+        examples: [new ObjectId(), new ObjectId()],
+        nsibidi: 'nsibidi',
+        stems: [],
+      };
+      const validWord = new Word(word);
+      validWord.save().then(() => {
+        getWords({ keyword: word.word, nsibidi: true })
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.have.lengthOf.at.least(1);
+            forEach(res.body, (wordRes) => {
+              expect(wordRes.nsibidi).to.not.equal(undefined);
+            });
+            getWords({ keyword: word.word, isStandardIgbo: true })
+              .end((error, noRes) => {
+                expect(noRes.status).to.equal(200);
+                expect(noRes.body).to.have.lengthOf(0);
+                done();
+              });
+          });
+      });
+    });
+
+    it('should return a word marked with nsibidi', (done) => {
+      const word = {
+        word: 'pronunciation',
+        wordClass: 'NNC',
+        definitions: ['first definition', 'second definition'],
+        dialects: {},
+        examples: [new ObjectId(), new ObjectId()],
+        pronunciation: 'audio-pronunciation',
+        stems: [],
+      };
+      const validWord = new Word(word);
+      validWord.save().then(() => {
+        getWords({ keyword: word.word, pronunciation: true })
+          .end((_, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.have.lengthOf.at.least(1);
+            forEach(res.body, (wordRes) => {
+              expect(wordRes.pronunciation.length).to.be.at.least(10);
+            });
+            getWords({ keyword: word.word, nsibidi: true })
+              .end((error, noRes) => {
+                expect(noRes.status).to.equal(200);
+                expect(noRes.body).to.have.lengthOf(0);
+                done();
+              });
+          });
+      });
     });
   });
 });

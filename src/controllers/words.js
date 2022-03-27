@@ -7,12 +7,7 @@ import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
 import { sortDocsBy, packageResponse, handleQueries } from './utils';
-import {
-  searchIgboTextSearch,
-  strictSearchIgboQuery,
-  searchEnglishRegexQuery,
-  searchIgboTextWithWordClass,
-} from './utils/queries';
+import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
 
@@ -43,8 +38,34 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
   return sortDocsBy(searchWord, words, 'definitions[0]');
 };
 
+/* Creates an object containing truthy key/value pairs for looking up words */
+const generateRequiredWordAttributes = (requiredAttributes) => (
+  Object.entries(requiredAttributes).reduce((attributes, [key, value]) => {
+    if (key === 'isStandardIgbo' && value) {
+      return {
+        ...attributes,
+        [key]: { $eq: true },
+      };
+    }
+    if (key === 'nsibidi' && value) {
+      return {
+        ...attributes,
+        [key]: { $ne: '' },
+      };
+    }
+    if (key === 'pronunciation' && value) {
+      return {
+        ...attributes,
+        pronunciation: { $exists: true },
+        $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
+      };
+    }
+    return attributes;
+  }, {})
+);
+
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase = async (req, res, next, wordClass) => {
+const getWordsFromDatabase = async (req, res, next) => {
   try {
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
@@ -58,6 +79,7 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
       strict,
       dialects,
       examples,
+      wordFields,
       isUsingMainKey,
       ...rest
     } = handleQueries(req);
@@ -70,18 +92,16 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
     };
     let words;
     let query;
+    const requiredAttributes = generateRequiredWordAttributes(wordFields);
     if (hasQuotes) {
-      query = searchEnglishRegexQuery(regexKeyword);
+      query = searchEnglishRegexQuery({ regex: regexKeyword, requiredAttributes });
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
-      const regularSearchIgboQuery = wordClass ? searchIgboTextWithWordClass({
-        searchWord,
-        wordClass,
+      const regularSearchIgboQuery = searchIgboTextSearch({
+        keyword: searchWord,
         isUsingMainKey,
-      }) : searchIgboTextSearch(
-        searchWord,
-        isUsingMainKey,
-      );
+        requiredAttributes,
+      });
       query = !strict
         ? regularSearchIgboQuery
         : strictSearchIgboQuery(
@@ -89,7 +109,7 @@ const getWordsFromDatabase = async (req, res, next, wordClass) => {
         );
       words = await searchWordUsingIgbo({ query, ...searchQueries });
       if (!words.length) {
-        query = searchEnglishRegexQuery(regexKeyword);
+        query = searchEnglishRegexQuery({ regex: regexKeyword, requiredAttributes });
         const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
         return packageResponse({
           res,
