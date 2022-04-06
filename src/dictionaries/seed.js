@@ -4,7 +4,7 @@ import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
 import { MONGO_URI } from '../config';
 import Dialects from '../shared/constants/Dialects';
-import wordClass from '../shared/constants/wordClass';
+import WordClass from '../shared/constants/WordClass';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -20,7 +20,7 @@ const populate = async () => {
           const word = { ...term };
           const cleanedKey = key.replace(/\./g, '');
           word.word = key;
-          word.wordClass = word.wordClass || wordClass.NNC.value;
+          word.wordClass = word.wordClass || WordClass.NNC.value;
           word.dialects = {
             [`${cleanedKey}-dialect`]: {
               dialects: [Dialects.NSA.value],

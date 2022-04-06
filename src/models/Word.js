@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 import { every, has, partial } from 'lodash';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 import Dialects from '../shared/constants/Dialects';
-import wordClass from '../shared/constants/wordClass';
+import Tenses from '../shared/constants/Tenses';
+import WordClass from '../shared/constants/WordClass';
 
 const REQUIRED_DIALECT_KEYS = ['variations', 'dialects', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
@@ -12,8 +13,8 @@ const wordSchema = new Schema({
   word: { type: String, required: true },
   wordClass: {
     type: String,
-    default: wordClass.NNC.value,
-    enum: Object.values(wordClass).map(({ value }) => value),
+    default: WordClass.NNC.value,
+    enum: Object.values(WordClass).map(({ value }) => value),
   },
   definitions: { type: [{ type: String }], default: [] },
   dialects: {
@@ -34,6 +35,17 @@ const wordSchema = new Schema({
     required: false,
     default: {},
   },
+  tenses: {
+    type: Object,
+    validate: (v) => {
+      const tenseValues = Object.values(Tenses);
+      Object.keys(v).every((key) => (
+        tenseValues.find(({ value: tenseValue }) => key === tenseValue)
+      ));
+    },
+    required: false,
+    default: {},
+  },
   pronunciation: { type: String, default: '' },
   isAccented: { type: Boolean, default: false },
   isStandardIgbo: { type: Boolean, default: false },
@@ -48,11 +60,26 @@ const wordSchema = new Schema({
   isComplete: { type: Boolean, default: false },
 }, { toObject: toObjectPlugin, timestamps: true });
 
+const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
+  ...finalIndexes,
+  [`tenses.${tense.value}`]: 'text',
+}), {});
+
 wordSchema.index({
   word: 'text',
   variations: 'text',
   dialects: 'text',
+  ...tensesIndexes,
   nsibidi: 'text',
+}, {
+  weights: {
+    word: 10,
+    tenses: 9,
+    dialects: 8,
+    vairations: 9,
+    nsibidi: 5,
+  },
+  name: 'Word text index',
 });
 
 toJSONPlugin(wordSchema);
