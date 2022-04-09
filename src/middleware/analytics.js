@@ -35,7 +35,7 @@ const trackEvent = ({
       url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
       data,
     })
-      .catch((err) => console.log(err.toJSON()));
+      .catch((err) => console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err));
   } else {
     axios({
       method: 'post',
@@ -45,7 +45,7 @@ const trackEvent = ({
       console.log('Logging the data:', res);
       console.log('Google Analytics Debug res: ', res.data);
     })
-      .catch((err) => console.log(err.toJSON()));
+      .catch((err) => console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err));
   }
 };
 
