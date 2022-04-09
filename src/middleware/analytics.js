@@ -1,33 +1,51 @@
 import axios from 'axios';
-import { GA_TRACKING_ID, GA_URL, DEBUG_GA_URL } from '../config';
+import {
+  GA_TRACKING_ID,
+  GA_API_SECRET,
+  GA_URL,
+  DEBUG_GA_URL,
+} from '../config';
 
 const trackEvent = ({
   clientIdentifier,
   category,
   action,
-  label,
+  keyword,
 }) => {
+  const params = {
+    measurement_id: GA_TRACKING_ID,
+    api_secret: GA_API_SECRET,
+  };
+
   const data = {
-    v: '1',
-    tid: GA_TRACKING_ID,
-    cid: clientIdentifier,
-    t: 'event',
-    ec: category,
-    ea: action,
-    el: label,
+    client_id: clientIdentifier,
+    events: [{
+      name: 'search',
+      params: {
+        category,
+        action,
+        search_term: keyword,
+      },
+    }],
   };
 
   if (process.env.NODE_ENV === 'production') {
-    axios.get(GA_URL, {
-      params: data,
-    });
+    axios.post({
+      method: 'post',
+      url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
+      data,
+    })
+      .catch((err) => console.log(err.toJSON()));
   } else {
-    axios.get(DEBUG_GA_URL, {
-      params: data,
+    axios({
+      method: 'post',
+      url: `${DEBUG_GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
+      data,
     }).then((res) => {
-      console.log('Logging the data:', data);
-      console.log('Google Analytics Debug res: ', res.data.hitParsingResult);
-    });
+      console.log('Logging the data:', res);
+      console.log('Google Analytics Debug res: ', res.data);
+    })
+      .catch((err) => console.log(err.toJSON()));
   }
 };
 
@@ -42,7 +60,7 @@ export default async (req, res, next) => {
       clientIdentifier: developerAPIKey || 'anon_client_id',
       category: pathname,
       action: method,
-      label: keyword,
+      keyword,
     });
 
     return next();
