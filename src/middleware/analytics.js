@@ -1,12 +1,11 @@
 import axios from 'axios';
-import { GA_TRACKING_ID, GA_URL } from '../config';
+import { GA_TRACKING_ID, GA_URL, DEBUG_GA_URL } from '../config';
 
 const trackEvent = ({
   clientIdentifier,
   category,
   action,
   label,
-  value,
 }) => {
   const data = {
     v: '1',
@@ -16,7 +15,6 @@ const trackEvent = ({
     ec: category,
     ea: action,
     el: label,
-    ev: value,
   };
 
   if (process.env.NODE_ENV === 'production') {
@@ -24,7 +22,12 @@ const trackEvent = ({
       params: data,
     });
   } else {
-    console.log('Logging the data:', data);
+    axios.get(DEBUG_GA_URL, {
+      params: data,
+    }).then((res) => {
+      console.log('Logging the data:', data);
+      console.log('Google Analytics Debug res: ', res.data.hitParsingResult);
+    });
   }
 };
 
@@ -39,8 +42,7 @@ export default async (req, res, next) => {
       clientIdentifier: developerAPIKey || 'anon_client_id',
       category: pathname,
       action: method,
-      label: 'Igbo API',
-      value: keyword,
+      label: keyword,
     });
 
     return next();
