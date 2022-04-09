@@ -84,6 +84,6 @@ if (sgMail) {
 export const MAIN_KEY = process.env.MAIN_KEY || 'main_key';
 
 // Google Analytics
-export const { GA_TRACKING_ID } = process.env;
-export const GA_URL = 'http://www.google-analytics.com/collect';
-export const DEBUG_GA_URL = 'http://www.google-analytics.com/debug/collect';
+export const { GA_TRACKING_ID, GA_API_SECRET } = process.env;
+export const GA_URL = 'https://www.google-analytics.com/mp/collect';
+export const DEBUG_GA_URL = 'https://www.google-analytics.com/debug/mp/collect';
