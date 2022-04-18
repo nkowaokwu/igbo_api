@@ -35,7 +35,7 @@ const Footer = () => {
                 text-center bg-white rounded-full w-12 h-12 m-2 hover:bg-gray-200
                 transition-all duration-200"
               >
-                <a href="https://github.com/ijemmao/igbo_api">
+                <a href="https://github.com/nkowaokwu/igbo_api">
                   <i className="fa fa-github text-4xl p-1" />
                 </a>
               </div>

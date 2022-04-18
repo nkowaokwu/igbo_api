@@ -68,7 +68,7 @@ const About = () => {
           {language === 'en' ? (
             <p>
               {'This is an '}
-              <a className="link" href="https://github.com/ijemmao/igbo_api">
+              <a className="link" href="https://github.com/nkowaokwu/igbo_api">
                 open-source project
               </a>
               {' created by '}
