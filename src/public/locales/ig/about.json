@@ -4,7 +4,7 @@
   "Our main goal is to make an easy-to-access, robust, lexical Igbo language resource to help solve a variety of complex problems within the worlds of education to Machine Learning.": "Ebumnobi ka anyị mkpa bụ imepụta ebenchọpụta asụsụ Igbo dị mfe iru aka, jupụta ejupụta, ma bụrụ mkpụrụasụsụ Igbo.",
   "The Igbo API hosts and serves all word and example sentence data that is shown on Nkọwa okwu, our official online Igbo-English dictionary app.": "API Igbo bụ ebe mkpụrụokwu niile na data omụmaatụ ahịrịokwu e gosipụtara na <a class=\"link\" href=\"https://nkowaokwu.com\">Nkọwa okwu</a> dị. ọkọwookwu ịntaneetị izugbe anyị.",
   "The initial words and examples that populated this API came from Kay Williamson's Igbo Dictionary entitled Dictionary of Ònìchà Igbo.": "Mkpụrụokwu na ọmụmaatụ mbụ jupụtara na API a si na ọkọwookwu Igbo Kay Williamson nke ọ kpọrọ  <a class=\"link\" href=\"http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf\">“Dictionary of Ònìchà Igbo”</a>.",
-  "This is an open-source project created by Ijemma Onwuzulike.": "Ihe a bụ <a class=\"link\" href=\"https://github.com/ijemmao/igbo_api\">ọrụ isi ndebanye ya ghe oghe</a> nke <a class=\"link\" href=\"https://twitter.com/ijemmaohno\">Ijemma Onwuzulike</a> mepụtara.",
+  "This is an open-source project created by Ijemma Onwuzulike.": "Ihe a bụ <a class=\"link\" href=\"https://github.com/nkowaokwu/igbo_api\">ọrụ isi ndebanye ya ghe oghe</a> nke <a class=\"link\" href=\"https://twitter.com/ijemmaohno\">Ijemma Onwuzulike</a> mepụtara.",
   "Contact": "Mkpọtụrụ",
   "Email": "Iimeelụ"
 }
