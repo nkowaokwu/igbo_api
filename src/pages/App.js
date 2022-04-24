@@ -39,15 +39,15 @@ const App = ({
         <div className="relative flex flex-col justify-center w-screen md:h-screen p-0 pt-10 lg:pt-16">
           <FadeIn>
             <h1
-              style={{ fontFamily: language !== 'en' ? 'inherit' : '' }}
+              style={{ fontFamily: language === 'ig' ? 'inherit' : '' }}
               className="text-center lg:text-left text-4xl md:text-6xl font-extrabold
               lg:ml-16 lg:mt-24 w-full lg:w-4/12"
             >
-              {t('The First African Language API').split('$API$')[0]}
+              {t('The First African Language').split('$API$')[0]}
               <span className="text-green-500">API</span>
               {
-                t('The First African Language API').split('$API$').length >= 2
-                  ? t('The First African Language API').split('$API$')[1]
+                t('The First African Language').split('$API$').length >= 2
+                  ? t('The First African Language').split('$API$')[1]
                   : ''
               }
             </h1>

@@ -17,6 +17,11 @@ const SubMenu = ({ isVisible, transparent }) => {
   const [language, setLanguage] = useState(i18n.language);
   const router = useRouter();
   const { t } = useTranslation();
+  const flags = new Map([
+    ['en', '🇺🇸'],
+    ['de', '🇩🇪'],
+    ['ig', '🇳🇬'],
+  ]);
 
   const navigate = (e, url) => {
     e.preventDefault();
@@ -99,7 +104,7 @@ const SubMenu = ({ isVisible, transparent }) => {
               backgroundColor: 'transparent',
             }}
           >
-            {language === 'en' ? '🇺🇸' : '🇳🇬'}
+            {flags.get(language) ? flags.get(language) : '' }
           </MenuButton>
           <MenuList color={transparent ? 'gray.500' : ''}>
             <MenuItem
