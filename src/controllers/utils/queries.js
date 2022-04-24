@@ -25,7 +25,7 @@ export const searchForAllWordsWithAudioPronunciations = () => ({
   $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
 });
 export const searchForAllWordsWithIsStandardIgbo = () => ({
-  isStandardIgbo: true,
+  attributes: { isStandardIgbo: true },
 });
 export const searchForAllWordsWithNsibidi = () => ({
   nsibidi: { $ne: '' },

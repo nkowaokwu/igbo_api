@@ -40,27 +40,30 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 
 /* Creates an object containing truthy key/value pairs for looking up words */
 const generateRequiredWordAttributes = (requiredAttributes) => (
-  Object.entries(requiredAttributes).reduce((attributes, [key, value]) => {
+  Object.entries(requiredAttributes).reduce((finalRequiredAttributes, [key, value]) => {
     if (key === 'isStandardIgbo' && value) {
       return {
-        ...attributes,
-        [key]: { $eq: true },
+        ...finalRequiredAttributes,
+        attributes: {
+          ...(finalRequiredAttributes.attributes || {}),
+          [key]: { $eq: true },
+        },
       };
     }
     if (key === 'nsibidi' && value) {
       return {
-        ...attributes,
+        ...finalRequiredAttributes,
         [key]: { $ne: '' },
       };
     }
     if (key === 'pronunciation' && value) {
       return {
-        ...attributes,
+        ...finalRequiredAttributes,
         pronunciation: { $exists: true },
         $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
       };
     }
-    return attributes;
+    return finalRequiredAttributes;
   }, {})
 );
 
