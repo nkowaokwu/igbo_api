@@ -1,7 +1,7 @@
 # Igbo API
-![backup_production](https://github.com/ijemmao/igbo_api/workflows/backup_production/badge.svg?event=schedule)
+![backup_production](https://github.com/nkowaokwu/igbo_api/workflows/backup_production/badge.svg?event=schedule)
 
-[Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://github.com/ijemmao/igbo_api/wiki) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
+[Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://github.com/nkowaokwu/igbo_api/wiki) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
 > Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people in at least 20 different dialects.
 
@@ -27,7 +27,7 @@ To run this project locally, the following tools need to be installed:
 Clone the project:
 
 ```
-git clone https://github.com/ijemmao/igbo_api.git
+git clone https://github.com/nkowaokwu/igbo_api.git
 ```
 
 Move into the project directory and install it's dependencies:

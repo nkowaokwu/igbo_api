@@ -17,7 +17,7 @@ const trackEvent = ({
     api_secret: GA_API_SECRET,
   };
 
-  const data = {
+  const data = JSON.stringify({
     client_id: clientIdentifier,
     events: [{
       name: 'search',
@@ -27,25 +27,29 @@ const trackEvent = ({
         search_term: keyword,
       },
     }],
-  };
+  });
 
-  if (process.env.NODE_ENV === 'production') {
-    axios.post({
+  if (process.env.NODE_ENV !== 'production') {
+    axios({
       method: 'post',
       url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
       data,
     })
-      .catch((err) => console.log(err.toJSON()));
+      .then((res) => {
+        console.log('Logging the data:', JSON.parse(data), JSON.parse(data).events[0].params);
+        console.log({ status: res.status, response: res.data });
+      })
+      .catch((err) => console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err));
   } else {
     axios({
       method: 'post',
       url: `${DEBUG_GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
       data,
     }).then((res) => {
-      console.log('Logging the data:', res);
+      console.log('Logging the data:', JSON.parse(data));
       console.log('Google Analytics Debug res: ', res.data);
     })
-      .catch((err) => console.log(err.toJSON()));
+      .catch((err) => console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err));
   }
 };
 

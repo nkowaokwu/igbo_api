@@ -4,10 +4,10 @@ Contributions are always welcome. Before contributing please read the [Code of C
 
 ## Feature Requests
 
-Feature requests should be captured through the repo's [issues](https://github.com/ijemmao/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
+Feature requests should be captured through the repo's [issues](https://github.com/nkowaokwu/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
 
 
-Before opening an issue, please read through the [issues](https://github.com/ijemmao/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
+Before opening an issue, please read through the [issues](https://github.com/nkowaokwu/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
 
 ## Areas of Contribution
 
