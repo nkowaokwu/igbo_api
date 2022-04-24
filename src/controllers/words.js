@@ -39,15 +39,12 @@ export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => 
 };
 
 /* Creates an object containing truthy key/value pairs for looking up words */
-const generateRequiredWordAttributes = (requiredAttributes) => (
-  Object.entries(requiredAttributes).reduce((finalRequiredAttributes, [key, value]) => {
+const generateFilteringParams = (filteringParams) => (
+  Object.entries(filteringParams).reduce((finalRequiredAttributes, [key, value]) => {
     if (key === 'isStandardIgbo' && value) {
       return {
         ...finalRequiredAttributes,
-        attributes: {
-          ...(finalRequiredAttributes.attributes || {}),
-          [key]: { $eq: true },
-        },
+        [`attributes.${key}`]: { $eq: true },
       };
     }
     if (key === 'nsibidi' && value) {
@@ -95,15 +92,15 @@ const getWordsFromDatabase = async (req, res, next) => {
     };
     let words;
     let query;
-    const requiredAttributes = generateRequiredWordAttributes(wordFields);
+    const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
-      query = searchEnglishRegexQuery({ regex: regexKeyword, requiredAttributes });
+      query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
       words = await searchWordUsingEnglish({ query, ...searchQueries });
     } else {
       const regularSearchIgboQuery = searchIgboTextSearch({
         keyword: searchWord,
         isUsingMainKey,
-        requiredAttributes,
+        filteringParams,
       });
       query = !strict
         ? regularSearchIgboQuery
@@ -112,7 +109,7 @@ const getWordsFromDatabase = async (req, res, next) => {
         );
       words = await searchWordUsingIgbo({ query, ...searchQueries });
       if (!words.length) {
-        query = searchEnglishRegexQuery({ regex: regexKeyword, requiredAttributes });
+        query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
         const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
         return packageResponse({
           res,
