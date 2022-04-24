@@ -594,7 +594,9 @@ describe('MongoDB Words', () => {
         definitions: ['first definition', 'second definition'],
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
-        isStandardIgbo: true,
+        attributes: {
+          isStandardIgbo: true,
+        },
         stems: [],
       };
       const validWord = new Word(word);
@@ -604,7 +606,7 @@ describe('MongoDB Words', () => {
             expect(res.status).to.equal(200);
             expect(res.body).to.have.lengthOf.at.least(1);
             forEach(res.body, (wordRes) => {
-              expect(wordRes.isStandardIgbo).to.be.equal(true);
+              expect(wordRes.attributes.isStandardIgbo).to.be.equal(true);
             });
             getWords({ keyword: word.word, pronunciation: true })
               .end((error, noRes) => {
