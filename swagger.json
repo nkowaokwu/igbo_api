@@ -39,8 +39,22 @@
         "pronunciation": {
           "type": "string"
         },
-        "isStandardIgbo": {
-          "type": "string"
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "isStandardIgbo": {
+              "type": "boolean"
+            },
+            "isAccented": {
+              "type": "boolean"
+            },
+            "isSlang": {
+              "type": "boolean"
+            },
+            "isConstructedTerm": {
+              "type": "boolean"
+            }
+          }
         },
         "variations": {
           "type": "array",

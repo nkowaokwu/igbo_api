@@ -20,8 +20,7 @@ export const WORD_KEYS = [
   'hypernyms',
   'hyponyms',
   'nsibidi',
-  'isAccented',
-  'isStandardIgbo',
+  'attributes',
   'updatedAt',
 ];
 export const EXAMPLE_KEYS = ['igbo', 'english', 'associatedWords', 'id', 'pronunciation', 'updatedAt', 'createdAt'];

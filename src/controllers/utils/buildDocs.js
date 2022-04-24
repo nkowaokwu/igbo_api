@@ -3,6 +3,7 @@
 
 import { assign, map, forEach } from 'lodash';
 import Word from '../../models/Word';
+import WordAttributes from '../../shared/constants/WordAttributes';
 
 /**
  * Removes _id and __v from nested documents
@@ -74,8 +75,7 @@ export const findWordsWithMatch = async ({
       stems: 1,
       updatedAt: 1,
       pronunciation: 1,
-      isAccented: 1,
-      isStandardIgbo: 1,
+      attributes: 1,
       synonyms: 1,
       antonyms: 1,
       hypernyms: 1,
@@ -84,6 +84,10 @@ export const findWordsWithMatch = async ({
       ...(examples ? { examples: 1 } : {}),
       ...(dialects ? { dialects: 1 } : {}),
     })
+    .append([
+      { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
+      { $unset: `attributes.${WordAttributes.IS_CONSTRUCTED_TERM.value}` },
+    ])
     .skip(skip)
     .limit(limit);
 

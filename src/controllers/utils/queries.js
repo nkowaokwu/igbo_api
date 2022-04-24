@@ -1,13 +1,13 @@
 import createRegExp from '../../shared/utils/createRegExp';
 
-const fullTextSearchQuery = ({ keyword, isUsingMainKey, requiredAttributes }) => (isUsingMainKey && !keyword
-  ? { word: { $regex: /./ }, ...requiredAttributes }
-  : { $text: { $search: keyword }, ...requiredAttributes }
+const fullTextSearchQuery = ({ keyword, isUsingMainKey, filteringParams }) => (isUsingMainKey && !keyword
+  ? { word: { $regex: /./ }, ...filteringParams }
+  : { $text: { $search: keyword }, ...filteringParams }
 );
 
-const definitionsQuery = ({ regex, requiredAttributes }) => ({
+const definitionsQuery = ({ regex, filteringParams }) => ({
   definitions: { $in: [regex] },
-  ...requiredAttributes,
+  ...filteringParams,
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
@@ -25,7 +25,7 @@ export const searchForAllWordsWithAudioPronunciations = () => ({
   $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
 });
 export const searchForAllWordsWithIsStandardIgbo = () => ({
-  isStandardIgbo: true,
+  'attributes.isStandardIgbo': true,
 });
 export const searchForAllWordsWithNsibidi = () => ({
   nsibidi: { $ne: '' },

@@ -4,6 +4,7 @@ import { toJSONPlugin, toObjectPlugin } from './plugins';
 import Dialects from '../shared/constants/Dialects';
 import Tenses from '../shared/constants/Tenses';
 import WordClass from '../shared/constants/WordClass';
+import WordAttributes from '../shared/constants/WordAttributes';
 
 const REQUIRED_DIALECT_KEYS = ['variations', 'dialects', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
@@ -46,9 +47,12 @@ const wordSchema = new Schema({
     required: false,
     default: {},
   },
+  attributes: Object.entries(WordAttributes)
+    .reduce((finalAttributes, [, { value }]) => ({
+      ...finalAttributes,
+      [value]: { type: Boolean, default: false },
+    }), {}),
   pronunciation: { type: String, default: '' },
-  isAccented: { type: Boolean, default: false },
-  isStandardIgbo: { type: Boolean, default: false },
   variations: { type: [{ type: String }], default: [] },
   frequency: { type: Number },
   synonyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
@@ -57,7 +61,6 @@ const wordSchema = new Schema({
   hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   stems: { type: [{ type: String }], default: [] },
   nsibidi: { type: String, default: '' },
-  isComplete: { type: Boolean, default: false },
 }, { toObject: toObjectPlugin, timestamps: true });
 
 const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
