@@ -22,7 +22,7 @@
     }
   ],
   "definitions": {
-    "word": {
+    "Word": {
       "properties": {
         "word": {
           "type": "string"
@@ -64,7 +64,7 @@
         }
       }
     },
-    "example": {
+    "Example": {
       "properties": {
         "igbo": {
           "type": "string"
@@ -79,6 +79,9 @@
           }
         }
       }
+    },
+    "WordClass": {
+      "type": "string"
     },
     "error": {
       "properties": {
