@@ -1,5 +1,6 @@
 import * as packageJson from '../package.json';
 import swaggerConfig from '../swagger.json';
+import injectWordClass from './shared/utils/injectWordClass';
 import './shared/utils/wrapConsole';
 
 const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
@@ -62,7 +63,7 @@ const SWAGGER_SETTINGS = {
   schemes: `${process.env.HEROKU ? ['https'] : ['http']}`,
 };
 
-const docs = { ...swaggerConfig, ...SWAGGER_SETTINGS };
+const docs = { ...injectWordClass(swaggerConfig), ...SWAGGER_SETTINGS };
 export const SWAGGER_DOCS = docs;
 export const SWAGGER_OPTIONS = {
   customSiteTitle: 'Igbo API Documentation',
