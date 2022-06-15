@@ -159,7 +159,7 @@ const SignUp = () => {
             ) : null}
           </form>
         </div>
-        <div className="flex flex-col w-0/12 lg:w-6/12 bg-gradient-to-r from-green-400 to-blue-500" />
+        <div className="flex flex-col w-0/12 lg:w-6/12 bg-gradient-to-tr from-green-100 to-green-500" />
       </div>
     </>
   );

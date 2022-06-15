@@ -1,6 +1,6 @@
 {
   "The First African Language ": "The First African Language ",
-  "homepageDescription": "Igbo is a rich Nigerian language that’s spoken by approximately 45 million people. Unfortunately, despite the language's wide use, it's considered to be a low resource language. The Igbo API aims to change this by making the process of learning Igbo more accessible to the Nigerian diaspora and beyond.",
+  "homepageDescription": "Access thousands of Igbo words, audio pronunciations, and example sentences to power the future of Igbo technology.",
   "Check on GitHub": "Check on GitHub",
   "Get an API Key": "Get an API Key",
   "About": "About",
@@ -13,6 +13,10 @@
   "Tone Marks": "Tone Marks",
   "Diacritics are used to convey the different tones present in the Igbo language.": "Diacritics are used to convey the different tones present in the Igbo language.",
   "Variations": "Variations",
+  "Nsịbịdị": "Nsịbịdị",
+  "Nsịbịdị is writing system was created in Nigeria.": "Nsịbịdị is writing system was created in Nigeria.",
+  "Proverbs": "Proverbs",
+  "Proverbs are a core aspect of the Igbo language.": "Proverbs are a core aspect of the Igbo language.",
   "The Igbo language has many dialects, some words capture this nuance by providing variant spellings.": "The Igbo language has many dialects, some words capture this nuance by providing variant spellings.",
   "Try it Out": "Try it Out",
   "With each API key, you will get 2,500 requests per day.": "With each API key, you will get 2,500 requests per day.",

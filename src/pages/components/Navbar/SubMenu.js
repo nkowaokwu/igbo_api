@@ -39,7 +39,7 @@ const SubMenu = ({ isVisible, transparent }) => {
     >
       <li className="transition-element">
         <button
-          className="cursor-pointer"
+          className="cursor-pointer font-normal"
           onClick={() => {
             router.push('/#features');
             window.scrollBy({ top: -100, behavior: 'smooth' });
@@ -51,6 +51,7 @@ const SubMenu = ({ isVisible, transparent }) => {
       </li>
       <li className="transition-element">
         <button
+          className="cursor-pointer font-normal"
           onClick={(e) => navigate(e, '/about')}
           type="button"
         >
@@ -58,10 +59,11 @@ const SubMenu = ({ isVisible, transparent }) => {
         </button>
       </li>
       <li className="transition-element">
-        <a href="/docs">Docs</a>
+        <a className="cursor-pointer font-normal" href="/docs">Docs</a>
       </li>
       <li className="transition-element">
         <button
+          className="cursor-pointer font-normal"
           onClick={() => {
             router.push('/signup');
           }}
@@ -70,6 +72,9 @@ const SubMenu = ({ isVisible, transparent }) => {
         >
           {t('Get an API Key')}
         </button>
+      </li>
+      <li className="flex justify-center items-center">
+        <div className="bg-gray-200" style={{ height: '50%', width: 1 }} />
       </li>
       <li className="transition-element">
         <button
@@ -103,7 +108,6 @@ const SubMenu = ({ isVisible, transparent }) => {
           </MenuButton>
           <MenuList color={transparent ? 'gray.500' : ''}>
             <MenuItem
-              textTransform="uppercase"
               onClick={() => handleChangeLocale('en')}
               className="flex flex-row justify-between items-center"
             >
@@ -114,7 +118,6 @@ const SubMenu = ({ isVisible, transparent }) => {
               {language === 'en' ? <chakra.span><CheckIcon /></chakra.span> : null}
             </MenuItem>
             <MenuItem
-              textTransform="uppercase"
               onClick={() => handleChangeLocale('ig')}
               className="flex flex-row justify-between items-center"
             >
