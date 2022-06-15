@@ -1,6 +1,6 @@
 {
   "The First African Language ": " mbụ nwere asụsụ si Afrịka",
-  "homepageDescription": "Igbo bụ asụsụ jupụtara ejupụta si na Naịjiria, nke ihe dị ka mmadụ nde 45 na-asụ. Agbanyeghị ọtụtụ ihe a na-eji ya bụ asụsụ eme, a na-ahụ ya dị ka asụsụ na-enweghị ọtụtụ ebe e nwere ike ịmụ ihe banyere ya. API chọrọ ịgbanwe nke a site n’ime ka usoro mmụta asụsụ Igbo dịrị ndị Naịjiria na-anọghị na Naịjiria mfe.",
+  "homepageDescription": "Nweta mkpụrụokwu Igbo ruru puku kwuru puku, ụda mkpọpụta, na ahịrịokwu ọmụmaatụ e ji akwado ndịniihu asụsụ Igbo na nkanụụzụ.",
   "Check on GitHub": "Lee na GitHub",
   "Get an API Key": "Nweta akara API",
   "About": "Banyere ya",
@@ -14,6 +14,10 @@
   "Diacritics are used to convey the different tones present in the Igbo language.": "E ji akara ụda gosipụta ụda dị iche iche e nwere n’asụsụ Igbo.",
   "Variations": "Ọdịiche",
   "The Igbo language has many dialects, some words capture this nuance by providing variant spellings.": "Asụsụ Igbo nwere ọtụtụ olumba. Ụfọdụ mkpụrụokwu gosiri nke a site na ndepụta e depụtara nsụpe olumba ndị ahụ.",
+  "Nsịbịdị": "Nsịbịdị",
+  "Nsịbịdị is writing system was created in Nigeria.": "Nsịbịdị bu usoro ede kere na Naijiria",
+  "Proverbs": "Ilu Igbo",
+  "Proverbs are a core aspect of the Igbo language.": "Ilu Igbo di mkpa akuku nke omenala na asusu Igbo",
   "Try it Out": "Nwaa ya",
   "With each API key, you will get 2,500 requests per day.": "Ọtụghe API ọbụla ga-enye gị.",
   "Enter a word below": "Denye mkpụrụokwu n’okpuru",

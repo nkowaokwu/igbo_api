@@ -11,10 +11,10 @@ const Stat = ({
 }) => (
   <div
     className="flex flex-col justify-center items-center h-auto
-    text-gray-700 text-center custom-border bg-gray-400 px-4 py-4 m-8"
+    text-gray-700 text-center px-4 py-4 m-8 rounded-md"
   >
     <h1 className="text-6xl text-gray-700 font-bold">{`${numberWithCommas(value)}${exact ? '' : '+'}`}</h1>
-    <h3 className="text-xl">{header}</h3>
+    <h3 className="text-xl text-gray-500">{header}</h3>
     {children}
   </div>
 );
