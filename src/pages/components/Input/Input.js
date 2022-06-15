@@ -7,7 +7,7 @@ const Input = React.forwardRef(({ header, type, ...rest }, ref) => (
     <input
       {...rest}
       ref={ref}
-      className="border-gray-400 border border-solid rounded-md h-10 w-full px-2"
+      className="border-gray-300 border border-solid rounded-md h-10 w-full px-2"
       type={type}
     />
   </div>

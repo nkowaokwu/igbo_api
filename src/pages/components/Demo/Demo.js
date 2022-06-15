@@ -72,7 +72,10 @@ const Demo = ({ searchWord, words }) => {
 
   return !isLoading ? (
     <div className="flex justify-center mb-16">
-      <div className="flex flex-col items-center md:items-start lg:flex-row lg:space-x-10 p-4 bg-gray-500 rounded-md">
+      <div
+        className="flex flex-col items-center md:items-start lg:flex-row
+        lg:space-x-10 p-4 bg-gradient-to-tl from-blue-100 to-white rounded-md"
+      >
         <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-8">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
             <h2>{t('Enter a word below')}</h2>
@@ -84,7 +87,7 @@ const Demo = ({ searchWord, words }) => {
               onInput={(e) => setKeyword(e.target.value)}
               onKeyPress={onEnter}
               className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
-              placeholder="i.e. please or biko"
+              placeholder="⌨️ i.e. please or biko"
               data-test="try-it-out-input"
               defaultValue={searchWord || initialQueries.word}
             />
