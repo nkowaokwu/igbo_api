@@ -39,7 +39,10 @@ const Footer = () => {
       >
         <div className="flex flex-row items-center justify-center">
           <div>
-            <div className="flex flex-row justify-center items-start my-6 space-x-32">
+            <div
+              className="flex flex-col lg:flex-row justify-center items-center
+              lg:items-start my-6 space-y-12 lg:space-y-0 lg:space-x-32"
+            >
               <div className="space-y-4">
                 <h3 className="font-bold">Projects</h3>
                 <ul className="list-none space-y-3">
