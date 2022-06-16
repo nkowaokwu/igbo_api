@@ -25,7 +25,7 @@ const Footer = () => {
           <button
             type="button"
             className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 hover:bg-transparent
-            hover:text-white hover:border-green-500 transition-all duration-200"
+            hover:text-gray-700 hover:border-green-500 transition-all duration-200"
             onClick={() => router.push('/signup')}
           >
             {t('Get an API Key')}
