@@ -47,17 +47,13 @@ const App = ({
               className="text-center text-4xl md:text-6xl font-extrabold
               lg:mt-24 w-full"
             >
-              {language === 'en' ? (
-                <>
-                  {t('The First African Language ')}
-                  <span className="text-green-500">API</span>
-                </>
-              ) : (
-                <>
-                  <span className="text-green-500">API</span>
-                  {t('The First African Language ')}
-                </>
-              )}
+              {t('The First African Language').split('$API$')[0]}
+              <span className="text-green-500">API</span>
+              {
+                t('The First African Language').split('$API$').length >= 2
+                  ? t('The First African Language').split('$API$')[1]
+                  : ''
+              }
             </h1>
           </FadeIn>
           <div className="text-xl md:text-xl w-full mb-4 mt-8 leading-10">
