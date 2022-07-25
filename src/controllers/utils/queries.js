@@ -30,3 +30,7 @@ export const searchForAllWordsWithIsStandardIgbo = () => ({
 export const searchForAllWordsWithNsibidi = () => ({
   nsibidi: { $ne: '' },
 });
+
+export const searchForAllDevelopers = () => ({
+  name: { $ne: '' },
+});

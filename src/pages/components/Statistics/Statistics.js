@@ -10,6 +10,7 @@ const Statistics = ({
   totalAudioPronunciations,
   totalStandardIgboWords,
   totalNsibidiWords,
+  totalDevelopers,
   contributors,
   stars,
 }) => {
@@ -29,6 +30,7 @@ const Statistics = ({
           header={t('Standard Igbo words').replace('{{number}}', totalStandardIgboWords)}
         />
         <Stat value={totalNsibidiWords} header={t('Words in Nsịbịdị').replace('{{number}}', totalNsibidiWords)} />
+        <Stat value={totalDevelopers} header={t('Developers using the Igbo API')} />
       </div>
       <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
         {contributors ? (
@@ -72,6 +74,7 @@ Statistics.propTypes = {
   totalAudioPronunciations: PropTypes.number,
   totalStandardIgboWords: PropTypes.number,
   totalNsibidiWords: PropTypes.number,
+  totalDevelopers: PropTypes.number,
   contributors: PropTypes.arrayOf(PropTypes.shape({})),
   stars: PropTypes.number,
 };
@@ -82,6 +85,7 @@ Statistics.defaultProps = {
   totalAudioPronunciations: 0,
   totalStandardIgboWords: 0,
   totalNsibidiWords: 0,
+  totalDevelopers: 0,
   contributors: [],
   stars: 0,
 };
