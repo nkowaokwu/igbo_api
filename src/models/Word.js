@@ -5,6 +5,7 @@ import Dialects from '../shared/constants/Dialects';
 import Tenses from '../shared/constants/Tenses';
 import WordClass from '../shared/constants/WordClass';
 import WordAttributes from '../shared/constants/WordAttributes';
+import WordTags from '../shared/constants/WordTags';
 
 const REQUIRED_DIALECT_KEYS = ['variations', 'dialects', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
@@ -35,6 +36,13 @@ const wordSchema = new Schema({
     },
     required: false,
     default: {},
+  },
+  tags: {
+    type: [String],
+    default: [],
+    validate: (v) => (
+      v.every((tag) => Object.values(WordTags).map(({ value }) => value).includes(tag))
+    ),
   },
   tenses: {
     type: Object,
