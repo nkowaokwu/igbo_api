@@ -53,6 +53,9 @@
             },
             "isConstructedTerm": {
               "type": "boolean"
+            },
+            "isBorrowedTerm": {
+              "type": "boolean"
             }
           }
         },
