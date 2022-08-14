@@ -70,28 +70,6 @@ const wordSchema = new Schema({
   nsibidi: { type: String, default: '' },
 }, { toObject: toObjectPlugin, timestamps: true });
 
-const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
-  ...finalIndexes,
-  [`tenses.${tense.value}`]: 'text',
-}), {});
-
-wordSchema.index({
-  word: 'text',
-  variations: 'text',
-  dialects: 'text',
-  ...tensesIndexes,
-  nsibidi: 'text',
-}, {
-  weights: {
-    word: 10,
-    tenses: 9,
-    dialects: 8,
-    vairations: 9,
-    nsibidi: 5,
-  },
-  name: 'Word text index',
-});
-
 toJSONPlugin(wordSchema);
 
 const WordModel = mongoose.model('Word', wordSchema);

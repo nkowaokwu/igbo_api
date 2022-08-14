@@ -1,8 +1,27 @@
 import createRegExp from '../../shared/utils/createRegExp';
+import Tenses from '../../shared/constants/Tenses';
 
-const fullTextSearchQuery = ({ keyword, isUsingMainKey, filteringParams }) => (isUsingMainKey && !keyword
+const fullTextSearchQuery = ({
+  keyword,
+  regex,
+  isUsingMainKey,
+  filteringParams,
+}) => (isUsingMainKey && !keyword
   ? { word: { $regex: /./ }, ...filteringParams }
-  : { $text: { $search: keyword }, ...filteringParams }
+  : {
+    $or: [
+      { word: { $regex: regex } },
+      { variations: { $regex: regex } },
+      { 'dialects.*.value': { $regex: regex } },
+      { nsibidi: { $regex: regex } },
+      { [`dialects.${keyword}`]: { $exists: true } },
+      ...Object.values(Tenses).reduce((finalIndexes, tense) => ([
+        ...finalIndexes,
+        { [`tenses.${tense.value}`]: { $regex: regex } },
+      ]), []),
+    ],
+    ...filteringParams,
+  }
 );
 
 const definitionsQuery = ({ regex, filteringParams }) => ({

@@ -99,6 +99,7 @@ const getWordsFromDatabase = async (req, res, next) => {
     } else {
       const regularSearchIgboQuery = searchIgboTextSearch({
         keyword: searchWord,
+        regex: regexKeyword,
         isUsingMainKey,
         filteringParams,
       });
