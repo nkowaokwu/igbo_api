@@ -43,12 +43,24 @@ export const GRAVE_LOWERCASE_U = 249;       // \u00f9
 export const GRAVE_ACUTE_LOWERCASE_U = 250; // \u00fa
 export const MACRON_LOWERCASE_U = 363;      // \u016b
 
-const caseInsensitiveN = '[n\u1e44\u01f9\u0144N\u1e45\u01f8\u0143]*'.normalize('NFD');
-const caseInsensitiveA = '[a\u0061\u00e0\u0101A\u00c0\u00c1\u0100]*'.normalize('NFD');
-const caseInsensitiveE = '[e\u00e8\u00e9\u0113E\u00c8\u00c9\u0112]*'.normalize('NFD');
-const caseInsensitiveI = '[i\u00ec\u00ed\u012b\u1ecbI\u00cc\u00cd\u012a\u1eca]*'.normalize('NFD');
-const caseInsensitiveO = '[o\u00f2\u00f3\u014d\u1ecdO\u00d2\u00d3\u014c\u1ecc]*'.normalize('NFD');
-const caseInsensitiveU = '[u\u00f9\u00fa\u016b\u1ee5U\u00d9\u00da\u016a\u1ee4]*'.normalize('NFD');
+const caseInsensitiveN = `${'[n\u1e44\u01f9\u0144N\u1e45\u01f8\u0143'
+  .normalize('NFD')}${'\u1e44\u01f9\u0144\u1e45\u01f8\u0143]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveA = `${'[aA'
+  .normalize('NFD')}${'\u0061\u00e0\u0101\u00c0\u00c1\u0100]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveE = `${'[eE'
+  .normalize('NFD')}${'\u00e8\u00e9\u0113\u00c8\u00c9\u0112]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveI = `${'[iI'
+  .normalize('NFD')}${'\u00ec\u00ed\u012b\u1ecb\u00cc\u00cd\u012a\u1eca]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveO = `${'[oO'
+  .normalize('NFD')}${'\u00f2\u00f3\u014d\u1ecd\u00d2\u00d3\u014c\u1ecc]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveU = `${'[uU'
+  .normalize('NFD')}${'\u00f9\u00fa\u016b\u1ee5\u00d9\u00da\u016a\u1ee4]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 
 export default {
   n: caseInsensitiveN,

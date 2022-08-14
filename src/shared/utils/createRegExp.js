@@ -12,7 +12,7 @@ export default (searchWord, hardMatch = false) => {
   ), '');
   /* Hard match checks to see if the searchWord is the beginning and end of the line, triggered by strict query */
   return new RegExp(!hardMatch
-    ? `(${front}${regexWordStringNormalizedNFD}${back})|(${front}${regexWordStringNormalizedNFC}${back})`
+    ? `(${front}${regexWordStringNormalizedNFD})`
     : `(^${front}${regexWordStringNormalizedNFD}${back}$)|(^${front}$${regexWordStringNormalizedNFC}${back}$)`,
   'i');
 };

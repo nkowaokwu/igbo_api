@@ -26,11 +26,11 @@ export const sortDocsBy = (searchWord, docs, key) => (
     const nextDocValue = get(nextDoc, key);
     const prevDocDifference = stringSimilarity.compareTwoStrings(
       searchWord.normalize('NFD'),
-      diacriticless(prevDocValue).normalize('NFD'),
+      diacriticless(prevDocValue.normalize('NFD')),
     ) * 100;
     const nextDocDifference = stringSimilarity.compareTwoStrings(
       searchWord.normalize('NFD'),
-      diacriticless(nextDocValue).normalize('NFD'),
+      diacriticless(nextDocValue.normalize('NFD')),
     ) * 100;
     if (prevDocDifference === nextDocDifference) {
       return 0;

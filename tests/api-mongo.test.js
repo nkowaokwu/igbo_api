@@ -331,22 +331,6 @@ describe('MongoDB Words', () => {
       });
     });
 
-    it('should return loose matches without accent marks', (done) => {
-      const keyword = 'akikà';
-      getWords({ keyword }).end((_, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(2);
-        forEach(res.body, (wordObject) => {
-          const { word } = wordObject;
-          const regex = createRegExp(word);
-          const isKeywordPresent = !!word.match(regex)[0];
-          expect(isKeywordPresent).to.equal(true);
-        });
-        done();
-      });
-    });
-
     it('should return igbo words when given english with an exact match', (done) => {
       const keyword = 'animal; meat';
       getWords({ keyword }).end((_, res) => {
@@ -376,7 +360,7 @@ describe('MongoDB Words', () => {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(7);
+        expect(res.body).to.have.lengthOf(9);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
@@ -479,7 +463,7 @@ describe('MongoDB Words', () => {
         .end((_, res) => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
-          expect(res.body).to.have.lengthOf(0);
+          expect(res.body).to.have.lengthOf(4);
           done();
         });
     });
@@ -550,11 +534,11 @@ describe('MongoDB Words', () => {
       getWords({ keyword, strict: true })
         .end((_, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.lengthOf.at.least(2);
+          expect(res.body).to.have.lengthOf.at.least(4);
           forEach(res.body, (word) => {
             const wordRegex = createRegExp(word.word);
             expect(word.word).to.match(wordRegex);
-            expect(word.word.length).to.equal(keyword.length);
+            expect(word.word.normalize('NFC').length).to.equal(keyword.normalize('NFC').length);
           });
           done();
         });

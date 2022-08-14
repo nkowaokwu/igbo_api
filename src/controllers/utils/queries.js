@@ -8,20 +8,22 @@ const fullTextSearchQuery = ({
   filteringParams,
 }) => (isUsingMainKey && !keyword
   ? { word: { $regex: /./ }, ...filteringParams }
-  : {
-    $or: [
-      { word: { $regex: regex } },
-      { variations: { $regex: regex } },
-      { 'dialects.*.value': { $regex: regex } },
-      { nsibidi: { $regex: regex } },
-      { [`dialects.${keyword}`]: { $exists: true } },
-      ...Object.values(Tenses).reduce((finalIndexes, tense) => ([
-        ...finalIndexes,
-        { [`tenses.${tense.value}`]: { $regex: regex } },
-      ]), []),
-    ],
-    ...filteringParams,
-  }
+  : (!isUsingMainKey && !keyword)
+    ? { $text: { $search: keyword }, ...filteringParams }
+    : {
+      $or: [
+        { word: keyword },
+        { word: { $regex: regex } },
+        { variations: keyword },
+        { nsibidi: keyword },
+        { [`dialects.${keyword}`]: { $exists: true } },
+        ...Object.values(Tenses).reduce((finalIndexes, tense) => ([
+          ...finalIndexes,
+          { [`tenses.${tense.value}`]: keyword },
+        ]), []),
+      ],
+      ...filteringParams,
+    }
 );
 
 const definitionsQuery = ({ regex, filteringParams }) => ({
