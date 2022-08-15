@@ -61,9 +61,10 @@ export const findWordsWithMatch = async ({
   words = words
     .collation({
       locale: 'ig',
-      caseFirst: 'upper',
       alternate: 'shifted',
       maxVariable: 'space',
+      strength: 1,
+      normalization: true,
     })
     .project({
       id: '$_id',

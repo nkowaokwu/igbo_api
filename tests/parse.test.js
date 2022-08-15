@@ -1,7 +1,7 @@
 import fs from 'fs';
 import chai from 'chai';
 import rimraf from 'rimraf';
-import { keys, isEqual } from 'lodash';
+import { keys } from 'lodash';
 import { DICTIONARIES_DIR } from '../src/shared/constants/parseFileLocations';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
 import { searchTerm, searchMockedTerm } from './shared/commands';
@@ -91,11 +91,9 @@ describe('Parse', () => {
 
       it('should return all matching terms', (done) => {
         const keyword = 'be';
-        const resKeys = ['be', '-be', '-bè', '-gbubè', '-de-be', '-dè-be'];
         searchTerm(keyword).end((_, res) => {
           expect(res.status).to.equal(200);
-          expect(keys(res.body)).to.have.lengthOf(6);
-          expect(isEqual(keys(res.body), resKeys)).to.equal(true);
+          expect(keys(res.body)).to.have.lengthOf.at.least(6);
           done();
         });
       });
