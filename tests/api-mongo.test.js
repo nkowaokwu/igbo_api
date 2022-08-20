@@ -36,6 +36,7 @@ describe('MongoDB Words', () => {
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
+        tenses: {},
       };
       const validWord = new Word(word);
       validWord.save()
@@ -44,6 +45,7 @@ describe('MongoDB Words', () => {
           expect(savedWord.word).to.equal('word');
           expect(savedWord.wordClass).to.equal('NNC');
           expect(savedWord.dialects).to.not.equal(undefined);
+          expect(savedWord.tenses).to.not.equal(undefined);
           done();
         });
     });
