@@ -16,6 +16,7 @@ export const WORD_KEYS = [
   'wordClass',
   'pronunciation',
   'relatedTerms',
+  'tenses',
   'hypernyms',
   'hyponyms',
   'nsibidi',

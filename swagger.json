@@ -39,6 +39,38 @@
         "pronunciation": {
           "type": "string"
         },
+        "nsibidi": {
+          "type": "string"
+        },
+        "tenses": {
+          "type": "object",
+          "properties": {
+            "infinitive": {
+              "type": "string"
+            },
+            "imperative": {
+              "type": "string"
+            },
+            "simplePast": {
+              "type": "string"
+            },
+            "simplePresent": {
+              "type": "string"
+            },
+            "presentContinuous": {
+              "type": "string"
+            },
+            "future": {
+              "type": "string"
+            }
+          }
+        },
+        "relatedTerms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "attributes": {
           "type": "object",
           "properties": {
