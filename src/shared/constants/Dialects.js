@@ -72,7 +72,7 @@ export default {
   ONI: {
     code: 'ibo-oni',
     value: 'ONI',
-    label: 'Onitsha',
+    label: 'Ọnịcha',
   },
   ECH: {
     code: 'ibo-ech',
@@ -88,5 +88,20 @@ export default {
     code: 'ibo-obo',
     value: 'OBO',
     label: 'Obosi',
+  },
+  NKA: {
+    code: 'ibo-nka',
+    value: 'NKA',
+    label: 'Nkanu',
+  },
+  OGI: {
+    code: 'ibo-ogi',
+    value: 'OGI',
+    label: 'Ogodi',
+  },
+  NKP: {
+    code: 'ibo-nkp',
+    value: 'NKP',
+    label: 'Nkpor',
   },
 };
