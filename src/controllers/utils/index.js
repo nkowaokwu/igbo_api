@@ -1,6 +1,7 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
 import { isNaN, orderBy, get } from 'lodash';
+import { findWordsWithMatchCount } from './buildDocs';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
@@ -84,7 +85,7 @@ export const packageResponse = async ({
   sort,
 }) => {
   const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
-  const count = await model.countDocuments(query);
+  const count = await findWordsWithMatchCount({ model, match: query });
   res.setHeader('Content-Range', count);
   return res.send(sendDocs);
 };

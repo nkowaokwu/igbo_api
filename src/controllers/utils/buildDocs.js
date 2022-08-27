@@ -6,6 +6,17 @@ import Word from '../../models/Word';
 import WordAttributes from '../../shared/constants/WordAttributes';
 
 /**
+ * Collation config
+ */
+const collationConfig = {
+  locale: 'ig',
+  alternate: 'shifted',
+  maxVariable: 'space',
+  strength: 1,
+  normalization: true,
+};
+
+/**
  * Removes _id and __v from nested documents
  * Normalizes (removes accent marks) from word and example's igbo
  */
@@ -34,6 +45,17 @@ const determineSorting = (match) => {
   return { 'definitions.0': 1 };
 };
 
+/**
+ * Creates foundation for Word aggregation pipeline
+ * @param {*} match
+ * @returns Word aggregation pipeline
+ */
+const generateAggregationBase = (Model, match) => (
+  Model.aggregate()
+    .match(match)
+    .sort(determineSorting(match))
+);
+
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
  */
@@ -44,9 +66,7 @@ export const findWordsWithMatch = async ({
   dialects,
   examples,
 }) => {
-  let words = Word.aggregate()
-    .match(match)
-    .sort(determineSorting(match));
+  let words = generateAggregationBase(Word, match);
 
   if (examples) {
     words = words
@@ -59,13 +79,7 @@ export const findWordsWithMatch = async ({
   }
 
   words = words
-    .collation({
-      locale: 'ig',
-      alternate: 'shifted',
-      maxVariable: 'space',
-      strength: 1,
-      normalization: true,
-    })
+    .collation(collationConfig)
     .project({
       id: '$_id',
       _id: 0,
@@ -95,3 +109,13 @@ export const findWordsWithMatch = async ({
 
   return examples ? removeKeysInNestedDoc(await words, 'examples') : words;
 };
+
+/*
+ * Counts total number of documents associated with query match
+ */
+export const findWordsWithMatchCount = async ({ model, match }) => (
+  (await generateAggregationBase(model, match)
+    .collation(collationConfig)
+    .project({ id: '$_id' }))
+    .length
+);
