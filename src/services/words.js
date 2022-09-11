@@ -17,7 +17,7 @@ export const resultsFromDictionarySearch = (regexWord, word, dictionary) => (
     const currentMatchedResults = { ...matchedResults };
     const termInformation = dictionary[key];
     const trimmedKey = removePrefix(key);
-    const isTrimmedKeyAndWordSameLength = (trimmedKey.match(regexWord) && trimmedKey.length === word.length);
+    const isTrimmedKeyAndWordSameLength = trimmedKey.match(regexWord);
     if (isTrimmedKeyAndWordSameLength || doesVariationMatch(termInformation, regexWord)) {
       currentMatchedResults[key] = termInformation;
     }
