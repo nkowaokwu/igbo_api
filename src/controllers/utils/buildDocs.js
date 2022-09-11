@@ -104,6 +104,7 @@ export const findWordsWithMatch = async ({
       { $unset: `attributes.${WordAttributes.IS_BORROWED_TERM.value}` },
       { $unset: `attributes.${WordAttributes.IS_CONSTRUCTED_TERM.value}` },
     ])
+    .sort({ definitions: -1 })
     .skip(skip)
     .limit(limit);
 

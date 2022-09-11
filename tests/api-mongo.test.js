@@ -362,7 +362,7 @@ describe('MongoDB Words', () => {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(9);
+        expect(res.body).to.have.lengthOf(6);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
@@ -460,12 +460,12 @@ describe('MongoDB Words', () => {
     });
 
     it('should not return any words when wrapping an igbo word in quotes', (done) => {
-      const keyword = '"mmili"';
+      const keyword = '"ulo"';
       getWords({ keyword })
         .end((_, res) => {
           expect(res.status).to.be.equal(200);
           expect(res.body).to.be.an('array');
-          expect(res.body).to.have.lengthOf(4);
+          expect(res.body).to.have.lengthOf(0);
           done();
         });
     });

@@ -42,7 +42,7 @@ const Statistics = ({
               {contributors.slice(0, 18)
                 .filter(({ login }) => login !== 'semantic-release-bot')
                 .map((contributor) => (
-                  <Tooltip label={`@${contributor.login}`}>
+                  <Tooltip key={contributor.login} label={`@${contributor.login}`}>
                     <div key={contributor.avatar_url}>
                       <a href={contributor.html_url}>
                         <img

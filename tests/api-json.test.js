@@ -30,7 +30,7 @@ describe('JSON Dictionary', () => {
       searchTerm(keyword).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.keys(keyword);
+        expect(res.body).to.have.keys(['(agụū) -gụ', '-gụ agụū', 'agụū mmīli', keyword]);
         expect(res.body[keyword][0].wordClass).to.equal('NNC');
         done();
       });
