@@ -17,7 +17,7 @@ export default {
   },
   TRANSPORTAION: {
     value: 'transportaion',
-    label: 'Transportaion',
+    label: 'Transportation',
   },
   CULTURE: {
     value: 'culture',
