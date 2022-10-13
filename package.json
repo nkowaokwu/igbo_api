@@ -33,7 +33,7 @@
     "start:docker": "docker-compose up",
     "test:build": "NODE_ENV=build yarn start",
     "dev:site": "cross-env NODE_ENV=development next",
-    "start:server": "cross-env NODE_ENV=development nodemon --delay 500ms --exec babel-node -- ./src/server.js",
+    "start:server": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./src/server.js",
     "start:database": "mongod --port 27017 --dbpath ./db",
     "start:database:replica": "npm-run-all -p start:database:primary start:database:secondary:first start:database:secondary:second",
     "start:database:primary": "mongod --port 2717 --dbpath ./mongos/db1 --replSet rs0 ",
@@ -162,5 +162,11 @@
       "changelog": true,
       "tag": true
     }
+  },
+  "nodemonConfig": {
+    "events": {
+      "restart": "fkill :8080 -fs"
+    },
+    "delay": "1500ms"
   }
 }

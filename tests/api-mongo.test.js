@@ -102,6 +102,113 @@ describe('MongoDB Words', () => {
         });
     });
 
+    it('should return back word information by searching definition', (done) => {
+      const keyword = 'smallpox';
+      const words = ['kịtịkpā', 'ùlì', 'ajō ọfịa'];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
+    it('should return back \'king\' documents', (done) => {
+      const keyword = 'king';
+      const words = [
+        'ezè',
+        'ezē mmụō',
+        'ezè nnùnù',
+        'ezè anụmànù',
+        'ezè azù',
+        '-chi',
+        'Ìchiè',
+        'ọbā',
+      ];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
+    it('should return back \'kings\' (plural) documents', (done) => {
+      const keyword = 'kings';
+      const words = [
+        'ezè',
+        'ezē mmụō',
+        'ezè nnùnù',
+        'ezè anụmànù',
+        'ezè azù',
+        '-chi',
+        'Ìchiè',
+        'ọbā',
+      ];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
+    it('should return back ada without Adaeze', (done) => {
+      const keyword = 'ada';
+      const words = [
+        'ada',
+        '-dà adà',
+        'Adà',
+        'adà akā',
+        'àda mmā',
+        'àda nne nnà',
+        'àda nne nnē',
+        'àda èzè',
+        'àda ìbà',
+        'àda òrà',
+        'àda Ǹrì',
+        'àda',
+        'ụmū āda',
+        '-kpò',
+        'òkwụkwụ',
+      ];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
+    it('should return back Adaeze without ada', (done) => {
+      const keyword = 'adaeze';
+      const words = ['àda èzè', 'Àdaèzè'];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
+    it('should return gbā ọ̄sọ̄ by searching \'run\'', (done) => {
+      const keyword = 'run';
+      const words = [
+        'gba ọsọ',
+        'gbabè',
+        '-gbaghalị',
+        '-gbabè',
+        '-kpo ọsọ',
+        '-kpo(lụ) ọsọ',
+        '-kpọwalụ',
+        '-gbakwu(te)',
+        '-gbakọ',
+        '-gba ǹje',
+        '-gbakute',
+        '-gba',
+      ];
+      getWords({ keyword }).end((_, res) => {
+        expect(res.status).to.equal(200);
+        forEach(res.body, (word) => expect(words).to.include(word.word));
+        done();
+      });
+    });
+
     it('should return word information with dialects query', (done) => {
       const keyword = 'bia';
       getWords({ keyword, dialects: true })
@@ -416,7 +523,7 @@ describe('MongoDB Words', () => {
       });
     });
 
-    it('should return a sorted list of igbo terms when using english', (done) => {
+    it.skip('should return a sorted list of igbo terms when using english', (done) => {
       const keyword = 'water';
       getWords({ keyword })
         .end((_, res) => {
