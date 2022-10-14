@@ -8,6 +8,10 @@ import SortingDirections from '../../shared/constants/sortingDirections';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
+const MATCHING_DEFINITION = 1000;
+const SIMILARITY_FACTOR = 100;
+const NO_FACTOR = 0;
+const SECONDARY_KEY = 'definitions[0]';
 
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
@@ -23,18 +27,23 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key) => (
   docs.sort((prevDoc, nextDoc) => {
+    const normalizedSearchWord = searchWord.normalize('NFD');
     const prevDocValue = get(prevDoc, key);
     const nextDocValue = get(nextDoc, key);
     const prevDocDifference = stringSimilarity.compareTwoStrings(
-      searchWord.normalize('NFD'),
+      normalizedSearchWord,
       diacriticless(prevDocValue.normalize('NFD')),
-    ) * 100;
+    ) * SIMILARITY_FACTOR + (get(prevDoc, SECONDARY_KEY).includes(normalizedSearchWord)
+      ? MATCHING_DEFINITION
+      : NO_FACTOR);
     const nextDocDifference = stringSimilarity.compareTwoStrings(
-      searchWord.normalize('NFD'),
+      normalizedSearchWord,
       diacriticless(nextDocValue.normalize('NFD')),
-    ) * 100;
+    ) * SIMILARITY_FACTOR + (get(nextDoc, SECONDARY_KEY).includes(normalizedSearchWord)
+      ? MATCHING_DEFINITION
+      : NO_FACTOR);
     if (prevDocDifference === nextDocDifference) {
-      return 0;
+      return NO_FACTOR;
     }
     return prevDocDifference > nextDocDifference ? -1 : 1;
   })
