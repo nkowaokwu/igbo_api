@@ -3,6 +3,7 @@
 
 import { assign, map, forEach } from 'lodash';
 import Word from '../../models/Word';
+import Dialects from '../../shared/constants/Dialects';
 import WordAttributes from '../../shared/constants/WordAttributes';
 
 /**
@@ -108,7 +109,15 @@ export const findWordsWithMatch = async ({
     .skip(skip)
     .limit(limit);
 
-  return examples ? removeKeysInNestedDoc(await words, 'examples') : words;
+  const finalWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
+  finalWords.forEach((word) => {
+    Object.keys(word?.dialects || {}).forEach((key) => {
+      word.dialects[key].dialects = (
+        word.dialects[key].dialects.map((dialect) => Dialects[dialect].label)
+      );
+    });
+  });
+  return finalWords;
 };
 
 /*
