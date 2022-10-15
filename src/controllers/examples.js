@@ -1,6 +1,7 @@
 import Example from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
+import { REDIS_CACHE_EXPIRATION } from '../config';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -17,16 +18,25 @@ const searchExamples = ({ query, skip, limit }) => (
 );
 
 /* Returns examples from MongoDB */
-export const getExamples = async (req, res, next) => {
+export const getExamples = (redisClient) => async (req, res, next) => {
   try {
     const {
+      searchWord,
       regexKeyword,
       skip,
       limit,
       ...rest
     } = handleQueries(req);
     const regexMatch = searchExamplesRegexQuery(regexKeyword);
-    const examples = await searchExamples({ query: regexMatch, skip, limit });
+    const redisCacheKey = `${searchWord}-${skip}-${limit}`;
+    const cachedExamples = await redisClient.get(redisCacheKey);
+    let examples;
+    if (cachedExamples) {
+      examples = cachedExamples;
+    } else {
+      examples = await searchExamples({ query: regexMatch, skip, limit });
+      redisClient.set(redisCacheKey, JSON.stringify(examples), 'EX', REDIS_CACHE_EXPIRATION);
+    }
 
     return packageResponse({
       res,
