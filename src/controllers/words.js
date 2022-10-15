@@ -6,6 +6,7 @@ import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
+import { REDIS_CACHE_EXPIRATION } from '../config';
 import { sortDocsBy, packageResponse, handleQueries } from './utils';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
@@ -65,7 +66,7 @@ const generateFilteringParams = (filteringParams) => (
 );
 
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase = async (req, res, next) => {
+const getWordsFromDatabase = async (req, res, next, redisClient) => {
   try {
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
@@ -94,8 +95,15 @@ const getWordsFromDatabase = async (req, res, next) => {
     let query;
     const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
-      query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
-      words = await searchWordUsingEnglish({ query, ...searchQueries });
+      const redisCacheKey = `"${searchWord}"-${skip}-${limit}`;
+      const cachedWords = await redisClient.get(redisCacheKey);
+      if (cachedWords) {
+        words = cachedWords;
+      } else {
+        query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
+        words = await searchWordUsingEnglish({ query, ...searchQueries });
+        redisClient.set(redisCacheKey, JSON.stringify(words), 'EX', REDIS_CACHE_EXPIRATION);
+      }
     } else {
       const regularSearchIgboQuery = searchIgboTextSearch({
         keyword: searchWord,
@@ -108,17 +116,18 @@ const getWordsFromDatabase = async (req, res, next) => {
         : strictSearchIgboQuery(
           searchWord,
         );
-      words = await searchWordUsingIgbo({ query, ...searchQueries });
-      if (!words.length) {
-        query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
-        const englishWords = await searchWordUsingEnglish({ query, ...searchQueries });
-        return packageResponse({
-          res,
-          docs: englishWords,
-          model: Word,
-          query,
-          ...rest,
-        });
+      const redisCacheKey = `${searchWord}-${skip}-${limit}`;
+      const cachedWords = await redisClient.get(redisCacheKey);
+      if (cachedWords) {
+        words = cachedWords;
+      } else {
+        words = await searchWordUsingIgbo({ query, ...searchQueries });
+        redisClient.set(redisCacheKey, JSON.stringify(words), 'EX', REDIS_CACHE_EXPIRATION);
+        if (!words.length) {
+          query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
+          words = await searchWordUsingEnglish({ query, ...searchQueries });
+          redisClient.set(redisCacheKey, JSON.stringify(words), 'EX', REDIS_CACHE_EXPIRATION);
+        }
       }
     }
     return packageResponse({
@@ -133,9 +142,9 @@ const getWordsFromDatabase = async (req, res, next) => {
   }
 };
 /* Gets words from MongoDB */
-export const getWords = async (req, res, next) => {
+export const getWords = (redisClient) => async (req, res, next) => {
   try {
-    return getWordsFromDatabase(req, res, next);
+    return getWordsFromDatabase(req, res, next, redisClient);
   } catch (err) {
     return next(err);
   }

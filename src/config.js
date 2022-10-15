@@ -88,3 +88,8 @@ export const MAIN_KEY = process.env.MAIN_KEY || 'main_key';
 export const { GA_TRACKING_ID, GA_API_SECRET } = process.env;
 export const GA_URL = 'https://www.google-analytics.com/mp/collect';
 export const DEBUG_GA_URL = 'https://www.google-analytics.com/debug/mp/collect';
+
+// Redis
+export const { REDIS_URL } = process.env;
+// Busts the cache every 12 hours
+export const REDIS_CACHE_EXPIRATION = 60 * 60 * 12;

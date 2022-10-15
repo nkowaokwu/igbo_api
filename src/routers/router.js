@@ -1,5 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
+import redisClient from '../services/redis';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
 import { postDeveloper } from '../controllers/developers';
@@ -22,9 +23,9 @@ const createDeveloperLimiter = rateLimit({
 // Google Analytics
 router.use(analytics);
 
-router.get('/words', validateApiKey, getWords);
+router.get('/words', validateApiKey, getWords(redisClient));
 router.get('/words/:id', validateApiKey, validId, getWord);
-router.get('/examples', validateApiKey, getExamples);
+router.get('/examples', validateApiKey, getExamples(redisClient));
 router.get('/examples/:id', validateApiKey, validId, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
