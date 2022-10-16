@@ -95,7 +95,7 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
     let query;
     const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
-      const redisCacheKey = `"${searchWord}"-${skip}-${limit}`;
+      const redisCacheKey = `"${searchWord}"-${skip}-${limit}-${dialects}-${examples}`;
       const cachedWords = await redisClient.get(redisCacheKey);
       if (cachedWords) {
         words = cachedWords;
@@ -116,7 +116,7 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         : strictSearchIgboQuery(
           searchWord,
         );
-      const redisCacheKey = `${searchWord}-${skip}-${limit}`;
+      const redisCacheKey = `${searchWord}-${skip}-${limit}-${dialects}-${examples}`;
       const cachedWords = await redisClient.get(redisCacheKey);
       if (cachedWords) {
         words = cachedWords;
