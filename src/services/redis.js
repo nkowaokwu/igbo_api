@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
 import { REDIS_URL } from '../config';
 
-const redisClient = REDIS_URL ? createClient({ uri: REDIS_URL }) : {
+const redisClient = REDIS_URL ? createClient({ url: REDIS_URL }) : {
   set: () => null,
   get: () => null,
   on: () => console.log('Fake Redis client'),
