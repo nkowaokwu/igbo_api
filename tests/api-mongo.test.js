@@ -189,21 +189,20 @@ describe('MongoDB Words', () => {
     it('should return gbā ọ̄sọ̄ by searching \'run\'', (done) => {
       const keyword = 'run';
       const words = [
-        'gba ọsọ',
-        'gbabè',
-        '-gbaghalị',
         '-gbabè',
+        '-gbaghalị',
         '-kpo ọsọ',
         '-kpo(lụ) ọsọ',
         '-kpọwalụ',
+        'ọsọ',
+        'mgbawa',
+        '-gba ọsọ',
         '-gbakwu(te)',
-        '-gbakọ',
-        '-gba ǹje',
-        '-gbakute',
         '-gba',
       ];
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
+        console.log('testing', res.body.map(({ word }) => word));
         forEach(res.body, (word) => expect(words).to.include(word.word));
         done();
       });
@@ -469,7 +468,7 @@ describe('MongoDB Words', () => {
       getWords({ keyword }).end((_, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.an('array');
-        expect(res.body).to.have.lengthOf(6);
+        expect(res.body).to.have.lengthOf(5);
         expect(uniqBy(res.body, (word) => word.id).length).to.equal(res.body.length);
         forEach(res.body, (word) => {
           expect(word).to.have.all.keys(WORD_KEYS);
