@@ -7,17 +7,6 @@ import Dialects from '../../shared/constants/Dialects';
 import WordAttributes from '../../shared/constants/WordAttributes';
 
 /**
- * Collation config
- */
-const collationConfig = {
-  locale: 'ig',
-  alternate: 'shifted',
-  maxVariable: 'space',
-  strength: 1,
-  normalization: true,
-};
-
-/**
  * Removes _id and __v from nested documents
  * Normalizes (removes accent marks) from word and example's igbo
  */
@@ -33,19 +22,6 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
   return docs;
 };
 
-/* Depending on whether or not a search term is provided,
- * the sort by key will be determined */
-const determineSorting = (match) => {
-  if (match.$text) {
-    if (match.$text.$search) {
-      return { word: { $meta: 'textScore' } };
-    }
-  } else if (match.word) {
-    return { word: 1, _id: 1 };
-  }
-  return { 'definitions.0': 1 };
-};
-
 /**
  * Creates foundation for Word aggregation pipeline
  * @param {*} match
@@ -54,7 +30,6 @@ const determineSorting = (match) => {
 const generateAggregationBase = (Model, match) => (
   Model.aggregate()
     .match(match)
-    .sort(determineSorting(match))
 );
 
 /* Performs a outer left lookup to append associated examples
@@ -80,7 +55,6 @@ export const findWordsWithMatch = async ({
   }
 
   words = words
-    .collation(collationConfig)
     .project({
       id: '$_id',
       _id: 0,
@@ -125,7 +99,6 @@ export const findWordsWithMatch = async ({
  */
 export const findWordsWithMatchCount = async ({ model, match }) => (
   (await generateAggregationBase(model, match)
-    .collation(collationConfig)
     .project({ id: '$_id' }))
     .length
 );
