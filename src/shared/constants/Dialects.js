@@ -39,6 +39,11 @@ export default {
     value: 'EZE',
     label: 'Ezeagu',
   },
+  ISU: {
+    code: 'ibo-isu',
+    value: 'ISU',
+    label: 'Isuama',
+  },
   MBA: {
     code: 'ibo-mba',
     value: 'MBA',
@@ -97,7 +102,7 @@ export default {
   OWE: {
     code: 'ibo-owe',
     value: 'OWE',
-    label: 'Owere; Isuama',
+    label: 'Owere',
   },
   OBO: {
     code: 'ibo-obo',
