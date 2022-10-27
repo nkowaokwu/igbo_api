@@ -45,14 +45,13 @@ export const getExamples = async (req, res, next) => {
       igbo: { $exists: false },
     }) : searchExamplesRegexQuery(regex);
     const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}-${version}`;
-    const redisExamplesCountCacheKey = `example-${searchWord}-${version}`;
-    const cachedExamples = await redisClient.get(redisExamplesCacheKey);
-    const cachedExamplesCount = await redisClient.get(redisExamplesCountCacheKey);
+    const rawCachedExamples = await redisClient.get(redisExamplesCacheKey);
+    const cachedExamples = typeof rawCachedExamples === 'string' ? JSON.parse(rawCachedExamples) : rawCachedExamples;
     let examples;
     let contentLength;
-    if (cachedExamples && cachedExamplesCount) {
-      examples = cachedExamples;
-      contentLength = cachedExamplesCount;
+    if (cachedExamples) {
+      examples = cachedExamples.examples;
+      contentLength = cachedExamples.contentLength;
     } else {
       const allExamples = await searchExamples({
         query: regexMatch,
@@ -63,10 +62,9 @@ export const getExamples = async (req, res, next) => {
       examples = allExamples.examples;
       contentLength = allExamples.contentLength;
       if (!redisClient.isFake) {
-        redisClient.set(redisExamplesCacheKey, JSON.stringify(allExamples.examples), 'EX', REDIS_CACHE_EXPIRATION);
         redisClient.set(
-          redisExamplesCountCacheKey,
-          JSON.stringify(allExamples.contentLength),
+          redisExamplesCacheKey,
+          JSON.stringify({ examples, contentLength }),
           'EX',
           REDIS_CACHE_EXPIRATION,
         );
