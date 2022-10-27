@@ -73,7 +73,7 @@ const Demo = ({ searchWord, words }) => {
   return !isLoading ? (
     <div className="flex justify-center mb-16">
       <div
-        className="flex flex-col items-center md:items-start lg:flex-row
+        className="flex flex-col items-center md:items-start xl:flex-row
         lg:space-x-10 p-4 bg-gradient-to-tl from-blue-100 to-white rounded-md"
       >
         <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-8">
@@ -132,7 +132,7 @@ const Demo = ({ searchWord, words }) => {
         <div className="flex flex-col w-full lg:w-auto lg:-mt-24">
           <h3
             className="text-center lg:text-left self-center w-full font-bold lg:mt-4
-          lg:w-auto lg:self-start text-2xl mb-5 text-white lg:text-gray-800"
+          lg:w-auto lg:self-start text-2xl mb-5 text-gray-800"
           >
             {t('Response')}
           </h3>

@@ -49,7 +49,9 @@ export const postDeveloper = async (req, res, next) => {
       apiKey,
     });
   } catch (err) {
-    console.trace(err);
+    if (process.env.NODE_ENV !== 'test') {
+      console.trace(err);
+    }
     return next(err);
   }
 };

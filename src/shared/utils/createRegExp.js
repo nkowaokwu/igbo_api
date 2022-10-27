@@ -41,10 +41,19 @@ export default (searchWord, hardMatch = false) => {
   const startWordBoundary = '(\\W|^)';
   const endWordBoundary = '(\\W|$)';
   /* Hard match checks to see if the searchWord is the beginning and end of the line, triggered by strict query */
-  return new RegExp(!hardMatch
+  const wordReg = new RegExp(!hardMatch
     ? `${startWordBoundary}(${front}${regexWordStringNormalizedNFD})${endWordBoundary}`
     + `|${startWordBoundary}(${front}${regexWordStringNormalizedNFC})${endWordBoundary}`
     : `${startWordBoundary}(^${front}${regexWordStringNormalizedNFD}${back}$)${endWordBoundary}`
     + `|${startWordBoundary}(^${front}$${regexWordStringNormalizedNFC}${back}$)${endWordBoundary}`,
   'i');
+
+  const definitionsReg = new RegExp(!hardMatch
+    ? `${startWordBoundary}(${regexWordStringNormalizedNFD})${endWordBoundary}`
+    + `|${startWordBoundary}(${regexWordStringNormalizedNFC})${endWordBoundary}`
+    : `${startWordBoundary}(^${regexWordStringNormalizedNFD}$)${endWordBoundary}`
+    + `|${startWordBoundary}(^$${regexWordStringNormalizedNFC}$)${endWordBoundary}`,
+  'i');
+
+  return { wordReg, definitionsReg };
 };

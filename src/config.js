@@ -77,7 +77,7 @@ export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 export const NEW_DEVELOPER_ACCOUNT_TEMPLATE = process.env.NEW_DEVELOPER_ACCOUNT_TEMPLATE || '';
 export const API_FROM_EMAIL = process.env.API_FROM_EMAIL || 'kedu@nkowaokwu.com';
 
-if (sgMail) {
+if (sgMail && process.env.NODE_ENV !== 'test') {
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
 

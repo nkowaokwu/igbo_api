@@ -1,7 +1,6 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
 import { isNaN, orderBy, get } from 'lodash';
-import { findWordsWithMatchCount } from './buildDocs';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import SortingDirections from '../../shared/constants/sortingDirections';
@@ -21,7 +20,7 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
     ? createQueryRegex(searchWord)
     : searchWord
       ? createQueryRegex(searchWord)
-      : /^[.{0,}\n{0,}]/
+      : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ }
 );
 
 /* Sorts all the docs based on the provided searchWord */
@@ -89,13 +88,11 @@ export const convertToSkipAndLimit = ({ page, range }) => {
 export const packageResponse = async ({
   res,
   docs,
-  model,
-  query,
+  contentLength,
   sort,
 }) => {
   const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
-  const count = await findWordsWithMatchCount({ model, match: query });
-  res.setHeader('Content-Range', count);
+  res.setHeader('Content-Range', contentLength);
   return res.send(sendDocs);
 };
 

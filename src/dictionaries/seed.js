@@ -34,14 +34,17 @@ const populate = async () => {
     );
     /* Waits for all the MongoDB document save promises to resolve */
     const savedWords = await Promise.all(wordPromises)
-      .then(() => {
+      .then(async () => {
         /* Wait 15 seconds to allow the data to be written to database */
-        setTimeout(() => {
+        await new Promise((resolve) => setTimeout(() => {
           console.green('✅ Seeding successful');
           if (process.env.NODE_ENV !== 'test') {
+            resolve();
             process.exit(0);
+          } else {
+            resolve();
           }
-        }, WRITE_DB_DELAY);
+        }, WRITE_DB_DELAY));
       })
       .catch((err) => {
         console.red('🔴 Seeding failed', err);
@@ -55,15 +58,14 @@ const seed = () => {
   if (mongoose.connection.readyState !== 1) {
     mongoose.connect(MONGO_URI, {
       useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
     });
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
-    return db.once('open', async () => {
+    return new Promise((resolve) => db.once('open', async () => {
       console.green('🗄 Database is connected');
-      return populate();
-    });
+      await populate();
+      return resolve();
+    }));
   }
   return populate();
 };

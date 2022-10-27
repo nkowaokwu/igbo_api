@@ -7,7 +7,7 @@ const doesVariationMatch = (termInformation, regexWord) => (
     if (status) {
       return status;
     }
-    return information.variations.some((variation) => variation.match(regexWord));
+    return (information.variations || []).some((variation) => variation.match(regexWord));
   }, false)
 );
 

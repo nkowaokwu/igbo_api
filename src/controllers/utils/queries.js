@@ -13,8 +13,8 @@ const fullTextSearchQuery = ({
     : {
       $or: [
         { word: keyword },
-        { word: { $regex: regex } },
-        { definitions: { $in: [regex] } },
+        { word: { $regex: regex.wordReg } },
+        { definitions: { $in: [regex.definitionsReg] } },
         { variations: keyword },
         { nsibidi: keyword },
         { [`dialects.${keyword}`]: { $exists: true } },
@@ -28,17 +28,19 @@ const fullTextSearchQuery = ({
 );
 
 const definitionsQuery = ({ regex, filteringParams }) => ({
-  definitions: { $in: [regex] },
+  definitions: { $in: [regex.definitionsReg] },
   ...filteringParams,
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
-export const searchExamplesRegexQuery = (regex) => ({ $or: [{ igbo: regex }, { english: regex }] });
+export const searchExamplesRegexQuery = (regex) => (
+  { $or: [{ igbo: regex.wordReg }, { english: regex.definitionsReg }] }
+);
 export const searchIgboTextSearch = fullTextSearchQuery;
 /* Since the word field is not non-accented yet,
  * a strict regex search for words has to be used as a workaround */
 export const strictSearchIgboQuery = (word) => ({
-  word: createRegExp(word, true),
+  word: createRegExp(word, true).wordReg,
 });
 export const searchEnglishRegexQuery = definitionsQuery;
 
