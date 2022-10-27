@@ -6,7 +6,7 @@ jobs:
   test:
     name: Build and Test
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 7
 
     strategy:
       matrix:
