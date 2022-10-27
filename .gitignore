@@ -135,6 +135,9 @@ dist
 # Cypress
 ./cypress/
 
+# Jest
+__tests__/__mocks__/dictionaries/
+
 # Backup directories
 ./igbo_api_db
 ./aws_pronunciations

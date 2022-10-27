@@ -282,5 +282,5 @@ yarn start:database
 in one terminal, and the following in another:
 
 ```
-yarn mocha
+yarn jest
 ```

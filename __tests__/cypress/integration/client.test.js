@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 describe('Igbo API Homepage', () => {
-  before(() => {
+  beforeAll(() => {
     cy.visit('/');
   });
 
@@ -48,7 +48,7 @@ describe('Igbo API Homepage', () => {
         cy.findByTestId('signup-password-input').clear().type('password');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
-          expect(res.response.statusCode).to.equal(200);
+          expect(res.response.statusCode).toEqual(200);
           cy.findByText('Success! Check your email');
         });
       });
@@ -67,7 +67,7 @@ describe('Igbo API Homepage', () => {
         cy.findByTestId('signup-password-input').clear().type('password');
         cy.findByText('Create account').click();
         cy.wait('@postDeveloper').then((res) => {
-          expect(res.response.statusCode).to.equal(400);
+          expect(res.response.statusCode).toEqual(400);
           cy.findByText('Create account').should('not.exist');
           cy.findByText('Success! Check your email').should('not.exist');
         });
