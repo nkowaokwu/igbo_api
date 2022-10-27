@@ -6,6 +6,7 @@ jobs:
   test:
     name: Build and Test
     runs-on: ubuntu-latest
+    timeout-minutes: 7
 
     strategy:
       matrix:
@@ -32,7 +33,7 @@ jobs:
       env:
         CI: test
     - name: Test API
-      run: yarn mocha
+      run: yarn jest
       env:
         CI: test
         MAIN_KEY: ${{ secrets.MAIN_KEY }}

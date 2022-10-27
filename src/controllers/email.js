@@ -7,8 +7,7 @@ import {
 
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
 
-if (sgMail && sgMail.setApiKey) {
-  console.log('setting the sendgrid api key', SENDGRID_API_KEY);
+if (sgMail && sgMail.setApiKey && process.env.NODE_ENV !== 'test') {
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
 

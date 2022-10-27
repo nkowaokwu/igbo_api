@@ -10,12 +10,12 @@ export const createExample = (data) => {
 };
 
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = ({ query, skip, limit }) => (
-  Example
-    .find(query)
-    .skip(skip)
-    .limit(limit)
-);
+const searchExamples = async ({ query, skip, limit }) => {
+  const allExamples = await Example.find(query);
+  const examples = allExamples.slice(skip, skip + limit);
+  const contentLength = allExamples.length;
+  return { examples, contentLength };
+};
 
 /* Returns examples from MongoDB */
 export const getExamples = (redisClient) => async (req, res, next) => {
@@ -28,21 +28,32 @@ export const getExamples = (redisClient) => async (req, res, next) => {
       ...rest
     } = handleQueries(req);
     const regexMatch = searchExamplesRegexQuery(regexKeyword);
-    const redisCacheKey = `${searchWord}-${skip}-${limit}`;
-    const cachedExamples = await redisClient.get(redisCacheKey);
+    const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}`;
+    const redisExamplesCountCacheKey = `example-${searchWord}`;
+    const cachedExamples = await redisClient.get(redisExamplesCacheKey);
+    const cachedExamplesCount = await redisClient.get(redisExamplesCountCacheKey);
     let examples;
-    if (cachedExamples) {
+    let contentLength;
+    if (cachedExamples && cachedExamplesCount) {
       examples = cachedExamples;
+      contentLength = cachedExamplesCount;
     } else {
-      examples = await searchExamples({ query: regexMatch, skip, limit });
-      redisClient.set(redisCacheKey, JSON.stringify(examples), 'EX', REDIS_CACHE_EXPIRATION);
+      const allExamples = await searchExamples({ query: regexMatch, skip, limit });
+      examples = allExamples.examples;
+      contentLength = allExamples.contentLength;
+      redisClient.set(redisExamplesCacheKey, JSON.stringify(allExamples.examples), 'EX', REDIS_CACHE_EXPIRATION);
+      redisClient.set(
+        redisExamplesCountCacheKey,
+        JSON.stringify(allExamples.contentLength),
+        'EX',
+        REDIS_CACHE_EXPIRATION,
+      );
     }
 
     return packageResponse({
       res,
       docs: examples,
-      model: Example,
-      query: regexMatch,
+      contentLength,
       ...rest,
     });
   } catch (err) {

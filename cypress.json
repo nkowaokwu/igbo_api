@@ -6,9 +6,9 @@
   "retries": {
     "runMode": 2
   },
-  "integrationFolder": "tests/cypress/integration",
-  "pluginsFile": "tests/cypress/plugins",
-  "supportFile": "tests/cypress/support",
+  "integrationFolder": "__tests__/cypress/integration",
+  "pluginsFile": "__tests__/cypress/plugins",
+  "supportFile": "__tests__/cypress/support",
   "pageLoadTimeout": 30000,
   "taskTimeout": 30000
 }

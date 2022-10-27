@@ -1,4 +1,3 @@
-import chai from 'chai';
 import {
   difference,
   forEach,
@@ -7,16 +6,14 @@ import {
 } from 'lodash';
 import SortingDirections from '../../src/shared/constants/sortingDirections';
 
-const { expect } = chai;
-
 const expectUniqSetsOfResponses = (res, responseLength = 10) => {
   forEach(res, (docsRes, index) => {
-    expect(docsRes.status).to.equal(200);
-    expect(docsRes.body).to.have.lengthOf.at.most(responseLength);
+    expect(docsRes.status).toEqual(200);
+    expect(docsRes.body.length).toBeLessThanOrEqual(responseLength);
     if (index !== 0) {
       const prevDocsIds = map(res[index].body, ({ id }) => ({ id }));
       const currentDocsIds = map(docsRes.body, ({ id }) => ({ id }));
-      expect(difference(prevDocsIds, currentDocsIds)).to.have.lengthOf(prevDocsIds.length);
+      expect(difference(prevDocsIds, currentDocsIds)).toHaveLength(prevDocsIds.length);
     }
   });
 };
@@ -32,7 +29,7 @@ const expectArrayIsInOrder = (array, key, direction = SortingDirections.ASCENDIN
         : String(array[index - 1][key] >= String(value))
     );
   });
-  expect(isOrdered).to.equal(true);
+  expect(isOrdered).toEqual(true);
 };
 
 export {

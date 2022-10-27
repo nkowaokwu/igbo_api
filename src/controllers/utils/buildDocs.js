@@ -79,11 +79,12 @@ export const findWordsWithMatch = async ({
       { $unset: `attributes.${WordAttributes.IS_BORROWED_TERM.value}` },
       { $unset: `attributes.${WordAttributes.IS_CONSTRUCTED_TERM.value}` },
     ])
-    .sort({ definitions: -1 })
-    .skip(skip)
-    .limit(limit);
+    .sort({ definitions: -1 });
 
-  const finalWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
+  const allWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
+  const contentLength = allWords.length;
+  const finalWords = allWords.slice(skip, skip + limit);
+
   finalWords.forEach((word) => {
     Object.keys(word?.dialects || {}).forEach((key) => {
       word.dialects[key].dialects = (
@@ -91,14 +92,5 @@ export const findWordsWithMatch = async ({
       );
     });
   });
-  return finalWords;
+  return { words: finalWords, contentLength };
 };
-
-/*
- * Counts total number of documents associated with query match
- */
-export const findWordsWithMatchCount = async ({ model, match }) => (
-  (await generateAggregationBase(model, match)
-    .project({ id: '$_id' }))
-    .length
-);
