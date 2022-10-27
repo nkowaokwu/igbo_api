@@ -76,7 +76,7 @@ const Demo = ({ searchWord, words }) => {
         className="flex flex-col items-center md:items-start xl:flex-row
         lg:space-x-10 p-4 bg-gradient-to-tl from-blue-100 to-white rounded-md"
       >
-        <div className="demo-inputs-container space-y-5 bg-white p-4 -mt-16 shadow-2xl rounded-md mb-8">
+        <div className="demo-inputs-container space-y-5 bg-white p-4 md:-mt-16 lg:mt-0 shadow-2xl rounded-md mb-8">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
             <h2>{t('Enter a word below')}</h2>
             <p className="self-center md:self-start">
@@ -129,7 +129,7 @@ const Demo = ({ searchWord, words }) => {
             </p>
           </form>
         </div>
-        <div className="flex flex-col w-full lg:w-auto lg:-mt-24">
+        <div className="flex flex-col w-full lg:w-auto xl:-mt-24">
           <h3
             className="text-center lg:text-left self-center w-full font-bold lg:mt-4
           lg:w-auto lg:self-start text-2xl mb-5 text-gray-800"
