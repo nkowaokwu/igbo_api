@@ -85,7 +85,7 @@ export const convertToSkipAndLimit = ({ page, range }) => {
 };
 
 /* Packages the res response with sorting */
-export const packageResponse = async ({
+export const packageResponse = ({
   res,
   docs,
   contentLength,
