@@ -2,6 +2,7 @@ import Example from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
 import { REDIS_CACHE_EXPIRATION } from '../config';
+import { findExamplesWithMatch } from './utils/buildDocs';
 
 /* Create a new Example object in MongoDB */
 export const createExample = (data) => {
@@ -10,17 +11,25 @@ export const createExample = (data) => {
 };
 
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = async ({ query, skip, limit }) => {
-  const allExamples = await Example.find(query);
-  const examples = allExamples.slice(skip, skip + limit);
-  const contentLength = allExamples.length;
-  return { examples, contentLength };
-};
+const searchExamples = ({
+  query,
+  version,
+  skip,
+  limit,
+}) => (
+  findExamplesWithMatch({
+    match: query,
+    version,
+    skip,
+    limit,
+  })
+);
 
 /* Returns examples from MongoDB */
 export const getExamples = (redisClient) => async (req, res, next) => {
   try {
     const {
+      version,
       searchWord,
       regexKeyword,
       skip,
@@ -28,8 +37,8 @@ export const getExamples = (redisClient) => async (req, res, next) => {
       ...rest
     } = handleQueries(req);
     const regexMatch = searchExamplesRegexQuery(regexKeyword);
-    const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}`;
-    const redisExamplesCountCacheKey = `example-${searchWord}`;
+    const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}-${version}`;
+    const redisExamplesCountCacheKey = `example-${searchWord}-${version}`;
     const cachedExamples = await redisClient.get(redisExamplesCacheKey);
     const cachedExamplesCount = await redisClient.get(redisExamplesCountCacheKey);
     let examples;
@@ -38,7 +47,12 @@ export const getExamples = (redisClient) => async (req, res, next) => {
       examples = cachedExamples;
       contentLength = cachedExamplesCount;
     } else {
-      const allExamples = await searchExamples({ query: regexMatch, skip, limit });
+      const allExamples = await searchExamples({
+        query: regexMatch,
+        version,
+        skip,
+        limit,
+      });
       examples = allExamples.examples;
       contentLength = allExamples.contentLength;
       redisClient.set(redisExamplesCacheKey, JSON.stringify(allExamples.examples), 'EX', REDIS_CACHE_EXPIRATION);

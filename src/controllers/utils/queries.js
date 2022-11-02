@@ -14,7 +14,7 @@ const fullTextSearchQuery = ({
       $or: [
         { word: keyword },
         { word: { $regex: regex.wordReg } },
-        { definitions: { $in: [regex.definitionsReg] } },
+        { 'definitions.definitions': { $in: [regex.definitionsReg] } },
         { variations: keyword },
         { nsibidi: keyword },
         { [`dialects.${keyword}`]: { $exists: true } },
@@ -28,7 +28,7 @@ const fullTextSearchQuery = ({
 );
 
 const definitionsQuery = ({ regex, filteringParams }) => ({
-  definitions: { $in: [regex.definitionsReg] },
+  'definitions.definitions': { $in: [regex.definitionsReg] },
   ...filteringParams,
 });
 

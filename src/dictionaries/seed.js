@@ -20,7 +20,12 @@ const populate = async () => {
           const word = { ...term };
           const cleanedKey = key.replace(/\./g, '');
           word.word = key;
-          word.wordClass = word.wordClass || WordClass.NNC.value;
+          word.definitions = [
+            {
+              wordClass: word.wordClass || WordClass.NNC.value,
+              definitions: word.definitions,
+            },
+          ];
           word.dialects = {
             [`${cleanedKey}-dialect`]: {
               dialects: [Dialects.NSA.value],

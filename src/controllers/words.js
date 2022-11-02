@@ -11,6 +11,7 @@ import { sortDocsBy, packageResponse, handleQueries } from './utils';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
+import Versions from '../shared/constants/Versions';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -28,15 +29,26 @@ export const getWordData = (req, res, next) => {
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
-export const searchWordUsingIgbo = async ({ query, searchWord, ...rest }) => {
-  const { words, contentLength } = await findWordsWithMatch({ match: query, ...rest });
-  return { words: sortDocsBy(searchWord, words, 'word'), contentLength };
+export const searchWordUsingIgbo = async ({
+  query,
+  searchWord,
+  version,
+  ...rest
+}) => {
+  const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
+  return { words: sortDocsBy(searchWord, words, 'word', version), contentLength };
 };
 
 /* Searches for word with English stored in MongoDB */
-export const searchWordUsingEnglish = async ({ query, searchWord, ...rest }) => {
-  const { words, contentLength } = await findWordsWithMatch({ match: query, ...rest });
-  return { words: sortDocsBy(searchWord, words, 'definitions[0]'), contentLength };
+export const searchWordUsingEnglish = async ({
+  query,
+  searchWord,
+  version,
+  ...rest
+}) => {
+  const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
+  const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
+  return { words: sortDocsBy(searchWord, words, sortKey, version), contentLength };
 };
 
 /* Creates an object containing truthy key/value pairs for looking up words */
@@ -73,6 +85,7 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
       req.query.keyword = req.query.keyword.replace(/["']/g, '');
     }
     const {
+      version,
       searchWord,
       regexKeyword,
       skip,
@@ -96,8 +109,8 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
     let query;
     const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
-      const redisWordsCacheKey = `"${searchWord}"-${skip}-${limit}-${dialects}-${examples}`;
-      const redisWordsCountCacheKey = `"${searchWord}"`;
+      const redisWordsCacheKey = `"${searchWord}"-${skip}-${limit}-${version}-${dialects}-${examples}`;
+      const redisWordsCountCacheKey = `"${searchWord}-${version}"`;
       const cachedWords = await redisClient.get(redisWordsCacheKey);
       const cachedWordsCount = await redisClient.get(redisWordsCountCacheKey);
       if (cachedWords && cachedWordsCount) {
@@ -105,7 +118,7 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         contentLength = cachedWordsCount;
       } else {
         query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
-        const wordsByEnglish = await searchWordUsingEnglish({ query, ...searchQueries });
+        const wordsByEnglish = await searchWordUsingEnglish({ query, version, ...searchQueries });
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
         redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByEnglish.words), 'EX', REDIS_CACHE_EXPIRATION);
@@ -123,15 +136,15 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         : strictSearchIgboQuery(
           searchWord,
         );
-      const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${dialects}-${examples}`;
-      const redisWordsCountCacheKey = `${searchWord}`;
+      const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${examples}`;
+      const redisWordsCountCacheKey = `${searchWord}-${version}`;
       const cachedWords = await redisClient.get(redisWordsCacheKey);
       const cachedWordsCount = await redisClient.get(redisWordsCountCacheKey);
       if (cachedWords && cachedWordsCount) {
         words = cachedWords;
         contentLength = cachedWordsCount;
       } else {
-        const wordsByIgbo = await searchWordUsingIgbo({ query, ...searchQueries });
+        const wordsByIgbo = await searchWordUsingIgbo({ query, version, ...searchQueries });
         words = wordsByIgbo.words;
         contentLength = wordsByIgbo.contentLength;
         redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByIgbo.words), 'EX', REDIS_CACHE_EXPIRATION);
@@ -161,10 +174,11 @@ export const getWords = (redisClient) => async (req, res, next) => {
 export const getWord = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { dialects, examples } = handleQueries(req);
+    const { dialects, examples, version } = handleQueries(req);
 
     const updatedWord = await findWordsWithMatch({
       match: { _id: mongoose.Types.ObjectId(id) },
+      version,
       limit: 1,
       dialects,
       examples,

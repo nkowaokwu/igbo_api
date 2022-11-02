@@ -1,16 +1,19 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import { isNaN, orderBy, get } from 'lodash';
+import { isNaN, get } from 'lodash';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
-import SortingDirections from '../../shared/constants/sortingDirections';
+import Versions from '../../shared/constants/Versions';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
 const MATCHING_DEFINITION = 1000;
 const SIMILARITY_FACTOR = 100;
 const NO_FACTOR = 0;
-const SECONDARY_KEY = 'definitions[0]';
+
+const generateSecondaryKey = (version) => (
+  version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]'
+);
 
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
@@ -24,7 +27,7 @@ const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
 );
 
 /* Sorts all the docs based on the provided searchWord */
-export const sortDocsBy = (searchWord, docs, key) => (
+export const sortDocsBy = (searchWord, docs, key, version) => (
   docs.sort((prevDoc, nextDoc) => {
     const normalizedSearchWord = searchWord.normalize('NFD');
     const prevDocValue = get(prevDoc, key);
@@ -32,13 +35,13 @@ export const sortDocsBy = (searchWord, docs, key) => (
     const prevDocDifference = stringSimilarity.compareTwoStrings(
       normalizedSearchWord,
       diacriticless(prevDocValue.normalize('NFD')),
-    ) * SIMILARITY_FACTOR + (get(prevDoc, SECONDARY_KEY).includes(normalizedSearchWord)
+    ) * SIMILARITY_FACTOR + ((get(prevDoc, generateSecondaryKey(version)) || '').includes(normalizedSearchWord)
       ? MATCHING_DEFINITION
       : NO_FACTOR);
     const nextDocDifference = stringSimilarity.compareTwoStrings(
       normalizedSearchWord,
       diacriticless(nextDocValue.normalize('NFD')),
-    ) * SIMILARITY_FACTOR + (get(nextDoc, SECONDARY_KEY).includes(normalizedSearchWord)
+    ) * SIMILARITY_FACTOR + ((get(nextDoc, generateSecondaryKey(version)) || '').includes(normalizedSearchWord)
       ? MATCHING_DEFINITION
       : NO_FACTOR);
     if (prevDocDifference === nextDocDifference) {
@@ -89,11 +92,9 @@ export const packageResponse = ({
   res,
   docs,
   contentLength,
-  sort,
 }) => {
-  const sendDocs = sort ? orderBy(docs, [sort.key], [sort.direction]) : docs;
   res.setHeader('Content-Range', contentLength);
-  return res.send(sendDocs);
+  return res.send(docs);
 };
 
 /* Converts the filter query into a word to be used as the keyword query */
@@ -120,36 +121,12 @@ const parseRange = (range) => {
   }
 };
 
-/* Parses out the key and the direction of sorting out into an object */
-const parseSortKeys = (sort) => {
-  try {
-    if (sort) {
-      const parsedSort = JSON.parse(sort);
-      const [key] = parsedSort[0] === 'approvals' || parsedSort[0] === 'denials'
-        ? [`${parsedSort[0]}.length`] : parsedSort;
-      const direction = parsedSort[1].toLowerCase();
-      if (direction.toLowerCase() !== SortingDirections.ASCENDING
-        && direction.toLowerCase() !== SortingDirections.DESCENDING) {
-        throw new Error('Invalid sorting direction. Valid sorting optons: "asc" or "desc"');
-      }
-      return {
-        key,
-        direction,
-      };
-    }
-    return null;
-  } catch {
-    throw new Error(`Invalid sort query syntax. Expected: [key,direction], Received: ${sort}`);
-  }
-};
-
 /* Handles all the queries for searching in the database */
-export const handleQueries = ({ query = {}, isUsingMainKey }) => {
+export const handleQueries = ({ query = {}, isUsingMainKey, baseUrl }) => {
   const {
     keyword = '',
     page: pageQuery = 0,
     range: rangeQuery = '',
-    sort: sortQuery,
     filter: filterQuery,
     strict: strictQuery,
     dialects: dialectsQuery,
@@ -158,21 +135,21 @@ export const handleQueries = ({ query = {}, isUsingMainKey }) => {
     pronunciation,
     nsibidi,
   } = query;
+  const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
   const regexKeyword = constructRegexQuery({ isUsingMainKey, searchWord });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
-  const sort = parseSortKeys(sortQuery);
   const strict = strictQuery === 'true';
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
   return {
+    version,
     searchWord,
     regexKeyword,
     page,
-    sort,
     skip,
     limit,
     strict,
