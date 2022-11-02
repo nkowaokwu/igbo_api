@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import {
   forEach,
+  has,
   isEqual,
   uniqBy,
   some,
@@ -9,17 +10,23 @@ import {
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
 import Word from '../src/models/Word';
+import WordClass from '../src/shared/constants/WordClass';
 import {
-  WORD_KEYS,
-  EXAMPLE_KEYS,
+  WORD_KEYS_V1,
+  WORD_KEYS_V2,
+  EXAMPLE_KEYS_V1,
   EXCLUDE_KEYS,
   INVALID_ID,
   NONEXISTENT_ID,
   MAIN_KEY,
 } from './shared/constants';
-import SortingDirections from '../src/shared/constants/sortingDirections';
-import { getWords, getWord } from './shared/commands';
-import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
+import {
+  getWords,
+  getWord,
+  getWordsV2,
+  getWordV2,
+} from './shared/commands';
+import { expectUniqSetsOfResponses } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
 
 const { ObjectId } = mongoose.Types;
@@ -29,8 +36,10 @@ describe('MongoDB Words', () => {
     it('should populate mongodb with words', async () => {
       const word = {
         word: 'word',
-        wordClass: 'NNC',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'NNC',
+          definitions: ['first definition', 'second definition'],
+        }],
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
@@ -40,7 +49,7 @@ describe('MongoDB Words', () => {
       const savedWord = await validWord.save();
       expect(savedWord.id).not.toEqual(undefined);
       expect(savedWord.word).toEqual('word');
-      expect(savedWord.wordClass).toEqual('NNC');
+      expect(savedWord.definitions[0].wordClass).toEqual('NNC');
       expect(savedWord.dialects).not.toEqual(undefined);
       expect(savedWord.tenses).not.toEqual(undefined);
     });
@@ -48,8 +57,10 @@ describe('MongoDB Words', () => {
     it('should fail populate mongodb with incorrect variations', async () => {
       const word = {
         word: 'word',
-        wordClass: 'N',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'NNC',
+          definitions: ['first definition', 'second definition'],
+        }],
         dialects: {
           dialectalWord: {
             variations: [],
@@ -69,8 +80,10 @@ describe('MongoDB Words', () => {
 
     it('should throw an error for invalid data', async () => {
       const word = {
-        wordClass: 'n.',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'n.',
+          definitions: ['first definition', 'second definition'],
+        }],
         examples: ['first example'],
         stems: [],
       };
@@ -82,15 +95,15 @@ describe('MongoDB Words', () => {
     });
   });
 
-  describe('/GET mongodb words', () => {
+  describe('/GET mongodb words V1', () => {
     it('should return word information', async () => {
       const keyword = 'bia';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
       forEach(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
         });
       });
     });
@@ -104,7 +117,7 @@ describe('MongoDB Words', () => {
     });
 
     it('should return back \'king\' documents', async () => {
-      const keyword = 'king';
+      const keyword = ' ';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(10);
@@ -112,21 +125,9 @@ describe('MongoDB Words', () => {
 
     it('should return back \'kings\' (plural) documents', async () => {
       const keyword = 'kings';
-      const words = [
-        'ùfìè ',
-        'Udō',
-        'òbi',
-        'enu igwē nà ùwà',
-        '-chi',
-        'igwē',
-        'àbànì',
-        'oke ọnū',
-        'ọbā',
-        'ime ōbi',
-      ];
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      forEach(res.body, (word) => expect(words).toContain(word.word));
+      expect(res.body.length).toEqual(10);
     });
 
     it('should return back words related to paradoxa (within paraenthesis)', async () => {
@@ -208,8 +209,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
       forEach(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
         });
       });
     });
@@ -219,8 +220,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       const result = await getWord(res.body[0].id);
       expect(result.status).toEqual(200);
-      Object.keys(result.body).forEach((key) => {
-        expect(WORD_KEYS).toContain(key);
+      WORD_KEYS_V1.forEach((key) => {
+        expect(has(result.body, key)).toBeTruthy();
       });
     });
 
@@ -349,8 +350,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(3);
       forEach(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
         });
       });
     });
@@ -362,8 +363,8 @@ describe('MongoDB Words', () => {
       expect(res.body).toHaveLength(6);
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
         });
       });
     });
@@ -384,8 +385,8 @@ describe('MongoDB Words', () => {
       expect(res.body.length).toBeLessThanOrEqual(5);
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
         });
       });
     });
@@ -396,14 +397,18 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(5);
       expect(every(res.body, (word) => {
+        WORD_KEYS_V1.forEach((key) => {
+          expect(has(word, key)).toBeTruthy();
+        });
         Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS).toContain(key);
           expect(EXCLUDE_KEYS).not.toContain(key);
         });
 
         expect(every(word.examples, (example) => {
+          EXAMPLE_KEYS_V1.forEach((key) => {
+            expect(has(word, key)).toBeTruthy();
+          });
           Object.keys(example).forEach((key) => {
-            expect(EXAMPLE_KEYS).toContain(key);
             expect(EXCLUDE_KEYS).not.toContain(key);
           });
         }));
@@ -446,29 +451,6 @@ describe('MongoDB Words', () => {
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(0);
-    });
-
-    it('should return a descending sorted list of words with sort query', async () => {
-      const key = 'word';
-      const direction = SortingDirections.DESCENDING;
-      const res = await getWords({ sort: `["${key}", "${direction}"]` });
-      expect(res.status).toEqual(200);
-      expectArrayIsInOrder(res.body, key, direction);
-    });
-
-    it('should return an ascending sorted list of words with sort query', async () => {
-      const key = 'definitions';
-      const direction = SortingDirections.ASCENDING;
-      const res = await getWords({ sort: `["${key}", "${direction}"]` });
-      expect(res.status).toEqual(200);
-      expectArrayIsInOrder(res.body, key, direction);
-    });
-
-    it('should throw an error due to malformed sort query', async () => {
-      const key = 'wordClass';
-      const res = await getWords({ sort: `["${key}]` });
-      expect(res.status).toEqual(400);
-      expect(res.body.error).not.toEqual(undefined);
     });
 
     it('should return words with no keyword as an application using MAIN_KEY', async () => {
@@ -527,8 +509,10 @@ describe('MongoDB Words', () => {
     it('should return a word marked as isStandardIgbo', async () => {
       const word = {
         word: 'standardIgboWord',
-        wordClass: 'NNC',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'NNC',
+          definitions: ['first definition', 'second definition'],
+        }],
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         attributes: {
@@ -552,8 +536,10 @@ describe('MongoDB Words', () => {
     it('should return a word marked with nsibidi', async () => {
       const word = {
         word: 'nsibidi',
-        wordClass: 'NNC',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'NNC',
+          definitions: ['first definition', 'second definition'],
+        }],
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         nsibidi: 'nsibidi',
@@ -575,8 +561,10 @@ describe('MongoDB Words', () => {
     it('should return a word marked with nsibidi', async () => {
       const word = {
         word: 'pronunciation',
-        wordClass: 'NNC',
-        definitions: ['first definition', 'second definition'],
+        definitions: [{
+          wordClass: 'NNC',
+          definitions: ['first definition', 'second definition'],
+        }],
         dialects: {},
         examples: [new ObjectId(), new ObjectId()],
         pronunciation: 'audio-pronunciation',
@@ -593,6 +581,31 @@ describe('MongoDB Words', () => {
       const noRes = await getWords({ keyword: word.word, nsibidi: true });
       expect(noRes.status).toEqual(200);
       expect(noRes.body).toHaveLength(0);
+    });
+  });
+
+  describe('/GET mongodb words V2', () => {
+    it('should return word information', async () => {
+      const keyword = 'bia';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(2);
+      forEach(res.body, (word) => {
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V2).toContain(key);
+        });
+        expect(WordClass[word.definitions[0].wordClass]).not.toBe(undefined);
+      });
+    });
+    it('should return one word', async () => {
+      const res = await getWordsV2({}, { apiKey: MAIN_KEY });
+      expect(res.status).toEqual(200);
+      const result = await getWordV2(res.body[0].id);
+      expect(result.status).toEqual(200);
+      WORD_KEYS_V2.forEach((key) => {
+        expect(has(result.body, key)).toBeTruthy();
+      });
+      expect(WordClass[result.body.definitions[0].wordClass]).not.toBe(undefined);
     });
   });
 });

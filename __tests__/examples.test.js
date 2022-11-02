@@ -1,16 +1,21 @@
-import { isEqual, forEach } from 'lodash';
-import SortingDirections from '../src/shared/constants/sortingDirections';
-import { getExamples, getExample } from './shared/commands';
+import { isEqual, forEach, has } from 'lodash';
+import {
+  getExamples,
+  getExample,
+  getExamplesV2,
+  getExampleV2,
+} from './shared/commands';
 import {
   MAIN_KEY,
-  EXAMPLE_KEYS,
+  EXAMPLE_KEYS_V1,
+  EXAMPLE_KEYS_V2,
   INVALID_ID,
   NONEXISTENT_ID,
 } from './shared/constants';
-import { expectUniqSetsOfResponses, expectArrayIsInOrder } from './shared/utils';
+import { expectUniqSetsOfResponses } from './shared/utils';
 
 describe('MongoDB Examples', () => {
-  describe('/GET mongodb examples', () => {
+  describe('/GET mongodb examples V1', () => {
     it('should return no examples by searching', async () => {
       const res = await getExamples();
       expect(res.status).toEqual(200);
@@ -27,8 +32,8 @@ describe('MongoDB Examples', () => {
       const res = await getExamples({}, { apiKey: MAIN_KEY });
       const result = await getExample(res.body[0].id);
       expect(result.status).toEqual(200);
-      Object.keys(result.body).forEach((key) => {
-        expect(EXAMPLE_KEYS).toContain(key);
+      EXAMPLE_KEYS_V1.forEach((key) => {
+        expect(has(result.body, key)).toBeTruthy();
       });
     });
 
@@ -72,36 +77,6 @@ describe('MongoDB Examples', () => {
       expect(isEqual(res[0].body, res[1].body)).toEqual(false);
     });
 
-    it('should return a descending sorted list of examples with sort query', async () => {
-      const key = 'igbo';
-      const direction = SortingDirections.DESCENDING;
-      const res = await getExamples({ sort: `["${key}", "${direction}"]` });
-      expect(res.status).toEqual(200);
-      expectArrayIsInOrder(res.body, key, direction);
-    });
-
-    it('should return an ascending sorted list of examples with sort query', async () => {
-      const key = 'english';
-      const direction = SortingDirections.ASCENDING;
-      const res = await getExamples({ sort: `["${key}", "${direction}"]` });
-      expect(res.status).toEqual(200);
-      expectArrayIsInOrder(res.body, key, direction);
-    });
-
-    it('should throw an error due to malformed sort query', async () => {
-      const key = 'igbo';
-      const res = await getExamples({ sort: `["${key}]` });
-      expect(res.status).toEqual(400);
-      expect(res.body.error).not.toEqual(undefined);
-    });
-
-    it('should throw an error due to invalid sorting ordering', async () => {
-      const key = 'igbo';
-      const res = await getExamples({ sort: `["${key}", "invalid"]` });
-      expect(res.status).toEqual(400);
-      expect(res.body.error).not.toEqual(undefined);
-    });
-
     it('should return words with no keyword as an application using MAIN_KEY', async () => {
       const res = await getExamples({ apiKey: MAIN_KEY });
       expect(res.status).toEqual(200);
@@ -128,6 +103,17 @@ describe('MongoDB Examples', () => {
       expect(res.status).toEqual(200);
       forEach(res.body, (example) => {
         expect(example.igbo).not.toEqual(undefined);
+      });
+    });
+  });
+
+  describe('/GET mongodb examples V2', () => {
+    it('should return one example', async () => {
+      const res = await getExamplesV2({}, { apiKey: MAIN_KEY });
+      const result = await getExampleV2(res.body[0].id);
+      expect(result.status).toEqual(200);
+      Object.keys(result.body).forEach((key) => {
+        expect(EXAMPLE_KEYS_V2).toContain(key);
       });
     });
   });
