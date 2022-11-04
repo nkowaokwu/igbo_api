@@ -43,7 +43,7 @@ const populate = async () => {
         /* Wait 15 seconds to allow the data to be written to database */
         await new Promise((resolve) => setTimeout(() => {
           console.green('✅ Seeding successful');
-          if (process.env.NODE_ENV !== 'test') {
+          if (process.env.NODE_ENV === 'production') {
             resolve();
             process.exit(0);
           } else {
