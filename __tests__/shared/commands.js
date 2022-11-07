@@ -2,6 +2,7 @@ import request from 'supertest';
 import app from '../../src/app';
 import {
   API_ROUTE,
+  API_ROUTE_V2,
   FALLBACK_API_KEY,
   LOCAL_ROUTE,
   TEST_ROUTE,
@@ -18,7 +19,7 @@ export const createDeveloper = (data) => (
     .send(data)
 );
 
-/* Searches for words using the data in MongoDB */
+/* Searches for words using the data in MongoDB V2 */
 export const getWords = (query = {}, options = {}) => (
   server
     .get(`${API_ROUTE}/words`)
@@ -33,14 +34,44 @@ export const getWord = (id, query = {}, options = {}) => (
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
 
+/* Searches for words using the data in MongoDB V2 */
+export const getWordsV2 = (query = {}, options = {}) => (
+  server
+    .get(`${API_ROUTE_V2}/words`)
+    .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+
+export const getWordV2 = (id, query = {}, options = {}) => (
+  server
+    .get(`${API_ROUTE_V2}/words/${id}`)
+    .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+
+/* Searches for examples using the data in MongoDB V1 */
 export const getExample = (id, query = {}, options = {}) => (
   server
     .get(`${API_ROUTE}/examples/${id}`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
-/* Searches for examples using the data in MongoDB */
+
 export const getExamples = (query = {}, options = {}) => (
+  server
+    .get(`${API_ROUTE}/examples`)
+    .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+
+/* Searches for examples using the data in MongoDB V2 */
+export const getExampleV2 = (id, query = {}, options = {}) => (
+  server
+    .get(`${API_ROUTE}/examples/${id}`)
+    .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+export const getExamplesV2 = (query = {}, options = {}) => (
   server
     .get(`${API_ROUTE}/examples`)
     .query(query)

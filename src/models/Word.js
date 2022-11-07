@@ -11,14 +11,25 @@ const REQUIRED_DIALECT_KEYS = ['variations', 'dialects', 'pronunciation'];
 const REQUIRED_DIALECT_CONSTANT_KEYS = ['code', 'value', 'label'];
 
 const { Schema, Types } = mongoose;
-const wordSchema = new Schema({
-  word: { type: String, required: true },
+
+const definitionSchema = new Schema({
   wordClass: {
     type: String,
     default: WordClass.NNC.value,
     enum: Object.values(WordClass).map(({ value }) => value),
   },
   definitions: { type: [{ type: String }], default: [] },
+}, { _id: true });
+
+const wordSchema = new Schema({
+  word: { type: String, required: true },
+  definitions: [{
+    type: definitionSchema,
+    validate: (definitions) => (
+      Array.isArray(definitions)
+      && definitions.length > 0
+    ),
+  }],
   dialects: {
     type: Object,
     validate: (v) => {

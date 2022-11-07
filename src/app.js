@@ -7,9 +7,15 @@ import sslRedirect from 'heroku-ssl-redirect';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
-import { router, siteRouter, testRouter } from './routers';
+import {
+  router,
+  routerV2,
+  siteRouter,
+  testRouter,
+} from './routers';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
+import Versions from './shared/constants/Versions';
 import {
   MONGO_URI,
   SWAGGER_DOCS,
@@ -27,6 +33,7 @@ app.use(bodyParser.raw());
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  autoIndex: true,
 });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -58,12 +65,13 @@ app.use('/services', express.static('./services'));
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS, SWAGGER_OPTIONS));
 
 /* Grabs data from MongoDB */
-app.use('/api/v1', router);
+app.use(`/api/${Versions.VERSION_1}`, router);
+app.use(`/api/${Versions.VERSION_2}`, routerV2);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
   app.use(
-    '/api/v1/test',
+    `/api/${Versions.VERSION_1}/test`,
     testRouter,
   );
 }

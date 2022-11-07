@@ -1,8 +1,15 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 
-import { assign, map, forEach } from 'lodash';
+import {
+  assign,
+  flatten,
+  forEach,
+  map,
+} from 'lodash';
+import Versions from '../../shared/constants/Versions';
 import Word from '../../models/Word';
+import Example from '../../models/Example';
 import Dialects from '../../shared/constants/Dialects';
 import WordAttributes from '../../shared/constants/WordAttributes';
 
@@ -37,6 +44,7 @@ const generateAggregationBase = (Model, match) => (
  */
 export const findWordsWithMatch = async ({
   match,
+  version,
   skip = 0,
   limit = 10,
   dialects,
@@ -59,7 +67,6 @@ export const findWordsWithMatch = async ({
       id: '$_id',
       _id: 0,
       word: 1,
-      wordClass: 1,
       definitions: 1,
       variations: 1,
       stems: 1,
@@ -86,6 +93,10 @@ export const findWordsWithMatch = async ({
   const finalWords = allWords.slice(skip, skip + limit);
 
   finalWords.forEach((word) => {
+    if (version === Versions.VERSION_1) {
+      word.wordClass = word.definitions[0].wordClass;
+      word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
+    }
     Object.keys(word?.dialects || {}).forEach((key) => {
       word.dialects[key].dialects = (
         word.dialects[key].dialects.map((dialect) => Dialects[dialect].label)
@@ -93,4 +104,32 @@ export const findWordsWithMatch = async ({
     });
   });
   return { words: finalWords, contentLength };
+};
+
+export const findExamplesWithMatch = async ({
+  match,
+  version,
+  skip = 0,
+  limit = 10,
+}) => {
+  let examples = generateAggregationBase(Example, match);
+
+  examples = examples
+    .project({
+      id: '$_id',
+      _id: 0,
+      igbo: 1,
+      english: 1,
+      meaning: 1,
+      style: 1,
+      associatedWords: 1,
+      ...(version === Versions.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
+      pronunciation: 1,
+    });
+
+  const allExamples = await examples;
+  const contentLength = allExamples.length;
+  const finalExamples = allExamples.slice(skip, skip + limit);
+
+  return { examples: finalExamples, contentLength };
 };

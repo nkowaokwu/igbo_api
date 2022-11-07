@@ -20,7 +20,12 @@ const populate = async () => {
           const word = { ...term };
           const cleanedKey = key.replace(/\./g, '');
           word.word = key;
-          word.wordClass = word.wordClass || WordClass.NNC.value;
+          word.definitions = [
+            {
+              wordClass: word.wordClass || WordClass.NNC.value,
+              definitions: word.definitions,
+            },
+          ];
           word.dialects = {
             [`${cleanedKey}-dialect`]: {
               dialects: [Dialects.NSA.value],
@@ -38,7 +43,7 @@ const populate = async () => {
         /* Wait 15 seconds to allow the data to be written to database */
         await new Promise((resolve) => setTimeout(() => {
           console.green('✅ Seeding successful');
-          if (process.env.NODE_ENV !== 'test') {
+          if (process.env.NODE_ENV === 'production') {
             resolve();
             process.exit(0);
           } else {

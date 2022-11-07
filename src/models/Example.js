@@ -13,6 +13,7 @@ const exampleSchema = new Schema({
     default: ExampleStyles.NO_STYLE.value,
   },
   associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+  associatedDefinitionsSchemas: { type: [{ type: Types.ObjectId }], default: [] },
   pronunciation: { type: String, default: '' },
 }, { toObject: toObjectPlugin, timestamps: true });
 

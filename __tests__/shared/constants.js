@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
+import Versions from '../../src/shared/constants/Versions';
 
 export const LOCAL_ROUTE = '/';
-export const API_ROUTE = '/api/v1';
-export const TEST_ROUTE = '/api/v1/test';
+export const API_ROUTE = `/api/${Versions.VERSION_1}`;
+export const API_ROUTE_V2 = `/api/${Versions.VERSION_2}`;
+export const TEST_ROUTE = `/api/${Versions.VERSION_1}/test`;
 export const API_URL = 'https://igboapi.com';
 
 export const SAVE_DOC_DELAY = 2000;
 
-export const WORD_KEYS = [
+export const WORD_KEYS_V1 = [
   'variations',
   'definitions',
   'stems',
@@ -22,12 +24,38 @@ export const WORD_KEYS = [
   'attributes',
   'updatedAt',
 ];
-export const EXAMPLE_KEYS = [
+export const WORD_KEYS_V2 = [
+  'variations',
+  'definitions',
+  'stems',
+  'id',
+  'word',
+  'pronunciation',
+  'relatedTerms',
+  'hypernyms',
+  'hyponyms',
+  'nsibidi',
+  'attributes',
+  'updatedAt',
+];
+export const EXAMPLE_KEYS_V1 = [
   'igbo',
   'english',
   'meaning',
   'style',
   'associatedWords',
+  'id',
+  'pronunciation',
+  'updatedAt',
+  'createdAt',
+];
+export const EXAMPLE_KEYS_V2 = [
+  'igbo',
+  'english',
+  'meaning',
+  'style',
+  'associatedWords',
+  'associatedDefinitionsSchemas',
   'id',
   'pronunciation',
   'updatedAt',
