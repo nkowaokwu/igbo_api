@@ -40,7 +40,12 @@ describe('MongoDB Words', () => {
           wordClass: 'NNC',
           definitions: ['first definition', 'second definition'],
         }],
-        dialects: {},
+        dialects: [{
+          variations: [],
+          dialects: ['NSA'],
+          pronunciation: '',
+          word: 'dialectalWord',
+        }],
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
         tenses: {},
@@ -50,8 +55,13 @@ describe('MongoDB Words', () => {
       expect(savedWord.id).not.toEqual(undefined);
       expect(savedWord.word).toEqual('word');
       expect(savedWord.definitions[0].wordClass).toEqual('NNC');
-      expect(savedWord.dialects).not.toEqual(undefined);
       expect(savedWord.tenses).not.toEqual(undefined);
+      const wordRes = await getWord(savedWord.id, { dialects: true });
+      expect(wordRes.status).toEqual(200);
+      expect(wordRes.body.dialects.dialectalWord).not.toEqual(undefined);
+      const v2WordRes = await getWordV2(savedWord.id, { dialects: true });
+      expect(v2WordRes.status).toEqual(200);
+      expect(v2WordRes.body.dialects[0].word).toEqual('dialectalWord');
     });
 
     it('should fail populate mongodb with incorrect variations', async () => {
@@ -62,11 +72,10 @@ describe('MongoDB Words', () => {
           definitions: ['first definition', 'second definition'],
         }],
         dialects: {
-          dialectalWord: {
-            variations: [],
-            dialects: ['mismatch'],
-            pronunciation: '',
-          },
+          variations: [],
+          dialects: ['mismatch'],
+          pronunciation: '',
+          word: 'dialectalWord',
         },
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
@@ -74,7 +83,7 @@ describe('MongoDB Words', () => {
       const validWord = new Word(word);
       await validWord.save()
         .catch((err) => {
-          expect(err.message.includes('`dialects`')).toEqual(true);
+          expect(err.message.includes('dialects')).toEqual(true);
         });
     });
 
@@ -513,7 +522,7 @@ describe('MongoDB Words', () => {
           wordClass: 'NNC',
           definitions: ['first definition', 'second definition'],
         }],
-        dialects: {},
+        dialects: [],
         examples: [new ObjectId(), new ObjectId()],
         attributes: {
           isStandardIgbo: true,
@@ -540,7 +549,7 @@ describe('MongoDB Words', () => {
           wordClass: 'NNC',
           definitions: ['first definition', 'second definition'],
         }],
-        dialects: {},
+        dialects: [],
         examples: [new ObjectId(), new ObjectId()],
         nsibidi: 'nsibidi',
         stems: [],
@@ -565,7 +574,7 @@ describe('MongoDB Words', () => {
           wordClass: 'NNC',
           definitions: ['first definition', 'second definition'],
         }],
-        dialects: {},
+        dialects: [],
         examples: [new ObjectId(), new ObjectId()],
         pronunciation: 'audio-pronunciation',
         stems: [],

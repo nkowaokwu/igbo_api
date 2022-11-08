@@ -96,12 +96,16 @@ export const findWordsWithMatch = async ({
     if (version === Versions.VERSION_1) {
       word.wordClass = word.definitions[0].wordClass;
       word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
+      if (dialects) {
+        word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({
+          ...finalDialects,
+          [dialect.word]: {
+            ...dialect,
+            dialects: dialect.dialects.map((d) => Dialects[d].label),
+          },
+        }), {});
+      }
     }
-    Object.keys(word?.dialects || {}).forEach((key) => {
-      word.dialects[key].dialects = (
-        word.dialects[key].dialects.map((dialect) => Dialects[dialect].label)
-      );
-    });
   });
   return { words: finalWords, contentLength };
 };
