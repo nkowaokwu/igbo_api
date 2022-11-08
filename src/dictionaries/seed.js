@@ -26,13 +26,12 @@ const populate = async () => {
               definitions: word.definitions,
             },
           ];
-          word.dialects = {
-            [`${cleanedKey}-dialect`]: {
-              dialects: [Dialects.NSA.value],
-              variations: [],
-              pronunciation: '',
-            },
-          };
+          word.dialects = [{
+            dialects: [Dialects.NSA.value],
+            variations: [],
+            pronunciation: '',
+            word: `${cleanedKey}-dialect`,
+          }];
           return createWord(word);
         });
       }),

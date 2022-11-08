@@ -17,7 +17,7 @@ const fullTextSearchQuery = ({
         { 'definitions.definitions': { $in: [regex.definitionsReg] } },
         { variations: keyword },
         { nsibidi: keyword },
-        { [`dialects.${keyword}`]: { $exists: true } },
+        { 'dialects.word': keyword },
         ...Object.values(Tenses).reduce((finalIndexes, tense) => ([
           ...finalIndexes,
           { [`tenses.${tense.value}`]: keyword },
