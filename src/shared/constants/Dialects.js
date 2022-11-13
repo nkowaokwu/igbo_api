@@ -34,15 +34,30 @@ export default {
     value: 'EGB',
     label: 'Egbema',
   },
+  EZA: {
+    code: 'ibo-eza',
+    value: 'EZA',
+    label: 'Ezza',
+  },
   EZE: {
     code: 'ibo-eze',
     value: 'EZE',
     label: 'Ezeagu',
   },
+  IQW: {
+    code: 'ibo-iqw',
+    value: 'IQW',
+    label: 'Ikwo',
+  },
   ISU: {
     code: 'ibo-isu',
     value: 'ISU',
     label: 'Isuama',
+  },
+  IZZ: {
+    code: 'ibo-izz',
+    value: 'IZZ',
+    label: 'Izii',
   },
   MBA: {
     code: 'ibo-mba',
