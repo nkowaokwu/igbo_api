@@ -45,7 +45,7 @@ export const strictSearchIgboQuery = (word) => ({
 export const searchEnglishRegexQuery = definitionsQuery;
 
 export const searchForAllWordsWithAudioPronunciations = () => ({
-  pronunciation: { $exists: true },
+  pronunciation: { $exists: true, $type: 'string' },
   $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
 });
 export const searchForAllWordsWithIsStandardIgbo = () => ({
