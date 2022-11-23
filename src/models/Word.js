@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { every } from 'lodash';
+import every from 'lodash/every';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 import Dialects from '../shared/constants/Dialects';
 import Tenses from '../shared/constants/Tenses';
@@ -25,7 +25,7 @@ const dialectSchema = new Schema({
   pronunciation: { type: String, default: '' },
 }, { toObject: toObjectPlugin });
 
-const wordSchema = new Schema({
+export const wordSchema = new Schema({
   word: { type: String, required: true },
   definitions: [{
     type: definitionSchema,
@@ -94,5 +94,3 @@ toJSONPlugin(wordSchema);
 
 const WordModel = mongoose.model('Word', wordSchema);
 WordModel.syncIndexes();
-
-export default WordModel;

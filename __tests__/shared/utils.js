@@ -1,4 +1,6 @@
-import { difference, forEach, map } from 'lodash';
+import forEach from 'lodash/forEach';
+import difference from 'lodash/difference';
+import map from 'lodash/map';
 
 export const expectUniqSetsOfResponses = (res, responseLength = 10) => {
   forEach(res, (docsRes, index) => {

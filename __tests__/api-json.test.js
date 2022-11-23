@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
 import { searchTerm } from './shared/commands';
 

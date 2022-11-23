@@ -1,7 +1,6 @@
-import { map } from 'lodash';
+import map from 'lodash/map';
 import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
-import Word from '../models/Word';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
@@ -12,6 +11,7 @@ import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } 
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
 import Versions from '../shared/constants/Versions';
+import { wordSchema } from '../models/Word';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -121,8 +121,10 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         const wordsByEnglish = await searchWordUsingEnglish({ query, version, ...searchQueries });
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
-        redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByEnglish.words), 'EX', REDIS_CACHE_EXPIRATION);
-        redisClient.set(redisWordsCountCacheKey, `${wordsByEnglish.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+        if (!redisClient.isFake) {
+          redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByEnglish.words), 'EX', REDIS_CACHE_EXPIRATION);
+          redisClient.set(redisWordsCountCacheKey, `${wordsByEnglish.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+        }
       }
     } else {
       const regularSearchIgboQuery = searchIgboTextSearch({
@@ -147,8 +149,10 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         const wordsByIgbo = await searchWordUsingIgbo({ query, version, ...searchQueries });
         words = wordsByIgbo.words;
         contentLength = wordsByIgbo.contentLength;
-        redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByIgbo.words), 'EX', REDIS_CACHE_EXPIRATION);
-        redisClient.set(redisWordsCountCacheKey, `${wordsByIgbo.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+        if (!redisClient.isFake) {
+          redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByIgbo.words), 'EX', REDIS_CACHE_EXPIRATION);
+          redisClient.set(redisWordsCountCacheKey, `${wordsByIgbo.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+        }
       }
     }
     return packageResponse({
@@ -196,7 +200,8 @@ export const getWord = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database */
-export const createWord = async (data) => {
+export const createWord = async (data, connection) => {
+  const Word = connection.model('Word', wordSchema);
   const {
     examples,
     word,
@@ -227,7 +232,8 @@ export const createWord = async (data) => {
       ...example,
       associatedWords: [newWord.id],
     };
-    return createExample(exampleData);
+    const createdExample = await createExample(exampleData, connection);
+    return createdExample;
   });
 
   /* Wait for all the Examples to be created and then add them to the Word document */

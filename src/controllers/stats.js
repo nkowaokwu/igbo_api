@@ -1,5 +1,5 @@
-import Word from '../models/Word';
-import Example from '../models/Example';
+import { wordSchema } from '../models/Word';
+import { exampleSchema } from '../models/Example';
 import Developer from '../models/Developer';
 import {
   searchForAllWordsWithAudioPronunciations,
@@ -7,8 +7,12 @@ import {
   searchForAllWordsWithNsibidi,
   searchForAllDevelopers,
 } from './utils/queries';
+import { createDbConnection, handleCloseConnection } from '../services/database';
 
 export const getStats = async (_, res, next) => {
+  const connection = createDbConnection();
+  const Word = connection.model('Word', wordSchema);
+  const Example = connection.model('Example', exampleSchema);
   try {
     const totalWords = await Word.countDocuments();
     const totalExamples = await Example.countDocuments();
@@ -16,6 +20,7 @@ export const getStats = async (_, res, next) => {
     const totalStandardIgboWords = await Word.find(searchForAllWordsWithIsStandardIgbo());
     const totalNsibidiWords = await Word.find(searchForAllWordsWithNsibidi());
     const totalDevelopers = await Developer.find(searchForAllDevelopers());
+    await handleCloseConnection(connection);
     return res.send({
       totalWords,
       totalExamples,
@@ -25,6 +30,7 @@ export const getStats = async (_, res, next) => {
       totalDevelopers: totalDevelopers.length,
     });
   } catch (err) {
+    await handleCloseConnection(connection);
     return next(err);
   }
 };

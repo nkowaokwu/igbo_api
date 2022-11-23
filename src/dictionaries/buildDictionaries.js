@@ -1,6 +1,6 @@
 import fs from 'fs';
 import shell from 'shelljs';
-import { flatten } from 'lodash';
+import flatten from 'lodash/flatten';
 import {
   DICTIONARIES_DIR,
   BUILD_DICTIONARIES_DIR,

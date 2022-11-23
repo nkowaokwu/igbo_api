@@ -1,4 +1,6 @@
-import { keys, reduce, replace } from 'lodash';
+import keys from 'lodash/keys';
+import reduce from 'lodash/reduce';
+import replace from 'lodash/replace';
 
 const abbreviations = {
   adj: 'adjective',

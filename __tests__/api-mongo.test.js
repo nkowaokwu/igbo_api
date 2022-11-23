@@ -1,15 +1,13 @@
 import mongoose from 'mongoose';
-import {
-  forEach,
-  has,
-  isEqual,
-  uniqBy,
-  some,
-  every,
-} from 'lodash';
+import forEach from 'lodash/forEach';
+import has from 'lodash/has';
+import isEqual from 'lodash/isEqual';
+import uniqBy from 'lodash/uniqBy';
+import some from 'lodash/some';
+import every from 'lodash/every';
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import Word from '../src/models/Word';
+import { wordSchema } from '../src/models/Word';
 import WordClass from '../src/shared/constants/WordClass';
 import {
   WORD_KEYS_V1,
@@ -28,12 +26,15 @@ import {
 } from './shared/commands';
 import { expectUniqSetsOfResponses } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
+import { createDbConnection, handleCloseConnection } from '../src/services/database';
 
 const { ObjectId } = mongoose.Types;
 
 describe('MongoDB Words', () => {
   describe('mongodb collection', () => {
     it('should populate mongodb with words', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'word',
         definitions: [{
@@ -52,6 +53,7 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       const savedWord = await validWord.save();
+      await handleCloseConnection(connection);
       expect(savedWord.id).not.toEqual(undefined);
       expect(savedWord.word).toEqual('word');
       expect(savedWord.definitions[0].wordClass).toEqual('NNC');
@@ -65,6 +67,8 @@ describe('MongoDB Words', () => {
     });
 
     it('should fail populate mongodb with incorrect variations', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'word',
         definitions: [{
@@ -82,12 +86,15 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       await validWord.save()
-        .catch((err) => {
+        .catch(async (err) => {
+          await handleCloseConnection(connection);
           expect(err.message.includes('dialects')).toEqual(true);
         });
     });
 
     it('should throw an error for invalid data', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         definitions: [{
           wordClass: 'n.',
@@ -98,7 +105,8 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       await validWord.save()
-        .catch((err) => {
+        .catch(async (err) => {
+          await handleCloseConnection(connection);
           expect(err).not.toEqual(undefined);
         });
     });
@@ -516,6 +524,8 @@ describe('MongoDB Words', () => {
     });
 
     it('should return a word marked as isStandardIgbo', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'standardIgboWord',
         definitions: [{
@@ -531,6 +541,7 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       await validWord.save();
+      await handleCloseConnection(connection);
       const res = await getWords({ keyword: word.word, isStandardIgbo: true });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(1);
@@ -543,6 +554,8 @@ describe('MongoDB Words', () => {
     });
 
     it('should return a word marked with nsibidi', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'nsibidi',
         definitions: [{
@@ -556,6 +569,7 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       await validWord.save();
+      await handleCloseConnection(connection);
       const res = await getWords({ keyword: word.word, nsibidi: true });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(1);
@@ -568,6 +582,8 @@ describe('MongoDB Words', () => {
     });
 
     it('should return a word marked with nsibidi', async () => {
+      const connection = createDbConnection();
+      const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'pronunciation',
         definitions: [{
@@ -581,6 +597,7 @@ describe('MongoDB Words', () => {
       };
       const validWord = new Word(word);
       await validWord.save();
+      await handleCloseConnection(connection);
       const res = await getWords({ keyword: word.word, pronunciation: true });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(1);

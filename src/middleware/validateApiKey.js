@@ -1,6 +1,7 @@
 import { compareSync } from 'bcrypt';
-import Developer from '../models/Developer';
+import { developerSchema } from '../models/Developer';
 import { MAIN_KEY } from '../config';
+import { createDbConnection } from '../services/database';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -34,6 +35,8 @@ const handleDeveloperUsage = async (developer) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async (apiKey) => {
+  const connection = createDbConnection();
+  const Developer = connection.model('Developer', developerSchema);
   const developers = await Developer.find({});
   return developers.find((dev) => compareSync(apiKey, dev.apiKey));
 };

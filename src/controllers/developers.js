@@ -1,6 +1,7 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import Developer from '../models/Developer';
+import { developerSchema } from '../models/Developer';
+import { createDbConnection, handleCloseConnection } from '../services/database';
 import { sendNewDeveloper } from './email';
 
 const TEST_EMAIL = 'developer@example.com';
@@ -10,6 +11,9 @@ const generateApiKey = uuid;
 
 /* Creates a new Developer in the database */
 export const postDeveloper = async (req, res, next) => {
+  const connection = createDbConnection();
+  const Developer = connection.model('Developer', developerSchema);
+
   try {
     const { body: data } = req;
     const {
@@ -44,11 +48,13 @@ export const postDeveloper = async (req, res, next) => {
         console.log(err.response.body.errors);
       }
     }
+    await handleCloseConnection(connection);
     return res.send({
       message: `Success email sent to ${email}`,
       apiKey,
     });
   } catch (err) {
+    await handleCloseConnection(connection);
     if (process.env.NODE_ENV !== 'test') {
       console.trace(err);
     }

@@ -3,7 +3,7 @@ import { toJSONPlugin, toObjectPlugin } from './plugins';
 import ExampleStyles from '../shared/constants/ExampleStyles';
 
 const { Schema, Types } = mongoose;
-const exampleSchema = new Schema({
+export const exampleSchema = new Schema({
   igbo: { type: String, default: '' },
   english: { type: String, default: '' },
   meaning: { type: String, default: '' },
@@ -18,5 +18,3 @@ const exampleSchema = new Schema({
 }, { toObject: toObjectPlugin, timestamps: true });
 
 toJSONPlugin(exampleSchema);
-
-export default mongoose.model('Example', exampleSchema);

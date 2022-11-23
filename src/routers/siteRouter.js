@@ -1,6 +1,6 @@
 import express from 'express';
 import nextjs from 'next';
-import { compact } from 'lodash';
+import compact from 'lodash/compact';
 import { parse } from 'url';
 
 const nextApp = nextjs({});
@@ -14,7 +14,7 @@ const routes = compact([
 
 const siteRouter = express.Router();
 
-siteRouter.use((req, res, next) => {
+siteRouter.use(async (req, res, next) => {
   try {
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;

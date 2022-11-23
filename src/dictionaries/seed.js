@@ -1,18 +1,19 @@
-import mongoose from 'mongoose';
-import { map, flatten, keys } from 'lodash';
+import map from 'lodash/map';
+import flatten from 'lodash/flatten';
+import keys from 'lodash/keys';
 import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
-import { MONGO_URI } from '../config';
 import Dialects from '../shared/constants/Dialects';
 import WordClass from '../shared/constants/WordClass';
+import { createDbConnection, handleCloseConnection } from '../services/database';
 
 const WRITE_DB_DELAY = 15000;
 
-const populate = async () => {
+const populate = async (connection) => {
   /* This route will populate a local MongoDB database */
   if (process.env.NODE_ENV !== 'production') {
     console.blue('🌱 Seeding database...');
-    mongoose.connection.db.dropDatabase();
+    connection.dropDatabase();
     const wordPromises = flatten(
       map(keys(dictionary), (key) => {
         const value = dictionary[key];
@@ -32,7 +33,7 @@ const populate = async () => {
             pronunciation: '',
             word: `${cleanedKey}-dialect`,
           }];
-          return createWord(word);
+          return createWord(word, connection);
         });
       }),
     );
@@ -59,19 +60,14 @@ const populate = async () => {
 };
 
 const seed = () => {
-  if (mongoose.connection.readyState !== 1) {
-    mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-    });
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    return new Promise((resolve) => db.once('open', async () => {
-      console.green('🗄 Database is connected');
-      await populate();
-      return resolve();
-    }));
-  }
-  return populate();
+  const connection = createDbConnection();
+  connection.on('error', console.error.bind(console, 'connection error:'));
+  return new Promise((resolve) => connection.once('connected', async () => {
+    console.green('🗄 Database is connected');
+    await populate(connection);
+    await handleCloseConnection(connection);
+    return resolve();
+  }));
 };
 
 const sendResponseAndEndServer = (res) => {

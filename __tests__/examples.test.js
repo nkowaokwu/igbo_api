@@ -1,4 +1,6 @@
-import { isEqual, forEach, has } from 'lodash';
+import forEach from 'lodash/forEach';
+import has from 'lodash/has';
+import isEqual from 'lodash/isEqual';
 import {
   getExamples,
   getExample,
