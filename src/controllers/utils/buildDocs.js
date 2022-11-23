@@ -85,7 +85,6 @@ export const findWordsWithMatch = async ({
       .append([
         { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
         { $unset: `attributes.${WordAttributes.IS_BORROWED_TERM.value}` },
-        { $unset: `attributes.${WordAttributes.IS_CONSTRUCTED_TERM.value}` },
       ])
       .sort({ definitions: -1 });
 
