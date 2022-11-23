@@ -9,19 +9,19 @@ export const getStats = async (_, res, next) => {
   const Stat = connection.model('Stat', statSchema);
   const Developer = connection.model('Developer', developerSchema);
   try {
-    const totalWords = Stat.findOne({ type: StatTypes.SUFFICIENT_WORDS });
-    const totalExamples = Stat.findOne({ type: StatTypes.SUFFICIENT_EXAMPLES });
-    const totalAudioPronunciations = Stat.findOne({ type: StatTypes.HEADWORD_AUDIO_PRONUNCIATIONS });
-    const totalStandardIgboWords = Stat.findOne({ type: StatTypes.STANDARD_IGBO });
-    const totalNsibidiWords = Stat.findOne({ type: StatTypes.NSIBIDI_WORDS });
+    const totalWords = await Stat.findOne({ type: StatTypes.SUFFICIENT_WORDS });
+    const totalExamples = await Stat.findOne({ type: StatTypes.SUFFICIENT_EXAMPLES });
+    const totalAudioPronunciations = await Stat.findOne({ type: StatTypes.HEADWORD_AUDIO_PRONUNCIATIONS });
+    const totalStandardIgboWords = await Stat.findOne({ type: StatTypes.STANDARD_IGBO });
+    const totalNsibidiWords = await Stat.findOne({ type: StatTypes.NSIBIDI_WORDS });
     const totalDevelopers = await Developer.find(searchForAllDevelopers());
     await handleCloseConnection(connection);
     return res.send({
-      totalWords,
-      totalExamples,
-      totalAudioPronunciations: totalAudioPronunciations.length,
-      totalStandardIgboWords: totalStandardIgboWords.length,
-      totalNsibidiWords: totalNsibidiWords.length,
+      totalWords: totalWords.value,
+      totalExamples: totalExamples.value,
+      totalAudioPronunciations: totalAudioPronunciations.value,
+      totalStandardIgboWords: totalStandardIgboWords.value,
+      totalNsibidiWords: totalNsibidiWords.value,
       totalDevelopers: totalDevelopers.length,
     });
   } catch (err) {
