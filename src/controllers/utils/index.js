@@ -1,6 +1,7 @@
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
-import { isNaN, get } from 'lodash';
+import isNaN from 'lodash/isNaN';
+import get from 'lodash/get';
 import removePrefix from '../../shared/utils/removePrefix';
 import createQueryRegex from '../../shared/utils/createQueryRegex';
 import Versions from '../../shared/constants/Versions';

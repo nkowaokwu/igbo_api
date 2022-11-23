@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 
 const { Schema } = mongoose;
-const developerSchema = new Schema({
+export const developerSchema = new Schema({
   name: { type: String, default: '', required: true },
   apiKey: { type: String, default: '', required: true },
   email: { type: String, default: '', required: true },
@@ -14,5 +14,3 @@ const developerSchema = new Schema({
 }, { toObject: toObjectPlugin, timestamps: true });
 
 toJSONPlugin(developerSchema);
-
-export default mongoose.model('Developer', developerSchema);

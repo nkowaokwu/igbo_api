@@ -1,4 +1,5 @@
-import { map, omit } from 'lodash';
+import omit from 'lodash/omit';
+import map from 'lodash/map';
 import {
   NEW_DEVELOPER_ACCOUNT_TEMPLATE,
   API_FROM_EMAIL,

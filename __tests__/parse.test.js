@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { keys } from 'lodash';
+import keys from 'lodash/keys';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
 import { searchTerm, searchMockedTerm } from './shared/commands';
 

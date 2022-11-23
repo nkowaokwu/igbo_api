@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
@@ -16,12 +15,7 @@ import {
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
-import {
-  MONGO_URI,
-  SWAGGER_DOCS,
-  CORS_CONFIG,
-  SWAGGER_OPTIONS,
-} from './config';
+import { SWAGGER_DOCS, CORS_CONFIG, SWAGGER_OPTIONS } from './config';
 
 const app = express();
 
@@ -29,17 +23,6 @@ app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
-
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  autoIndex: true,
-});
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.green('🗄 Database is connected');
-});
 
 if (process.env.HEROKU) {
   // enable ssl redirect

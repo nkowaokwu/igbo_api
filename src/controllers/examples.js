@@ -1,11 +1,13 @@
-import Example from '../models/Example';
+import { exampleSchema } from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
 import { REDIS_CACHE_EXPIRATION } from '../config';
 import { findExamplesWithMatch } from './utils/buildDocs';
+import { createDbConnection, handleCloseConnection } from '../services/database';
 
 /* Create a new Example object in MongoDB */
-export const createExample = (data) => {
+export const createExample = async (data, connection) => {
+  const Example = connection.model('Example', exampleSchema);
   const example = new Example(data);
   return example.save();
 };
@@ -55,13 +57,15 @@ export const getExamples = (redisClient) => async (req, res, next) => {
       });
       examples = allExamples.examples;
       contentLength = allExamples.contentLength;
-      redisClient.set(redisExamplesCacheKey, JSON.stringify(allExamples.examples), 'EX', REDIS_CACHE_EXPIRATION);
-      redisClient.set(
-        redisExamplesCountCacheKey,
-        JSON.stringify(allExamples.contentLength),
-        'EX',
-        REDIS_CACHE_EXPIRATION,
-      );
+      if (!redisClient.isFake) {
+        redisClient.set(redisExamplesCacheKey, JSON.stringify(allExamples.examples), 'EX', REDIS_CACHE_EXPIRATION);
+        redisClient.set(
+          redisExamplesCountCacheKey,
+          JSON.stringify(allExamples.contentLength),
+          'EX',
+          REDIS_CACHE_EXPIRATION,
+        );
+      }
     }
 
     return packageResponse({
@@ -75,9 +79,18 @@ export const getExamples = (redisClient) => async (req, res, next) => {
   }
 };
 
-export const findExampleById = (id) => (
-  Example.findById(id)
-);
+export const findExampleById = async (id) => {
+  const connection = createDbConnection();
+  const Example = connection.model('Example', exampleSchema);
+  try {
+    const example = await Example.findById(id);
+    await handleCloseConnection(connection);
+    return example;
+  } catch (err) {
+    await handleCloseConnection(connection);
+    throw err;
+  }
+};
 
 /* Returns an example from MongoDB using an id */
 export const getExample = async (req, res, next) => {

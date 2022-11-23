@@ -1,5 +1,5 @@
 /* Code inspired by goodyduru/igbo-text: https://github.com/goodyduru/igbo-text */
-import { forEach } from 'lodash';
+import forEach from 'lodash/forEach';
 import unicharadata from 'unicharadata';
 
 /* Removes all periods and numbers */

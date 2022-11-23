@@ -1,4 +1,5 @@
-import { reduce, keys } from 'lodash';
+import reduce from 'lodash/reduce';
+import keys from 'lodash/keys';
 import removePrefix from '../shared/utils/removePrefix';
 import databaseDictionary from '../dictionaries/ig-en/ig-en_expanded.json';
 
