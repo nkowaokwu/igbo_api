@@ -43,18 +43,6 @@ export const strictSearchIgboQuery = (word) => ({
   word: createRegExp(word, true).wordReg,
 });
 export const searchEnglishRegexQuery = definitionsQuery;
-
-export const searchForAllWordsWithAudioPronunciations = () => ({
-  pronunciation: { $exists: true, $type: 'string' },
-  $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
-});
-export const searchForAllWordsWithIsStandardIgbo = () => ({
-  'attributes.isStandardIgbo': true,
-});
-export const searchForAllWordsWithNsibidi = () => ({
-  nsibidi: { $ne: '' },
-});
-
 export const searchForAllDevelopers = () => ({
   name: { $ne: '' },
 });
