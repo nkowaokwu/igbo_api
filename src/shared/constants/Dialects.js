@@ -1,4 +1,9 @@
 export default {
+  ABI: {
+    code: 'ibo-abi',
+    value: 'ABI',
+    label: 'Abiriba',
+  },
   AFI: {
     code: 'ibo-afi',
     value: 'AFI',
