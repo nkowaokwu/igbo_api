@@ -27,6 +27,8 @@ const dialectSchema = new Schema({
 
 export const wordSchema = new Schema({
   word: { type: String, required: true },
+  wordPronunciation: { type: String, default: '' },
+  conceptualWord: { type: String, default: '' },
   definitions: [{
     type: definitionSchema,
     validate: (definitions) => (
