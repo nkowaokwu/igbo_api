@@ -494,7 +494,7 @@ describe('MongoDB Words', () => {
       const keyword = 'akwa';
       const res = await getWords({ keyword, strict: true });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(4);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
       forEach(res.body, (word) => {
         const { wordReg: wordRegex } = createRegExp(word.word);
         expect(word.word).toMatch(wordRegex);
