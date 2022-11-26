@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
@@ -9,6 +10,7 @@ import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 
 const Demo = ({ searchWord, words }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isSearchingWord, setIsSearchingWord] = useState(false);
   const [keyword, setKeyword] = useState(searchWord || '');
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState({});
@@ -36,6 +38,7 @@ const Demo = ({ searchWord, words }) => {
 
   const onSubmit = (e = { preventDefault: () => {} }) => {
     e.preventDefault();
+    setIsSearchingWord(true);
     const appendQueries = constructQueryString();
     window.location.href = `/?word=${keyword}${appendQueries}`;
   };
@@ -115,12 +118,20 @@ const Demo = ({ searchWord, words }) => {
               </div>
             </div>
             <Input disabled value={constructRequestUrl()} className="w-full py-3 px-5" />
-            <button
+            <Button
               type="submit"
-              className="primary-button w-full transition-all duration-100"
+              className="w-full transition-all duration-100"
+              backgroundColor="green.400"
+              color="white"
+              _hover={{
+                backgroundColor: 'green.300',
+              }}
+              borderRadius="full"
+              isLoading={isSearchingWord}
+              isDisabled={isSearchingWord}
             >
               {t('Submit')}
-            </button>
+            </Button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {t('Want to see how this data is getting used? Take a look at ')}
               <a className="link" href={DICTIONARY_APP_URL}>
