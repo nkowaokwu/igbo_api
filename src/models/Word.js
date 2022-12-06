@@ -16,6 +16,7 @@ const definitionSchema = new Schema({
     enum: Object.values(WordClass).map(({ value }) => value),
   },
   definitions: { type: [{ type: String }], default: [] },
+  igboDefinitions: { type: [{ type: String }], default: [] },
 }, { _id: true });
 
 const dialectSchema = new Schema({
