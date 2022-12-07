@@ -35,6 +35,10 @@ export default {
     value: 'NNC',
     label: 'Noun',
   },
+  ND: {
+    value: 'ND',
+    label: 'Nominal Modifier',
+  },
   NNP: {
     value: 'NNP',
     label: 'Proper noun',
