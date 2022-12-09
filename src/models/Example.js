@@ -7,6 +7,7 @@ export const exampleSchema = new Schema({
   igbo: { type: String, default: '' },
   english: { type: String, default: '' },
   meaning: { type: String, default: '' },
+  nsibidi: { type: String, default: '' },
   style: {
     type: String,
     enum: Object.values(ExampleStyles).map(({ value }) => value),
