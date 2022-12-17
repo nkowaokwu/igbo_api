@@ -46,14 +46,14 @@ export default (searchWord, hardMatch = false) => {
     ? `${startWordBoundary}(${front}${regexWordStringNormalizedNFD})${endWordBoundary}`
     + `|${startWordBoundary}(${front}${regexWordStringNormalizedNFC})${endWordBoundary}`
     : `${startWordBoundary}(^${front}${regexWordStringNormalizedNFD}${back}$)${endWordBoundary}`
-    + `|${startWordBoundary}(^${front}$${regexWordStringNormalizedNFC}${back}$)${endWordBoundary}`,
+    + `|${startWordBoundary}(^${front}${regexWordStringNormalizedNFC}${back}$)${endWordBoundary}`,
   'i');
 
   const definitionsReg = new RegExp(!hardMatch
     ? `${startWordBoundary}(${regexWordStringNormalizedNFD})${endWordBoundary}`
     + `|${startWordBoundary}(${regexWordStringNormalizedNFC})${endWordBoundary}`
-    : `${startWordBoundary}(^${regexWordStringNormalizedNFD}$)${endWordBoundary}`
-    + `|${startWordBoundary}(^$${regexWordStringNormalizedNFC}$)${endWordBoundary}`,
+    : `${startWordBoundary}(${regexWordStringNormalizedNFD}$)${endWordBoundary}`
+    + `|${startWordBoundary}(${regexWordStringNormalizedNFC}$)${endWordBoundary}`,
   'i');
 
   return { wordReg, definitionsReg };

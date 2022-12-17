@@ -55,12 +55,18 @@ const caseInsensitiveE = `${'[eE'
 const caseInsensitiveI = `${'[iI'
   .normalize('NFD')}${'\u00ec\u00ed\u012b\u1ecb\u00cc\u00cd\u012a\u1eca]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỊ = `${'[ịỊ'
+  .normalize('NFD')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveO = `${'[oO'
   .normalize('NFD')}${'\u00f2\u00f3\u014d\u1ecd\u00d2\u00d3\u014c\u1ecc]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỌ = `${'[ọỌ'
+  .normalize('NFD')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveU = `${'[uU'
   .normalize('NFD')}${'\u00f9\u00fa\u016b\u1ee5\u00d9\u00da\u016a\u1ee4]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỤ = `${'[ụỤ'
+  .normalize('NFD')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 
 export default {
   n: caseInsensitiveN,
@@ -71,10 +77,16 @@ export default {
   E: caseInsensitiveE,
   i: caseInsensitiveI,
   I: caseInsensitiveI,
+  ị: caseInsensitiveỊ,
+  Ị: caseInsensitiveỊ,
   o: caseInsensitiveO,
   O: caseInsensitiveO,
+  ọ: caseInsensitiveỌ,
+  Ọ: caseInsensitiveỌ,
   u: caseInsensitiveU,
   U: caseInsensitiveU,
+  ụ: caseInsensitiveỤ,
+  Ụ: caseInsensitiveỤ,
   ' ': '[\\s\u0027]',
   '?': '\\?',
 };
