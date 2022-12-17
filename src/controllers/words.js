@@ -63,7 +63,7 @@ const generateFilteringParams = (filteringParams) => (
     if (key === 'nsibidi' && value) {
       return {
         ...finalRequiredAttributes,
-        [key]: { $ne: '' },
+        [`definitions.${key}`]: { $ne: '' },
       };
     }
     if (key === 'pronunciation' && value) {

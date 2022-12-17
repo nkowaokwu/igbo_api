@@ -77,7 +77,6 @@ export const findWordsWithMatch = async ({
         relatedTerms: 1,
         hypernyms: 1,
         hyponyms: 1,
-        nsibidi: 1,
         tenses: 1,
         ...(examples ? { examples: 1 } : {}),
         ...(dialects ? { dialects: 1 } : {}),

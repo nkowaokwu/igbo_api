@@ -561,10 +561,10 @@ describe('MongoDB Words', () => {
         definitions: [{
           wordClass: 'NNC',
           definitions: ['first definition', 'second definition'],
+          nsibidi: 'nsibidi',
         }],
         dialects: [],
         examples: [new ObjectId(), new ObjectId()],
-        nsibidi: 'nsibidi',
         stems: [],
       };
       const validWord = new Word(word);

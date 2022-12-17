@@ -34,7 +34,6 @@ export const WORD_KEYS_V2 = [
   'relatedTerms',
   'hypernyms',
   'hyponyms',
-  'nsibidi',
   'attributes',
   'updatedAt',
 ];
