@@ -182,10 +182,11 @@ export const handleQueries = async ({
 
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-  const keywords = version === Versions.VERSION_2 ? (
-    expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
-      { text, wordClass, regex: constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }) }
-    ))) : [];
+//   const keywords = version === Versions.VERSION_2 ? (
+//     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
+//       { text, wordClass, regex: constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }) }
+//     ))) : [];
+  const keywords = [];
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
