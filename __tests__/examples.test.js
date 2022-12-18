@@ -85,7 +85,7 @@ describe('MongoDB Examples', () => {
       expect(res.body.length).toBeLessThanOrEqual(10);
     });
 
-    it('should return no words with no keyword as a developer', async () => {
+    it('should return no examples with no keyword as a developer', async () => {
       const res = await getExamples();
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(0);

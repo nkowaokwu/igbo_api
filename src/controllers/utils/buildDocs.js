@@ -77,7 +77,6 @@ export const findWordsWithMatch = async ({
         relatedTerms: 1,
         hypernyms: 1,
         hyponyms: 1,
-        nsibidi: 1,
         tenses: 1,
         ...(examples ? { examples: 1 } : {}),
         ...(dialects ? { dialects: 1 } : {}),
@@ -95,6 +94,7 @@ export const findWordsWithMatch = async ({
     finalWords.forEach((word) => {
       if (version === Versions.VERSION_1) {
         word.wordClass = word.definitions[0].wordClass;
+        word.nsibidi = word.definitions[0].nsibidi;
         word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
         if (dialects) {
           word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({

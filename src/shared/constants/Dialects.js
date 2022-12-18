@@ -4,6 +4,11 @@ export default {
     value: 'ABI',
     label: 'Abiriba',
   },
+  ACH: {
+    code: 'ibo-ach',
+    value: 'ACH',
+    label: 'Achalla',
+  },
   AFI: {
     code: 'ibo-afi',
     value: 'AFI',
@@ -13,6 +18,16 @@ export default {
     code: 'ibo-aja',
     value: 'AJA',
     label: 'Ajalli/Ajali',
+  },
+  AMA: {
+    code: 'ibo-ama',
+    value: 'AMA',
+    label: 'Amaifeke',
+  },
+  ANA: {
+    code: 'ibo-ana',
+    value: 'ANA',
+    lable: 'Anam',
   },
   ANI: {
     code: 'ibo-ani',
@@ -48,6 +63,11 @@ export default {
     code: 'ibo-eze',
     value: 'EZE',
     label: 'Ezeagu',
+  },
+  IHU: {
+    code: 'ibo-ihu',
+    value: 'IHU',
+    label: 'Ihuoma',
   },
   IQW: {
     code: 'ibo-iqw',

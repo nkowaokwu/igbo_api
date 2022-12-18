@@ -14,8 +14,10 @@ const definitionSchema = new Schema({
     type: String,
     default: WordClass.NNC.value,
     enum: Object.values(WordClass).map(({ value }) => value),
+    index: true,
   },
   definitions: { type: [{ type: String }], default: [] },
+  nsibidi: { type: String, default: '' },
   igboDefinitions: { type: [{ type: String }], default: [] },
 }, { _id: true });
 
@@ -68,7 +70,6 @@ export const wordSchema = new Schema({
   hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   stems: { type: [{ type: String }], default: [] },
-  nsibidi: { type: String, default: '' },
 }, { toObject: toObjectPlugin, timestamps: true });
 
 const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
@@ -81,14 +82,14 @@ wordSchema.index({
   variations: 'text',
   'dialects.word': 'text',
   ...tensesIndexes,
-  nsibidi: 'text',
+  'definitions.nsibidi': 'text',
 }, {
   weights: {
     word: 10,
     tenses: 9,
-    dialects: 8,
-    vairations: 9,
-    nsibidi: 5,
+    'dialects.word': 8,
+    variations: 9,
+    'definitions.nsibidi': 5,
   },
   name: 'Word text index',
 });
