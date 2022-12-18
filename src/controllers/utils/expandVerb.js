@@ -183,33 +183,28 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
   const updatedMeta = { ...meta };
   updatedMeta.depth += 1;
   const allWords = Object.values(wordData).flat();
-  const isRootVerb = (root) => allWords.find(({ word: headword, wordClass, definitions = [], ...rest }) => {
-    return (version === Versions.VERSION_1 ? (
-      wordClass === WordClass.AV.value
-      || wordClass === WordClass.MV.value
-      || wordClass === WordClass.PV.value
-    ) : definitions.find(({ wordClass: nestedWordClass }) => (
+  console.log('allWords length', allWords?.length)
+  const isRootVerb = (root) => allWords.find(({ word: headword, wordClass, definitions = [] }) => (
+    definitions.find(({ wordClass: nestedWordClass }) => (
       nestedWordClass === WordClass.AV.value
       || nestedWordClass === WordClass.MV.value
       || nestedWordClass === WordClass.PV.value)))
-    && removeAccents.removeExcluding(headword).normalize('NFC') === root;
-  }) ;
-  const isSuffix = (root) => allWords.find(({ word: headword, wordClass, definitions = [] }) => {
-    return (version === Versions.VERSION_1 ? (
-      wordClass === WordClass.ESUF.value
-      || wordClass === WordClass.ISUF.value
-    ) : definitions.find(({ wordClass }) => (
+    && removeAccents.removeExcluding(headword).normalize('NFC') === root
+  );
+  const isSuffix = (root) => allWords.find(({ word: headword, wordClass, definitions = [] }) => (
+    definitions.find(({ wordClass }) => (
       wordClass === WordClass.ESUF.value
       || wordClass === WordClass.ISUF.value
     )))
     && removeAccents.removeExcluding(headword).replace('-', '').normalize('NFC') === root
-  });
+  );
   
-  let solutions = [topSolution  ];
+  let solutions = [topSolution];
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
     let tempSolution = solution;
     const currentRange = word.substring(firstPointer, secondPointer);
+    console.log('the current range', currentRange, updatedMeta.depth)
     if (prefixes.includes(currentRange)) {
       solution.push({ type: partType.INFINITIVE, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
       updatedMeta.isPreviousVerb = false;
