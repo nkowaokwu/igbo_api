@@ -5,8 +5,6 @@ export default (err, req, res, next) => {
   if (err.message.match(/No .{1,} exist(s)?/) || err.message.match(/doesn't exist(s)?/)) {
     res.status(404);
   }
-  if (process.env.NODE_ENV === 'development') {
-    console.log(err?.stack);
-  }
+  console.log(err?.stack);
   return res.send({ error: err.message });
 };
