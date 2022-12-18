@@ -1,4 +1,5 @@
 import map from 'lodash/map';
+import compact from 'lodash/compact';
 import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import { findSearchWord } from '../services/words';
@@ -78,7 +79,7 @@ const generateFilteringParams = (filteringParams) => (
 );
 
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase = async (req, res, next, redisClient) => {
+const getWordsFromDatabase = async (req, res, next) => {
   try {
     const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
     if (hasQuotes) {
@@ -87,7 +88,8 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
     const {
       version,
       searchWord,
-      regexKeyword,
+      keywords,
+      regex,
       skip,
       limit,
       strict,
@@ -95,8 +97,11 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
       examples,
       wordFields,
       isUsingMainKey,
+      redisAllVerbsAndSuffixesKey,
+      allVerbsAndSuffixes,
+      redisClient,
       ...rest
-    } = handleQueries(req);
+    } = await handleQueries(req);
     const searchQueries = {
       searchWord,
       skip,
@@ -117,26 +122,37 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         words = cachedWords;
         contentLength = cachedWordsCount;
       } else {
-        query = searchEnglishRegexQuery({ regex: regexKeyword, filteringParams });
+        query = searchEnglishRegexQuery({ regex, filteringParams });
         const wordsByEnglish = await searchWordUsingEnglish({ query, version, ...searchQueries });
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
         if (!redisClient.isFake) {
           redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByEnglish.words), 'EX', REDIS_CACHE_EXPIRATION);
           redisClient.set(redisWordsCountCacheKey, `${wordsByEnglish.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+          redisClient.set(
+            redisAllVerbsAndSuffixesKey,
+            `${JSON.stringify(allVerbsAndSuffixes)}`,
+            'EX',
+            REDIS_CACHE_EXPIRATION,
+          );
         }
       }
     } else {
+      const parsedSegments = [...searchWord.split(' ')];
+      parsedSegments.shift();
+      const allSearchKeywords = compact(keywords.concat(searchWord
+        ? { text: searchWord, wordClass: [], regex }
+        : null),
+      );
       const regularSearchIgboQuery = searchIgboTextSearch({
-        keyword: searchWord,
-        regex: regexKeyword,
+        keywords: allSearchKeywords,
         isUsingMainKey,
         filteringParams,
       });
       query = !strict
         ? regularSearchIgboQuery
         : strictSearchIgboQuery(
-          searchWord,
+          allSearchKeywords,
         );
       const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${examples}`;
       const redisWordsCountCacheKey = `${searchWord}-${version}`;
@@ -152,6 +168,12 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
         if (!redisClient.isFake) {
           redisClient.set(redisWordsCacheKey, JSON.stringify(wordsByIgbo.words), 'EX', REDIS_CACHE_EXPIRATION);
           redisClient.set(redisWordsCountCacheKey, `${wordsByIgbo.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
+          redisClient.set(
+            redisAllVerbsAndSuffixesKey,
+            `${JSON.stringify(allVerbsAndSuffixes)}`,
+            'EX',
+            REDIS_CACHE_EXPIRATION,
+          );
         }
       }
     }
@@ -166,9 +188,9 @@ const getWordsFromDatabase = async (req, res, next, redisClient) => {
   }
 };
 /* Gets words from MongoDB */
-export const getWords = (redisClient) => async (req, res, next) => {
+export const getWords = async (req, res, next) => {
   try {
-    return getWordsFromDatabase(req, res, next, redisClient);
+    return getWordsFromDatabase(req, res, next);
   } catch (err) {
     return next(err);
   }
@@ -178,7 +200,11 @@ export const getWords = (redisClient) => async (req, res, next) => {
 export const getWord = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { dialects, examples, version } = handleQueries(req);
+    const {
+      dialects,
+      examples,
+      version,
+    } = await handleQueries(req);
 
     const updatedWord = await findWordsWithMatch({
       match: { _id: mongoose.Types.ObjectId(id) },
