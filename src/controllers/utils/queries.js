@@ -1,28 +1,27 @@
-import createRegExp from '../../shared/utils/createRegExp';
-import Tenses from '../../shared/constants/Tenses';
+import WordClass from '../../shared/constants/WordClass';
 
 const fullTextSearchQuery = ({
-  keyword,
-  regex,
+  keywords,
   isUsingMainKey,
   filteringParams,
-}) => (isUsingMainKey && !keyword
+}) => (isUsingMainKey && !keywords?.length
   ? { word: { $regex: /./ }, ...filteringParams }
-  : (!isUsingMainKey && !keyword)
-    ? { $text: { $search: keyword }, ...filteringParams }
+  : (!isUsingMainKey && !keywords?.length)
+    ? { _id: { $exists: false }, id: { $exists: false } }
     : {
-      $or: [
-        { word: keyword },
-        { word: { $regex: regex.wordReg } },
-        { 'definitions.definitions': { $in: [regex.definitionsReg] } },
-        { variations: keyword },
-        { nsibidi: keyword },
-        { 'dialects.word': keyword },
-        ...Object.values(Tenses).reduce((finalIndexes, tense) => ([
-          ...finalIndexes,
-          { [`tenses.${tense.value}`]: keyword },
-        ]), []),
-      ],
+      $or: keywords.map(({ text, regex, wordClass = [] }) => ({
+        $and: [{
+          $or: [
+            { word: text },
+            { word: { $regex: regex.wordReg } },
+            { 'definitions.definitions': { $regex: regex.definitionsReg } },
+            { variations: text },
+            { 'definitions.nsibidi': text },
+            { 'dialects.word': text },
+          ],
+          ...(wordClass?.length ? { 'definitions.wordClass': { $in: wordClass } } : {}),
+        }],
+      })),
       ...filteringParams,
     }
 );
@@ -39,10 +38,21 @@ export const searchExamplesRegexQuery = (regex) => (
 export const searchIgboTextSearch = fullTextSearchQuery;
 /* Since the word field is not non-accented yet,
  * a strict regex search for words has to be used as a workaround */
-export const strictSearchIgboQuery = (word) => ({
-  word: createRegExp(word, true).wordReg,
+export const strictSearchIgboQuery = (keywords) => ({
+  $or: keywords.map(({ regex }) => ({ word: { $regex: regex.wordReg } })),
 });
 export const searchEnglishRegexQuery = definitionsQuery;
 export const searchForAllDevelopers = () => ({
   name: { $ne: '' },
+});
+export const searchForAllVerbsAndSuffixesQuery = () => ({
+  'definitions.wordClass': {
+    $in: [
+      WordClass.AV.value,
+      WordClass.MV.value,
+      WordClass.PV.value,
+      WordClass.ISUF.value,
+      WordClass.ESUF.value,
+    ],
+  },
 });

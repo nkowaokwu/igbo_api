@@ -3,27 +3,40 @@ import diacriticless from 'diacriticless';
 import isNaN from 'lodash/isNaN';
 import get from 'lodash/get';
 import removePrefix from '../../shared/utils/removePrefix';
-import createQueryRegex from '../../shared/utils/createQueryRegex';
+import { searchForAllVerbsAndSuffixesQuery } from './queries';
+import createRegExp from '../../shared/utils/createRegExp';
+import expandVerb from './expandVerb';
+import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
 const MATCHING_DEFINITION = 1000;
 const SIMILARITY_FACTOR = 100;
+const VERB_AND_SUFFIXES_LIMIT = 5000;
 const NO_FACTOR = 0;
 
 const generateSecondaryKey = (version) => (
   version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]'
 );
 
+const createSimpleRegExp = (keywords) => ({
+  wordReg: new RegExp(`${keywords.map((keyword) => (
+    `(${createRegExp(keyword.text, true).wordReg.source})`
+  )).join('|')}`, 'i'),
+  definitionsReg: new RegExp(`${keywords.map((keyword) => (
+    `(${createRegExp(keyword.text, true).definitionsReg.source})`
+  )).join('|')}`, 'i'),
+});
+
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
  */
-const constructRegexQuery = ({ isUsingMainKey, searchWord }) => (
+const constructRegexQuery = ({ isUsingMainKey, keywords }) => (
   isUsingMainKey
-    ? createQueryRegex(searchWord)
-    : searchWord
-      ? createQueryRegex(searchWord)
+    ? createSimpleRegExp(keywords)
+    : keywords?.length
+      ? createSimpleRegExp(keywords)
       : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ }
 );
 
@@ -122,8 +135,26 @@ const parseRange = (range) => {
   }
 };
 
+const searchAllVerbsAndSuffixes = async ({
+  query,
+  version,
+}) => {
+  const { words, contentLength } = await findWordsWithMatch({
+    match: query,
+    version,
+    skip: 0,
+    limit: VERB_AND_SUFFIXES_LIMIT,
+  });
+  return { words, contentLength };
+};
+
 /* Handles all the queries for searching in the database */
-export const handleQueries = ({ query = {}, isUsingMainKey, baseUrl }) => {
+export const handleQueries = async ({
+  query = {},
+  isUsingMainKey,
+  baseUrl,
+  redisClient,
+}) => {
   const {
     keyword = '',
     page: pageQuery = 0,
@@ -136,10 +167,26 @@ export const handleQueries = ({ query = {}, isUsingMainKey, baseUrl }) => {
     pronunciation,
     nsibidi,
   } = query;
+  let allVerbsAndSuffixes;
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
+  const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
+  const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
+  const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
+  if (version === Versions.VERSION_2) {
+    if (cachedAllVerbsAndSuffixes) {
+      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
+    } else {
+      allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
+    }
+  }
+
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-  const regexKeyword = constructRegexQuery({ isUsingMainKey, searchWord });
+  const keywords = version === Versions.VERSION_2 ? (
+    expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
+      { text, wordClass, regex: constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }) }
+    ))) : [];
+  const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
@@ -149,7 +196,8 @@ export const handleQueries = ({ query = {}, isUsingMainKey, baseUrl }) => {
   return {
     version,
     searchWord,
-    regexKeyword,
+    keywords,
+    regex,
     page,
     skip,
     limit,
@@ -162,5 +210,8 @@ export const handleQueries = ({ query = {}, isUsingMainKey, baseUrl }) => {
       pronunciation,
       nsibidi,
     },
+    redisAllVerbsAndSuffixesKey,
+    allVerbsAndSuffixes,
+    redisClient,
   };
 };

@@ -28,17 +28,22 @@ const searchExamples = ({
 );
 
 /* Returns examples from MongoDB */
-export const getExamples = (redisClient) => async (req, res, next) => {
+export const getExamples = async (req, res, next) => {
   try {
     const {
       version,
       searchWord,
-      regexKeyword,
+      keywords,
+      regex,
       skip,
       limit,
+      redisClient,
+      isUsingMainKey,
       ...rest
-    } = handleQueries(req);
-    const regexMatch = searchExamplesRegexQuery(regexKeyword);
+    } = await handleQueries(req);
+    const regexMatch = !isUsingMainKey && !searchWord ? ({
+      igbo: { $exists: false },
+    }) : searchExamplesRegexQuery(regex);
     const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}-${version}`;
     const redisExamplesCountCacheKey = `example-${searchWord}-${version}`;
     const cachedExamples = await redisClient.get(redisExamplesCacheKey);

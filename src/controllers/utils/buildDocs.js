@@ -94,8 +94,8 @@ export const findWordsWithMatch = async ({
     finalWords.forEach((word) => {
       if (version === Versions.VERSION_1) {
         word.wordClass = word.definitions[0].wordClass;
-        word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
         word.nsibidi = word.definitions[0].nsibidi;
+        word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
         if (dialects) {
           word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({
             ...finalDialects,
