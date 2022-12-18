@@ -183,7 +183,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
   const updatedMeta = { ...meta };
   updatedMeta.depth += 1;
   const allWords = Object.values(wordData).flat();
-  const isRootVerb = (root) => allWords.find(({ word: headword, wordClass, definitions, ...rest }) => {
+  const isRootVerb = (root) => allWords.find(({ word: headword, wordClass, definitions = [], ...rest }) => {
     return (version === Versions.VERSION_1 ? (
       wordClass === WordClass.AV.value
       || wordClass === WordClass.MV.value
@@ -194,7 +194,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
       || nestedWordClass === WordClass.PV.value)))
     && removeAccents.removeExcluding(headword).normalize('NFC') === root;
   }) ;
-  const isSuffix = (root) => allWords.find(({ word: headword, definitions, wordClass }) => {
+  const isSuffix = (root) => allWords.find(({ word: headword, wordClass, definitions = [] }) => {
     return (version === Versions.VERSION_1 ? (
       wordClass === WordClass.ESUF.value
       || wordClass === WordClass.ISUF.value
