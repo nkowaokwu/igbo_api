@@ -1,5 +1,6 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
+import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { sendNewDeveloper } from './email';
@@ -27,7 +28,7 @@ export const postDeveloper = async (req, res, next) => {
       throw new Error('This email is already used');
     }
 
-    if ((process.env.NODE_ENV === 'production' || process.env.CLIENT_TEST) && email === TEST_EMAIL) {
+    if ((isProduction || CLIENT_TEST) && email === TEST_EMAIL) {
       throw new Error('This email is already used');
     }
 
@@ -41,7 +42,7 @@ export const postDeveloper = async (req, res, next) => {
       password: hashedPassword,
     });
     await developer.save();
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTest) {
       try {
         await sendNewDeveloper({ to: email, apiKey, name });
       } catch (err) {
@@ -55,7 +56,7 @@ export const postDeveloper = async (req, res, next) => {
     });
   } catch (err) {
     await handleCloseConnection(connection);
-    if (process.env.NODE_ENV !== 'test') {
+    if (!isTest) {
       console.trace(err);
     }
     return next(err);

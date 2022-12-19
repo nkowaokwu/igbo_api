@@ -1,8 +1,8 @@
+import { initializeApp } from 'firebase/app';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUI from 'swagger-ui-express';
-import sslRedirect from 'heroku-ssl-redirect';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
@@ -15,25 +15,28 @@ import {
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
-import { SWAGGER_DOCS, CORS_CONFIG, SWAGGER_OPTIONS } from './config';
+import {
+  SWAGGER_DOCS,
+  CORS_CONFIG,
+  SWAGGER_OPTIONS,
+  FIREBASE_CONFIG,
+} from './config';
 
 const app = express();
+
+initializeApp(FIREBASE_CONFIG);
 
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
-if (process.env.HEROKU) {
-  // enable ssl redirect
-  app.use(sslRedirect());
-}
-
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
   app.use('*', logger);
 }
 
+/* Site config */
 app.options('*', cors());
 app.use(cors(CORS_CONFIG));
 app.set('trust proxy', 1);
@@ -66,3 +69,5 @@ app.use(siteRouter);
 app.use(errorHandler);
 
 export default app;
+
+export const api = app;

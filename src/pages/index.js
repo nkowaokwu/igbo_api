@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { API_ROUTE } from '../siteConstants';
+import { MAIN_KEY } from '../config';
 import App from './App';
 
 export const getServerSideProps = async (context) => {
@@ -19,14 +20,14 @@ export const getServerSideProps = async (context) => {
         method: 'get',
         url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${queries}`,
         headers: {
-          'X-API-Key': process.env.MAIN_KEY || 'main_key',
+          'X-API-Key': MAIN_KEY || 'main_key',
         },
       });
       return { props: { searchWord: '', words: words || [] } };
     }
     return { props: { searchWord: '', words: [] } };
   } catch (err) {
-    console.log(err);
+    console.trace(err);
     return {
       props: {
         searchWord: '',

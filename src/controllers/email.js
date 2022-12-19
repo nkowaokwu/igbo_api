@@ -1,14 +1,16 @@
 import omit from 'lodash/omit';
 import map from 'lodash/map';
 import {
-  NEW_DEVELOPER_ACCOUNT_TEMPLATE,
+  SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE,
   API_FROM_EMAIL,
   SENDGRID_API_KEY,
+  isTest,
+  isProduction,
 } from '../config';
 
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : {};
 
-if (sgMail && sgMail.setApiKey && process.env.NODE_ENV !== 'test') {
+if (sgMail && sgMail.setApiKey && !isTest) {
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
 
@@ -22,14 +24,14 @@ const constructMessage = (messageFields) => ({
 
 /* Wrapper around SendGrid function to handle errors */
 export const sendEmail = (message) => (
-  process.env.NODE_ENV !== 'test' ? sgMail.send(message)
+  !isTest ? sgMail.send(message)
     .then(() => {
-      if (process.env.NODE_ENV !== 'production') {
+      if (!isProduction) {
         console.green('Email successfully sent.');
       }
     })
     .catch((err) => {
-      if (process.env.NODE_ENV !== 'production') {
+      if (!isProduction) {
         console.red(err);
         return Promise.resolve(err);
       }
@@ -46,7 +48,7 @@ export const sendEmail = (message) => (
 export const sendNewDeveloper = (data) => {
   const message = constructMessage({
     to: [data.to],
-    templateId: NEW_DEVELOPER_ACCOUNT_TEMPLATE,
+    templateId: SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE,
     dynamic_template_data: omit(data, ['to']),
   });
   return sendEmail(message);
