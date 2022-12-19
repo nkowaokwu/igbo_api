@@ -4,7 +4,7 @@
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "main": "server.js",
   "scripts": {
-    "build": "shx rm -rf build/ && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:site && yarn build:functions",
+    "build": "rm -rf build/ && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:site && yarn build:functions",
     "build:functions": "shx rm -rf functions/src && shx cp -r ./build ./functions/build; cp swagger.json ./functions; cp -r ./build/dictionaries/ig-en ./functions/build/dictionaries",
     "build:src": "./node_modules/.bin/babel -d build/ ./src -s && ./node_modules/.bin/babel -d functions/build/ ./src -s",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
