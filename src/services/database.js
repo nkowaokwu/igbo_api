@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../config';
+import { MONGO_URI, isProduction } from '../config';
 
 const DISCONNECTED = 0;
 
@@ -14,7 +14,7 @@ export const createDbConnection = () => {
 
   connection.on('error', console.error.bind(console, 'connection error:'));
   connection.once('open', () => {
-    if (process.env.NODE_ENV === 'production') {
+    if (isProduction) {
       console.log('🗄 Database is connected', process.env.CI, MONGO_URI);
     }
   });
@@ -27,7 +27,7 @@ export const disconnectDatabase = () => {
   if (db.readyState !== DISCONNECTED) {
     db.close();
     db.once('close', () => {
-      if (process.env.NODE_ENV === 'production') {
+      if (isProduction) {
         console.log('🗃 Database is connection closed', process.env.CI, MONGO_URI);
       }
     });

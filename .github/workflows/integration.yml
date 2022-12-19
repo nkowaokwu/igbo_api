@@ -2,6 +2,11 @@ name: Test Suite
 
 on: pull_request
 
+env:
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  CI: test
+  MAIN_KEY: ${{ secrets.MAIN_KEY }}
+
 jobs:
   test:
     name: Build and Test
@@ -27,17 +32,13 @@ jobs:
     - name: Build Server
       run: |
         yarn install
+        npm install -g firebase-tools
+        firebase use default --token $FIREBASE_TOKEN
+        firebase functions:config:set runtime.env=test --token $FIREBASE_TOKEN
         yarn build
     - name: Test Server Build Process
       run: yarn test:build
-      env:
-        CI: test
     - name: Test API
       run: yarn jest
-      env:
-        CI: test
-        MAIN_KEY: ${{ secrets.MAIN_KEY }}
     - name: Test API Homepage
       run: yarn cypress:ci
-      env:
-        CI: test

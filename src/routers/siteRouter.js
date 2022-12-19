@@ -18,7 +18,6 @@ siteRouter.use(async (req, res, next) => {
   try {
     const parsedUrl = parse(req.url, true);
     const { pathname, query } = parsedUrl;
-
     if (routes.find((route) => pathname.match(route))) {
       return nextApp.render(req, res, pathname, query);
     }

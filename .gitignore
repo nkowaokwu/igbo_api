@@ -144,3 +144,8 @@ __tests__/__mocks__/dictionaries/
 
 # misc
 .DS_Store
+
+# Firebase
+functions/node_modules
+functions/src
+functions/swagger.json

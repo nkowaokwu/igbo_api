@@ -103,9 +103,11 @@ describe('Developers', () => {
     it('should increase the count by maxing usage limit', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
-      await getWord(wordId, {}, { apiKey: developerRes.body.apiKey });
-      await getWord(wordId, {}, { apiKey: developerRes.body.apiKey });
-      const res = await getWord(wordId, { apiLimit: 2 }, { apiKey: developerRes.body.apiKey });
+      const wordsRes = await getWords({ keyword: 'eat' });
+      const limitWordId = wordsRes.body[0].id;
+      await getWord(limitWordId, {}, { apiKey: developerRes.body.apiKey });
+      await getWord(limitWordId, {}, { apiKey: developerRes.body.apiKey });
+      const res = await getWord(limitWordId, { apiLimit: 2 }, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(403);
     });
   });

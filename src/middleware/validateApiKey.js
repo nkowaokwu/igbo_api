@@ -1,13 +1,18 @@
 import { compareSync } from 'bcrypt';
 import { developerSchema } from '../models/Developer';
-import { MAIN_KEY } from '../config';
+import {
+  MAIN_KEY,
+  isTest,
+  isDevelopment,
+  isProduction,
+} from '../config';
 import { createDbConnection } from '../services/database';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
 
 const determineLimit = (apiLimit) => (
-  process.env.NODE_ENV === 'test'
+  isTest
     ? apiLimit || PROD_LIMIT
     : PROD_LIMIT
 );
@@ -53,17 +58,15 @@ export default async (req, res, next) => {
     }
     req.isUsingMainKey = false;
 
-    if ((!apiKey) && process.env.NODE_ENV === 'development') {
-      if (!apiKey) {
-        apiKey = FALLBACK_API_KEY;
-      }
+    if (!apiKey && isDevelopment) {
+      apiKey = FALLBACK_API_KEY;
     }
     if (!apiKey) {
       throw new Error('X-API-Key Header doesn\'t exist');
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
-    if (apiKey === FALLBACK_API_KEY && process.env.NODE_ENV !== 'production') {
+    if (apiKey === FALLBACK_API_KEY && !isProduction) {
       return next();
     }
 

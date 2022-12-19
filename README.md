@@ -219,21 +219,7 @@ For example:
 http://localhost:8080/api/v1/test/populate // POST
 ```
 
-After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database!
-
-Then make another `POST` request to the following route, to populate all the `GenericWord` documents:
-
-```
-/api/v1/genericWords
-```
-
-For example:
-
-```
-http://localhost:8080/api/v1/genericWords // POST
-```
-
-After about 30 seconds, you should get a message returned back saying `Successfully populated generic words`.
+After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database.
 
 ### 3. Migrate Data (Optional)
 
