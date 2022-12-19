@@ -50,7 +50,7 @@ jobs:
         run: |
           firebase use default --token $FIREBASE_TOKEN
           firebase functions:config:set runtime.env="production" env.main_key=$MAIN_KEY env.mongo_uri=$MONGO_URI --token $FIREBASE_TOKEN
-          firebase functions:config:set env.firebase_config=$FIREBASE_CONFIG --token $FIREBASE_TOKEN
+          firebase functions:config:set env.firebase_config="$FIREBASE_CONFIG" --token $FIREBASE_TOKEN
           firebase functions:config:set sendgrid.api_key=$SENDGRID_API_KEY sendgrid.new_developer_account_template=$SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE --token $FIREBASE_TOKEN
           firebase functions:config:set analytics.ga_tracking_id=$SENDGRID_API_KEY analytics.ga_api_secret=$GA_API_SECRET --token $FIREBASE_TOKEN
           firebase functions:config:set env.redis_url=$REDIS_URL --token $FIREBASE_TOKEN
