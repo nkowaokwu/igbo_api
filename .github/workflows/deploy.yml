@@ -25,7 +25,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
