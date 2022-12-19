@@ -39,7 +39,7 @@ jobs:
           ls ./node_modules/.bin
           pwd
       - name: Install Cloud Dependencies
-        run: cd functions; rm -rf ./node_modules/; yarn; cd ..
+        run: cd functions; rm -rf ./node_modules/; yarn; cd ..; pwd
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
