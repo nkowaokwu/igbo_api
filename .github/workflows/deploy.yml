@@ -35,7 +35,7 @@ jobs:
       - name: Install Project Dependencies
         run: |
           rm -rf ./node_modules; yarn install
-          npm install -g firebase-tools @babel/core @babel/cli
+          npm install -g firebase-tools @babel/core @babel/cli @babel/plugin-transform-react-jsx
           ls ./node_modules/.bin
       - name: Install Cloud Dependencies
         run: cd functions; rm -rf ./node_modules/; yarn; cd ..
