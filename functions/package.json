@@ -13,6 +13,7 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@babel/runtime": "^7.20.6",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "^11",
