@@ -34,15 +34,15 @@ jobs:
           node-version: '16'
       - name: Install Project Dependencies
         run: |
-          yarn install --check-files
+          npm ci
           npm install -g firebase-tools @babel/core @babel/cli
           ls ./node_modules/.bin
       - name: Install Cloud Dependencies
-        run: cd functions; yarn; cd ..
+        run: cd functions; npm ci; cd ..
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
-          yarn migrate
+          npm run migrate
       - name: Build Production Project
         run: |
           firebase use default --token $FIREBASE_TOKEN
@@ -53,7 +53,7 @@ jobs:
           firebase functions:config:set env.redis_url=$REDIS_URL --token $FIREBASE_TOKEN
           firebase functions:config:set aws.access_key=$AWS_ACCESS_KEY_ID aws.secret_access_key=$AWS_SECRET_ACCESS_KEY aws.bucket=$AWS_S3_BUCKET aws.region=$AWS_REGION  --token $FIREBASE_TOKEN
           firebase functions:config:set github.stats_token=$GITHUB_STATS_TOKEN  --token $FIREBASE_TOKEN
-          yarn build
+          npm run build
       - name: Deploy to prod
         uses: docker://w9jds/firebase-action:master
         with:
