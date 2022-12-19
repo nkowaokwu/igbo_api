@@ -3,7 +3,7 @@ name: Deploy to Firebase
 on:
   push:
     branches:
-      - main
+      - master
 env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
