@@ -34,7 +34,7 @@ jobs:
           node-version: '16'
       - name: Install Project Dependencies
         run: |
-          yarn install
+          yarn install --check-files
           npm install -g firebase-tools @babel/core @babel/cli
           ls ./node_modules/.bin
       - name: Install Cloud Dependencies
