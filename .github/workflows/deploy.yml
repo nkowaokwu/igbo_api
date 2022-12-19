@@ -35,7 +35,9 @@ jobs:
       - name: Install Project Dependencies
         run: |
           yarn install
-          npm install -g firebase-tools @babel/core @babel/cli
+          npm install -g firebase-tools
+      - name: Install Cloud Dependencies
+        run: cd functions; yarn; cd ..
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
