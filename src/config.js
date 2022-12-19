@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as packageJson from '../package.json';
+import packageJson from '../package.json';
 import swaggerConfig from '../swagger.json';
 import injectWordClass from './shared/utils/injectWordClass';
 import './shared/utils/wrapConsole';
