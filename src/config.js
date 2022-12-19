@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions';
-import packageJson from '../package.json';
 import swaggerConfig from '../swagger.json';
 import injectWordClass from './shared/utils/injectWordClass';
 import './shared/utils/wrapConsole';
@@ -71,9 +70,9 @@ export const CORS_CONFIG = {
 
 // Documentation
 const SWAGGER_SETTINGS = {
-  title: packageJson.name,
-  version: packageJson.version,
-  description: packageJson.description,
+  title: 'Igbo API',
+  version: '1.43.5',
+  description: 'Igbo Dictionary API contains Igbo words, definitions, and examples',
   host: `${isProduction ? process.env.DOMAIN_NAME : `localhost:${PORT}`}`,
   schemes: `${isProduction ? ['https'] : ['http']}`,
 };
