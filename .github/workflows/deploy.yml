@@ -44,7 +44,7 @@ jobs:
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
           pwd
-          yarn migrate
+          yarn migrate-up
       - name: Build Production Project
         run: |
           firebase use default --token $FIREBASE_TOKEN
