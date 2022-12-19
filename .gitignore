@@ -149,3 +149,5 @@ __tests__/__mocks__/dictionaries/
 functions/node_modules
 functions/src
 functions/swagger.json
+functions/yarn.lock
+yarn.lock

@@ -34,11 +34,11 @@ jobs:
           node-version: '16'
       - name: Install Project Dependencies
         run: |
-          npm install --force
+          rm -rf ./node_modules; yarn install
           npm install -g firebase-tools @babel/core @babel/cli
           ls ./node_modules/.bin
       - name: Install Cloud Dependencies
-        run: cd functions; npm install --force; cd ..
+        run: cd functions; rm -rf ./node_modules/; yarn; cd ..
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
