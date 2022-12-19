@@ -1,6 +1,6 @@
 {
   "name": "igbo-api",
-  "version": "1.43.4",
+  "version": "1.43.5",
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "main": "server.js",
   "scripts": {
