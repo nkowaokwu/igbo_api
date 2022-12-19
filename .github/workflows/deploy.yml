@@ -7,6 +7,7 @@ on:
 env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+  GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
   MAIN_KEY: ${{ secrets.MAIN_KEY }}
   MONGO_URI: ${{ secrets.MONGO_URI }}
   SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
