@@ -15,7 +15,7 @@ const Statistics = ({
   stars,
 }) => {
   const { t } = useTranslation();
-  const totalSlackMembers = 100;
+  const totalSlackMembers = 150;
   return (
     <div className="w-full flex flex-col justify-center items-center odd:space-y-6">
       <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">

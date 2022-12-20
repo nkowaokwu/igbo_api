@@ -2,6 +2,7 @@ import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';
 import isNaN from 'lodash/isNaN';
 import get from 'lodash/get';
+import pick from 'lodash/pick';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
@@ -174,7 +175,7 @@ export const handleQueries = async ({
   const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
   if (version === Versions.VERSION_2) {
     if (cachedAllVerbsAndSuffixes) {
-      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
+      allVerbsAndSuffixes = JSON.parse(cachedAllVerbsAndSuffixes);
     } else {
       allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
     }
@@ -182,11 +183,10 @@ export const handleQueries = async ({
 
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-//   const keywords = version === Versions.VERSION_2 ? (
-//     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
-//       { text, wordClass, regex: constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }) }
-//     ))) : [];
-  const keywords = [];
+  const keywords = version === Versions.VERSION_2 ? (
+    expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
+      { text, wordClass, regex: pick(constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }), ['wordReg']) }
+    ))) : [];
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);

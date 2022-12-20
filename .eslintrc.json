@@ -4,6 +4,7 @@
     "node": true,
     "jest": true
   },
+  "ignorePatterns": ["**/functions/*.js"],
   "extends": [
     "next",
     "airbnb",

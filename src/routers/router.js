@@ -30,6 +30,6 @@ router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExamp
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
 
-router.get('/stats', validateAdminApiKey, getStats);
+router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 
 export default router;

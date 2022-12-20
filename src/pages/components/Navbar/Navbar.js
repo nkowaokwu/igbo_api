@@ -4,7 +4,6 @@ import Image from 'next/image';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import SubMenu from './SubMenu';
-import IgboAPI from '../../assets/igboAPI.svg';
 import MenuIcon from '../../assets/downchevron.svg';
 
 const Navbar = ({ to, transparent }) => {
@@ -19,7 +18,7 @@ const Navbar = ({ to, transparent }) => {
       <h1 className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900 ml-5 lg:ml-0">
         {to ? (
           <a href={to}>
-            <Image {...IgboAPI} alt="Igbo API logo" />
+            <img src="https://igbo-api.s3.us-east-2.amazonaws.com/images/igboAPI.svg" alt="Igbo API logo" />
           </a>
         ) : (
           <Link

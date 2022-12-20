@@ -53,7 +53,7 @@ const partType = {
   },
   FUTURE_CONTINUOUS: { // Rule #13
     type: 'future continuous',
-    backgroundColor: 'blue.50', 
+    backgroundColor: 'blue.50',
   },
   POTENTIAL_CONTINUOUS_PREFIX: { // Rule #14
     type: 'potential continuous prefix',
@@ -98,6 +98,10 @@ const partType = {
   NEGATIVE_POTENTIAL: { // Rule #21
     type: 'negative potential',
     backgroundColor: 'purple.200',
+  },
+  NOMINAL_PREFIX: {
+    type: 'nominal prefix',
+    backgroundColor: 'pink.200',
   }
 }
 
@@ -115,6 +119,21 @@ const negativesOrPast = [
 const negativePrefixes = [
   'a',
   'e',
+];
+
+const nominalPrefixes = [
+  'a',
+  'e',
+  'i',
+  'ị',
+  'o',
+  'ọ',
+  'u',
+  'ụ',
+  'n',
+  'nn',
+  'm',
+  'mm',
 ];
 
 const nots = [
@@ -183,7 +202,6 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
   const updatedMeta = { ...meta };
   updatedMeta.depth += 1;
   const allWords = Object.values(wordData).flat();
-  console.log('allWords length', allWords?.length)
   const isRootVerb = (root) => allWords.find(({ word: headword, wordClass, definitions = [] }) => (
     definitions.find(({ wordClass: nestedWordClass }) => (
       nestedWordClass === WordClass.AV.value
@@ -198,7 +216,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
     )))
     && removeAccents.removeExcluding(headword).replace('-', '').normalize('NFC') === root
   );
-  
+
   let solutions = [topSolution];
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
@@ -212,6 +230,12 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
     } else if (!updatedMeta.isPreviousVerb && isRootVerb(currentRange)) {
       solution.push({ type: partType.VERB_ROOT, text: currentRange, wordInfo: isRootVerb(currentRange), wordClass: [WordClass.AV.value, WordClass.MV.value, WordClass.PV.value] });
       updatedMeta.isPreviousVerb = true;
+      tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
+    } else if (!updatedMeta.nominalPrefix && nominalPrefixes.includes(currentRange)) {
+      solution.push({ type: partType.NOMINAL_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
+      updatedMeta.isPreviousVerb = false;
+      updatedMeta.negatorPrefixed = false;
+      updatedMeta.nominalPrefix = true;
       tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
     } else if (!updatedMeta.isPreviousVerb && negativePrefixes.includes(currentRange)) {
       solution.push({ type: partType.NEGATOR_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
@@ -235,7 +259,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
       updatedMeta.isPreviousVerb = true;
       tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
     } else if (isSuffix(currentRange)) {
-      solution.push({ type: partType.EXTENSIONAL_SUFFIX, text: currentRange, wordInfo: isSuffix(currentRange),  wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
+      solution.push({ type: partType.EXTENSIONAL_SUFFIX, text: currentRange, wordInfo: isSuffix(currentRange), wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
       updatedMeta.isPreviousVerb = true;
       tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
     } else if (multiplePeople.includes(currentRange)) {
@@ -268,7 +292,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
       updatedMeta.isPreviousVerb = false;
       tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
     } else if (hasBeenAndStill.includes(currentRange)) {
-      solution.push({ type: partType.PAST_PERFECT_CONTINUOUS_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value]  });
+      solution.push({ type: partType.PAST_PERFECT_CONTINUOUS_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
       updatedMeta.isPreviousVerb = false;
       tempSolution = helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta, version);
     }
@@ -276,8 +300,8 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta, 
     secondPointer += 1;
   }
   return solutions.reduce((longestSolution, solution) => (
-    longestSolution.length >= solution.length ? longestSolution : solution, []
-  ));
+    longestSolution.length >= solution.length ? longestSolution : solution
+  ), []);
 }
 
 // Backtracking
@@ -285,8 +309,10 @@ export default (word, wordData, version) => {
   const normalizedWord = word.toLowerCase().normalize('NFC');
   let firstPointer = 0;
   let secondPointer = 1;
-  return helper(normalizedWord, wordData, firstPointer, secondPointer, [], { depth: 0 }, version)
+  const solution = helper(normalizedWord, wordData, firstPointer, secondPointer, [], { depth: 0 }, version)
     .map(({ text, ...rest }) => (
       { ...rest, text: text.trim() }
     ));
+  console.log('Expanded verb: ', solution);
+  return solution;
 }

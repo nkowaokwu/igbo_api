@@ -1,3 +1,4 @@
+import compact from 'lodash/compact';
 import WordClass from '../../shared/constants/WordClass';
 
 const fullTextSearchQuery = ({
@@ -11,14 +12,14 @@ const fullTextSearchQuery = ({
     : {
       $or: keywords.map(({ text, regex, wordClass = [] }) => ({
         $and: [{
-          $or: [
+          $or: compact([
             { word: text },
             { word: { $regex: regex.wordReg } },
-            { 'definitions.definitions': { $regex: regex.definitionsReg } },
+            (regex.definitionsReg ? { 'definitions.definitions': { $regex: regex.definitionsReg } } : null),
             { variations: text },
             { 'definitions.nsibidi': text },
             { 'dialects.word': text },
-          ],
+          ]),
           ...(wordClass?.length ? { 'definitions.wordClass': { $in: wordClass } } : {}),
         }],
       })),

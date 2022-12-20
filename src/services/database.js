@@ -12,6 +12,7 @@ export const createDbConnection = () => {
     autoIndex: true,
   });
 
+  console.log('Attempting MongoDB URI:', MONGO_URI);
   connection.on('error', console.error.bind(console, 'connection error:'));
   connection.once('open', () => {
     if (isProduction) {

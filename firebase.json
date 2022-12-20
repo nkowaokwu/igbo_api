@@ -10,11 +10,11 @@
       "**/.*",
       "**/node_modules/**"
     ],  
-    "rewrites": [ {
+    "rewrites": [{
       "source": "**",
       "function": "api",
       "region": "us-central1"
-    } ],
+    }],
     "headers": [
       {
         "source": "/",
