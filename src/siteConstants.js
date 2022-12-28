@@ -2,9 +2,7 @@
 export const PORT = 8080;
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
 export const APP_URL = 'https://igboapi.com';
-export const API_ROUTE = process.env.NODE_ENV === 'production'
-  ? `https://${APP_URL}`
-  : `http://localhost:${PORT}`;
+export const API_ROUTE = APP_URL;
 export const DICTIONARY_APP_URL = 'https://nkowaokwu.com/home';
 export const GITHUB_REPO = 'https://github.com/nkowaokwu/igbo_api';
 export const GITHUB_CONTRIBUTORS = 'https://api.github.com/repos/nkowaokwu/igbo_api/contributors';

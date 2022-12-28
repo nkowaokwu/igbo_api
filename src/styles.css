@@ -145,6 +145,7 @@
   @apply my-6;
   @apply mx-4;
   transition: all .1s ease;
+  width: 150px;
 }
 
 .mentioned-in img:hover {

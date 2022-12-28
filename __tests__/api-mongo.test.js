@@ -632,5 +632,11 @@ describe('MongoDB Words', () => {
       });
       expect(WordClass[result.body.definitions[0].wordClass]).not.toBe(undefined);
     });
+    it('should return word with verb conjugation', async () => {
+      const keyword = 'ajora';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(2);
+    });
   });
 });

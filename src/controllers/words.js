@@ -170,7 +170,7 @@ const getWordsFromDatabase = async (req, res, next) => {
           redisClient.set(redisWordsCountCacheKey, `${wordsByIgbo.contentLength}`, 'EX', REDIS_CACHE_EXPIRATION);
           redisClient.set(
             redisAllVerbsAndSuffixesKey,
-            `${JSON.stringify(allVerbsAndSuffixes)}`,
+            JSON.stringify(allVerbsAndSuffixes),
             'EX',
             REDIS_CACHE_EXPIRATION,
           );

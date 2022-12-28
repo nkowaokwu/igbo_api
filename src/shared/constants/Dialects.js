@@ -27,7 +27,7 @@ export default {
   ANA: {
     code: 'ibo-ana',
     value: 'ANA',
-    lable: 'Anam',
+    label: 'Anam',
   },
   ANI: {
     code: 'ibo-ani',

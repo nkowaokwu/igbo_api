@@ -170,6 +170,7 @@ App.propTypes = {
   databaseStats: PropTypes.shape({}),
   gitHubStats: PropTypes.shape({
     stars: PropTypes.number,
+    contributors: PropTypes.arrayOf(PropTypes.shape({})),
   }),
 };
 
