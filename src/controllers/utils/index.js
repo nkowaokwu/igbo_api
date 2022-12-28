@@ -33,11 +33,11 @@ const createSimpleRegExp = (keywords) => ({
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
  */
-const constructRegexQuery = ({ isUsingMainKey, keywords }) => (
+const constructRegexQuery = ({ isUsingMainKey, keywords, strict = false }) => (
   isUsingMainKey
-    ? createSimpleRegExp(keywords)
+    ? createSimpleRegExp(keywords, strict)
     : keywords?.length
-      ? createSimpleRegExp(keywords)
+      ? createSimpleRegExp(keywords, strict)
       : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ }
 );
 
@@ -185,7 +185,15 @@ export const handleQueries = async ({
   const searchWord = removePrefix(keyword || filter || '');
   const keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
-      { text, wordClass, regex: pick(constructRegexQuery({ isUsingMainKey, keywords: [{ text }] }), ['wordReg']) }
+      {
+        text,
+        wordClass,
+        regex: pick(constructRegexQuery({
+          isUsingMainKey,
+          keywords: [{ text }],
+          strict: true,
+        }), ['wordReg']),
+      }
     ))) : [];
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const page = parseInt(pageQuery, 10);
