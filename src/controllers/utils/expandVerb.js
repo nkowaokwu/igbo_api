@@ -1,5 +1,5 @@
 /* eslint-disable */
-import Versions from '../../shared/constants/Versions';
+import compact from 'lodash/compact';
 import WordClass from '../../shared/constants/WordClass';
 import removeAccents from '../../shared/utils/removeAccents';
 
@@ -226,13 +226,14 @@ const isSuffix = (root, wordData) => wordData.suffixes.find(({ word: headword, d
   )
 );
 
+const topSolutions = [];
 const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) => {
   const updatedMeta = { ...meta };
   updatedMeta.depth += 1;
   let solutions = [topSolution];
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
-    const currentRange = word.substring(firstPointer, secondPointer);
+    const currentRange = (word.substring(firstPointer, secondPointer) || '').trim();
     console.log('the current range', currentRange, updatedMeta.depth);
     if (!updatedMeta.nominalPrefix && prefixes.includes(currentRange)) {
       solution.push({ type: partType.INFINITIVE, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
@@ -244,14 +245,14 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
       solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta));
     } else if (
       // TODO: double check nominal prefixes
-      (!updatedMeta.nominalPrefix && nominalPrefixes.includes(currentRange))
-      || (!updatedMeta.isPreviousVerb && negativePrefixes.includes(currentRange))
+      // (!updatedMeta.nominalPrefix && nominalPrefixes.includes(currentRange)) ||
+      (!updatedMeta.isPreviousVerb && negativePrefixes.includes(currentRange))
     ) {
-      solution.push({ type: partType.NOMINAL_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
-      updatedMeta.isPreviousVerb = false;
-      updatedMeta.negatorPrefixed = false;
-      updatedMeta.nominalPrefix = true;
-      solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, { ...updatedMeta }));
+      // solution.push({ type: partType.NOMINAL_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
+      // updatedMeta.isPreviousVerb = false;
+      // updatedMeta.negatorPrefixed = false;
+      // updatedMeta.nominalPrefix = true;
+      // solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, { ...updatedMeta }));
       if (negativePrefixes.includes(currentRange)) {
         const forkedUpdatedMeta = { ...updatedMeta };
         solution.push({ type: partType.NEGATOR_PREFIX, text: currentRange, wordClass: [WordClass.ISUF.value, WordClass.ESUF.value] });
@@ -317,15 +318,12 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
     }
     secondPointer += 1;
   }
-  // TODO: need to handle returning multiple solutions
-  return solutions.reduce((longestSolution, currentSolution) => (
-    longestSolution.length >= currentSolution.length ? longestSolution : currentSolution
-  ), []);
+  solutions.forEach((s) => topSolutions.push(s));
 }
 
 // Backtracking
-export default (word, wordData) => {
-  const normalizedWord = word.toLowerCase().normalize('NFC');
+export default (rawWord, wordData) => {
+  const word = rawWord.toLowerCase().normalize('NFC');
   let firstPointer = 0;
   let secondPointer = 1;
   const allWords = Object.values(wordData).flat();
@@ -340,14 +338,13 @@ export default (word, wordData) => {
       nestedWordClass === WordClass.ESUF.value
       || nestedWordClass === WordClass.ISUF.value)
   )));
-  const tempSolution = helper(normalizedWord, { verbs, suffixes }, firstPointer, secondPointer, [], { depth: 0 });
-  let solution = tempSolution
-    .map(({ text, ...rest }) => (
-      { ...rest, text: text.trim() }
-    ));
-  solution = removeAccents.removeExcluding(solution.reduce((finalString, currentPart) => (
-    `${finalString}${currentPart}`
-  ), '') || '').normalize('NFD') === word ? solution : []
+  helper(word, { verbs, suffixes }, firstPointer, secondPointer, [], { depth: 0 });
+  let solution = compact(topSolutions).find((s) => {
+    const solutionPathText = removeAccents.removeExcluding(s.reduce((finalString, { text }) => (
+      `${finalString}${text}`
+    ), '') || '').normalize('NFC');
+    return solutionPathText === word;
+  }) || [];
   console.log('Expanded verb: ', solution);
   return solution;
 }
