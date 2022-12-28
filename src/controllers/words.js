@@ -152,9 +152,9 @@ const getWordsFromDatabase = async (req, res, next) => {
         : strictSearchIgboQuery(
           allSearchKeywords,
         );
-    const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${examples}`;
-    const rawCachedWords = await redisClient.get(redisWordsCacheKey);
-    const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
+      const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${examples}`;
+      const rawCachedWords = await redisClient.get(redisWordsCacheKey);
+      const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
       if (cachedWords) {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
