@@ -57,3 +57,8 @@ export const searchForAllVerbsAndSuffixesQuery = () => ({
     ],
   },
 });
+export const searchForAllNounsQuery = () => ({
+  'definitions.wordClass': {
+    $in: [WordClass.NNC.value],
+  },
+});

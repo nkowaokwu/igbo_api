@@ -29,10 +29,10 @@
   },
   "emulators": {
     "functions": {
-      "port": 5001
+      "port": 5005
     },
     "firestore": {
-      "port": 8081
+      "port": 8085
     },
     "hosting": {
       "port": 8080
@@ -41,7 +41,7 @@
       "enabled": true
     },
     "pubsub": {
-      "port": 8085
+      "port": 8088
     }
   }
 }

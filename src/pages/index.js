@@ -58,7 +58,11 @@ const getWords = async (searchWord, queries) => {
 export const getServerSideProps = async (context) => {
   try {
     let promises = [async () => ({ data: [] })];
-    const { query } = context;
+    const { res, query } = context;
+    res.setHeader(
+      'Cache-Control',
+      'no-cache, no-store, max-age=0, must-revalidate',
+    );
     const searchWord = encodeURI(query.word);
     const queries = Object.entries(query).reduce((finalQueries, [key, value]) => {
       let updatedQueries = finalQueries;
@@ -71,7 +75,7 @@ export const getServerSideProps = async (context) => {
       promises[0] = getWords(searchWord, queries);
     }
     promises = promises.concat([getDatabaseStats(), getGitHubContributors(), getGitHubStars()]);
-    const [{ data: words }, databaseStats, contributors, stars] = await Promise.all(promises);
+    const [words, databaseStats, contributors, stars] = await Promise.all(promises);
     return {
       props: {
         searchWord: '',
