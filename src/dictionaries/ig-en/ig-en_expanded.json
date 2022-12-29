@@ -18407,7 +18407,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18421,7 +18421,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18435,7 +18435,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18449,7 +18449,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18463,7 +18463,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18477,7 +18477,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18491,7 +18491,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18505,7 +18505,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18519,7 +18519,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa",
+                "bịa",
                 "ǹso"
             ]
         }
@@ -18534,7 +18534,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18549,7 +18549,7 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
@@ -18563,13 +18563,13 @@
             "examples": [],
             "variations": [],
             "stems": [
-                "-bịa"
+                "bịa"
             ]
         }
     ],
-    "-bịa": [
+    "bịa": [
         {
-            "word": "-bịa",
+            "word": "bịa",
             "wordClass": "AV",
             "definitions": [
                 "come"
@@ -63495,7 +63495,7 @@
             ]
         }
     ],
-    "kwa": [
+    "-kwa": [
         {
             "word": "kwa",
             "wordClass": "ADV",
@@ -63933,10 +63933,10 @@
             ]
         }
     ],
-    "-kwa": [
+    "kwa": [
         {
             "word": "-kwa",
-            "wordClass": "",
+            "wordClass": "AV",
             "definitions": [
                 "pack; carry off; clear away",
                 "weep; cry; lament",
