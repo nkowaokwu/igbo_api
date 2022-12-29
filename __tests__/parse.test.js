@@ -46,7 +46,7 @@ describe('Parse', () => {
       it('should return term information without included dashes', async () => {
         const res = searchMockedTerm('bia');
         keys(res).forEach((key) => {
-          expect(key.charAt(0)).toEqual('-');
+          expect(key.charAt(0)).toEqual('b');
         });
       });
 
