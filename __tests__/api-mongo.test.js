@@ -638,5 +638,19 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
     });
+    it('should return word parts of bịara for verb deconstruction', async () => {
+      const keyword = 'bịara';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(2);
+    });
+    it('should return word parts of akwa for noun deconstruction', async () => {
+      const keyword = 'akwa';
+      const res = await getWordsV2({ keyword });
+      console.log(res.body);
+      expect(res.status).toEqual(200);
+      const kwuWord = res.body.find(({ word }) => word === 'kwa');
+      expect(kwuWord).toBeTruthy();
+    });
   });
 });

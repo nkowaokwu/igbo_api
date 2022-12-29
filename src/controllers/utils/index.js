@@ -7,6 +7,7 @@ import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
 import expandVerb from './expandVerb';
+import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
 
@@ -47,22 +48,27 @@ export const sortDocsBy = (searchWord, docs, key, version) => (
     const normalizedSearchWord = searchWord.normalize('NFC');
     const prevDocValue = get(prevDoc, key);
     const nextDocValue = get(nextDoc, key);
-    const prevDocDifference = stringSimilarity.compareTwoStrings(
-      normalizedSearchWord,
-      removeAccents.remove(prevDocValue).normalize('NFC'),
-    ) * SIMILARITY_FACTOR + ((get(prevDoc, generateSecondaryKey(version)) || '').includes(normalizedSearchWord)
+    const cleanedPrevDocValue = removeAccents.removeExcluding(prevDocValue).normalize('NFC');
+    const cleanedNextDocValue = removeAccents.removeExcluding(nextDocValue).normalize('NFC');
+    const prevSecondaryKeyValue = get(prevDoc, generateSecondaryKey(version)) || '';
+    const nextSecondaryKeyValue = get(nextDoc, generateSecondaryKey(version)) || '';
+    const prevMatchingDefinitionFactor = prevSecondaryKeyValue.includes(normalizedSearchWord)
       ? MATCHING_DEFINITION
-      : NO_FACTOR);
-    const nextDocDifference = stringSimilarity.compareTwoStrings(
-      normalizedSearchWord,
-      removeAccents.remove(nextDocValue).normalize('NFC'),
-    ) * SIMILARITY_FACTOR + ((get(nextDoc, generateSecondaryKey(version)) || '').includes(normalizedSearchWord)
+      : NO_FACTOR;
+    const nextMatchingDefinitionFactor = nextSecondaryKeyValue.includes(normalizedSearchWord)
       ? MATCHING_DEFINITION
-      : NO_FACTOR);
-    if (prevDocDifference === nextDocDifference) {
+      : NO_FACTOR;
+
+    const prevDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedPrevDocValue);
+    const nextDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedNextDocValue);
+
+    const finalPrevDocDiff = prevDocDifference * SIMILARITY_FACTOR + prevMatchingDefinitionFactor;
+    const finalNextDocDiff = nextDocDifference * SIMILARITY_FACTOR + nextMatchingDefinitionFactor;
+
+    if (finalPrevDocDiff === finalNextDocDiff) {
       return NO_FACTOR;
     }
-    return prevDocDifference > nextDocDifference ? -1 : 1;
+    return finalPrevDocDiff > finalNextDocDiff ? -1 : 1;
   })
 );
 
@@ -183,7 +189,7 @@ export const handleQueries = async ({
 
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
-  const keywords = version === Versions.VERSION_2 ? (
+  let keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
       {
         text,
@@ -195,6 +201,21 @@ export const handleQueries = async ({
         }), ['wordReg']),
       }
     ))) : [];
+  // Attempt to breakdown as noun if there is no breakdown as verb
+  if (!keywords.length) {
+    keywords = version === Versions.VERSION_2 ? (
+      expandNoun(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
+        {
+          text,
+          wordClass,
+          regex: pick(constructRegexQuery({
+            isUsingMainKey,
+            keywords: [{ text }],
+            strict: true,
+          }), ['wordReg']),
+        }
+      ))) : [];
+  }
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
