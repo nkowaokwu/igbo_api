@@ -19,6 +19,10 @@ const PartTypes = {
     type: 'stative prefix',
     backgroundColor: 'green.50',
   },
+  STATIVE_PREFIX_PAIR: { // Rule #11
+    type: 'stative prefix pair',
+    backgroundColor: 'green.50',
+  },
   PRESENT_CONTINUOUS: {
     type: 'present continuous',
     backgroundColor: 'teal.50',

@@ -40,27 +40,31 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
     const currentRange = (word.substring(firstPointer, secondPointer) || '').trim();
-    if (updatedMeta.nominalPrefix && isRootVerb(currentRange, wordData)) {
-      solution.push({
-        type: PartTypes.VERB_ROOT,
-        text: currentRange,
-        wordInfo: isRootVerb(currentRange, wordData),
-        wordClass: [WordClass.AV.value, WordClass.MV.value, WordClass.PV.value],
-      });
-      updatedMeta.isPreviousVerb = true;
-      solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta));
-    } else if (!updatedMeta.nominalPrefix && nominalPrefixes.includes(currentRange)) {
-      solution.push({
-        type: PartTypes.NOMINAL_PREFIX,
-        text: currentRange,
-        wordClass: [WordClass.ISUF.value, WordClass.ESUF.value],
-      });
-      updatedMeta.isPreviousVerb = false;
-      updatedMeta.negatorPrefixed = false;
-      updatedMeta.nominalPrefix = true;
-      solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, { ...updatedMeta }));
+    if (!currentRange) {
+      secondPointer += 1; // eslint-disable-line
+    } else {
+      if (updatedMeta.nominalPrefix && isRootVerb(currentRange, wordData)) {
+        solution.push({
+          type: PartTypes.VERB_ROOT,
+          text: currentRange,
+          wordInfo: isRootVerb(currentRange, wordData),
+          wordClass: [WordClass.AV.value, WordClass.MV.value, WordClass.PV.value],
+        });
+        updatedMeta.isPreviousVerb = true;
+        solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta));
+      } else if (!updatedMeta.nominalPrefix && nominalPrefixes.includes(currentRange)) {
+        solution.push({
+          type: PartTypes.NOMINAL_PREFIX,
+          text: currentRange,
+          wordClass: [WordClass.ISUF.value, WordClass.ESUF.value],
+        });
+        updatedMeta.isPreviousVerb = false;
+        updatedMeta.negatorPrefixed = false;
+        updatedMeta.nominalPrefix = true;
+        solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, { ...updatedMeta }));
+      }
+      secondPointer += 1; // eslint-disable-line
     }
-    secondPointer += 1; // eslint-disable-line
   }
   solutions.forEach((s) => topSolutions.push(s));
 };
