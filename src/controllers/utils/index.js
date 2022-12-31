@@ -189,6 +189,7 @@ export const handleQueries = async ({
 
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '');
+  console.log(`Search word: ${searchWord}`);
   let keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
       {
