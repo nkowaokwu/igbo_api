@@ -4,8 +4,6 @@ import {
   GA_API_SECRET,
   GA_URL,
   DEBUG_GA_URL,
-  isDevelopment,
-  isProduction,
 } from '../config';
 
 const trackEvent = ({
@@ -18,6 +16,7 @@ const trackEvent = ({
     measurement_id: GA_TRACKING_ID,
     api_secret: GA_API_SECRET,
   };
+  const isProduction = !process.env.FUNCTIONS_EMULATOR && params.GA_TRACKING_ID && params.GA_API_SECRET;
 
   const data = JSON.stringify({
     client_id: clientIdentifier,
@@ -31,7 +30,8 @@ const trackEvent = ({
     }],
   });
 
-  if (!isDevelopment) {
+  // Avoid sending GA events
+  if (isProduction) {
     axios({
       method: 'post',
       url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
@@ -47,11 +47,6 @@ const trackEvent = ({
       method: 'post',
       url: `${DEBUG_GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
       data,
-    }).then((res) => {
-      if (isProduction) {
-        console.log('Logging the data:', JSON.parse(data));
-        console.log('Google Analytics Debug res: ', res.data);
-      }
     })
       .catch((err) => {
         if (isProduction) {
