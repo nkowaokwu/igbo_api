@@ -186,9 +186,16 @@ export const handleQueries = async ({
       allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
     }
   }
-
   const filter = convertFilterToKeyword(filterQuery);
-  const searchWord = removePrefix(keyword || filter || '');
+  const searchWord = removePrefix(keyword || filter || '')
+    .replace(/[Aa]na m /, 'm ');
+  const searchWordParts = searchWord.split(' ');
+  const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
+  const regexes = searchWordParts.reduce((regexesObject, searchWordPart) => ({
+    ...regexesObject,
+    [searchWordPart]: constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWordPart }] }),
+  }), {});
+  console.log(`Word splits: ${searchWordParts}`);
   console.log(`Search word: ${searchWord}`);
   let keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
@@ -217,7 +224,22 @@ export const handleQueries = async ({
         }
       ))) : [];
   }
-  const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
+  if (!keywords.length) {
+    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart) => {
+      const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes, version);
+      return expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
+        {
+          text,
+          wordClass,
+          regex: pick(constructRegexQuery({
+            isUsingMainKey,
+            keywords: [{ text }],
+            strict: true,
+          }), ['wordReg']),
+        }
+      )) : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
+    }) : []).flat();
+  }
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
