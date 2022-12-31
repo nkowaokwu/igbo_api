@@ -40,7 +40,6 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
     const currentRange = (word.substring(firstPointer, secondPointer) || '').trim();
-    console.log('the current noun range', currentRange, updatedMeta.depth);
     if (updatedMeta.nominalPrefix && isRootVerb(currentRange, wordData)) {
       solution.push({
         type: PartTypes.VERB_ROOT,

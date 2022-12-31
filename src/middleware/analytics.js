@@ -31,7 +31,7 @@ const trackEvent = ({
     }],
   });
 
-  if (isDevelopment) {
+  if (!isDevelopment) {
     axios({
       method: 'post',
       url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,

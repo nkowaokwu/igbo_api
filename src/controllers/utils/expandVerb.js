@@ -113,7 +113,6 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
   while (secondPointer <= word.length) {
     const solution = [...topSolution];
     const currentRange = (word.substring(firstPointer, secondPointer) || '').trim();
-    console.log('the current verb range', currentRange, updatedMeta.depth);
     if (!updatedMeta.nominalPrefix && prefixes.includes(currentRange)) {
       solution.push({
         type: PartTypes.INFINITIVE,
