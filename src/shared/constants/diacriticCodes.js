@@ -52,13 +52,13 @@ const caseInsensitiveE = `${'[eE'}${'\u00e8\u00e9\u0113\u00c8\u00c9\u0112]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveI = `${'[iI'}${'\u00ec\u00ed\u012b\u1ecb\u00cc\u00cd\u012a\u1eca]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
-const caseInsensitiveỊ = `${'(([iI]+[\u0323])|[\u1ECB\u1ECA])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỊ = `${'(([iI]+[\u0323]{0,})|[\u1ECB\u1ECA])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveO = `${'[oO'}${'\u00f2\u00f3\u014d\u1ecd\u00d2\u00d3\u014c\u1ecc]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
-const caseInsensitiveỌ = `${'(([oO]+[\u0323])|[\u1ECD\u1ECC])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỌ = `${'(([oO]+[\u0323]{0,})|[\u1ECD\u1ECC])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveU = `${'[uU'}${'\u00f9\u00fa\u016b\u1ee5\u00d9\u00da\u016a\u1ee4]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
-const caseInsensitiveỤ = `${'(([uU]+[\u0323])|[\u1EE5\u1EE4])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveỤ = `${'(([uU]+[\u0323]{0,})|[\u1EE5\u1EE4])'}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 
 export default {
   n: caseInsensitiveN,
