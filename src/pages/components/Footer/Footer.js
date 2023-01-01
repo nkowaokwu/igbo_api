@@ -7,6 +7,7 @@ import {
   TWITTER,
   INSTAGRAM,
   LINKEDIN,
+  YOUTUBE,
   NKOWAOKWU,
   NKOWAOKWU_CHROME,
   APP_URL,
@@ -104,6 +105,11 @@ const Footer = () => {
                   <li>
                     <a href={LINKEDIN} className="font-normal border-b border-b-gray-500">
                       LinkedIn
+                    </a>
+                  </li>
+                  <li>
+                    <a href={YOUTUBE} className="font-normal border-b border-b-gray-500">
+                      YouTube
                     </a>
                   </li>
                   <li>
