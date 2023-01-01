@@ -36,10 +36,7 @@ export default (rawSearchWord, hardMatch = false) => {
     : `${startWordBoundary}(^${front}${regexWordString}${back}$)${endWordBoundary}`,
   'i');
 
-  const definitionsReg = new RegExp(!hardMatch
-    ? `${startWordBoundary}(${regexWordString})${endWordBoundary}`
-    : `${startWordBoundary}(${regexWordString}$)${endWordBoundary}`,
-  'i');
+  const definitionsReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
 
   return { wordReg, definitionsReg };
 };
