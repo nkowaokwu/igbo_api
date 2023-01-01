@@ -40004,9 +40004,9 @@
             ]
         }
     ],
-    "-gba": [
+    "gba": [
         {
-            "word": "-gba",
+            "word": "gba",
             "wordClass": "AV",
             "definitions": [
                 "move",

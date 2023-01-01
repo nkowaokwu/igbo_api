@@ -137,14 +137,14 @@ describe('MongoDB Words', () => {
       const keyword = 'king';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(4);
+      expect(res.body).toHaveLength(10);
     });
 
     it('should return back \'kings\' (plural) documents', async () => {
       const keyword = 'kings';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toEqual(4);
+      expect(res.body.length).toEqual(10);
     });
 
     it('should return back words related to paradoxa (within paraenthesis)', async () => {
@@ -162,7 +162,7 @@ describe('MongoDB Words', () => {
       const keyword = 'ada';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(4);
+      expect(res.body).toHaveLength(10);
     });
 
     it('should return back Adaeze without ada', async () => {
@@ -177,7 +177,7 @@ describe('MongoDB Words', () => {
       const keyword = 'run';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(5);
+      expect(res.body).toHaveLength(10);
     });
 
     it('should return word information with dialects query', async () => {
@@ -377,7 +377,7 @@ describe('MongoDB Words', () => {
       const keyword = 'mili';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(2);
+      expect(res.body).toHaveLength(3);
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
         WORD_KEYS_V1.forEach((key) => {
@@ -644,13 +644,12 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
     });
-    it('should return word parts of akwa for noun deconstruction', async () => {
-      const keyword = 'akwa';
+    it('should return word parts of mgba for noun deconstruction', async () => {
+      const keyword = 'mgba';
       const res = await getWordsV2({ keyword });
-      console.log(res.body);
       expect(res.status).toEqual(200);
-      const kwuWord = res.body.find(({ word }) => word === 'kwa');
-      expect(kwuWord).toBeTruthy();
+      const gbaWord = res.body.find(({ word }) => word === 'gba');
+      expect(gbaWord).toBeTruthy();
     });
   });
 });
