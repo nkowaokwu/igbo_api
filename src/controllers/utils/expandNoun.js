@@ -81,6 +81,7 @@ export default (rawWord, wordData) => {
       || nestedWordClass === WordClass.MV.value
       || nestedWordClass === WordClass.PV.value),
     )));
+  console.time('Expand noun time');
   helper(word, { verbs }, firstPointer, secondPointer, [], { depth: 0 });
   const solution = compact(topSolutions).find((s) => {
     const solutionPathText = removeAccents.removeExcluding(s.reduce((finalString, { text }) => (
@@ -88,6 +89,7 @@ export default (rawWord, wordData) => {
     ), '') || '').normalize('NFC');
     return solutionPathText === word;
   }) || [];
+  console.timeEnd('Expand noun time');
   console.log('Expanded noun: ', solution);
   return solution;
 };

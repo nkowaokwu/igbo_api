@@ -225,6 +225,7 @@ export const handleQueries = async ({
       ))) : [];
   }
   if (!keywords.length) {
+    console.time('Expand phrase time');
     keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart) => {
       const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes, version);
       return expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
@@ -239,6 +240,7 @@ export const handleQueries = async ({
         }
       )) : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
     }) : []).flat();
+    console.timeEnd('Expand phrase time');
   }
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);

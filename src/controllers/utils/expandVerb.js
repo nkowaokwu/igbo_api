@@ -316,6 +316,7 @@ export default (rawWord, wordData) => {
       nestedWordClass === WordClass.ESUF.value
       || nestedWordClass === WordClass.ISUF.value),
     )));
+  console.time('Expand verb time');
   console.log('Expanding word: ', word);
   helper(word, { verbs, suffixes: wordSuffixes }, firstPointer, secondPointer, [], { depth: 0 });
   const { path: solution } = compact(topSolutions).find(({ path, metaData }) => {
@@ -325,6 +326,7 @@ export default (rawWord, wordData) => {
     // TODO: requiring matching parts to be complete set
     return solutionPathText === word && !metaData.isNegatorPrefixed;
   }) || { path: [] };
+  console.timeEnd('Expand verb time');
   console.log('Expanded verb: ', solution);
   return solution;
 };
