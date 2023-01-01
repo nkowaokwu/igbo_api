@@ -12,6 +12,7 @@ export const GITHUB_STARS = 'https://api.github.com/repos/nkowaokwu/igbo_api';
 export const TWITTER = 'https://twitter.com/nkowaokwu';
 export const INSTAGRAM = 'https://www.instagram.com/nkowaokwu';
 export const LINKEDIN = 'https://www.linkedin.com/company/nkowa-okwu';
+export const YOUTUBE = 'https://www.youtube.com/c/IjemmaOnwuzulike';
 
 // Projects
 export const NKOWAOKWU = 'https://nkowaokwu.com';
