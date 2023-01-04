@@ -173,7 +173,7 @@ const getWordsFromDatabase = async (req, res, next) => {
         }
       }
     }
-    console.log('Number of words:', contentLength);
+    console.log(`Number of words for search word "${searchWord}": ${contentLength}`);
     return packageResponse({
       res,
       docs: words,
