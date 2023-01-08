@@ -43,8 +43,6 @@ const generateAggregationBase = (Model, match) => (
 export const findWordsWithMatch = async ({
   match,
   version,
-  skip = 0,
-  limit = 10,
   dialects,
   examples,
 }) => {
@@ -87,9 +85,8 @@ export const findWordsWithMatch = async ({
       ])
       .sort({ definitions: -1 });
 
-    const allWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
-    const contentLength = allWords.length;
-    const finalWords = allWords.slice(skip, skip + limit);
+    const finalWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
+    const contentLength = finalWords.length;
 
     finalWords.forEach((word) => {
       if (version === Versions.VERSION_1) {
