@@ -1,9 +1,9 @@
 import { exampleSchema } from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
-import { REDIS_CACHE_EXPIRATION } from '../config';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
+import { getCachedExamples, setCachedExamples } from './utils/RedisAPI';
 
 /* Create a new Example object in MongoDB */
 export const createExample = async (data, connection) => {
@@ -45,8 +45,7 @@ export const getExamples = async (req, res, next) => {
       igbo: { $exists: false },
     }) : searchExamplesRegexQuery(regex);
     const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}-${version}`;
-    const rawCachedExamples = await redisClient.get(redisExamplesCacheKey);
-    const cachedExamples = typeof rawCachedExamples === 'string' ? JSON.parse(rawCachedExamples) : rawCachedExamples;
+    const cachedExamples = await getCachedExamples({ redisClient, redisExamplesCacheKey });
     let examples;
     let contentLength;
     if (cachedExamples) {
@@ -62,12 +61,12 @@ export const getExamples = async (req, res, next) => {
       examples = allExamples.examples;
       contentLength = allExamples.contentLength;
       if (!redisClient.isFake) {
-        redisClient.set(
+        await setCachedExamples({
+          redisClient,
           redisExamplesCacheKey,
-          JSON.stringify({ examples, contentLength }),
-          'EX',
-          REDIS_CACHE_EXPIRATION,
-        );
+          examples,
+          contentLength,
+        });
       }
     }
 
