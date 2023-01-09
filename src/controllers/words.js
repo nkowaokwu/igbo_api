@@ -6,13 +6,13 @@ import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
-import { REDIS_CACHE_EXPIRATION } from '../config';
 import { sortDocsBy, packageResponse, handleQueries } from './utils';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
 import { createExample } from './examples';
 import Versions from '../shared/constants/Versions';
 import { wordSchema } from '../models/Word';
+import { getCachedWords, setCachedAllVerbsAndSuffixes, setCachedWords } from './utils/RedisAPI';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -123,8 +123,7 @@ const getWordsFromDatabase = async (req, res, next) => {
     const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
       const redisWordsCacheKey = `"${searchWord}"-${skip}-${limit}-${version}-${dialects}-${examples}`;
-      const rawCachedWords = await redisClient.get(redisWordsCacheKey);
-      const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
+      const cachedWords = await getCachedWords({ redisClient, redisWordsCacheKey });
       if (cachedWords) {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
@@ -134,13 +133,17 @@ const getWordsFromDatabase = async (req, res, next) => {
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
         if (!redisClient.isFake) {
-          redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
+          await setCachedWords({
+            redisClient,
+            redisWordsCacheKey,
+            words,
+            contentLength,
+          });
+          await setCachedAllVerbsAndSuffixes({
+            redisClient,
             redisAllVerbsAndSuffixesKey,
-            `${JSON.stringify(allVerbsAndSuffixes)}`,
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
+            allVerbsAndSuffixes,
+          });
         }
       }
     } else {
@@ -160,8 +163,7 @@ const getWordsFromDatabase = async (req, res, next) => {
         ? regularSearchIgboQuery
         : strictSearchIgboQuery(allSearchKeywords);
       const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${examples}`;
-      const rawCachedWords = await redisClient.get(redisWordsCacheKey);
-      const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
+      const cachedWords = await getCachedWords({ redisClient, redisWordsCacheKey });
       if (cachedWords) {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
@@ -170,13 +172,17 @@ const getWordsFromDatabase = async (req, res, next) => {
         words = wordsByIgbo.words;
         contentLength = wordsByIgbo.contentLength;
         if (!redisClient.isFake) {
-          redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
+          await setCachedWords({
+            redisClient,
+            redisWordsCacheKey,
+            words,
+            contentLength,
+          });
+          await setCachedAllVerbsAndSuffixes({
+            redisClient,
             redisAllVerbsAndSuffixesKey,
-            JSON.stringify(allVerbsAndSuffixes),
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
+            allVerbsAndSuffixes,
+          });
         }
       }
     }
