@@ -172,10 +172,10 @@ export const handleQueries = async ({
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
+  const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
   if (version === Versions.VERSION_2) {
-    const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
     if (cachedAllVerbsAndSuffixes) {
-      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
+      allVerbsAndSuffixes = JSON.parse(cachedAllVerbsAndSuffixes);
     } else {
       allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
     }
