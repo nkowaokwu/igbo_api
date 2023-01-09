@@ -13,8 +13,9 @@ import Versions from '../../shared/constants/Versions';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
-const MATCHING_DEFINITION = 300;
+const MATCHING_DEFINITION = 1000;
 const SIMILARITY_FACTOR = 100;
+const VERB_AND_SUFFIXES_LIMIT = 5000;
 const NO_FACTOR = 0;
 
 const generateSecondaryKey = (version) => (
@@ -33,11 +34,11 @@ const createSimpleRegExp = (keywords) => ({
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
  */
-const constructRegexQuery = ({ isUsingMainKey, keywords }) => (
+const constructRegexQuery = ({ isUsingMainKey, keywords, strict = false }) => (
   isUsingMainKey
-    ? createSimpleRegExp(keywords)
+    ? createSimpleRegExp(keywords, strict)
     : keywords?.length
-      ? createSimpleRegExp(keywords)
+      ? createSimpleRegExp(keywords, strict)
       : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ }
 );
 
@@ -92,8 +93,8 @@ export const convertToSkipAndLimit = ({ page, range }) => {
   let skip = 0;
   let limit = 10;
   if (isValidRange(range)) {
-    [skip, limit] = range;
-    limit -= skip;
+    [skip] = range;
+    limit = range[1] - range[0];
     return { skip, limit };
   }
 
@@ -145,7 +146,12 @@ const searchAllVerbsAndSuffixes = async ({
   query,
   version,
 }) => {
-  const { words, contentLength } = await findWordsWithMatch({ match: query, version });
+  const { words, contentLength } = await findWordsWithMatch({
+    match: query,
+    version,
+    skip: 0,
+    limit: VERB_AND_SUFFIXES_LIMIT,
+  });
   return { words, contentLength };
 };
 
@@ -213,6 +219,7 @@ export const handleQueries = async ({
           regex: pick(constructRegexQuery({
             isUsingMainKey,
             keywords: [{ text }],
+            strict: true,
           }), ['wordReg']),
         }
       ))) : [];
