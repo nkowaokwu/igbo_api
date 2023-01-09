@@ -226,9 +226,10 @@ export const handleQueries = async ({
   }
   if (!keywords.length) {
     console.time('Expand phrase time');
-    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart) => {
+    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart, searchWordPartInex) => {
       const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes, version);
-      return expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
+      console.time(`Expand phrase part ${searchWordPartInex}`);
+      const result = expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
         {
           text,
           wordClass,
@@ -239,6 +240,8 @@ export const handleQueries = async ({
           }), ['wordReg']),
         }
       )) : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
+      console.timeEnd(`Expand phrase part ${searchWordPartInex}`);
+      return result;
     }) : []).flat();
     console.timeEnd('Expand phrase time');
   }
