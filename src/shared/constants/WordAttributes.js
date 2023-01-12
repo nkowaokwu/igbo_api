@@ -7,6 +7,10 @@ export default {
     value: 'isAccented',
     label: 'Is Accented',
   },
+  IS_COMMON: {
+    value: 'isCommon',
+    label: 'Is Common',
+  },
   IS_COMPLETE: {
     value: 'isComplete',
     label: 'Is Complete',
