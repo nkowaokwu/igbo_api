@@ -14,6 +14,7 @@ import Versions from '../../shared/constants/Versions';
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
 const MATCHING_DEFINITION = 1000;
+const IS_COMMON = 1000;
 const SIMILARITY_FACTOR = 100;
 const VERB_AND_SUFFIXES_LIMIT = 5000;
 const NO_FACTOR = 0;
@@ -62,8 +63,14 @@ export const sortDocsBy = (searchWord, docs, key, version) => (
     const prevDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedPrevDocValue);
     const nextDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedNextDocValue);
 
-    const finalPrevDocDiff = prevDocDifference * SIMILARITY_FACTOR + prevMatchingDefinitionFactor;
-    const finalNextDocDiff = nextDocDifference * SIMILARITY_FACTOR + nextMatchingDefinitionFactor;
+    const prevDocSimilarityFactor = prevDocDifference * SIMILARITY_FACTOR;
+    const nextDocSimilarityFactor = nextDocDifference * SIMILARITY_FACTOR;
+
+    const prevDocNsibidiFactor = prevDoc?.attributes?.isCommon ? IS_COMMON : 0;
+    const nextDocNsibidiFactor = nextDoc?.attributes?.isCommon ? IS_COMMON : 0;
+
+    const finalPrevDocDiff = prevDocSimilarityFactor + prevMatchingDefinitionFactor + prevDocNsibidiFactor;
+    const finalNextDocDiff = nextDocSimilarityFactor + nextMatchingDefinitionFactor + nextDocNsibidiFactor;
 
     if (finalPrevDocDiff === finalNextDocDiff) {
       return NO_FACTOR;
