@@ -34,10 +34,15 @@ export const searchWordUsingIgbo = async ({
   query,
   searchWord,
   version,
+  regex,
+  skip,
+  limit,
   ...rest
 }) => {
   const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
-  return { words: sortDocsBy(searchWord, words, 'word', version), contentLength };
+  let sortedWords = sortDocsBy(searchWord, words, 'word', version, regex);
+  sortedWords = sortedWords.slice(skip, skip + limit);
+  return { words: sortedWords, contentLength };
 };
 
 /* Searches for word with English stored in MongoDB */
@@ -45,11 +50,16 @@ export const searchWordUsingEnglish = async ({
   query,
   searchWord,
   version,
+  regex,
+  skip,
+  limit,
   ...rest
 }) => {
   const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
   const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
-  return { words: sortDocsBy(searchWord, words, sortKey, version), contentLength };
+  let sortedWords = sortDocsBy(searchWord, words, sortKey, version, regex);
+  sortedWords = sortedWords.slice(skip, skip + limit);
+  return { words: sortedWords, contentLength };
 };
 
 /* Creates an object containing truthy key/value pairs for looking up words */
@@ -122,7 +132,12 @@ const getWordsFromDatabase = async (req, res, next) => {
         contentLength = cachedWords.contentLength;
       } else {
         query = searchEnglishRegexQuery({ regex, filteringParams });
-        const wordsByEnglish = await searchWordUsingEnglish({ query, version, ...searchQueries });
+        const wordsByEnglish = await searchWordUsingEnglish({
+          query,
+          version,
+          regex,
+          ...searchQueries,
+        });
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
         if (!redisClient.isFake) {
@@ -159,7 +174,12 @@ const getWordsFromDatabase = async (req, res, next) => {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
       } else {
-        const wordsByIgbo = await searchWordUsingIgbo({ query, version, ...searchQueries });
+        const wordsByIgbo = await searchWordUsingIgbo({
+          query,
+          version,
+          regex,
+          ...searchQueries,
+        });
         words = wordsByIgbo.words;
         contentLength = wordsByIgbo.contentLength;
         if (!redisClient.isFake) {
@@ -206,7 +226,6 @@ export const getWord = async (req, res, next) => {
     const updatedWord = await findWordsWithMatch({
       match: { _id: mongoose.Types.ObjectId(id) },
       version,
-      limit: 1,
       dialects,
       examples,
     })
