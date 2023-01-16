@@ -15,18 +15,30 @@ export default (rawSearchWord, hardMatch = false) => {
   const requirePluralAndGerundMatch = searchWord.endsWith('ing') && searchWord.replace('ing', '').length <= 1
     ? ''
     : '?';
-  let regexWordString = [...(searchWord
+  const regexStringBase = [...(searchWord
     .replace(/(?:es|[s]|ing)$/, ''))];
-  regexWordString = `${regexWordString
+  const regexWordString = `${regexStringBase
     .reduce((regexWord, letter, index) => {
       const isLastLetterDuplicated = getIsLastLetterDuplicated({
-        stringArray: regexWordString,
+        stringArray: regexStringBase,
         index,
         letter,
       });
       // eslint-disable-next-line max-len
       return `${regexWord}(${(diacriticCodes[letter] || letter)})${isLastLetterDuplicated ? '{0,}' : ''}`;
     }, '')}(?:es|[sx]|ing)${requirePluralAndGerundMatch}`;
+  const hardRegexWordString = searchWord.length
+    ? `${[...searchWord]
+      .reduce((regexWord, letter, index) => {
+        const isLastLetterDuplicated = getIsLastLetterDuplicated({
+          stringArray: regexStringBase,
+          index,
+          letter,
+        });
+        // eslint-disable-next-line max-len
+        return `${regexWord}(${(diacriticCodes[letter] || letter)})${isLastLetterDuplicated ? '{0,}' : ''}`;
+      }, '')}${requirePluralAndGerundMatch}`
+    : '';
 
   const startWordBoundary = '(\\W|^)';
   const endWordBoundary = '(\\W|$)';
@@ -37,6 +49,11 @@ export default (rawSearchWord, hardMatch = false) => {
   'i');
 
   const definitionsReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
+  const hardDefinitionsReg = new RegExp(`${startWordBoundary}(${hardRegexWordString})${endWordBoundary}`, 'i');
 
-  return { wordReg, definitionsReg };
+  return {
+    wordReg,
+    definitionsReg,
+    hardDefinitionsReg,
+  };
 };
