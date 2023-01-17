@@ -12,9 +12,10 @@
     "build:fonts": "shx cp -r ./src/public/fonts/ ./build/dist/fonts",
     "build:assets": "shx cp -r ./src/pages/assets/ ./build/dist/assets",
     "start:emulators": "node_modules/.bin/firebase emulators:start --only functions,hosting",
+    "start:watch": "nodemon --watch './src' --ext ts,js,tsx,jsx  --ignore './functions' --verbose --exec yarn build",
     "clean": "shx rm -rf node_modules/ build/ out/ yarn.lock package-lock.json *.log",
     "predev": "firebase functions:config:set runtime.env=development",
-    "dev": "npm-run-all -p start:emulators start:database",
+    "dev": "npm-run-all -p start:watch start:emulators start:database",
     "dev:full": "firebase functions:config:set env.redis_url=redis://localhost:6379 env.replica_set=true env.redis_status=true && npm-run-all -p start:emulators start:database:replica",
     "migrate-up": "migrate-mongo up",
     "migrate-down": "migrate-mongo down",
@@ -166,9 +167,6 @@
     }
   },
   "nodemonConfig": {
-    "events": {
-      "restart": "fkill :8080 -fs"
-    },
     "delay": "1500ms"
   }
 }
