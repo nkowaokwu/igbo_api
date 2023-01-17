@@ -132,12 +132,14 @@ const getWordsFromDatabase = async (req, res, next) => {
         contentLength = cachedWords.contentLength;
       } else {
         query = searchEnglishRegexQuery({ regex, filteringParams });
+        console.time(`Searching English words for ${searchWord}`);
         const wordsByEnglish = await searchWordUsingEnglish({
           query,
           version,
           regex,
           ...searchQueries,
         });
+        console.timeEnd(`Searching English words for ${searchWord}`);
         words = wordsByEnglish.words;
         contentLength = wordsByEnglish.contentLength;
         if (!redisClient.isFake) {
@@ -174,12 +176,14 @@ const getWordsFromDatabase = async (req, res, next) => {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
       } else {
+        console.time(`Searching Igbo words for ${searchWord}`);
         const wordsByIgbo = await searchWordUsingIgbo({
           query,
           version,
           regex,
           ...searchQueries,
         });
+        console.timeEnd(`Searching Igbo words ${searchWord}`);
         words = wordsByIgbo.words;
         contentLength = wordsByIgbo.contentLength;
         if (!redisClient.isFake) {
