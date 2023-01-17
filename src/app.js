@@ -12,6 +12,7 @@ import {
   siteRouter,
   testRouter,
 } from './routers';
+import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
@@ -42,17 +43,17 @@ app.use(cors(CORS_CONFIG));
 app.set('trust proxy', 1);
 
 /* Provides static assets for the API Homepage */
-app.use('/_next', express.static('./build/dist'));
-app.use('/assets', express.static('./build/dist/assets'));
-app.use('/fonts', express.static('./build/dist/fonts'));
-app.use('/services', express.static('./services'));
+app.use('/_next', cache(), express.static('./build/dist'));
+app.use('/assets', cache(), express.static('./build/dist/assets'));
+app.use('/fonts', cache(), express.static('./build/dist/fonts'));
+app.use('/services', cache(), express.static('./services'));
 
 /* Sets up the doc site */
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS, SWAGGER_OPTIONS));
 
 /* Grabs data from MongoDB */
-app.use(`/api/${Versions.VERSION_1}`, router);
-app.use(`/api/${Versions.VERSION_2}`, routerV2);
+app.use(`/api/${Versions.VERSION_1}`, cache(86400, 172800), router);
+app.use(`/api/${Versions.VERSION_2}`, cache(86400, 172800), routerV2);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /* Renders the API Site */
-app.use(siteRouter);
+app.use(siteRouter, cache());
 
 /* Handles all uncaught errors */
 app.use(errorHandler);

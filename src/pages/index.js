@@ -61,7 +61,7 @@ export const getServerSideProps = async (context) => {
     const { res, query } = context;
     res.setHeader(
       'Cache-Control',
-      'no-cache, no-store, max-age=0, must-revalidate',
+      'public, max-age=302400, s-maxage=604800',
     );
     const searchWord = encodeURI(query.word);
     const queries = Object.entries(query).reduce((finalQueries, [key, value]) => {
