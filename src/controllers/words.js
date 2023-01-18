@@ -111,7 +111,6 @@ const getWordsFromDatabase = async (req, res, next) => {
       redisAllVerbsAndSuffixesKey,
       allVerbsAndSuffixes,
       redisClient,
-      ...rest
     } = await handleQueries(req);
     const searchQueries = {
       searchWord,
@@ -204,7 +203,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       res,
       docs: words,
       contentLength,
-      ...rest,
+      version,
     });
   } catch (err) {
     return next(err);
@@ -222,8 +221,8 @@ export const getWords = async (req, res, next) => {
 /* Returns a word from MongoDB using an id */
 export const getWord = async (req, res, next) => {
   try {
-    const { id } = req.params;
     const {
+      id,
       dialects,
       examples,
       resolve,
@@ -243,7 +242,12 @@ export const getWord = async (req, res, next) => {
         }
         return word;
       });
-    return res.send(updatedWord);
+    return packageResponse({
+      res,
+      docs: updatedWord,
+      contentLength: 1,
+      version,
+    });
   } catch (err) {
     return next(err);
   }

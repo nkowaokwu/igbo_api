@@ -75,6 +75,7 @@ export const getExamples = async (req, res, next) => {
       res,
       docs: examples,
       contentLength,
+      version,
       ...rest,
     });
   } catch (err) {
@@ -82,7 +83,7 @@ export const getExamples = async (req, res, next) => {
   }
 };
 
-export const findExampleById = async (id) => {
+const findExampleById = async (id) => {
   const connection = createDbConnection();
   const Example = connection.model('Example', exampleSchema);
   try {
@@ -98,7 +99,7 @@ export const findExampleById = async (id) => {
 /* Returns an example from MongoDB using an id */
 export const getExample = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { id, version } = await handleQueries(req);
     const foundExample = await findExampleById(id)
       .then((example) => {
         if (!example) {
@@ -106,7 +107,12 @@ export const getExample = async (req, res, next) => {
         }
         return example;
       });
-    return res.send(foundExample);
+    return packageResponse({
+      res,
+      docs: foundExample,
+      contentLength: 1,
+      version,
+    });
   } catch (err) {
     return next(err);
   }

@@ -131,9 +131,11 @@ export const packageResponse = ({
   res,
   docs,
   contentLength,
+  version,
 }) => {
   res.set({ 'Content-Range': contentLength });
-  return res.send(docs);
+  const response = version === Versions.VERSION_2 ? { data: docs, length: contentLength } : docs;
+  return res.send(response);
 };
 
 /* Converts the filter query into a word to be used as the keyword query */
@@ -174,6 +176,7 @@ const searchAllVerbsAndSuffixes = async ({
 /* Handles all the queries for searching in the database */
 export const handleQueries = async ({
   query = {},
+  params = {},
   isUsingMainKey,
   baseUrl,
   redisClient,
@@ -191,6 +194,7 @@ export const handleQueries = async ({
     pronunciation,
     nsibidi,
   } = query;
+  const { id } = params;
   let allVerbsAndSuffixes;
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
@@ -212,7 +216,7 @@ export const handleQueries = async ({
     ...regexesObject,
     [searchWordPart]: constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWordPart }] }),
   }), {});
-  console.log(`Word splits: ${searchWordParts}`);
+  console.log('Word splits:', searchWordParts);
   console.log(`Search word: ${searchWord}`);
   let keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
@@ -270,6 +274,7 @@ export const handleQueries = async ({
   const examples = examplesQuery === 'true';
   const resolve = resolveQuery === 'true';
   return {
+    id,
     version,
     searchWord,
     keywords,
