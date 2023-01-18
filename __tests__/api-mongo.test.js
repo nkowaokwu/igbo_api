@@ -63,7 +63,7 @@ describe('MongoDB Words', () => {
       expect(wordRes.body.dialects.dialectalWord).not.toEqual(undefined);
       const v2WordRes = await getWordV2(savedWord.id, { dialects: true });
       expect(v2WordRes.status).toEqual(200);
-      expect(v2WordRes.body.dialects[0].word).toEqual('dialectalWord');
+      expect(v2WordRes.body.data.dialects[0].word).toEqual('dialectalWord');
     });
 
     it('should fail populate mongodb with incorrect variations', async () => {
@@ -614,8 +614,8 @@ describe('MongoDB Words', () => {
       const keyword = 'bia';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(2);
-      forEach(res.body, (word) => {
+      expect(res.body.data.length).toBeGreaterThanOrEqual(2);
+      forEach(res.body.data, (word) => {
         Object.keys(word).forEach((key) => {
           expect(WORD_KEYS_V2).toContain(key);
         });
@@ -625,30 +625,30 @@ describe('MongoDB Words', () => {
     it('should return one word', async () => {
       const res = await getWordsV2({}, { apiKey: MAIN_KEY });
       expect(res.status).toEqual(200);
-      const result = await getWordV2(res.body[0].id);
+      const result = await getWordV2(res.body.data[0].id);
       expect(result.status).toEqual(200);
       WORD_KEYS_V2.forEach((key) => {
-        expect(has(result.body, key)).toBeTruthy();
+        expect(has(result.body.data, key)).toBeTruthy();
       });
-      expect(WordClass[result.body.definitions[0].wordClass]).not.toBe(undefined);
+      expect(WordClass[result.body.data.definitions[0].wordClass]).not.toBe(undefined);
     });
     it('should return word with verb conjugation', async () => {
       const keyword = 'ajora';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(2);
+      expect(res.body.data.length).toBeGreaterThanOrEqual(2);
     });
     it('should return word parts of bịara for verb deconstruction', async () => {
       const keyword = 'bịara';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(2);
+      expect(res.body.data.length).toBeGreaterThanOrEqual(2);
     });
     it('should return word parts of mgba for noun deconstruction', async () => {
       const keyword = 'mgba';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
-      const gbaWord = res.body.find(({ word }) => word === 'gba');
+      const gbaWord = res.body.data.find(({ word }) => word === 'gba');
       expect(gbaWord).toBeTruthy();
     });
   });
