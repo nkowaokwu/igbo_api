@@ -19,6 +19,10 @@ const IS_COMMON = 1000;
 const SIMILARITY_FACTOR = 100;
 const NO_FACTOR = 0;
 
+// Caching
+const MAX_AGE = 86400; // 1 Day
+const S_MAX_AGE = 172800; // 2 Days
+
 const generateSecondaryKey = (version) => (
   version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]'
 );
@@ -132,7 +136,10 @@ export const packageResponse = ({
   docs,
   contentLength,
 }) => {
-  res.setHeader('Content-Range', contentLength);
+  res.set({
+    'Cache-Control': `public, max-age=${MAX_AGE}, s-maxage=${S_MAX_AGE}`,
+    'Content-Range': contentLength,
+  });
   return res.send(docs);
 };
 
