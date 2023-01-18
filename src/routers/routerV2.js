@@ -8,7 +8,7 @@ import attachRedisClient from '../middleware/attachRedisClient';
 const routerV2 = express.Router();
 
 routerV2.get('/words', analytics, validateApiKey, attachRedisClient, getWords);
-routerV2.get('/words/:id', analytics, validateApiKey, validId, attachRedisClient, getWord);
+routerV2.get(' :id', analytics, validateApiKey, validId, attachRedisClient, getWord);
 
 // Redirects to V1
 routerV2.get('/examples', (_, res) => res.redirect('/api/v1/examples'));
