@@ -186,6 +186,7 @@ export const handleQueries = async ({
     strict: strictQuery,
     dialects: dialectsQuery,
     examples: examplesQuery,
+    resolve: resolveQuery,
     isStandardIgbo,
     pronunciation,
     nsibidi,
@@ -267,6 +268,7 @@ export const handleQueries = async ({
   const strict = strictQuery === 'true';
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
+  const resolve = resolveQuery === 'true';
   return {
     version,
     searchWord,
@@ -278,6 +280,7 @@ export const handleQueries = async ({
     strict,
     dialects,
     examples,
+    resolve,
     isUsingMainKey,
     wordFields: {
       isStandardIgbo,

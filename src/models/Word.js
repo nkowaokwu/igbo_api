@@ -69,7 +69,7 @@ export const wordSchema = new Schema({
   relatedTerms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-  stems: { type: [{ type: String }], default: [] },
+  stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
 }, { toObject: toObjectPlugin, timestamps: true });
 
 const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({

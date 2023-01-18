@@ -105,6 +105,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       strict,
       dialects,
       examples,
+      resolve,
       wordFields,
       isUsingMainKey,
       redisAllVerbsAndSuffixesKey,
@@ -118,6 +119,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       limit,
       dialects,
       examples,
+      resolve,
     };
     let words;
     let contentLength;
@@ -224,6 +226,7 @@ export const getWord = async (req, res, next) => {
     const {
       dialects,
       examples,
+      resolve,
       version,
     } = await handleQueries(req);
 
@@ -232,6 +235,7 @@ export const getWord = async (req, res, next) => {
       version,
       dialects,
       examples,
+      resolve,
     })
       .then(async ({ words: [word] }) => {
         if (!word) {

@@ -45,6 +45,7 @@ export const findWordsWithMatch = async ({
   version,
   dialects,
   examples,
+  resolve,
 }) => {
   const connection = createDbConnection();
   const Word = connection.model('Word', wordSchema);
@@ -58,6 +59,24 @@ export const findWordsWithMatch = async ({
           localField: '_id',
           foreignField: 'associatedWords',
           as: 'examples',
+        });
+    }
+
+    if (resolve && version === Versions.VERSION_2) {
+      words = words
+        .lookup({
+          from: 'words',
+          localField: 'stems',
+          foreignField: '_id',
+          as: 'stems',
+        });
+
+      words = words
+        .lookup({
+          from: 'words',
+          localField: 'relatedTerms',
+          foreignField: '_id',
+          as: 'relatedTerms',
         });
     }
 
