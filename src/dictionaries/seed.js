@@ -1,6 +1,7 @@
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import keys from 'lodash/keys';
+import omit from 'lodash/omit';
 import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
 import Dialects from '../shared/constants/Dialects';
@@ -18,7 +19,7 @@ const populate = async (connection) => {
       map(keys(dictionary), (key) => {
         const value = dictionary[key];
         return map(value, (term) => {
-          const word = { ...term };
+          const word = omit({ ...term }, ['stems']);
           const cleanedKey = key.replace(/\./g, '');
           word.word = key;
           word.definitions = [
