@@ -1,5 +1,6 @@
 import compact from 'lodash/compact';
 import WordClass from '../../shared/constants/WordClass';
+import Tenses from '../../shared/constants/Tenses';
 
 const fullTextSearchQuery = ({
   keywords,
@@ -19,6 +20,7 @@ const fullTextSearchQuery = ({
             { variations: regex.wordReg },
             { 'definitions.nsibidi': text },
             { 'dialects.word': regex.wordReg },
+            ...Object.values(Tenses).map(({ value }) => ({ [`tenses.${value}`]: regex.wordReg })),
           ]),
           ...(wordClass?.length ? { 'definitions.wordClass': { $in: wordClass } } : {}),
         }],
