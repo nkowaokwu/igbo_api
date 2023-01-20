@@ -100,8 +100,7 @@ export const findWordsWithMatch = async ({
       })
       .append([
         { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
-      ])
-      .sort({ definitions: -1 });
+      ]);
 
     const finalWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
     const contentLength = finalWords.length;
