@@ -74,23 +74,17 @@ export const wordSchema = new Schema({
 
 const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
   ...finalIndexes,
-  [`tenses.${tense.value}`]: 'text',
+  [`tenses.${tense.value}`]: 1,
 }), {});
 
 wordSchema.index({
-  word: 'text',
-  variations: 'text',
-  'dialects.word': 'text',
+  word: 1,
+  'definitions.definitions': 1,
+  variations: 1,
+  'definitions.nsibidi': 1,
+  'dialects.word': 1,
   ...tensesIndexes,
-  'definitions.nsibidi': 'text',
 }, {
-  weights: {
-    word: 10,
-    tenses: 9,
-    'dialects.word': 8,
-    variations: 9,
-    'definitions.nsibidi': 5,
-  },
   name: 'Word text index',
 });
 
