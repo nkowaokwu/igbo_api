@@ -31,7 +31,7 @@ const SubMenu = ({ isVisible, transparent }) => {
     changeLanguage(language);
   }, [language]);
   return (
-    <nav
+    <ul
       className={`navbar ${transparent ? 'transparent-navbar' : ''} 
       ${isVisible ? 'visible opacity-1' : 'hidden opacity-0'}
       ${isVisible ? '' : 'pointer-events-none'}
@@ -130,7 +130,7 @@ const SubMenu = ({ isVisible, transparent }) => {
           </MenuList>
         </Menu>
       </li>
-    </nav>
+    </ul>
   );
 };
 
