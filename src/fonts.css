@@ -6,6 +6,7 @@
        url('./public/fonts/silka-regular-webfont.woff') format('woff'),
        url('./public/fonts/silka-regular-webfont.ttf') format('truetype');
   font-weight: normal;
+  font-display: swap;
 
 }
 
@@ -17,6 +18,7 @@
        url('./public/fonts/silka-bold-webfont.woff') format('woff'),
        url('./public/fonts/silka-bold-webfont.ttf') format('truetype');
   font-weight: 700;
+  font-display: swap;
 
 }
 
@@ -28,9 +30,11 @@
        url('./public/fonts/silka-black-webfont.woff') format('woff'),
        url('./public/fonts/silka-black-webfont.ttf') format('truetype');
   font-weight: 900;
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Inter';
   src: url('./public/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf');
+  font-display: swap;
 }
