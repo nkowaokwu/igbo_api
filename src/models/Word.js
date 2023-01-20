@@ -72,20 +72,41 @@ export const wordSchema = new Schema({
   stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
 }, { toObject: toObjectPlugin, timestamps: true });
 
-const tensesIndexes = Object.values(Tenses).reduce((finalIndexes, tense) => ({
-  ...finalIndexes,
-  [`tenses.${tense.value}`]: 1,
-}), {});
-
 wordSchema.index({
   word: 1,
+});
+wordSchema.index({
   'definitions.definitions': 1,
+});
+wordSchema.index({
+  'definitions.wordClass': 1,
+});
+wordSchema.index({
   variations: 1,
+});
+wordSchema.index({
   'definitions.nsibidi': 1,
+});
+wordSchema.index({
   'dialects.word': 1,
-  ...tensesIndexes,
-}, {
-  name: 'Word text index',
+});
+wordSchema.index({
+  'tenses.infinitive': 1,
+});
+wordSchema.index({
+  'tenses.imperative': 1,
+});
+wordSchema.index({
+  'tenses.simplePast': 1,
+});
+wordSchema.index({
+  'tenses.simplePresent': 1,
+});
+wordSchema.index({
+  'tenses.presentContinuous': 1,
+});
+wordSchema.index({
+  'tenses.future': 1,
 });
 
 toJSONPlugin(wordSchema);
