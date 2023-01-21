@@ -32,7 +32,7 @@ const generateMultipleVariationsRegex = (keywords) => {
     return `${wordRegex}|${regex.wordReg.source}`;
   }, '');
   const regex = new RegExp(variationsRegexes, 'i');
-  return { variations: { $regex: regex.source } };
+  return { variations: { $in: [regex.source] } };
 };
 
 const generateMultipleDialectsWordRegex = (keywords) => {
@@ -62,7 +62,7 @@ const generateMultipleTensesWordRegex = (keywords) => {
 
 const generateMultipleWordClass = (keywords) => {
   const inWordClass = (keywords.map(({ wordClass = [] }) => wordClass) || []).flat();
-  return !inWordClass.length ? null : { 'definitions.wordClass': { $in: inWordClass } };
+  return !inWordClass.length ? {} : { 'definitions.wordClass': { $in: inWordClass } };
 };
 
 const fullTextSearchQuery = ({
@@ -85,8 +85,8 @@ const fullTextSearchQuery = ({
                 generateMultipleVariationsRegex(keywords),
                 generateMultipleDialectsWordRegex(keywords),
                 ...generateMultipleTensesWordRegex(keywords),
-                generateMultipleWordClass(keywords),
               ]),
+              ...generateMultipleWordClass(keywords),
             }],
             ...filteringParams,
           }

@@ -44,7 +44,7 @@
     "test": "npm-run-all -p -r start:database jest"
   },
   "engines": {
-    "node": "18",
+    "node": ">=16",
     "npm": "8",
     "yarn": "1.22.x"
   },
@@ -95,10 +95,10 @@
     "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
-    "firebase": "9.8.4",
+    "firebase": "9.16.0",
     "firebase-admin": "10.3.0",
     "firebase-functions": "3.19.0",
-    "firebase-tools": "11.1.0",
+    "firebase-tools": "11.18.0",
     "framer-motion": "^5",
     "i18next": "^21.6.5",
     "joi": "^17.4.0",

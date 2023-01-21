@@ -25,6 +25,7 @@ const searchWordUsingIgbo = async ({
   const regularSearchIgboQuery = searchIgboTextSearch({
     keywords: allSearchKeywords,
     isUsingMainKey,
+    searchWord,
     filteringParams,
   });
   const igboQuery = !strict
