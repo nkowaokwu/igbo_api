@@ -32,7 +32,7 @@ const generateMultipleVariationsRegex = (keywords) => {
     return `${wordRegex}|${regex.wordReg.source}`;
   }, '');
   const regex = new RegExp(variationsRegexes, 'i');
-  return { variations: { $in: [regex.source] } };
+  return { variations: { $in: [regex] } };
 };
 
 const generateMultipleDialectsWordRegex = (keywords) => {

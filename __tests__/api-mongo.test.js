@@ -377,7 +377,7 @@ describe('MongoDB Words', () => {
       const keyword = 'mili';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(2);
+      expect(res.body).toHaveLength(2); // Expecting mmilī (variation is milī) and -mìlị
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
         WORD_KEYS_V1.forEach((key) => {

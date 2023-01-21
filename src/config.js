@@ -71,7 +71,7 @@ export const CORS_CONFIG = {
 // Documentation
 const SWAGGER_SETTINGS = {
   title: 'Igbo API',
-  version: '1.43.5',
+  version: '1.50.3',
   description: 'Igbo Dictionary API contains Igbo words, definitions, and examples',
   host: `${isProduction ? process.env.DOMAIN_NAME : `localhost:${PORT}`}`,
   schemes: `${isProduction ? ['https'] : ['http']}`,
