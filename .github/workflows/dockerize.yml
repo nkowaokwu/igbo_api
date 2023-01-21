@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Use Node.js @18
+      - name: Use Node.js @16
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: 16
       - name: Log into Docker Account
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         env:
