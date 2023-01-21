@@ -38,7 +38,7 @@ const isTestingEnvironment = (
   )
 );
 export const PORT = 8080;
-export const MONGO_HOST = process.env.CONTAINER_HOST || 'localhost';
+export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';
 export const FIRST_REPLICA_SET_PORT = '2717';
 export const SECOND_REPLICA_SET_PORT = '2727';
@@ -71,7 +71,7 @@ export const CORS_CONFIG = {
 // Documentation
 const SWAGGER_SETTINGS = {
   title: 'Igbo API',
-  version: '1.43.5',
+  version: '1.50.3',
   description: 'Igbo Dictionary API contains Igbo words, definitions, and examples',
   host: `${isProduction ? process.env.DOMAIN_NAME : `localhost:${PORT}`}`,
   schemes: `${isProduction ? ['https'] : ['http']}`,
