@@ -10,7 +10,7 @@ export const toJSONPlugin = (schema) => {
   schema.set('toJSON', {
     virtuals: true,
   });
-  schema.methods.toJSON = function () {
+  schema.methods.toJSON = () => {
     const json = toJSON.apply(this);
     delete json._id;
     delete json.__t;
