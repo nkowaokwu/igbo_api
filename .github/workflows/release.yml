@@ -19,13 +19,9 @@ jobs:
     - name: Use Node.js v16
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18
     - name: Install Dependencies
       run: yarn install
-    - name: Use Node.js v18
-      uses: actions/setup-node@v1
-      with:
-        node-version: 18
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_ACCESS_TOKEN }}
