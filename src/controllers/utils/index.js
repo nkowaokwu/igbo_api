@@ -1,5 +1,4 @@
 import stringSimilarity from 'string-similarity';
-import compact from 'lodash/compact';
 import isNaN from 'lodash/isNaN';
 import get from 'lodash/get';
 import pick from 'lodash/pick';
@@ -163,7 +162,6 @@ const parseRange = (range) => {
   }
 };
 
-/* Gets all verbs and suffixes within the Igbo API */
 const searchAllVerbsAndSuffixes = async ({
   query,
   version,
@@ -175,32 +173,6 @@ const searchAllVerbsAndSuffixes = async ({
   return { words, contentLength };
 };
 
-/* Creates an object containing truthy key/value pairs for looking up words */
-const generateFilteringParams = (filteringParams) => (
-  Object.entries(filteringParams).reduce((finalRequiredAttributes, [key, value]) => {
-    if (key === 'isStandardIgbo' && value) {
-      return {
-        ...finalRequiredAttributes,
-        [`attributes.${key}`]: { $eq: true },
-      };
-    }
-    if (key === 'nsibidi' && value) {
-      return {
-        ...finalRequiredAttributes,
-        [`definitions.${key}`]: { $ne: '' },
-      };
-    }
-    if (key === 'pronunciation' && value) {
-      return {
-        ...finalRequiredAttributes,
-        pronunciation: { $exists: true },
-        $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
-      };
-    }
-    return finalRequiredAttributes;
-  }, {})
-);
-
 /* Handles all the queries for searching in the database */
 export const handleQueries = async ({
   query = {},
@@ -210,7 +182,7 @@ export const handleQueries = async ({
   redisClient,
 }) => {
   const {
-    keyword: keywordQuery = '',
+    keyword = '',
     page: pageQuery = 0,
     range: rangeQuery = '',
     filter: filterQuery,
@@ -224,8 +196,6 @@ export const handleQueries = async ({
   } = query;
   const { id } = params;
   let allVerbsAndSuffixes;
-  const hasQuotes = keywordQuery && (keywordQuery.match(/["'].*["']/) !== null);
-  const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
@@ -240,7 +210,7 @@ export const handleQueries = async ({
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '')
     .replace(/[Aa]na m /, 'm ');
-  const searchWordParts = compact(searchWord.split(' '));
+  const searchWordParts = searchWord.split(' ');
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const regexes = searchWordParts.reduce((regexesObject, searchWordPart) => ({
     ...regexesObject,
@@ -248,7 +218,7 @@ export const handleQueries = async ({
   }), {});
   console.log('Word splits:', searchWordParts);
   console.log(`Search word: ${searchWord}`);
-  let keywords = version === Versions.VERSION_2 && searchWord ? (
+  let keywords = version === Versions.VERSION_2 ? (
     expandVerb(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
       {
         text,
@@ -262,7 +232,7 @@ export const handleQueries = async ({
     ))) : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   if (!keywords.length) {
-    keywords = version === Versions.VERSION_2 && searchWord ? (
+    keywords = version === Versions.VERSION_2 ? (
       expandNoun(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
         {
           text,
@@ -303,12 +273,6 @@ export const handleQueries = async ({
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
   const resolve = resolveQuery === 'true';
-  const wordFields = {
-    isStandardIgbo,
-    pronunciation,
-    nsibidi,
-  };
-  const filteringParams = generateFilteringParams(wordFields);
   return {
     id,
     version,
@@ -322,9 +286,12 @@ export const handleQueries = async ({
     dialects,
     examples,
     resolve,
-    hasQuotes,
     isUsingMainKey,
-    filteringParams,
+    wordFields: {
+      isStandardIgbo,
+      pronunciation,
+      nsibidi,
+    },
     redisAllVerbsAndSuffixesKey,
     allVerbsAndSuffixes,
     redisClient,

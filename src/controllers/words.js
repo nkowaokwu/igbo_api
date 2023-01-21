@@ -1,4 +1,5 @@
 import map from 'lodash/map';
+import compact from 'lodash/compact';
 import mongoose from 'mongoose';
 import removePrefix from '../shared/utils/removePrefix';
 import { findSearchWord } from '../services/words';
@@ -6,11 +7,11 @@ import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
 import { REDIS_CACHE_EXPIRATION } from '../config';
-import { packageResponse, handleQueries } from './utils';
+import { sortDocsBy, packageResponse, handleQueries } from './utils';
+import { searchIgboTextSearch, strictSearchIgboQuery, searchEnglishRegexQuery } from './utils/queries';
 import { findWordsWithMatch } from './utils/buildDocs';
-import searchWordUsingEnglish from './utils/searchWordUsingEnglish';
-import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
 import { createExample } from './examples';
+import Versions from '../shared/constants/Versions';
 import { wordSchema } from '../models/Word';
 
 /* Gets words from JSON dictionary */
@@ -28,9 +29,76 @@ export const getWordData = (req, res, next) => {
   }
 };
 
+/* Searches for a word with Igbo stored in MongoDB */
+export const searchWordUsingIgbo = async ({
+  query,
+  searchWord,
+  version,
+  regex,
+  skip,
+  limit,
+  ...rest
+}) => {
+  console.time(`Searching Igbo words for ${searchWord}`);
+  const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
+  let sortedWords = sortDocsBy(searchWord, words, 'word', version, regex);
+  sortedWords = sortedWords.slice(skip, skip + limit);
+  console.timeEnd(`Searching Igbo words for ${searchWord}`);
+  return { words: sortedWords, contentLength };
+};
+
+/* Searches for word with English stored in MongoDB */
+export const searchWordUsingEnglish = async ({
+  query,
+  searchWord,
+  version,
+  regex,
+  skip,
+  limit,
+  ...rest
+}) => {
+  console.time(`Searching English words for ${searchWord}`);
+  const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
+  const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
+  let sortedWords = sortDocsBy(searchWord, words, sortKey, version, regex);
+  sortedWords = sortedWords.slice(skip, skip + limit);
+  console.timeEnd(`Searching English words for ${searchWord}`);
+  return { words: sortedWords, contentLength };
+};
+
+/* Creates an object containing truthy key/value pairs for looking up words */
+const generateFilteringParams = (filteringParams) => (
+  Object.entries(filteringParams).reduce((finalRequiredAttributes, [key, value]) => {
+    if (key === 'isStandardIgbo' && value) {
+      return {
+        ...finalRequiredAttributes,
+        [`attributes.${key}`]: { $eq: true },
+      };
+    }
+    if (key === 'nsibidi' && value) {
+      return {
+        ...finalRequiredAttributes,
+        [`definitions.${key}`]: { $ne: '' },
+      };
+    }
+    if (key === 'pronunciation' && value) {
+      return {
+        ...finalRequiredAttributes,
+        pronunciation: { $exists: true },
+        $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
+      };
+    }
+    return finalRequiredAttributes;
+  }, {})
+);
+
 /* Reuseable base controller function for getting words */
 const getWordsFromDatabase = async (req, res, next) => {
   try {
+    const hasQuotes = req.query.keyword && (req.query.keyword.match(/["'].*["']/) !== null);
+    if (hasQuotes) {
+      req.query.keyword = req.query.keyword.replace(/["']/g, '');
+    }
     const {
       version,
       searchWord,
@@ -42,8 +110,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       dialects,
       examples,
       resolve,
-      hasQuotes,
-      filteringParams,
+      wordFields,
       isUsingMainKey,
       redisAllVerbsAndSuffixesKey,
       allVerbsAndSuffixes,
@@ -59,6 +126,8 @@ const getWordsFromDatabase = async (req, res, next) => {
     };
     let words;
     let contentLength;
+    let query;
+    const filteringParams = generateFilteringParams(wordFields);
     if (hasQuotes) {
       const redisWordsCacheKey = `"${searchWord}"-${skip}-${limit}-${version}-${dialects}-${resolve}-${examples}`;
       const rawCachedWords = await redisClient.get(redisWordsCacheKey);
@@ -67,8 +136,9 @@ const getWordsFromDatabase = async (req, res, next) => {
         words = cachedWords.words;
         contentLength = cachedWords.contentLength;
       } else {
+        query = searchEnglishRegexQuery({ regex, filteringParams });
         const wordsByEnglish = await searchWordUsingEnglish({
-          filteringParams,
+          query,
           version,
           regex,
           ...searchQueries,
@@ -88,7 +158,20 @@ const getWordsFromDatabase = async (req, res, next) => {
     } else {
       const parsedSegments = [...searchWord.split(' ')];
       parsedSegments.shift();
-
+      const allSearchKeywords = compact(keywords.concat(searchWord
+        ? { text: searchWord, wordClass: [], regex }
+        : null),
+      );
+      const regularSearchIgboQuery = searchIgboTextSearch({
+        keywords: allSearchKeywords,
+        isUsingMainKey,
+        filteringParams,
+      });
+      query = !strict
+        ? regularSearchIgboQuery
+        : strictSearchIgboQuery(
+          allSearchKeywords,
+        );
       const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${resolve}-${examples}`;
       const rawCachedWords = await redisClient.get(redisWordsCacheKey);
       const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
@@ -97,12 +180,9 @@ const getWordsFromDatabase = async (req, res, next) => {
         contentLength = cachedWords.contentLength;
       } else {
         const wordsByIgbo = await searchWordUsingIgbo({
-          keywords,
+          query,
           version,
           regex,
-          strict,
-          isUsingMainKey,
-          filteringParams,
           ...searchQueries,
         });
         words = wordsByIgbo.words;
