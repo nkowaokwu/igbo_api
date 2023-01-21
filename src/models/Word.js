@@ -14,6 +14,7 @@ const definitionSchema = new Schema({
     type: String,
     default: WordClass.NNC.value,
     enum: Object.values(WordClass).map(({ value }) => value),
+    index: true,
   },
   definitions: { type: [{ type: String }], default: [] },
   nsibidi: { type: String, default: '' },
@@ -21,7 +22,7 @@ const definitionSchema = new Schema({
 }, { _id: true });
 
 const dialectSchema = new Schema({
-  word: { type: String, required: true },
+  word: { type: String, required: true, index: true },
   variations: { type: [{ type: String }], default: [] },
   dialects: { type: [{ type: String }], validate: (v) => every(v, (dialect) => Dialects[dialect].value), default: [] },
   pronunciation: { type: String, default: '' },
@@ -75,7 +76,7 @@ wordSchema.index({
   word: 1,
 });
 wordSchema.index({
-  'definitions.definitions': 'text',
+  'definitions.definitions': 1,
 });
 wordSchema.index({
   'definitions.wordClass': 1,

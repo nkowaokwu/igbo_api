@@ -38,7 +38,7 @@ const isTestingEnvironment = (
   )
 );
 export const PORT = 8080;
-export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
+export const MONGO_HOST = process.env.CONTAINER_HOST || 'localhost';
 export const REPLICA_SET_NAME = 'rs0';
 export const FIRST_REPLICA_SET_PORT = '2717';
 export const SECOND_REPLICA_SET_PORT = '2727';
