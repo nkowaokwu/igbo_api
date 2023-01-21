@@ -44,7 +44,7 @@
     "test": "npm-run-all -p -r start:database jest"
   },
   "engines": {
-    "node": "18",
+    "node": "16",
     "npm": "8",
     "yarn": "1.22.x"
   },
