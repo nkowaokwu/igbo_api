@@ -43,7 +43,6 @@ export const GRAVE_LOWERCASE_U = 249;       // \u00f9
 export const GRAVE_ACUTE_LOWERCASE_U = 250; // \u00fa
 export const MACRON_LOWERCASE_U = 363;      // \u016b
 
-export const cjkRange = '[\u4E00-\u9FFF]';
 const caseInsensitiveN = `${'[n\u1e44\u01f9\u0144N\u1e45\u01f8\u0143'
   .normalize('NFD')}${'\u1e44\u01f9\u0144\u1e45\u01f8\u0143]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
