@@ -41,8 +41,8 @@ const searchWordUsingIgbo = async ({
   });
   console.time(`Searching Igbo words for ${searchWord}`);
   const [igboResults, englishResults] = await Promise.all([
-    await findWordsWithMatch({ match: igboQuery, version, ...rest }),
-    await findWordsWithMatch({ match: definitionsWithinIgboQuery, version, ...rest }),
+    findWordsWithMatch({ match: igboQuery, version, ...rest }),
+    findWordsWithMatch({ match: definitionsWithinIgboQuery, version, ...rest }),
   ]);
   const words = igboResults.words.concat(englishResults.words);
   const contentLength = parseInt(igboResults.contentLength, 10) + parseInt(englishResults.contentLength, 10);

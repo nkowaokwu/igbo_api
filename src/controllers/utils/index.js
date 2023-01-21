@@ -11,6 +11,7 @@ import expandVerb from './expandVerb';
 import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
+import WordClass from '../../shared/constants/WordClass';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -266,7 +267,7 @@ export const handleQueries = async ({
       expandNoun(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
         {
           text,
-          wordClass,
+          wordClass: wordClass.concat([WordClass.NNC.value, WordClass.PRN.value, WordClass.NNP.value]),
           regex: pick(constructRegexQuery({
             isUsingMainKey,
             keywords: [{ text }],
