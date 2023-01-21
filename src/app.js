@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import './services/firebase';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -16,16 +16,9 @@ import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
-import {
-  SWAGGER_DOCS,
-  CORS_CONFIG,
-  SWAGGER_OPTIONS,
-  FIREBASE_CONFIG,
-} from './config';
+import { SWAGGER_DOCS, CORS_CONFIG, SWAGGER_OPTIONS } from './config';
 
 const app = express();
-
-initializeApp(FIREBASE_CONFIG);
 
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
