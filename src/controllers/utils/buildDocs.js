@@ -49,6 +49,7 @@ export const findWordsWithMatch = async ({
 }) => {
   const connection = createDbConnection();
   const Word = connection.model('Word', wordSchema);
+  console.time('Aggregation completion time');
   try {
     let words = generateAggregationBase(Word, match);
 
@@ -122,9 +123,11 @@ export const findWordsWithMatch = async ({
       }
     });
 
+    console.timeEnd('Aggregation completion time');
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err) {
+    console.timeEnd('Aggregation completion time');
     await handleCloseConnection(connection);
     throw err;
   }
