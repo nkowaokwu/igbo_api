@@ -30,12 +30,12 @@ const searchWordUsingEnglish = async ({
     console.time(`Searching English words for ${searchWord}`);
     const { words, contentLength } = await findWordsWithMatch({ match: query, version });
     console.timeEnd(`Searching English words for ${searchWord}`);
-    await setCachedWords({ key: redisWordsCacheKey, data: { words, contentLength }, redisClient });
-
-    responseData = {
-      words,
-      contentLength,
-    };
+    responseData = await setCachedWords({
+      key: redisWordsCacheKey,
+      data: { words, contentLength },
+      redisClient,
+      version,
+    });
   }
 
   const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';

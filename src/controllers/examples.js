@@ -30,13 +30,12 @@ const searchExamples = async ({
       contentLength: cachedExamples.contentLength,
     };
   } else {
-    const { examples: allExamples, contentLength } = findExamplesWithMatch({ match: query, version });
-    await setCachedExamples({ key: redisExamplesCacheKey, data: { allExamples, contentLength }, redisClient });
-
-    responseData = {
-      examples: allExamples,
-      contentLength,
-    };
+    const { examples: allExamples, contentLength } = await findExamplesWithMatch({ match: query, version });
+    responseData = await setCachedExamples({
+      key: redisExamplesCacheKey,
+      data: { examples: allExamples, contentLength },
+      redisClient,
+    });
   }
   const examples = responseData.examples.slice(skip, skip + limit);
   return { examples, contentLength: responseData.contentLength };

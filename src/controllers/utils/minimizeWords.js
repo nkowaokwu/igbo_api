@@ -1,18 +1,19 @@
 import { assign, omit, pick } from 'lodash';
+import Versions from '../../shared/constants/Versions';
 
-const minimizeWords = (words) => {
+const minimizeWords = (words, version) => {
   console.time('Minimize words');
   const minimizedWords = words.map((word) => {
     let minimizedWord = assign(word);
     minimizedWord = omit(minimizedWord, ['hypernyms', 'hyponyms', 'updatedAt', 'createdAt']);
-    minimizedWord.definitions = (minimizedWord.definitions || []).map((definition) => {
+    minimizedWord.definitions = version === Versions.VERSION_2 ? (minimizedWord.definitions || []).map((definition) => {
       let minimizedDefinition = assign(definition);
       minimizedDefinition = omit(minimizedDefinition, ['label', 'igboDefinitions', '_id', 'id']);
       if (!minimizedDefinition.nsibidi) {
         minimizedDefinition = omit(minimizedDefinition, ['nsibidi']);
       }
       return minimizedDefinition;
-    });
+    }) : minimizedWord.definitions;
     if (!minimizedWord.variations?.length) {
       minimizedWord = omit(minimizedWord, ['variations']);
     }
@@ -47,7 +48,7 @@ const minimizeWords = (words) => {
       minimizedWord = omit(minimizedWord, ['tenses']);
     }
 
-    if (minimizedWord.dialects?.length) {
+    if (version === Versions.VERSION_2 && minimizedWord.dialects?.length) {
       minimizedWord.dialects = minimizedWord.dialects?.map((dialect) => {
         let minimizedDialect = omit(dialect, ['variations', 'id', '_id']);
         if (!minimizedDialect.pronunciation) {
@@ -55,7 +56,7 @@ const minimizeWords = (words) => {
         }
         return minimizedDialect;
       });
-    } else {
+    } else if (version === Versions.VERSION_2 && !minimizedWord.dialects?.length) {
       minimizedWord = omit(minimizedWord, ['dialects']);
     }
 

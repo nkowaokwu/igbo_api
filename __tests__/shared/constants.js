@@ -22,7 +22,6 @@ export const WORD_KEYS_V1 = [
   'hyponyms',
   'nsibidi',
   'attributes',
-  'updatedAt',
 ];
 export const WORD_KEYS_V2 = [
   'variations',
@@ -35,7 +34,6 @@ export const WORD_KEYS_V2 = [
   'hypernyms',
   'hyponyms',
   'attributes',
-  'updatedAt',
 ];
 export const EXAMPLE_KEYS_V1 = [
   'igbo',

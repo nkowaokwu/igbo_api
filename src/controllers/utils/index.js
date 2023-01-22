@@ -59,8 +59,8 @@ export const sortDocsBy = (searchWord, docs, key, version, regex) => (
     const cleanedNextDocValue = removeAccents.removeExcluding(nextDocValue).normalize('NFC');
     const prevSecondaryKeyValue = get(prevDoc, generateSecondaryKey(version)) || '';
     const nextSecondaryKeyValue = get(nextDoc, generateSecondaryKey(version)) || '';
-    const rawPrevDefinitionMatchIndex = prevSecondaryKeyValue.search(regex.hardDefinitionsReg);
-    const rawNextDefinitionMatchIndex = nextSecondaryKeyValue.search(regex.hardDefinitionsReg);
+    const rawPrevDefinitionMatchIndex = prevSecondaryKeyValue?.search?.(regex.hardDefinitionsReg) || -1;
+    const rawNextDefinitionMatchIndex = nextSecondaryKeyValue?.search?.(regex.hardDefinitionsReg) || -1;
     const prevDefinitionMatchIndexValue = rawPrevDefinitionMatchIndex === -1
       ? 11
       : rawPrevDefinitionMatchIndex;
@@ -237,8 +237,15 @@ export const handleQueries = async ({
       console.log('Getting all verbs and suffixes from cache');
       allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
-      allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
-      await setAllCachedVerbsAndSuffixes({ key: version, data: allVerbsAndSuffixes, redisClient });
+      const allVerbsAndSuffixesDb = (
+        await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })
+      ).words;
+      allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
+        key: version,
+        data: allVerbsAndSuffixesDb,
+        redisClient,
+        version,
+      });
     }
     console.timeEnd('Searching all verbs and suffixes');
   }

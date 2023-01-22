@@ -12,6 +12,7 @@ import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
 import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
+import minimizeWords from './utils/minimizeWords';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -108,7 +109,8 @@ export const getWord = async (req, res, next) => {
           throw new Error('No word exists with the provided id.');
         }
         const { words } = await handleWordFlags({ data, flags });
-        return words[0];
+        const minimizedWords = minimizeWords(words, version);
+        return minimizedWords[0];
       });
     return packageResponse({
       res,

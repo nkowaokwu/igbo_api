@@ -61,9 +61,12 @@ const searchWordUsingIgbo = async ({
     const words = igboResults.words.concat(englishResults.words);
     const contentLength = parseInt(igboResults.contentLength, 10) + parseInt(englishResults.contentLength, 10);
 
-    await setCachedWords({ key: redisWordsCacheKey, data: { words, contentLength }, redisClient });
-
-    responseData = { words, contentLength };
+    responseData = await setCachedWords({
+      key: redisWordsCacheKey,
+      data: { words, contentLength },
+      redisClient,
+      setCachedWords,
+    });
   }
 
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);

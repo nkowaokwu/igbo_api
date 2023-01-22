@@ -11,12 +11,18 @@ export const getCachedWords = async ({ key, redisClient }) => {
   return cachedWords;
 };
 
-export const setCachedWords = async ({ key, data, redisClient }) => {
+export const setCachedWords = async ({
+  key,
+  data,
+  redisClient,
+  version,
+}) => {
+  const updatedData = assign(data);
+  updatedData.words = minimizeWords(data.words, version);
   if (!redisClient.isFake) {
-    const updatedData = assign(data);
-    updatedData.words = minimizeWords(data.words);
     await redisClient.set(key, JSON.stringify(updatedData), 'EX', REDIS_CACHE_EXPIRATION);
   }
+  return updatedData;
 };
 
 export const getCachedExamples = async ({ key, redisClient }) => {
@@ -35,6 +41,7 @@ export const setCachedExamples = async ({ key, data, redisClient }) => {
       REDIS_CACHE_EXPIRATION,
     );
   }
+  return data;
 };
 
 export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }) => {
@@ -46,10 +53,15 @@ export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }) => {
   return cachedAllVerbsAndSuffixes;
 };
 
-export const setAllCachedVerbsAndSuffixes = async ({ key, data, redisClient }) => {
+export const setAllCachedVerbsAndSuffixes = async ({
+  key,
+  data,
+  redisClient,
+  version,
+}) => {
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
+  const updatedData = minimizeWords(data, version);
   if (!redisClient.isFake) {
-    const updatedData = minimizeWords(data);
     await redisClient.set(
       redisAllVerbsAndSuffixesKey,
       JSON.stringify(updatedData),
@@ -57,4 +69,5 @@ export const setAllCachedVerbsAndSuffixes = async ({ key, data, redisClient }) =
       REDIS_CACHE_EXPIRATION,
     );
   }
+  return updatedData;
 };
