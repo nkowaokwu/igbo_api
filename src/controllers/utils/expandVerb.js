@@ -115,7 +115,7 @@ const isSuffix = (root, wordData) => wordData.suffixes.find(({ word: headword, d
   && (
     removeAccents.removeExcluding(headword).replace('-', '').normalize('NFC') === root
     || definitions.find(({ nsibidi }) => (
-      nsibidi.replace('-', '') === root
+      nsibidi && nsibidi.replace('-', '') === root
     ))
   ),
 );

@@ -43,9 +43,6 @@ const generateAggregationBase = (Model, match) => (
 export const findWordsWithMatch = async ({
   match,
   version,
-  dialects,
-  examples,
-  resolve,
 }) => {
   const connection = createDbConnection();
   const Word = connection.model('Word', wordSchema);
@@ -53,17 +50,15 @@ export const findWordsWithMatch = async ({
   try {
     let words = generateAggregationBase(Word, match);
 
-    if (examples) {
-      words = words
-        .lookup({
-          from: 'examples',
-          localField: '_id',
-          foreignField: 'associatedWords',
-          as: 'examples',
-        });
-    }
+    words = words
+      .lookup({
+        from: 'examples',
+        localField: '_id',
+        foreignField: 'associatedWords',
+        as: 'examples',
+      });
 
-    if (resolve && version === Versions.VERSION_2) {
+    if (version === Versions.VERSION_2) {
       words = words
         .lookup({
           from: 'words',
@@ -89,21 +84,19 @@ export const findWordsWithMatch = async ({
         definitions: 1,
         variations: 1,
         stems: 1,
+        relatedTerms: 1,
         updatedAt: 1,
         pronunciation: 1,
         attributes: 1,
-        relatedTerms: 1,
-        hypernyms: 1,
-        hyponyms: 1,
         tenses: 1,
-        ...(examples ? { examples: 1 } : {}),
-        ...(dialects ? { dialects: 1 } : {}),
+        examples: 1,
+        dialects: 1,
       })
       .append([
         { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
       ]);
 
-    const finalWords = examples ? removeKeysInNestedDoc(await words, 'examples') : await words;
+    const finalWords = removeKeysInNestedDoc(await words, 'examples');
     const contentLength = finalWords.length;
 
     finalWords.forEach((word) => {
@@ -111,17 +104,24 @@ export const findWordsWithMatch = async ({
         word.wordClass = word.definitions[0].wordClass;
         word.nsibidi = word.definitions[0].nsibidi;
         word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
-        if (dialects) {
-          word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({
-            ...finalDialects,
-            [dialect.word]: {
-              ...dialect,
-              dialects: dialect.dialects.map((d) => Dialects[d].label),
-            },
-          }), {});
-        }
+        word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({
+          ...finalDialects,
+          [dialect.word]: {
+            ...dialect,
+            dialects: dialect.dialects.map((d) => Dialects[d].label),
+          },
+        }), {});
       }
     });
+
+    //  /* Convert nested ObjectId into Strings */
+    //  const dbWords = (await words).map((dbWord) => {
+    //   dbWord.stems = dbWord.stems.map((stem) => stem.toString());
+    //   dbWord.relatedTerms = dbWord.relatedTerms.map((relatedTerm) => relatedTerm.toString());
+    //   return dbWord;
+    // });
+    // const rawWords = removeKeysInNestedDoc(dbWords, 'examples');
+    // const contentLength = rawWords.length;
 
     console.timeEnd('Aggregation completion time');
     await handleCloseConnection(connection);
@@ -136,8 +136,6 @@ export const findWordsWithMatch = async ({
 export const findExamplesWithMatch = async ({
   match,
   version,
-  skip = 0,
-  limit = 10,
 }) => {
   const connection = createDbConnection();
   const Example = connection.model('Example', exampleSchema);
@@ -159,10 +157,9 @@ export const findExamplesWithMatch = async ({
 
     const allExamples = await examples;
     const contentLength = allExamples.length;
-    const finalExamples = allExamples.slice(skip, skip + limit);
 
     await handleCloseConnection(connection);
-    return { examples: finalExamples, contentLength };
+    return { examples: allExamples, contentLength };
   } catch (err) {
     await handleCloseConnection(connection);
     throw err;

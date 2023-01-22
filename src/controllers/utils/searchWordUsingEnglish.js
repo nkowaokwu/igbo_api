@@ -2,25 +2,49 @@ import Versions from '../../shared/constants/Versions';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from '.';
 import { searchEnglishRegexQuery } from './queries';
+import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
+import { handleWordFlags } from '../../APIs/FlagsAPI';
 
 /* Searches for word with English stored in MongoDB */
 const searchWordUsingEnglish = async ({
-  searchWord,
+  redisClient,
   filteringParams,
   version,
   regex,
+  searchWord,
   skip,
   limit,
-  ...rest
+  flags,
 }) => {
-  const query = searchEnglishRegexQuery({ regex, searchWord, filteringParams });
-  console.time(`Searching English words for ${searchWord}`);
-  const { words, contentLength } = await findWordsWithMatch({ match: query, version, ...rest });
+  let responseData = {};
+  const redisWordsCacheKey = `"${searchWord}"-${version}`;
+  const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
+
+  if (cachedWords) {
+    responseData = {
+      words: cachedWords.words,
+      contentLength: cachedWords.contentLength,
+    };
+  } else {
+    const query = searchEnglishRegexQuery({ regex, searchWord, filteringParams });
+    console.time(`Searching English words for ${searchWord}`);
+    const { words, contentLength } = await findWordsWithMatch({ match: query, version });
+    console.timeEnd(`Searching English words for ${searchWord}`);
+    await setCachedWords({ key: redisWordsCacheKey, data: { words, contentLength }, redisClient });
+
+    responseData = {
+      words,
+      contentLength,
+    };
+  }
+
   const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
-  let sortedWords = sortDocsBy(searchWord, words, sortKey, version, regex);
+  let sortedWords = sortDocsBy(searchWord, responseData.words, sortKey, version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
-  console.timeEnd(`Searching English words for ${searchWord}`);
-  return { words: sortedWords, contentLength };
+  return handleWordFlags({
+    data: { words: sortedWords, contentLength: responseData.contentLength },
+    flags,
+  });
 };
 
 export default searchWordUsingEnglish;

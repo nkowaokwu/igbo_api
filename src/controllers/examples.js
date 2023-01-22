@@ -1,9 +1,9 @@
 import { exampleSchema } from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
-import { REDIS_CACHE_EXPIRATION } from '../config';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
+import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
 
 /* Create a new Example object in MongoDB */
 export const createExample = async (data, connection) => {
@@ -13,19 +13,34 @@ export const createExample = async (data, connection) => {
 };
 
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = ({
+const searchExamples = async ({
+  redisClient,
+  searchWord,
   query,
   version,
   skip,
   limit,
-}) => (
-  findExamplesWithMatch({
-    match: query,
-    version,
-    skip,
-    limit,
-  })
-);
+}) => {
+  let responseData = {};
+  const redisExamplesCacheKey = `example-${searchWord}-${version}`;
+  const cachedExamples = await getCachedExamples({ key: redisExamplesCacheKey, redisClient });
+  if (cachedExamples) {
+    responseData = {
+      examples: cachedExamples.examples,
+      contentLength: cachedExamples.contentLength,
+    };
+  } else {
+    const { examples: allExamples, contentLength } = findExamplesWithMatch({ match: query, version });
+    await setCachedExamples({ key: redisExamplesCacheKey, data: { allExamples, contentLength }, redisClient });
+
+    responseData = {
+      examples: allExamples,
+      contentLength,
+    };
+  }
+  const examples = responseData.examples.slice(skip, skip + limit);
+  return { examples, contentLength: responseData.contentLength };
+};
 
 /* Returns examples from MongoDB */
 export const getExamples = async (req, res, next) => {
@@ -44,37 +59,19 @@ export const getExamples = async (req, res, next) => {
     const regexMatch = !isUsingMainKey && !searchWord ? ({
       igbo: { $exists: false },
     }) : searchExamplesRegexQuery(regex);
-    const redisExamplesCacheKey = `example-${searchWord}-${skip}-${limit}-${version}`;
-    const rawCachedExamples = await redisClient.get(redisExamplesCacheKey);
-    const cachedExamples = typeof rawCachedExamples === 'string' ? JSON.parse(rawCachedExamples) : rawCachedExamples;
-    let examples;
-    let contentLength;
-    if (cachedExamples) {
-      examples = cachedExamples.examples;
-      contentLength = cachedExamples.contentLength;
-    } else {
-      const allExamples = await searchExamples({
-        query: regexMatch,
-        version,
-        skip,
-        limit,
-      });
-      examples = allExamples.examples;
-      contentLength = allExamples.contentLength;
-      if (!redisClient.isFake) {
-        redisClient.set(
-          redisExamplesCacheKey,
-          JSON.stringify({ examples, contentLength }),
-          'EX',
-          REDIS_CACHE_EXPIRATION,
-        );
-      }
-    }
+    const responseData = await searchExamples({
+      searchWord,
+      redisClient,
+      query: regexMatch,
+      version,
+      skip,
+      limit,
+    });
 
     return packageResponse({
       res,
-      docs: examples,
-      contentLength,
+      docs: responseData.examples,
+      contentLength: responseData.contentLength,
       version,
       ...rest,
     });

@@ -12,7 +12,7 @@ import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
 import WordClass from '../../shared/constants/WordClass';
-import { REDIS_CACHE_EXPIRATION } from '../../config';
+import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -230,23 +230,15 @@ export const handleQueries = async ({
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
-  const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
-  const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
+  const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({ key: version, redisClient });
   if (version === Versions.VERSION_2) {
     console.time('Searching all verbs and suffixes');
     if (cachedAllVerbsAndSuffixes) {
       console.log('Getting all verbs and suffixes from cache');
-      allVerbsAndSuffixes = JSON.parse(cachedAllVerbsAndSuffixes);
+      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
       allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
-      if (!redisClient.isFake) {
-        redisClient.set(
-          redisAllVerbsAndSuffixesKey,
-          JSON.stringify(allVerbsAndSuffixes),
-          'EX',
-          REDIS_CACHE_EXPIRATION,
-        );
-      }
+      await setAllCachedVerbsAndSuffixes({ key: version, data: allVerbsAndSuffixes, redisClient });
     }
     console.timeEnd('Searching all verbs and suffixes');
   }
@@ -321,6 +313,11 @@ export const handleQueries = async ({
     pronunciation,
     nsibidi,
   };
+  const flags = {
+    dialects,
+    examples,
+    resolve,
+  };
   const filteringParams = generateFilteringParams(wordFields);
   return {
     id,
@@ -332,9 +329,7 @@ export const handleQueries = async ({
     skip,
     limit,
     strict,
-    dialects,
-    examples,
-    resolve,
+    flags,
     hasQuotes,
     isUsingMainKey,
     filteringParams,
