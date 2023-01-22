@@ -31,6 +31,7 @@ export const getWordData = (req, res, next) => {
 /* Reuseable base controller function for getting words */
 const getWordsFromDatabase = async (req, res, next) => {
   try {
+    console.time('Getting words from database');
     const {
       version,
       searchWord,
@@ -45,8 +46,6 @@ const getWordsFromDatabase = async (req, res, next) => {
       hasQuotes,
       filteringParams,
       isUsingMainKey,
-      redisAllVerbsAndSuffixesKey,
-      allVerbsAndSuffixes,
       redisClient,
     } = await handleQueries(req);
     const searchQueries = {
@@ -77,12 +76,6 @@ const getWordsFromDatabase = async (req, res, next) => {
         contentLength = wordsByEnglish.contentLength;
         if (!redisClient.isFake) {
           redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
-            redisAllVerbsAndSuffixesKey,
-            `${JSON.stringify(allVerbsAndSuffixes)}`,
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
         }
       }
     } else {
@@ -109,16 +102,11 @@ const getWordsFromDatabase = async (req, res, next) => {
         contentLength = wordsByIgbo.contentLength;
         if (!redisClient.isFake) {
           redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
-            redisAllVerbsAndSuffixesKey,
-            JSON.stringify(allVerbsAndSuffixes),
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
         }
       }
     }
     console.log(`Number of words for search word "${searchWord}": ${contentLength}`);
+    console.timeEnd('Getting words from database');
     return packageResponse({
       res,
       docs: words,

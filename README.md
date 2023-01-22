@@ -51,12 +51,17 @@ yarn dev
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
 
-**Alternative dev start command**:
+**Development with Replica Sets and Redis**:
 
 To start the dev API server while running [MongoDB Replica sets](https://docs.mongodb.com/manual/replication/) and the [Redis cache](https://redis.io/), run:
 
 ```
 yarn dev:full
+```
+
+To start a Redis server, run:
+```
+redis-server
 ```
 
 **Warning**: Running replica sets locally is machine intensive and should only

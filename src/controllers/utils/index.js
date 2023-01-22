@@ -12,6 +12,7 @@ import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
 import WordClass from '../../shared/constants/WordClass';
+import { REDIS_CACHE_EXPIRATION } from '../../config';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -232,11 +233,22 @@ export const handleQueries = async ({
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
   const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
   if (version === Versions.VERSION_2) {
+    console.time('Searching all verbs and suffixes');
     if (cachedAllVerbsAndSuffixes) {
+      console.log('Getting all verbs and suffixes from cache');
       allVerbsAndSuffixes = JSON.parse(cachedAllVerbsAndSuffixes);
     } else {
       allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
+      if (!redisClient.isFake) {
+        redisClient.set(
+          redisAllVerbsAndSuffixesKey,
+          JSON.stringify(allVerbsAndSuffixes),
+          'EX',
+          REDIS_CACHE_EXPIRATION,
+        );
+      }
     }
+    console.timeEnd('Searching all verbs and suffixes');
   }
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '')
@@ -262,8 +274,8 @@ export const handleQueries = async ({
       }
     ))) : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
-  if (!keywords.length) {
-    keywords = version === Versions.VERSION_2 && searchWord ? (
+  if (!keywords.length && searchWord) {
+    keywords = version === Versions.VERSION_2 ? (
       expandNoun(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
         {
           text,
@@ -276,11 +288,11 @@ export const handleQueries = async ({
         }
       ))) : [];
   }
-  if (!keywords.length) {
+  if (!keywords.length && searchWord) {
     console.time('Expand phrase time');
-    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart, searchWordPartInex) => {
+    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart, searchWordPartIndex) => {
       const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes, version);
-      console.time(`Expand phrase part ${searchWordPartInex}`);
+      console.time(`Expand phrase part ${searchWordPartIndex}`);
       const result = expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
         {
           text,
@@ -292,7 +304,7 @@ export const handleQueries = async ({
           }), ['wordReg']),
         }
       )) : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
-      console.timeEnd(`Expand phrase part ${searchWordPartInex}`);
+      console.timeEnd(`Expand phrase part ${searchWordPartIndex}`);
       return result;
     }) : []).flat();
     console.timeEnd('Expand phrase time');
@@ -326,8 +338,6 @@ export const handleQueries = async ({
     hasQuotes,
     isUsingMainKey,
     filteringParams,
-    redisAllVerbsAndSuffixesKey,
-    allVerbsAndSuffixes,
     redisClient,
   };
 };
