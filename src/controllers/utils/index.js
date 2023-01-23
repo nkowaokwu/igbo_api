@@ -173,6 +173,7 @@ const searchAllVerbsAndSuffixes = async ({
   const { words, contentLength } = await findWordsWithMatch({
     match: query,
     version,
+    lean: true,
   });
   return { words, contentLength };
 };

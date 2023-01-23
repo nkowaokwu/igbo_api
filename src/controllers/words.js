@@ -108,7 +108,7 @@ export const getWord = async (req, res, next) => {
         if (!data.words[0]) {
           throw new Error('No word exists with the provided id.');
         }
-        const { words } = await handleWordFlags({ data, flags });
+        const { words } = handleWordFlags({ data, flags });
         const minimizedWords = minimizeWords(words, version);
         return minimizedWords[0];
       });
