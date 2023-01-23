@@ -1,5 +1,6 @@
 import { getApp, initializeApp } from 'firebase/app';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
+import { isProduction } from '../config';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyBDXPLmvu7YEagwdgp_W4uoZhCglbXrG6M',
@@ -14,5 +15,7 @@ const FIREBASE_CONFIG = {
 initializeApp(FIREBASE_CONFIG);
 
 const functions = getFunctions(getApp());
-connectFunctionsEmulator(functions, 'localhost', 5005);
-console.debug('Using Functions emulator: http://localhost:5005');
+if (!isProduction) {
+  connectFunctionsEmulator(functions, 'localhost', 5005);
+  console.debug('Using Functions emulator: http://localhost:5005');
+}

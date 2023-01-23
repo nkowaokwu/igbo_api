@@ -5,13 +5,14 @@ import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
-import { REDIS_CACHE_EXPIRATION } from '../config';
 import { packageResponse, handleQueries } from './utils';
 import { findWordsWithMatch } from './utils/buildDocs';
 import searchWordUsingEnglish from './utils/searchWordUsingEnglish';
 import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
 import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
+import { handleWordFlags } from '../APIs/FlagsAPI';
+import minimizeWords from './utils/minimizeWords';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -31,6 +32,7 @@ export const getWordData = (req, res, next) => {
 /* Reuseable base controller function for getting words */
 const getWordsFromDatabase = async (req, res, next) => {
   try {
+    console.time('Getting words from database');
     const {
       version,
       searchWord,
@@ -39,90 +41,45 @@ const getWordsFromDatabase = async (req, res, next) => {
       skip,
       limit,
       strict,
-      dialects,
-      examples,
-      resolve,
+      flags,
       hasQuotes,
       filteringParams,
       isUsingMainKey,
-      redisAllVerbsAndSuffixesKey,
-      allVerbsAndSuffixes,
       redisClient,
     } = await handleQueries(req);
     const searchQueries = {
       searchWord,
       skip,
       limit,
-      dialects,
-      examples,
-      resolve,
+      flags,
     };
-    let words;
-    let contentLength;
+    let responseData = {};
     if (hasQuotes) {
-      const redisWordsCacheKey = `"${searchWord}"-${skip}-${limit}-${version}-${dialects}-${resolve}-${examples}`;
-      const rawCachedWords = await redisClient.get(redisWordsCacheKey);
-      const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
-      if (cachedWords) {
-        words = cachedWords.words;
-        contentLength = cachedWords.contentLength;
-      } else {
-        const wordsByEnglish = await searchWordUsingEnglish({
-          filteringParams,
-          version,
-          regex,
-          ...searchQueries,
-        });
-        words = wordsByEnglish.words;
-        contentLength = wordsByEnglish.contentLength;
-        if (!redisClient.isFake) {
-          redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
-            redisAllVerbsAndSuffixesKey,
-            `${JSON.stringify(allVerbsAndSuffixes)}`,
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
-        }
-      }
+      responseData = await searchWordUsingEnglish({
+        redisClient,
+        filteringParams,
+        version,
+        regex,
+        ...searchQueries,
+      });
     } else {
-      const parsedSegments = [...searchWord.split(' ')];
-      parsedSegments.shift();
-
-      const redisWordsCacheKey = `${searchWord}-${skip}-${limit}-${version}-${dialects}-${resolve}-${examples}`;
-      const rawCachedWords = await redisClient.get(redisWordsCacheKey);
-      const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
-      if (cachedWords) {
-        words = cachedWords.words;
-        contentLength = cachedWords.contentLength;
-      } else {
-        const wordsByIgbo = await searchWordUsingIgbo({
-          keywords,
-          version,
-          regex,
-          strict,
-          isUsingMainKey,
-          filteringParams,
-          ...searchQueries,
-        });
-        words = wordsByIgbo.words;
-        contentLength = wordsByIgbo.contentLength;
-        if (!redisClient.isFake) {
-          redisClient.set(redisWordsCacheKey, JSON.stringify({ words, contentLength }), 'EX', REDIS_CACHE_EXPIRATION);
-          redisClient.set(
-            redisAllVerbsAndSuffixesKey,
-            JSON.stringify(allVerbsAndSuffixes),
-            'EX',
-            REDIS_CACHE_EXPIRATION,
-          );
-        }
-      }
+      responseData = await searchWordUsingIgbo({
+        redisClient,
+        keywords,
+        version,
+        regex,
+        strict,
+        isUsingMainKey,
+        filteringParams,
+        ...searchQueries,
+      });
     }
-    console.log(`Number of words for search word "${searchWord}": ${contentLength}`);
+    console.log(`Number of words for search word "${searchWord}": ${responseData.contentLength}`);
+    console.timeEnd('Getting words from database');
     return packageResponse({
       res,
-      docs: words,
-      contentLength,
+      docs: responseData.words,
+      contentLength: responseData.contentLength,
       version,
     });
   } catch (err) {
@@ -141,26 +98,19 @@ export const getWords = async (req, res, next) => {
 /* Returns a word from MongoDB using an id */
 export const getWord = async (req, res, next) => {
   try {
-    const {
-      id,
-      dialects,
-      examples,
-      resolve,
-      version,
-    } = await handleQueries(req);
+    const { id, flags, version } = await handleQueries(req);
 
     const updatedWord = await findWordsWithMatch({
       match: { _id: mongoose.Types.ObjectId(id) },
       version,
-      dialects,
-      examples,
-      resolve,
     })
-      .then(async ({ words: [word] }) => {
-        if (!word) {
+      .then(async (data) => {
+        if (!data.words[0]) {
           throw new Error('No word exists with the provided id.');
         }
-        return word;
+        const { words } = await handleWordFlags({ data, flags });
+        const minimizedWords = minimizeWords(words, version);
+        return minimizedWords[0];
       });
     return packageResponse({
       res,
@@ -173,7 +123,7 @@ export const getWord = async (req, res, next) => {
   }
 };
 
-/* Creates Word documents in MongoDB database */
+/* Creates Word documents in MongoDB database for testing */
 export const createWord = async (data, connection) => {
   const Word = connection.model('Word', wordSchema);
   const {

@@ -12,6 +12,7 @@ import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Versions from '../../shared/constants/Versions';
 import WordClass from '../../shared/constants/WordClass';
+import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 
 const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
@@ -58,8 +59,8 @@ export const sortDocsBy = (searchWord, docs, key, version, regex) => (
     const cleanedNextDocValue = removeAccents.removeExcluding(nextDocValue).normalize('NFC');
     const prevSecondaryKeyValue = get(prevDoc, generateSecondaryKey(version)) || '';
     const nextSecondaryKeyValue = get(nextDoc, generateSecondaryKey(version)) || '';
-    const rawPrevDefinitionMatchIndex = prevSecondaryKeyValue.search(regex.hardDefinitionsReg);
-    const rawNextDefinitionMatchIndex = nextSecondaryKeyValue.search(regex.hardDefinitionsReg);
+    const rawPrevDefinitionMatchIndex = prevSecondaryKeyValue?.search?.(regex.hardDefinitionsReg) || -1;
+    const rawNextDefinitionMatchIndex = nextSecondaryKeyValue?.search?.(regex.hardDefinitionsReg) || -1;
     const prevDefinitionMatchIndexValue = rawPrevDefinitionMatchIndex === -1
       ? 11
       : rawPrevDefinitionMatchIndex;
@@ -229,14 +230,24 @@ export const handleQueries = async ({
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Versions.VERSION_2) ? Versions.VERSION_2 : Versions.VERSION_1;
   const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
-  const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${version}`;
-  const cachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
+  const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({ key: version, redisClient });
   if (version === Versions.VERSION_2) {
+    console.time('Searching all verbs and suffixes');
     if (cachedAllVerbsAndSuffixes) {
-      allVerbsAndSuffixes = JSON.parse(cachedAllVerbsAndSuffixes);
+      console.log('Getting all verbs and suffixes from cache');
+      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
-      allVerbsAndSuffixes = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })).words;
+      const allVerbsAndSuffixesDb = (
+        await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })
+      ).words;
+      allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
+        key: version,
+        data: allVerbsAndSuffixesDb,
+        redisClient,
+        version,
+      });
     }
+    console.timeEnd('Searching all verbs and suffixes');
   }
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '')
@@ -262,8 +273,8 @@ export const handleQueries = async ({
       }
     ))) : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
-  if (!keywords.length) {
-    keywords = version === Versions.VERSION_2 && searchWord ? (
+  if (!keywords.length && searchWord) {
+    keywords = version === Versions.VERSION_2 ? (
       expandNoun(searchWord, allVerbsAndSuffixes, version).map(({ text, wordClass }) => (
         {
           text,
@@ -276,11 +287,11 @@ export const handleQueries = async ({
         }
       ))) : [];
   }
-  if (!keywords.length) {
+  if (!keywords.length && searchWord) {
     console.time('Expand phrase time');
-    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart, searchWordPartInex) => {
+    keywords = (version === Versions.VERSION_2 ? searchWordParts.map((searchWordPart, searchWordPartIndex) => {
       const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes, version);
-      console.time(`Expand phrase part ${searchWordPartInex}`);
+      console.time(`Expand phrase part ${searchWordPartIndex}`);
       const result = expandedVerb.length ? expandedVerb.map(({ text, wordClass }) => (
         {
           text,
@@ -292,7 +303,7 @@ export const handleQueries = async ({
           }), ['wordReg']),
         }
       )) : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
-      console.timeEnd(`Expand phrase part ${searchWordPartInex}`);
+      console.timeEnd(`Expand phrase part ${searchWordPartIndex}`);
       return result;
     }) : []).flat();
     console.timeEnd('Expand phrase time');
@@ -309,6 +320,11 @@ export const handleQueries = async ({
     pronunciation,
     nsibidi,
   };
+  const flags = {
+    dialects,
+    examples,
+    resolve,
+  };
   const filteringParams = generateFilteringParams(wordFields);
   return {
     id,
@@ -320,14 +336,10 @@ export const handleQueries = async ({
     skip,
     limit,
     strict,
-    dialects,
-    examples,
-    resolve,
+    flags,
     hasQuotes,
     isUsingMainKey,
     filteringParams,
-    redisAllVerbsAndSuffixesKey,
-    allVerbsAndSuffixes,
     redisClient,
   };
 };

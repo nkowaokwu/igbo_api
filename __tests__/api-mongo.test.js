@@ -119,8 +119,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
       forEach(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
       });
     });
@@ -226,8 +226,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
       forEach(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
       });
     });
@@ -237,8 +237,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       const result = await getWord(res.body[0].id);
       expect(result.status).toEqual(200);
-      WORD_KEYS_V1.forEach((key) => {
-        expect(has(result.body, key)).toBeTruthy();
+      Object.keys(result.body).forEach((key) => {
+        expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
       });
     });
 
@@ -367,8 +367,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(3);
       forEach(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
       });
     });
@@ -380,8 +380,8 @@ describe('MongoDB Words', () => {
       expect(res.body).toHaveLength(2); // Expecting mmilī (variation is milī) and -mìlị
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
       });
     });
@@ -402,8 +402,8 @@ describe('MongoDB Words', () => {
       expect(res.body.length).toBeLessThanOrEqual(5);
       expect(uniqBy(res.body, (word) => word.id).length).toEqual(res.body.length);
       forEach(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
       });
     });
@@ -414,8 +414,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
       expect(every(res.body, (word) => {
-        WORD_KEYS_V1.forEach((key) => {
-          expect(has(word, key)).toBeTruthy();
+        Object.keys(word).forEach((key) => {
+          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
         });
         Object.keys(word).forEach((key) => {
           expect(EXCLUDE_KEYS).not.toContain(key);
@@ -627,8 +627,8 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       const result = await getWordV2(res.body.data[0].id);
       expect(result.status).toEqual(200);
-      WORD_KEYS_V2.forEach((key) => {
-        expect(has(result.body.data, key)).toBeTruthy();
+      Object.keys(result.body.data).forEach((key) => {
+        expect(WORD_KEYS_V2.includes(key)).toBeTruthy();
       });
       expect(WordClass[result.body.data.definitions[0].wordClass]).not.toBe(undefined);
     });
