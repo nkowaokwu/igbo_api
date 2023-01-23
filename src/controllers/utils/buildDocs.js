@@ -43,6 +43,7 @@ const generateAggregationBase = (Model, match) => (
 export const findWordsWithMatch = async ({
   match,
   version,
+  lean = false,
 }) => {
   const connection = createDbConnection();
   const Word = connection.model('Word', wordSchema);
@@ -50,15 +51,17 @@ export const findWordsWithMatch = async ({
   try {
     let words = generateAggregationBase(Word, match);
 
-    words = words
-      .lookup({
-        from: 'examples',
-        localField: '_id',
-        foreignField: 'associatedWords',
-        as: 'examples',
-      });
+    if (!lean) {
+      words = words
+        .lookup({
+          from: 'examples',
+          localField: '_id',
+          foreignField: 'associatedWords',
+          as: 'examples',
+        });
+    }
 
-    if (version === Versions.VERSION_2) {
+    if (!lean && version === Versions.VERSION_2) {
       words = words
         .lookup({
           from: 'words',
@@ -113,15 +116,6 @@ export const findWordsWithMatch = async ({
         }), {});
       }
     });
-
-    //  /* Convert nested ObjectId into Strings */
-    //  const dbWords = (await words).map((dbWord) => {
-    //   dbWord.stems = dbWord.stems.map((stem) => stem.toString());
-    //   dbWord.relatedTerms = dbWord.relatedTerms.map((relatedTerm) => relatedTerm.toString());
-    //   return dbWord;
-    // });
-    // const rawWords = removeKeysInNestedDoc(dbWords, 'examples');
-    // const contentLength = rawWords.length;
 
     console.timeEnd('Aggregation completion time');
     await handleCloseConnection(connection);

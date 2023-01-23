@@ -2,11 +2,11 @@ import assign from 'lodash/assign';
 import omit from 'lodash/omit';
 
 /* FlagsAPI cleans returned MongoDB data to match client-provided flags */
-export const handleWordFlags = async ({
+export const handleWordFlags = ({
   data: { words, contentLength },
   flags: { examples, dialects, resolve },
 }) => {
-  const updatedWords = await Promise.all(words.map(async (word) => {
+  const updatedWords = words.map((word) => {
     let updatedWord = assign(word);
     if (!examples) {
       updatedWord = omit(updatedWord, ['examples']);
@@ -23,6 +23,6 @@ export const handleWordFlags = async ({
       }
     }
     return updatedWord;
-  }));
+  });
   return { words: updatedWords, contentLength };
 };
