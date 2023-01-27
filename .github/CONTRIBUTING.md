@@ -35,7 +35,7 @@ Double check to make sure that you have done the following things:
    variables, exposed ports, useful file locations and container parameters.
 
 ### After Opening a Pull Request
-1. Open a pull request and assign at least two reviewers, [@ijemmao](https://github.com/ijemmao) and another community member.
+1. Open a pull request and assign at least one reviewer, [@ijemmao](https://github.com/ijemmao).
 2. You may merge the pull request in once the following things happen
     * All the tests pass against your branch build
     * You have the sign-off from both reviewers
