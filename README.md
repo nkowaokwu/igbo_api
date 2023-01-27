@@ -1,18 +1,18 @@
 # Igbo API
-![backup_production](https://github.com/nkowaokwu/igbo_api/workflows/backup_production/badge.svg?event=schedule)
+[![Deploy to Firebase](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml) [![Dockerize Igbo API](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml)
 
 [Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://github.com/nkowaokwu/igbo_api/wiki) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
-> Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people in at least 20 different dialects.
+> Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people with more than 20 different dialects.
 
-This repo parses the words, word classes, definitions, and more from the Columbia University paper [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
+The initial dataset, including the words, word classes, definitions, and more, were based on the Columbia University published dictionary, [*Dictionary of Ònìchà Igbo*](http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf).
 
 ## Try it Out
 **For a demo, check out this link [https://igboapi.com](https://www.igboapi.com)**
 
 ## Getting Started
 
-These instructions will get a copy of the project up and running on your machine for development and testing purposes.
+Let's get the Igbo API running locally on your machine.
 
 ### Prerequisites
 
@@ -21,6 +21,7 @@ To run this project locally, the following tools need to be installed:
 * [Node.js](https://nodejs.org/en/download/)
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
 * [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+* [Firebase](https://console.firebase.google.com/)
 
 ### Installation
 
@@ -30,7 +31,7 @@ Clone the project:
 git clone https://github.com/nkowaokwu/igbo_api.git
 ```
 
-Move into the project directory and install it's dependencies:
+Navigate into the project directory and install it's dependencies:
 
 ```
 cd igbo_api/
@@ -43,7 +44,27 @@ Build the frontend for the site:
 yarn build
 ```
 
-To start the dev API server run the following command:
+### Connect Firebase Project
+
+This project relies on Firebase Cloud Functions to execute the API dictionary logic along side host our website.
+
+To ensure this project stays open source, it requires that individual contributors integrate their own Firebase project for local development.
+
+#### Step 1: Create a Firebase Project
+
+Please follow this [Firebase Getting Started Guide](https://firebase.google.com/docs/web/setup) to create your own Firebase project.
+
+#### Step 2: Replace the `default` Firebase Project Name
+
+Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project name `igbo-api-bb22d` with your new Firebase project name
+
+#### Step 3: Replace the Firebase Config file
+
+Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.js#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
+
+### Local Development
+
+Once you've configured your prpoject, you can start the Igbo API dev server by running:
 
 ```
 yarn dev
