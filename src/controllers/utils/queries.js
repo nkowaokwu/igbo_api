@@ -60,11 +60,6 @@ const generateMultipleTensesWordRegex = (keywords) => {
   return tenses;
 };
 
-const generateMultipleWordClass = (keywords) => {
-  const inWordClass = (keywords.map(({ wordClass = [] }) => wordClass) || []).flat();
-  return !inWordClass.length ? {} : { 'definitions.wordClass': { $in: inWordClass } };
-};
-
 const fullTextSearchQuery = ({
   keywords,
   isUsingMainKey,
@@ -86,7 +81,6 @@ const fullTextSearchQuery = ({
                 generateMultipleDialectsWordRegex(keywords),
                 ...generateMultipleTensesWordRegex(keywords),
               ]),
-              ...generateMultipleWordClass(keywords),
             }],
             ...filteringParams,
           }
