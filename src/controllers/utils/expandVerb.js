@@ -97,7 +97,6 @@ const hasBeenAndStill = [
 const isRootVerb = (root, wordData) => wordData.verbs.find(({ word: headword, definitions = [] }) => (
   definitions.find(({ wordClass: nestedWordClass }) => (
     nestedWordClass === WordClass.AV.value
-    || nestedWordClass === WordClass.MV.value
     || nestedWordClass === WordClass.PV.value
   )))
   && (
@@ -144,7 +143,7 @@ const helper = (word, wordData, firstPointer, secondPointer, topSolution, meta) 
           type: PartTypes.VERB_ROOT,
           text: currentRange,
           wordInfo: isRootVerb(currentRange, wordData),
-          wordClass: [WordClass.AV.value, WordClass.MV.value, WordClass.PV.value],
+          wordClass: [WordClass.AV.value, WordClass.PV.value],
         });
         updatedMeta.isPreviousVerb = true;
         solutions.push(helper(word, wordData, secondPointer, secondPointer + 1, solution, updatedMeta));
@@ -308,7 +307,6 @@ export default (rawWord, wordData) => {
   const verbs = allWords.filter(({ definitions = [] }) => (
     definitions.find(({ wordClass: nestedWordClass }) => (
       nestedWordClass === WordClass.AV.value
-      || nestedWordClass === WordClass.MV.value
       || nestedWordClass === WordClass.PV.value),
     )));
   const wordSuffixes = allWords.filter(({ definitions = [] }) => (

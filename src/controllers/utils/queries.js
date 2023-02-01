@@ -132,7 +132,6 @@ export const searchForAllVerbsAndSuffixesQuery = () => ({
   'definitions.wordClass': {
     $in: [
       WordClass.AV.value,
-      WordClass.MV.value,
       WordClass.PV.value,
       WordClass.ISUF.value,
       WordClass.ESUF.value,
