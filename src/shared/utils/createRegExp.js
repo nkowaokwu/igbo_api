@@ -1,3 +1,4 @@
+import last from 'lodash/last';
 import removeAccents from './removeAccents';
 import diacriticCodes from '../constants/diacriticCodes';
 
@@ -27,7 +28,7 @@ export default (rawSearchWord, hardMatch = false) => {
       // eslint-disable-next-line max-len
       return `${regexWord}(${(diacriticCodes[letter] || letter)})${isLastLetterDuplicated ? '{0,}' : ''}`;
     }, '')}(?:es|[sx]|ing)${requirePluralAndGerundMatch}`;
-  const hardRegexWordString = searchWord.length
+  let hardRegexWordString = searchWord.length
     ? `${[...searchWord]
       .reduce((regexWord, letter, index) => {
         const isLastLetterDuplicated = getIsLastLetterDuplicated({
@@ -39,6 +40,11 @@ export default (rawSearchWord, hardMatch = false) => {
         return `${regexWord}(${(diacriticCodes[letter] || letter)})${isLastLetterDuplicated ? '{0,}' : ''}`;
       }, '')}${requirePluralAndGerundMatch}`
     : '';
+  const hardRegexWordStringPieces = [...hardRegexWordString];
+  if (last(hardRegexWordStringPieces) === '?') {
+    hardRegexWordStringPieces.pop();
+  }
+  hardRegexWordString = hardRegexWordStringPieces.join('');
 
   const startWordBoundary = '(\\W|^)';
   const endWordBoundary = '(\\W|$)';
