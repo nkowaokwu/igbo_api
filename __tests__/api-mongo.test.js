@@ -27,6 +27,7 @@ import {
 import { expectUniqSetsOfResponses } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { createDbConnection, handleCloseConnection } from '../src/services/database';
+import Tenses from '../src/shared/constants/Tenses';
 
 const { ObjectId } = mongoose.Types;
 
@@ -607,6 +608,20 @@ describe('MongoDB Words', () => {
       expect(noRes.status).toEqual(200);
       expect(noRes.body).toHaveLength(0);
     });
+
+    it('should return all tenses', async () => {
+      const keyword = 'bịa';
+      const res = await getWords({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
+      forEach(res.body, (word) => {
+        if (word.definitions[0].wordClass === WordClass.AV.value) {
+          expect(word.tenses[Tenses.PRESENT_PASSIVE.value]).not.toBe(undefined);
+        } else if (word.definitions[0].wordClass === WordClass.PV.value) {
+          expect(word.tenses[Tenses.PRESENT_PASSIVE.value]).not.toBe(undefined);
+        }
+      });
+    });
   });
 
   describe('/GET mongodb words V2', () => {
@@ -650,6 +665,13 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       const gbaWord = res.body.data.find(({ word }) => word === 'gba');
       expect(gbaWord).toBeTruthy();
+    });
+    it('should noun with broken portions or word', async () => {
+      const keyword = 'ọrụ';
+      const res = await getWordsV2({ keyword });
+      const ọrụWord = res.body.data.find(({ word }) => word === 'ọrụ');
+      expect(res.status).toEqual(200);
+      expect(ọrụWord).toBeTruthy();
     });
   });
 });
