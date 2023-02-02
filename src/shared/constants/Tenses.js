@@ -11,6 +11,10 @@ export default {
     value: 'simplePast',
     label: 'Simple Past',
   },
+  PRESENT_PASSIVE: {
+    value: 'presentPassive',
+    label: 'Present Passive',
+  },
   SIMPLE_PRESENT: {
     value: 'simplePresent',
     label: 'Simple Present',

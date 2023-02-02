@@ -18,8 +18,11 @@ const DEFAULT_RESPONSE_LIMIT = 10;
 const MAX_RESPONSE_LIMIT = 25;
 const MATCHING_DEFINITION_INDEX = 1000;
 const MATCHING_DEFINITION_INDEX_FACTOR = 100;
+const WORD_LENGTH_FACTOR = 100;
+const WORD_LENGTH_DIFFERENCE_FACTOR = 15;
 const IS_COMMON = 1000;
 const SIMILARITY_FACTOR = 100;
+const SIMILAR_WORD_THRESHOLD = 1.5;
 const NO_FACTOR = 0;
 
 const generateSecondaryKey = (version) => (
@@ -52,11 +55,27 @@ const constructRegexQuery = ({ isUsingMainKey, keywords, strict = false }) => (
 /* Sorts all the docs based on the provided searchWord */
 export const sortDocsBy = (searchWord, docs, key, version, regex) => (
   docs.sort((prevDoc, nextDoc) => {
-    const normalizedSearchWord = searchWord.normalize('NFC');
+    const normalizedSearchWord = removePrefix(searchWord.normalize('NFC'));
     const prevDocValue = get(prevDoc, key);
     const nextDocValue = get(nextDoc, key);
-    const cleanedPrevDocValue = removeAccents.removeExcluding(prevDocValue).normalize('NFC');
-    const cleanedNextDocValue = removeAccents.removeExcluding(nextDocValue).normalize('NFC');
+    const cleanedPrevDocValueWithUnderdots = removeAccents.removeExcluding(prevDocValue).normalize('NFC');
+    const cleanedNextDocValueWithUnderdots = removeAccents.removeExcluding(nextDocValue).normalize('NFC');
+    const cleanedPrevDocValue = removeAccents.remove(prevDocValue).normalize('NFC');
+    const cleanedNextDocValue = removeAccents.remove(nextDocValue).normalize('NFC');
+    const prevDocValueLengthDifference = (
+      WORD_LENGTH_FACTOR
+      - (
+        Math.abs(normalizedSearchWord.length - removePrefix(cleanedPrevDocValueWithUnderdots).length)
+        * WORD_LENGTH_DIFFERENCE_FACTOR
+      )
+    );
+    const nextDocValueLengthDifference = (
+      WORD_LENGTH_FACTOR
+      - (
+        Math.abs(normalizedSearchWord.length - removePrefix(cleanedNextDocValueWithUnderdots).length)
+        * WORD_LENGTH_DIFFERENCE_FACTOR
+      )
+    );
     const prevSecondaryKeyValue = get(prevDoc, generateSecondaryKey(version)) || '';
     const nextSecondaryKeyValue = get(nextDoc, generateSecondaryKey(version)) || '';
     const rawPrevDefinitionMatchIndex = prevSecondaryKeyValue?.search?.(regex.hardDefinitionsReg) || -1;
@@ -74,11 +93,20 @@ export const sortDocsBy = (searchWord, docs, key, version, regex) => (
       MATCHING_DEFINITION_INDEX - nextDefinitionMatchIndexValue * MATCHING_DEFINITION_INDEX_FACTOR
     );
 
+    const prevDocDifferenceWithUnderdots = stringSimilarity
+      .compareTwoStrings(normalizedSearchWord, cleanedPrevDocValueWithUnderdots);
+    const nextDocDifferenceWithUnderdots = stringSimilarity
+      .compareTwoStrings(normalizedSearchWord, cleanedNextDocValueWithUnderdots);
     const prevDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedPrevDocValue);
     const nextDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedNextDocValue);
 
-    const prevDocSimilarityFactor = prevDocDifference * SIMILARITY_FACTOR;
-    const nextDocSimilarityFactor = nextDocDifference * SIMILARITY_FACTOR;
+    const prevDocDifferences = prevDocDifference + prevDocDifferenceWithUnderdots;
+    const nextDocDifferences = nextDocDifference + nextDocDifferenceWithUnderdots;
+
+    const prevDocSimilarityFactor = (prevDocDifferences + prevDocDifferences >= SIMILAR_WORD_THRESHOLD
+      ? prevDocValueLengthDifference : 0) * SIMILARITY_FACTOR;
+    const nextDocSimilarityFactor = (nextDocDifferences + nextDocDifferences >= SIMILAR_WORD_THRESHOLD
+      ? nextDocValueLengthDifference : 0) * SIMILARITY_FACTOR;
 
     const prevDocNsibidiFactor = prevDoc?.attributes?.isCommon ? IS_COMMON : 0;
     const nextDocNsibidiFactor = nextDoc?.attributes?.isCommon ? IS_COMMON : 0;
