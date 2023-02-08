@@ -8,7 +8,7 @@ const Statistics = ({
   totalWords,
   totalExamples,
   totalAudioPronunciations,
-  totalStandardIgboWords,
+  totalIgboDefinitions,
   totalNsibidiWords,
   totalDevelopers,
   contributors,
@@ -26,8 +26,8 @@ const Statistics = ({
           header={t('Word audio pronunciations').replace('{{number}}', totalAudioPronunciations)}
         />
         <Stat
-          value={totalStandardIgboWords}
-          header={t('Standard Igbo words').replace('{{number}}', totalStandardIgboWords)}
+          value={totalIgboDefinitions}
+          header={t('Words with Igbo definitions').replace('{{number}}', totalIgboDefinitions)}
         />
         <Stat value={totalNsibidiWords} header={t('Words in Nsịbịdị').replace('{{number}}', totalNsibidiWords)} />
         <Stat value={totalDevelopers} header={t('Developers using the Igbo API')} />
@@ -72,7 +72,7 @@ Statistics.propTypes = {
   totalWords: PropTypes.number,
   totalExamples: PropTypes.number,
   totalAudioPronunciations: PropTypes.number,
-  totalStandardIgboWords: PropTypes.number,
+  totalIgboDefinitions: PropTypes.number,
   totalNsibidiWords: PropTypes.number,
   totalDevelopers: PropTypes.number,
   contributors: PropTypes.arrayOf(PropTypes.shape({})),
@@ -83,7 +83,7 @@ Statistics.defaultProps = {
   totalWords: 0,
   totalExamples: 0,
   totalAudioPronunciations: 0,
-  totalStandardIgboWords: 0,
+  totalIgboDefinitions: 0,
   totalNsibidiWords: 0,
   totalDevelopers: 0,
   contributors: [],
