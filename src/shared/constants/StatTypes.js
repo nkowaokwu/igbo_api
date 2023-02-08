@@ -6,6 +6,7 @@ export default {
   DIALECTAL_VARIATIONS: 'dialectal_variations',
   HEADWORD_AUDIO_PRONUNCIATIONS: 'headword_audio_pronunciations',
   STANDARD_IGBO: 'standard_igbo',
+  IGBO_DEFINITIONS: 'igbo_definitions',
   NSIBIDI_WORDS: 'nsibidi_words',
   NSIBIDI_WORD_SUGGESTIONS: 'nsibidi_word_suggestions',
   USER: 'user',
