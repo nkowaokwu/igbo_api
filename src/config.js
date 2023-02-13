@@ -108,7 +108,8 @@ export const DEBUG_GA_URL = 'https://www.google-analytics.com/debug/mp/collect';
 // Redis
 export const REDIS_HOST = config?.env?.redis_host;
 export const REDIS_PORT = config?.env?.redis_port;
-export const VPC_CONNECTOR = config?.env?.vpc_connector;
+export const REDIS_USERNAME = config?.env?.redis_username;
+export const REDIS_PASSWORD = config?.env?.redis_password;
 export const REDIS_URL = config?.env?.redis_url;
 // Busts the cache every 7 days
 export const REDIS_CACHE_EXPIRATION = 604800;
