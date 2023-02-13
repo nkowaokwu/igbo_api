@@ -1,5 +1,11 @@
 import { createClient } from 'redis';
-import { REDIS_HOST, REDIS_PORT, REDIS_URL } from '../config';
+import {
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_URL,
+  REDIS_USERNAME,
+  REDIS_PASSWORD,
+} from '../config';
 
 const afterResponse = (redisClient) => {
   try {
@@ -12,9 +18,9 @@ const afterResponse = (redisClient) => {
 };
 
 export default async (req, res, next) => {
-  const redisClient = REDIS_HOST && REDIS_PORT
+  const redisClient = REDIS_HOST && REDIS_PORT && REDIS_USERNAME && REDIS_PASSWORD
     ? createClient({
-      url: `redis://${REDIS_HOST}:${REDIS_PORT}`,
+      url: `redis://${REDIS_USERNAME}:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}`,
     })
     : REDIS_URL && process.env.FIREBASE_FUNCTIONS
       ? createClient({
