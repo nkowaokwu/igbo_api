@@ -10,6 +10,7 @@ export const createDbConnection = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     autoIndex: true,
+    readPreference: 'nearest',
   });
 
   console.log('Attempting MongoDB URI:', MONGO_URI);
