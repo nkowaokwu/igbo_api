@@ -20,7 +20,7 @@ export const setCachedWords = async ({
   const updatedData = assign(data);
   updatedData.words = minimizeWords(data.words, version);
   if (!redisClient.isFake) {
-    await redisClient.set(key, JSON.stringify(updatedData), 'EX', REDIS_CACHE_EXPIRATION);
+    await redisClient.set(key, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }
   return updatedData;
 };
@@ -34,12 +34,7 @@ export const getCachedExamples = async ({ key, redisClient }) => {
 
 export const setCachedExamples = async ({ key, data, redisClient }) => {
   if (!redisClient.isFake) {
-    await redisClient.set(
-      key,
-      JSON.stringify(data),
-      'EX',
-      REDIS_CACHE_EXPIRATION,
-    );
+    await redisClient.set(key, JSON.stringify(data), { EX: REDIS_CACHE_EXPIRATION });
   }
   return data;
 };
@@ -62,12 +57,7 @@ export const setAllCachedVerbsAndSuffixes = async ({
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
   const updatedData = minimizeWords(data, version);
   if (!redisClient.isFake) {
-    await redisClient.set(
-      redisAllVerbsAndSuffixesKey,
-      JSON.stringify(updatedData),
-      'EX',
-      REDIS_CACHE_EXPIRATION,
-    );
+    await redisClient.set(redisAllVerbsAndSuffixesKey, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }
   return updatedData;
 };
