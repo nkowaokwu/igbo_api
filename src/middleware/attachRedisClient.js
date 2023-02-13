@@ -20,7 +20,12 @@ const afterResponse = (redisClient) => {
 export default async (req, res, next) => {
   const redisClient = REDIS_HOST && REDIS_PORT && REDIS_USERNAME && REDIS_PASSWORD
     ? createClient({
-      url: `redis://${REDIS_USERNAME}:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}`,
+      socket: {
+        host: REDIS_HOST,
+        port: REDIS_PORT,
+      },
+      username: REDIS_USERNAME,
+      password: REDIS_PASSWORD,
     })
     : REDIS_URL && process.env.FIREBASE_FUNCTIONS
       ? createClient({
@@ -32,6 +37,7 @@ export default async (req, res, next) => {
         on: () => console.log('\nFake Redis client'),
         connect: () => console.log('Connected to fake Redis client'),
         isFake: true,
+        quit: () => console.log('Mock Redis client quit'),
       };
   redisClient.on('error', (err) => console.log('Redis Client Error', err));
   redisClient.connect();

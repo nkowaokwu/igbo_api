@@ -10,6 +10,7 @@ import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
+import flowRequest from '../shared/utils/flowRequest';
 
 const router = express.Router();
 
@@ -23,13 +24,13 @@ const createDeveloperLimiter = rateLimit({
 // Google Analytics
 router.use(analytics);
 
-router.get('/words', validateApiKey, attachRedisClient, getWords);
-router.get('/words/:id', validateApiKey, validId, attachRedisClient, getWord);
-router.get('/examples', validateApiKey, attachRedisClient, getExamples);
-router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
+router.get('/words', ...flowRequest([validateApiKey, attachRedisClient, getWords]));
+router.get('/words/:id', ...flowRequest([validateApiKey, validId, attachRedisClient, getWord]));
+router.get('/examples', ...flowRequest([validateApiKey, attachRedisClient, getExamples]));
+router.get('/examples/:id', ...flowRequest([validateApiKey, validId, attachRedisClient, getExample]));
 
-router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
+router.post('/developers', ...flowRequest([createDeveloperLimiter, validateDeveloperBody, postDeveloper]));
 
-router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
+router.get('/stats', ...flowRequest([validateAdminApiKey, attachRedisClient, getStats]));
 
 export default router;
