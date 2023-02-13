@@ -21,7 +21,7 @@ const definitionSchema = new Schema({
 }, { _id: true });
 
 const dialectSchema = new Schema({
-  word: { type: String, required: true },
+  word: { type: String, required: true, index: true },
   variations: { type: [{ type: String }], default: [] },
   dialects: { type: [{ type: String }], validate: (v) => every(v, (dialect) => Dialects[dialect].value), default: [] },
   pronunciation: { type: String, default: '' },
