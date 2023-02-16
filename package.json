@@ -167,6 +167,9 @@
       "tag": true
     }
   },
+  "resolutions": {
+    "esquery": "1.4.0"
+  },
   "nodemonConfig": {
     "delay": "1500ms"
   }
