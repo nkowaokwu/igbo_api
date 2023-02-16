@@ -21,6 +21,16 @@ describe('Igbo API Homepage', () => {
       cy.contains('Email:');
     });
 
+    it('render the Privacy page', () => {
+      cy.findByText('Privacy').click();
+      cy.findByText('Privacy Policy').should('exist');
+    });
+
+    it('render the Terms or Service page', () => {
+      cy.findByText('Terms of Service').click();
+      cy.findByText('Terms and Conditions').should('exist');
+    });
+
     describe('Try it Out', () => {
       it('enter a word and select flag', () => {
         cy.visit('/');

@@ -8,8 +8,6 @@ const handle = nextApp.getRequestHandler();
 
 const routes = compact([
   /^\/$/,
-  /^\/about/,
-  process.env.NODE_ENV !== 'production' ? /^\/signup/ : null,
 ]);
 
 const siteRouter = express.Router();

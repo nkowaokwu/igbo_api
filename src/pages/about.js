@@ -41,7 +41,7 @@ const About = () => {
               <a className="link" href={DICTIONARY_APP_URL}>
                 Nkọwa okwu
               </a>
-              {' , our official online Igbo-English dictionary app.'}
+              , our official online Igbo-English dictionary app.
             </p>
           ) : (
             <p dangerouslySetInnerHTML={{

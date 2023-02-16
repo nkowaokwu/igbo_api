@@ -40,5 +40,5 @@ jobs:
       run: yarn test:build
     - name: Test API
       run: yarn jest
-    # - name: Test API Homepage
-    #   run: yarn cypress:ci
+    - name: Test API Homepage
+      run: yarn cypress:ci
