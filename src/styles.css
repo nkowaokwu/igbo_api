@@ -25,6 +25,7 @@
 .link {
   @apply transition-element;
   @apply text-green-400;
+  @apply inline;
 }
 
 .link:hover {

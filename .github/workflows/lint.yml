@@ -19,7 +19,5 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn install
 
-      - name: Run linters
-        uses: wearerequired/lint-action@v1
-        with:
-          eslint: true
+      - name: Run ESLint
+        run: yarn run eslint ./src --ext .js,.jsx,.ts,.tsx -c ./.eslintrc.json

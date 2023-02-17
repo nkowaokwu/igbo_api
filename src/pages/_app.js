@@ -7,6 +7,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { appWithTranslation } from 'next-i18next';
 import Head from 'next/head';
+import ChakraTheme from '../shared/constants/ChakraTheme';
 import en from '../public/locales/en';
 import ig from '../public/locales/ig';
 import * as gtag from '../lib/gtag';
@@ -49,7 +50,7 @@ const MainApp = ({ Component, pageProps, ...rest }) => {
         <title>Igbo API - The First African Language API</title>
       </Head>
       <>
-        <ChakraProvider>
+        <ChakraProvider theme={ChakraTheme}>
           <Component {...pageProps} {...rest} />
         </ChakraProvider>
         {/* Global Site Tag (gtag.js) - Google Analytics */}

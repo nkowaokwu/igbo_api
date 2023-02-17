@@ -32,17 +32,17 @@ const Terms = () => (
               &#39;).
             </ListItem>
             <ListItem>
-              The Website is operated by Nkowa Okwu LLC. Access to and use of the
+              The Website is operated by Nkọwa okwu LLC. Access to and use of the
               Website, or any of its associated Products or Services, is provided by
-              Nkowa Okwu LLC. Please read these terms and conditions (the &#39;{' '}
+              Nkọwa okwu LLC. Please read these terms and conditions (the &#39;{' '}
               <strong>Terms</strong>&#39;) carefully. By using, browsing, and/or reading
               the Website, this signifies that you have read, understood, and agree to
               be bound by the Terms. If you do not agree with the Terms, you must cease
               the use of the Website, or any of Services, immediately.
             </ListItem>
             <ListItem>
-              (c)Nkowa Okwu LLC. reserves the right to review and change any of the
-              Terms by updating this page at its sole discretion. When Nkowa Okwu LLC.
+              (c)Nkọwa okwu LLC. reserves the right to review and change any of the
+              Terms by updating this page at its sole discretion. When Nkọwa okwu LLC.
               updates the Terms, it will use reasonable endeavors to provide you with
               notice of updates to the Terms. Any changes to the Terms take immediate
               effect from the date of their publication. Before you continue, we
@@ -55,21 +55,21 @@ const Terms = () => (
           <Text>
             You accept the Terms by remaining on the Website. You may also accept the
             Terms by clicking to accept or agree to the Terms where this option is
-            made available to you by Nkowa Okwu LLC. in the user interface. Nkowa Okwu
+            made available to you by Nkọwa okwu LLC. in the user interface. Nkọwa okwu
             LLC reserves the right to change the Terms at any time.
           </Text>
           <Heading as="h2">
-            3. Subscription and Registration to use Nkowa Okwu
+            3. Subscription and Registration to use Nkọwa okwu
             Services
           </Heading>
           <UnorderedList>
             <ListItem>
-              All users by default have access to all Nkowa okwu Learning free tiers
+              All users by default have access to all Nkọwa okwu Learning free tiers
               and no credit card information is required (&#39;No{' '}
               <strong>Subscription Fee</strong>&#39;) for this tier.
             </ListItem>
             <ListItem>
-              In order to access the advanced features of Nkowa okwu Learning, you
+              In order to access the advanced features of Nkọwa okwu Learning, you
               must first purchase a subscription through the Website (the &#39;{' '}
               <strong>Subscription</strong>&#39;) and pay the applicable fee for the
               selected Subscription (the &#39; <strong>Subscription Fee</strong>&#39;).
@@ -96,7 +96,7 @@ const Terms = () => (
               <ListItem>Password</ListItem>
             </Box>
             <ListItem>
-              You warrant that any information you give to Nkowa Okwu LLC. in the
+              You warrant that any information you give to Nkọwa okwu LLC. in the
               course of completing the registration process will always be accurate,
               correct and up to date.
             </ListItem>
@@ -113,7 +113,7 @@ const Terms = () => (
             <ListItem>You may not use the Services and may not accept the Terms if:</ListItem>
             <Box pl={8}>
               <ListItem>
-                you are not of legal age to form a binding contract with Nkowa Okwu
+                you are not of legal age to form a binding contract with Nkọwa okwu
                 LLC.; or
               </ListItem>
               <ListItem>
@@ -149,13 +149,13 @@ const Terms = () => (
             </ListItem>
             <ListItem>
               access and use of the Website is limited, non-transferable and allows
-              for the sole use of the Website by you for the purposes of Nkowa Okwu LLC.
+              for the sole use of the Website by you for the purposes of Nkọwa okwu LLC.
               providing the Services;
             </ListItem>
             <ListItem>
               you will not use the Services or the Website in connection with any
               commercial endeavors except those that are specifically endorsed or
-              approved by the management of Nkowa Okwu LLC.;
+              approved by the management of Nkọwa okwu LLC.;
             </ListItem>
             <ListItem>
               you will not use the Services or Website for any illegal and/or
@@ -167,7 +167,7 @@ const Terms = () => (
               you agree that commercial advertisements, affiliate links, and other
               forms of solicitation may be removed from the Website without notice and
               may result in termination of the Services. Appropriate legal action will
-              be taken by Nkowa Okwu LLC. for any illegal or unauthorised use of the
+              be taken by Nkọwa okwu LLC. for any illegal or unauthorised use of the
               Website; and
             </ListItem>
             <ListItem>
@@ -196,7 +196,7 @@ const Terms = () => (
               with the Subscription Fee.
             </ListItem>
             <ListItem>
-              You agree and acknowledge that Nkowa Okwu LLC. can vary the
+              You agree and acknowledge that Nkọwa okwu LLC. can vary the
               Subscription Fee at any time and that the varied Subscription Fee will
               come into effect following the conclusion of the existing Subscription
               Period.
@@ -219,12 +219,12 @@ const Terms = () => (
               Services and compilation of the Website (including but not limited to
               text, graphics, logos, button icons, video images, audio clips, Website,
               code, scripts, design elements, and interactive features) or the Services
-              are owned or controlled for these purposes and are reserved by Nkowa Okwu
+              are owned or controlled for these purposes and are reserved by Nkọwa okwu
               LLC. or its contributors.
             </ListItem>
             <ListItem>
               All trademarks, service marks, and trade names are owned, registered,
-              and/or licensed by Nkowa Okwu LLC., who grants to you a worldwide,
+              and/or licensed by Nkọwa okwu LLC., who grants to you a worldwide,
               non-exclusive, royalty-free, revocable license whilst you are a Member to:
             </ListItem>
             <Box pl={8}>
@@ -239,12 +239,12 @@ const Terms = () => (
               </ListItem>
             </Box>
             <Text>
-              Nkowa Okwu LLC. does not grant you any other rights whatsoever in relation
+              Nkọwa okwu LLC. does not grant you any other rights whatsoever in relation
               to the Website or the Services. All other rights are expressly reserved by
-              Nkowa Okwu LLC..
+              Nkọwa okwu LLC..
             </Text>
             <ListItem>
-              Nkowa Okwu LLC. retains all rights, title, and interest in and to the
+              Nkọwa okwu LLC. retains all rights, title, and interest in and to the
               Website and all related Services. Nothing you do on or in relation to the
               Website will transfer any:
             </ListItem>
@@ -264,7 +264,7 @@ const Terms = () => (
               </ListItem>
             </Box>
             <ListItem>
-              You may not, without the prior written permission of Nkowa Okwu LLC.
+              You may not, without the prior written permission of Nkọwa okwu LLC.
               and the permission of any other relevant rights owners: broadcast,
               republish, up-load to a third party, transmit, post, distribute, show or
               play in public, adapt or change in any way the Services or third-party
@@ -277,8 +277,8 @@ const Terms = () => (
             8. Privacy
           </Heading>
           <Text>
-            Nkowa Okwu LLC. takes your privacy seriously and any information provided
-            through your use of the Website and/or Services are subject to Nkowa Okwu
+            Nkọwa okwu LLC. takes your privacy seriously and any information provided
+            through your use of the Website and/or Services are subject to Nkọwa okwu
             LLC.&#39;s Privacy Policy, which is available on the Website.
           </Text>
           <Heading as="h2">
@@ -298,7 +298,7 @@ const Terms = () => (
                 are not expressly stated in the Terms are excluded; and
               </ListItem>
               <ListItem>
-                Nkowa Okwu LLC. will not be liable for any special, indirect or
+                Nkọwa okwu LLC. will not be liable for any special, indirect or
                 consequential loss or damage (unless such loss or damage is reasonably
                 foreseeable resulting from our failure to meet an applicable Consumer
                 Guarantee), loss of profit or opportunity, or damage to goodwill arising
@@ -313,9 +313,9 @@ const Terms = () => (
               the Website and the Services is provided to you &quot;as is&quot; and
               &quot;as available&quot; without warranty or condition of any kind. None
               of the affiliates, directors, officers, employees, agents, contributors
-              and licensors of Nkowa Okwu LLC. make any express or implied
+              and licensors of Nkọwa okwu LLC. make any express or implied
               representation or warranty about the Services or any products or Services
-              (including the products or Services of Nkowa Okwu LLC.) referred to on the
+              (including the products or Services of Nkọwa okwu LLC.) referred to on the
               Website. includes (but is not restricted to) loss or damage you might
               suffer as a result of any of the following:
             </ListItem>
@@ -337,7 +337,7 @@ const Terms = () => (
               </ListItem>
               <Text>
                 costs incurred as a result of you using the Website, the Services or
-                any of the products of Nkowa Okwu LLC.; and
+                any of the products of Nkọwa okwu LLC.; and
               </Text>
               <ListItem>
                 the Services or operation in respect to links that are provided for
@@ -350,19 +350,19 @@ const Terms = () => (
           </Heading>
           <UnorderedList>
             <ListItem>
-              By using our services, you agree that Nkowa Okwu LLC. is not to be held
+              By using our services, you agree that Nkọwa okwu LLC. is not to be held
               liable for any decisions you make based on any of our services or
               guidance, and any consequences, as a result, are your own. Under no
-              circumstances can you hold Nkowa Okwu LLC. liable for any actions you take
+              circumstances can you hold Nkọwa okwu LLC. liable for any actions you take
               nor can you hold us or any of our employees liable for any loss or costs
               incurred by you as a result of any guidance, advice, coaching, materials,
-              or techniques used or provided by Nkowa Okwu LLC.
+              or techniques used or provided by Nkọwa okwu LLC.
             </ListItem>
             <ListItem>
               All our information on both the website and in consultations is
               intended to assist you and does not in any way, nor is it intended to
               substitute professional, financial, or legal advice. Results are not
-              guaranteed and Nkowa Okwu LLC. takes no responsibility for your actions,
+              guaranteed and Nkọwa okwu LLC. takes no responsibility for your actions,
               choices, or decisions.
             </ListItem>
           </UnorderedList>
@@ -371,13 +371,13 @@ const Terms = () => (
           </Heading>
           <UnorderedList>
             <ListItem>
-              Nkowa Okwu LLC.&#39;s total liability arising out of or in connection
+              Nkọwa okwu LLC.&#39;s total liability arising out of or in connection
               with the Services or these Terms, however arising, including under
               contract, tort (including negligence), in equity, under statute or
               otherwise, will not exceed the resupply of the Services to you.
             </ListItem>
             <ListItem>
-              You expressly understand and agree that Nkowa Okwu LLC., its
+              You expressly understand and agree that Nkọwa okwu LLC., its
               affiliates, employees, agents, contributors and licensors shall not be
               liable to you for any direct, indirect, incidental, special consequential
               or exemplary damages which may be incurred by you, however, caused and
@@ -392,7 +392,7 @@ const Terms = () => (
           <UnorderedList>
             <ListItem>
               The Terms will continue to apply until terminated by either you or by
-              Nkowa Okwu LLC. as set out below.
+              Nkọwa okwu LLC. as set out below.
             </ListItem>
             <ListItem>(b)If you want to terminate the Terms, you may do so by:</ListItem>
             <Box pl={6}>
@@ -403,10 +403,10 @@ const Terms = () => (
               <Text>And</Text>
               <ListItem>
                 closing your accounts for all of the services which you use, where
-                Nkowa Okwu LLC. has made this option available to you.
+                Nkọwa okwu LLC. has made this option available to you.
               </ListItem>
             </Box>
-            <ListItem>(c)Nkowa Okwu LLC. may at any time, terminate the Terms with you if:</ListItem>
+            <ListItem>(c)Nkọwa okwu LLC. may at any time, terminate the Terms with you if:</ListItem>
             <Box pl={8}>
               <ListItem>
                 you do not renew the Subscription at the end of the Subscription
@@ -416,18 +416,18 @@ const Terms = () => (
                 you have breached any provision of the Terms or intend to breach any
                 provision;
               </ListItem>
-              <ListItem>Nkowa Okwu LLC. is required to do so by law;</ListItem>
+              <ListItem>Nkọwa okwu LLC. is required to do so by law;</ListItem>
               <ListItem>
-                the provision of the Services to you by Nkowa Okwu LLC. is, in the
-                opinion of Nkowa Okwu LLC., no longer commercially viable.
+                the provision of the Services to you by Nkọwa okwu LLC. is, in the
+                opinion of Nkọwa okwu LLC., no longer commercially viable.
               </ListItem>
             </Box>
             <ListItem>
-              Subject to local applicable laws, Nkowa Okwu LLC. reserves the right to
+              Subject to local applicable laws, Nkọwa okwu LLC. reserves the right to
               discontinue or cancel your membership at any time and may suspend or deny,
               in its sole discretion, your access to all or any portion of the Website
               or the Services without notice if you breach any provision of the Terms or
-              any applicable law or if your conduct impacts Nkowa Okwu LLC.&#39;s name
+              any applicable law or if your conduct impacts Nkọwa okwu LLC.&#39;s name
               or reputation or violates the rights of those of another party.
             </ListItem>
           </UnorderedList>
@@ -435,7 +435,7 @@ const Terms = () => (
             13. Indemnity
           </Heading>
           <Text>
-            You agree to indemnify Nkowa Okwu LLC., its affiliates, employees, agents,
+            You agree to indemnify Nkọwa okwu LLC., its affiliates, employees, agents,
             contributors, third party content providers, and licensors from and
             against:
           </Text>
@@ -529,7 +529,7 @@ const Terms = () => (
             15. Venue and Jurisdiction
           </Heading>
           <Text>
-            The Services offered by Nkowa Okwu LLC. are intended to be viewed
+            The Services offered by Nkọwa okwu LLC. are intended to be viewed
             globally. In the event of any dispute arising out of or in relation to the
             Website, you agree that the exclusive venue for resolving any dispute
             shall be in the jurisdiction courts.

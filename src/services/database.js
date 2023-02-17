@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MONGO_URI, isProduction } from '../config';
+import { MONGO_URI, isProduction, isTest } from '../config';
 
 const DISCONNECTED = 0;
 
@@ -10,7 +10,7 @@ export const createDbConnection = () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     autoIndex: true,
-    readPreference: 'nearest',
+    readPreference: isTest ? 'primary' : 'nearest',
   });
 
   console.log('Attempting MongoDB URI:', MONGO_URI);
