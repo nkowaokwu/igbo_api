@@ -1,4 +1,3 @@
-// MongoDB Stop words: https://github.com/igorbrigadir/stopwords/blob/master/en/mongodb.txt
 import mongoose from 'mongoose';
 import every from 'lodash/every';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
@@ -77,8 +76,6 @@ wordSchema.index({
 });
 wordSchema.index({
   'definitions.definitions': 'text',
-}, {
-  default_language: 'none',
 });
 wordSchema.index({
   'definitions.wordClass': 1,

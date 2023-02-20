@@ -2,6 +2,7 @@ import compact from 'lodash/compact';
 import { cjkRange } from '../../shared/constants/diacriticCodes';
 import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
+import StopWords from '../../shared/constants/StopWords';
 
 const generateMultipleNsibidi = (keywords) => (
   keywords.map(({ text }) => (
@@ -89,7 +90,7 @@ const fullTextSearchQuery = ({
 const fullTextDefinitionsSearchQuery = ({
   keywords,
   isUsingMainKey,
-  searchWord,
+  searchWord = '',
   filteringParams,
 }) => (
   !isUsingMainKey && !keywords?.length
@@ -98,16 +99,16 @@ const fullTextDefinitionsSearchQuery = ({
       ? {}
       : {
         $and: [
-          { $text: { $search: searchWord } },
+          StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
           generateMultipleDefinitionsRegex(keywords),
           filteringParams,
         ],
       }
 );
 
-const definitionsQuery = ({ regex, searchWord, filteringParams }) => ({
+const definitionsQuery = ({ regex, searchWord = '', filteringParams }) => ({
   $and: [
-    { $text: { $search: searchWord } },
+    StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
     { 'definitions.definitions': { $in: [regex.definitionsReg] } },
     filteringParams,
   ],
