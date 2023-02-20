@@ -1,3 +1,4 @@
+// MongoDB Stop words: https://github.com/igorbrigadir/stopwords/blob/master/en/mongodb.txt
 import mongoose from 'mongoose';
 import every from 'lodash/every';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
@@ -69,13 +70,15 @@ export const wordSchema = new Schema({
   hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-}, { toObject: toObjectPlugin, timestamps: true });
+}, { toObject: toObjectPlugin, timestamps: true, autoIndex: true });
 
 wordSchema.index({
   word: 1,
 });
 wordSchema.index({
   'definitions.definitions': 'text',
+}, {
+  default_language: 'none',
 });
 wordSchema.index({
   'definitions.wordClass': 1,
