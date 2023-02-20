@@ -145,7 +145,7 @@ describe('MongoDB Words', () => {
       const keyword = 'kings';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
-      expect(res.body.length).toEqual(10);
+      expect(res.body).toHaveLength(10);
     });
 
     it('should return back words related to paradoxa (within paraenthesis)', async () => {
@@ -176,6 +176,20 @@ describe('MongoDB Words', () => {
 
     it('should return gbā ọ̄sọ̄ by searching \'run\'', async () => {
       const keyword = 'run';
+      const res = await getWords({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body).toHaveLength(10);
+    });
+
+    it('should return words using stop word (\'who\') as search keyword', async () => {
+      const keyword = 'who';
+      const res = await getWords({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body).toHaveLength(10);
+    });
+
+    it('should return words using stop word (\'what\') as search keyword', async () => {
+      const keyword = 'what';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(10);
@@ -646,6 +660,19 @@ describe('MongoDB Words', () => {
         expect(WORD_KEYS_V2.includes(key)).toBeTruthy();
       });
       expect(WordClass[result.body.data.definitions[0].wordClass]).not.toBe(undefined);
+    });
+    it('should return words using stop word (\'who\') as search keyword', async () => {
+      const keyword = 'who';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.data).toHaveLength(10);
+    });
+
+    it('should return words using stop word (\'what\') as search keyword', async () => {
+      const keyword = 'what';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      expect(res.body.data).toHaveLength(10);
     });
     it('should return word with verb conjugation', async () => {
       const keyword = 'ajora';

@@ -69,7 +69,7 @@ export const wordSchema = new Schema({
   hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-}, { toObject: toObjectPlugin, timestamps: true });
+}, { toObject: toObjectPlugin, timestamps: true, autoIndex: true });
 
 wordSchema.index({
   word: 1,
