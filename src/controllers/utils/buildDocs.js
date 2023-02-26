@@ -4,6 +4,7 @@ import assign from 'lodash/assign';
 import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import forEach from 'lodash/forEach';
+import omit from 'lodash/omit';
 import Versions from '../../shared/constants/Versions';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
@@ -89,7 +90,6 @@ export const findWordsWithMatch = async ({
         stems: 1,
         relatedTerms: 1,
         updatedAt: 1,
-        pronunciation: 1,
         attributes: 1,
         tenses: 1,
         examples: 1,
@@ -104,6 +104,7 @@ export const findWordsWithMatch = async ({
     const contentLength = finalWords.length;
 
     finalWords.forEach((word) => {
+      delete word.pronunciations;
       if (version === Versions.VERSION_1) {
         word.wordClass = word.definitions[0].wordClass;
         word.nsibidi = word.definitions[0].nsibidi;
@@ -148,10 +149,13 @@ export const findExamplesWithMatch = async ({
         style: 1,
         associatedWords: 1,
         ...(version === Versions.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
-        pronunciation: 1,
+        pronunciations: 1,
       });
 
-    const allExamples = await examples;
+    // Returns only the first pronunciation for the example sentence
+    const allExamples = (await examples).map((example) => (
+      omit({ ...example, pronunciation: example.pronunciations[0]?.audio }, ['pronunciation'])
+    ));
     const contentLength = allExamples.length;
 
     await handleCloseConnection(connection);

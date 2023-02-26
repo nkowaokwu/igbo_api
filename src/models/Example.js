@@ -21,7 +21,13 @@ export const exampleSchema = new Schema({
   },
   associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
   associatedDefinitionsSchemas: { type: [{ type: Types.ObjectId }], default: [] },
-  pronunciation: { type: String, default: '' },
+  pronunciations: {
+    type: [{
+      audio: { type: String, default: '' },
+      speaker: { type: String, default: '' },
+    }],
+    default: [],
+  },
 }, { toObject: toObjectPlugin, timestamps: true });
 
 exampleSchema.index({
