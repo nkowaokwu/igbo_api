@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  Box,
+  Button,
+  Heading,
+  Text,
+} from '@chakra-ui/react';
 // import { useRouter } from 'next/router';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
-import FadeReveal from 'react-reveal/Reveal';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
-import Demo from './components/Demo';
-import Card from './components/Card';
+import FeaturesSection from './components/FeaturesSection';
+import DemoSection from './components/DemoSection';
 import Footer from './components/Footer';
 import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
-import GitHubStars from './components/GitHubStars';
+import GitHub from './components/Icons/GitHub';
+import { GITHUB_REPO } from '../siteConstants';
 
 const App = ({
   searchWord,
@@ -31,21 +37,21 @@ const App = ({
     setLanguage(i18n?.language);
   }, [i18n?.language]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <div
+    <Box
       className="overflow-x-hidden flex flex-col items-center"
+      backgroundColor="gray.900"
       id="homepage-container"
     >
       <Navbar />
-      <div className="w-10/12 flex flex-col items-center">
-        <div className="relative flex flex-col justify-center items-center w-full my-32 lg:w-6/12 space-y-12">
+      <div className="w-full flex flex-col items-center">
+        <div className="relative flex flex-col justify-center items-center w-full my-32 space-y-12">
           <FadeIn>
-            <h1
-              style={{
-                fontFamily: language !== 'en' ? 'inherit' : '',
-                maxWidth: 500,
-              }}
-              className="text-center text-4xl md:text-6xl font-extrabold
-              lg:mt-24 w-full"
+            <Heading
+              fontSize={{ base: '4xl', md: '7xl' }}
+              fontWeight="600"
+              color="white"
+              textAlign="center"
+              className="lg:mt-24 w-full"
             >
               {language === 'en' ? (
                 <>
@@ -58,88 +64,33 @@ const App = ({
                   {t('The First African Language ')}
                 </>
               )}
-            </h1>
+            </Heading>
           </FadeIn>
           <div className="text-xl md:text-xl w-full mb-4 mt-8 leading-10">
             <FadeIn>
-              <p className="px-6 lg:px-0 text-center text-gray-500">
+              <Text className="px-6 lg:px-0 text-center text-white" fontFamily="Silka">
                 {t('homepageDescription')}
-              </p>
+              </Text>
               <br />
-              <div className="w-full flex flex-col lg:flex-row justify-center items-center lg:space-x-4">
-                <GitHubStars stars={gitHubStats.stars} />
+              <div className="w-full flex flex-col lg:flex-row justify-center items-center lg:space-x-8">
+                <Button>Get API key</Button>
+                <a href={GITHUB_REPO}>
+                  <Button
+                    leftIcon={<GitHub />}
+                    backgroundColor="gray.900"
+                    color="white"
+                    borderColor="white"
+                    boxShadow="white"
+                  >
+                    {`${gitHubStats.stars} Stars`}
+                  </Button>
+                </a>
               </div>
             </FadeIn>
           </div>
         </div>
-        <div className="w-full text-center lg:text-left my-6">
-          <h2 id="features" className="text-4xl text-green-500 font-bold">
-            {`🔌 ${t('Features')}`}
-          </h2>
-        </div>
-        <div className="flex flex-col justify-between items-start w-full mb-4 mt-8">
-          <p className="text-xl px-6 lg:px-0 text-gray-500">
-            {t('featuresDescription')}
-          </p>
-          <div className="w-full flex flex-col items-center">
-            <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12
-              mt-10 mb-24 content-center place-items-center"
-            >
-              <FadeReveal>
-                <Card
-                  title={t('Definitions')}
-                  description={t('Each word is provided with at least one definition.')}
-                  icon="🗣"
-                  tooltipLabel="All definitions are in English, while the head words are in Igbo."
-                />
-                <Card
-                  title={t('Examples')}
-                  description={t('Certain words are accompanied by contextual examples.')}
-                  icon="✍🏾"
-                  tooltipLabel="We are working to add at least on example Igbo sentence for each word entry."
-                />
-                <Card
-                  title={t('Tone Marks')}
-                  description={t('Diacritics are used to convey the different tones present in the Igbo language.')}
-                  icon="📑"
-                  tooltipLabel="We use the acute, grave, and macron diacritic marks to denote pronunciation."
-                />
-                <Card
-                  title={t('Variations')}
-                  description={t('The Igbo language has many dialects, some '
-                  + 'words capture this nuance by providing variant spellings.')}
-                  icon="🇳🇬"
-                  tooltipLabel="The database is structured to make it easier for
-                  contributors to add dialect-specific word data."
-                />
-                <Card
-                  title={t('Nsịbịdị')}
-                  description={t('Nsịbịdị is writing system was created in Nigeria.')}
-                  icon="𑗉"
-                  tooltipLabel="Each headword will be accompanied with its Nsịbịdị equivalent."
-                />
-                <Card
-                  title={t('Proverbs')}
-                  description={t('Proverbs are a core aspect of the Igbo language.')}
-                  icon="🤲🏾"
-                  tooltipLabel="Proverbs are associated with words that are used in those proverbs"
-                />
-              </FadeReveal>
-            </div>
-          </div>
-        </div>
-        <div className="w-full text-center lg:text-left my-6">
-          <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
-            {`🏃🏾‍♀️ ${t('Try it Out')}`}
-          </h2>
-        </div>
-        <div className="text-xl md:text-1xl w-full mt-8 leading-10 mb-24">
-          <p className="px-6 lg:px-0 text-center lg:text-left text-gray-500">
-            {t('With each API key, you will get 2,500 requests per day.')}
-          </p>
-        </div>
-        <Demo searchWord={searchWord} words={words} />
+        <DemoSection searchWord={searchWord} words={words} />
+        <FeaturesSection />
         <div className="w-full text-center lg:text-left my-6">
           <h2 id="try-it-out" className="text-4xl text-green-500 font-bold">
             {`📣 ${t('Mentioned In')}`}
@@ -160,7 +111,7 @@ const App = ({
         <Statistics {...databaseStats} {...gitHubStats} />
       </div>
       <Footer />
-    </div>
+    </Box>
   );
 };
 

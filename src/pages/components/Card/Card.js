@@ -1,40 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Tooltip,
+  chakra,
+} from '@chakra-ui/react';
 
 const Card = ({
   title,
   description,
   icon,
   tooltipLabel,
+  color,
 }) => (
   <Tooltip label={tooltipLabel}>
-    <div
-      style={{
-        maxHeight: 250,
-        maxWidth: 400,
-      }}
-      className={`w-full flex flex-col items-center py-4 cursor-default
-      shadow-md rounded-lg px-5 my-10 bg-gradient-to-t from-gray-50 to-white`}
+    <Box
+      minHeight={52}
+      backgroundColor={color}
+      className="flex flex-col justify-between items-center p-4"
+      borderWidth="2px"
+      borderColor="gray.900"
+      borderRadius="md"
+      boxShadow="white"
     >
-      <div className="flex flex-row justif-start items-center space-x-2">
-        <span className="rounded-full text-3xl w-16 bg-white my-4 justify-center text-center">
-          {icon}
-        </span>
-        <div>
+      <Box className="flex flex-row justify-start items-center space-x-2">
+        <Box>
           <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
-          <p
+          <Text
             style={{
-              maxHeight: 200,
-              maxWidth: 400,
             }}
-            className="text-l text-gray-500"
+            className="text-l"
+            color="gray.700"
           >
             {description}
-          </p>
-        </div>
-      </div>
-    </div>
+          </Text>
+        </Box>
+      </Box>
+      <chakra.span fontSize="5xl" alignSelf="end">
+        {icon}
+      </chakra.span>
+    </Box>
   </Tooltip>
 );
 
@@ -43,6 +49,7 @@ Card.propTypes = {
   description: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   tooltipLabel: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default Card;

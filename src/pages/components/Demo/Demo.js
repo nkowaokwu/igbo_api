@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Text,
+  Input,
+} from '@chakra-ui/react';
 import omit from 'lodash/omit';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
-import { Input, Checkbox } from 'antd';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
+import { Checkbox } from 'antd';
+import { API_ROUTE } from '../../../siteConstants';
+import Header from '../Header';
 
 const Demo = ({ searchWord, words }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -74,87 +82,117 @@ const Demo = ({ searchWord, words }) => {
   };
 
   return !isLoading ? (
-    <div className="flex justify-center mb-16">
-      <div
-        className="flex flex-col items-center md:items-start xl:flex-row
-        lg:space-x-10 p-4 bg-gradient-to-tl from-blue-100 to-white rounded-md"
+    <Box className="flex justify-center mb-16">
+      <Box
+        className="grid grid-cols-1 lg:grid-cols-2"
       >
-        <div className="demo-inputs-container space-y-5 bg-white p-4 md:-mt-16 lg:mt-0 shadow-2xl rounded-md mb-8">
-          <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
-            <h2>{t('Enter a word below')}</h2>
-            <p className="self-center md:self-start">
-              {t('Enter a word in either English or Igbo to see it\'s information')}
-            </p>
-            <Input
-              size="large"
-              onInput={(e) => setKeyword(e.target.value)}
-              onKeyPress={onEnter}
-              className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
-              placeholder="⌨️ i.e. please or biko"
-              data-test="try-it-out-input"
-              defaultValue={searchWord || initialQueries.word}
+        <Box
+          className="demo-inputs-container space-y-5 bg-white md:-mt-16 lg:mt-0 mb-8"
+          borderColor="black"
+          borderWidth="2px"
+        >
+          <form onSubmit={onSubmit} className="flex flex-col w-full">
+            <Header
+              title={t('Enter a word below')}
+              description={t('Enter a word in either English or Igbo to see it\'s information')}
             />
-            <h2 className="text-2xl">{t('Flags')}</h2>
-            <div className="flex space-x-8">
-              <div>
-                <Checkbox
-                  className="flex items-center space-x-2"
-                  defaultChecked={initialQueries.dialects}
-                  onChange={handleDialects}
-                  data-test="dialects-flag"
+            <Box p={8} className="space-y-5 h-fit">
+              <Heading as="h2" fontFamily="Silka" fontSize="xl">{t('Flags')}</Heading>
+              <Box className="flex space-x-8">
+                <Box>
+                  <Checkbox
+                    className="flex items-center space-x-2"
+                    defaultChecked={initialQueries.dialects}
+                    onChange={handleDialects}
+                    data-test="dialects-flag"
+                  >
+                    {t('Dialects')}
+                  </Checkbox>
+                </Box>
+                <Box>
+                  <Checkbox
+                    className="flex items-center space-x-2"
+                    defaultChecked={initialQueries.examples}
+                    onChange={handleExamples}
+                    data-test="examples-flag"
+                  >
+                    {t('Examples')}
+                  </Checkbox>
+                </Box>
+              </Box>
+              <Box
+                className="flex flex-row justify-between items-center rounded-md"
+                py={2}
+                px={4}
+                borderWidth="1px"
+                borderColor="gray.400"
+              >
+                <Text
+                  pointerEvents="none"
+                  className="w-full rounded-md"
+                  width="full"
                 >
-                  {t('Dialects')}
-                </Checkbox>
-              </div>
-              <div>
-                <Checkbox
-                  className="flex items-center space-x-2"
-                  defaultChecked={initialQueries.examples}
-                  onChange={handleExamples}
-                  data-test="examples-flag"
+                  {constructRequestUrl()}
+                </Text>
+                <ContentCopyIcon sx={{ height: 20, cursor: 'pointer' }} />
+              </Box>
+              <Box className="flex flex-row items-center space-x-4">
+                <Input
+                  onInput={(e) => setKeyword(e.target.value)}
+                  onKeyPress={onEnter}
+                  className="w-full rounded-md"
+                  p={5}
+                  borderWidth="1px"
+                  borderColor="gray.400"
+                  placeholder="⌨️ i.e. please or biko"
+                  data-test="try-it-out-input"
+                  defaultValue={searchWord || initialQueries.word}
+                />
+                <Button
+                  type="submit"
+                  className="w-full transition-all duration-100"
+                  backgroundColor="green.300"
+                  color="white"
+                  boxShadow="black"
+                  borderColor="black"
+                  p="20px"
+                  _hover={{
+                    backgroundColor: 'green.300',
+                  }}
+                  isLoading={isSearchingWord}
+                  isDisabled={isSearchingWord}
                 >
-                  {t('Examples')}
-                </Checkbox>
-              </div>
-            </div>
-            <Input disabled value={constructRequestUrl()} className="w-full py-3 px-5" />
-            <Button
-              type="submit"
-              className="w-full transition-all duration-100"
-              backgroundColor="green.400"
-              color="white"
-              _hover={{
-                backgroundColor: 'green.300',
-              }}
-              borderRadius="full"
-              isLoading={isSearchingWord}
-              isDisabled={isSearchingWord}
-            >
-              {t('Submit')}
-            </Button>
-            <p className="text-l text-center text-gray-700 self-center mb-24">
-              {t('Want to see how this data is getting used? Take a look at ')}
-              <a className="link" href={DICTIONARY_APP_URL}>
-                Nkọwa okwu
-              </a>
-            </p>
+                  {t('Submit')}
+                </Button>
+              </Box>
+            </Box>
           </form>
-        </div>
-        <div className="flex flex-col w-full lg:w-auto xl:-mt-24">
-          <h3
-            className="text-center lg:text-left self-center w-full font-bold lg:mt-4
-          lg:w-auto lg:self-start text-2xl mb-5 text-gray-800"
-          >
-            {t('Response')}
-          </h3>
-          <JSONPretty
-            className="jsonPretty w-full self-center lg:w-auto bg-gray-800 rounded-md p-2 overflow-auto"
-            id="json-pretty"
-            data={responseBody}
-          />
-        </div>
-      </div>
-    </div>
+        </Box>
+        <Box
+          className="demo-inputs-container bg-white md:-mt-16 lg:mt-0 mb-8"
+          borderColor="black"
+          borderWidth="2px"
+        >
+          <Header title={t('Response')} />
+          <Box position="relative" height="full">
+            <JSONPretty
+              className="jsonPretty h-full w-full self-center lg:w-auto bg-gray-800 p-2 overflow-auto"
+              id="json-pretty"
+              data={responseBody}
+            />
+            <ContentCopyIcon
+              sx={{
+                position: 'absolute',
+                height: 20,
+                fill: 'white',
+                top: 8,
+                right: 8,
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   ) : null;
 };
 
