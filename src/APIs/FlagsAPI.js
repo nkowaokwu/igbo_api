@@ -5,12 +5,7 @@ import omit from 'lodash/omit';
 /* FlagsAPI cleans returned MongoDB data to match client-provided flags */
 export const handleWordFlags = ({
   data: { words, contentLength },
-  flags: {
-    examples,
-    dialects,
-    resolve,
-    tags,
-  },
+  flags: { examples, dialects, resolve },
 }) => {
   const updatedWords = compact(words.map((word) => {
     let updatedWord = assign(word);
@@ -28,6 +23,17 @@ export const handleWordFlags = ({
         updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) => relatedTerm._id || relatedTerm.id);
       }
     }
+    return updatedWord;
+  }));
+  return { words: updatedWords, contentLength };
+};
+
+export const handleTagsFlag = ({
+  data: { words },
+  flags: { tags },
+}) => {
+  const updatedWords = compact(words.map((word) => {
+    const updatedWord = assign(word);
     if (tags.length && Array.isArray(word.tags)) {
       const hasTags = word.tags.some((tag) => tags.includes(tag));
       if (!hasTags) {
@@ -36,5 +42,5 @@ export const handleWordFlags = ({
     }
     return updatedWord;
   }));
-  return { words: updatedWords, contentLength };
+  return { words: updatedWords, contentLength: updatedWords.length };
 };
