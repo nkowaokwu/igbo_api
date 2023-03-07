@@ -1,12 +1,18 @@
+import compact from 'lodash/compact';
 import assign from 'lodash/assign';
 import omit from 'lodash/omit';
 
 /* FlagsAPI cleans returned MongoDB data to match client-provided flags */
 export const handleWordFlags = ({
   data: { words, contentLength },
-  flags: { examples, dialects, resolve },
+  flags: {
+    examples,
+    dialects,
+    resolve,
+    tags,
+  },
 }) => {
-  const updatedWords = words.map((word) => {
+  const updatedWords = compact(words.map((word) => {
     let updatedWord = assign(word);
     if (!examples) {
       updatedWord = omit(updatedWord, ['examples']);
@@ -22,7 +28,13 @@ export const handleWordFlags = ({
         updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) => relatedTerm._id || relatedTerm.id);
       }
     }
+    if (tags.length && Array.isArray(word.tags)) {
+      const hasTags = word.tags.some((tag) => tags.includes(tag));
+      if (!hasTags) {
+        return null;
+      }
+    }
     return updatedWord;
-  });
+  }));
   return { words: updatedWords, contentLength };
 };
