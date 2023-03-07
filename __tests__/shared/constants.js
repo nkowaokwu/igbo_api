@@ -34,6 +34,7 @@ export const WORD_KEYS_V2 = [
   'hypernyms',
   'hyponyms',
   'attributes',
+  'tags',
 ];
 export const EXAMPLE_KEYS_V1 = [
   'igbo',

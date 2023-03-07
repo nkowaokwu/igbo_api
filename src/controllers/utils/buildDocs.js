@@ -94,6 +94,7 @@ export const findWordsWithMatch = async ({
         tenses: 1,
         examples: 1,
         dialects: 1,
+        tags: 1,
       })
       .append([
         { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
@@ -114,6 +115,7 @@ export const findWordsWithMatch = async ({
             dialects: dialect.dialects.map((d) => Dialects[d].label),
           },
         }), {});
+        delete word.tags;
       }
     });
 

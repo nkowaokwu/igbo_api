@@ -1,3 +1,4 @@
+import compact from 'lodash/compact';
 import assign from 'lodash/assign';
 import omit from 'lodash/omit';
 
@@ -6,7 +7,7 @@ export const handleWordFlags = ({
   data: { words, contentLength },
   flags: { examples, dialects, resolve },
 }) => {
-  const updatedWords = words.map((word) => {
+  const updatedWords = compact(words.map((word) => {
     let updatedWord = assign(word);
     if (!examples) {
       updatedWord = omit(updatedWord, ['examples']);
@@ -23,6 +24,23 @@ export const handleWordFlags = ({
       }
     }
     return updatedWord;
-  });
+  }));
   return { words: updatedWords, contentLength };
+};
+
+export const handleTagsFlag = ({
+  data: { words },
+  flags: { tags },
+}) => {
+  const updatedWords = compact(words.map((word) => {
+    const updatedWord = assign(word);
+    if (tags.length && Array.isArray(word.tags)) {
+      const hasTags = word.tags.some((tag) => tags.includes(tag));
+      if (!hasTags) {
+        return null;
+      }
+    }
+    return updatedWord;
+  }));
+  return { words: updatedWords, contentLength: updatedWords.length };
 };

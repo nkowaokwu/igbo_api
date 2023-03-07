@@ -3,7 +3,7 @@ import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from '.';
 import { searchEnglishRegexQuery } from './queries';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
-import { handleWordFlags } from '../../APIs/FlagsAPI';
+import { handleWordFlags, handleTagsFlag } from '../../APIs/FlagsAPI';
 
 /* Searches for word with English stored in MongoDB */
 const searchWordUsingEnglish = async ({
@@ -39,6 +39,10 @@ const searchWordUsingEnglish = async ({
   }
 
   const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
+  responseData = handleTagsFlag({
+    data: { words: responseData.words },
+    flags,
+  });
   let sortedWords = sortDocsBy(searchWord, responseData.words, sortKey, version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
   return handleWordFlags({
