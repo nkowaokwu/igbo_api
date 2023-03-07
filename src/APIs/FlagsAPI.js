@@ -40,6 +40,12 @@ export const handleTagsFlag = ({
         return null;
       }
     }
+    if (wordClasses.length) {
+      const hasWordClass = word.definitions.some(({ wordClass }) => wordClasses.includes(wordClass));
+      if (!hasWordClass) {
+        return null;
+      }
+    }
     return updatedWord;
   }));
   return { words: updatedWords, contentLength: updatedWords.length };
