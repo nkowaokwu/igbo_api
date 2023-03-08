@@ -28,9 +28,9 @@ export const handleWordFlags = ({
   return { words: updatedWords, contentLength };
 };
 
-export const handleTagsFlag = ({
+export const handleFiltering = ({
   data: { words },
-  flags: { tags },
+  flags: { tags, wordClasses },
 }) => {
   const updatedWords = compact(words.map((word) => {
     const updatedWord = assign(word);

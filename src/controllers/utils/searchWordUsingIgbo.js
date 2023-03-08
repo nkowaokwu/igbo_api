@@ -3,7 +3,7 @@ import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgb
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from '.';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
-import { handleTagsFlag, handleWordFlags } from '../../APIs/FlagsAPI';
+import { handleWordFlags, handleFiltering } from '../../APIs/FlagsAPI';
 
 /* Searches for a word with Igbo stored in MongoDB */
 const searchWordUsingIgbo = async ({
@@ -69,7 +69,7 @@ const searchWordUsingIgbo = async ({
     });
   }
 
-  responseData = handleTagsFlag({
+  responseData = handleFiltering({
     data: { words: responseData.words },
     flags,
   });
