@@ -249,6 +249,7 @@ export const handleQueries = async ({
     dialects: dialectsQuery,
     examples: examplesQuery,
     tags: tagsQuery,
+    wordClasses: wordClassesQuery,
     resolve: resolveQuery,
     isStandardIgbo,
     pronunciation,
@@ -345,6 +346,8 @@ export const handleQueries = async ({
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
   const tags = tagsQuery ? tagsQuery.replaceAll(/[[\]']/g, '').split(',').map((tag) => tag.trim()) : [];
+  const wordClasses = wordClassesQuery ? wordClassesQuery.replaceAll(/[[\]']/g, '').split(',')
+    .map((wordClass) => wordClass.trim()) : [];
   const resolve = resolveQuery === 'true';
   const wordFields = {
     isStandardIgbo,
@@ -356,6 +359,7 @@ export const handleQueries = async ({
     examples,
     resolve,
     tags,
+    wordClasses,
   };
   const filteringParams = generateFilteringParams(wordFields);
   return {
