@@ -64,7 +64,7 @@ Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/servi
 
 ### Local Development
 
-Once you've configured your prpoject, you can start the Igbo API dev server by running:
+Once you've configured your project, you can start the Igbo API dev server by running:
 
 ```
 yarn dev
