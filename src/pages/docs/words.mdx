@@ -1,3 +1,190 @@
 import React from 'react';
+import Link from 'next/link';
+import { Tab, Tabs } from 'nextra-theme-docs';
+import { useState } from 'react'
 
-# Words
+### Publicly Access the words API Routes
+
+```js {1}
+[ Base URL: igboapi.com/api/v1/ ]
+
+```
+
+***
+
+###### Words Route
+
+```js copy
+GET /words
+```
+Get words in Dictionary
+
+ **Parameters**
+
+| Name   | Description |
+| :----- | :----: |
+| **keyword** *required* | Keyword for querying words (string) |
+| **page** | Page for results (integer) |
+| **range** | Page for result using [x,y] syntax, max range includes 25 documents (string) |
+| **strict**  | Searches for matching words that start and end with the provided keyword's letters (boolean) |
+| **dialects** | Includes dialect information in returned document (boolean) |
+| **examples** | Includes examples associated with returned document (boolean) |
+| **isStandardIgbo**  | Returns words that are marked as Standard Igbo (boolean) |
+| **pronunciation** | Returns words that have audio pronunciations (boolean) |
+| **nsibidi** | Returns words that have Nsịbịdị equivalents (boolean) |
+
+
+ **Responses**
+
+ The response for the route will be a plain JSON object similar to this:
+
+ ```
+ [
+    {
+        "wordClass": "string",
+        "definitions": [
+            "hunger; desire; eagerness"
+        ],
+        "examples": [],
+        "phrases": {
+            "(agụū) -gụ": {
+                "definitions": [
+                    "be hungry"
+                ],
+                "examples": []
+            },
+            "agụū mmīli": {
+                "definitions": [
+                    "thirst"
+                ],
+                "examples": []
+            },
+            "-gụ agụū": {
+                "definitions": [
+                    "hunger; desire; long for ( -gụ 2. desire)"
+                ],
+                "examples": []
+            }
+        }
+    }
+]
+ ```
+
+ ***
+
+ ###### Single Word Route
+
+
+```js copy
+GET /words/{wordId}
+```
+Returns a single Word object from the database
+
+ **Parameters**
+
+| Name   | Description |
+| :----- | :----: |
+| **wordId** *required* | The word Id (string) |
+
+ **Responses**
+
+ The response for the route will be a plain JSON object similar to this:
+
+ ```
+{
+  "definitions": [
+    "person bearing same name as another; namesake"
+  ],
+  "stems": [
+    {
+      "id": {
+        "type": "Buffer",
+        "data": [
+          95,
+          144,
+          195,
+          94,
+          73
+        ]
+      },
+      "_id": "5f90c35e49f7e863e92b78f8"
+    }
+  ],
+  "word": "agụ̀",
+  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b6e83.webm",
+  "attributes": {
+    "isStandardIgbo": true,
+    "isAccented": true,
+    "isSlang": false,
+    "isConstructedTerm": false,
+    "isBorrowedTerm": false,
+    "isStem": false,
+    "isCommon": false
+  },
+  "relatedTerms": [
+    {
+      "id": {
+        "type": "Buffer",
+        "data": [
+          95,
+          144,
+          195,
+          94
+        ]
+      },
+      "_id": "5f90c35e49f7e863e92b6e0a"
+    },
+    {
+      "id": {
+        "type": "Buffer",
+        "data": [
+          95,
+          144,
+          195,
+          95
+        ]
+      },
+      "_id": "5f90c35f49f7e863e92b8552"
+    }
+  ],
+  "id": "5f90c35e49f7e863e92b6e83",
+  "wordClass": "NNC",
+  "nsibidi": "窓"
+}
+ ```
+
+  **Response Code**
+<Tabs items={['200', '400', '403', '404']}>
+  <Tab>
+    **Success**:
+    ```
+    [
+        "string"
+    ]
+    ```
+  </Tab>
+  <Tab>
+    **Bad Request**:
+   ```
+    {
+        "error": "string"
+    }
+   ```
+  </Tab>
+  <Tab>
+      **Invalid API Key**:
+   ```
+    {
+        "error": "string"
+    }
+   ```
+  </Tab>
+  <Tab>
+       **Not Found**:
+   ```
+    {
+        "error": "string"
+    }
+   ```
+  </Tab>
+</Tabs>
