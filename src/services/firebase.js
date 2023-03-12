@@ -3,13 +3,13 @@ import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 import { isProduction } from '../config';
 
 const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBDXPLmvu7YEagwdgp_W4uoZhCglbXrG6M',
-  authDomain: 'igbo-api-bb22d.firebaseapp.com',
-  projectId: 'igbo-api-bb22d',
-  storageBucket: 'igbo-api-bb22d.appspot.com',
-  messagingSenderId: '299917108135',
-  appId: '1:299917108135:web:e5053fceeba3155b624c82',
-  measurementId: 'G-YGGV667F2H',
+  apiKey: "AIzaSyCulhIE2ni1SxQ_lPL3lA4NpLToiBtkCjg",
+  authDomain: "igbo-api-doc-site.firebaseapp.com",
+  projectId: "igbo-api-doc-site",
+  storageBucket: "igbo-api-doc-site.appspot.com",
+  messagingSenderId: "316509373277",
+  appId: "1:316509373277:web:078bcbcf7018ee69149eb4",
+  measurementId: "G-X4VW49D8RW"
 };
 
 initializeApp(FIREBASE_CONFIG);

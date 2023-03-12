@@ -1,3 +1,13 @@
 {
-  "index": "Introduction"
+  "index": "Introduction",
+  "Getting-started": "Getting Started",
+  "Words": "Words",
+  "Examples": "Examples",
+  "How-to-contribute": "How to contribute",
+  "Code-of-conduct": "Code of conduct",
+  "Local-development": "Local Development",
+  "FAQ": "FAQ",
+  "Contact-us": "Contact us",
+  "Glossary": "Glossary",
+  "References": "References"
 }
