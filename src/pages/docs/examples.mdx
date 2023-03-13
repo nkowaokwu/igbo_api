@@ -3,11 +3,10 @@ import Link from 'next/link';
 import { Tab, Tabs } from 'nextra-theme-docs';
 import { useState } from 'react'
 
-### Publicly Access the examples API Routes
+# Publicly Access the Examples API Routes
 
 ```js {1}
 [ Base URL: igboapi.com/api/v1/ ]
-
 ```
 
 ***
@@ -22,14 +21,16 @@ Get examples in dictionary
  **Parameters**
 
 | Name   | Description |
-| :----- | :----: |
+| :----- | :----- |
 | **keyword** *required* | Keyword for querying words (string) |
 | **page** | Page for results (integer) |
 | **range** | Page for result using [x,y] syntax, max range includes 25 documents (string) |
 
  **Responses**
 
- The response for the route will be a plain JSON object similar to this:
+ The response for the route will be a plain JSON object similar to JSON below. 
+ To illustrate this response, we will use the keyword "agu" to query the API
+
 
  ```
 [
@@ -37,45 +38,37 @@ Get examples in dictionary
     "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
     "english": "Agụ is eating unripe mango",
     "associatedWords": [
-      "5f90c35f49f7e863e92b7e4a"
     ],
     "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
     "meaning": "",
     "style": "",
-    "id": "5f90c36549f7e863e92b8e7b"
   },
   {
     "igbo": "Agū nà-èjeghalị n'òzàlà ịmā mà ọ nwè ife ọ gà-àfụ kpachalị",
     "english": "Agụ is going about in the grassland to see if he can find some (animal) to take",
     "associatedWords": [
-      "5f90c35e49f7e863e92b7891"
     ],
     "pronunciation": "",
     "meaning": "",
     "style": "",
-    "id": "5f90c36549f7e863e92b8e3c"
   },
   {
     "igbo": "Agū azàgo",
     "english": "Agụ has lost weight",
     "associatedWords": [
-      "5f90c35f49f7e863e92b8d49"
     ],
     "pronunciation": "",
     "meaning": "",
     "style": "",
-    "id": "5f90c36c49f7e863e92b932d"
   },
   {
     "igbo": "Agū nà-àgbalụ m òdìbò",
     "english": "Agụ is working for me as my servant",
     "associatedWords": [
-      "5f90c35e49f7e863e92b7761"
     ],
     "pronunciation": "",
     "meaning": "",
     "style": "",
-    "id": "5f90c36949f7e863e92b90f9"
   }
 ]
  ```
@@ -93,7 +86,7 @@ Returns a single Example object from the database
  **Parameters**
 
 | Name   | Description |
-| :----- | :----: |
+| :----- | :----- |
 | **exampleId** *required* | The example Id (string) |
 
  **Responses**
@@ -103,19 +96,17 @@ Returns a single Example object from the database
  ```
 {
   "nsibidi": "",
-  "igbo": "Agū nà-èjeghalị n'òzàlà ịmā mà ọ nwè ife ọ gà-àfụ kpachalị",
-  "english": "Agụ is going about in the grassland to see if he can find some (animal) to take",
+  "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
+  "english": "Agụ is eating unripe mango",
   "associatedWords": [
-    "5f90c35e49f7e863e92b7891"
   ],
-  "pronunciation": "",
-  "updatedAt": "2020-11-22T03:29:58.053Z",
+  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
+  "updatedAt": "2022-05-02T06:18:09.906Z",
   "meaning": "",
   "style": "",
   "associatedDefinitionsSchemas": [
     null
   ],
-  "id": "5f90c36549f7e863e92b8e3c"
 }
  ```
 
