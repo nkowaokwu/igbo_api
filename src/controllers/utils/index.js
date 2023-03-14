@@ -22,6 +22,7 @@ const WORD_LENGTH_FACTOR = 100;
 const WORD_LENGTH_DIFFERENCE_FACTOR = 15;
 const IS_COMMON = 1000;
 const SIMILARITY_FACTOR = 100;
+const EXACT_MATCH_FACTOR = 2000;
 const SIMILAR_WORD_THRESHOLD = 1.5;
 const NO_FACTOR = 0;
 
@@ -100,16 +101,26 @@ export const sortDocsBy = (searchWord, docs, key, version, regex) => (
     const prevDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedPrevDocValue);
     const nextDocDifference = stringSimilarity.compareTwoStrings(normalizedSearchWord, cleanedNextDocValue);
 
-    const prevDocDifferences = prevDocDifference + prevDocDifferenceWithUnderdots;
-    const nextDocDifferences = nextDocDifference + nextDocDifferenceWithUnderdots;
+    const prevDocDifferences = (
+      prevDocDifference
+      + (prevDocDifference === 1 ? EXACT_MATCH_FACTOR : 0)
+      + prevDocDifferenceWithUnderdots
+      + (prevDocDifferenceWithUnderdots === 1 ? EXACT_MATCH_FACTOR : 0)
+    );
+    const nextDocDifferences = (
+      nextDocDifference
+      + (nextDocDifference === 1 ? EXACT_MATCH_FACTOR : 0)
+      + nextDocDifferenceWithUnderdots
+      + (nextDocDifferenceWithUnderdots === 1 ? EXACT_MATCH_FACTOR : 0)
+    );
 
-    const prevDocSimilarityFactor = (prevDocDifferences + prevDocDifferences >= SIMILAR_WORD_THRESHOLD
+    const prevDocSimilarityFactor = (prevDocDifferences >= SIMILAR_WORD_THRESHOLD
       ? prevDocValueLengthDifference : 0) * SIMILARITY_FACTOR;
-    const nextDocSimilarityFactor = (nextDocDifferences + nextDocDifferences >= SIMILAR_WORD_THRESHOLD
+    const nextDocSimilarityFactor = (nextDocDifferences >= SIMILAR_WORD_THRESHOLD
       ? nextDocValueLengthDifference : 0) * SIMILARITY_FACTOR;
 
-    const prevDocNsibidiFactor = prevDoc?.attributes?.isCommon ? IS_COMMON : 0;
-    const nextDocNsibidiFactor = nextDoc?.attributes?.isCommon ? IS_COMMON : 0;
+    const prevDocNsibidiFactor = prevDoc?.attributes?.isCommon && prevDocDifferences > 1 ? IS_COMMON : 0;
+    const nextDocNsibidiFactor = nextDoc?.attributes?.isCommon && nextDocDifferences > 1 ? IS_COMMON : 0;
 
     const finalPrevDocDiff = prevDocSimilarityFactor + prevDocNsibidiFactor + prevDefinitionMatchIndexFactor;
     const finalNextDocDiff = nextDocSimilarityFactor + nextDocNsibidiFactor + nextDefinitionMatchIndexFactor;
