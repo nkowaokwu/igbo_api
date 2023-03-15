@@ -90,6 +90,7 @@ export const findWordsWithMatch = async ({
         stems: 1,
         relatedTerms: 1,
         updatedAt: 1,
+        pronunciation: 1,
         attributes: 1,
         tenses: 1,
         examples: 1,
@@ -104,7 +105,6 @@ export const findWordsWithMatch = async ({
     const contentLength = finalWords.length;
 
     finalWords.forEach((word) => {
-      delete word.pronunciations;
       if (version === Versions.VERSION_1) {
         word.wordClass = word.definitions[0].wordClass;
         word.nsibidi = word.definitions[0].nsibidi;
