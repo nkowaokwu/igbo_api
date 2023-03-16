@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "build": "rm -rf build/ && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:site && yarn build:functions",
-    "build:functions": "rm -rf functions/src && shx cp -r ./build ./functions; cp swagger.json ./functions; cp -r ./build/dictionaries/ig-en ./functions/build/dictionaries",
+    "build:functions": "rm -rf functions/src && cp -r ./build/dictionaries/ig-en ./functions/build/dictionaries",
     "build:src": "babel -d build/ ./src -s && babel -d functions/build/ ./src -s",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && yarn build:fonts && yarn build:assets",
