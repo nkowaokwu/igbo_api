@@ -7,7 +7,7 @@ module.exports = {
       },
       {
         $addFields: {
-          'attributes.frequency': {
+          frequency: {
             $cond: {
               if: {
                 $eq: ['$attributes.isCommon', true],
@@ -25,7 +25,7 @@ module.exports = {
     const collections = ['words', 'wordsuggestions'];
     return collections.map((collection) => (
       db.collection(collection).updateMany({}, {
-        $unset: { 'attributes.frequency': null },
+        $set: { frequency: 0 },
       })
     ));
   },

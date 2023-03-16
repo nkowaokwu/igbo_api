@@ -11,10 +11,6 @@ export default {
     value: 'isCommon',
     label: 'Is Common',
   },
-  FREQUENCY: {
-    value: 'frequency',
-    label: 'Frequency',
-  },
   IS_COMPLETE: {
     value: 'isComplete',
     label: 'Is Complete',
