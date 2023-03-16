@@ -146,6 +146,5 @@ __tests__/__mocks__/dictionaries/
 # Firebase
 functions/node_modules
 functions/src
-functions/swagger.json
 functions/yarn.lock
 yarn.lock
