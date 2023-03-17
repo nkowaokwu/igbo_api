@@ -1,13 +1,12 @@
 {
   "index": "Introduction",
-  "Getting-Started": "Getting Started",
-  "Words": "Words",
-  "Examples": "Examples",
-  "How-to-Contribute": "How to Contribute",
-  "Code-of-Conduct": "Code of Conduct",
-  "Local-Development": "Local Development",
-  "FAQ": "FAQ",
-  "Contact-Us": "Contact Us",
+  "Getting-started": "Getting Started",
+  "Routes": "Routes",
+  "Local-development": "Local Development",
+  "How-to-contribute": "How to Contribute",
   "Glossary": "Glossary",
-  "References": "References"
+  "References": "References",
+  "FAQ": "FAQ",
+  "Code-of-conduct": "Code of Conduct",
+  "Contact-us": "Contact Us"
 }
