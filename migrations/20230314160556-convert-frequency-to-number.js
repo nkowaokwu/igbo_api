@@ -5,19 +5,21 @@ module.exports = {
       db.collection(collection).updateMany({
         'attributes.isCommon': true,
       },
-      {
-        $addFields: {
-          frequency: {
-            $cond: {
-              if: {
-                $eq: ['$attributes.isCommon', true],
+      [
+        {
+          $addFields: {
+            frequency: {
+              $cond: {
+                if: {
+                  $eq: ['$attributes.isCommon', true],
+                },
+                then: 5,
+                else: 1,
               },
-              then: 5,
-              else: 1,
             },
           },
         },
-      })
+      ])
     ));
   },
 
