@@ -58,7 +58,13 @@ const searchWordUsingIgbo = async ({
       findWordsWithMatch({ match: definitionsWithinIgboQuery, version }),
     ]);
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
-    const words = igboResults.words.concat(englishResults.words);
+    // Prevents from duplicate word documents from being included in the final words array
+    const words = searchWord ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
+      if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
+        finalWords.push(word);
+      }
+      return finalWords;
+    }, []) : igboResults.words;
     const contentLength = parseInt(igboResults.contentLength, 10) + parseInt(englishResults.contentLength, 10);
 
     responseData = await setCachedWords({
