@@ -3,7 +3,6 @@
   "version": "1.53.2",
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "author": "Ijemma Onwuzulike",
-  "private": "false",
   "main": "server.js",
   "scripts": {
     "build": "rm -rf build/ && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:site && yarn build:functions",
