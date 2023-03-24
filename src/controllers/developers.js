@@ -25,11 +25,11 @@ export const postDeveloper = async (req, res, next) => {
 
     const developers = await Developer.find({ email });
     if (developers.length && email !== TEST_EMAIL) {
-      throw new Error('This email is already used');
+      throw new Error('This email is already used.');
     }
 
     if ((isProduction || CLIENT_TEST) && email === TEST_EMAIL) {
-      throw new Error('This email is already used');
+      throw new Error('This email is already used.');
     }
 
     const apiKey = generateApiKey();

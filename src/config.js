@@ -18,15 +18,19 @@ if (dotenv) {
   dotenv.config();
 }
 
-export const isBuild = config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === 'build';
-export const isProduction = config?.runtime?.env === Environment.PRODUCTION || process.env.NODE_ENV === 'production';
-export const isDevelopment = config?.runtime?.env === Environment.DEVELOPMENT || process.env.NODE_ENV === 'development';
-export const isTest = config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === 'test';
+export const isBuild = config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
+export const isProduction = (
+  config?.runtime?.env === Environment.PRODUCTION || process.env.NODE_ENV === Environment.PRODUCTION
+);
+export const isDevelopment = (
+  config?.runtime?.env === Environment.DEVELOPMENT || process.env.NODE_ENV === Environment.DEVELOPMENT
+);
+export const isTest = config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
 const useReplicaSet = config?.env?.replica_set;
 
 // Database
-export const DB_NAME = 'igbo_api';
-export const TEST_DB_NAME = 'test_igbo_api';
+const DB_NAME = 'igbo_api';
+const TEST_DB_NAME = 'test_igbo_api';
 
 // If running inside Docker container, it will fallback to using test_igbo_api database
 const isTestingEnvironment = (
