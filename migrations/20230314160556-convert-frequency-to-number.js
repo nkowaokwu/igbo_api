@@ -2,9 +2,7 @@ module.exports = {
   async up(db) {
     const collections = ['words', 'wordsuggestions'];
     return collections.map((collection) => (
-      db.collection(collection).updateMany({
-        'attributes.isCommon': true,
-      },
+      db.collection(collection).updateMany({},
       [
         {
           $addFields: {
