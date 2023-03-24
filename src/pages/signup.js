@@ -9,6 +9,7 @@ import { PORT } from '../siteConstants';
 const SignUp = () => {
   const { t } = useTranslation('signup');
   const [buttonText, setButtonText] = useState('Create account');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [igboApiRoute, setIgboApiRoute] = useState('');
   const [apiKey, setApiKey] = useState('');
@@ -53,10 +54,14 @@ const SignUp = () => {
           setApiKey(res.data.apiKey);
         } else if (res.status >= 400) {
           handleCreateDeveloperResponse(t('An error occurred'));
+          setErrorMessage(res.data.error);
         }
       }, (err) => {
         console.log(err);
         handleCreateDeveloperResponse(t('An error occurred'));
+        if (err.response.status >= 400) {
+          setErrorMessage(err.response.data.error);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -156,6 +161,11 @@ const SignUp = () => {
                   {t("We'll also send you an email with your account information along with your API key.")}
                 </p>
               </div>
+            ) : null}
+            {errorMessage ? (
+              <p className="text-red-600 mt-4" data-test="error-message">
+                {errorMessage}
+              </p>
             ) : null}
           </form>
         </div>
