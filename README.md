@@ -14,7 +14,7 @@
 
 🔎 Full-text search with diacritic support
 
-🚀[Try out a demo here](https://igboapi.com)
+🚀 [Try out a demo here](https://igboapi.com)
 
 ## Getting Started
 
