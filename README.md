@@ -85,6 +85,7 @@ be ran for testing or specific-feature development purposes.
 **Reminder**: You must have Redis installed on your machine in order to run the server.
 
 ### Docker
+
 If you don't want to run a local Node and MongoDB, you can use [Docker](https://docker.com)
 
 Run the following command:
