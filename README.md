@@ -14,7 +14,7 @@
 
 🔎 Full-text search with diacritic support
 
-🚀[Try out a demo here](https://igboapi.com)
+🚀 [Try out a demo here](https://igboapi.com)
 
 ## Getting Started
 
@@ -85,6 +85,7 @@ be ran for testing or specific-feature development purposes.
 **Reminder**: You must have Redis installed on your machine in order to run the server.
 
 ### Docker
+
 If you don't want to run a local Node and MongoDB, you can use [Docker](https://docker.com)
 
 Run the following command:
@@ -157,7 +158,6 @@ yarn migrate-up
 ### Frontend
 
 Frontend tests focus specifically on the Igbo API homepage using Cypress. First, run:
-
 
 ```
 yarn build
