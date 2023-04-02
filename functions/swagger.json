@@ -1,0 +1,457 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Igbo API",
+    "description": "Dictionary API that contains Igbo words",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/api/v1/",
+  "tags": [
+    {
+      "name": "Production",
+      "description": "Publicly accessible API routes"
+    },
+    {
+      "name": "Test",
+      "description": "API routes only for local testing"
+    }
+  ],
+  "definitions": {
+    "Word": {
+      "properties": {
+        "word": {
+          "type": "string"
+        },
+        "wordClass": {
+          "type": "string"
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pronunciation": {
+          "type": "string"
+        },
+        "nsibidi": {
+          "type": "string"
+        },
+        "tenses": {
+          "type": "object",
+          "properties": {
+            "infinitive": {
+              "type": "string"
+            },
+            "imperative": {
+              "type": "string"
+            },
+            "simplePast": {
+              "type": "string"
+            },
+            "simplePresent": {
+              "type": "string"
+            },
+            "presentContinuous": {
+              "type": "string"
+            },
+            "future": {
+              "type": "string"
+            }
+          }
+        },
+        "relatedTerms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "isStandardIgbo": {
+              "type": "boolean"
+            },
+            "isAccented": {
+              "type": "boolean"
+            },
+            "isSlang": {
+              "type": "boolean"
+            },
+            "isConstructedTerm": {
+              "type": "boolean"
+            },
+            "isBorrowedTerm": {
+              "type": "boolean"
+            }
+          }
+        },
+        "variations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Example": {
+      "properties": {
+        "igbo": {
+          "type": "string"
+        },
+        "english": {
+          "type": "string"
+        },
+        "associatedWords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "WordClass": {
+      "type": "string"
+    },
+    "error": {
+      "properties": {
+        "error": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "X-API-Key"
+    }
+  },
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/words": {
+      "get": {
+        "summary": "Get words in dictionary",
+        "description": "Get words in dictionary",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying words",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "strict",
+            "description": "Searches for matching words that start and end with the provided keyword's letters",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "dialects",
+            "description": "Includes dialect information in returned document",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "examples",
+            "description": "Includes examples associated with returned document",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "isStandardIgbo",
+            "description": "Returns words that are marked as Standard Igbo",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pronunciation",
+            "description": "Returns words that have audio pronunciations",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "nsibidi",
+            "description": "Returns words that have Nsịbịdị equivalents",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/word"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "403": {
+            "description": "Invalid API Key",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/words/{wordId}": {
+      "get": {
+        "summary": "Get a single Word",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
+        "description": "Returns a single Word object from the database",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "wordId",
+            "description": "The word Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/word"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "403": {
+            "description": "Invalid API Key",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/examples": {
+      "get": {
+        "summary": "Get examples in dictionary",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
+        "description": "Get examples in dictionary",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying examples",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/example"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "403": {
+            "description": "Invalid API Key",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/examples/{exampleId}": {
+      "get": {
+        "summary": "Get a single Example",
+        "security": [
+          { "ApiKeyAuth": [] }
+        ],
+        "description": "Returns a single Example object from the database",
+        "tags": ["Production"],
+        "parameters": [
+          {
+            "name": "exampleId",
+            "description": "The example Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/example"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "403": {
+            "description": "Invalid API Key",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/test/populate": {
+      "post": {
+        "summary": "Creates a new Word document",
+        "description": "Creates a new Word document",
+        "tags": ["Test"],
+        "parameters": [
+          {
+            "name": "Populate Word and Example collections",
+            "description": "Populate mongodb with json from ./ig-en/ig-en.json"
+          }
+        ],
+        "response": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/test/words": {
+      "get": {
+        "summary": "Get words in JSON dictionary",
+        "description": "Get words in JSON dictionary",
+        "tags": ["Test"],
+        "parameters": [
+          {
+            "name": "keyword",
+            "description": "Keyword for querying words",
+            "in": "query",
+            "required": false
+          },
+          {
+            "name": "page",
+            "description": "Page for results",
+            "in": "query",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "range",
+            "description": "Page for result using [x,y] syntax, max range includes 25 documents",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/word"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

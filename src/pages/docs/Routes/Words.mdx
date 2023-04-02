@@ -3,72 +3,45 @@ import Link from 'next/link';
 import { Tab, Tabs } from 'nextra-theme-docs';
 import { useState } from 'react'
 
-# Access Igbo Examples
+# Words
 
-```js {1}
-[ Base URL: igboapi.com/api/v1/ ]
+Base URL:
+```
+https://igboapi.com/api/v1/
 ```
 
 ***
 
-###### Words Route
+###### Get Multiple Words
 
-```js copy
+```js
 GET /words
 ```
-Get words in Dictionary
+Get words from dictionary
 
- **Parameters**
+ **Query Parameters**
 
-| Name   | Description |
-| :----- | :----- |
-| **keyword** *required* | Keyword for querying words (string) |
-| **page** | Page for results (integer) |
-| **range** | Page for result using [x,y] syntax, max range includes 25 documents (string) |
-| **strict**  | Searches for matching words that start and end with the provided keyword's letters (boolean) |
-| **dialects** | Includes dialect information in returned document (boolean) |
-| **examples** | Includes examples associated with returned document (boolean) |
-| **isStandardIgbo**  | Returns words that are marked as Standard Igbo (boolean) |
-| **pronunciation** | Returns words that have audio pronunciations (boolean) |
-| **nsibidi** | Returns words that have Nsịbịdị equivalents (boolean) |
-
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **keyword** *required* | Keyword for querying words | `keyword=ego` |
+| **page** | Current page of results, the default max number of words on a page is 10 | `page=1` |
+| **range** | A selected range of words to return, the max range is 25 | `range=[0, 24]` |
+| **strict**  | Searches strictly for words matching with provided diacritics | `strict=true` |
+| **dialects** | Includes dialect information in each document | `dialects=true` |
+| **examples** | Includes examples associated with each document | `examples=true` |
 
  **Responses**
 
- The response for the route will be a plain JSON object similar to JSON below. 
- To illustrate this response, we will use the keyword "agu" to query the API
+ An array of up to 10 word JSON objects.
 
- ```
+ ```js
  [
   {
     "definitions": [
-      "person bearing same name as another; namesake"
+      "the likeness of an action or being; manner; how; the way;"
     ],
-    "stems": [
-      "5f90c35e49f7e863e92b78f8"
-    ],
-    "word": "agụ̀",
-    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b6e83.webm",
-    "attributes": {
-      "isStandardIgbo": true,
-      "isAccented": true,
-      "isSlang": false,
-      "isConstructedTerm": false,
-      "isBorrowedTerm": false,
-      "isStem": false,
-      "isCommon": false
-    },
-    "relatedTerms": [
-    ],
-    "wordClass": "NNC",
-    "nsibidi": "窓"
-  },
-  {
-    "definitions": [
-      "leopard; tiger"
-    ],
-    "word": "agụ̄",
-    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b6e82.mp3",
+    "word": "ètù",
+    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b7622.mp3",
     "attributes": {
       "isStandardIgbo": true,
       "isAccented": false,
@@ -79,124 +52,58 @@ Get words in Dictionary
       "isCommon": false
     },
     "relatedTerms": [
+      "636464df6ec644341fb395e5"
     ],
-    "wordClass": "NNC",
-    "nsibidi": "虎"
-  },
-  {
-    "attributes": {
-      "isStandardIgbo": true,
-      "isAccented": false,
-      "isSlang": false,
-      "isConstructedTerm": false,
-      "isBorrowedTerm": false,
-      "isStem": false,
-      "isCommon": false
-    },
-    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/638a59701b5b4d7ad64758df.mp3",
-    "stems": [
-      "5f90c35e49f7e863e92b6e8c"
-    ],
-    "relatedTerms": [
-    ],
-    "word": "agụụ̄",
-    "definitions": [
-      "hunger; desire; thirst [for water]; eagerness"
-    ],
-    "wordClass": "NNC",
-    "nsibidi": ""
-  },
-  {
-    "definitions": [
-      "namesake; comrade; friend; pal; reincarnated person"
-    ],
-    "word": "ògbò",
-    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35f49f7e863e92b8552.webm",
-    "attributes": {
-      "isStandardIgbo": true,
-      "isAccented": true,
-      "isSlang": false,
-      "isConstructedTerm": false,
-      "isBorrowedTerm": false,
-      "isStem": true,
-      "isCommon": false
-    },
-    "relatedTerms": [
-    ],
-    "wordClass": "NNC",
-    "nsibidi": ""
-  },
-  {
-    "attributes": {
-      "isStandardIgbo": true,
-      "isAccented": false,
-      "isSlang": false,
-      "isConstructedTerm": false,
-      "isBorrowedTerm": false,
-      "isStem": false,
-      "isCommon": false
-    },
-    "definitions": [
-      "a kitchen utensil used in scooping food and also putting food in the mouth; spoon"
-    ],
-    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/633d720e6b46fd6a632ad876.mp3",
-    "stems": [
-      "5f90c35e49f7e863e92b7bd1"
-    ],
-    "relatedTerms": [
-    ],
-    "word": "ǹgàjì",
-    "wordClass": "NNC",
-    "nsibidi": ""
+    "id": "5f90c35e49f7e863e92b7622",
+    "wordClass": "ADV",
+    "nsibidi": "虐"
   }
 ]
  ```
 
  ***
 
- ###### Single Word Route
+ ###### Get a Single Word
 
 
-```js copy
+```js
 GET /words/{wordId}
 ```
-Returns a single Word object from the database
+Returns a single word JSON object from the database
 
  **Parameters**
 
-| Name   | Description |
-| :----- | :----- |
-| **wordId** *required* | The word Id (string) |
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **wordId** *required* | The word Id (string) | `id=1234567890` |
 
  **Responses**
 
- The response for the route will be a plain JSON object similar to this:
+ A single word JSON object will be returned.
 
- ```
-{
-  "definitions": [
-    "person bearing same name as another; namesake"
-  ],
-  "stems": [
-    {
-    }
-  ],
-  "word": "agụ̀",
-  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b6e83.webm",
-  "attributes": {
-    "isStandardIgbo": true,
-    "isAccented": true,
-    "isSlang": false,
-    "isConstructedTerm": false,
-    "isBorrowedTerm": false,
-    "isStem": false,
-    "isCommon": false
-  },
-  "relatedTerms": [
-  ],
-  "wordClass": "NNC",
-  "nsibidi": "窓"
-}
+ ```js
+  {
+    "definitions": [
+      "the likeness of an action or being; manner; how; the way;"
+    ],
+    "word": "ètù",
+    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/5f90c35e49f7e863e92b7622.mp3",
+    "attributes": {
+      "isStandardIgbo": true,
+      "isAccented": false,
+      "isSlang": false,
+      "isConstructedTerm": false,
+      "isBorrowedTerm": false,
+      "isStem": true,
+      "isCommon": false
+    },
+    "relatedTerms": [
+      "636464df6ec644341fb395e5"
+    ],
+    "id": "5f90c35e49f7e863e92b7622",
+    "wordClass": "ADV",
+    "nsibidi": "虐"
+  }
  ```
 
   **Response Code**
@@ -204,33 +111,27 @@ Returns a single Word object from the database
   <Tab>
     **Success**:
     ```
-    [
-        "string"
-    ]
+    [JSON Object]
     ```
+
+    If there are more than 10 words that match the query, you can look at the `Content-Range` response header to find the total number of matching words.
   </Tab>
   <Tab>
     **Bad Request**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
   <Tab>
       **Invalid API Key**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
   <Tab>
        **Not Found**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
 </Tabs>

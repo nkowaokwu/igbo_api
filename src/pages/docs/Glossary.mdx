@@ -1,3 +1,32 @@
 import React from 'react';
 
 # Glossary
+
+We use a few more specialized terms to describe the nature of this project. Here's a list of some terms and their definitions.
+
+## Word entry
+
+A word that is represented as a MongoDB document which includes metadata information like definitions, part of speech, and more.
+
+## Nsịbịdị
+
+[Nsịbịdị](https://en.wikipedia.org/wiki/Nsibidi) is a proto-writing system that originates from the western region of Africa, which is modern day Nigeria.
+
+## Related terms
+
+Word entries can be connected to one another through the `relatedTerms` field. This field is an array of word Ids that point to other word 
+documents which also could be connected to other related terms. This structure forms a complex graph of interconnected related words.
+
+## Word stems
+
+Many Igbo words are formed by combining more simplistic words that we refer to as 'word stems'. Whenever a word has word stems, that means that it was made up 
+of smaller words.
+
+## Dialectal variations
+
+Igbo has more than 30 known dialects that are mutually intelligible, meaning that a speaker from one dialect has a good chance of understanding
+a speaker from another dialect. We want to best showcase the robust nature of the Igbo language by associating dialectal variations with each word entry.
+
+## Diacritic
+
+A visual tone mark that denotes the pronunciation of a word. All our headwords include diacritics.

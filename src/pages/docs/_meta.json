@@ -1,12 +1,11 @@
 {
   "index": "Introduction",
-  "Getting-started": "Getting Started",
-  "Routes": "Routes",
-  "Local-development": "Local Development",
-  "How-to-contribute": "How to Contribute",
-  "Glossary": "Glossary",
-  "References": "References",
-  "FAQ": "FAQ",
-  "Code-of-conduct": "Code of Conduct",
-  "Contact-us": "Contact Us"
+  "getting-started": "Getting Started",
+  "routes": "Routes",
+  "guides": "Guides",
+  "contributing": "Contributing",
+  "glossary": "Glossary",
+  "faq": "FAQ",
+  "code-of-conduct": "Code of Conduct",
+  "contact-us": "Contact Us"
 }

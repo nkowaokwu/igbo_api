@@ -3,110 +3,78 @@ import Link from 'next/link';
 import { Tab, Tabs } from 'nextra-theme-docs';
 import { useState } from 'react'
 
-# Access Igbo Examples
+# Examples
 
-```js {1}
-[ Base URL: igboapi.com/api/v1/ ]
+Base URL:
+```
+https://igboapi.com/api/v1/
 ```
 
 ***
 
-###### Examples Route
+###### Get Multiple Examples
 
-```js copy
+```js
 GET /examples
 ```
-Get examples in dictionary
+Get examples from dictionary
 
  **Parameters**
 
-| Name   | Description |
-| :----- | :----- |
-| **keyword** *required* | Keyword for querying words (string) |
-| **page** | Page for results (integer) |
-| **range** | Page for result using [x,y] syntax, max range includes 25 documents (string) |
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **keyword** *required* | Keyword for querying words |  `keyword=ego` |
+| **page** | Page for results | `page=1` |
+| **range** | Page for result using [x,y] syntax, max range includes 25 documents | `range=[0, 24]` |
 
  **Responses**
 
- The response for the route will be a plain JSON object similar to JSON below. 
- To illustrate this response, we will use the keyword "agu" to query the API
+ An array of up to 10 example JSON objects.
 
-
- ```
+ ```js
 [
   {
     "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
     "english": "Agụ is eating unripe mango",
-    "associatedWords": [
-    ],
+    "associatedWords": [],
     "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
     "meaning": "",
     "style": "",
   },
-  {
-    "igbo": "Agū nà-èjeghalị n'òzàlà ịmā mà ọ nwè ife ọ gà-àfụ kpachalị",
-    "english": "Agụ is going about in the grassland to see if he can find some (animal) to take",
-    "associatedWords": [
-    ],
-    "pronunciation": "",
-    "meaning": "",
-    "style": "",
-  },
-  {
-    "igbo": "Agū azàgo",
-    "english": "Agụ has lost weight",
-    "associatedWords": [
-    ],
-    "pronunciation": "",
-    "meaning": "",
-    "style": "",
-  },
-  {
-    "igbo": "Agū nà-àgbalụ m òdìbò",
-    "english": "Agụ is working for me as my servant",
-    "associatedWords": [
-    ],
-    "pronunciation": "",
-    "meaning": "",
-    "style": "",
-  }
 ]
  ```
 
  ***
 
- ###### Single example Route
+ ###### Get a Single Example
 
 
-```js copy
+```js
 GET /examples/{exampleId}
 ```
-Returns a single Example object from the database
+Returns a single example JSON object from the database
 
  **Parameters**
 
-| Name   | Description |
-| :----- | :----- |
-| **exampleId** *required* | The example Id (string) |
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **exampleId** *required* | The example Id | `id=1234567890` |
 
  **Responses**
 
- The response for the route will be a plain JSON object similar to this:
+A single example JSON object will be returned.
 
- ```
+ ```js
 {
   "nsibidi": "",
   "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
   "english": "Agụ is eating unripe mango",
-  "associatedWords": [
-  ],
+  "associatedWords": [],
   "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
   "updatedAt": "2022-05-02T06:18:09.906Z",
   "meaning": "",
   "style": "",
-  "associatedDefinitionsSchemas": [
-    null
-  ],
+  "associatedDefinitionsSchemas": [],
 }
  ```
 
@@ -115,33 +83,27 @@ Returns a single Example object from the database
   <Tab>
     **Success**:
     ```
-    [
-        "string"
-    ]
+    [JSON Object]
     ```
+
+    If there are more than 10 examples that match the query, you can look at the `Content-Range` response header to find the total number of matching examples.
   </Tab>
   <Tab>
     **Bad Request**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
   <Tab>
       **Invalid API Key**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
   <Tab>
        **Not Found**:
    ```
-    {
-        "error": "string"
-    }
+    { "error": "string" }
    ```
   </Tab>
 </Tabs>

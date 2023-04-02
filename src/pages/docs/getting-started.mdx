@@ -1,3 +1,79 @@
 import React from 'react';
 
 # Getting Started
+
+If you would like to start using the Igbo API in your production-ready projects, you can sign up for an [Igbo API developer token](https://igboapi.com/signup).
+
+## Prerequisites
+
+You will need the following tools installed on your computer to run the project locally:
+
+* Node.js
+* Yarn
+* MongoDB
+* Firebase
+* Redis (optional)
+* Docker (optional)
+
+## Installation
+
+Clone the project:
+
+```bash
+git clone https://github.com/nkowaokwu/igbo_api.git
+```
+
+Navigate into the project directory and install its dependencies:
+
+```bash
+cd igbo_api/
+yarn install
+```
+
+Build the frontend for the site:
+
+```bash
+yarn build
+```
+
+## Connect to a Firebase Project
+This project uses Firebase and requires you create your own free Firebase project.
+
+Please follow the [Firebase Configuration Guide](./guides/firebase).
+
+## Local Development
+Once you've configured your project, you can start the Igbo API dev server by running:
+
+```bash
+yarn dev
+```
+
+Navigate to [localhost:8080](http://localhost:8080) to see the API
+
+## Optional: Development with Replica Sets and Redis
+If you would like to run the API while running [MongoDB Replica Sets]() and a [Redis cache](), run:
+
+```bash
+yarn dev:full
+```
+
+Ensure that you have Redis installed on your machine. Then, run the following to start a Redis server:
+
+```bash
+redis-server
+```
+
+**Warning**: Running replica sets locally is a machine-intensive operation and should only be ran for testing or specific
+feature development purposes.
+
+## Alternative: Docker
+
+If you don't want to run a local Node and MongoDB service, you can use Docker.
+
+Run the following command:
+
+```bash
+yarn start:docker
+```
+
+Navigate to [localhost:8080](http://localhost:8080) to see the API
