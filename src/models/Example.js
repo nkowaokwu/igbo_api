@@ -18,4 +18,14 @@ export const exampleSchema = new Schema({
   pronunciation: { type: String, default: '' },
 }, { toObject: toObjectPlugin, timestamps: true });
 
+exampleSchema.index({
+  associatedWords: 1,
+});
+exampleSchema.index({
+  english: 1,
+});
+exampleSchema.index({
+  igbo: 1,
+});
+
 toJSONPlugin(exampleSchema);
