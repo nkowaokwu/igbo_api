@@ -27,26 +27,3 @@ export const handleWordFlags = ({
   }));
   return { words: updatedWords, contentLength };
 };
-
-export const handleFiltering = ({
-  data: { words },
-  flags: { tags, wordClasses },
-}) => {
-  const updatedWords = compact(words.map((word) => {
-    const updatedWord = assign(word);
-    if (tags.length && Array.isArray(word.tags)) {
-      const hasTags = word.tags.some((tag) => tags.includes(tag));
-      if (!hasTags) {
-        return null;
-      }
-    }
-    if (wordClasses.length) {
-      const hasWordClass = word.definitions.some(({ wordClass }) => wordClasses.includes(wordClass));
-      if (!hasWordClass) {
-        return null;
-      }
-    }
-    return updatedWord;
-  }));
-  return { words: updatedWords, contentLength: updatedWords.length };
-};

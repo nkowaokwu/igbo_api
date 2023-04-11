@@ -217,32 +217,6 @@ const searchAllVerbsAndSuffixes = async ({
   return { words, contentLength };
 };
 
-/* Creates an object containing truthy key/value pairs for looking up words */
-const generateFilteringParams = (filteringParams) => (
-  Object.entries(filteringParams).reduce((finalRequiredAttributes, [key, value]) => {
-    if (key === 'isStandardIgbo' && value) {
-      return {
-        ...finalRequiredAttributes,
-        [`attributes.${key}`]: { $eq: true },
-      };
-    }
-    if (key === 'nsibidi' && value) {
-      return {
-        ...finalRequiredAttributes,
-        [`definitions.${key}`]: { $ne: '' },
-      };
-    }
-    if (key === 'pronunciation' && value) {
-      return {
-        ...finalRequiredAttributes,
-        pronunciation: { $exists: true },
-        $expr: { $gt: [{ $strLenCP: '$pronunciation' }, 10] },
-      };
-    }
-    return finalRequiredAttributes;
-  }, {})
-);
-
 /* Handles all the queries for searching in the database */
 export const handleQueries = async ({
   query = {},
@@ -262,9 +236,6 @@ export const handleQueries = async ({
     tags: tagsQuery,
     wordClasses: wordClassesQuery,
     resolve: resolveQuery,
-    isStandardIgbo,
-    pronunciation,
-    nsibidi,
   } = query;
   const { id } = params;
   let allVerbsAndSuffixes;
@@ -360,19 +331,15 @@ export const handleQueries = async ({
   const wordClasses = wordClassesQuery ? wordClassesQuery.replaceAll(/[[\]']/g, '').split(',')
     .map((wordClass) => wordClass.trim()) : [];
   const resolve = resolveQuery === 'true';
-  const wordFields = {
-    isStandardIgbo,
-    pronunciation,
-    nsibidi,
-  };
   const flags = {
     dialects,
     examples,
     resolve,
-    tags,
-    wordClasses,
   };
-  const filteringParams = generateFilteringParams(wordFields);
+  const filters = {
+    ...(tags?.length ? { tags: { $in: tags } } : {}),
+    ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
+  };
   return {
     id,
     version,
@@ -384,9 +351,9 @@ export const handleQueries = async ({
     limit,
     strict,
     flags,
+    filters,
     hasQuotes,
     isUsingMainKey,
-    filteringParams,
     redisClient,
   };
 };
