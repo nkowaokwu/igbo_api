@@ -42,8 +42,8 @@ const getWordsFromDatabase = async (req, res, next) => {
       limit,
       strict,
       flags,
-      filters,
       hasQuotes,
+      filteringParams,
       isUsingMainKey,
       redisClient,
     } = await handleQueries(req);
@@ -52,12 +52,12 @@ const getWordsFromDatabase = async (req, res, next) => {
       skip,
       limit,
       flags,
-      filters,
     };
     let responseData = {};
     if (hasQuotes) {
       responseData = await searchWordUsingEnglish({
         redisClient,
+        filteringParams,
         version,
         regex,
         ...searchQueries,
@@ -70,6 +70,7 @@ const getWordsFromDatabase = async (req, res, next) => {
         regex,
         strict,
         isUsingMainKey,
+        filteringParams,
         ...searchQueries,
       });
     }

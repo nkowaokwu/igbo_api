@@ -3,7 +3,7 @@ import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgb
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from '.';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
-import { handleWordFlags } from '../../APIs/FlagsAPI';
+import { handleWordFlags, handleFiltering } from '../../APIs/FlagsAPI';
 
 /* Searches for a word with Igbo stored in MongoDB */
 const searchWordUsingIgbo = async ({
@@ -13,11 +13,11 @@ const searchWordUsingIgbo = async ({
   regex,
   strict,
   isUsingMainKey,
+  filteringParams,
   searchWord,
   skip,
   limit,
   flags,
-  filters,
 }) => {
   let responseData = {};
   const redisWordsCacheKey = `${searchWord}-${version}`;
@@ -39,7 +39,7 @@ const searchWordUsingIgbo = async ({
       keywords: allSearchKeywords,
       isUsingMainKey,
       searchWord,
-      filters,
+      filteringParams,
     });
     const igboQuery = !strict
       ? regularSearchIgboQuery
@@ -50,7 +50,7 @@ const searchWordUsingIgbo = async ({
       keywords: allSearchKeywords,
       isUsingMainKey,
       searchWord,
-      filters,
+      filteringParams,
     });
     console.time(`Searching Igbo words for ${searchWord}`);
     const [igboResults, englishResults] = await Promise.all([
@@ -65,7 +65,7 @@ const searchWordUsingIgbo = async ({
       }
       return finalWords;
     }, []) : igboResults.words;
-    const contentLength = words.length;
+    const contentLength = parseInt(igboResults.contentLength, 10) + parseInt(englishResults.contentLength, 10);
 
     responseData = await setCachedWords({
       key: redisWordsCacheKey,
@@ -75,6 +75,10 @@ const searchWordUsingIgbo = async ({
     });
   }
 
+  responseData = handleFiltering({
+    data: { words: responseData.words },
+    flags,
+  });
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
   return handleWordFlags({
