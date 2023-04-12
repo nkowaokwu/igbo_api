@@ -3,18 +3,18 @@ import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from '.';
 import { searchEnglishRegexQuery } from './queries';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
-import { handleWordFlags, handleFiltering } from '../../APIs/FlagsAPI';
+import { handleWordFlags } from '../../APIs/FlagsAPI';
 
 /* Searches for word with English stored in MongoDB */
 const searchWordUsingEnglish = async ({
   redisClient,
-  filteringParams,
   version,
   regex,
   searchWord,
   skip,
   limit,
   flags,
+  filters,
 }) => {
   let responseData = {};
   const redisWordsCacheKey = `"${searchWord}"-${version}`;
@@ -26,7 +26,7 @@ const searchWordUsingEnglish = async ({
       contentLength: cachedWords.contentLength,
     };
   } else {
-    const query = searchEnglishRegexQuery({ regex, searchWord, filteringParams });
+    const query = searchEnglishRegexQuery({ regex, searchWord, filters });
     console.time(`Searching English words for ${searchWord}`);
     const { words, contentLength } = await findWordsWithMatch({ match: query, version });
     console.timeEnd(`Searching English words for ${searchWord}`);
@@ -39,10 +39,6 @@ const searchWordUsingEnglish = async ({
   }
 
   const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
-  responseData = handleFiltering({
-    data: { words: responseData.words },
-    flags,
-  });
   let sortedWords = sortDocsBy(searchWord, responseData.words, sortKey, version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
   return handleWordFlags({

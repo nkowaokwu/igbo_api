@@ -64,16 +64,16 @@ const generateMultipleTensesWordRegex = (keywords) => {
 const fullTextSearchQuery = ({
   keywords,
   isUsingMainKey,
-  filteringParams,
+  filters = {},
 }) => {
   const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
   return (
     isUsingMainKey && !keywords?.length
-      ? { word: { $regex: /./ }, ...filteringParams }
+      ? filters
       : (!isUsingMainKey && !keywords?.length)
         ? { _id: { $exists: false }, id: { $exists: false } }
         : hasNsibidi
-          ? { $or: generateMultipleNsibidi(keywords) }
+          ? { $and: [{ $or: generateMultipleNsibidi(keywords) }, filters] }
           : {
             $and: [{
               $or: compact([
@@ -83,7 +83,7 @@ const fullTextSearchQuery = ({
                 ...generateMultipleTensesWordRegex(keywords),
               ]),
             }],
-            ...filteringParams,
+            ...filters,
           }
   );
 };
@@ -91,26 +91,26 @@ const fullTextDefinitionsSearchQuery = ({
   keywords,
   isUsingMainKey,
   searchWord = '',
-  filteringParams,
+  filters,
 }) => (
   !isUsingMainKey && !keywords?.length
     ? { _id: { $exists: false }, id: { $exists: false } }
     : !keywords?.length
-      ? {}
+      ? filters
       : {
         $and: [
+          filters,
           StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
           generateMultipleDefinitionsRegex(keywords),
-          filteringParams,
         ],
       }
 );
 
-const definitionsQuery = ({ regex, searchWord = '', filteringParams }) => ({
+const definitionsQuery = ({ regex, searchWord = '', filters }) => ({
   $and: [
+    filters,
     StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
     { 'definitions.definitions': { $in: [regex.definitionsReg] } },
-    filteringParams,
   ],
 });
 

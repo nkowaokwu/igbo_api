@@ -537,7 +537,7 @@ describe('MongoDB Words', () => {
       });
     });
 
-    it('should return a word marked as isStandardIgbo', async () => {
+    it('should return a word that is a common noun', async () => {
       const connection = createDbConnection();
       const Word = connection.model('Word', wordSchema);
       const word = {
@@ -556,69 +556,13 @@ describe('MongoDB Words', () => {
       const validWord = new Word(word);
       await validWord.save();
       await handleCloseConnection(connection);
-      const res = await getWords({ keyword: word.word, isStandardIgbo: true });
+      const res = await getWords({ keyword: word.word, wordClasses: '[NNC]' });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(1);
       forEach(res.body, (wordRes) => {
         expect(wordRes.attributes.isStandardIgbo).toEqual(true);
       });
-      const noRes = await getWords({ keyword: word.word, pronunciation: true });
-      expect(noRes.status).toEqual(200);
-      expect(noRes.body).toHaveLength(0);
-    });
-
-    it('should return a word marked with nsibidi', async () => {
-      const connection = createDbConnection();
-      const Word = connection.model('Word', wordSchema);
-      const word = {
-        word: 'nsibidi',
-        definitions: [{
-          wordClass: 'NNC',
-          definitions: ['first definition', 'second definition'],
-          nsibidi: 'nsibidi',
-        }],
-        dialects: [],
-        examples: [new ObjectId(), new ObjectId()],
-        stems: [],
-      };
-      const validWord = new Word(word);
-      await validWord.save();
-      await handleCloseConnection(connection);
-      const res = await getWords({ keyword: word.word, nsibidi: true });
-      expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(1);
-      forEach(res.body, (wordRes) => {
-        expect(wordRes.nsibidi).not.toEqual(undefined);
-      });
-      const noRes = await getWords({ keyword: word.word, isStandardIgbo: true });
-      expect(noRes.status).toEqual(200);
-      expect(noRes.body).toHaveLength(0);
-    });
-
-    it('should return a word marked with pronunciation', async () => {
-      const connection = createDbConnection();
-      const Word = connection.model('Word', wordSchema);
-      const word = {
-        word: 'pronunciation',
-        definitions: [{
-          wordClass: 'NNC',
-          definitions: ['first definition', 'second definition'],
-        }],
-        dialects: [],
-        examples: [new ObjectId(), new ObjectId()],
-        pronunciation: 'audio-pronunciation',
-        stems: [],
-      };
-      const validWord = new Word(word);
-      await validWord.save();
-      await handleCloseConnection(connection);
-      const res = await getWords({ keyword: word.word, pronunciation: true });
-      expect(res.status).toEqual(200);
-      expect(res.body.length).toBeGreaterThanOrEqual(1);
-      forEach(res.body, (wordRes) => {
-        expect(wordRes.pronunciation.length).toBeGreaterThanOrEqual(10);
-      });
-      const noRes = await getWords({ keyword: word.word, nsibidi: true });
+      const noRes = await getWords({ keyword: word.word, wordClasses: ['ADJ'] });
       expect(noRes.status).toEqual(200);
       expect(noRes.body).toHaveLength(0);
     });
