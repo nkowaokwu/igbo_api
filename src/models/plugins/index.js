@@ -10,6 +10,7 @@ export const toJSONPlugin = (schema) => {
   schema.set('toJSON', {
     virtuals: true,
   });
+  // eslint-disable-next-line func-names
   schema.methods.toJSON = function () {
     const json = toJSON.apply(this);
     delete json._id;

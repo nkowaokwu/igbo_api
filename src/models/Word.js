@@ -17,7 +17,13 @@ const definitionSchema = new Schema({
   },
   definitions: { type: [{ type: String }], default: [] },
   nsibidi: { type: String, default: '' },
-  igboDefinitions: { type: [{ type: String }], default: [] },
+  igboDefinitions: {
+    type: [{
+      igbo: String,
+      nsibidi: String,
+    }],
+    default: [],
+  },
 }, { _id: true });
 
 const dialectSchema = new Schema({
