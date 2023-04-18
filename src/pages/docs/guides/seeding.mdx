@@ -1,0 +1,41 @@
+import React from 'react';
+
+# Seeding the Database
+
+Follow these steps to populate the database:
+
+## Build a Dictionary
+
+We will need to build the dictionaries into a file that can be used to populate the MongoDB database.
+
+The following command places the JSON dictionaries in the `build/` directory:
+
+```
+yarn build:dictionaries
+```
+
+Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
+
+## Populate the MongoDB Database
+
+Now that the data has been compiled, it needs to be used to populate, or seed, the MongoDB database.
+
+Start the development server:
+
+```
+yarn dev
+```
+
+Then make a `POST` request to the following route:
+
+```
+/api/v1/test/populate
+```
+
+For example:
+
+```
+http://localhost:8080/api/v1/test/populate // POST
+```
+
+After about 20 seconds, you will see the `✅ Seeding successful.` message in your terminal. Now you have data in your MongoDB database.
