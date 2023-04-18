@@ -40,10 +40,13 @@ const handleDeveloperUsage = async (developer) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async (apiKey) => {
+  console.time('Finding developer account');
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
   const developers = await Developer.find({});
-  return developers.find((dev) => compareSync(apiKey, dev.apiKey));
+  const developer = developers.find((dev) => compareSync(apiKey, dev.apiKey));
+  console.timeEnd('Finding developer account');
+  return developer;
 };
 
 export default async (req, res, next) => {
