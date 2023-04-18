@@ -17,7 +17,8 @@ const trackEvent = ({
     measurement_id: GA_TRACKING_ID,
     api_secret: GA_API_SECRET,
   };
-  const isProduction = isProductionConfig && params.GA_TRACKING_ID && params.GA_API_SECRET;
+
+  const isProduction = isProductionConfig && params.measurement_id && params.api_secret;
 
   const data = JSON.stringify({
     client_id: clientIdentifier,
