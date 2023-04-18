@@ -58,7 +58,7 @@ Please follow the [Firebase Configuration Guide here](./.github/FIREBASE_CONFIG.
 
 ### 3. Local Development
 
-Once you've configured your prpoject, you can start the Igbo API dev server by running:
+Once you've configured your project, you can start the Igbo API dev server by running:
 
 ```
 yarn dev
