@@ -4,6 +4,7 @@ import {
   GA_API_SECRET,
   GA_URL,
   DEBUG_GA_URL,
+  isProduction as isProductionConfig,
 } from '../config';
 
 const trackEvent = ({
@@ -16,7 +17,7 @@ const trackEvent = ({
     measurement_id: GA_TRACKING_ID,
     api_secret: GA_API_SECRET,
   };
-  const isProduction = !process.env.FUNCTIONS_EMULATOR && params.GA_TRACKING_ID && params.GA_API_SECRET;
+  const isProduction = isProductionConfig && params.GA_TRACKING_ID && params.GA_API_SECRET;
 
   const data = JSON.stringify({
     client_id: clientIdentifier,
