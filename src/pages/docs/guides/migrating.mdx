@@ -1,0 +1,19 @@
+import React from 'react';
+
+# Migrating Database
+
+The database has gone through many data migrations since the beginning of this project. Whenever the data schema of the 
+Word or Example model need to change, the contributor making that schema change will create a new migration script 
+following the [`migrate-mongo` guides](https://www.npmjs.com/package/migrate-mongo).
+
+Once you've created a migration script, you can run the following command to apply the migration to your local MongoDB database:
+
+```bash
+yarn migrate-up
+```
+
+If you want to rollback your migration, you can run the following command:
+
+```bash
+yarn migrate-down
+```

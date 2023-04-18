@@ -1,7 +1,7 @@
 # Igbo API
 [![Deploy to Firebase](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml) [![Dockerize Igbo API](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml)
 
-[Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://github.com/nkowaokwu/igbo_api/wiki) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
+[Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://igboapi.com/docs) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
 
 > Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people with more than 20 different dialects.
 
@@ -179,12 +179,7 @@ yarn test
 
 If you want to run your MongoDB instance and tests in separate terminals, you can run:
 
-```
-yarn start:database
-```
 
-in one terminal, and the following in another:
+## Next Steps
 
-```
-yarn jest
-```
+Visit our 📚 [documentation website](https://igboapi.com/docs) to learn how to use the Igbo API within your own project.
