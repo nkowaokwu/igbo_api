@@ -645,14 +645,4 @@ describe('MongoDB Words', () => {
       expect(ọrụWord).toBeTruthy();
     });
   });
-
-  describe('API', () => {
-    it('should exclude headers', async () => {
-      const keyword = 'bia';
-      const res = await getWordsV2({ keyword });
-      expect(res.status).toEqual(200);
-      expect(res.headers['X-Powered-By']).toBe(undefined);
-      expect(res.headers['Transfer-Encoding']).toBe(undefined);
-    });
-  });
 });

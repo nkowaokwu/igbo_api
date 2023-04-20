@@ -176,8 +176,6 @@ export const packageResponse = ({
   version,
 }) => {
   res.set({ 'Content-Range': contentLength });
-  res.removeHeader('Transfer-Encoding');
-  res.removeHeader('X-Powered-By');
   const response = version === Versions.VERSION_2 ? { data: docs, length: contentLength } : docs;
   return res.send(response);
 };
