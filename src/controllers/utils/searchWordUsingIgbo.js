@@ -35,23 +35,27 @@ const searchWordUsingIgbo = async ({
         : null),
       )
       : keywords;
+    console.time('Generate regular search Igbo query');
     const regularSearchIgboQuery = searchIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
       searchWord,
       filters,
     });
+    console.timeEnd('Generate regular search Igbo query');
     const igboQuery = !strict
       ? regularSearchIgboQuery
       : strictSearchIgboQuery(
         allSearchKeywords,
       );
+    console.time('Generate definitions within Igbo query');
     const definitionsWithinIgboQuery = searchDefinitionsWithinIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
       searchWord,
       filters,
     });
+    console.timeEnd('Generate definitions within Igbo query');
     console.time(`Searching Igbo words for ${searchWord}`);
     const [igboResults, englishResults] = await Promise.all([
       findWordsWithMatch({ match: igboQuery, version }),

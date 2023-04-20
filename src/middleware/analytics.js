@@ -79,12 +79,14 @@ export default async (req, _, next) => {
     const { keyword } = req.query;
     const { pathname } = req._parsedUrl;
 
+    console.time('Tracking event');
     await trackEvent({
       clientIdentifier: developerAPIKey || 'anon_client_id',
       category: pathname,
       action: method,
       keyword,
     });
+    console.timeEnd('Tracking event');
 
     return next();
   } catch (err) {
