@@ -47,6 +47,9 @@ export const cjkRange = '[\u4E00-\u9FFF]';
 const caseInsensitiveN = `${'[n\u1e44\u01f9\u0144N\u1e45\u01f8\u0143'
   .normalize('NFD')}${'\u1e44\u01f9\u0144\u1e45\u01f8\u0143]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
+const caseInsensitiveM = `${'[m\u1e44\u01f9\u0144M\u1e45\u01f8\u0143'
+  .normalize('NFD')}${'\u1e44\u01f9\u0144\u1e45\u01f8\u0143]'
+  .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveA = `${'[aA'}${'\u0061\u00e0\u0101\u00c0\u00c1\u0100]'
   .normalize('NFC')}+[\u00B4\u0301\u0060\u00AF\u0304\u0323\u0300]{0,}`;
 const caseInsensitiveE = `${'[eE'}${'\u00e8\u00e9\u0113\u00c8\u00c9\u0112]'
@@ -64,6 +67,8 @@ const caseInsensitiveỤ = `${'(([uU]+[\u0323]{0,})|[\u1EE5\u1EE4])'}+[\u00B4\u0
 export default {
   n: caseInsensitiveN,
   N: caseInsensitiveN,
+  m: caseInsensitiveM,
+  M: caseInsensitiveM,
   a: caseInsensitiveA,
   A: caseInsensitiveA,
   e: caseInsensitiveE,
