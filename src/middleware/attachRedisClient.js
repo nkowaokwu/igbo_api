@@ -18,7 +18,6 @@ const afterResponse = (redisClient) => {
 };
 
 export default async (req, res, next) => {
-  console.time('Creating Redis client');
   const redisClient = REDIS_HOST && REDIS_PORT && REDIS_USERNAME && REDIS_PASSWORD
     ? createClient({
       socket: {
@@ -46,6 +45,5 @@ export default async (req, res, next) => {
   res.on('close', afterResponse);
 
   req.redisClient = redisClient;
-  console.timeEnd('Creating Redis client');
   return next();
 };

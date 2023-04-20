@@ -239,7 +239,6 @@ export const handleQueries = async ({
     wordClasses: wordClassesQuery,
     resolve: resolveQuery,
   } = query;
-  console.time('Handling queries');
   const { id } = params;
   let allVerbsAndSuffixes;
   const hasQuotes = keywordQuery && (keywordQuery.match(/["'].*["']/) !== null);
@@ -343,7 +342,6 @@ export const handleQueries = async ({
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };
-  console.timeEnd('Handling queries');
   return {
     id,
     version,
