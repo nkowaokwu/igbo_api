@@ -11,4 +11,8 @@ export default {
     value: 'proverb',
     label: 'Proverb',
   },
+  BIBLICAL: {
+    value: 'biblical',
+    label: 'biblical',
+  },
 };
