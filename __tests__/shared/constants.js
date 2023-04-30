@@ -53,6 +53,7 @@ export const EXAMPLE_KEYS_V2 = [
   'english',
   'meaning',
   'style',
+  'type',
   'associatedWords',
   'associatedDefinitionsSchemas',
   'id',

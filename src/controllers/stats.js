@@ -16,6 +16,7 @@ export const getStats = async (req, res, next) => {
       totalDevelopers,
       totalExamples,
       totalIgboDefinitions,
+      totalProverbs,
     ] = await Promise.all([
       Stat.findOne({ type: StatTypes.SUFFICIENT_WORDS }),
       Stat.findOne({ type: StatTypes.HEADWORD_AUDIO_PRONUNCIATIONS }),
@@ -23,6 +24,7 @@ export const getStats = async (req, res, next) => {
       Developer.find(searchForAllDevelopers()),
       Stat.findOne({ type: StatTypes.SUFFICIENT_EXAMPLES }),
       Stat.findOne({ type: StatTypes.IGBO_DEFINITIONS }),
+      Stat.findOne({ type: StatTypes.PROVERB_EXAMPLES }),
     ]);
     const stats = {
       totalWords: totalWords.value,
@@ -31,6 +33,7 @@ export const getStats = async (req, res, next) => {
       totalNsibidiWords: totalNsibidiWords.value,
       totalDevelopers: totalDevelopers.length,
       totalIgboDefinitions: totalIgboDefinitions.value,
+      totalProverbs: totalProverbs.value,
     };
     await handleCloseConnection(connection);
     return res.send(stats);
