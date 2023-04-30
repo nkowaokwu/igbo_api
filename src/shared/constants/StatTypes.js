@@ -3,6 +3,7 @@ export default {
   COMPLETE_WORDS: 'complete_words',
   SUFFICIENT_EXAMPLES: 'sufficient_examples',
   COMPLETE_EXAMPLES: 'complete_examples',
+  PROVERB_EXAMPLES: 'proverb_examples',
   DIALECTAL_VARIATIONS: 'dialectal_variations',
   HEADWORD_AUDIO_PRONUNCIATIONS: 'headword_audio_pronunciations',
   STANDARD_IGBO: 'standard_igbo',
