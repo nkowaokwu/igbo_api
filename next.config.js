@@ -6,11 +6,7 @@ const withNextra = nextra({
   themeConfig: './theme.config.jsx',
 });
 
-module.exports = (_, { defaultConfig }) => ({
-  ...defaultConfig,
-  ...withNextra({
-    unstable_flexsearch: true,
-  }),
+module.exports = withNextra({
   distDir: 'build/dist',
   generateBuildId: async () => 'api-homepage',
   i18n,
