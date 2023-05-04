@@ -1,0 +1,6 @@
+{
+  "seeding": "Seeding the Database",
+  "firebase": "Firebase Configuration",
+  "migrating": "Migrating the Database",
+  "testing": "Testing"
+}
