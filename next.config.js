@@ -6,8 +6,10 @@ const withNextra = nextra({
   themeConfig: './theme.config.jsx',
 });
 
-module.exports = withNextra({
+const nextConfig = {
   distDir: 'build/dist',
   generateBuildId: async () => 'api-homepage',
   i18n,
-});
+};
+
+module.exports = withNextra(nextConfig);
