@@ -1,0 +1,109 @@
+import React from 'react';
+import Link from 'next/link';
+import { Tab, Tabs } from 'nextra-theme-docs';
+import { useState } from 'react'
+
+# Examples
+
+Base URL:
+```
+https://igboapi.com/api/v1/
+```
+
+***
+
+###### Get Multiple Examples
+
+```js
+GET /examples
+```
+Get examples from dictionary
+
+ **Parameters**
+
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **keyword** *required* | Keyword for querying words |  `keyword=ego` |
+| **page** | Page for results | `page=1` |
+| **range** | Page for result using [x,y] syntax, max range includes 25 documents | `range=[0, 24]` |
+
+ **Responses**
+
+ An array of up to 10 example JSON objects.
+
+ ```js
+[
+  {
+    "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
+    "english": "Agụ is eating unripe mango",
+    "associatedWords": [],
+    "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
+    "meaning": "",
+    "style": "",
+  },
+]
+ ```
+
+ ***
+
+ ###### Get a Single Example
+
+
+```js
+GET /examples/{exampleId}
+```
+Returns a single example JSON object from the database
+
+ **Parameters**
+
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **exampleId** *required* | The example Id | `id=1234567890` |
+
+ **Responses**
+
+A single example JSON object will be returned.
+
+ ```js
+{
+  "nsibidi": "",
+  "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
+  "english": "Agụ is eating unripe mango",
+  "associatedWords": [],
+  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
+  "updatedAt": "2022-05-02T06:18:09.906Z",
+  "meaning": "",
+  "style": "",
+  "associatedDefinitionsSchemas": [],
+}
+ ```
+
+  **Response Code**
+<Tabs items={['200', '400', '403', '404']}>
+  <Tab>
+    **Success**:
+    ```
+    [JSON Object]
+    ```
+
+    If there are more than 10 examples that match the query, you can look at the `Content-Range` response header to find the total number of matching examples.
+  </Tab>
+  <Tab>
+    **Bad Request**:
+   ```
+    { "error": "string" }
+   ```
+  </Tab>
+  <Tab>
+      **Invalid API Key**:
+   ```
+    { "error": "string" }
+   ```
+  </Tab>
+  <Tab>
+       **Not Found**:
+   ```
+    { "error": "string" }
+   ```
+  </Tab>
+</Tabs>

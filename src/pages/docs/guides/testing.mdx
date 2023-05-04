@@ -1,0 +1,40 @@
+import React from 'react';
+
+# Testing
+
+Creating and maintaining our automated tests ensure that the API is always reliable and stable for the community.
+
+## Frontend
+
+Frontend tests focus specifically on the Igbo API homepage using Cypress. First, run:
+
+```
+yarn build
+```
+
+Then run the following to start Cypress:
+
+```
+yarn cypress
+```
+
+## Backend
+
+If you would like to have one terminal dedicated to running tests (the downside is a very noisy terminal), you can run 
+the following:
+
+```
+yarn test
+```
+
+If you want to run your MongoDB instance and tests in separate terminals, you can run the following command in one terminal:
+
+```
+yarn start:database
+```
+
+Open another terminal and run the following:
+
+```
+yarn jest
+```
