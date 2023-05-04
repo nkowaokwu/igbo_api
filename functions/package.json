@@ -78,7 +78,6 @@
     "shelljs": "^0.8.4",
     "shx": "^0.3.3",
     "string-similarity": "^4.0.2",
-    "swagger-ui-express": "^4.1.4",
     "tailwindcss": "3",
     "unicharadata": "^9.0.0-alpha.6",
     "uuid": "^8.3.2",

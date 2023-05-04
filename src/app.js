@@ -2,7 +2,6 @@ import './services/firebase';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import swaggerUI from 'swagger-ui-express';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
@@ -16,7 +15,7 @@ import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
-import { SWAGGER_DOCS, CORS_CONFIG, SWAGGER_OPTIONS } from './config';
+import { CORS_CONFIG } from './config';
 
 const app = express();
 
@@ -40,9 +39,6 @@ app.use('/_next', express.static('./build/dist'));
 app.use('/assets', cache(), express.static('./build/dist/assets'));
 app.use('/fonts', cache(), express.static('./build/dist/fonts'));
 app.use('/services', cache(), express.static('./services'));
-
-/* Sets up the doc site */
-app.use('/docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCS, SWAGGER_OPTIONS));
 
 /* Grabs data from MongoDB */
 app.use(`/api/${Versions.VERSION_1}`, cache(86400, 172800), router);
