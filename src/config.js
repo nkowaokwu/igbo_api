@@ -1,4 +1,6 @@
 import * as functions from 'firebase-functions';
+import swaggerConfig from '../swagger.json';
+import injectWordClass from './shared/utils/injectWordClass';
 import './shared/utils/wrapConsole';
 
 const Environment = {
@@ -39,6 +41,7 @@ const isTestingEnvironment = (
     && !isProduction
   )
 );
+const DOMAIN_NAME = 'igboapi.com';
 export const PORT = 8080;
 export const PROD_LIMIT = 2500;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
@@ -69,6 +72,21 @@ export const CLIENT_TEST = config?.env?.client_test;
 export const CORS_CONFIG = {
   origin: true,
   exposedHeaders: ['Content-Range', 'X-Content-Range'],
+};
+
+// Documentation
+const SWAGGER_SETTINGS = {
+  title: 'Igbo API',
+  version: '1.51.0',
+  description: 'Igbo Dictionary API contains Igbo words, definitions, and examples',
+  host: `${isProduction ? DOMAIN_NAME : `localhost:${PORT}`}`,
+  schemes: `${isProduction ? ['https'] : ['http']}`,
+};
+
+const docs = { ...injectWordClass(swaggerConfig), ...SWAGGER_SETTINGS };
+export const SWAGGER_DOCS = docs;
+export const SWAGGER_OPTIONS = {
+  customSiteTitle: 'Igbo API Documentation',
 };
 
 // API Homepage
