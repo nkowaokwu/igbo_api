@@ -35,9 +35,9 @@ app.use(cors(CORS_CONFIG));
 app.set('trust proxy', 1);
 
 /* Provides static assets for the API Homepage */
-app.use('/_next', express.static('./build/dist'));
-app.use('/assets', cache(), express.static('./build/dist/assets'));
-app.use('/fonts', cache(), express.static('./build/dist/fonts'));
+app.use('/_next', express.static('./dist'));
+app.use('/assets', cache(), express.static('./dist/assets'));
+app.use('/fonts', cache(), express.static('./dist/fonts'));
 app.use('/services', cache(), express.static('./services'));
 
 /* Grabs data from MongoDB */
