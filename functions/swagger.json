@@ -186,6 +186,27 @@
             "in": "query",
             "required": false,
             "type": "boolean"
+          },
+          {
+            "name": "isStandardIgbo",
+            "description": "Returns words that are marked as Standard Igbo",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pronunciation",
+            "description": "Returns words that have audio pronunciations",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "nsibidi",
+            "description": "Returns words that have Nsịbịdị equivalents",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
