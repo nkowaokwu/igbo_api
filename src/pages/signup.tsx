@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Heading, Text, chakra, useMediaQuery } from '@chakra-ui/react';
 import axios from 'axios';
