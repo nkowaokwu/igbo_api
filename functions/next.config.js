@@ -7,7 +7,7 @@ const withNextra = nextra({
 });
 
 module.exports = withNextra({
-  distDir: 'build/dist',
+  distDir: 'src',
   generateBuildId: async () => 'api-homepage',
   i18n,
 });
