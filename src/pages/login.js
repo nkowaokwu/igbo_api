@@ -1,9 +1,7 @@
-import React from 'react'
+/* eslint-disable linebreak-style */
+import React from 'react';
+import { Box } from '@chakra-ui/react';
 
-const login = () => {
-  return (
-    <div>login</div>
-  )
-}
+const Login = () => <Box>Login</Box>;
 
-export default login
+export default Login;
