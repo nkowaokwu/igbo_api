@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 
 export default {
@@ -20,6 +21,36 @@ export default {
     },
   },
   docsRepositoryBase: 'https://github.com/nkowaokwu/igbo_api',
+  head: (
+    <>
+      {/* Metadata */}
+      <meta name="title" content="Technical documentation for the Igbo API" />
+      <meta name="description" content="Technical documentation for the Igbo API" />
+      <meta property="og:title" content="Igbo API Documentation" />
+      <meta property="og:description" content="Technical documentation for the Igbo API" />
+      <meta property="twitter:title" content="Igbo API Documentation" />
+      <meta property="twitter:description" content="Technical documentation for the Igbo API" />
+      <meta property="twitter:image:alt" content="Igbo API Documentation" />
+
+      {/* Meta image */}
+      <meta property="og:image" content="https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/icons/igbo_api/igbo_api_banner.png" />
+      <meta property="twitter:image" content="https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/icons/igbo_api/igbo_api_banner.png" />
+
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://igboapi.com/" />
+
+      {/* Twitter */}
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@nkowaokwu" />
+      <meta property="twitter:url" content="https://igboapi.com/" />
+
+      {/* Favicon */}
+      <link rel="apple-touch-icon" sizes="180x180" href="https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/icons/igbo_api/favicon/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/icons/igbo_api/favicon/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/icons/igbo_api/favicon/favicon-16x16.png" />
+    </>
+  ),
   footer: {
     text: (
       <span>
@@ -32,17 +63,6 @@ export default {
       </span>
     ),
   },
-
-  head: (
-    <>
-      <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon/favicon-16x16.png" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Igbo API Documentation" />
-      <meta property="og:description" content="Technical documentation for the Igbo API" />
-    </>
-  ),
   chat: {
     link: 'https://twitter.com/nkowaokwu',
     // eslint-disable-next-line max-len
