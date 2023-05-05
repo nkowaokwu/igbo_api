@@ -43,7 +43,8 @@
     "start:database:primary": "mongod --port 2717 --dbpath ./mongos/db1 --replSet rs0 --quiet",
     "start:database:secondary:first": "mongod --port 2727 --dbpath ./mongos/db2 --replSet rs0 --quiet",
     "start:database:secondary:second": "mongod --port 2737 --dbpath ./mongos/db3 --replSet rs0 --quiet",
-    "test": "npm-run-all -p -r start:database jest"
+    "test": "npm-run-all -p -r start:database jest",
+    "tsc":"tsc"
   },
   "engines": {
     "node": ">=18",
