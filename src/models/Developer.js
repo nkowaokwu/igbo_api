@@ -4,7 +4,12 @@ import { toJSONPlugin, toObjectPlugin } from './plugins';
 const { Schema } = mongoose;
 export const developerSchema = new Schema({
   name: { type: String, default: '', required: true },
-  apiKey: { type: String, default: '', required: true },
+  apiKey: {
+    type: String,
+    default: '',
+    required: true,
+    index: true,
+  },
   email: { type: String, default: '', required: true },
   password: { type: String, default: '', required: true },
   usage: {
