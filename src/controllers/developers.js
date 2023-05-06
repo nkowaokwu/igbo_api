@@ -33,12 +33,11 @@ export const postDeveloper = async (req, res, next) => {
     }
 
     const apiKey = generateApiKey();
-    const hashedApiKey = await hash(apiKey, 10);
     const hashedPassword = await hash(password, 10);
     const developer = new Developer({
       name,
       email,
-      apiKey: hashedApiKey,
+      apiKey,
       password: hashedPassword,
     });
     await developer.save();
