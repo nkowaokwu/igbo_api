@@ -5,7 +5,11 @@
     "rootDir": "./",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowJs": false
   },
+  "exclude": [
+    "node_modules"
+  ],
   "files": []
 }
