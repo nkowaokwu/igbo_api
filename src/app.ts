@@ -17,7 +17,7 @@ import errorHandler from './middleware/errorHandler';
 import Versions from './shared/constants/Versions';
 import { CORS_CONFIG } from './config';
 
-const app = express();
+const app: express.Application = express();
 
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,4 +60,4 @@ app.use(errorHandler);
 
 export default app;
 
-export const api = app;
+export const api: express.Application = app;
