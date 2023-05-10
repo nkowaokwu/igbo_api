@@ -1,4 +1,0 @@
-FROM alpine:latest
-RUN apk add dos2unix
-WORKDIR /app
-ENTRYPOINT [ "sh", "-c", "ls -l && dos2unix **/*" ]
