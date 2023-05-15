@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { isDevelopment } from '../config';
 import { handleRequest, FALLBACK_API_KEY, findDeveloper } from '../controllers/developers/utils';
 
@@ -24,4 +25,13 @@ export default async (req, res, next) => {
     }
     return res.status(status).send({ error: err.message });
   }
+=======
+import { fetchAPIKey, findDeveloper } from '../shared/constants/DeveloperUtils';
+
+export default async (req, res, next) => {
+  // const { apiLimit } = req.query;
+  const apiKey = fetchAPIKey();
+
+  const developer = await findDeveloper(apiKey);
+>>>>>>> dff17ab (chore: add developer function helpers, update validateApiKey middleware #627)
 };
