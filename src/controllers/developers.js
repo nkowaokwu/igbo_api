@@ -17,11 +17,7 @@ export const postDeveloper = async (req, res, next) => {
 
   try {
     const { body: data } = req;
-    const {
-      email,
-      password,
-      name,
-    } = data;
+    const { email, password, name } = data;
 
     const developers = await Developer.find({ email });
     if (developers.length && email !== TEST_EMAIL) {
@@ -53,6 +49,25 @@ export const postDeveloper = async (req, res, next) => {
     return res.send({
       message: `Success email sent to ${email}`,
       apiKey,
+    });
+  } catch (err) {
+    await handleCloseConnection(connection);
+    if (!isTest) {
+      console.trace(err);
+    }
+    return next(err);
+  }
+};
+
+export const getDeveloper = async (req, res, next) => {
+  const connection = createDbConnection();
+  const Developer = connection.model('Developer', developerSchema);
+  try {
+    const developers = await Developer.find();
+    await handleCloseConnection(connection);
+    return res.send({
+      message: 'Success',
+      developers,
     });
   } catch (err) {
     await handleCloseConnection(connection);
