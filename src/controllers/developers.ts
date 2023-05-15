@@ -64,7 +64,13 @@ export const getDeveloper = async (req, res, next) => {
   const Developer = connection.model('Developer', developerSchema);
   const { id } = req.params;
   try {
-    const developer = await Developer.find({ _id: devId });
+    let developer = await Developer.find({ _id: devId });
+    
+    if (developer) {
+      throw new Error('Developer doesn\'t exist');
+    }
+
+    developer = developer.toJSON();
     await handleCloseConnection(connection);
     return res.send({
       message: 'Success',
