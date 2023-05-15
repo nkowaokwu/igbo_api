@@ -150,5 +150,11 @@ functions/node_modules
 functions/src
 functions/yarn.lock
 yarn.lock
+<<<<<<< HEAD
 .idea
 .firebaserc
+=======
+
+# prettier
+.prettierignore
+>>>>>>> d5576a8 (add developer utils constant #627)
