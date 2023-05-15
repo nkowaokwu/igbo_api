@@ -7,6 +7,7 @@ import {
   isProduction,
 } from '../config';
 import { createDbConnection } from '../services/database';
+import { fetchAPIKey } from '../shared/constants/DeveloperUtils';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -52,7 +53,7 @@ const findDeveloper = async (apiKey) => {
 export default async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
-    let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
+    let apiKey = fetchAPIKey();
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
