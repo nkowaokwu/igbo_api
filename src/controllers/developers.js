@@ -61,7 +61,7 @@ export const postDeveloper = async (req, res, next) => {
 export const getDeveloper = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
-  const devId = req.params.id;
+  const { id } = req.params;
   try {
     const developer = await Developer.find({ _id: devId });
     await handleCloseConnection(connection);
