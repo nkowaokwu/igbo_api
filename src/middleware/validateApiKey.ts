@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { developerSchema } from '../models/Developer';
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
 import { createDbConnection } from '../services/database';
+import { fetchAPIKey } from '../shared/constants/DeveloperUtils';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -61,7 +62,7 @@ interface UsingMainKeyRequest extends Request {
 export default async (req: UsingMainKeyRequest, res: Response, next: NextFunction) => {
   try {
     const { apiLimit } = req.query;
-    let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
+    let apiKey = fetchAPIKey();
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
