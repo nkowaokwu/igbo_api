@@ -63,10 +63,10 @@ export const getDeveloper = async (req, res, next) => {
   const Developer = connection.model('Developer', developerSchema);
   const { id } = req.params;
   try {
-    let developer = await Developer.find({ _id: devId });
-    
-    if (developer) {
-      throw new Error('Developer doesn\'t exist');
+    let developer = await Developer.find({ _id: id });
+
+    if (!developer.length) {
+      throw new Error("Developer doesn't exist");
     }
 
     developer = developer.toJSON();
