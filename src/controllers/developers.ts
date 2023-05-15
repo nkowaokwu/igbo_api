@@ -62,12 +62,13 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
 export const getDeveloper = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
+  const devId = req.params.id;
   try {
-    const developers = await Developer.find();
+    const developer = await Developer.find({ _id: devId });
     await handleCloseConnection(connection);
     return res.send({
       message: 'Success',
-      developers,
+      developer,
     });
   } catch (err) {
     await handleCloseConnection(connection);
