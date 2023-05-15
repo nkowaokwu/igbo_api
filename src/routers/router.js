@@ -10,6 +10,7 @@ import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
+import authorization from '../middleware/authorization';
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
-router.get('/developers/:id', validId, attachRedisClient, getDeveloper);
+router.get('/developers/:id', authorization, validId, attachRedisClient, getDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 
