@@ -11,7 +11,10 @@ import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
 import authorization from '../middleware/authorization';
+<<<<<<< HEAD
 import { login } from '../controllers/auth/login';
+=======
+>>>>>>> d8994ba (add authorization middleware  #627)
 
 const router = express.Router();
 
@@ -31,7 +34,11 @@ router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
+<<<<<<< HEAD
 router.get('/developers/developer', authorization, attachRedisClient, getDeveloper);
+=======
+router.get('/developers/:id', authorization, validId, attachRedisClient, getDeveloper);
+>>>>>>> d8994ba (add authorization middleware  #627)
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 router.post('/login', login);
