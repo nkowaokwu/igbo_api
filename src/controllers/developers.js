@@ -65,11 +65,10 @@ export const getDeveloper = async (req, res, next) => {
   try {
     const developer = await Developer.find({ _id: id });
 
-    if (!developer.length) {
+    if (!developer) {
       throw new Error("Developer doesn't exist");
     }
 
-    // developer = developer.toJSON();
     await handleCloseConnection(connection);
     return res.send({
       message: 'Success',
