@@ -3,14 +3,13 @@ import { FALLBACK_API_KEY, fetchAPIKey, findDeveloper } from '../shared/constant
 
 export default async (req, res, next) => {
   try {
-    // const { apiLimit } = req.query;
     let apiKey = fetchAPIKey(req);
 
     if (!apiKey && isDevelopment) {
       apiKey = FALLBACK_API_KEY;
     }
 
-    //   check if api key belongs to developer
+    // check if api key belongs to developer
     await findDeveloper(apiKey);
 
     return next();

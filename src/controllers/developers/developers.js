@@ -1,9 +1,9 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { isProduction, CLIENT_TEST, isTest } from '../config';
-import { developerSchema } from '../models/Developer';
-import { createDbConnection, handleCloseConnection } from '../services/database';
-import { sendNewDeveloper } from './email';
+import { isProduction, CLIENT_TEST, isTest } from '../../config';
+import { developerSchema } from '../../models/Developer';
+import { createDbConnection, handleCloseConnection } from '../../services/database';
+import { sendNewDeveloper } from '../email';
 
 const TEST_EMAIL = 'developer@example.com';
 
@@ -66,7 +66,7 @@ export const getDeveloper = async (req, res, next) => {
     const developer = await Developer.findById(id);
 
     if (!developer) {
-      throw new Error('Developer doesn\'t exist');
+      throw new Error("Developer doesn't exist");
     }
 
     await handleCloseConnection(connection);
