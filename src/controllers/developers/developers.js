@@ -1,10 +1,17 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
+<<<<<<<< HEAD:src/controllers/developers.ts
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { Express } from '../types';
 import { sendNewDeveloper } from './email';
+========
+import { isProduction, CLIENT_TEST, isTest } from '../../config';
+import { developerSchema } from '../../models/Developer';
+import { createDbConnection, handleCloseConnection } from '../../services/database';
+import { sendNewDeveloper } from '../email';
+>>>>>>>> 53662e8 (chore: move developers controller method to developers folder #627):src/controllers/developers/developers.js
 
 const TEST_EMAIL = 'developer@example.com';
 
@@ -41,8 +48,8 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
     if (!isTest) {
       try {
         await sendNewDeveloper({ to: email, apiKey, name });
-      } catch (err: any) {
-        console.log(err?.response?.body?.errors);
+      } catch (err) {
+        console.log(err.response.body.errors);
       }
     }
     await handleCloseConnection(connection);
@@ -50,7 +57,32 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
       message: `Success email sent to ${email}`,
       apiKey,
     });
-  } catch (err: any) {
+  } catch (err) {
+    await handleCloseConnection(connection);
+    if (!isTest) {
+      console.trace(err);
+    }
+    return next(err);
+  }
+};
+
+export const getDeveloper = async (req, res, next) => {
+  const connection = createDbConnection();
+  const Developer = connection.model('Developer', developerSchema);
+  const { id } = req.params;
+  try {
+    const developer = await Developer.findById(id);
+
+    if (!developer) {
+      throw new Error("Developer doesn't exist");
+    }
+
+    await handleCloseConnection(connection);
+    return res.send({
+      message: 'Success',
+      developer,
+    });
+  } catch (err) {
     await handleCloseConnection(connection);
     if (!isTest) {
       console.trace(err);
