@@ -8,7 +8,7 @@ import {
   checkDeveloperAPIKey,
   fetchAPIKey,
   findDeveloper,
-} from '../shared/constants/DeveloperUtils';
+} from '../controllers/developers';
 
 export default async (req, res, next) => {
   try {
