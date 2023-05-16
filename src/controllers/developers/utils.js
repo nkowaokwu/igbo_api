@@ -11,16 +11,11 @@ export const fetchRequestQuery = (req) => {
   return apiLimit;
 };
 
-// const isSameDate = (first, second) =>
-//   first.getFullYear() === second.getFullYear() &&
-//   first.getMonth() === second.getMonth() &&
-//   first.getDate() === second.getDate();
-
-const isSameDate = (first, second) => {
-  const firstISO = first.toISOString().slice(0, 10); // Extract YYYY-MM-DD from first date
-  const secondISO = second.toISOString().slice(0, 10); // Extract YYYY-MM-DD from second date
-  return firstISO === secondISO;
-};
+const isSameDate = (first, second) => (
+  first.getFullYear() === second.getFullYear()
+    && first.getMonth() === second.getMonth()
+    && first.getDate() === second.getDate()
+);
 
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer) => {
