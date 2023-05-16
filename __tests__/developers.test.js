@@ -1,16 +1,5 @@
-import {
-  createDeveloper,
-  getExample,
-  getExamples,
-  getWord,
-  getWords,
-} from './shared/commands';
-import {
-  developerData,
-  malformedDeveloperData,
-  wordId,
-  exampleId,
-} from './__mocks__/documentData';
+import { createDeveloper, getDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
+import { developerData, malformedDeveloperData, wordId, exampleId } from './__mocks__/documentData';
 
 describe('Developers', () => {
   describe('/POST mongodb developers', () => {
@@ -109,6 +98,13 @@ describe('Developers', () => {
       await getWord(limitWordId, {}, { apiKey: developerRes.body.apiKey });
       const res = await getWord(limitWordId, { apiLimit: 2 }, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(403);
+    });
+
+    it('should return developer document with correct credentials', async () => {
+      const developerRes = await createDeveloper(developerData);
+      const developerDetails = await getDeveloper(exampleId, {}, { apiKey: developerRes.body.apiKey });
+      expect(developerDetails.status).toEqual(200);
+      expect(developerDetails.body).not.toEqual(undefined);
     });
   });
 });
