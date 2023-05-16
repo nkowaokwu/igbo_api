@@ -101,3 +101,10 @@ export const searchMockedTerm = (term) => {
   const { wordReg: regexTerm } = createRegExp(term);
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
+
+/* fetch developer details */
+export const getDeveloper = (id, options = {}) => (
+  server
+    .get(`${API_ROUTE}/developers/${id}`)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
