@@ -53,9 +53,7 @@ export const findDeveloper = async (apiKey) => {
   return developer;
 };
 
-export const checkDeveloperAPIKey = async (req, res, next) => {
-  const { apiLimit } = fetchRequestQuery(req);
-  const apiKey = fetchAPIKey(req);
+export const checkDeveloperAPIKey = async (apiLimit, apiKey, next) => {
   const developer = await findDeveloper(apiKey);
 
   if (developer) {
