@@ -1,5 +1,5 @@
 import { isDevelopment } from '../config';
-import { FALLBACK_API_KEY, fetchAPIKey, findDeveloper } from '../shared/constants/DeveloperUtils';
+import { FALLBACK_API_KEY, fetchAPIKey, findDeveloper } from '../controllers/developers';
 
 export default async (req, res, next) => {
   try {
