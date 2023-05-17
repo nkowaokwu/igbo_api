@@ -14,7 +14,8 @@ export default async (req, res, next) => {
 
     return next();
   } catch (err) {
-    res.status(400);
-    return res.send({ error: err.message });
+    res
+      .status(400)
+      .send({ error: err.message });
   }
 };
