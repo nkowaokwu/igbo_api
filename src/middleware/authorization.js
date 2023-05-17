@@ -9,7 +9,7 @@ export default async (req, res, next) => {
       apiKey = FALLBACK_API_KEY;
     }
 
-    // check if api key belongs to developer
+    // Check if API key belongs to the requested developer
     await findDeveloper(apiKey);
 
     return next();
