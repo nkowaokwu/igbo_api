@@ -28,6 +28,7 @@ To run this project locally, the following tools need to be installed:
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
 * [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
 * [Firebase](https://console.firebase.google.com/)
+* [Java](https://www.oracle.com/java/technologies/downloads/)
 
 ### 1. Installation
 
