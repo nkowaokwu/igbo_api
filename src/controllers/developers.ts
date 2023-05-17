@@ -78,7 +78,7 @@ export const getDeveloper = async (req, res, next) => {
     }
 
     await handleCloseConnection(connection);
-    return res.send({
+    return res.status.send({
       message: 'Success',
       developer,
     });
