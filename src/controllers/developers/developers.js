@@ -67,7 +67,7 @@ export const getDeveloper = async (req, res, next) => {
     const developer = await Developer.findById(id);
 
     if (!developer) {
-      throw new Error("Developer doesn't exist");
+      throw new Error('Developer doesn\'t exist');
     }
 
     await handleCloseConnection(connection);
