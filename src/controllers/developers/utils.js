@@ -67,6 +67,5 @@ export const checkDeveloperAPIKey = async (req, res, next) => {
     return next();
   }
 
-  res.status(401);
-  return res.send({ error: 'Your API key is invalid' });
+  throw new Error('Invalid API Key. Check your API Key and try again', 401);
 };
