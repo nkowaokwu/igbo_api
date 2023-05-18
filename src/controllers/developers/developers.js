@@ -60,23 +60,14 @@ export const postDeveloper = async (req, res, next) => {
 };
 
 export const getDeveloper = async (req, res, next) => {
-  const connection = createDbConnection();
-  const Developer = connection.model('Developer', developerSchema);
-  const { id } = req.params;
   try {
-    const developer = await Developer.findById(id);
+    const { developer } = res.locals;
 
-    if (!developer) {
-      throw new Error("Developer doesn't exist");
-    }
-
-    await handleCloseConnection(connection);
-    return res.status.send({
+    return res.status(200).send({
       message: 'Success',
       developer,
     });
   } catch (err) {
-    await handleCloseConnection(connection);
     if (!isTest) {
       console.trace(err);
     }
