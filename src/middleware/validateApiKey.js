@@ -64,7 +64,7 @@ const findDeveloper = async (apiKey) => {
 export default async (req, res, next) => {
   try {
     let apiKey = fetchAPIKey(req);
-    const { apiLimit } = fetchRequestQuery(req);
+    const { apiLimit } = handleRequest(req);
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
