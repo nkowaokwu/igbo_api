@@ -11,6 +11,13 @@ export const fetchRequestQuery = (req) => {
   return apiLimit;
 };
 
+export const handleRequest = (req) => {
+  const { apiLimit } = req.query;
+  const apiToken = req.headers['X-API-Key'] || req.headers['x-api-key'];
+
+  return { apiLimit, apiToken };
+};
+
 const isSameDate = (first, second) => (
   first.getFullYear() === second.getFullYear()
     && first.getMonth() === second.getMonth()
