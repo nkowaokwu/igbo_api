@@ -46,7 +46,7 @@ export const findDeveloper = async (apiKey) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
   const developer = await Developer.find({ apiKey });
-  if (!developer.length) {
+  if (!developer) {
     throw new Error('Invalid API Key. Check your API Key and try again');
   }
   console.timeEnd('Finding developer account');
