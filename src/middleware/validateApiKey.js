@@ -1,14 +1,5 @@
-import {
-  MAIN_KEY,
-  isDevelopment,
-  isProduction,
-} from '../config';
-import {
-  FALLBACK_API_KEY,
-  checkDeveloperAPIKey,
-  fetchAPIKey,
-  findDeveloper,
-} from '../shared/constants/DeveloperUtils';
+import { MAIN_KEY, isDevelopment, isProduction } from '../config';
+import { FALLBACK_API_KEY, checkDeveloperAPIKey, fetchAPIKey, findDeveloper } from '../shared/constants/DeveloperUtils';
 
 export default async (req, res, next) => {
   try {
