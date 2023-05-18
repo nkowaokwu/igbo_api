@@ -6,10 +6,6 @@ const PROD_LIMIT = 2500;
 export const FALLBACK_API_KEY = 'fallback_api_key';
 
 const determineLimit = (apiLimit) => (isTest ? apiLimit || PROD_LIMIT : PROD_LIMIT);
-export const fetchRequestQuery = (req) => {
-  const { apiLimit } = req.query;
-  return apiLimit;
-};
 
 export const handleRequest = (req) => {
   const { apiLimit } = req.query;
@@ -39,14 +35,6 @@ const handleDeveloperUsage = async (developer) => {
   return updatedDeveloper.save();
 };
 
-export const fetchAPIKey = (req) => {
-  const apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
-  if (!apiKey) {
-    throw new Error("X-API-Key Header doesn't exist");
-  }
-  return apiKey;
-};
-
 /* Finds a developer with provided information */
 export const findDeveloper = async (apiKey) => {
   console.time('Finding developer account');
@@ -64,6 +52,7 @@ export const checkDeveloperAPIKey = async (apiLimit, apiKey, next) => {
   const developer = await findDeveloper(apiKey);
 
   if (developer) {
+    console.log(determineLimit(apiLimit));
     if (developer.usage.count >= determineLimit(apiLimit)) {
       throw new Error('You have exceeded your API limit. Please upgrade your plan.', 403);
     }
