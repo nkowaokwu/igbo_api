@@ -1,9 +1,9 @@
 import { isDevelopment } from '../config';
-import { fetchAPIKey, FALLBACK_API_KEY, findDeveloper } from '../controllers/developers/utils';
+import { handleRequest, FALLBACK_API_KEY, findDeveloper } from '../controllers/developers/utils';
 
 export default async (req, res, next) => {
   try {
-    let apiKey = fetchAPIKey(req);
+    let apiKey = handleRequest(req);
     console.log('API Key:', apiKey);
 
     if (!apiKey && isDevelopment) {
