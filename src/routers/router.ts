@@ -31,7 +31,7 @@ router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
-router.get('/developers/developer', authorization, validId, attachRedisClient, getDeveloper);
+router.get('/developers/developer', authorization, attachRedisClient, getDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 
