@@ -7,14 +7,13 @@ import {
   handleRequest,
   FALLBACK_API_KEY,
   checkDeveloperAPIKey,
-  fetchAPIKey,
   findDeveloper,
 } from '../controllers/developers/utils';
 
 export default async (req, res, next) => {
   try {
-    let apiKey = fetchAPIKey(req);
-    const { apiLimit } = handleRequest(req);
+    let { apiToken: apiKey, apiLimit } = handleRequest(req);
+    apiLimit = 2500;
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
