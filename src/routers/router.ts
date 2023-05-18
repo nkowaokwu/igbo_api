@@ -3,7 +3,7 @@ import rateLimit from 'express-rate-limit';
 import { MiddleWare } from '../types';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
-import { getDeveloper, postDeveloper } from '../controllers/developers';
+import { getDeveloper, postDeveloper } from '../controllers/developers/developers';
 import { getStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
