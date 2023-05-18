@@ -3,16 +3,19 @@ import { handleRequest, FALLBACK_API_KEY, findDeveloper } from '../controllers/d
 
 export default async (req, res, next) => {
   try {
-    let apiKey = handleRequest(req);
-    console.log('API Key:', apiKey);
+    let { apiToken: apiKey } = handleRequest(req);
 
     if (!apiKey && isDevelopment) {
       apiKey = FALLBACK_API_KEY;
     }
 
     // Check if API key belongs to the requested developer
-    await findDeveloper(apiKey);
+    const developer = await findDeveloper(apiKey);
 
+    if (developer.length < 1) {
+      throw new Error('Invalid API Key. Check your API Key and try again', 403);
+    }
+    res.locals.developer = developer;
     next();
     return;
   } catch (err) {
