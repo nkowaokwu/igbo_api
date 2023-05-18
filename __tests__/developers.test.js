@@ -1,4 +1,4 @@
-import { createDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
+import { createDeveloper, getDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
 import { developerData, malformedDeveloperData, wordId, exampleId } from './__mocks__/documentData';
 
 describe('Developers', () => {
@@ -106,17 +106,7 @@ describe('Developers', () => {
       const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
       expect(developerDetails.status).toEqual(200);
       expect(developerDetails.body.developer).toMatchObject({
-        usage: expect.objectContaining({
-          date: expect.any(String),
-          count: expect.any(Number),
-        }),
-        name: expect.any(String),
-        apiKey: expect.any(String),
-        email: expect.any(String),
-        password: expect.any(String),
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
-        id: expect.any(String),
+        ...developerRes.body.developer,
       });
     });
 

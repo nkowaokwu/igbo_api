@@ -60,25 +60,25 @@ export const getExamplesV2 = (query = {}, options = {}) =>
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
-/* Searches for Nsibidi characters using the data in MongoDB V1 */
+    /* Searches for Nsibidi characters using the data in MongoDB V1 */
 export const getNsibidiCharacter = (id, query = {}, options = {}) =>
-  server
-    .get(`${API_ROUTE}/nsibidi/${id}`)
-    .query(query)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+server
+  .get(`${API_ROUTE}/nsibidi/${id}`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
 /* Searches for Nsibidi characters using the data in MongoDB V2 */
 export const getNsibidiCharacterV2 = (id, query = {}, options = {}) =>
-  server
-    .get(`${API_ROUTE_V2}/nsibidi/${id}`)
-    .query(query)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+server
+  .get(`${API_ROUTE_V2}/nsibidi/${id}`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
 export const getNsibidiCharactersV2 = (query = {}, options = {}) =>
-  server
-    .get(`${API_ROUTE_V2}/nsibidi`)
-    .query(query)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+server
+  .get(`${API_ROUTE_V2}/nsibidi`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
 /* Hits the POST /populate route to seed the local MongoDB database */
 export const populateAPI = () => server.post(`${TEST_ROUTE}/populate`);
@@ -94,6 +94,13 @@ export const searchMockedTerm = (term) => {
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
 
-/* fetch developer details */
-export const getDeveloper = (id, options = {}) =>
-  server.get(`${API_ROUTE}/developers/${id}`).set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+/* Fetch developer details */
+export const getDeveloper = (options = {}) =>
+  server.get(`${API_ROUTE}/developers/account`).set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+
+/** Login a developer */
+export const loginDeveloper = (data) => server.post(`${API_ROUTE}/login`).send(data);
+
+/** Logout a developer */
+export const logoutDeveloper = (options = {}) =>
+  server.post(`${API_ROUTE}/logout`).set('Authorization', `Bearer ${options.token || ''}`);
