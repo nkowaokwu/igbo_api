@@ -1,9 +1,28 @@
+<<<<<<< HEAD
 import { MAIN_KEY, isDevelopment, isProduction } from '../config';
 import { FALLBACK_API_KEY, checkDeveloperAPIKey, fetchAPIKey, findDeveloper } from '../shared/constants/DeveloperUtils';
 
 export default async (req, res, next) => {
   try {
     let apiKey = fetchAPIKey(req);
+=======
+import {
+  MAIN_KEY,
+  isDevelopment,
+  isProduction,
+} from '../config';
+import {
+  handleRequest,
+  FALLBACK_API_KEY,
+  checkDeveloperAPIKey,
+  findDeveloper,
+} from '../controllers/developers/utils';
+
+export default async (req, res, next) => {
+  try {
+    let { apiToken: apiKey, apiLimit } = handleRequest(req);
+    apiLimit = 2500;
+>>>>>>> db38580 (chore: update authorization middleware and getDeveloper controller #627)
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
