@@ -4,6 +4,7 @@ import { isProduction, CLIENT_TEST, isTest } from '../../config';
 import { developerSchema } from '../../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
 import { sendNewDeveloper } from '../email';
+import { findDeveloper } from './utils';
 
 const TEST_EMAIL = 'developer@example.com';
 
@@ -29,11 +30,12 @@ export const postDeveloper = async (req, res, next) => {
     }
 
     const apiKey = generateApiKey();
+    const hashedApiKey = await hash(apiKey, 10);
     const hashedPassword = await hash(password, 10);
     const developer = new Developer({
       name,
       email,
-      apiKey,
+      apiKey: hashedApiKey,
       password: hashedPassword,
     });
     await developer.save();
@@ -60,9 +62,19 @@ export const postDeveloper = async (req, res, next) => {
 
 export const getDeveloper = async (req, res, next) => {
   try {
-    const { developer } = req;
+    const { headers: data } = req;
+    const apiKey = data['x-api-key' || 'X-API-Key'];
+    if (!apiKey) {
+      throw new Error('No API key provided');
+    }
 
-    return res.status(200).send({
+    const developer = await findDeveloper(apiKey);
+    // check if developer is an empty array or undefined
+    if (!developer) {
+      throw new Error('No developer exists');
+    }
+
+    return res.send({
       developer,
     });
   } catch (err) {
