@@ -102,10 +102,17 @@ describe('Developers', () => {
 
     it('should return developer document with correct credentials', async () => {
       const developerRes = await createDeveloper(developerData);
-      const developerDetails = await getDeveloper(exampleId, {}, { apiKey: developerRes.body.apiKey });
+      console.log(developerRes.body);
+      const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
       console.warn(developerDetails.body);
       expect(developerDetails.status).toEqual(200);
       expect(developerDetails.body).not.toEqual(undefined);
+    });
+
+    it('should throw an error getting developer document with invalid credentials', async () => {
+      const res = await getDeveloper({ apiKey: 'invalid api key' });
+      expect(res.body.status).toEqual(403);
+      expect(res.body.error).not.toEqual(undefined);
     });
   });
 });
