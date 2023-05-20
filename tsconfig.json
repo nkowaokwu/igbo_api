@@ -3,7 +3,7 @@
     "outDir": "./build",
     "allowJs": true,
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "esnext"],
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
