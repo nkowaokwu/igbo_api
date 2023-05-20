@@ -95,8 +95,5 @@ export const searchMockedTerm = (term) => {
 };
 
 /* fetch developer details */
-export const getDeveloper = (id, options = {}) => (
-  server
-    .get(`${API_ROUTE}/developers/${id}`)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
-);
+export const getDeveloper = (id, options = {}) =>
+  server.get(`${API_ROUTE}/developers/${id}`).set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
