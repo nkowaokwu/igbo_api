@@ -14,6 +14,7 @@ import mockedData from '../__mocks__/data.mock.json';
 const server = request(app);
 
 export const createDeveloper = (data) => (
+  // console.warn('createDeveloper is deprecated. Use createDeveloperV2 instead.');
   server
     .post(`${API_ROUTE}/developers`)
     .send(data)
@@ -103,8 +104,8 @@ export const searchMockedTerm = (term) => {
 };
 
 /* fetch developer details */
-export const getDeveloper = (id, options = {}) => (
+export const getDeveloper = (options = {}) => (
   server
-    .get(`${API_ROUTE}/developers/${id}`)
-    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+    .get(`${API_ROUTE}/developers/developer`)
+    .set('X-API-Key', options.name || FALLBACK_API_KEY)
 );
