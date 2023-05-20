@@ -8,16 +8,18 @@
   "extends": [
     "next",
     "airbnb",
-    "plugin:cypress/recommended"
+    "airbnb-typescript",
+    "plugin:cypress/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "eslint-plugin-jsx-a11y",
-    "cypress"
-  ],
+  "plugins": ["eslint-plugin-jsx-a11y", "cypress", "@typescript-eslint"],
   "rules": {
     "function-call-argument-newline": ["off"],
     "function-paren-newline": ["off"],
@@ -35,6 +37,15 @@
     "react/no-danger": ["off"],
     "@next/next/no-html-link-for-pages": ["off"],
     "@next/next/no-img-element": ["off"],
-    "linebreak-style": ["off"]
+    "linebreak-style": ["off"],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-empty-function": ["warn"],
+    "prefer-const": "error"
   }
 }
