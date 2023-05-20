@@ -78,6 +78,13 @@ export const getExamplesV2 = (query = {}, options = {}) => (
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
 
+/* Searches for developers using the data in MongoDB V1 */
+export const getDeveloper = (options = {}) => (
+  server
+    .get(`${API_ROUTE}/developers/account`)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+
 /* Hits the POST /populate route to seed the local MongoDB database */
 export const populateAPI = () => (
   server
@@ -101,13 +108,6 @@ export const searchMockedTerm = (term) => {
   const { wordReg: regexTerm } = createRegExp(term);
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
-
-/* fetch developer details */
-export const getDeveloper = (options = {}) => (
-  server
-    .get(`${API_ROUTE}/developers/developer`)
-    .set('X-API-Key', options.name || FALLBACK_API_KEY)
-);
 
 /** login a developer */
 export const loginDeveloper = (data) => (
