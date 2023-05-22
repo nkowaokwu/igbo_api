@@ -15,7 +15,7 @@ export default async (req, res, next) => {
     if (developer.length < 1) {
       throw new Error('Invalid API Key. Check your API Key and try again', 403);
     }
-    res.locals.developer = developer;
+    req.locals.developer = developer;
     next();
     return;
   } catch (err) {
