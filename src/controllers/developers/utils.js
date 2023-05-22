@@ -48,7 +48,7 @@ export const findDeveloper = async (apiKey) => {
   return developer;
 };
 
-export const checkDeveloperAPIKey = async (apiLimit, apiKey, next) => {
+export const checkDeveloperAPILimit = async (apiLimit, apiKey, next) => {
   const developer = await findDeveloper(apiKey);
 
   if (developer) {
