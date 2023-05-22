@@ -8,13 +8,11 @@ describe('Developers', () => {
       expect(res.status).toEqual(200);
       expect(res.body.message).not.toEqual(undefined);
     });
-
     it('should throw an error while creating a new developer', async () => {
       const res = await createDeveloper(malformedDeveloperData);
       expect(res.status).toEqual(400);
       expect(res.body.error).not.toEqual(undefined);
     });
-
     it('should throw an error by using the same email for new developers', async () => {
       const repeatedDeveloper = {
         ...developerData,
@@ -102,9 +100,7 @@ describe('Developers', () => {
 
     it('should return developer document with correct credentials', async () => {
       const developerRes = await createDeveloper(developerData);
-      console.log(developerRes.body);
       const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
-      console.warn(developerDetails.body);
       expect(developerDetails.status).toEqual(200);
       expect(developerDetails.body).not.toEqual(undefined);
     });
