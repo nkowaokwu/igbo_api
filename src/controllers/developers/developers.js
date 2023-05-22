@@ -68,6 +68,7 @@ export const getDeveloper = async (req, res, next) => {
       throw new Error('No API key provided');
     }
 
+<<<<<<< HEAD
     const developer = await findDeveloper(apiKey);
     // check if developer is an empty array or undefined
     if (!developer) {
@@ -75,6 +76,10 @@ export const getDeveloper = async (req, res, next) => {
     }
 
     return res.send({
+=======
+    return res.status(200).send({
+      message: 'Developer retrieved!',
+>>>>>>> 4d297f0 (chore: update developer document retrieval test #627)
       developer,
     });
   } catch (err) {
