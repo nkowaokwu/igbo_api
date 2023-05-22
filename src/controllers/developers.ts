@@ -64,7 +64,7 @@ export const getDeveloper = async (req, res, next) => {
     const { developer } = res.locals;
 
     return res.status(200).send({
-      message: 'Success',
+      message: 'Developer retrieved!',
       developer,
     });
   } catch (err) {
