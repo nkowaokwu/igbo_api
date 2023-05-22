@@ -150,6 +150,3 @@ functions/src
 functions/swagger.json
 functions/yarn.lock
 yarn.lock
-
-# prettier
-.prettierignore
