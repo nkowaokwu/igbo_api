@@ -7,9 +7,7 @@ const pronunciationsMigrationPipeline = [
       }],
     },
   },
-  {
-    $unset: 'pronunciation',
-  },
+  { $unset: 'pronunciation' },
 ];
 const revertPronunciationsMigrationPipeline = [
   {
@@ -26,7 +24,14 @@ module.exports = {
   async up(db) {
     const collections = ['examples', 'examplesuggestions'];
     return collections.map(async (collection) => {
-      db.collection(collection).updateMany({}, pronunciationsMigrationPipeline);
+      db.collection(collection).updateMany(
+        { $and: [{ pronunciation: { $ne: '' } }, { pronunciation: { $ne: null } }] },
+        pronunciationsMigrationPipeline,
+      );
+      db.collection(collection).updateMany(
+        { pronunciations: { $exists: false } },
+        [{ $set: { pronunciations: [] } }, { $unset: 'pronunciation' }],
+      );
     });
   },
 
