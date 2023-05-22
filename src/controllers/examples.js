@@ -1,9 +1,19 @@
+import { assign, omit } from 'lodash';
 import { exampleSchema } from '../models/Example';
 import { packageResponse, handleQueries } from './utils';
 import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
+import Versions from '../shared/constants/Versions';
+
+/* Converts the pronunciations field to pronunciation for v1 */
+export const convertExamplePronunciations = (example) => {
+  let updatedExample = assign(example);
+  updatedExample.pronunciation = updatedExample.pronunciations?.[0]?.audio || '';
+  updatedExample = omit(updatedExample, ['pronunciations']);
+  return updatedExample;
+};
 
 /* Create a new Example object in MongoDB */
 export const createExample = async (data, connection) => {
@@ -30,7 +40,14 @@ const searchExamples = async ({
       contentLength: cachedExamples.contentLength,
     };
   } else {
-    const { examples: allExamples, contentLength } = await findExamplesWithMatch({ match: query, version });
+    const { examples, contentLength } = await findExamplesWithMatch({ match: query, version });
+    let allExamples = examples;
+
+    // Replaces pronunciations with pronunciation v1
+    if (version === Versions.VERSION_1) {
+      allExamples = allExamples.map((example) => convertExamplePronunciations(example));
+    }
+
     responseData = await setCachedExamples({
       key: redisExamplesCacheKey,
       data: { examples: allExamples, contentLength },
@@ -100,6 +117,9 @@ export const getExample = async (req, res, next) => {
       .then((example) => {
         if (!example) {
           throw new Error('No example exists with the provided id.');
+        }
+        if (version === Versions.VERSION_1) {
+          return convertExamplePronunciations(example.toJSON());
         }
         return example;
       });
