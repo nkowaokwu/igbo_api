@@ -149,6 +149,3 @@ functions/node_modules
 functions/src
 functions/yarn.lock
 yarn.lock
-
-# prettier
-.prettierignore
