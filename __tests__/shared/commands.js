@@ -14,7 +14,6 @@ import mockedData from '../__mocks__/data.mock.json';
 const server = request(app);
 
 export const createDeveloper = (data) => (
-  // console.warn('createDeveloper is deprecated. Use createDeveloperV2 instead.');
   server
     .post(`${API_ROUTE}/developers`)
     .send(data)
