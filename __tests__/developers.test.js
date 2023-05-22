@@ -102,7 +102,7 @@ describe('Developers', () => {
       const developerRes = await createDeveloper(developerData);
       const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
       expect(developerDetails.status).toEqual(200);
-      expect(developerDetails.body).not.toEqual(undefined);
+      expect(developerDetails.body.message).toEqual('Developer retrieved!');
     });
 
     it('should throw an error getting developer document with invalid credentials', async () => {
