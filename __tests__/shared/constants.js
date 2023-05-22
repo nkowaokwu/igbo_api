@@ -58,7 +58,7 @@ export const EXAMPLE_KEYS_V2 = [
   'associatedDefinitionsSchemas',
   'id',
   'nsibidi',
-  'pronunciation',
+  'pronunciations',
   'updatedAt',
   'createdAt',
 ];

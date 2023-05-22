@@ -67,13 +67,13 @@ export const getExamples = (query = {}, options = {}) => (
 /* Searches for examples using the data in MongoDB V2 */
 export const getExampleV2 = (id, query = {}, options = {}) => (
   server
-    .get(`${API_ROUTE}/examples/${id}`)
+    .get(`${API_ROUTE_V2}/examples/${id}`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
 export const getExamplesV2 = (query = {}, options = {}) => (
   server
-    .get(`${API_ROUTE}/examples`)
+    .get(`${API_ROUTE_V2}/examples`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
