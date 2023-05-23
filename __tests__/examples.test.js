@@ -112,9 +112,9 @@ describe('MongoDB Examples', () => {
   describe('/GET mongodb examples V2', () => {
     it('should return one example', async () => {
       const res = await getExamplesV2({}, { apiKey: MAIN_KEY });
-      const result = await getExampleV2(res.body[0].id);
+      const result = await getExampleV2(res.body.data[0].id);
       expect(result.status).toEqual(200);
-      Object.keys(result.body).forEach((key) => {
+      Object.keys(result.body.data).forEach((key) => {
         expect(EXAMPLE_KEYS_V2).toContain(key);
       });
     });

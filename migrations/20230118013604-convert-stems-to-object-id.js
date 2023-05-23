@@ -3,6 +3,7 @@ const stemsToObjectIdMigrationPipeline = [
     $match: {
       'stems.0': {
         $exists: true,
+        $type: 'string',
       },
     },
   }, {
