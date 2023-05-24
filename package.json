@@ -1,6 +1,6 @@
 {
   "name": "igbo-api",
-  "version": "1.58.0",
+  "version": "1.59.0",
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "author": "Ijemma Onwuzulike",
   "main": "server.js",
