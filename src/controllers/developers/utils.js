@@ -1,8 +1,7 @@
 import { developerSchema } from '../../models/Developer';
 import { createDbConnection } from '../../services/database';
-import { isTest } from '../../config';
+import { PROD_LIMIT, isTest } from '../../config';
 
-const PROD_LIMIT = 2500;
 export const FALLBACK_API_KEY = 'fallback_api_key';
 
 const determineLimit = (apiLimit) => (isTest ? apiLimit || PROD_LIMIT : PROD_LIMIT);
