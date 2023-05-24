@@ -61,7 +61,7 @@ export const postDeveloper = async (req, res, next) => {
 
 export const getDeveloper = async (req, res, next) => {
   try {
-    const { developer } = res.locals;
+    const { developer } = req;
 
     return res.status(200).send({
       message: 'Developer retrieved!',
