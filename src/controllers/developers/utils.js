@@ -47,17 +47,17 @@ export const findDeveloper = async (apiKey) => {
   return developer;
 };
 
-export const checkDeveloperAPILimit = async (apiLimit, apiKey, next) => {
+export const checkDeveloperAPILimit = async (apiKey) => {
   const developer = await findDeveloper(apiKey);
   console.log(developer);
 
   if (developer) {
-    console.log(determineLimit(apiLimit));
-    if (developer.usage.count >= determineLimit(apiLimit)) {
+    console.log(determineLimit(PROD_LIMIT));
+    if (developer.usage.count >= determineLimit(PROD_LIMIT)) {
       throw new Error('You have exceeded your API limit. Please upgrade your plan.', 403);
     }
     await handleDeveloperUsage(developer);
-    return next();
+    return developer;
   }
 
   throw new Error('Invalid API Key. Check your API Key and try again', 401);
