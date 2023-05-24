@@ -50,6 +50,7 @@ export const findDeveloper = async (apiKey) => {
 
 export const checkDeveloperAPILimit = async (apiLimit, apiKey, next) => {
   const developer = await findDeveloper(apiKey);
+  console.log(developer);
 
   if (developer) {
     console.log(determineLimit(apiLimit));
