@@ -102,7 +102,19 @@ describe('Developers', () => {
       const developerRes = await createDeveloper(developerData);
       const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
       expect(developerDetails.status).toEqual(200);
-      expect(developerDetails.body.message).toEqual('Developer retrieved!');
+      expect(developerDetails.body.developer).toMatchObject({
+        usage: expect.objectContaining({
+          date: expect.any(String),
+          count: expect.any(Number),
+        }),
+        name: expect.any(String),
+        apiKey: expect.any(String),
+        email: expect.any(String),
+        password: expect.any(String),
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+        id: expect.any(String),
+      });
     });
 
     it('should throw an error getting developer document with invalid credentials', async () => {
