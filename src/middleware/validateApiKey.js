@@ -1,6 +1,5 @@
 import {
   MAIN_KEY,
-  PROD_LIMIT,
   isDevelopment,
   isProduction,
 } from '../config';
@@ -84,7 +83,7 @@ export default async (req, res, next) => {
 
     await findDeveloper(apiKey);
 
-    await checkDeveloperAPILimit(PROD_LIMIT, apiKey, next);
+    await checkDeveloperAPILimit(apiKey);
     return next();
   } catch (err) {
     res.status(400);
