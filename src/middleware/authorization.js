@@ -13,12 +13,12 @@ export default async (req, res, next) => {
     const developer = await findDeveloper(apiKey);
 
     if (developer.length < 1) {
-      throw new Error('Invalid API Key. Check your API Key and try again', 403);
+      throw new Error('Invalid API Key. Check your API Key and try again', { cause: 403 });
     }
     console.info('Developer found', developer);
     req.developer = developer;
     return next();
   } catch (err) {
-return res.status(400).send({ error: err.message });
+    return res.status(400).send({ error: err.message });
   }
 };
