@@ -61,7 +61,6 @@ export const findDeveloper = async (apiKey) => {
 
 export const checkDeveloperAPILimit = async (apiKey) => {
   const developer = await findDeveloper(apiKey);
-  console.log(developer);
 
   if (developer) {
     if (developer.usage.count >= determineLimit(PROD_LIMIT)) {
