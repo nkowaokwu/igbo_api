@@ -5,18 +5,6 @@
   },
   "hosting": {
     "public": "public",
-<<<<<<< HEAD
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [{
-      "source": "**",
-      "function": "api",
-      "region": "us-central1"
-    }],
-=======
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
@@ -25,7 +13,6 @@
         "region": "us-central1"
       }
     ],
->>>>>>> a1ddb79 (chore: update find developer method #627)
     "headers": [
       {
         "source": "/",
