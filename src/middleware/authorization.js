@@ -19,6 +19,10 @@ export default async (req, res, next) => {
     req.developer = developer;
     return next();
   } catch (err) {
-    return res.status(400).send({ error: err.message });
+    let status = 400;
+    if ('cause' in err) {
+      status = err.cause;
+    }
+    return res.status(status).send({ error: err.message });
   }
 };
