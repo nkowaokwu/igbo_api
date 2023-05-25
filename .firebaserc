@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "igbo-api-bb22d"
+    "default": "igbo-api-bb22d",
+    "staging": "igbo-api-staging-99a67"
   }
 }
