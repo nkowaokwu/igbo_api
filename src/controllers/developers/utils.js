@@ -51,7 +51,7 @@ export const checkDeveloperAPILimit = async (apiKey) => {
 
   if (developer) {
     if (developer.usage.count >= determineLimit(PROD_LIMIT)) {
-      throw new Error('You have exceeded your API limit. Please upgrade your plan.', 403);
+      throw new Error('You have exceeded your API limit. Please upgrade your plan.', { cause: 403 });
     }
     await handleDeveloperUsage(developer);
     return developer;
