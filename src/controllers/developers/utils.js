@@ -13,11 +13,10 @@ export const handleRequest = (req) => {
   return { apiLimit, apiToken };
 };
 
-const isSameDate = (first, second) => (
-  first.getFullYear() === second.getFullYear()
-    && first.getMonth() === second.getMonth()
-    && first.getDate() === second.getDate()
-);
+const isSameDate = (first, second) =>
+  first.getFullYear() === second.getFullYear() &&
+  first.getMonth() === second.getMonth() &&
+  first.getDate() === second.getDate();
 
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer) => {
@@ -49,10 +48,8 @@ export const findDeveloper = async (apiKey) => {
 
 export const checkDeveloperAPILimit = async (apiKey) => {
   const developer = await findDeveloper(apiKey);
-  console.log(developer);
 
   if (developer) {
-    console.log(determineLimit(PROD_LIMIT));
     if (developer.usage.count >= determineLimit(PROD_LIMIT)) {
       throw new Error('You have exceeded your API limit. Please upgrade your plan.', 403);
     }
