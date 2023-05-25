@@ -57,5 +57,5 @@ export const checkDeveloperAPILimit = async (apiKey) => {
     return developer;
   }
 
-  throw new Error('Invalid API Key. Check your API Key and try again', 401);
+  throw new Error('Invalid API Key. Check your API Key and try again', { cause: 401 });
 };
