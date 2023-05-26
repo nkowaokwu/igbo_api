@@ -34,7 +34,7 @@ jobs:
       run: |
         yarn install
         npm install -g firebase-tools
-        firebase use default --token $FIREBASE_TOKEN
+        firebase use staging --token $FIREBASE_TOKEN
         yarn build
     - name: Test Server Build Process
       run: yarn test:build
