@@ -32,4 +32,35 @@ module.exports = {
     '@next/next/no-img-element': ['off'],
     'linebreak-style': ['error', os.platform() === 'win32' ? 'windows' : 'unix'],
   },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      extends: [
+        'next',
+        'airbnb',
+        'airbnb-typescript',
+        'plugin:cypress/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 12,
+        sourceType: 'module',
+        project: ['./tsconfig.json'],
+      },
+      plugins: ['@typescript-eslint', 'eslint-plugin-jsx-a11y', 'cypress'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            varsIgnorePattern: '^_',
+            argsIgnorePattern: '^_',
+          },
+        ],
+        '@typescript-eslint/no-empty-function': ['warn'],
+        'prefer-const': 'error',
+      },
+    },
+  ],
 };

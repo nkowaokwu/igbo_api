@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf dist/ && yarn build:site && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:functions",
     "build:functions": "rm -rf functions/src && shx cp -r ./dist ./functions/src && cp -r ./dist/dictionaries/ig-en ./functions/src/dictionaries",
-    "build:src": "babel -d dist/ ./src -s",
+    "build:src": "babel -d dist/ ./src -s --extensions '.js,.jsx,.ts,.tsx'",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && yarn build:fonts && yarn build:assets",
     "build:fonts": "shx cp -r ./src/public/fonts/ ./dist/fonts",
@@ -136,6 +136,7 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.5",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@semantic-release/changelog": "^5.0.1",
@@ -143,11 +144,14 @@
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/npm": "^7.0.10",
     "@semantic-release/release-notes-generator": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
     "babel-loader": "^8.1.0",
     "cross-env": "^7.0.2",
     "cypress": "^6.0.0",
     "eslint": "8.34.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-cypress": "2.12.1",
@@ -160,7 +164,8 @@
     "postcss": "^8.1.3",
     "postcss-loader": "~3.0.0",
     "postcss-preset-env": "^6.7.0",
-    "supertest": "^6.3.1"
+    "supertest": "^6.3.1",
+    "typescript": "5.0.4"
   },
   "standard-version": {
     "skip": {
