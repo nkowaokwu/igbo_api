@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf dist/ && yarn build:site && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:functions",
     "build:functions": "rm -rf functions/src && shx cp -r ./dist ./functions/src && cp -r ./dist/dictionaries/ig-en ./functions/src/dictionaries",
-    "build:src": "babel -d dist/ ./src -s",
+    "build:src": "babel -d dist/ ./src -s --extensions '.js,.jsx,.ts,.tsx'",
     "build:dictionaries": "babel-node src/dictionaries/buildDictionaries.js",
     "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && yarn build:fonts && yarn build:assets",
     "build:fonts": "shx cp -r ./src/public/fonts/ ./dist/fonts",
@@ -136,6 +136,7 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.5",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@semantic-release/changelog": "^5.0.1",
