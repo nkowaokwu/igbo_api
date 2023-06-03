@@ -8,7 +8,7 @@ import omit from 'lodash/omit';
 import Versions from '../../shared/constants/Versions';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
-import Dialects from '../../shared/constants/Dialects';
+import Dialects from '../../shared/constants/Dialects.ts';
 import WordAttributes from '../../shared/constants/WordAttributes';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
 
