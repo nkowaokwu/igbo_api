@@ -17,6 +17,7 @@ module.exports = {
     'function-call-argument-newline': ['off'],
     'function-paren-newline': ['off'],
     'import/prefer-default-export': ['off'],
+    'import/extensions': ['warn'],
     'max-len': ['error', { code: 120 }],
     'newline-per-chained-call': ['off'],
     'no-console': ['off'],
@@ -61,6 +62,10 @@ module.exports = {
       },
       plugins: ['@typescript-eslint', 'eslint-plugin-jsx-a11y', 'cypress'],
       rules: {
+        'import/prefer-default-export': ['off'],
+        'import/extensions': ['warn'],
+        'max-len': ['error', { code: 120 }],
+        'no-nested-ternary': ['off'],
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {

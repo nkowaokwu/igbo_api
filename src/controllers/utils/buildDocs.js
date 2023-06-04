@@ -5,7 +5,7 @@ import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import forEach from 'lodash/forEach';
 import omit from 'lodash/omit';
-import Versions from '../../shared/constants/Versions';
+import Version from '../../shared/constants/Version';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
 import Dialects from '../../shared/constants/Dialect';
@@ -62,7 +62,7 @@ export const findWordsWithMatch = async ({
         });
     }
 
-    if (!lean && version === Versions.VERSION_2) {
+    if (!lean && version === Version.VERSION_2) {
       words = words
         .lookup({
           from: 'words',
@@ -105,7 +105,7 @@ export const findWordsWithMatch = async ({
     const contentLength = finalWords.length;
 
     finalWords.forEach((word) => {
-      if (version === Versions.VERSION_1) {
+      if (version === Version.VERSION_1) {
         word.wordClass = word.definitions[0].wordClass;
         word.nsibidi = word.definitions[0].nsibidi;
         word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
@@ -148,7 +148,7 @@ export const findExamplesWithMatch = async ({
         meaning: 1,
         style: 1,
         associatedWords: 1,
-        ...(version === Versions.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
+        ...(version === Version.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
         pronunciations: 1,
       });
 
