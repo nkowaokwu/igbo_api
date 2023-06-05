@@ -1,6 +1,6 @@
 const config = {
   mongodb: {
-    url: process.env.MONGO_URI || 'mongodb://localhost:27017',
+    url: process.env.MONGO_URI || 'mongodb://0.0.0.0:27017',
     databaseName: process.env.DB_NAME || 'igbo_api',
     options: {
       useNewUrlParser: true,
