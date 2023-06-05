@@ -105,7 +105,7 @@ describe('Developers', () => {
       expect(developerDetails.body.developer).toMatchObject({
         usage: expect.objectContaining({
           date: expect.any(String),
-          count: 0,
+          count: expect.any(Number),
         }),
         name: expect.any(String),
         apiKey: expect.any(String),

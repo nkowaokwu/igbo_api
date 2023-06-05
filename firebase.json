@@ -5,23 +5,21 @@
   },
   "hosting": {
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "api",
+        "region": "us-central1"
+      }
     ],
-    "rewrites": [{
-      "source": "**",
-      "function": "api",
-      "region": "us-central1"
-    }],
     "headers": [
       {
         "source": "/",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=302400, s-maxage=604800"
+            "value": "no-cache, no-store, must-revalidate"
           }
         ]
       }
