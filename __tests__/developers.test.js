@@ -1,5 +1,17 @@
-import { createDeveloper, getDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
-import { developerData, malformedDeveloperData, wordId, exampleId } from './__mocks__/documentData';
+import {
+  createDeveloper,
+  getDeveloper,
+  getExample,
+  getExamples,
+  getWord,
+  getWords,
+} from './shared/commands';
+import {
+  developerData,
+  malformedDeveloperData,
+  wordId,
+  exampleId,
+} from './__mocks__/documentData';
 
 describe('Developers', () => {
   describe('/POST mongodb developers', () => {
