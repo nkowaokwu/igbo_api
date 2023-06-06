@@ -15,28 +15,36 @@ const definitionSchema = new Schema({
     default: WordClass.NNC.value,
     enum: Object.values(WordClass).map(({ value }) => value),
   },
+  label: { type: String, default: '', trim: true },
   definitions: { type: [{ type: String }], default: [] },
-  nsibidi: { type: String, default: '' },
+  nsibidi: { type: String, default: '', index: true },
+  nsibidiCharacters: { type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }], default: [] },
   igboDefinitions: {
     type: [{
       igbo: String,
       nsibidi: String,
+      nsibidiCharacters: { type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }], default: [] },
     }],
     default: [],
   },
-}, { _id: true });
+}, { _id: true, toObject: toObjectPlugin });
 
 const dialectSchema = new Schema({
-  word: { type: String, required: true, index: true },
+  word: {
+    type: String,
+    required: true,
+    index: true,
+    trim: true,
+  },
   variations: { type: [{ type: String }], default: [] },
   dialects: { type: [{ type: String }], validate: (v) => every(v, (dialect) => Dialects[dialect].value), default: [] },
   pronunciation: { type: String, default: '' },
 }, { toObject: toObjectPlugin });
 
 export const wordSchema = new Schema({
-  word: { type: String, required: true },
-  wordPronunciation: { type: String, default: '' },
-  conceptualWord: { type: String, default: '' },
+  word: { type: String, required: true, trim: true },
+  wordPronunciation: { type: String, default: '', trim: true },
+  conceptualWord: { type: String, default: '', trim: true },
   definitions: [{
     type: definitionSchema,
     validate: (definitions) => (
@@ -52,19 +60,13 @@ export const wordSchema = new Schema({
       v.every((tag) => Object.values(WordTags).map(({ value }) => value).includes(tag))
     ),
   },
-  tenses: {
-    type: Object,
-    validate: (v) => {
-      const tenseValues = Object.values(Tenses);
-      Object.keys(v).every((key) => (
-        tenseValues.find(({ value: tenseValue }) => key === tenseValue)
-      ));
-    },
-    required: false,
-    default: {},
-  },
-  attributes: Object.entries(WordAttributes)
-    .reduce((finalAttributes, [, { value }]) => ({
+  tenses: Object.values(Tenses)
+    .reduce((tenses, { value }) => ({
+      ...tenses,
+      [value]: { type: String, default: '', trim: true },
+    }), {}),
+  attributes: Object.values(WordAttributes)
+    .reduce((finalAttributes, { value }) => ({
       ...finalAttributes,
       [value]: { type: Boolean, default: false },
     }), {}),
