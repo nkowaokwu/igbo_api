@@ -1,7 +1,7 @@
 import compact from 'lodash/compact';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
 import { findWordsWithMatch } from './buildDocs';
-import { sortDocsBy } from '.';
+import { sortDocsBy } from './sortDocsBy';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
 
@@ -19,7 +19,7 @@ const searchWordUsingIgbo = async ({
   flags,
   filters,
 }) => {
-  let responseData = {};
+  let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `${searchWord}-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
@@ -32,13 +32,11 @@ const searchWordUsingIgbo = async ({
     const allSearchKeywords = !keywords.find(({ text }) => text === searchWord)
       ? compact(keywords.concat(searchWord
         ? { text: searchWord, wordClass: [], regex }
-        : null),
-      )
+        : null))
       : keywords;
     const regularSearchIgboQuery = searchIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
-      searchWord,
       filters,
     });
     const igboQuery = !strict
@@ -71,7 +69,7 @@ const searchWordUsingIgbo = async ({
       key: redisWordsCacheKey,
       data: { words, contentLength },
       redisClient,
-      setCachedWords,
+      version,
     });
   }
 

@@ -5,7 +5,7 @@ import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
-import Versions from '../shared/constants/Versions';
+import Version from '../shared/constants/Version';
 
 /* Converts the pronunciations field to pronunciation for v1 */
 export const convertExamplePronunciations = (example) => {
@@ -44,7 +44,7 @@ const searchExamples = async ({
     let allExamples = examples;
 
     // Replaces pronunciations with pronunciation v1
-    if (version === Versions.VERSION_1) {
+    if (version === Version.VERSION_1) {
       allExamples = allExamples.map((example) => convertExamplePronunciations(example));
     }
 
@@ -118,7 +118,7 @@ export const getExample = async (req, res, next) => {
         if (!example) {
           throw new Error('No example exists with the provided id.');
         }
-        if (version === Versions.VERSION_1) {
+        if (version === Version.VERSION_1) {
           return convertExamplePronunciations(example.toJSON());
         }
         return example;
