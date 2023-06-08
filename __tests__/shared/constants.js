@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import Versions from '../../src/shared/constants/Versions';
+import Version from '../../src/shared/constants/Version';
 
 export const LOCAL_ROUTE = '/';
-export const API_ROUTE = `/api/${Versions.VERSION_1}`;
-export const API_ROUTE_V2 = `/api/${Versions.VERSION_2}`;
-export const TEST_ROUTE = `/api/${Versions.VERSION_1}/test`;
+export const API_ROUTE = `/api/${Version.VERSION_1}`;
+export const API_ROUTE_V2 = `/api/${Version.VERSION_2}`;
+export const TEST_ROUTE = `/api/${Version.VERSION_1}/test`;
 export const API_URL = 'https://igboapi.com';
 
 export const SAVE_DOC_DELAY = 2000;

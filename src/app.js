@@ -14,7 +14,7 @@ import {
 import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
-import Versions from './shared/constants/Versions';
+import Version from './shared/constants/Version';
 import { CORS_CONFIG } from './config';
 
 const app = express();
@@ -41,13 +41,13 @@ app.use('/fonts', cache(), express.static('./dist/fonts'));
 app.use('/services', cache(), express.static('./services'));
 
 /* Grabs data from MongoDB */
-app.use(`/api/${Versions.VERSION_1}`, cache(86400, 172800), router);
-app.use(`/api/${Versions.VERSION_2}`, cache(86400, 172800), routerV2);
+app.use(`/api/${Version.VERSION_1}`, cache(86400, 172800), router);
+app.use(`/api/${Version.VERSION_2}`, cache(86400, 172800), routerV2);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
   app.use(
-    `/api/${Versions.VERSION_1}/test`,
+    `/api/${Version.VERSION_1}/test`,
     testRouter,
   );
 }

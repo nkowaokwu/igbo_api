@@ -1,6 +1,6 @@
-import Versions from '../../shared/constants/Versions';
+import Version from '../../shared/constants/Version';
 import { findWordsWithMatch } from './buildDocs';
-import { sortDocsBy } from '.';
+import { sortDocsBy } from './sortDocsBy';
 import { searchEnglishRegexQuery } from './queries';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
@@ -16,7 +16,7 @@ const searchWordUsingEnglish = async ({
   flags,
   filters,
 }) => {
-  let responseData = {};
+  let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `"${searchWord}"-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
@@ -38,7 +38,7 @@ const searchWordUsingEnglish = async ({
     });
   }
 
-  const sortKey = version === Versions.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
+  const sortKey = version === Version.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
   let sortedWords = sortDocsBy(searchWord, responseData.words, sortKey, version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
   return handleWordFlags({
