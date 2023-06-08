@@ -4,7 +4,7 @@ import keys from 'lodash/keys';
 import omit from 'lodash/omit';
 import { createWord } from '../controllers/words';
 import dictionary from './ig-en/ig-en.json';
-import Dialects from '../shared/constants/Dialects.ts';
+import Dialects from '../shared/constants/Dialect';
 import WordClass from '../shared/constants/WordClass';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 
