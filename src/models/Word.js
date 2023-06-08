@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import every from 'lodash/every';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
-import Dialects from '../shared/constants/Dialects.ts';
+import Dialects from '../shared/constants/Dialect';
 import Tenses from '../shared/constants/Tenses';
 import WordClass from '../shared/constants/WordClass';
 import WordAttributes from '../shared/constants/WordAttributes';
