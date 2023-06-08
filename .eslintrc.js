@@ -17,7 +17,6 @@ module.exports = {
     'function-call-argument-newline': ['off'],
     'function-paren-newline': ['off'],
     'import/prefer-default-export': ['off'],
-    'import/extensions': ['warn'],
     'max-len': ['error', { code: 120 }],
     'newline-per-chained-call': ['off'],
     'no-console': ['off'],
