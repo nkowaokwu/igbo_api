@@ -17,6 +17,7 @@ module.exports = {
     'function-call-argument-newline': ['off'],
     'function-paren-newline': ['off'],
     'import/prefer-default-export': ['off'],
+    'import/extensions': ['warn'],
     'max-len': ['error', { code: 120 }],
     'newline-per-chained-call': ['off'],
     'no-console': ['off'],
@@ -31,7 +32,6 @@ module.exports = {
     '@next/next/no-html-link-for-pages': ['off'],
     '@next/next/no-img-element': ['off'],
     'linebreak-style': ['error', os.platform() === 'win32' ? 'windows' : 'unix'],
-    'import/extensions': ['warn'],
   },
   overrides: [
     {
