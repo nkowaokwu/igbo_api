@@ -31,16 +31,7 @@ module.exports = {
     '@next/next/no-html-link-for-pages': ['off'],
     '@next/next/no-img-element': ['off'],
     'linebreak-style': ['error', os.platform() === 'win32' ? 'windows' : 'unix'],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
+    'import/extensions': ['warn'],
   },
   overrides: [
     {
