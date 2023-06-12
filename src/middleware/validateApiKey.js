@@ -76,6 +76,10 @@ export default async (req, res, next) => {
       apiKey = FALLBACK_API_KEY;
     }
 
+    if (!apiKey) {
+      throw new Error("X-API-Key Header doesn't exist");
+    }
+
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
     if (apiKey === FALLBACK_API_KEY && !isProduction) {
       return next();
