@@ -1,8 +1,4 @@
-import {
-  MAIN_KEY,
-  isDevelopment,
-  isProduction,
-} from '../config';
+import { MAIN_KEY, isDevelopment, isProduction } from '../config';
 import {
   handleRequest,
   FALLBACK_API_KEY,
@@ -23,6 +19,10 @@ export default async (req, res, next) => {
 
     if (!apiKey && isDevelopment) {
       apiKey = FALLBACK_API_KEY;
+    }
+
+    if (!apiKey) {
+      throw new Error("X-API-Key Header doesn't exist");
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
