@@ -57,8 +57,8 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "./node_modules/.bin/eslint"
+    "{*.js,*.ts}": [
+      "./node_modules/.bin/eslint 'src/**'"
     ]
   },
   "license": "ISC",
@@ -70,6 +70,7 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.7",
+    "@babel/preset-typescript": "^7.21.5",
     "@babel/runtime": "^7.20.6",
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.4",
@@ -137,7 +138,6 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.21.5",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@semantic-release/changelog": "^5.0.1",
