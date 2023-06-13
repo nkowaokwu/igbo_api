@@ -4,6 +4,7 @@ import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
+import Word from '../../models/interfaces/Word';
 
 /* Searches for a word with Igbo stored in MongoDB */
 const searchWordUsingIgbo = async ({
@@ -19,7 +20,7 @@ const searchWordUsingIgbo = async ({
   flags,
   filters,
 }) => {
-  let responseData = { words: [], contentLength: 0 };
+  let responseData = { words: [], contentLength: 0 } as { words: Word[]; contentLength: number };
   const redisWordsCacheKey = `${searchWord}-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
@@ -30,20 +31,14 @@ const searchWordUsingIgbo = async ({
     };
   } else {
     const allSearchKeywords = !keywords.find(({ text }) => text === searchWord)
-      ? compact(keywords.concat(searchWord
-        ? { text: searchWord, wordClass: [], regex }
-        : null))
+      ? compact(keywords.concat(searchWord ? { text: searchWord, wordClass: [], regex } : null))
       : keywords;
     const regularSearchIgboQuery = searchIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
       filters,
     });
-    const igboQuery = !strict
-      ? regularSearchIgboQuery
-      : strictSearchIgboQuery(
-        allSearchKeywords,
-      );
+    const igboQuery = !strict ? regularSearchIgboQuery : strictSearchIgboQuery(allSearchKeywords);
     const definitionsWithinIgboQuery = searchDefinitionsWithinIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
@@ -57,12 +52,14 @@ const searchWordUsingIgbo = async ({
     ]);
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
-    const words = searchWord ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
-      if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
-        finalWords.push(word);
-      }
-      return finalWords;
-    }, []) : igboResults.words;
+    const words = searchWord
+      ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
+          if (!finalWords.find((finalWord) => finalWord.id?.toString() === word.id.toString())) {
+            finalWords.push(word);
+          }
+          return finalWords;
+        }, [] as Word[])
+      : igboResults.words;
     const contentLength = words.length;
 
     responseData = await setCachedWords({
