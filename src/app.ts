@@ -1,5 +1,5 @@
 import './services/firebase';
-import express from 'express';
+import express, { Express } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
@@ -17,7 +17,7 @@ import errorHandler from './middleware/errorHandler';
 import Version from './shared/constants/Version';
 import { CORS_CONFIG } from './config';
 
-const app = express();
+const app: Express = express();
 
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,4 +60,4 @@ app.use(errorHandler);
 
 export default app;
 
-export const api = app;
+export const api: Express = app;
