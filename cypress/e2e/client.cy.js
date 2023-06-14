@@ -1,8 +1,16 @@
 import { v4 as uuid } from 'uuid';
 
 describe('Igbo API Homepage', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/');
+  });
+
+  describe('Outside links', () => {
+    it('navigate to Nkọwa okwu website', () => {
+      cy.get('[data-test="nkowaokwu-link"]').click();
+      cy.url().should('equal', 'https://nkowaokwu.com/home');
+      cy.contains('Internal Server Error').should('not.exist');
+    });
   });
 
   describe('Desktop', () => {
