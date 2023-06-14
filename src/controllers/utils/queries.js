@@ -4,11 +4,7 @@ import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
 import StopWords from '../../shared/constants/StopWords';
 
-const generateMultipleNsibidi = (keywords) => (
-  keywords.map(({ text }) => (
-    { 'definitions.nsibidi': text }
-  ))
-);
+const generateMultipleNsibidi = (keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
 
 const generateMultipleWordRegex = (keywords) => {
   const wordRegexes = keywords.reduce((wordRegex, { regex }, index) => {
@@ -21,9 +17,9 @@ const generateMultipleWordRegex = (keywords) => {
   return { word: { $regex: regex.source } };
 };
 
-const generateMultipleDefinitionsRegex = (keywords) => (
-  { 'definitions.definitions': { $in: keywords.map(({ regex }) => regex.definitionsReg) } }
-);
+const generateMultipleDefinitionsRegex = (keywords) => ({
+  'definitions.definitions': { $in: keywords.map(({ regex }) => regex.definitionsReg) },
+});
 
 const generateMultipleVariationsRegex = (keywords) => {
   const variationsRegexes = keywords.reduce((wordRegex, { regex }, index) => {
@@ -61,50 +57,40 @@ const generateMultipleTensesWordRegex = (keywords) => {
   return tenses;
 };
 
-const fullTextSearchQuery = ({
-  keywords,
-  isUsingMainKey,
-  filters = {},
-}) => {
+const fullTextSearchQuery = ({ keywords, isUsingMainKey, filters = {} }) => {
   const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
-  return (
-    isUsingMainKey && !keywords?.length
-      ? filters
-      : (!isUsingMainKey && !keywords?.length)
-        ? { _id: { $exists: false }, id: { $exists: false } }
-        : hasNsibidi
-          ? { $and: [{ $or: generateMultipleNsibidi(keywords) }, filters] }
-          : {
-            $and: [{
-              $or: compact([
-                generateMultipleWordRegex(keywords),
-                generateMultipleVariationsRegex(keywords),
-                generateMultipleDialectsWordRegex(keywords),
-                ...generateMultipleTensesWordRegex(keywords),
-              ]),
-            }],
-            ...filters,
-          }
-  );
+  return isUsingMainKey && !keywords?.length
+    ? filters
+    : !isUsingMainKey && !keywords?.length
+    ? { _id: { $exists: false }, id: { $exists: false } }
+    : hasNsibidi
+    ? { $and: [{ $or: generateMultipleNsibidi(keywords) }, filters] }
+    : {
+        $and: [
+          {
+            $or: compact([
+              generateMultipleWordRegex(keywords),
+              generateMultipleVariationsRegex(keywords),
+              generateMultipleDialectsWordRegex(keywords),
+              ...generateMultipleTensesWordRegex(keywords),
+            ]),
+          },
+        ],
+        ...filters,
+      };
 };
-const fullTextDefinitionsSearchQuery = ({
-  keywords,
-  isUsingMainKey,
-  searchWord = '',
-  filters,
-}) => (
+const fullTextDefinitionsSearchQuery = ({ keywords, isUsingMainKey, searchWord = '', filters }) =>
   !isUsingMainKey && !keywords?.length
     ? { _id: { $exists: false }, id: { $exists: false } }
     : !keywords?.length
-      ? filters
-      : {
+    ? filters
+    : {
         $and: [
           filters,
           StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
           generateMultipleDefinitionsRegex(keywords),
         ],
-      }
-);
+      };
 
 const definitionsQuery = ({ regex, searchWord = '', filters }) => ({
   $and: [
@@ -115,9 +101,9 @@ const definitionsQuery = ({ regex, searchWord = '', filters }) => ({
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
-export const searchExamplesRegexQuery = (regex) => (
-  { $or: [{ igbo: regex.wordReg }, { english: regex.definitionsReg }] }
-);
+export const searchExamplesRegexQuery = (regex) => ({
+  $or: [{ igbo: regex.wordReg }, { english: regex.definitionsReg }],
+});
 export const searchIgboTextSearch = fullTextSearchQuery;
 export const searchDefinitionsWithinIgboTextSearch = fullTextDefinitionsSearchQuery;
 /* Since the word field is not non-accented yet,
@@ -131,11 +117,6 @@ export const searchForAllDevelopers = () => ({
 });
 export const searchForAllVerbsAndSuffixesQuery = () => ({
   'definitions.wordClass': {
-    $in: [
-      WordClass.AV.value,
-      WordClass.PV.value,
-      WordClass.ISUF.value,
-      WordClass.ESUF.value,
-    ],
+    $in: [WordClass.AV.value, WordClass.PV.value, WordClass.ISUF.value, WordClass.ESUF.value],
   },
 });

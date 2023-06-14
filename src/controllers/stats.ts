@@ -1,13 +1,16 @@
+import { NextFunction, Request, Response } from 'express';
 import { statSchema } from '../models/Stat';
 import { developerSchema } from '../models/Developer';
 import { searchForAllDevelopers } from './utils/queries';
 import { createDbConnection, handleCloseConnection } from '../services/database';
-import StatTypes from '../shared/constants/StatTypes';
+import StatType from '../shared/constants/StatType';
+import StatModel from '../models/interfaces/Stat';
+import DeveloperModel from '../models/interfaces/Developer';
 
-export const getStats = async (req, res, next) => {
+export const getStats = async (req: Request, res: Response, next: NextFunction) => {
   const connection = createDbConnection();
-  const Stat = connection.model('Stat', statSchema);
-  const Developer = connection.model('Developer', developerSchema);
+  const Stat = connection.model<StatModel>('Stat', statSchema);
+  const Developer = connection.model<DeveloperModel>('Developer', developerSchema);
   try {
     const [
       totalWords,
@@ -19,14 +22,14 @@ export const getStats = async (req, res, next) => {
       totalProverbs,
       totalBibleVerses,
     ] = await Promise.all([
-      Stat.findOne({ type: StatTypes.SUFFICIENT_WORDS }),
-      Stat.findOne({ type: StatTypes.HEADWORD_AUDIO_PRONUNCIATIONS }),
-      Stat.findOne({ type: StatTypes.NSIBIDI_WORDS }),
+      Stat.findOne({ type: StatType.SUFFICIENT_WORDS }),
+      Stat.findOne({ type: StatType.HEADWORD_AUDIO_PRONUNCIATIONS }),
+      Stat.findOne({ type: StatType.NSIBIDI_WORDS }),
       Developer.find(searchForAllDevelopers()),
-      Stat.findOne({ type: StatTypes.SUFFICIENT_EXAMPLES }),
-      Stat.findOne({ type: StatTypes.IGBO_DEFINITIONS }),
-      Stat.findOne({ type: StatTypes.PROVERB_EXAMPLES }),
-      Stat.findOne({ type: StatTypes.BIBLICAL_EXAMPLES }),
+      Stat.findOne({ type: StatType.SUFFICIENT_EXAMPLES }),
+      Stat.findOne({ type: StatType.IGBO_DEFINITIONS }),
+      Stat.findOne({ type: StatType.PROVERB_EXAMPLES }),
+      Stat.findOne({ type: StatType.BIBLICAL_EXAMPLES }),
     ]);
     const stats = {
       totalWords: totalWords.value,
