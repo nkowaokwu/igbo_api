@@ -77,7 +77,7 @@ export default async (req, res, next) => {
     }
 
     if (!apiKey) {
-      throw new Error("X-API-Key Header doesn't exist");
+      throw new Error('X-API-Key Header doesn\'t exist');
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */
