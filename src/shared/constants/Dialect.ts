@@ -2,22 +2,22 @@ export default {
   ABI: {
     code: 'ibo-abi',
     value: 'ABI',
-    label: 'Abiriba',
+    label: 'Abịrịba',
   },
   ACH: {
     code: 'ibo-ach',
     value: 'ACH',
-    label: 'Achalla',
+    label: 'Achala',
   },
   AFI: {
     code: 'ibo-afi',
     value: 'AFI',
-    label: 'Afikpo',
+    label: 'Afiikpo',
   },
   AJA: {
     code: 'ibo-aja',
     value: 'AJA',
-    label: 'Ajalli/Ajali',
+    label: 'Ajalị',
   },
   AMA: {
     code: 'ibo-ama',
@@ -37,7 +37,7 @@ export default {
   AWK: {
     code: 'ibo-awk',
     value: 'AWK',
-    label: 'Awkuzu; Okuzu',
+    label: 'Ọkụzụ',
   },
   BON: {
     code: 'ibo-bon',
@@ -47,7 +47,7 @@ export default {
   ECH: {
     code: 'ibo-ech',
     value: 'ECH',
-    label: 'Eche',
+    label: 'Echee',
   },
   EGB: {
     code: 'ibo-egb',
@@ -57,7 +57,7 @@ export default {
   EZA: {
     code: 'ibo-eza',
     value: 'EZA',
-    label: 'Ezza',
+    label: 'Ezaa',
   },
   EZE: {
     code: 'ibo-eze',
@@ -97,12 +97,12 @@ export default {
   NKA: {
     code: 'ibo-nka',
     value: 'NKA',
-    label: 'Nkanu',
+    label: 'Nkanụ',
   },
   NKP: {
     code: 'ibo-nkp',
     value: 'NKP',
-    label: 'Nkpor',
+    label: 'Mkpọọ',
   },
   NSA: {
     code: 'ibo-nsa',
@@ -117,7 +117,7 @@ export default {
   OGU: {
     code: 'ibo-ogu',
     value: 'OGU',
-    label: 'Ọgụta',
+    label: 'Ugwuta',
   },
   OHU: {
     code: 'ibo-ohu',
