@@ -2,7 +2,7 @@
 <!--- Thoughtfully think through your changes. Think of your audience, this PR is public! -->
 
 ## Issue ticket number and link
-<!--- Closed <insert issue number with #> -->
+Closed <!--- <insert issue number with # to have GitHub automatically close the issue - https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword> -->
 
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
