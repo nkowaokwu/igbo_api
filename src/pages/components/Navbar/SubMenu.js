@@ -53,7 +53,8 @@ const SubMenu = ({ isVisible, transparent }) => {
       className={`navbar ${transparent ? 'transparent-navbar' : ''} 
       ${isVisible ? 'visible opacity-1' : 'hidden opacity-0'}
       ${isVisible ? '' : 'pointer-events-none'}
-      space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100`}
+      space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100
+      ${isMobile ? 'text-red-500' : ''}`}
     >
       <li className="transition-element">
         <button
