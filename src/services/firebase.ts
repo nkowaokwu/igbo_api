@@ -2,7 +2,17 @@ import { getApp, initializeApp } from 'firebase/app';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 import { isProduction } from '../config';
 
-const STAGING_FIREBASE_CONFIG = {
+interface FirebaseConfig {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId?: string;
+}
+
+const STAGING_FIREBASE_CONFIG: FirebaseConfig = {
   apiKey: 'AIzaSyBk96Lx1weQcOliPZfc3w2aw1Az8n16E8o',
   authDomain: 'igbo-api-staging-99a67.firebaseapp.com',
   projectId: 'igbo-api-staging-99a67',
@@ -11,7 +21,7 @@ const STAGING_FIREBASE_CONFIG = {
   appId: '1:225886570045:web:06ec83640f8868f5a04c54',
 };
 
-const PRODUCTION_FIREBASE_CONFIG = {
+const PRODUCTION_FIREBASE_CONFIG: FirebaseConfig = {
   apiKey: 'AIzaSyBDXPLmvu7YEagwdgp_W4uoZhCglbXrG6M',
   authDomain: 'igbo-api-bb22d.firebaseapp.com',
   projectId: 'igbo-api-bb22d',
