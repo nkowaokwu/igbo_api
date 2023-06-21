@@ -30,6 +30,24 @@ const SubMenu = ({ isVisible, transparent }) => {
   useEffect(() => {
     changeLanguage(language);
   }, [language]);
+  // Check if the viewport matches a mobile screen width
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    // Initial check
+    handleMediaQueryChange(mediaQuery);
+
+    // Listen for changes in viewport width
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    // Clean up the event listener
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
+
   return (
     <ul
       className={`navbar ${transparent ? 'transparent-navbar' : ''} 
