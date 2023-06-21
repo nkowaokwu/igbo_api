@@ -1,58 +1,18 @@
-import { compareSync } from 'bcrypt';
-import { developerSchema } from '../models/Developer';
 import {
   MAIN_KEY,
-  isTest,
   isDevelopment,
   isProduction,
 } from '../config';
-import { createDbConnection } from '../services/database';
-
-const PROD_LIMIT = 2500;
-const FALLBACK_API_KEY = 'fallback_api_key';
-
-const determineLimit = (apiLimit) => (
-  isTest
-    ? apiLimit || PROD_LIMIT
-    : PROD_LIMIT
-);
-
-const isSameDate = (first, second) => (
-  first.getFullYear() === second.getFullYear()
-    && first.getMonth() === second.getMonth()
-    && first.getDate() === second.getDate()
-);
-
-/* Increments usage count and updates usage date */
-const handleDeveloperUsage = async (developer) => {
-  const updatedDeveloper = developer;
-  const isNewDay = !isSameDate(updatedDeveloper.usage.date, new Date());
-  updatedDeveloper.usage.date = Date.now();
-
-  if (isNewDay) {
-    updatedDeveloper.usage.count = 0;
-  } else {
-    updatedDeveloper.usage.count += 1;
-  }
-
-  return updatedDeveloper.save();
-};
-
-/* Finds a developer with provided information */
-const findDeveloper = async (apiKey) => {
-  console.time('Finding developer account');
-  const connection = createDbConnection();
-  const Developer = connection.model('Developer', developerSchema);
-  const developers = await Developer.find({});
-  const developer = developers.find((dev) => compareSync(apiKey, dev.apiKey));
-  console.timeEnd('Finding developer account');
-  return developer;
-};
+import {
+  handleRequest,
+  FALLBACK_API_KEY,
+  checkDeveloperAPILimit,
+  findDeveloper,
+} from '../controllers/developers/utils';
 
 export default async (req, res, next) => {
   try {
-    const { apiLimit } = req.query;
-    let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
+    let { apiToken: apiKey } = handleRequest(req);
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
@@ -64,6 +24,7 @@ export default async (req, res, next) => {
     if (!apiKey && isDevelopment) {
       apiKey = FALLBACK_API_KEY;
     }
+
     if (!apiKey) {
       throw new Error('X-API-Key Header doesn\'t exist');
     }
@@ -73,19 +34,10 @@ export default async (req, res, next) => {
       return next();
     }
 
-    const developer = await findDeveloper(apiKey);
+    await findDeveloper(apiKey);
 
-    if (developer) {
-      if (developer.usage.count >= determineLimit(apiLimit)) {
-        res.status(403);
-        return res.send({ error: 'You have exceeded your limit of requests for the day' });
-      }
-      await handleDeveloperUsage(developer);
-      return next();
-    }
-
-    res.status(401);
-    return res.send({ error: 'Your API key is invalid' });
+    await checkDeveloperAPILimit(apiKey);
+    return next();
   } catch (err) {
     res.status(400);
     return res.send({ error: err.message });

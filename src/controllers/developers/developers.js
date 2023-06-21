@@ -1,9 +1,9 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { isProduction, CLIENT_TEST, isTest } from '../config';
-import { developerSchema } from '../models/Developer';
-import { createDbConnection, handleCloseConnection } from '../services/database';
-import { sendNewDeveloper } from './email';
+import { isProduction, CLIENT_TEST, isTest } from '../../config';
+import { developerSchema } from '../../models/Developer';
+import { createDbConnection, handleCloseConnection } from '../../services/database';
+import { sendNewDeveloper } from '../email';
 
 const TEST_EMAIL = 'developer@example.com';
 
@@ -17,11 +17,7 @@ export const postDeveloper = async (req, res, next) => {
 
   try {
     const { body: data } = req;
-    const {
-      email,
-      password,
-      name,
-    } = data;
+    const { email, password, name } = data;
 
     const developers = await Developer.find({ email });
     if (developers.length && email !== TEST_EMAIL) {
@@ -56,6 +52,21 @@ export const postDeveloper = async (req, res, next) => {
     });
   } catch (err) {
     await handleCloseConnection(connection);
+    if (!isTest) {
+      console.trace(err);
+    }
+    return next(err);
+  }
+};
+
+export const getDeveloper = async (req, res, next) => {
+  try {
+    const { developer } = req;
+
+    return res.status(200).send({
+      developer,
+    });
+  } catch (err) {
     if (!isTest) {
       console.trace(err);
     }
