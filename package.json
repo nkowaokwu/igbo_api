@@ -75,7 +75,7 @@
     "@babel/preset-typescript": "^7.21.5",
     "@babel/runtime": "^7.20.6",
     "@chakra-ui/icons": "^1.1.1",
-    "@chakra-ui/react": "^1.7.4",
+    "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fortawesome/fontawesome": "^1.1.8",

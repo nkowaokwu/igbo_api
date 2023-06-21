@@ -142,6 +142,7 @@ __tests__/__mocks__/dictionaries/
 
 # misc
 .DS_Store
+.history
 
 # Firebase
 functions/node_modules
