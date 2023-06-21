@@ -1,11 +1,13 @@
-import { statSchema } from '../models/Stat';
+import { NextFunction, Request, Response } from 'express';
+import { Connection } from 'mongoose';
 import { developerSchema } from '../models/Developer';
-import { searchForAllDevelopers } from './utils/queries';
+import { statSchema } from '../models/Stat';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import StatTypes from '../shared/constants/StatTypes';
+import { searchForAllDevelopers } from './utils/queries';
 
-export const getStats = async (req, res, next) => {
-  const connection = createDbConnection();
+export const getStats = async (_: Request, res: Response, next: NextFunction) => {
+  const connection: Connection = createDbConnection();
   const Stat = connection.model('Stat', statSchema);
   const Developer = connection.model('Developer', developerSchema);
   try {
@@ -28,6 +30,7 @@ export const getStats = async (req, res, next) => {
       Stat.findOne({ type: StatTypes.PROVERB_EXAMPLES }),
       Stat.findOne({ type: StatTypes.BIBLICAL_EXAMPLES }),
     ]);
+
     const stats = {
       totalWords: totalWords.value,
       totalExamples: totalExamples.value,

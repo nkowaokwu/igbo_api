@@ -1,28 +1,31 @@
+import { NextFunction, Request, Response } from 'express';
 import map from 'lodash/map';
-import mongoose from 'mongoose';
-import removePrefix from '../shared/utils/removePrefix';
+import mongoose, { Connection } from 'mongoose';
+import { handleWordFlags } from '../APIs/FlagsAPI';
+import { wordSchema } from '../models/Word';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
-import { getDocumentsIds } from '../shared/utils/documentUtils';
 import createRegExp from '../shared/utils/createRegExp';
-import { packageResponse, handleQueries } from './utils';
+import { getDocumentsIds } from '../shared/utils/documentUtils';
+import removePrefix from '../shared/utils/removePrefix';
+import { createExample } from './examples';
+import { IgboAPIRequest, handleQueries, packageResponse } from './utils';
 import { findWordsWithMatch } from './utils/buildDocs';
+import minimizeWords from './utils/minimizeWords';
 import searchWordUsingEnglish from './utils/searchWordUsingEnglish';
 import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
-import { createExample } from './examples';
-import { wordSchema } from '../models/Word';
-import { handleWordFlags } from '../APIs/FlagsAPI';
-import minimizeWords from './utils/minimizeWords';
 
 /* Gets words from JSON dictionary */
-export const getWordData = (req, res, next) => {
+export const getWordData = (req: Request, res: Response, next: NextFunction) => {
   try {
     const { keyword } = req.query;
     const searchWord = removePrefix(keyword);
+
     if (!searchWord) {
       throw new Error(NO_PROVIDED_TERM);
     }
     const { wordReg: regexWord } = createRegExp(searchWord);
+
     return res.send(findSearchWord(regexWord, searchWord));
   } catch (err) {
     return next(err);
@@ -30,8 +33,9 @@ export const getWordData = (req, res, next) => {
 };
 
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase = async (req, res, next) => {
+const getWordsFromDatabase = async (req: IgboAPIRequest, res: Response, next: NextFunction) => {
   try {
+    // eslint-disable-next-line no-console
     console.time('Getting words from database');
     const {
       version,
@@ -47,6 +51,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       isUsingMainKey,
       redisClient,
     } = await handleQueries(req);
+
     const searchQueries = {
       searchWord,
       skip,
@@ -54,7 +59,8 @@ const getWordsFromDatabase = async (req, res, next) => {
       flags,
       filters,
     };
-    let responseData = {};
+
+    let responseData: { words?: string[]; contentLength?: number } = {};
     if (hasQuotes) {
       responseData = await searchWordUsingEnglish({
         redisClient,
@@ -73,8 +79,12 @@ const getWordsFromDatabase = async (req, res, next) => {
         ...searchQueries,
       });
     }
+
+    // eslint-disable-next-line no-console
     console.log(`Number of words for search word "${searchWord}": ${responseData.contentLength}`);
+    // eslint-disable-next-line no-console
     console.timeEnd('Getting words from database');
+
     return packageResponse({
       res,
       docs: responseData.words,
@@ -86,31 +96,31 @@ const getWordsFromDatabase = async (req, res, next) => {
   }
 };
 /* Gets words from MongoDB */
-export const getWords = async (req, res, next) => {
+export const getWords = async (req: IgboAPIRequest, res: Response, next: NextFunction) => {
   try {
-    return getWordsFromDatabase(req, res, next);
+    return await getWordsFromDatabase(req, res, next);
   } catch (err) {
     return next(err);
   }
 };
 
 /* Returns a word from MongoDB using an id */
-export const getWord = async (req, res, next) => {
+export const getWord = async (req: IgboAPIRequest, res: Response, next: NextFunction) => {
   try {
     const { id, flags, version } = await handleQueries(req);
 
-    const updatedWord = await findWordsWithMatch({
-      match: { _id: mongoose.Types.ObjectId(id) },
+    const data = await findWordsWithMatch({
+      match: { _id: new mongoose.Types.ObjectId(id) },
       version,
-    })
-      .then(async (data) => {
-        if (!data.words[0]) {
-          throw new Error('No word exists with the provided id.');
-        }
-        const { words } = handleWordFlags({ data, flags });
-        const minimizedWords = minimizeWords(words, version);
-        return minimizedWords[0];
-      });
+    });
+
+    if (!data.words[0]) {
+      throw new Error('No word exists with the provided id.');
+    }
+    const { words } = handleWordFlags({ data, flags });
+    const minimizedWords = minimizeWords(words, version);
+    const updatedWord = minimizedWords[0];
+
     return packageResponse({
       res,
       docs: updatedWord,
@@ -123,18 +133,9 @@ export const getWord = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data, connection) => {
+export const createWord = async (data: Record<string, any>, connection: Connection) => {
   const Word = connection.model('Word', wordSchema);
-  const {
-    examples,
-    word,
-    wordClass,
-    definitions,
-    variations,
-    stems,
-    dialects,
-    ...rest
-  } = data;
+  const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 
   const wordData = {
     word,
@@ -162,6 +163,6 @@ export const createWord = async (data, connection) => {
   /* Wait for all the Examples to be created and then add them to the Word document */
   const resolvedExamples = await Promise.all(savedExamples);
   const exampleIds = getDocumentsIds(resolvedExamples);
-  newWord.examples = exampleIds;
+  (newWord as any).examples = exampleIds;
   return newWord.save();
 };

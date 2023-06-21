@@ -1,8 +1,11 @@
 import { hash } from 'bcrypt';
+import { NextFunction, Request, Response } from 'express';
+import { Connection } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { isProduction, CLIENT_TEST, isTest } from '../config';
+import { CLIENT_TEST, isProduction, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
+import { DeveloperRequestBody } from './controllers.interface';
 import { sendNewDeveloper } from './email';
 
 const TEST_EMAIL = 'developer@example.com';
@@ -11,19 +14,16 @@ const TEST_EMAIL = 'developer@example.com';
 const generateApiKey = uuid;
 
 /* Creates a new Developer in the database */
-export const postDeveloper = async (req, res, next) => {
-  const connection = createDbConnection();
+export const postDeveloper = async (req: Request, res: Response, next: NextFunction) => {
+  const connection: Connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
 
   try {
     const { body: data } = req;
-    const {
-      email,
-      password,
-      name,
-    } = data;
 
-    const developers = await Developer.find({ email });
+    const { email, password, name } = data as DeveloperRequestBody;
+
+    const developers: (typeof developerSchema)[] = await Developer.find({ email });
     if (developers.length && email !== TEST_EMAIL) {
       throw new Error('This email is already used.');
     }
