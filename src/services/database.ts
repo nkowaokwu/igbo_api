@@ -23,7 +23,7 @@ export const createDbConnection = (): mongoose.Connection => {
 
 /* Closes current connection to MongoDB */
 export const disconnectDatabase = (): void => {
-  const db: mongoose.Connection = mongoose.connection;
+  const db = mongoose.connection;
   if (db.readyState !== DISCONNECTED) {
     db.close();
     db.once('close', () => {
