@@ -1,27 +1,30 @@
 /* eslint-disable max-len */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { GITHUB_REPO } from '../../../siteConstants';
 
-const GitHubStars = ({ stars }) => (
-  <div className="flex flex-row items-center justify-center space-x-4">
-    <a
-      href={GITHUB_REPO}
-      className="hover:shadow-inner bg-gradient-to-t from-gray-100 to-white border border-gray-200
-      rounded-lg p-2 font-bold text-lg -mr-1 flex flex-row items-center"
-    >
-      <svg
-        className="mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        focusable="false"
-        role="img"
-        width="1.03em"
-        height="1em"
-        viewBox="0 0 256 250"
+type GitHubStarsProps = {
+  stars: number;
+};
+
+export default function GitHubStars({ stars }: GitHubStarsProps) {
+  return (
+    <div className="flex flex-row items-center justify-center space-x-4">
+      <a
+        href={GITHUB_REPO}
+        className="flex flex-row items-center p-2 -mr-1 text-lg font-bold border border-gray-200 rounded-lg hover:shadow-inner bg-gradient-to-t from-gray-100 to-white"
       >
-        <path
-          d="M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46c6.397
+        <svg
+          className="mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+          role="img"
+          width="1.03em"
+          height="1em"
+          viewBox="0 0 256 250"
+        >
+          <path
+            d="M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46c6.397
           1.185 8.746-2.777 8.746-6.158c0-3.052-.12-13.135-.174-23.83c-35.61
           7.742-43.124-15.103-43.124-15.103c-5.823-14.795-14.213-18.73-14.213-18.73c-11.613-7.944.876-7.78.876-7.78c12.853.902
           19.621 13.19 19.621 13.19c11.417 19.568 29.945 13.911 37.249 10.64c1.149-8.272
@@ -44,29 +47,21 @@ const GitHubStars = ({ stars }) => (
           1.202-1.932 2.733-1.958c1.522-.03 2.768.818 2.768 1.868zm10.555-.405c.182 1.03-.875 2.088-2.387
           2.37c-1.485.271-2.861-.365-3.05-1.386c-.184-1.056.893-2.114 2.376-2.387c1.514-.263 2.868.356
           3.061 1.403z"
-          fill="#000"
-        />
-      </svg>
-      Stars
-    </a>
-    <div
-      className="hover:shadow-inner flex flex-row items-center bg-gradient-to-t
-      from-gray-100 to-white border border-gray-200 rounded-lg p-2 relative ml-3"
-    >
-      <div
-        style={{ zIndex: -1 }}
-        className="absolute -left-1 top-3.5 h-3 w-3 bg-gradient-to-t
-        from-gray-100-to-white rounded-sm border border-gray-300 flex-none transform rotate-45"
-      />
-      <a className="inset-0 btn font-bold text-lg" href={GITHUB_REPO}>
-        {stars}
+            fill="#000"
+          />
+        </svg>
+        Stars
       </a>
+      <div className="relative flex flex-row items-center p-2 ml-3 border border-gray-200 rounded-lg hover:shadow-inner bg-gradient-to-t from-gray-100 to-white">
+        <div
+          style={{ zIndex: -1 }}
+          className="absolute -left-1 top-3.5 h-3 w-3 bg-gradient-to-t
+        from-gray-100-to-white rounded-sm border border-gray-300 flex-none transform rotate-45"
+        />
+        <a className="inset-0 text-lg font-bold btn" href={GITHUB_REPO}>
+          {stars}
+        </a>
+      </div>
     </div>
-  </div>
-);
-
-GitHubStars.propTypes = {
-  stars: PropTypes.number.isRequired,
-};
-
-export default GitHubStars;
+  );
+}
