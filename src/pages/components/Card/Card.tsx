@@ -39,10 +39,3 @@ export default function Card({ title, description, icon, tooltipLabel }: CardInt
     </Tooltip>
   );
 }
-
-// Card.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   description: PropTypes.string.isRequired,
-//   icon: PropTypes.string.isRequired,
-//   tooltipLabel: PropTypes.string.isRequired,
-// };
