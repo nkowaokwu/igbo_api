@@ -9,17 +9,17 @@ jobs:
   backup:
     name: Backup
     runs-on: ubuntu-latest
-      
+
     steps:
-    - name: Git checkout files and create db directory
-      uses: actions/checkout@v2
-    - shell: bash
-      env:
-        MONGO_URI: ${{ secrets.MONGO_URI }}
-        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
-      # https://github.com/actions/virtual-environments/issues/1207
-      run: |
-        sudo apt-get install mongodb
-        sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
-        mkdir igbo_api_db
-        ./scripts/sync.sh $MONGO_URI $DROPBOX_TOKEN
+      - name: Git checkout files and create db directory
+        uses: actions/checkout@v2
+      - shell: bash
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+        # https://github.com/actions/virtual-environments/issues/1207
+        run: |
+          sudo apt-get install mongodb
+          sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+          mkdir igbo_api_db
+          ./scripts/sync.sh $MONGO_URI $DROPBOX_TOKEN
