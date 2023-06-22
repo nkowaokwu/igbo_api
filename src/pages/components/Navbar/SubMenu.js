@@ -36,6 +36,14 @@ const SubMenu = ({ isVisible, transparent }) => {
       setIsMobile(event.matches);
     };
 
+    const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
     // Initial check
     handleMediaQueryChange(mediaQuery);
 
@@ -46,7 +54,7 @@ const SubMenu = ({ isVisible, transparent }) => {
     return () => {
       mediaQuery.removeEventListener('change', handleMediaQueryChange);
     };
-  }, []);
+  }, []); // Empty dependency array to run the effect only once
 
   return (
     <ul
