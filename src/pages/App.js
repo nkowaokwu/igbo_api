@@ -115,7 +115,7 @@ const App = ({
                 />
                 <Card
                   title={t('Nsịbịdị')}
-                  description={t('Nsịbịdị is writing system was created in Nigeria.')}
+                  description={t('Nsịbịdị is a writing system created in Nigeria.')}
                   icon="𑗉"
                   tooltipLabel="Each headword will be accompanied with its Nsịbịdị equivalent."
                 />
