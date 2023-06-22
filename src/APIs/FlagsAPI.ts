@@ -41,10 +41,12 @@ export const handleWordFlags = ({
       }
       if (!resolve) {
         if (updatedWord.stems) {
-          updatedWord.stems = updatedWord.stems.map((stem) => stem.id);
+          updatedWord.stems = updatedWord.stems.map((stem) => (typeof stem === 'string' ? stem : stem.id));
         }
         if (updatedWord.relatedTerms) {
-          updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) => relatedTerm.id);
+          updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) =>
+            typeof relatedTerm === 'string' ? relatedTerm : relatedTerm.id
+          );
         }
       }
       return updatedWord;
