@@ -13,20 +13,19 @@ import {
   APP_URL,
 } from '../../../siteConstants';
 
-const Footer = () => {
+export default function Footer() {
   const router = useRouter();
   const { t } = useTranslation();
   return (
     <div className="w-full">
-      <div className="flex flex-row items-center justify-center bg-gradient-to-t from-gray-50 to-white  h-56">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-2xl text-center items-center p-5">
+      <div className="flex flex-row items-center justify-center h-56 bg-gradient-to-t from-gray-50 to-white">
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="items-center p-5 text-2xl text-center">
             {t('Interested in what you see? Register for an API Key!')}
           </h1>
           <button
             type="button"
-            className="mt-4 rounded-full bg-green-500 text-white border-2 py-2 px-4 hover:bg-transparent
-            hover:text-gray-700 hover:border-green-500 transition-all duration-200"
+            className="px-4 py-2 mt-4 text-white transition-all duration-200 bg-green-500 border-2 rounded-full hover:bg-transparent hover:text-gray-700 hover:border-green-500"
             onClick={() => router.push('/signup')}
           >
             {t('Get an API Key')}
@@ -41,12 +40,11 @@ const Footer = () => {
         <div className="flex flex-row items-center justify-center">
           <div>
             <div
-              className="flex flex-col lg:flex-row justify-center items-center
-              lg:items-start my-6 space-y-12 lg:space-y-0 lg:space-x-32"
+              className="flex flex-col items-center justify-center my-6 space-y-12 lg:flex-row lg:items-start lg:space-y-0 lg:space-x-32"
             >
               <div className="space-y-4">
                 <h3 className="font-bold">Projects</h3>
-                <ul className="list-none space-y-3">
+                <ul className="space-y-3 list-none">
                   <li>
                     <a href={APP_URL} className="font-normal border-b border-b-gray-500">
                       Igbo API
@@ -66,7 +64,7 @@ const Footer = () => {
               </div>
               <div className="space-y-4">
                 <h3 className="font-bold">Organization</h3>
-                <ul className="list-none space-y-3">
+                <ul className="space-y-3 list-none">
                   <li>
                     <a href="/about" className="font-normal border-b border-b-gray-500">
                       About
@@ -86,7 +84,7 @@ const Footer = () => {
               </div>
               <div className="space-y-4">
                 <h3 className="font-bold">Social</h3>
-                <ul className="list-none space-y-3">
+                <ul className="space-y-3 list-none">
                   <li>
                     <a href={GITHUB_REPO} className="font-normal border-b border-b-gray-500">
                       GitHub
@@ -125,6 +123,4 @@ const Footer = () => {
       </footer>
     </div>
   );
-};
-
-export default Footer;
+}
