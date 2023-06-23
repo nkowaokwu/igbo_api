@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
@@ -39,9 +40,7 @@ export default function Footer() {
       >
         <div className="flex flex-row items-center justify-center">
           <div>
-            <div
-              className="flex flex-col items-center justify-center my-6 space-y-12 lg:flex-row lg:items-start lg:space-y-0 lg:space-x-32"
-            >
+            <div className="flex flex-col items-center justify-center my-6 space-y-12 lg:flex-row lg:items-start lg:space-y-0 lg:space-x-32">
               <div className="space-y-4">
                 <h3 className="font-bold">Projects</h3>
                 <ul className="space-y-3 list-none">
