@@ -91,6 +91,23 @@ describe('Igbo API Homepage', () => {
         });
       });
     });
+
+    describe('Log in to Account', () => {
+      beforeEach(() => {
+        cy.visit('/login');
+      });
+
+      it('render the Login page', () => {
+        cy.findByText('Log in.');
+      });
+
+      it('fill out the sign up form and submit for developer account', () => {
+        const email = `${uuid()}@testing.com`;
+        cy.findByTestId('login-email-input').clear().type(email);
+        cy.findByTestId('login-password-input').clear().type('password');
+        cy.findByText('Login').click();
+      });
+    });
   });
 
   describe('Mobile', () => {
