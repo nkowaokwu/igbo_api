@@ -17,10 +17,10 @@ const Statistics = ({
   stars,
 }) => {
   const { t } = useTranslation();
-  const totalSlackMembers = 150;
+  const totalSlackMembers = 230;
   return (
-    <div className="w-full flex flex-col justify-center items-center odd:space-y-6">
-      <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
+    <div className="flex flex-col items-center justify-center w-full odd:space-y-6">
+      <div className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         <Stat value={totalWords} header={t('Words in the database').replace('{{number}}', totalWords)} />
         <Stat value={totalExamples} header={t('Example Igbo sentences').replace('{{number}}', totalExamples)} />
         <Stat
@@ -42,13 +42,13 @@ const Statistics = ({
         <Stat value={totalNsibidiWords} header={t('Words in Nsịbịdị').replace('{{number}}', totalNsibidiWords)} />
         <Stat value={totalDevelopers} header={t('Developers using the Igbo API')} />
       </div>
-      <div className="flex flex-row justify-center items-center flex-wrap w-full lg:w-9/12">
+      <div className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         {contributors ? (
           <Stat
             value={contributors.length - 1}
             header={t('GitHub Contributors').replace('{{number}}', contributors.length - 1)}
           >
-            <div className="flex flex-row flex-wrap justify-center items-center mt-4">
+            <div className="flex flex-row flex-wrap items-center justify-center mt-4">
               {contributors.slice(0, 18)
                 .filter(({ login }) => login !== 'semantic-release-bot')
                 .map((contributor) => (
@@ -57,7 +57,7 @@ const Statistics = ({
                       <a href={contributor.html_url}>
                         <img
                           src={contributor.avatar_url}
-                          className=" text-gray-700 bg-gray-400 w-10 m-2 rounded-full"
+                          className="w-10 m-2 text-gray-700 bg-gray-400 rounded-full "
                           alt="github avatar"
                         />
                       </a>
