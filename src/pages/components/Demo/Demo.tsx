@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import { useTranslation } from 'react-i18next';
@@ -158,13 +157,3 @@ export default function Demo({ searchWord, words }: DemoPropsInterface) {
     </div>
   ) : null;
 }
-
-Demo.propTypes = {
-  searchWord: PropTypes.string,
-  words: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-Demo.defaultProps = {
-  searchWord: '',
-  words: [],
-};

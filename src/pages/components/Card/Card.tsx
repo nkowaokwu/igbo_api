@@ -2,14 +2,14 @@ import React from 'react';
 import { Tooltip } from '@chakra-ui/react';
 import { ReactI18NextChild } from 'react-i18next';
 
-interface CardInterface {
+interface CardPropsInterface {
   title: string;
   description: string;
   icon: ReactI18NextChild;
   tooltipLabel: string;
 }
 
-export default function Card({ title, description, icon, tooltipLabel }: CardInterface) {
+export default function Card({ title, description, icon, tooltipLabel }: CardPropsInterface) {
   return (
     <Tooltip label={tooltipLabel}>
       <div
