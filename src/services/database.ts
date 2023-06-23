@@ -4,11 +4,9 @@ import { MONGO_URI, isProduction, isTest } from '../config';
 const DISCONNECTED = 0;
 
 /* Opens a connection to MongoDB */
-export const createDbConnection = () => {
+export const createDbConnection = (): mongoose.Connection => {
   /* Connects to the MongoDB Database */
-  const connection = mongoose.createConnection(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  const connection: mongoose.Connection = mongoose.createConnection(MONGO_URI, {
     autoIndex: true,
     readPreference: isTest ? 'primary' : 'nearest',
   });
@@ -24,7 +22,7 @@ export const createDbConnection = () => {
 };
 
 /* Closes current connection to MongoDB */
-export const disconnectDatabase = () => {
+export const disconnectDatabase = (): void => {
   const db = mongoose.connection;
   if (db.readyState !== DISCONNECTED) {
     db.close();
@@ -36,9 +34,9 @@ export const disconnectDatabase = () => {
   }
 };
 
-export const isConnected = () => mongoose.connection.readyState !== 0;
+export const isConnected = (): boolean => mongoose.connection.readyState !== 0;
 
-export const handleCloseConnection = async (connection) => {
+export const handleCloseConnection = async (connection: mongoose.Connection | undefined): Promise<void> => {
   if (typeof connection?.readyState === 'number' && connection?.readyState !== DISCONNECTED) {
     await connection.close();
   }
