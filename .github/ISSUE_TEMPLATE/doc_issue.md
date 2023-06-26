@@ -1,5 +1,5 @@
 ---
-name: Doc Issue
+name: Docs feedback
 about: Suggest feedback, ideas, or any new forms of contributions
 title: ''
 labels: ''
