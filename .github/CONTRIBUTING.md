@@ -6,7 +6,6 @@ Contributions are always welcome. Before contributing please read the [Code of C
 
 Feature requests should be captured through the repo's [issues](https://github.com/nkowaokwu/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
 
-
 Before opening an issue, please read through the [issues](https://github.com/nkowaokwu/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
 
 ## Areas of Contribution
@@ -20,19 +19,24 @@ There are a lot of different things that can be done to support the development 
 
 You can also reach out to [@ijemmao](https://github.com/ijemmao) if you any other ideas.
 
+## Fork the Repo
+
+Before making any changes, please ensure that you fork this repo to have your own copy of the codebase associated with your account.
+This repo is set up to accept PRs from forked repos.
+
 ## Pull Request Process
 
 ### Before Opening a Pull Request
 
-Double check to make sure that you have done the following things:
+Double-check to make sure that you have done the following things:
 
-1. If implementing a feature request, create new unit tests to increase confidence of your changes.
+1. If implementing a feature request, create new unit tests to increase confidence in your changes.
     * **You're code will be unable to get merged without new unit tests**
 2. Check to see if your changes are non-breaking by running `yarn test`
 3. And install or build dependencies are removed
     * You can run `yarn clean` to remove unwanted files.
 4. Update the README.md with details of changes to the interface, this includes new environment 
-   variables, exposed ports, useful file locations and container parameters.
+   variables, exposed ports, useful file locations, and container parameters.
 
 ### After Opening a Pull Request
 1. Open a pull request and assign at least one reviewer, [@ijemmao](https://github.com/ijemmao).
