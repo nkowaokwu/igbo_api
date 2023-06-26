@@ -1,3 +1,11 @@
+---
+name: Doc Issue
+about: Suggest feedback, ideas, or any new forms of contributions
+title: ''
+labels: ''
+assignees: ''
+---
+
 <!-- Thank you for contributing to Igbo API 📑 ✍️. -->
 <!-- We appreciate your feedback, ideas, and contributions. -->
 <!-- Before filing this issue, please make sure to check if there's already a similar issue open in our Docs project Board. -->
