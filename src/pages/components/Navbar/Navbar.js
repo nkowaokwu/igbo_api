@@ -11,9 +11,9 @@ const Navbar = ({ to, transparent }) => {
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
     <div
-      className={`flex items-center justify-between w-full py-5 lg:px-10
+      className={`flex fixed items-center justify-between w-full py-5 lg:px-10
       ${transparent ? 'transparent' : 'bg-white bg-opacity-75'} select-none`}
-      style={{ zIndex: 2, position: 'fixed' }}
+      style={{ zIndex: 2 }}
     >
       <h1 className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900 ml-5 lg:ml-0">
         {to ? (
