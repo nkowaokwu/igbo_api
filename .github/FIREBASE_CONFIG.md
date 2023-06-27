@@ -18,14 +18,4 @@ Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/servi
 
 ## Step 4: Merging forked changes into main repo
 
-Congrats 🎉 You have a change you want to merge into the main repo. You will need to complete a few extra steps to ensure your branch builds pass.
-
-1. In your terminal, run `firebase login`. After following the instructions on screen, you will see a token pasted in your terminal. Save this for later
-2. Navigate to the "Settings" tab at the top of your forked repo on GitHub
-3. In the sidebar, click on the "Secrets and variables" dropdown
-4. Select "Actions"
-5. Click the green "New repository secret" button
-6. Create a new variable with the name `FIREBASE_TOKEN`
-7. Paste in the token you received from running `firebase login`
-8. Click the green "Add secret" button
-9. Submit your PR to get reviewed and merged 🚀
+Congrats 🎉 You're ready to start making your first changes to your repo. Please refer to our [Contributing Guide](https://github.com/nkowaokwu/igbo_api/blob/master/.github/CONTRIBUTING.md) to learn how to contribute to the project.
