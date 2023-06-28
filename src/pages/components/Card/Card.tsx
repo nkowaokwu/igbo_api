@@ -1,11 +1,10 @@
 import React from 'react';
-import { Tooltip } from '@chakra-ui/react';
-import { ReactI18NextChild } from 'react-i18next';
+import { ButtonProps, Tooltip } from '@chakra-ui/react';
 
 interface CardPropsInterface {
   title: string;
   description: string;
-  icon: ReactI18NextChild;
+  icon: ButtonProps['rightIcon'];
   tooltipLabel: string;
 }
 
