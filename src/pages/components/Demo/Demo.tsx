@@ -7,16 +7,17 @@ import queryString, { ParsedQuery } from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { Input, Checkbox } from 'antd';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
+import Word from '../../../models/interfaces/Word';
 
 interface DemoPropsInterface {
   searchWord: string;
-  words: Record<string, string>[];
+  words: Word[];
 }
 
 export default function Demo({ searchWord, words }: DemoPropsInterface) {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchingWord, setIsSearchingWord] = useState(false);
-  const [keyword, setKeyword] = useState(searchWord || '');
+  const [keyword, setKeyword] = useState<string | string[]>(searchWord || '');
   const [queries, setQueries] = useState({});
   const [initialQueries, setInitialQueries] = useState<ParsedQuery<string>>();
   const [productionUrl, setProductionUrl] = useState('');
@@ -29,7 +30,7 @@ export default function Demo({ searchWord, words }: DemoPropsInterface) {
       setInitialQueries(loadedInitialQueries);
       setIsLoading(false);
       setQueries(omit(loadedInitialQueries, ['word']));
-      setKeyword(loadedInitialQueries.word as string);
+      setKeyword(loadedInitialQueries.word);
       if (keyword || loadedInitialQueries.word) {
         window.location.hash = 'try-it-out';
       }
