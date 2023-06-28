@@ -29,6 +29,7 @@ To run this project locally, the following tools need to be installed:
 * [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
 * [Firebase](https://console.firebase.google.com/)
 * [Java](https://www.oracle.com/java/technologies/downloads/)
+* [NVM](https://github.com/nvm-sh/nvm)
 
 ### 1. Installation
 
@@ -38,7 +39,10 @@ Clone the project:
 git clone https://github.com/nkowaokwu/igbo_api.git
 ```
 
-Navigate into the project directory and install it's dependencies:
+**Note:** It's recommended to have [NVM](https://github.com/nvm-sh/nvm) installed so you can easily switch
+between Node versions that are required in this project.
+
+Navigate into the project directory and install its dependencies:
 
 ```
 cd igbo_api/
