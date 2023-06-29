@@ -30,7 +30,7 @@ export const disconnectDatabase = () => {
     db.close();
     db.once('close', () => {
       if (isProduction) {
-        console.log('🗃 Database is connection closed', process.env.CI, MONGO_URI);
+        console.log('🗃  is connection closed', process.env.CI, MONGO_URI);
       }
     });
   }
