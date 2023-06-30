@@ -34,7 +34,6 @@ router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDe
 router.get('/developers/developer', authorization, attachRedisClient, getDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
-
 router.post('/login', login);
 
 export default router;
