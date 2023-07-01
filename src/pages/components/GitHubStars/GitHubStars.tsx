@@ -2,9 +2,9 @@
 import React from 'react';
 import { GITHUB_REPO } from '../../../siteConstants';
 
-type GitHubStarsProps = {
+interface GitHubStarsProps {
   stars: number;
-};
+}
 
 export default function GitHubStars({ stars }: GitHubStarsProps) {
   return (

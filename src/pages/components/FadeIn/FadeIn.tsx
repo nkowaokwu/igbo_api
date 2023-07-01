@@ -1,9 +1,9 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import ReactFadeIn from 'react-fade-in';
 
-type FadeInProps = {
+interface FadeInProps {
   children: ReactNode;
-};
+}
 
 export default function FadeIn({ children }: FadeInProps) {
   const [isBrowser, setIsBrowser] = useState(false);
