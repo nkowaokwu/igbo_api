@@ -108,3 +108,10 @@ export const getDeveloper = (options = {}) => (
     .get(`${API_ROUTE}/developers/developer`)
     .set('X-API-Key', options.name || FALLBACK_API_KEY)
 );
+
+/** login a developer */
+export const loginDeveloper = (data) => (
+  server
+    .post(`${API_ROUTE}/login`)
+    .send(data)
+);
