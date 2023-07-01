@@ -1,4 +1,4 @@
-export const login = (res) => {
+export const login = (req, res, next) => {
   try {
     return res.status(200).send({
       message: 'Logging in...',
