@@ -1,11 +1,14 @@
+import { isTest } from '../../config';
+
 export const login = (req, res, next) => {
   try {
     return res.status(200).send({
       message: 'Logging in...',
     });
   } catch (error) {
-    return res.status(400).send({
-      error: error.message,
-    });
+    if (!isTest) {
+      console.trace(error);
+    }
+    return next(error);
   }
 };
