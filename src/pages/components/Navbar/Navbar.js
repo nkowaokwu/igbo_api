@@ -11,7 +11,7 @@ const Navbar = ({ to, transparent }) => {
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
     <div
-      className={`flex relative lg:fixed items-center justify-between w-full py-5 lg:px-10
+      className={`flex fixed items-center justify-between w-full py-5 lg:px-10
       ${transparent ? 'transparent' : 'bg-white bg-opacity-75'} select-none`}
       style={{ zIndex: 2 }}
     >
@@ -21,13 +21,7 @@ const Navbar = ({ to, transparent }) => {
             <img src="https://igbo-api.s3.us-east-2.amazonaws.com/images/igboAPI.svg" alt="Igbo API logo" />
           </a>
         ) : (
-          <Link
-            className="cursor-pointer"
-            to="homepage-container"
-            smooth
-            offset={-100}
-            duration={600}
-          >
+          <Link className="cursor-pointer" to="homepage-container" smooth offset={-100} duration={600}>
             Igbo API
           </Link>
         )}
@@ -41,10 +35,7 @@ const Navbar = ({ to, transparent }) => {
           <Image {...MenuIcon} alt="down arrow as menu icon" />
         </button>
       ) : null}
-      <SubMenu
-        isVisible={matchesLargeScreenQuery || isMenuVisible}
-        transparent={transparent}
-      />
+      <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} transparent={transparent} />
     </div>
   );
 };
