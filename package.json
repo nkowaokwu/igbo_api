@@ -102,7 +102,7 @@
     "firebase": "9.16.0",
     "firebase-admin": "10.3.0",
     "firebase-functions": "3.19.0",
-    "firebase-tools": "11.18.0",
+    "firebase-tools": "11.30.0",
     "framer-motion": "^5",
     "i18next": "^21.6.5",
     "joi": "^17.4.0",
