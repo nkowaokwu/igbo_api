@@ -1,4 +1,3 @@
-import { RedisClient } from 'redis'; // Import the appropriate Redis client type
 import assign from 'lodash/assign';
 import { REDIS_CACHE_EXPIRATION } from '../config';
 import minimizeWords from '../controllers/utils/minimizeWords';
