@@ -4,19 +4,11 @@ import { sortDocsBy } from './sortDocsBy';
 import { searchEnglishRegexQuery } from './queries';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
+import Word from '../../models/interfaces/Word';
 
 /* Searches for word with English stored in MongoDB */
-const searchWordUsingEnglish = async ({
-  redisClient,
-  version,
-  regex,
-  searchWord,
-  skip,
-  limit,
-  flags,
-  filters,
-}) => {
-  let responseData = { words: [], contentLength: 0 };
+const searchWordUsingEnglish = async ({ redisClient, version, regex, searchWord, skip, limit, flags, filters }) => {
+  let responseData = { words: [], contentLength: 0 } as { words: Word[]; contentLength: number };
   const redisWordsCacheKey = `"${searchWord}"-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
