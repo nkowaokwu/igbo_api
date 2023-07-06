@@ -1,28 +1,41 @@
-# Contributing
+# Contributing to the Igbo API
+
+If you have questions about the Igbo API (not a bug report), please ask a question in our [Slack community](https://nkowaokwu.com/volunteer) as a volunteer.
 
 Contributions are always welcome. Before contributing please read the [Code of Conduct](./CODE_OF_CONDUCT.md) section.
 
-## Feature Requests
+## Reporting bugs
+Before opening a new issue, look for existing [issues](https://github.com/nkowaokwu/igbo_api/issues) to avoid duplication. If the issue does not exist yet, [create one](https://github.com/nkowaokwu/igbo_api/issues/new).
 
-Feature requests should be captured through the repo's [issues](https://github.com/nkowaokwu/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
+* Please post any relevant code samples or screenshots
+* If the bug involves an error, please post the **stack trace**
+* Please fully detail the nature of the bug by filling out the issue template
 
-Before opening an issue, please read through the [issues](https://github.com/nkowaokwu/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
+## Requesting new features
+* Before opening a new issue, look for existing [issues](https://github.com/nkowaokwu/igbo_api/issues) to avoid duplication. If the issue does not exist yet, [create one](https://github.com/nkowaokwu/igbo_api/issues/new).
+* Please fully detail the nature of the feature request by filling out the request template
 
-## Areas of Contribution
+## Areas of contribution
+There are plenty of opportunities to support and help maintain this repo. This includes, but is not limited to:
 
-There are a lot of different things that can be done to support the development of this repo:
+1. Request new features for the Igbo API
+2. Fixing typos in code or sample/mock data
+3. Update the README or write documentation for implementations
+4. Convert files from JS to TS
+5. So much more...
 
-1. Implement requested features
-2. Correct typos or misplaced data in the dictionary JSON files
-3. Write documentation on the project structure
-4. Collaborate on creating a roadmap for the project
+If you have more ideas of how to improve the Igbo API, reach out to Ijemma on [Slack](https://nkowaokwu.com/volunteer) as a volunteer.
 
-You can also reach out to [@ijemmao](https://github.com/ijemmao) if you any other ideas.
+## Accepting work
+Once you find an issue you would like to work on, you can request to have that issue assigned to you to begin work. 
 
-## Fork the Repo
+**Note:** Multiple people can be assigned to the same ticket. Issue assignment is only meant to help **track** who's working on what. This means that multiple contributors can be working on the same issue.
 
-Before making any changes, please ensure that you fork this repo to have your own copy of the codebase associated with your account.
-This repo is set up to accept PRs from forked repos.
+## Fork the repo
+
+Please ensure that you fork this repo before making any changes. This will ensure that you are not only able to make changes in your own work environment but also able to submit PRs.
+
+**This repo is set up to only accept PRs from forked repos**
 
 ## Pull Request Process
 
