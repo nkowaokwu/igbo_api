@@ -6,16 +6,7 @@ import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
 
 /* Searches for word with English stored in MongoDB */
-const searchWordUsingEnglish = async ({
-  redisClient,
-  version,
-  regex,
-  searchWord,
-  skip,
-  limit,
-  flags,
-  filters,
-}) => {
+const searchWordUsingEnglish = async ({ redisClient, version, regex, searchWord, skip, limit, flags, filters }) => {
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `"${searchWord}"-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
