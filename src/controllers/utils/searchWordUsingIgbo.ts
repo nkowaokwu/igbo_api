@@ -30,20 +30,14 @@ const searchWordUsingIgbo = async ({
     };
   } else {
     const allSearchKeywords = !keywords.find(({ text }) => text === searchWord)
-      ? compact(keywords.concat(searchWord
-        ? { text: searchWord, wordClass: [], regex }
-        : null))
+      ? compact(keywords.concat(searchWord ? { text: searchWord, wordClass: [], regex } : null))
       : keywords;
     const regularSearchIgboQuery = searchIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
       filters,
     });
-    const igboQuery = !strict
-      ? regularSearchIgboQuery
-      : strictSearchIgboQuery(
-        allSearchKeywords,
-      );
+    const igboQuery = !strict ? regularSearchIgboQuery : strictSearchIgboQuery(allSearchKeywords);
     const definitionsWithinIgboQuery = searchDefinitionsWithinIgboTextSearch({
       keywords: allSearchKeywords,
       isUsingMainKey,
@@ -57,12 +51,14 @@ const searchWordUsingIgbo = async ({
     ]);
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
-    const words = searchWord ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
-      if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
-        finalWords.push(word);
-      }
-      return finalWords;
-    }, []) : igboResults.words;
+    const words = searchWord
+      ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
+          if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
+            finalWords.push(word);
+          }
+          return finalWords;
+        }, [])
+      : igboResults.words;
     const contentLength = words.length;
 
     responseData = await setCachedWords({
