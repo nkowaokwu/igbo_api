@@ -15,7 +15,7 @@ export default function Navbar({ to = '/', transparent }: NavBarPropsInterface) 
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
     <div
-      className={`flex relative lg:fixed items-center justify-between w-full py-5 lg:px-10
+      className={`flex fixed items-center justify-between w-full py-5 lg:px-10
       ${transparent ? 'transparent' : 'bg-white bg-opacity-75'} select-none`}
       style={{ zIndex: 2 }}
     >

@@ -22,7 +22,7 @@ const About = () => {
       <Navbar to="/" />
       <div
         className="flex flex-col px-8 mb-6 lg:justify-between xl:flex-row pt-10
-      lg:pt-32 max-w-2xl lg:max-w-6xl h-full text-gray-800 text-lg lg:text-xl w-full"
+      lg:pt-32 max-w-2xl lg:max-w-6xl text-gray-800 text-lg lg:text-xl w-full"
       >
         <div className="max-w-3xl space-y-4 mb-10 text-gray-600">
           <h1 className="text-3xl text-gray-700">{t('About')}</h1>
@@ -87,7 +87,7 @@ const About = () => {
       </div>
       <div
         className="flex flex-col px-8 max-w-2xl lg:max-w-6xl
-        mb-10 lg:mb-24 h-full text-gray-800 text-lg lg:text-xl w-full"
+        mb-10 lg:mb-24 text-gray-800 text-lg lg:text-xl w-full"
       >
         <h1 className="text-3xl text-gray-700">{t('Contact')}</h1>
         <p className="mt-6 text-gray-600">
