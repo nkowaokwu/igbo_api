@@ -155,7 +155,7 @@
     "cross-env": "^7.0.2",
     "cypress": "^12.14.0",
     "eslint": "8.34.0",
-    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "8.6.0",
