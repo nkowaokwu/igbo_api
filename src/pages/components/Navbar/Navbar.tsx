@@ -10,7 +10,7 @@ interface NavBarPropsInterface {
   transparent: boolean;
 }
 
-export default function Navbar({ to = '/', transparent }: NavBarPropsInterface) {
+const Navbar = ({ to = '/', transparent }: NavBarPropsInterface) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
@@ -42,4 +42,6 @@ export default function Navbar({ to = '/', transparent }: NavBarPropsInterface) 
       <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} transparent={transparent} />
     </div>
   );
-}
+};
+
+export default Navbar;

@@ -11,7 +11,7 @@ interface SubMenuPropsInterface {
   transparent: boolean;
 }
 
-export default function SubMenu({ isVisible, transparent }: SubMenuPropsInterface) {
+const SubMenu = ({ isVisible, transparent }: SubMenuPropsInterface) => {
   const [language, setLanguage] = useState(i18n.language);
   const router = useRouter();
   const { t } = useTranslation();
@@ -129,4 +129,6 @@ export default function SubMenu({ isVisible, transparent }: SubMenuPropsInterfac
       </li>
     </ul>
   );
-}
+};
+
+export default SubMenu;

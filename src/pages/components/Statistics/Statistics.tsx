@@ -22,7 +22,7 @@ interface ContributorsInterface {
   html_url: string;
 }
 
-export default function Statistics({
+const Statistics = ({
   totalWords,
   totalExamples,
   totalAudioPronunciations,
@@ -33,7 +33,7 @@ export default function Statistics({
   totalDevelopers,
   contributors,
   stars,
-}: StatisticsPropsInterface) {
+}: StatisticsPropsInterface) => {
   const { t } = useTranslation();
   const totalSlackMembers = 230;
   return (
@@ -95,4 +95,6 @@ export default function Statistics({
       </div>
     </div>
   );
-}
+};
+
+export default Statistics;

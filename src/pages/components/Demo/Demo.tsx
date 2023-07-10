@@ -14,7 +14,7 @@ interface DemoPropsInterface {
   words: Word[];
 }
 
-export default function Demo({ searchWord, words }: DemoPropsInterface) {
+const Demo = ({ searchWord, words }: DemoPropsInterface) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchingWord, setIsSearchingWord] = useState(false);
   const [keyword, setKeyword] = useState<string | string[]>(searchWord || '');
@@ -157,4 +157,6 @@ export default function Demo({ searchWord, words }: DemoPropsInterface) {
       </div>
     </div>
   ) : null;
-}
+};
+
+export default Demo;

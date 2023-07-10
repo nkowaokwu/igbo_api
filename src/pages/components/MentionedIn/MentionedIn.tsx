@@ -27,32 +27,32 @@ const NASDAQ = {
   src: 'https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/images/learningHomePage/mentionedIn/nasdaq.png',
 };
 
-export default function MentionedIn() {
-  return (
-    <div className="flex items-center justify-center w-full mentioned-in lg:py-16">
-      <div
-        className={`w-full md:w-10/12 flex flex-col md:flex-row
+const MentionedIn = () => (
+  <div className="flex items-center justify-center w-full mentioned-in lg:py-16">
+    <div
+      className={`w-full md:w-10/12 flex flex-col md:flex-row
     flex-wrap items-center justify-evenly md:space-x-8 lg:space-x-0 space-y-12 my-8 md:space-y-0 md:my-0`}
-      >
-        <a href={NASDAQ.url} target="_blank" rel="noreferrer">
-          <img src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '200px' }} />
-        </a>
-        <a href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
-          <img src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" />
-        </a>
-        <a href={UIU.url} target="_blank" rel="noreferrer">
-          <img src={UIU.src} alt="Umu Igbo Unite logo" />
-        </a>
-        <a href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
-          <img src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" />
-        </a>
-        <a href={NUESROOM.url} target="_blank" rel="noreferrer">
-          <img src={NUESROOM.src} alt="Nuesroom logo" />
-        </a>
-        <a href={WEDEYCODE.url} target="_blank" rel="noreferrer">
-          <img src={WEDEYCODE.src} alt="WeDeyCode logo" />
-        </a>
-      </div>
+    >
+      <a href={NASDAQ.url} target="_blank" rel="noreferrer">
+        <img src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '200px' }} />
+      </a>
+      <a href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
+        <img src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" />
+      </a>
+      <a href={UIU.url} target="_blank" rel="noreferrer">
+        <img src={UIU.src} alt="Umu Igbo Unite logo" />
+      </a>
+      <a href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
+        <img src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" />
+      </a>
+      <a href={NUESROOM.url} target="_blank" rel="noreferrer">
+        <img src={NUESROOM.src} alt="Nuesroom logo" />
+      </a>
+      <a href={WEDEYCODE.url} target="_blank" rel="noreferrer">
+        <img src={WEDEYCODE.src} alt="WeDeyCode logo" />
+      </a>
     </div>
-  );
-}
+  </div>
+);
+
+export default MentionedIn;

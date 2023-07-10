@@ -5,7 +5,7 @@ interface FadeInProps {
   children: ReactNode;
 }
 
-export default function FadeIn({ children }: FadeInProps) {
+const FadeIn = ({ children }: FadeInProps) => {
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
@@ -14,4 +14,6 @@ export default function FadeIn({ children }: FadeInProps) {
     }
   }, []);
   return !isBrowser ? <div>{children}</div> : <ReactFadeIn>{children}</ReactFadeIn>;
-}
+};
+
+export default FadeIn;

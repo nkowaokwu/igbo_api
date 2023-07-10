@@ -14,7 +14,7 @@ import {
   APP_URL,
 } from '../../../siteConstants';
 
-export default function Footer() {
+const Footer = () => {
   const router = useRouter();
   const { t } = useTranslation();
   return (
@@ -122,4 +122,6 @@ export default function Footer() {
       </footer>
     </div>
   );
-}
+};
+
+export default Footer;
