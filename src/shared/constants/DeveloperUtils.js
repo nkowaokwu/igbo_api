@@ -1,4 +1,3 @@
-import { compareSync } from 'bcrypt';
 import { developerSchema } from '../../models/Developer';
 import { createDbConnection } from '../../services/database';
 import { isTest } from '../../config';
