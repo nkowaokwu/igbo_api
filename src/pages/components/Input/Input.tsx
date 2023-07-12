@@ -5,9 +5,7 @@ interface InputPropsInterface extends InputHTMLAttributes<HTMLInputElement> {
   type: string;
 }
 
-type Ref = HTMLInputElement;
-
-const Input = forwardRef<Ref, InputPropsInterface>(({ header, type = '', ...rest }, ref) => (
+const Input = forwardRef<HTMLInputElement, InputPropsInterface>(({ header, type = '', ...rest }, ref) => (
   <div className="flex flex-col w-full my-3 items-left">
     <h3 className="mb-3 font-normal text-gray-600">{header}</h3>
     <input
