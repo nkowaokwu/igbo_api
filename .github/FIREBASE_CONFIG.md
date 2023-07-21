@@ -16,6 +16,16 @@ Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebase
 
 Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.js#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
 
-## Step 4: Merging forked changes into main repo
+## Step 4: Select your default project
+
+Run the following command to select your default Firebase project:
+
+```bash
+npx firebase use default
+```
+
+Selecting a Firebase project is important for Firebase to know which project configure it should use when starting your dev environment.
+
+## Step 5: Merging forked changes into main repo
 
 Congrats 🎉 You're ready to start making your first changes to your repo. Please refer to our [Contributing Guide](https://github.com/nkowaokwu/igbo_api/blob/master/.github/CONTRIBUTING.md) to learn how to contribute to the project.
