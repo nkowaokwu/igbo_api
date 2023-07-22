@@ -8,6 +8,8 @@ Individual contributors need to integrate their own Firebase project config to b
 
 Please follow this [Firebase Getting Started Guide](https://firebase.google.com/docs/web/setup) to create your own Firebase project.
 
+**Note:** Make sure to update your Billing options for your project for the Blaze plan to run the project. Don't worry, it's free 😉
+
 ## Step 2: Replace the `default` Firebase Project Name
 
 Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project name `igbo-api-bb22d` with your new Firebase project name
