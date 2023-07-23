@@ -9,8 +9,8 @@ import Version from '../../shared/constants/Version';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
 import Dialects from '../../shared/constants/Dialect';
-import WordAttributes from '../../shared/constants/WordAttributes';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
+import WordAttributeEnum from '../../shared/constants/WordAttributeEnum';
 
 /**
  * Removes _id and __v from nested documents
@@ -33,19 +33,12 @@ const removeKeysInNestedDoc = (docs, nestedDocsKey) => {
  * @param {*} match
  * @returns Word aggregation pipeline
  */
-const generateAggregationBase = (Model, match) => (
-  Model.aggregate()
-    .match(match)
-);
+const generateAggregationBase = (Model, match) => Model.aggregate().match(match);
 
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
  */
-export const findWordsWithMatch = async ({
-  match,
-  version,
-  lean = false,
-}) => {
+export const findWordsWithMatch = async ({ match, version, lean = false }) => {
   const connection = createDbConnection();
   const Word = connection.model('Word', wordSchema);
   console.time('Aggregation completion time');
@@ -53,31 +46,28 @@ export const findWordsWithMatch = async ({
     let words = generateAggregationBase(Word, match);
 
     if (!lean) {
-      words = words
-        .lookup({
-          from: 'examples',
-          localField: '_id',
-          foreignField: 'associatedWords',
-          as: 'examples',
-        });
+      words = words.lookup({
+        from: 'examples',
+        localField: '_id',
+        foreignField: 'associatedWords',
+        as: 'examples',
+      });
     }
 
     if (!lean && version === Version.VERSION_2) {
-      words = words
-        .lookup({
-          from: 'words',
-          localField: 'stems',
-          foreignField: '_id',
-          as: 'stems',
-        });
+      words = words.lookup({
+        from: 'words',
+        localField: 'stems',
+        foreignField: '_id',
+        as: 'stems',
+      });
 
-      words = words
-        .lookup({
-          from: 'words',
-          localField: 'relatedTerms',
-          foreignField: '_id',
-          as: 'relatedTerms',
-        });
+      words = words.lookup({
+        from: 'words',
+        localField: 'relatedTerms',
+        foreignField: '_id',
+        as: 'relatedTerms',
+      });
     }
 
     words = words
@@ -97,9 +87,7 @@ export const findWordsWithMatch = async ({
         dialects: 1,
         tags: 1,
       })
-      .append([
-        { $unset: `attributes.${WordAttributes.IS_COMPLETE.value}` },
-      ]);
+      .append([{ $unset: `attributes.${WordAttributeEnum.IS_COMPLETE}` }]);
 
     const finalWords = removeKeysInNestedDoc(await words, 'examples');
     const contentLength = finalWords.length;
@@ -109,13 +97,16 @@ export const findWordsWithMatch = async ({
         word.wordClass = word.definitions[0].wordClass;
         word.nsibidi = word.definitions[0].nsibidi;
         word.definitions = flatten(word.definitions.map(({ definitions }) => definitions));
-        word.dialects = (word.dialects || []).reduce((finalDialects, dialect) => ({
-          ...finalDialects,
-          [dialect.word]: {
-            ...dialect,
-            dialects: dialect.dialects.map((d) => Dialects[d].label),
-          },
-        }), {});
+        word.dialects = (word.dialects || []).reduce(
+          (finalDialects, dialect) => ({
+            ...finalDialects,
+            [dialect.word]: {
+              ...dialect,
+              dialects: dialect.dialects.map((d) => Dialects[d].label),
+            },
+          }),
+          {}
+        );
         delete word.tags;
       }
     });
@@ -130,32 +121,28 @@ export const findWordsWithMatch = async ({
   }
 };
 
-export const findExamplesWithMatch = async ({
-  match,
-  version,
-}) => {
+export const findExamplesWithMatch = async ({ match, version }) => {
   const connection = createDbConnection();
   const Example = connection.model('Example', exampleSchema);
   try {
     let examples = generateAggregationBase(Example, match);
 
-    examples = examples
-      .project({
-        id: '$_id',
-        _id: 0,
-        igbo: 1,
-        english: 1,
-        meaning: 1,
-        style: 1,
-        associatedWords: 1,
-        ...(version === Version.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
-        pronunciations: 1,
-      });
+    examples = examples.project({
+      id: '$_id',
+      _id: 0,
+      igbo: 1,
+      english: 1,
+      meaning: 1,
+      style: 1,
+      associatedWords: 1,
+      ...(version === Version.VERSION_2 ? { associatedDefinitionsSchemas: 1 } : {}),
+      pronunciations: 1,
+    });
 
     // Returns only the first pronunciation for the example sentence
-    const allExamples = (await examples).map((example) => (
+    const allExamples = (await examples).map((example) =>
       omit({ ...example, pronunciation: example.pronunciations[0]?.audio }, ['pronunciation'])
-    ));
+    );
     const contentLength = allExamples.length;
 
     await handleCloseConnection(connection);
