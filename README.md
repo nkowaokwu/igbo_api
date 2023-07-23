@@ -1,4 +1,5 @@
 # Igbo API
+
 [![Deploy to Firebase](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/deploy.yml) [![Dockerize Igbo API](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml/badge.svg)](https://github.com/nkowaokwu/igbo_api/actions/workflows/dockerize.yml)
 
 [Contributing](./.github/CONTRIBUTING.md) | [Documentation](https://igboapi.com/docs) | [Code of Conduct](./.github/CODE_OF_CONDUCT.md) | [Slack Channel](https://igboapi.slack.com)
@@ -6,6 +7,7 @@
 > Igbo is the principal native language of the Igbo people, an ethnic group of southeastern Nigeria, and is spoken by approx 45 million people with more than 20 different dialects.
 
 ## Features 🧱
+
 📚 4,500+ Igbo words, 5,000+ dialectal variations, 17,000+ Igbo example sentences
 
 ✍🏾 English and Igbo definitions
@@ -22,14 +24,14 @@ Let's get the Igbo API running locally on your machine.
 
 ### 0. Prerequisites
 
-To run this project locally, the following tools need to be installed:
+To run this project locally, please install the following:
 
-* [Node.js](https://nodejs.org/en/download/)
-* [Yarn](https://classic.yarnpkg.com/en/docs/install)
-* [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
-* [Firebase](https://console.firebase.google.com/)
-* [Java](https://www.oracle.com/java/technologies/downloads/)
-* [NVM](https://github.com/nvm-sh/nvm)
+- [Node.js](https://nodejs.org/en/download/)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install)
+- [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+- [Firebase](https://console.firebase.google.com/)
+- [Java](https://www.oracle.com/java/technologies/downloads/)
+- [NVM](https://github.com/nvm-sh/nvm)
 
 ### 1. Installation
 
@@ -80,6 +82,7 @@ yarn dev:full
 ```
 
 To start a Redis server, run:
+
 ```
 redis-server
 ```
@@ -183,7 +186,6 @@ yarn test
 ```
 
 If you want to run your MongoDB instance and tests in separate terminals, you can run:
-
 
 ## Next Steps
 
