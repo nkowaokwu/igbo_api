@@ -8,7 +8,17 @@ Individual contributors need to integrate their own Firebase project config to b
 
 Please follow this [Firebase Getting Started Guide](https://firebase.google.com/docs/web/setup) to create your own Firebase project.
 
-**Note:** Make sure to update your Billing options for your project for the Blaze plan to run the project. Don't worry, it's free 😉
+## Step 1a: Log into Firebase via Terminal (CLI)
+
+In your terminal, log into your Firebase account by running the command and following the prompts:
+
+```bash
+npx firebase login
+```
+
+## Step 1b: Select the Blaze, pay as you go Firebase plan
+
+Make sure to update your Billing options for your Firebase project. This will allow your project to use emulators. Don't worry, it's free 😉
 
 ## Step 2: Replace the `default` Firebase Project Name
 
