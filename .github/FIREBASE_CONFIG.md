@@ -20,9 +20,9 @@ npx firebase login
 
 Make sure to update your Billing options for your Firebase project. This will allow your project to use emulators. Don't worry, it's free 😉
 
-## Step 2: Replace the `default` Firebase Project Name
+## Step 2: Replace the `default` Firebase Project ID
 
-Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project name `igbo-api-bb22d` with your new Firebase project name
+Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project ID `igbo-api-bb22d` with your new Firebase project ID
 
 ## Step 3: Replace the Firebase Config file
 
