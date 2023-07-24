@@ -26,7 +26,7 @@ Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebase
 
 ## Step 3: Replace the Firebase Config file
 
-Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.js#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
+Within [firebase.ts](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.ts#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
 
 ## Step 4: Select your default project
 
