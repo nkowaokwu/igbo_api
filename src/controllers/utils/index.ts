@@ -118,6 +118,7 @@ export const handleQueries = async ({
       console.log('Getting all verbs and suffixes from cache');
       allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
+      console.log('Getting all verbs and suffixes from database');
       const allVerbsAndSuffixesDb = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version }))
         .words;
       allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
@@ -129,6 +130,7 @@ export const handleQueries = async ({
     }
     console.timeEnd('Searching all verbs and suffixes');
   }
+  console.time('Generating filters, searchWord, and regexes');
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '').replace(/[Aa]na m /, 'm ');
   const searchWordParts = compact(searchWord.split(' '));
@@ -140,6 +142,7 @@ export const handleQueries = async ({
     }),
     {}
   );
+  console.timeEnd('Generating filters, searchWord, and regexes');
   console.log('Word splits:', searchWordParts);
   console.log(`Search word: ${searchWord}`);
   let keywords =
@@ -158,6 +161,7 @@ export const handleQueries = async ({
       : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   if (!keywords.length && searchWord) {
+    console.time('Attempting to breakdown noun');
     keywords =
       version === Version.VERSION_2
         ? expandNoun(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
@@ -172,6 +176,7 @@ export const handleQueries = async ({
             ),
           }))
         : [];
+    console.timeEnd('Attempting to breakdown noun');
   }
   if (!keywords.length && searchWord) {
     console.time('Expand phrase time');
@@ -200,6 +205,7 @@ export const handleQueries = async ({
     ).flat();
     console.timeEnd('Expand phrase time');
   }
+  console.time('Generating page, rank, skip, limit, and other flags');
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
@@ -228,6 +234,7 @@ export const handleQueries = async ({
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };
+  console.timeEnd('Generating page, rank, skip, limit, and other flags');
   console.timeEnd('Handling queries');
   return {
     id,
