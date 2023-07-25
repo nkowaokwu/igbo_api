@@ -35,7 +35,7 @@ export const setCachedExamples = async ({ key, data, redisClient }) => {
 };
 
 export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }) => {
-  console.time('Searching cached verbs and suffixes');
+  console.time(`Searching cached verbs and suffixes: verbs-and-suffixes-${key}`);
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
   const rawCachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
   const cachedAllVerbsAndSuffixes =
@@ -43,7 +43,7 @@ export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }) => {
       ? JSON.parse(rawCachedAllVerbsAndSuffixes)
       : rawCachedAllVerbsAndSuffixes;
   console.log(`Retrieved cached data for verbs and suffixes ${key}:`, !!cachedAllVerbsAndSuffixes);
-  console.timeEnd('Searching cached verbs and suffixes');
+  console.timeEnd(`Searching cached verbs and suffixes: verbs-and-suffixes-${key}`);
   return cachedAllVerbsAndSuffixes;
 };
 
