@@ -5,6 +5,7 @@ const server = app.listen(PORT, () => {
   console.green(`🟢 Server started on port ${PORT}`);
 
   /* Used to test server build */
+  // @ts-expect-error process.env.NODE_ENV
   if (process.env.NODE_ENV === 'build') {
     console.blue('🧪 Testing server build');
     setTimeout(() => {
