@@ -19,11 +19,13 @@ const searchWordUsingIgbo = async ({
   flags,
   filters,
 }) => {
+  console.time(`searchWordUsingIgbo for ${searchWord}`);
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `${searchWord}-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
   if (cachedWords) {
+    console.log('Return words from cache for Igbo search');
     responseData = {
       words: cachedWords.words,
       contentLength: cachedWords.contentLength,
@@ -71,6 +73,8 @@ const searchWordUsingIgbo = async ({
 
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
+
+  console.time(`searchWordUsingIgbo for ${searchWord}`);
   return handleWordFlags({
     data: { words: sortedWords, contentLength: responseData.contentLength },
     flags,
