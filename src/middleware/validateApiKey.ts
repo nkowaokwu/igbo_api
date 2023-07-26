@@ -1,27 +1,17 @@
 import { compareSync } from 'bcrypt';
 import { developerSchema } from '../models/Developer';
-import {
-  MAIN_KEY,
-  isTest,
-  isDevelopment,
-  isProduction,
-} from '../config';
+import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
 import { createDbConnection } from '../services/database';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
 
-const determineLimit = (apiLimit) => (
-  isTest
-    ? apiLimit || PROD_LIMIT
-    : PROD_LIMIT
-);
+const determineLimit = (apiLimit) => (isTest ? apiLimit || PROD_LIMIT : PROD_LIMIT);
 
-const isSameDate = (first, second) => (
-  first.getFullYear() === second.getFullYear()
-    && first.getMonth() === second.getMonth()
-    && first.getDate() === second.getDate()
-);
+const isSameDate = (first, second) =>
+  first.getFullYear() === second.getFullYear() &&
+  first.getMonth() === second.getMonth() &&
+  first.getDate() === second.getDate();
 
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer) => {
@@ -79,7 +69,7 @@ export default async (req, res, next) => {
       apiKey = FALLBACK_API_KEY;
     }
     if (!apiKey) {
-      throw new Error('X-API-Key Header doesn\'t exist');
+      throw new Error("X-API-Key Header doesn't exist");
     }
 
     /* While in development or testing, using the FALLBACK_API_KEY will grant access */

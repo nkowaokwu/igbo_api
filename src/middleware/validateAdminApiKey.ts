@@ -5,9 +5,7 @@ export default async (req, res, next) => {
     const apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
 
     if (isProduction && apiKey !== MAIN_KEY) {
-      return res
-        .status(403)
-        .send({ error: 'You do not have permission to view this resource' });
+      return res.status(403).send({ error: 'You do not have permission to view this resource' });
     }
 
     return next();
