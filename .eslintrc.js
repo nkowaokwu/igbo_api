@@ -50,7 +50,7 @@ module.exports = {
       plugins: ['@typescript-eslint', 'eslint-plugin-jsx-a11y', 'cypress'],
       rules: {
         'import/prefer-default-export': ['off'],
-        'import/extensions': ['warn'],
+        'import/extensions': ['off'],
         'max-len': ['error', { code: 120 }],
         'no-nested-ternary': ['off'],
         '@typescript-eslint/no-unused-vars': [
