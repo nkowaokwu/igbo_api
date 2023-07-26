@@ -3,8 +3,9 @@ import { developerSchema } from '../models/Developer';
 import { searchForAllDevelopers } from './utils/queries';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import StatTypes from '../shared/constants/StatTypes';
+import { Express } from '../types';
 
-export const getStats = async (req, res, next) => {
+export const getStats: Express.MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Stat = connection.model('Stat', statSchema);
   const Developer = connection.model('Developer', developerSchema);

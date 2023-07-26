@@ -13,9 +13,10 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
+import { Express, Word as IgboWord } from '../types';
 
 /* Gets words from JSON dictionary */
-export const getWordData = (req, res, next) => {
+export const getWordData: Express.MiddleWare = (req, res, next) => {
   try {
     const { keyword } = req.query;
     const searchWord = removePrefix(keyword);
@@ -30,7 +31,7 @@ export const getWordData = (req, res, next) => {
 };
 
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase = async (req, res, next) => {
+const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
   try {
     console.time('Getting words from database');
     const {
@@ -54,7 +55,7 @@ const getWordsFromDatabase = async (req, res, next) => {
       flags,
       filters,
     };
-    let responseData = {};
+    let responseData: { contentLength?: number; words?: Word[] } = {};
     if (hasQuotes) {
       responseData = await searchWordUsingEnglish({
         redisClient,
@@ -86,7 +87,7 @@ const getWordsFromDatabase = async (req, res, next) => {
   }
 };
 /* Gets words from MongoDB */
-export const getWords = async (req, res, next) => {
+export const getWords: Express.MiddleWare = async (req, res, next) => {
   try {
     return getWordsFromDatabase(req, res, next);
   } catch (err) {
@@ -95,22 +96,21 @@ export const getWords = async (req, res, next) => {
 };
 
 /* Returns a word from MongoDB using an id */
-export const getWord = async (req, res, next) => {
+export const getWord: Express.MiddleWare = async (req, res, next) => {
   try {
     const { id, flags, version } = await handleQueries(req);
 
     const updatedWord = await findWordsWithMatch({
-      match: { _id: mongoose.Types.ObjectId(id) },
+      match: { _id: new mongoose.Types.ObjectId(id) },
       version,
-    })
-      .then(async (data) => {
-        if (!data.words[0]) {
-          throw new Error('No word exists with the provided id.');
-        }
-        const { words } = handleWordFlags({ data, flags });
-        const minimizedWords = minimizeWords(words, version);
-        return minimizedWords[0];
-      });
+    }).then(async (data) => {
+      if (!data.words[0]) {
+        throw new Error('No word exists with the provided id.');
+      }
+      const { words } = handleWordFlags({ data, flags });
+      const minimizedWords = minimizeWords(words, version);
+      return minimizedWords[0];
+    });
     return packageResponse({
       res,
       docs: updatedWord,
@@ -123,18 +123,9 @@ export const getWord = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data, connection) => {
+export const createWord = async (data: IgboWord, connection: mongoose.Connection) => {
   const Word = connection.model('Word', wordSchema);
-  const {
-    examples,
-    word,
-    wordClass,
-    definitions,
-    variations,
-    stems,
-    dialects,
-    ...rest
-  } = data;
+  const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 
   const wordData = {
     word,
