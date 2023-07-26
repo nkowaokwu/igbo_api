@@ -62,6 +62,7 @@ module.exports = {
         ],
         '@typescript-eslint/no-empty-function': ['warn'],
         'prefer-const': 'error',
+        'no-underscore-dangle': 'off',
       },
     },
   ],
