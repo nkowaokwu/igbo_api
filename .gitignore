@@ -10,7 +10,6 @@ lerna-debug.log*
 dump/
 db/
 mongos/
-dump.rdb
 
 # Transpiled code
 build/

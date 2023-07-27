@@ -55,7 +55,7 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       flags,
       filters,
     };
-    let responseData: { contentLength?: number; words?: Word[] } = {};
+    let responseData: { contentLength?: number; words?: IgboWord[] } = {};
     if (hasQuotes) {
       responseData = await searchWordUsingEnglish({
         redisClient,
