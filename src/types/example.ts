@@ -1,21 +1,21 @@
 export type Example = {
   id: string;
-  igbo?: string;
+  associatedDefinitionsSchemas: string[];
+  associatedWords: string[];
   english?: string;
+  igbo?: string;
   meaning?: string;
   nsibidi?: string;
   nsibidiCharacters: string[];
-  associatedWords: string[];
-  associatedDefinitionsSchemas: string[];
-  pronunciations: Pronounciation[];
+  pronunciations: Pronunciation[];
   updatedAt: Date;
 };
 
-export type Pronounciation = {
-  audio: string;
-  speaker: string;
-  review: boolean;
-  approvals: string[];
-  denials: string[];
+type Pronunciation = {
   _id: string;
+  approvals: string[];
+  audio: string;
+  denials: string[];
+  review: boolean;
+  speaker: string;
 };
