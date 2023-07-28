@@ -13,6 +13,7 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
+import { isTest } from '../config';
 
 /* Gets words from JSON dictionary */
 export const getWordData = (req, res, next) => {
@@ -90,6 +91,9 @@ export const getWords = async (req, res, next) => {
   try {
     return getWordsFromDatabase(req, res, next);
   } catch (err) {
+    if (!isTest) {
+      console.trace(err);
+    }
     return next(err);
   }
 };
@@ -118,6 +122,9 @@ export const getWord = async (req, res, next) => {
       version,
     });
   } catch (err) {
+    if (!isTest) {
+      console.trace(err)
+    }
     return next(err);
   }
 };
