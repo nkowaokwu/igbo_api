@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import { populateAPI } from './__tests__/shared/commands';
 
+/**
+ * Responsible for populating the test database.
+ * Called before all tests.
+ */
 export default async () => {
   if (mongoose.connection?.db?.dropDatabase) {
     await mongoose.connection.collection('words').dropIndexes();
