@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf dist/ && yarn build:site && yarn build:src && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:functions",
     "build:functions": "rm -rf functions/src && shx cp -r ./dist ./functions/src && shx cp -r ./dist/dictionaries/ig-en ./functions/src/dictionaries",
-    "build:src": "babel -d dist/ ./src -s --extensions '.js,.jsx,.ts,.tsx'",
+    "build:src": "bash ./scripts/build_src.sh",
     "build:dictionaries:ig:en": "[ ! -d \"./dist/dictionaries\" ] && shx mkdir ./dist/dictionaries || echo '' && [ ! -d \"./dist/dictionaries/ig-en\" ] && shx mkdir ./dist/dictionaries/ig-en || echo 'Igbo to English dictionaries dir already exists'",
     "build:dictionaries:en:ig": "[ ! -d \"./dist/dictionaries\" ] && shx mkdir ./dist/dictionaries || echo '' && [ ! -d \"./dist/dictionaries/en-ig\" ] && shx mkdir ./dist/dictionaries/en-ig || echo 'English to Igbo dictionaries dir already exists'",
     "prebuild:dictionaries": "yarn build:dictionaries:ig:en && yarn build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./dist/dictionaries && shx cp -r ./src/dictionaries/en-ig ./dist/dictionaries",

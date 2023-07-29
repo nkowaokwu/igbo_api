@@ -28,10 +28,12 @@ To run this project locally, please install the following:
 
 - [Node.js](https://nodejs.org/en/download/)
 - [Yarn](https://classic.yarnpkg.com/en/docs/install)
-- [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+- [Mongo for Windows](https://www.mongodb.com/docs/v3.0/tutorial/install-mongodb-on-windows/)
+- [Mongo for Mac](https://www.mongodb.com/docs/v3.0/tutorial/install-mongodb-on-os-x/)
 - [Firebase](https://console.firebase.google.com/)
 - [Java](https://www.oracle.com/java/technologies/downloads/)
 - [NVM](https://github.com/nvm-sh/nvm)
+- [MongoDB Compass](https://docs.mongodb.com/manual/administration/install-community/) (Optional)
 
 ### 1. Installation
 
