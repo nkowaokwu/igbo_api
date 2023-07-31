@@ -14,12 +14,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
   },
-  "include": [
-    "./src/**/*"
-, "@types"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src/**/*", "@types", "env.d.ts"],
+  "exclude": ["node_modules"],
 }

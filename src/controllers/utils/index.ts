@@ -2,6 +2,7 @@ import compact from 'lodash/compact';
 import pick from 'lodash/pick';
 import { Request } from 'express';
 import { RedisClientType } from 'redis';
+import { Express } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
@@ -67,23 +68,6 @@ const searchAllVerbsAndSuffixes = async ({ query, version }) => {
   return { words, contentLength };
 };
 
-interface IgboAPIRequest extends Request {
-  isUsingMainKey: boolean;
-  redisClient: RedisClientType;
-  query: {
-    keyword?: string;
-    page?: string;
-    range?: string;
-    filter?: string;
-    strict?: string;
-    dialects?: string;
-    examples?: string;
-    tags?: string;
-    wordClasses?: string;
-    resolve?: string;
-  };
-}
-
 /* Handles all the queries for searching in the database */
 export const handleQueries = async ({
   query = {},
@@ -91,7 +75,7 @@ export const handleQueries = async ({
   isUsingMainKey,
   baseUrl,
   redisClient,
-}: IgboAPIRequest) => {
+}: Express.IgboAPIRequest) => {
   const {
     keyword: keywordQuery = '',
     page: pageQuery = '0',

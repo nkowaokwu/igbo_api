@@ -1,17 +1,10 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-<<<<<<<< HEAD:src/controllers/developers/developers.js
-import { isProduction, CLIENT_TEST, isTest } from '../../config';
-import { developerSchema } from '../../models/Developer';
-import { createDbConnection, handleCloseConnection } from '../../services/database';
-import { sendNewDeveloper } from '../email';
-========
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { Express } from '../types';
 import { sendNewDeveloper } from './email';
->>>>>>>> dbb9e1a (chore: convert controllers to typescript (#724)):src/controllers/developers.ts
 
 const TEST_EMAIL = 'developer@example.com';
 
