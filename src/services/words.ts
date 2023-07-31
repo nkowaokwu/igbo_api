@@ -1,6 +1,6 @@
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
-import Word from '../models/interfaces/Word';
+import { Word } from '../types';
 import removePrefix from '../shared/utils/removePrefix';
 import databaseDictionary from '../dictionaries/ig-en/ig-en_expanded.json';
 
