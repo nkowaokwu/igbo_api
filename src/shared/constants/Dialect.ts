@@ -64,6 +64,11 @@ export default {
     value: 'EZE',
     label: 'Ezeagu',
   },
+  EZM: {
+    code: 'ibo-ezm',
+    value: 'EZM',
+    label: 'Ezzamgbo',
+  },
   IHU: {
     code: 'ibo-ihu',
     value: 'IHU',
