@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 validateApiKey.js
 developers.test.js
 commands.js
-=======
-words.js
-validateApiKey.js
-commands.js
->>>>>>> a083ec4 (chore: fix find developer tests)

@@ -69,7 +69,7 @@ export const getDeveloper = async (req, res, next) => {
     }
 
     const developer = await findDeveloper(apiKey);
-    // check if developer is an empty array or undefined
+
     if (!developer) {
       throw new Error('No developer exists');
     }
