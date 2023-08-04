@@ -28,7 +28,7 @@ jobs:
       # Skipping the following steps to prioritize using AWS S3 Glacier
 
       # - name: Git checkout files and create aws db directory
-      #   uses: actions/checkout@v2
+      #   uses: actions/checkout@v3
       # - name: Set up network configurations
       #   run: sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
       # - name: Create temporary directory
