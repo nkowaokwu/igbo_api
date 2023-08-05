@@ -69,6 +69,7 @@ export default async (req, _, next) => {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
     const { keyword } = req.query;
+    // eslint-disable-next-line no-underscore-dangle
     const { pathname } = req._parsedUrl;
 
     await trackEvent({
