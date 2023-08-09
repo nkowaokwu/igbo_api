@@ -11,7 +11,7 @@ const afterResponse = (redisClient: RedisClientType) => {
     if (redisClient) {
       redisClient.quit();
     }
-  } catch (err: any) {
+  } catch (err) {
     console.log(`Error with closing redis: ${err.message}`);
   }
 };

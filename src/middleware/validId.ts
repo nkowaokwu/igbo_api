@@ -9,7 +9,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
       return res.send({ error: 'Provided an invalid id' });
     }
     return next();
-  } catch (err: any) {
+  } catch (err) {
     res.status(400);
     return res.send({ error: err.message });
   }

@@ -10,7 +10,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     }
 
     return next();
-  } catch (err: any) {
+  } catch (err) {
     res.status(400);
     return res.send({ error: err.message });
   }
