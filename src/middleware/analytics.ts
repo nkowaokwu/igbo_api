@@ -2,14 +2,14 @@ import axios from 'axios';
 import { NextFunction, Request } from 'express';
 import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
 
-interface Props {
+interface TrackingEvent {
   clientIdentifier: string | string[] | undefined;
   category: string;
   action: string;
   keyword: any;
 }
 
-const trackEvent = ({ clientIdentifier, category, action, keyword }: Props) =>
+const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEvent) =>
   new Promise((resolve, reject) => {
     const params = {
       measurement_id: GA_TRACKING_ID,
@@ -72,7 +72,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: Props) =>
     }
   });
 
-export default async (req: Request, next: NextFunction) => {
+export default async (req: Request, _, next: NextFunction) => {
   try {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
