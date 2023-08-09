@@ -1,6 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
 import { MAIN_KEY, isProduction } from '../config';
 
-export default async (req, res, next) => {
+export default async (req: Request, res: Response, next: NextFunction) => {
   try {
     const apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
 
@@ -9,7 +10,7 @@ export default async (req, res, next) => {
     }
 
     return next();
-  } catch (err) {
+  } catch (err: any) {
     res.status(400);
     return res.send({ error: err.message });
   }

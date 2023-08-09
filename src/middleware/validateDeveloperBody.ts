@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { NextFunction, Request, Response } from 'express';
 
 const developersJoiSchema = Joi.object().keys({
   name: Joi.string().required(),
@@ -6,7 +7,7 @@ const developersJoiSchema = Joi.object().keys({
   password: Joi.string().required(),
 });
 
-export default (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   const { body: data } = req;
 
   const validationResult = developersJoiSchema.validate(data);

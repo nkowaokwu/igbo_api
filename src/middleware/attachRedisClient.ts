@@ -1,12 +1,17 @@
-import { createClient } from 'redis';
+import { createClient, RedisClientType } from 'redis';
+import { NextFunction, Request, Response } from 'express';
 import { REDIS_HOST, REDIS_PORT, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } from '../config';
 
-const afterResponse = (redisClient) => {
+interface RedisClientRequest extends Request {
+  redisClient: RedisClientType;
+}
+
+const afterResponse = (redisClient: RedisClientType) => {
   try {
     if (redisClient) {
       redisClient.quit();
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(`Error with closing redis: ${err.message}`);
   }
 };
@@ -35,7 +40,7 @@ const redisClient =
         isReady: true,
       };
 
-export default async (req, res, next) => {
+export default async (req: RedisClientRequest, res: Response, next: NextFunction) => {
   if (!redisClient.isReady) {
     redisClient.connect();
   }
@@ -44,6 +49,6 @@ export default async (req, res, next) => {
   res.on('finish', afterResponse);
   res.on('close', afterResponse);
 
-  req.redisClient = redisClient;
+  req.redisClient = redisClient as RedisClientType;
   return next();
 };
