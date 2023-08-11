@@ -1,0 +1,25 @@
+enum WordClassEnum {
+  ADJ = 'ADJ',
+  ADV = 'ADV',
+  AV = 'AV',
+  PV = 'PV',
+  MV = 'MV',
+  CJN = 'CJN',
+  DEM = 'DEM',
+  NM = 'NM',
+  NNC = 'NNC',
+  ND = 'ND',
+  NNP = 'NNP',
+  CD = 'CD',
+  PREP = 'PREP',
+  PRN = 'PRN',
+  FW = 'FW',
+  QTF = 'QTF',
+  WH = 'WH',
+  INTJ = 'INTJ',
+  ISUF = 'ISUF',
+  ESUF = 'ESUF',
+  SYM = 'SYM',
+}
+
+export default WordClassEnum;
