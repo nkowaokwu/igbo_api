@@ -1,7 +1,15 @@
 import axios from 'axios';
+import { NextFunction, Request } from 'express';
 import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
 
-const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
+interface TrackingEvent {
+  clientIdentifier: string | string[] | undefined;
+  category: string;
+  action: string;
+  keyword: any;
+}
+
+const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEvent) =>
   new Promise((resolve, reject) => {
     const params = {
       measurement_id: GA_TRACKING_ID,
@@ -64,13 +72,12 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
     }
   });
 
-export default async (req, _, next) => {
+export default async (req: Request, _, next: NextFunction) => {
   try {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
     const { keyword } = req.query;
-    // eslint-disable-next-line no-underscore-dangle
-    const { pathname } = req._parsedUrl;
+    const { pathname } = req.params;
 
     await trackEvent({
       clientIdentifier: developerAPIKey || 'anon_client_id',

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { NextFunction, Request, Response } from 'express';
 
-export default (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
