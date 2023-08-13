@@ -1,7 +1,16 @@
 import axios from 'axios';
+import { Request } from 'express';
+import { Express } from '../types';
 import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
 
-const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
+interface TrackingEvent {
+  clientIdentifier: string | string[] | undefined;
+  category: string;
+  action: string;
+  keyword: string | string[] | undefined | Request['query'] | Request['query'][];
+}
+
+const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEvent) =>
   new Promise((resolve, reject) => {
     const params = {
       measurement_id: GA_TRACKING_ID,
@@ -38,7 +47,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
           console.timeEnd('Sending production tracking data');
           resolve(true);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
           console.timeEnd('Sending production tracking data');
           reject(new Error(err));
@@ -54,7 +63,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
           console.timeEnd('Sending development tracking data');
           resolve(true);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           if (isProduction) {
             console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
             console.timeEnd('Sending development tracking data');
@@ -64,13 +73,12 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }) =>
     }
   });
 
-export default async (req, _, next) => {
+const analytics: Express.MiddleWare = async (req, _, next) => {
   try {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
     const { keyword } = req.query;
-    // eslint-disable-next-line no-underscore-dangle
-    const { pathname } = req._parsedUrl;
+    const { pathname } = req.params;
 
     await trackEvent({
       clientIdentifier: developerAPIKey || 'anon_client_id',
@@ -80,7 +88,9 @@ export default async (req, _, next) => {
     });
 
     return next();
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
+
+export default analytics;

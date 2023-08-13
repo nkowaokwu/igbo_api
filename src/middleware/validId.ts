@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { Express } from '../types';
 
-export default (req, res, next) => {
+const validId: Express.MiddleWare = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -8,8 +9,10 @@ export default (req, res, next) => {
       return res.send({ error: 'Provided an invalid id' });
     }
     return next();
-  } catch (err) {
+  } catch (err: any) {
     res.status(400);
     return res.send({ error: err.message });
   }
 };
+
+export default validId;

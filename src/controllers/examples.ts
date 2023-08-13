@@ -9,10 +9,7 @@ import { createDbConnection, handleCloseConnection } from '../services/database'
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
 import { Example as ExampleType, Express } from '../types';
 import Version from '../shared/constants/Version';
-
-type WithPronunciation = Omit<ExampleType, 'pronunciations'> & {
-  pronunciation: string;
-};
+import { ExampleResponseData, WithPronunciation } from './types';
 
 /* Converts the pronunciations field to pronunciation for v1 */
 export const convertExamplePronunciations = (example: ExampleType): WithPronunciation => {
@@ -34,14 +31,14 @@ export const createExample = async (data: ExampleType, connection: Connection) =
 type SearchExamplesArg = {
   limit: number;
   query: PipelineStage.Match['$match'];
-  redisClient: RedisClientType;
+  redisClient: RedisClientType | undefined;
   searchWord: string;
   skip: number;
   version: Version;
 };
 /* Uses regex to search for examples with both Igbo and English */
 const searchExamples = async ({ redisClient, searchWord, query, version, skip, limit }: SearchExamplesArg) => {
-  let responseData: { contentLength?: number; examples?: ExampleType[] } = {};
+  let responseData: ExampleResponseData = { contentLength: 0, examples: [] };
   const redisExamplesCacheKey = `example-${searchWord}-${version}`;
   const cachedExamples = await getCachedExamples({ key: redisExamplesCacheKey, redisClient });
   if (cachedExamples) {
@@ -50,12 +47,10 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
       contentLength: cachedExamples.contentLength,
     };
   } else {
-    const { examples, contentLength }: { examples: ExampleType[]; contentLength: number } = await findExamplesWithMatch(
-      {
-        match: query,
-        version,
-      }
-    );
+    const { examples, contentLength } = await findExamplesWithMatch({
+      match: query,
+      version,
+    });
     const allExamples = examples;
 
     responseData = await setCachedExamples({
@@ -63,9 +58,7 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
       data: {
         // Replaces pronunciations with pronunciation v1
         examples:
-          version === Version.VERSION_1
-            ? allExamples.map((example) => convertExamplePronunciations(example))
-            : examples,
+          version === Version.VERSION_1 ? (allExamples as ExampleType[]).map(convertExamplePronunciations) : examples,
         contentLength,
       },
       redisClient,
@@ -78,8 +71,7 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
 /* Returns examples from MongoDB */
 export const getExamples: Express.MiddleWare = async (req, res, next) => {
   try {
-    const { version, searchWord, keywords, regex, skip, limit, redisClient, isUsingMainKey, ...rest } =
-      await handleQueries(req);
+    const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, ...rest } = await handleQueries(req);
     const regexMatch =
       !isUsingMainKey && !searchWord
         ? {
@@ -102,19 +94,19 @@ export const getExamples: Express.MiddleWare = async (req, res, next) => {
       version,
       ...rest,
     });
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
 
 const findExampleById = async (id: string) => {
   const connection = createDbConnection();
-  const Example = connection.model('Example', exampleSchema);
+  const Example = connection.model<ExampleType>('Example', exampleSchema);
   try {
     const example = await Example.findById(id);
     await handleCloseConnection(connection);
     return example;
-  } catch (err) {
+  } catch (err: any) {
     await handleCloseConnection(connection);
     throw err;
   }
@@ -139,7 +131,7 @@ export const getExample: Express.MiddleWare = async (req, res, next) => {
       contentLength: 1,
       version,
     });
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };

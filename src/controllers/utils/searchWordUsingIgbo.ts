@@ -1,9 +1,32 @@
+import { RedisClientType } from 'redis';
 import compact from 'lodash/compact';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
+import Version from '../../shared/constants/Version';
+import { SearchRegExp } from '../../shared/utils/createRegExp';
+import WordClassEnum from '../../shared/constants/WordClassEnum';
+import { LegacyWordDocument, WordDocument } from '../../types';
+
+type IgboSearch = {
+  redisClient: RedisClientType | undefined;
+  keywords: { text: string; wordClass: WordClassEnum[]; regex: Pick<SearchRegExp, 'wordReg'> | SearchRegExp }[];
+  strict: boolean;
+  isUsingMainKey: boolean | undefined;
+  version: Version;
+  regex: SearchRegExp;
+  searchWord: string;
+  skip: number;
+  limit: number;
+  flags: {
+    examples: boolean;
+    dialects: boolean;
+    resolve: boolean;
+  };
+  filters: any;
+};
 
 /* Searches for a word with Igbo stored in MongoDB */
 const searchWordUsingIgbo = async ({
@@ -18,7 +41,7 @@ const searchWordUsingIgbo = async ({
   limit,
   flags,
   filters,
-}) => {
+}: IgboSearch) => {
   console.time(`searchWordUsingIgbo for ${searchWord}`);
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `${searchWord}-${version}`;
@@ -32,7 +55,7 @@ const searchWordUsingIgbo = async ({
     };
   } else {
     const allSearchKeywords = !keywords.find(({ text }) => text === searchWord)
-      ? compact(keywords.concat(searchWord ? { text: searchWord, wordClass: [], regex } : null))
+      ? compact(searchWord ? keywords.concat({ text: searchWord, wordClass: [], regex }) : null)
       : keywords;
     const regularSearchIgboQuery = searchIgboTextSearch({
       keywords: allSearchKeywords,
@@ -54,7 +77,9 @@ const searchWordUsingIgbo = async ({
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
     const words = searchWord
-      ? igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
+      ? // @ts-expect-error non-compatible types
+        igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
+          // @ts-expect-error Parameter 'finalWord' implicitly has an 'any' type.
           if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
             finalWords.push(word);
           }

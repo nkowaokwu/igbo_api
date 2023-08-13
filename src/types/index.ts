@@ -1,3 +1,5 @@
 export type * as Express from './express';
-export type { Example } from './example';
-export type { Word } from './word';
+export type { Developer, DeveloperDocument } from './developer';
+export type { Example, ExampleDocument } from './example';
+export type { Stat } from './stat';
+export type { Word, LegacyWord, WordDocument, LegacyWordDocument } from './word';

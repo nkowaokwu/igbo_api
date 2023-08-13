@@ -16,7 +16,7 @@ const EXACT_MATCH_FACTOR = 2000;
 const SIMILAR_WORD_THRESHOLD = 1.5;
 const NO_FACTOR = 0;
 
-const generateSecondaryKey = (version) =>
+const generateSecondaryKey = (version: Version) =>
   version === Version.VERSION_1 ? 'definitions[0]' : 'definitions[0].definitions[0]';
 
 /* Sorts all the docs based on the provided searchWord */
@@ -39,8 +39,10 @@ export const sortDocsBy = (searchWord: string, docs: Word[], key: string, versio
         WORD_LENGTH_DIFFERENCE_FACTOR;
     const prevSecondaryKeyValue = get(prevDoc, generateSecondaryKey(version)) || '';
     const nextSecondaryKeyValue = get(nextDoc, generateSecondaryKey(version)) || '';
-    const rawPrevDefinitionMatchIndex = (prevSecondaryKeyValue as string)?.search?.(regex.hardDefinitionsReg) || -1;
-    const rawNextDefinitionMatchIndex = (nextSecondaryKeyValue as string)?.search?.(regex.hardDefinitionsReg) || -1;
+    const rawPrevDefinitionMatchIndex =
+      (prevSecondaryKeyValue as string)?.search?.(regex?.hardDefinitionsReg || '') || -1;
+    const rawNextDefinitionMatchIndex =
+      (nextSecondaryKeyValue as string)?.search?.(regex?.hardDefinitionsReg || '') || -1;
     const prevDefinitionMatchIndexValue = rawPrevDefinitionMatchIndex === -1 ? 11 : rawPrevDefinitionMatchIndex;
     const nextDefinitionMatchIndexValue = rawNextDefinitionMatchIndex === -1 ? 11 : rawNextDefinitionMatchIndex;
     const prevDefinitionMatchIndexFactor =

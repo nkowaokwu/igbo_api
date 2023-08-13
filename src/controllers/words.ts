@@ -13,7 +13,8 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
-import { Express, Word as IgboWord } from '../types';
+import { Express, LegacyWord } from '../types';
+import { WordResponseData } from './types';
 
 /* Gets words from JSON dictionary */
 export const getWordData: Express.MiddleWare = (req, res, next) => {
@@ -25,7 +26,7 @@ export const getWordData: Express.MiddleWare = (req, res, next) => {
     }
     const { wordReg: regexWord } = createRegExp(searchWord);
     return res.send(findSearchWord(regexWord, searchWord));
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
@@ -55,7 +56,7 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       flags,
       filters,
     };
-    let responseData: { contentLength?: number; words?: IgboWord[] } = {};
+    let responseData: WordResponseData = { words: [], contentLength: 0 };
     if (hasQuotes) {
       responseData = await searchWordUsingEnglish({
         redisClient,
@@ -82,7 +83,7 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       contentLength: responseData.contentLength,
       version,
     });
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
@@ -90,7 +91,7 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
 export const getWords: Express.MiddleWare = async (req, res, next) => {
   try {
     return getWordsFromDatabase(req, res, next);
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
@@ -117,13 +118,13 @@ export const getWord: Express.MiddleWare = async (req, res, next) => {
       contentLength: 1,
       version,
     });
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data: IgboWord, connection: mongoose.Connection) => {
+export const createWord = async (data: LegacyWord, connection: mongoose.Connection) => {
   const Word = connection.model('Word', wordSchema);
   const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 

@@ -1,12 +1,38 @@
+import { RedisClientType } from 'redis';
 import Version from '../../shared/constants/Version';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
 import { searchEnglishRegexQuery } from './queries';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
+import { SearchRegExp } from '../../shared/utils/createRegExp';
+
+type EnglishSearch = {
+  redisClient: RedisClientType | undefined;
+  version: Version;
+  regex: SearchRegExp;
+  searchWord: string;
+  skip: number;
+  limit: number;
+  flags: {
+    examples: boolean;
+    dialects: boolean;
+    resolve: boolean;
+  };
+  filters: any;
+};
 
 /* Searches for word with English stored in MongoDB */
-const searchWordUsingEnglish = async ({ redisClient, version, regex, searchWord, skip, limit, flags, filters }) => {
+const searchWordUsingEnglish = async ({
+  redisClient,
+  version,
+  regex,
+  searchWord,
+  skip,
+  limit,
+  flags,
+  filters,
+}: EnglishSearch) => {
   console.time(`searchWordUsingEnglish for ${searchWord}`);
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `"${searchWord}"-${version}`;

@@ -1,6 +1,7 @@
 import { MAIN_KEY, isProduction } from '../config';
+import { Express } from '../types';
 
-export default async (req, res, next) => {
+const validateAdminApiKey: Express.MiddleWare = async (req, res, next) => {
   try {
     const apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
 
@@ -9,8 +10,10 @@ export default async (req, res, next) => {
     }
 
     return next();
-  } catch (err) {
+  } catch (err: any) {
     res.status(400);
     return res.send({ error: err.message });
   }
 };
+
+export default validateAdminApiKey;

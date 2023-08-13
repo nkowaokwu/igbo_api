@@ -1,177 +1,179 @@
+import DialectEnum from './DialectEnum';
+
 export default {
-  ABI: {
+  [DialectEnum.ABI]: {
     code: 'ibo-abi',
-    value: 'ABI',
+    value: DialectEnum.ABI,
     label: 'Abịrịba',
   },
-  ACH: {
+  [DialectEnum.ACH]: {
     code: 'ibo-ach',
-    value: 'ACH',
+    value: DialectEnum.ACH,
     label: 'Achala',
   },
-  AFI: {
+  [DialectEnum.AFI]: {
     code: 'ibo-afi',
-    value: 'AFI',
+    value: DialectEnum.AFI,
     label: 'Afiikpo',
   },
-  AJA: {
+  [DialectEnum.AJA]: {
     code: 'ibo-aja',
-    value: 'AJA',
+    value: DialectEnum.AJA,
     label: 'Ajalị',
   },
-  AMA: {
+  [DialectEnum.AMA]: {
     code: 'ibo-ama',
-    value: 'AMA',
+    value: DialectEnum.AMA,
     label: 'Amaifeke',
   },
-  ANA: {
+  [DialectEnum.ANA]: {
     code: 'ibo-ana',
-    value: 'ANA',
+    value: DialectEnum.ANA,
     label: 'Anam',
   },
-  ANI: {
+  [DialectEnum.ANI]: {
     code: 'ibo-ani',
-    value: 'ANI',
+    value: DialectEnum.ANI,
     label: 'Anịọcha',
   },
-  AWK: {
+  [DialectEnum.AWK]: {
     code: 'ibo-awk',
-    value: 'AWK',
+    value: DialectEnum.AWK,
     label: 'Ọkụzụ',
   },
-  BON: {
+  [DialectEnum.BON]: {
     code: 'ibo-bon',
-    value: 'BON',
+    value: DialectEnum.BON,
     label: 'Ụbanị',
   },
-  ECH: {
+  [DialectEnum.ECH]: {
     code: 'ibo-ech',
-    value: 'ECH',
+    value: DialectEnum.ECH,
     label: 'Echee',
   },
-  EGB: {
+  [DialectEnum.EGB]: {
     code: 'ibo-egb',
-    value: 'EGB',
+    value: DialectEnum.EGB,
     label: 'Egbema',
   },
-  EZA: {
+  [DialectEnum.EZA]: {
     code: 'ibo-eza',
-    value: 'EZA',
+    value: DialectEnum.EZA,
     label: 'Ezaa',
   },
-  EZE: {
+  [DialectEnum.EZE]: {
     code: 'ibo-eze',
-    value: 'EZE',
+    value: DialectEnum.EZE,
     label: 'Ezeagu',
   },
-  EZM: {
+  [DialectEnum.EZM]: {
     code: 'ibo-ezm',
     value: 'EZM',
     label: 'Ezzamgbo',
   },
-  IHU: {
+  [DialectEnum.IHU]: {
     code: 'ibo-ihu',
-    value: 'IHU',
+    value: DialectEnum.IHU,
     label: 'Ihuoma',
   },
-  IQW: {
+  [DialectEnum.IQW]: {
     code: 'ibo-iqw',
-    value: 'IQW',
+    value: DialectEnum.IQW,
     label: 'Ikwo',
   },
-  ISU: {
+  [DialectEnum.ISU]: {
     code: 'ibo-isu',
-    value: 'ISU',
+    value: DialectEnum.ISU,
     label: 'Isuama',
   },
-  IZZ: {
+  [DialectEnum.IZZ]: {
     code: 'ibo-izz',
-    value: 'IZZ',
+    value: DialectEnum.IZZ,
     label: 'Izii',
   },
-  MBA: {
+  [DialectEnum.MBA]: {
     code: 'ibo-mba',
-    value: 'MBA',
+    value: DialectEnum.MBA,
     label: 'Mbaise',
   },
-  NGW: {
+  [DialectEnum.NGW]: {
     code: 'ibo-ngw',
-    value: 'NGW',
+    value: DialectEnum.NGW,
     label: 'Ngwa',
   },
-  NKA: {
+  [DialectEnum.NKA]: {
     code: 'ibo-nka',
-    value: 'NKA',
+    value: DialectEnum.NKA,
     label: 'Nkanụ',
   },
-  NKP: {
+  [DialectEnum.NKP]: {
     code: 'ibo-nkp',
-    value: 'NKP',
+    value: DialectEnum.NKP,
     label: 'Mkpọọ',
   },
-  NSA: {
+  [DialectEnum.NSA]: {
     code: 'ibo-nsa',
-    value: 'NSA',
+    value: DialectEnum.NSA,
     label: 'Nsa',
   },
-  NSU: {
+  [DialectEnum.NSU]: {
     code: 'ibo-nsu',
-    value: 'NSU',
+    value: DialectEnum.NSU,
     label: 'Nsụka',
   },
-  OGU: {
+  [DialectEnum.OGU]: {
     code: 'ibo-ogu',
-    value: 'OGU',
+    value: DialectEnum.OGU,
     label: 'Ugwuta',
   },
-  OHU: {
+  [DialectEnum.OHU]: {
     code: 'ibo-ohu',
-    value: 'OHU',
+    value: DialectEnum.OHU,
     label: 'Ọhụhụ',
   },
-  OKA: {
+  [DialectEnum.OKA]: {
     code: 'ibo-oka',
-    value: 'OKA',
+    value: DialectEnum.OKA,
     label: 'Ọka',
   },
-  ONI: {
+  [DialectEnum.ONI]: {
     code: 'ibo-oni',
-    value: 'ONI',
+    value: DialectEnum.ONI,
     label: 'Ọnịcha',
   },
-  ORL: {
+  [DialectEnum.ORL]: {
     code: 'ibo-orl',
-    value: 'ORL',
+    value: DialectEnum.ORL,
     label: 'Ọlụ',
   },
-  OWE: {
+  [DialectEnum.OWE]: {
     code: 'ibo-owe',
-    value: 'OWE',
+    value: DialectEnum.OWE,
     label: 'Owere',
   },
-  OBO: {
+  [DialectEnum.OBO]: {
     code: 'ibo-obo',
-    value: 'OBO',
+    value: DialectEnum.OBO,
     label: 'Obosi',
   },
-  OGI: {
+  [DialectEnum.OGI]: {
     code: 'ibo-ogi',
-    value: 'OGI',
+    value: DialectEnum.OGI,
     label: 'Ogidi',
   },
-  UDI: {
+  [DialectEnum.UDI]: {
     code: 'ibo-udi',
-    value: 'UDI',
+    value: DialectEnum.UDI,
     label: 'Udi',
   },
-  UMU: {
+  [DialectEnum.UMU]: {
     code: 'ibo-umu',
-    value: 'UMU',
+    value: DialectEnum.UMU,
     label: 'Ụmụahịa',
   },
-  UNW: {
+  [DialectEnum.UNW]: {
     code: 'ibo-unw',
-    value: 'UNW',
+    value: DialectEnum.UNW,
     label: 'Unwana; Ungwana Lordji',
   },
 };
