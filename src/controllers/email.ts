@@ -38,7 +38,7 @@ export const sendEmail = (message: MailDataRequired) =>
             console.green('Email successfully sent.');
           }
         })
-        .catch((err) => {
+        .catch((err: any) => {
           if (!isProduction) {
             console.red(err);
             return Promise.resolve(err);

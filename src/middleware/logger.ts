@@ -1,9 +1,11 @@
 import chalk from 'chalk';
-import { NextFunction, Request } from 'express';
+import { Express } from '../types';
 
-export default (req: Request, _, next: NextFunction) => {
+const logger: Express.MiddleWare = async (req, _, next) => {
   console.blue('-----------');
   console.log(chalk.blue('Query:'), req.query);
   console.blue('-----------');
   next();
 };
+
+export default logger;

@@ -53,6 +53,7 @@ module.exports = {
         'import/extensions': ['warn'],
         'max-len': ['error', { code: 120 }],
         'no-nested-ternary': ['off'],
+        'no-underscore-dangle': ['off'],
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {

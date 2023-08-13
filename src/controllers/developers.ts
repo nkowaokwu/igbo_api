@@ -41,8 +41,8 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
     if (!isTest) {
       try {
         await sendNewDeveloper({ to: email, apiKey, name });
-      } catch (err) {
-        console.log(err.response.body.errors);
+      } catch (err: any) {
+        console.log(err?.response?.body?.errors);
       }
     }
     await handleCloseConnection(connection);
@@ -50,7 +50,7 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
       message: `Success email sent to ${email}`,
       apiKey,
     });
-  } catch (err) {
+  } catch (err: any) {
     await handleCloseConnection(connection);
     if (!isTest) {
       console.trace(err);
