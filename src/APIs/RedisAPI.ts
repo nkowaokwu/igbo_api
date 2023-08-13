@@ -3,6 +3,9 @@ import { REDIS_CACHE_EXPIRATION } from '../config';
 import minimizeWords from '../controllers/utils/minimizeWords';
 import minimizeVerbsAndSuffixes from '../controllers/utils/minimizeVerbsAndSuffixes';
 import Version from '../shared/constants/Version';
+import { Word } from '../types';
+import { ExampleResponseData } from '../controllers/types';
+import { redisClient as defaultRedisClient } from '../middleware/attachRedisClient';
 
 type RedisClient = {
   get: (value: string) => void;
@@ -10,7 +13,12 @@ type RedisClient = {
   set: (key: string, value: string, options: { [key in string]: any }) => void;
 };
 
-export const getCachedWords = async ({ key, redisClient }: { key: string; redisClient: RedisClient }) => {
+type GetValue = {
+  key: string;
+  redisClient: RedisClient | undefined;
+};
+
+export const getCachedWords = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
   console.time('Getting cached words');
   const rawCachedWords = await redisClient.get(key);
   const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
@@ -22,12 +30,12 @@ export const getCachedWords = async ({ key, redisClient }: { key: string; redisC
 export const setCachedWords = async ({
   key,
   data,
-  redisClient,
+  redisClient = defaultRedisClient,
   version,
 }: {
   key: string;
   data: any;
-  redisClient: RedisClient;
+  redisClient: RedisClient | undefined;
   version: Version;
 }) => {
   const updatedData = assign(data);
@@ -38,21 +46,29 @@ export const setCachedWords = async ({
   return updatedData;
 };
 
-export const getCachedExamples = async ({ key, redisClient }: { key: string; redisClient: RedisClient }) => {
+export const getCachedExamples = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
   const rawCachedExamples = await redisClient.get(key);
   const cachedExamples = typeof rawCachedExamples === 'string' ? JSON.parse(rawCachedExamples) : rawCachedExamples;
   console.log(`Retrieved cached data for examples ${key}:`, !!cachedExamples);
   return cachedExamples;
 };
 
-export const setCachedExamples = async ({ key, data, redisClient }) => {
+export const setCachedExamples = async ({
+  key,
+  data,
+  redisClient = defaultRedisClient,
+}: {
+  key: string;
+  data: ExampleResponseData;
+  redisClient: RedisClient | undefined;
+}) => {
   if (!redisClient.isFake) {
     await redisClient.set(key, JSON.stringify(data), { EX: REDIS_CACHE_EXPIRATION });
   }
   return data;
 };
 
-export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }: { key: string; redisClient: RedisClient }) => {
+export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
   console.time(`Searching cached verbs and suffixes: verbs-and-suffixes-${key}`);
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
   const rawCachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
@@ -68,12 +84,12 @@ export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient }: { key: 
 export const setAllCachedVerbsAndSuffixes = async ({
   key,
   data,
-  redisClient,
+  redisClient = defaultRedisClient,
   version,
 }: {
   key: Version;
-  data: string;
-  redisClient: RedisClient;
+  data: Word[];
+  redisClient: RedisClient | undefined;
   version: Version;
 }) => {
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
@@ -81,6 +97,6 @@ export const setAllCachedVerbsAndSuffixes = async ({
   if (!redisClient.isFake) {
     await redisClient.set(redisAllVerbsAndSuffixesKey, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }
-  console.log(`Setting verbs and suffixes cache: ${JSON.stringify(updatedData, null, 2)}`);
+  console.log(`Setting verbs and suffixes cache: ${JSON.stringify(updatedData, null, 2).length}`);
   return updatedData;
 };

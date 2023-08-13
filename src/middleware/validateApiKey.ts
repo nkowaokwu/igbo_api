@@ -1,13 +1,13 @@
 import { compareSync } from 'bcrypt';
-import { NextFunction, Request, Response } from 'express';
 import { developerSchema } from '../models/Developer';
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
 import { createDbConnection } from '../services/database';
+import { DeveloperDocument, Express } from '../types';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
 
-const determineLimit = (apiLimit) => (isTest ? apiLimit || PROD_LIMIT : PROD_LIMIT);
+const determineLimit = (apiLimit = '') => (isTest ? parseInt(apiLimit, 10) || PROD_LIMIT : PROD_LIMIT);
 
 const isSameDate = (first: Date, second: Date) =>
   first.getFullYear() === second.getFullYear() &&
@@ -15,10 +15,10 @@ const isSameDate = (first: Date, second: Date) =>
   first.getDate() === second.getDate();
 
 /* Increments usage count and updates usage date */
-const handleDeveloperUsage = async (developer) => {
+const handleDeveloperUsage = async (developer: DeveloperDocument) => {
   const updatedDeveloper = developer;
   const isNewDay = !isSameDate(updatedDeveloper.usage.date, new Date());
-  updatedDeveloper.usage.date = Date.now();
+  updatedDeveloper.usage.date = new Date();
 
   if (isNewDay) {
     updatedDeveloper.usage.count = 0;
@@ -30,10 +30,10 @@ const handleDeveloperUsage = async (developer) => {
 };
 
 /* Finds a developer with provided information */
-const findDeveloper = async (apiKey) => {
+const findDeveloper = async (apiKey: string) => {
   console.time('Finding developer account');
   const connection = createDbConnection();
-  const Developer = connection.model('Developer', developerSchema);
+  const Developer = connection.model<DeveloperDocument>('Developer', developerSchema);
   let developer = await Developer.findOne({ apiKey });
   if (developer) {
     console.timeEnd('Finding developer account');
@@ -43,7 +43,7 @@ const findDeveloper = async (apiKey) => {
   // This logic attempts to find the developer document and update it
   // with the API token
   const developers = await Developer.find({});
-  developer = developers.find((dev) => compareSync(apiKey, dev.apiKey));
+  developer = developers.find((dev) => compareSync(apiKey, dev.apiKey)) || null;
   if (developer) {
     developer.apiKey = apiKey;
     const updatedDeveloper = await developer.save();
@@ -54,14 +54,10 @@ const findDeveloper = async (apiKey) => {
   return developer;
 };
 
-interface UsingMainKeyRequest extends Request {
-  isUsingMainKey: boolean;
-}
-
-export default async (req: UsingMainKeyRequest, res: Response, next: NextFunction) => {
+const validateApiKey: Express.MiddleWare = async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
-    let apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
+    let apiKey = (req.headers['X-API-Key'] || req.headers['x-api-key']) as string;
 
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
@@ -95,8 +91,10 @@ export default async (req: UsingMainKeyRequest, res: Response, next: NextFunctio
 
     res.status(401);
     return res.send({ error: 'Your API key is invalid' });
-  } catch (err) {
+  } catch (err: any) {
     res.status(400);
     return res.send({ error: err.message });
   }
 };
+
+export default validateApiKey;

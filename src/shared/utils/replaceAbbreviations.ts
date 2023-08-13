@@ -29,14 +29,17 @@ const abbreviations = {
   Y: 'derived from Yoruba',
 };
 
-const trim = (text) => replace(text, ':', '');
+const trim = (text: string) => replace(text, ':', '');
 
-export default (text) => {
+export default (text: string) => {
   const insertedAbbreviationsText = reduce(
     keys(abbreviations),
     (partiallyInsertedAbbreviationsText, abbreviation) => {
       const regExp = new RegExp(`\\b${abbreviation}\\.`);
+      // @ts-expect-error abbreviations
       return replace(partiallyInsertedAbbreviationsText, regExp, abbreviations[abbreviation]);
-    }, trim(text));
+    },
+    trim(text)
+  );
   return insertedAbbreviationsText;
 };

@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { NextFunction, Request } from 'express';
+import { Request } from 'express';
+import { Express } from '../types';
 import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
 
 interface TrackingEvent {
   clientIdentifier: string | string[] | undefined;
   category: string;
   action: string;
-  keyword: any;
+  keyword: string | string[] | undefined | Request['query'] | Request['query'][];
 }
 
 const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEvent) =>
@@ -46,7 +47,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
           console.timeEnd('Sending production tracking data');
           resolve(true);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
           console.timeEnd('Sending production tracking data');
           reject(new Error(err));
@@ -62,7 +63,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
           console.timeEnd('Sending development tracking data');
           resolve(true);
         })
-        .catch((err) => {
+        .catch((err: any) => {
           if (isProduction) {
             console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
             console.timeEnd('Sending development tracking data');
@@ -72,7 +73,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
     }
   });
 
-export default async (req: Request, _, next: NextFunction) => {
+const analytics: Express.MiddleWare = async (req, _, next) => {
   try {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
@@ -87,7 +88,9 @@ export default async (req: Request, _, next: NextFunction) => {
     });
 
     return next();
-  } catch (err) {
+  } catch (err: any) {
     return next(err);
   }
 };
+
+export default analytics;
