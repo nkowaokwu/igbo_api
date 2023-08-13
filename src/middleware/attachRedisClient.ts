@@ -1,23 +1,19 @@
 import { createClient, RedisClientType } from 'redis';
-import { NextFunction, Request, Response } from 'express';
 import { REDIS_HOST, REDIS_PORT, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } from '../config';
-
-interface RedisClientRequest extends Request {
-  redisClient: RedisClientType;
-}
+import { Express } from '../types';
 
 const afterResponse = (redisClient: RedisClientType) => {
   try {
     if (redisClient) {
       redisClient.quit();
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(`Error with closing redis: ${err.message}`);
   }
 };
 
 // Keep the same Redis Client connection open
-const redisClient =
+export const redisClient =
   REDIS_HOST && REDIS_PORT && REDIS_USERNAME && REDIS_PASSWORD
     ? createClient({
         socket: {
@@ -40,11 +36,11 @@ const redisClient =
         isReady: true,
       };
 
-export default async (req: RedisClientRequest, res: Response, next: NextFunction) => {
+const attachRedisClient: Express.MiddleWare = async (req, res, next) => {
   if (!redisClient.isReady) {
     redisClient.connect();
   }
-  redisClient.on('error', (err) => console.log('Redis Client Error', err));
+  redisClient.on('error', (err: any) => console.log('Redis Client Error', err));
 
   res.on('finish', afterResponse);
   res.on('close', afterResponse);
@@ -52,3 +48,5 @@ export default async (req: RedisClientRequest, res: Response, next: NextFunction
   req.redisClient = redisClient as RedisClientType;
   return next();
 };
+
+export default attachRedisClient;

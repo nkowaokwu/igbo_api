@@ -1,3 +1,5 @@
+import { Document, Types } from 'mongoose';
+
 export type Example = {
   id: string;
   associatedDefinitionsSchemas: string[];
@@ -19,3 +21,9 @@ type Pronunciation = {
   review: boolean;
   speaker: string;
 };
+
+export interface ExampleDocument extends Example, Document<any> {
+  _id: Types.ObjectId;
+  __v: number;
+  id: string;
+}

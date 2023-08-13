@@ -12,12 +12,15 @@ export type Query = {
   strict: string;
   tags: string;
   wordClasses: string;
+  apiLimit: string;
 };
 
-export type IgboAPIRequest = ExpressRequest & {
-  isUsingMainKey: boolean;
+export interface IgboAPIRequest extends ExpressRequest {
   query: Partial<Query>;
-  redisClient: RedisClientType;
-};
+  isUsingMainKey?: boolean;
+  redisClient?: RedisClientType;
+}
 
-export type MiddleWare = (req: IgboAPIRequest, res: Response, next: NextFunction) => void;
+export interface MiddleWare {
+  (req: IgboAPIRequest, res: Response, next: NextFunction): void;
+}
