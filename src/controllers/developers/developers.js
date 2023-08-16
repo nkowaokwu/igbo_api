@@ -65,7 +65,7 @@ export const getDeveloper = async (req, res, next) => {
     const { headers: data } = req;
     const apiKey = data['x-api-key' || 'X-API-Key'];
     if (!apiKey) {
-      throw new Error('No API key provided');
+      throw new Error('No API key provided.');
     }
 
     const developer = await findDeveloper(apiKey);
