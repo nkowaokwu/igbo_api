@@ -154,7 +154,26 @@ http://localhost:8080/api/v1/test/populate // POST
 
 After about 20 seconds, if you see the `✅ Seeding successful.` message in your terminal, then you have successfully populated your database.
 
-### 3. (Optional) Migrate Data
+### Verify database seeding was successful
+
+Install one of the options on your machine to view the seeded data
+
+**Option 1:** Download MongoDB Compass
+```
+https://docs.mongodb.com/manual/administration/install-community/
+```
+
+**Option 2:** Install MongoDB VSCode extension
+```
+https://marketplace.visualstudio.com/items?itemName=mongodb.mongodb-vscode
+```
+
+Connect to your local mongodb cluster using this connection:
+```
+mongodb://127.0.0.1:27017/igbo_api
+```
+
+### (Optional) Migrate Data
 
 The database has gone through a number of migrations since the beginning of this project. To ensure that local testing data is the same
 shape as the data in the production MongoDB database, run all MongoDB migration scripts with the following command:

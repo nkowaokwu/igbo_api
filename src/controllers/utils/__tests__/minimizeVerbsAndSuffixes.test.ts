@@ -28,10 +28,12 @@ describe('minimizeVerbsAndSuffixes', () => {
       },
     ];
     const minimizedWords = minimizeVerbsAndSuffixes(words, Version.VERSION_2);
-    expect(minimizedWords).toEqual([
-      { word: 'first word', definitions: [{ wordClass: WordClass.NNC.value }] },
-      { word: 'second word', definitions: [{ wordClass: WordClass.ADV.value }] },
-      { word: 'third word', definitions: [{ wordClass: WordClass.PREP.value }] },
-    ]);
+    expect(minimizedWords).toEqual({
+      suffixes: [
+        { word: 'first word', definitions: [{ wordClass: WordClass.NNC.value }] },
+        { word: 'third word', definitions: [{ wordClass: WordClass.PREP.value }] },
+      ],
+      verbs: [{ word: 'second word', definitions: [{ wordClass: WordClass.ADV.value }] }],
+    });
   });
 });

@@ -1,7 +1,7 @@
-import compact from 'lodash/compact';
-import pick from 'lodash/pick';
-import { Request } from 'express';
-import { RedisClientType } from 'redis';
+import { Response } from 'express';
+import { PipelineStage } from 'mongoose';
+import { compact, pick } from 'lodash';
+import { Example, Express, Word } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
@@ -13,8 +13,10 @@ import WordClass from '../../shared/constants/WordClass';
 import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
+import { WordData } from './types';
+import { WithPronunciation } from '../types';
 
-const createSimpleRegExp = (keywords) => ({
+const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
     `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`).join('|')}`,
     'i'
@@ -24,7 +26,9 @@ const createSimpleRegExp = (keywords) => ({
     'i'
   ),
   hardDefinitionsReg: new RegExp(
-    `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).hardDefinitionsReg.source})`).join('|')}`,
+    `${keywords
+      .map((keyword) => `(${(createRegExp(keyword.text, true).hardDefinitionsReg || { source: keyword.text }).source})`)
+      .join('|')}`,
     'i'
   ),
 });
@@ -32,7 +36,13 @@ const createSimpleRegExp = (keywords) => ({
 /* Determines if an empty response should be returned
  * if the request comes from an application not using MAIN_KEY
  */
-const constructRegexQuery = ({ isUsingMainKey, keywords }) =>
+const constructRegexQuery = ({
+  isUsingMainKey,
+  keywords,
+}: {
+  isUsingMainKey: boolean | undefined;
+  keywords: { text: string }[];
+}) =>
   isUsingMainKey
     ? createSimpleRegExp(keywords)
     : keywords?.length
@@ -40,7 +50,23 @@ const constructRegexQuery = ({ isUsingMainKey, keywords }) =>
     : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ };
 
 /* Packages the res response with sorting */
-export const packageResponse = ({ res, docs, contentLength, version }) => {
+export const packageResponse = ({
+  res,
+  docs,
+  contentLength,
+  version,
+}: {
+  res: Response;
+  docs:
+    | Partial<Word>
+    | Partial<Example>
+    | Partial<WithPronunciation>
+    | Partial<Word>[]
+    | Partial<Example>[]
+    | Partial<WithPronunciation>[];
+  contentLength: number;
+  version: Version;
+}) => {
   res.set({ 'Content-Range': contentLength });
   const response = version === Version.VERSION_2 ? { data: docs, length: contentLength } : docs;
   return res.send(response);
@@ -58,31 +84,20 @@ const convertFilterToKeyword = (filter = '{"word": ""}') => {
 };
 
 /* Gets all verbs and suffixes within the Igbo API */
-const searchAllVerbsAndSuffixes = async ({ query, version }) => {
-  const { words, contentLength } = await findWordsWithMatch({
+const searchAllVerbsAndSuffixes = async ({
+  query,
+  version,
+}: {
+  query: PipelineStage.Match['$match'];
+  version: Version;
+}): Promise<{ words: Word[]; contentLength: number }> => {
+  const { words, contentLength } = (await findWordsWithMatch({
     match: query,
     version,
     lean: true,
-  });
+  })) as { words: Word[]; contentLength: number };
   return { words, contentLength };
 };
-
-interface IgboAPIRequest extends Request {
-  isUsingMainKey: boolean;
-  redisClient: RedisClientType;
-  query: {
-    keyword?: string;
-    page?: string;
-    range?: string;
-    filter?: string;
-    strict?: string;
-    dialects?: string;
-    examples?: string;
-    tags?: string;
-    wordClasses?: string;
-    resolve?: string;
-  };
-}
 
 /* Handles all the queries for searching in the database */
 export const handleQueries = async ({
@@ -91,7 +106,7 @@ export const handleQueries = async ({
   isUsingMainKey,
   baseUrl,
   redisClient,
-}: IgboAPIRequest) => {
+}: Express.IgboAPIRequest) => {
   const {
     keyword: keywordQuery = '',
     page: pageQuery = '0',
@@ -106,11 +121,11 @@ export const handleQueries = async ({
   } = query;
   console.time('Handling queries');
   const { id } = params;
-  let allVerbsAndSuffixes;
+  let allVerbsAndSuffixes: WordData = { verbs: [], suffixes: [] };
   const hasQuotes = keywordQuery && keywordQuery.match(/["'].*["']/) !== null;
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
-  const allVerbsAndSuffixesQuery = searchForAllVerbsAndSuffixesQuery();
+  const allVerbsAndSuffixesQuery: PipelineStage.Match['$match'] = searchForAllVerbsAndSuffixesQuery();
   const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({ key: version, redisClient });
   if (version === Version.VERSION_2) {
     console.time('Searching all verbs and suffixes');
@@ -197,7 +212,8 @@ export const handleQueries = async ({
                     ['wordReg']
                   ),
                 }))
-              : [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
+              : // @ts-expect-error no index signature with parameter type string
+                [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
             console.timeEnd(`Expand phrase part ${searchWordPartIndex}`);
             return result;
           })
@@ -214,13 +230,13 @@ export const handleQueries = async ({
   const examples = examplesQuery === 'true';
   const tags = tagsQuery
     ? tagsQuery
-        .replaceAll(/[[\]']/g, '')
+        .replace(/[[\]']/g, '')
         .split(',')
         .map((tag) => tag.trim())
     : [];
   const wordClasses = wordClassesQuery
     ? wordClassesQuery
-        .replaceAll(/[[\]']/g, '')
+        .replace(/[[\]']/g, '')
         .split(',')
         .map((wordClass) => wordClass.trim())
     : [];

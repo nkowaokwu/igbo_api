@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
+import { Express } from '../types';
 import { sendNewDeveloper } from './email';
 
 const TEST_EMAIL = 'developer@example.com';
@@ -11,17 +12,13 @@ const TEST_EMAIL = 'developer@example.com';
 const generateApiKey = uuid;
 
 /* Creates a new Developer in the database */
-export const postDeveloper = async (req, res, next) => {
+export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
 
   try {
     const { body: data } = req;
-    const {
-      email,
-      password,
-      name,
-    } = data;
+    const { email, password, name } = data;
 
     const developers = await Developer.find({ email });
     if (developers.length && email !== TEST_EMAIL) {
@@ -44,8 +41,8 @@ export const postDeveloper = async (req, res, next) => {
     if (!isTest) {
       try {
         await sendNewDeveloper({ to: email, apiKey, name });
-      } catch (err) {
-        console.log(err.response.body.errors);
+      } catch (err: any) {
+        console.log(err?.response?.body?.errors);
       }
     }
     await handleCloseConnection(connection);
@@ -53,7 +50,7 @@ export const postDeveloper = async (req, res, next) => {
       message: `Success email sent to ${email}`,
       apiKey,
     });
-  } catch (err) {
+  } catch (err: any) {
     await handleCloseConnection(connection);
     if (!isTest) {
       console.trace(err);
