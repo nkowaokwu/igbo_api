@@ -67,14 +67,21 @@ export const getExamples = (query = {}, options = {}) => (
 /* Searches for examples using the data in MongoDB V2 */
 export const getExampleV2 = (id, query = {}, options = {}) => (
   server
-    .get(`${API_ROUTE}/examples/${id}`)
+    .get(`${API_ROUTE_V2}/examples/${id}`)
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
 export const getExamplesV2 = (query = {}, options = {}) => (
   server
-    .get(`${API_ROUTE}/examples`)
+    .get(`${API_ROUTE_V2}/examples`)
     .query(query)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
+);
+
+/* Searches for developers using the data in MongoDB V1 */
+export const getDeveloper = (options = {}) => (
+  server
+    .get(`${API_ROUTE}/developers/account`)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY)
 );
 
@@ -102,9 +109,9 @@ export const searchMockedTerm = (term) => {
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
 
-/* fetch developer details */
-export const getDeveloper = (options = {}) => (
+/** login a developer */
+export const loginDeveloper = (data) => (
   server
-    .get(`${API_ROUTE}/developers/developer`)
-    .set('X-API-Key', options.name || FALLBACK_API_KEY)
+    .post(`${API_ROUTE}/login`)
+    .send(data)
 );
