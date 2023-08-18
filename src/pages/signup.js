@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useMediaQuery } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Input from './components/Input';
 import { PORT } from '../siteConstants';
@@ -16,7 +16,7 @@ const SignUp = () => {
   const [apiKey, setApiKey] = useState('');
   const { handleSubmit, control, errors } = useForm();
 
-  const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
+  const [matchesLargeScreenQuery] = useMediaQuery('(min-width:1024px)');
 
   useEffect(() => {
     const productionApiRoute = 'https://igboapi.com';
