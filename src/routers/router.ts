@@ -1,8 +1,9 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
+import { Express } from '../types';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
-import { getDeveloper, postDeveloper } from '../controllers/developers/developers';
+import { getDeveloper, postDeveloper } from '../controllers/developers';
 import { getStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
@@ -16,7 +17,7 @@ const router = express.Router();
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const REQUESTS_PER_MS = 20;
-const createDeveloperLimiter = rateLimit({
+const createDeveloperLimiter: Express.MiddleWare = rateLimit({
   windowMs: FIFTEEN_MINUTES,
   max: REQUESTS_PER_MS,
 });
