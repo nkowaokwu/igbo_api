@@ -99,30 +99,5 @@ describe('Developers', () => {
       const res = await getWord(limitWordId, { apiLimit: 2 }, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(403);
     });
-
-    it('should return developer document with correct credentials', async () => {
-      const developerRes = await createDeveloper(developerData);
-      const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
-      expect(developerDetails.status).toEqual(200);
-      expect(developerDetails.body.developer).toMatchObject({
-        usage: expect.objectContaining({
-          date: expect.any(String),
-          count: 0,
-        }),
-        name: expect.any(String),
-        apiKey: expect.any(String),
-        email: expect.any(String),
-        password: expect.any(String),
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
-        id: expect.any(String),
-      });
-    });
-
-    it('should throw an error getting developer document with invalid credentials', async () => {
-      const res = await getDeveloper({ apiKey: 'invalid api key' });
-      expect(res.body.status).toEqual(403);
-      expect(res.body.error).not.toEqual(undefined);
-    });
   });
 });

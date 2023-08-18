@@ -69,7 +69,6 @@ const validateApiKey: Express.MiddleWare = async (req, res, next) => {
     if (!apiKey && isDevelopment) {
       apiKey = FALLBACK_API_KEY;
     }
-
     if (!apiKey) {
       throw new Error("X-API-Key Header doesn't exist");
     }
@@ -79,7 +78,7 @@ const validateApiKey: Express.MiddleWare = async (req, res, next) => {
       return next();
     }
 
-    await findDeveloper(apiKey);
+    const developer = await findDeveloper(apiKey);
 
     if (developer) {
       if (developer.usage.count >= determineLimit(apiLimit)) {

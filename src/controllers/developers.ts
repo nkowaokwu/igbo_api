@@ -58,18 +58,3 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
     return next(err);
   }
 };
-
-export const getDeveloper = async (req, res, next) => {
-  try {
-    const { developer } = req;
-
-    return res.status(200).send({
-      developer,
-    });
-  } catch (err) {
-    if (!isTest) {
-      console.trace(err);
-    }
-    return next(err);
-  }
-};
