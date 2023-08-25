@@ -22,11 +22,13 @@ const getIsLastLetterDuplicated = ({
   return isLastLetterDuplicated;
 };
 
+const removeSpecialCharacters = (word: string) => word.replace(/[()!~@#$%&*\-=+[\]{},<>?|\\]/g, '');
+
 export default (rawSearchWord: string, hardMatch = false): SearchRegExp => {
   /* Front and back ensure the regexp will match with whole words */
   const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
   const back = '(?![a-zA-Z\u00c0-\u1ee5]+|,|s[a-zA-Z\u00c0-\u1ee5]+)';
-  const searchWord = removeAccents.removeExcluding(rawSearchWord).normalize('NFC');
+  const searchWord = removeAccents.removeExcluding(removeSpecialCharacters(rawSearchWord)).normalize('NFC');
   const requirePluralAndGerundMatch =
     searchWord.endsWith('ing') && searchWord.replace('ing', '').length <= 1 ? '' : '?';
   const regexStringBase = [...searchWord.replace(/(?:es|[s]|ing)$/, '')];
