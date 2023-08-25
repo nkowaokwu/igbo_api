@@ -77,14 +77,17 @@ const searchWordUsingIgbo = async ({
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
     const words = searchWord
-      ? // @ts-expect-error non-compatible types
-        igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
-          // @ts-expect-error Parameter 'finalWord' implicitly has an 'any' type.
-          if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
-            finalWords.push(word);
-          }
-          return finalWords;
-        }, [])
+      ? igboResults.words
+          // @ts-expect-error non-compatible
+          .concat(englishResults.words)
+          .reduce((finalWords: WordDocument[] | LegacyWordDocument[], word: WordDocument | LegacyWordDocument) => {
+            // @ts-expect-error Parameter 'finalWord' implicitly has an 'any' type.
+            if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
+              // @ts-expect-error non-compatible
+              finalWords.push(word);
+            }
+            return finalWords;
+          }, [] as WordDocument[] | LegacyWordDocument[])
       : igboResults.words;
     const contentLength = words.length;
 

@@ -19,9 +19,11 @@ module.exports = {
     'import/extensions': ['off'],
     'newline-per-chained-call': ['off'],
     'no-console': ['off'],
+    'no-misleading-character-class': ['off'],
     'no-nested-ternary': ['off'],
     'no-promise-executor-return': ['off'],
     'no-underscore-dangle': ['off'],
+    'no-useless-escape': ['off'],
     'react/jsx-filename-extension': ['off'],
     'react/function-component-definition': ['off'],
     'react/jsx-props-no-spreading': ['off'],
@@ -52,8 +54,10 @@ module.exports = {
         'import/prefer-default-export': ['off'],
         'import/extensions': ['warn'],
         'max-len': ['error', { code: 120 }],
+        'no-misleading-character-class': ['off'],
         'no-nested-ternary': ['off'],
         'no-underscore-dangle': ['off'],
+        'no-useless-escape': ['off'],
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {
