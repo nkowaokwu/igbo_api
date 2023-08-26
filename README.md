@@ -89,12 +89,12 @@ To start a Redis server, run:
 redis-server
 ```
 
-**Warning**: Running replica sets locally is machine intensive and should only
+**Warning**: Running replica sets locally is machine-intensive and should only
 be ran for testing or specific-feature development purposes.
 
 **Reminder**: You must have Redis installed on your machine in order to run the server.
 
-### Docker
+### Project Start-Up Alternative: Docker
 
 If you don't want to run a local Node and MongoDB, you can use [Docker](https://docker.com)
 
@@ -116,7 +116,7 @@ yarn dev:site
 
 Navigate to [localhost:3000](http://localhost:3000) to see the API front site
 
-## Seeding 🌱
+## Seeding the Database 🌱
 
 To populate the database complete the following steps:
 
