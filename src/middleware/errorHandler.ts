@@ -6,6 +6,6 @@ export default (err: any, _: Request, res: Response, __: NextFunction) => {
   if (err.message.match(/No .{1,} exist(s)?/) || err.message.match(/doesn't exist(s)?/)) {
     res.status(404);
   }
-  console.log(err?.stack);
+  console.error(err?.stack);
   return res.send({ error: err.message });
 };
