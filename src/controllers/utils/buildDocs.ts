@@ -120,10 +120,10 @@ export const findWordsWithMatch = async ({
           }),
           {}
         );
-        return word;
+        return word as LegacyWordDocument;
       }
-      return cleanedWord;
-    }) as WordDocument[] | LegacyWordDocument[];
+      return cleanedWord as WordDocument;
+    });
 
     console.timeEnd('Aggregation completion time');
     await handleCloseConnection(connection);

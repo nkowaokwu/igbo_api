@@ -1,5 +1,5 @@
 import { RedisClientType } from 'redis';
-import compact from 'lodash/compact';
+import { compact, uniqWith } from 'lodash';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
@@ -8,7 +8,6 @@ import { handleWordFlags } from '../../APIs/FlagsAPI';
 import Version from '../../shared/constants/Version';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
 import WordClassEnum from '../../shared/constants/WordClassEnum';
-import { LegacyWordDocument, WordDocument } from '../../types';
 
 type IgboSearch = {
   redisClient: RedisClientType | undefined;
@@ -77,17 +76,10 @@ const searchWordUsingIgbo = async ({
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
     const words = searchWord
-      ? igboResults.words
-          // @ts-expect-error non-compatible
-          .concat(englishResults.words)
-          .reduce((finalWords: WordDocument[] | LegacyWordDocument[], word: WordDocument | LegacyWordDocument) => {
-            // @ts-expect-error Parameter 'finalWord' implicitly has an 'any' type.
-            if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
-              // @ts-expect-error non-compatible
-              finalWords.push(word);
-            }
-            return finalWords;
-          }, [] as WordDocument[] | LegacyWordDocument[])
+      ? uniqWith(
+          igboResults.words.concat(englishResults.words),
+          (firstWord, secondWord) => firstWord.id.toString() === secondWord.id.toString()
+        )
       : igboResults.words;
     const contentLength = words.length;
 

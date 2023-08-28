@@ -22,7 +22,7 @@ const getIsLastLetterDuplicated = ({
   return isLastLetterDuplicated;
 };
 
-export const removeSpecialCharacters = (word: string) => word.replace(/[()!~@#$%&*\-=+[\]{},<>?|\\_\/]/g, '');
+export const removeSpecialCharacters = (word: string) => word.replace(/[()!~@#$%&*\=+[\]{},<>?|\\_\/]/g, '');
 
 export default (rawSearchWord: string, hardMatch = false): SearchRegExp => {
   /* Front and back ensure the regexp will match with whole words */
