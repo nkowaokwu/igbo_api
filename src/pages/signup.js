@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
+import { useMediaQuery } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Input from './components/Input';
 import { PORT } from '../siteConstants';
@@ -14,24 +15,21 @@ const SignUp = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [igboApiRoute, setIgboApiRoute] = useState('');
   const [apiKey, setApiKey] = useState('');
-  const {
-    handleSubmit,
-    control,
-    errors,
-  } = useForm();
+  const { handleSubmit, control, errors } = useForm();
+
+  const [matchesLargeScreenQuery] = useMediaQuery('(min-width:1024px)');
 
   useEffect(() => {
     const productionApiRoute = 'https://igboapi.com';
     const developmentApiRoute = `http://localhost:${PORT}`;
     let apiRoute = developmentApiRoute;
     if (typeof window !== 'undefined') {
-      apiRoute = window.location.hostname === 'igboapi.com' && process.env.NODE_ENV === 'production'
-        ? productionApiRoute
-        : developmentApiRoute;
+      apiRoute =
+        window.location.hostname === 'igboapi.com' && process.env.NODE_ENV === 'production'
+          ? productionApiRoute
+          : developmentApiRoute;
     } else {
-      apiRoute = process.env.NODE_ENV === 'production'
-        ? productionApiRoute
-        : developmentApiRoute;
+      apiRoute = process.env.NODE_ENV === 'production' ? productionApiRoute : developmentApiRoute;
     }
     setIgboApiRoute(apiRoute);
   }, []);
@@ -43,39 +41,41 @@ const SignUp = () => {
   };
 
   /* Sends a POST request to the Igbo API to create a new Developer */
-  const createDeveloper = (data) => (
+  const createDeveloper = (data) =>
     axios({
       method: 'post',
       url: `${igboApiRoute}/api/v1/developers`,
       data,
     })
-      .then((res) => {
-        if (res.status === 200) {
-          handleCreateDeveloperResponse(t('Success! Check your email'));
-          setApiKey(res.data.apiKey);
-        } else if (res.status >= 400) {
+      .then(
+        (res) => {
+          if (res.status === 200) {
+            handleCreateDeveloperResponse(t('Success! Check your email'));
+            setApiKey(res.data.apiKey);
+          } else if (res.status >= 400) {
+            handleCreateDeveloperResponse(t('An error occurred'));
+            setErrorMessage(res.data.error);
+          }
+        },
+        (err) => {
+          console.log(err);
           handleCreateDeveloperResponse(t('An error occurred'));
-          setErrorMessage(res.data.error);
+          if (err.response.status >= 400) {
+            setErrorMessage(err.response.data.error);
+          }
         }
-      }, (err) => {
-        console.log(err);
-        handleCreateDeveloperResponse(t('An error occurred'));
-        if (err.response.status >= 400) {
-          setErrorMessage(err.response.data.error);
-        }
-      })
+      )
       .catch((err) => {
         console.log(err);
         handleCreateDeveloperResponse(t('An error occurred'));
-      })
-  );
+      });
 
   /* Once the user submits the form, a new Developer account will be created */
   const onSubmit = createDeveloper;
 
   return (
     <>
-      <Navbar transparent />
+      <Navbar transparent={matchesLargeScreenQuery} />
       <div className="w-screen h-screen flex flex-row overflow-hidden">
         <div className="flex flex-col justify-center items-center w-full lg:w-6/12">
           <div className="w-10/12 lg:w-7/12">
@@ -140,20 +140,14 @@ const SignUp = () => {
               }}
             />
             {errors.password ? <span className="error">Password is required</span> : null}
-            <button
-              type="submit"
-              className="primary-button"
-              disabled={isButtonDisabled}
-            >
+            <button type="submit" className="primary-button" disabled={isButtonDisabled}>
               {t(buttonText)}
             </button>
             {apiKey ? (
               <div className="my-4 text-center space-y-6">
                 <h2 className="mb-4 text-gray-800 text-2xl">{t('Custom Igbo API Key:')}</h2>
                 <div className="w-full space-x-2">
-                  <code className="bg-gray-100 text-gray-600 p-1 w-full">
-                    {apiKey}
-                  </code>
+                  <code className="bg-gray-100 text-gray-600 p-1 w-full">{apiKey}</code>
                 </div>
                 <p className="text-red-600">
                   {t('Please save this key in a secure location. This key will disappear once you leave this page')}

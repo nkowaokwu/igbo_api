@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import { LegacyWordDocument, Word, WordDocument } from '../types';
 
 type HandleFlags = {
-  data: { words: Word[] | WordDocument[] | LegacyWordDocument[]; contentLength: number };
+  data: { words: (Word | WordDocument | LegacyWordDocument)[]; contentLength: number };
   flags: { examples: boolean; dialects: boolean; resolve: boolean };
 };
 
