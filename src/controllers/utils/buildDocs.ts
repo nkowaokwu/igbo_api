@@ -45,14 +45,16 @@ export const findWordsWithMatch = async ({
   match,
   version,
   lean = false,
+  queryLabel = '',
 }: {
   match: PipelineStage.Match['$match'];
   version: Version;
   lean?: boolean;
+  queryLabel?: string;
 }) => {
   const connection = createDbConnection();
   const Word = connection.model<WordDocument>('Word', wordSchema);
-  console.time('Aggregation completion time');
+  console.time(`Aggregation completion time: ${queryLabel || 'N/A'}`);
   try {
     let words = generateAggregationBase<WordDocument>(Word, match);
 
@@ -125,11 +127,13 @@ export const findWordsWithMatch = async ({
       return cleanedWord as WordDocument;
     });
 
-    console.timeEnd('Aggregation completion time');
+    console.log('first', queryLabel);
+    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err: any) {
-    console.timeEnd('Aggregation completion time');
+    console.log('second', queryLabel);
+    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     throw err;
   }

@@ -1,4 +1,5 @@
 import { RedisClientType } from 'redis';
+import fs from 'fs';
 import { compact, uniqWith } from 'lodash';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
 import { findWordsWithMatch } from './buildDocs';
@@ -70,8 +71,8 @@ const searchWordUsingIgbo = async ({
     });
     console.time(`Searching Igbo words for ${searchWord}`);
     const [igboResults, englishResults] = await Promise.all([
-      findWordsWithMatch({ match: igboQuery, version }),
-      findWordsWithMatch({ match: definitionsWithinIgboQuery, version }),
+      findWordsWithMatch({ match: igboQuery, version, queryLabel: 'igbo' }),
+      findWordsWithMatch({ match: definitionsWithinIgboQuery, version, queryLabel: 'definitions' }),
     ]);
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
@@ -94,7 +95,7 @@ const searchWordUsingIgbo = async ({
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
 
-  console.time(`searchWordUsingIgbo for ${searchWord}`);
+  console.timeEnd(`searchWordUsingIgbo for ${searchWord}`);
   return handleWordFlags({
     data: { words: sortedWords, contentLength: responseData.contentLength },
     flags,
