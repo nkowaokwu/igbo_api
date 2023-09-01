@@ -18,7 +18,7 @@ const generateMultipleWordRegex = (keywords) => {
 };
 
 const generateMultipleDefinitionsRegex = (keywords) => ({
-  'definitions.definitions': { $in: keywords.map(({ regex }) => regex.definitionsReg) },
+  'definitions.definitions': { $in: compact(keywords.map(({ regex }) => regex.definitionsReg)) },
 });
 
 const generateMultipleVariationsRegex = (keywords) => {
