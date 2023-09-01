@@ -127,12 +127,10 @@ export const findWordsWithMatch = async ({
       return cleanedWord as WordDocument;
     });
 
-    console.log('first', queryLabel);
     console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err: any) {
-    console.log('second', queryLabel);
     console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     throw err;
