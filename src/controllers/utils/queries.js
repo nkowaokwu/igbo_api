@@ -1,4 +1,4 @@
-import compact from 'lodash/compact';
+import { compact, flatten } from 'lodash';
 import { cjkRange } from '../../shared/constants/diacriticCodes';
 import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
@@ -6,57 +6,29 @@ import StopWords from '../../shared/constants/StopWords';
 
 const generateMultipleNsibidi = (keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
 
-const generateMultipleWordRegex = (keywords) => {
-  const wordRegexes = keywords.reduce((wordRegex, { regex }, index) => {
-    if (!index) {
-      return regex.wordReg.source;
-    }
-    return `${wordRegex}|${regex.wordReg.source}`;
-  }, '');
-  const regex = new RegExp(wordRegexes, 'i');
-  return { word: { $regex: regex.source, $options: 'i' } };
-};
+const generateMultipleWordRegex = (keywords) =>
+  keywords.map(({ regex }) => ({ word: { $regex: regex.wordReg.source, $options: 'i' } }));
 
 const generateMultipleDefinitionsRegex = (keywords) => ({
   'definitions.definitions': { $in: compact(keywords.map(({ regex }) => regex.definitionsReg)) },
 });
 
-const generateMultipleVariationsRegex = (keywords) => {
-  const variationsRegexes = keywords.reduce((wordRegex, { regex }, index) => {
-    if (!index) {
-      return regex.wordReg.source;
-    }
-    return `${wordRegex}|${regex.wordReg.source}`;
-  }, '');
-  const regex = new RegExp(variationsRegexes, 'i');
-  return { variations: { $in: [regex] } };
-};
+const generateMultipleVariationsRegex = (keywords) =>
+  keywords.map(({ regex }) => ({ variations: { $in: [regex.wordReg.source] } }));
 
-const generateMultipleDialectsWordRegex = (keywords) => {
-  const dialectsWordRegex = keywords.reduce((wordRegex, { regex }, index) => {
-    if (!index) {
-      return regex.wordReg.source;
-    }
-    return `${wordRegex}|${regex.wordReg.source}`;
-  }, '');
-  const regex = new RegExp(dialectsWordRegex, 'i');
-  return { 'dialects.word': { $regex: regex.source, $options: 'i' } };
-};
+const generateMultipleDialectsWordRegex = (keywords) =>
+  keywords.map(({ regex }) => ({ 'dialects.word': { $regex: regex.wordReg.source, $options: 'i' } }));
 
-const generateMultipleTensesWordRegex = (keywords) => {
-  const tenses = Object.values(Tenses).map(({ value }) => {
-    const tenseRegexes = keywords.reduce((wordRegex, { regex }, index) => {
-      if (!index) {
-        return regex.wordReg.source;
-      }
-      return `${wordRegex}|${regex.wordReg.source}`;
-    }, '');
-    const regex = new RegExp(tenseRegexes, 'i');
-    return { [`tenses.${value}`]: { $regex: regex.source, $options: 'i' } };
-  });
-  return tenses;
-};
-
+const generateMultipleTensesWordRegex = (keywords) =>
+  flatten(
+    Object.values(Tenses).reduce((finalRegexes, { value }) => {
+      const regexes = keywords.map(({ regex }) => ({
+        [`tenses.${value}`]: { $regex: regex.wordReg.source, $options: 'i' },
+      }));
+      finalRegexes.push(regexes);
+      return finalRegexes;
+    }, [])
+  );
 const fullTextSearchQuery = ({ keywords, isUsingMainKey, filters = {} }) => {
   const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
   return isUsingMainKey && !keywords?.length
@@ -69,9 +41,9 @@ const fullTextSearchQuery = ({ keywords, isUsingMainKey, filters = {} }) => {
         $and: [
           {
             $or: compact([
-              generateMultipleWordRegex(keywords),
-              generateMultipleVariationsRegex(keywords),
-              generateMultipleDialectsWordRegex(keywords),
+              ...generateMultipleWordRegex(keywords),
+              ...generateMultipleVariationsRegex(keywords),
+              ...generateMultipleDialectsWordRegex(keywords),
               ...generateMultipleTensesWordRegex(keywords),
             ]),
           },
