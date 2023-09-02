@@ -131,6 +131,7 @@ export const findWordsWithMatch = async ({
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err: any) {
+    console.log('An error occurred', err);
     console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     throw err;
