@@ -14,15 +14,14 @@ import { rateLimiter } from '../middleware/rateLimiter';
 
 const router = express.Router();
 
-// Google Analytics
-router.use(analytics);
+router.use(analytics, rateLimiter);
 
-router.get('/words', rateLimiter, validateApiKey, attachRedisClient, getWords);
-router.get('/words/:id', rateLimiter, validateApiKey, validId, attachRedisClient, getWord);
-router.get('/examples', rateLimiter, validateApiKey, attachRedisClient, getExamples);
-router.get('/examples/:id', rateLimiter, validateApiKey, validId, attachRedisClient, getExample);
+router.get('/words', validateApiKey, attachRedisClient, getWords);
+router.get('/words/:id', validateApiKey, validId, attachRedisClient, getWord);
+router.get('/examples', validateApiKey, attachRedisClient, getExamples);
+router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
-router.post('/developers', rateLimiter, validateDeveloperBody, postDeveloper);
+router.post('/developers', validateDeveloperBody, postDeveloper);
 
 router.get('/stats', rateLimiter, validateAdminApiKey, attachRedisClient, getStats);
 
