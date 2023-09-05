@@ -6,34 +6,34 @@ const minimizeWords = (words, version) => {
   const minimizedWords = words.map((word) => {
     let minimizedWord = assign(word);
     minimizedWord = omit(minimizedWord, ['hypernyms', 'hyponyms', 'updatedAt', 'createdAt']);
-    minimizedWord.definitions = version === Version.VERSION_2 ? (minimizedWord.definitions || []).map((definition) => {
-      let minimizedDefinition = assign(definition);
-      minimizedDefinition = omit(minimizedDefinition, ['label', 'igboDefinitions', '_id', 'id']);
-      if (!minimizedDefinition.nsibidi) {
-        minimizedDefinition = omit(minimizedDefinition, ['nsibidi']);
-      }
-      return minimizedDefinition;
-    }) : minimizedWord.definitions;
+    minimizedWord.definitions =
+      version === Version.VERSION_2
+        ? (minimizedWord.definitions || []).map((definition) => {
+            let minimizedDefinition = assign(definition);
+            minimizedDefinition = omit(minimizedDefinition, ['label', 'igboDefinitions', '_id', 'id']);
+            if (!minimizedDefinition.nsibidi) {
+              minimizedDefinition = omit(minimizedDefinition, ['nsibidi']);
+            }
+            return minimizedDefinition;
+          })
+        : minimizedWord.definitions;
     if (!minimizedWord.variations?.length) {
       minimizedWord = omit(minimizedWord, ['variations']);
     }
     if (minimizedWord.examples?.length) {
       minimizedWord.examples = minimizedWord.examples?.map((example) => {
         let minimizedExample = assign(example);
-        minimizedExample = omit(
-          example,
-          [
-            'associatedWords',
-            'pronunciation',
-            'updatedAt',
-            'createdAt',
-            'meaning',
-            'style',
-            'associatedDefinitionsSchemas',
-            'archived',
-            'id',
-          ],
-        );
+        minimizedExample = omit(example, [
+          'associatedWords',
+          'pronunciation',
+          'updatedAt',
+          'createdAt',
+          'meaning',
+          'style',
+          'associatedDefinitionsSchemas',
+          'archived',
+          'id',
+        ]);
         if (!minimizedExample.nsibidi) {
           minimizedExample = omit(minimizedExample, ['nsibidi']);
         }

@@ -1,5 +1,6 @@
 import { RedisClientType } from 'redis';
-import compact from 'lodash/compact';
+import fs from 'fs';
+import { compact, uniqWith } from 'lodash';
 import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
@@ -8,7 +9,6 @@ import { handleWordFlags } from '../../APIs/FlagsAPI';
 import Version from '../../shared/constants/Version';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
 import WordClassEnum from '../../shared/constants/WordClassEnum';
-import { LegacyWordDocument, WordDocument } from '../../types';
 
 type IgboSearch = {
   redisClient: RedisClientType | undefined;
@@ -71,20 +71,16 @@ const searchWordUsingIgbo = async ({
     });
     console.time(`Searching Igbo words for ${searchWord}`);
     const [igboResults, englishResults] = await Promise.all([
-      findWordsWithMatch({ match: igboQuery, version }),
-      findWordsWithMatch({ match: definitionsWithinIgboQuery, version }),
+      findWordsWithMatch({ match: igboQuery, version, queryLabel: 'igbo' }),
+      findWordsWithMatch({ match: definitionsWithinIgboQuery, version, queryLabel: 'definitions' }),
     ]);
     console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
     const words = searchWord
-      ? // @ts-expect-error non-compatible types
-        igboResults.words.concat(englishResults.words).reduce((finalWords, word) => {
-          // @ts-expect-error Parameter 'finalWord' implicitly has an 'any' type.
-          if (!finalWords.find((finalWord) => finalWord.id.equals(word.id.toString()))) {
-            finalWords.push(word);
-          }
-          return finalWords;
-        }, [])
+      ? uniqWith(
+          igboResults.words.concat(englishResults.words),
+          (firstWord, secondWord) => firstWord.id.toString() === secondWord.id.toString()
+        )
       : igboResults.words;
     const contentLength = words.length;
 
@@ -99,7 +95,7 @@ const searchWordUsingIgbo = async ({
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
 
-  console.time(`searchWordUsingIgbo for ${searchWord}`);
+  console.timeEnd(`searchWordUsingIgbo for ${searchWord}`);
   return handleWordFlags({
     data: { words: sortedWords, contentLength: responseData.contentLength },
     flags,

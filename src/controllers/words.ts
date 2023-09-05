@@ -1,5 +1,6 @@
 import map from 'lodash/map';
 import mongoose from 'mongoose';
+import isWord from 'is-word';
 import removePrefix from '../shared/utils/removePrefix';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
@@ -15,6 +16,8 @@ import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
 import { Express, LegacyWord } from '../types';
 import { WordResponseData } from './types';
+
+const isEnglish = isWord('american-english');
 
 /* Gets words from JSON dictionary */
 export const getWordData: Express.MiddleWare = (req, res, next) => {
@@ -57,7 +60,8 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       filters,
     };
     let responseData: WordResponseData = { words: [], contentLength: 0 };
-    if (hasQuotes) {
+    const isSearchWordEnglish = isEnglish.check(searchWord) && !!searchWord;
+    if (hasQuotes || isSearchWordEnglish) {
       responseData = await searchWordUsingEnglish({
         redisClient,
         version,

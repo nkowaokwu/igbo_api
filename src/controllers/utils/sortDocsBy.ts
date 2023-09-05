@@ -11,6 +11,7 @@ const MATCHING_DEFINITION_INDEX_FACTOR = 100;
 const WORD_LENGTH_FACTOR = 100;
 const WORD_LENGTH_DIFFERENCE_FACTOR = 15;
 const IS_COMMON = 1000;
+const IS_COMMON_THRESHOLD = -700;
 const SIMILARITY_FACTOR = 100;
 const EXACT_MATCH_FACTOR = 2000;
 const SIMILAR_WORD_THRESHOLD = 1.5;
@@ -79,8 +80,13 @@ export const sortDocsBy = (searchWord: string, docs: Word[], key: string, versio
       (nextDocDifferences >= SIMILAR_WORD_THRESHOLD ? nextDocValueLengthDifference : 0) * SIMILARITY_FACTOR +
       nextDocDifferences * SIMILARITY_FACTOR;
 
-    const prevDocIsCommonFactor = prevDoc?.attributes?.isCommon ? IS_COMMON : 0;
-    const nextDocIsCommonFactor = nextDoc?.attributes?.isCommon ? IS_COMMON : 0;
+    const prevDocSimilarityAndDefinitionMatch = prevDocSimilarityFactor + prevDefinitionMatchIndexFactor;
+    const nextDocSimilarityAndDefinitionMatch = nextDocSimilarityFactor + nextDefinitionMatchIndexFactor;
+
+    const prevDocIsCommonFactor =
+      prevDocSimilarityAndDefinitionMatch <= IS_COMMON_THRESHOLD && prevDoc?.attributes?.isCommon ? IS_COMMON : 0;
+    const nextDocIsCommonFactor =
+      nextDocSimilarityAndDefinitionMatch <= IS_COMMON_THRESHOLD && nextDoc?.attributes?.isCommon ? IS_COMMON : 0;
 
     const finalPrevDocDiff = prevDocSimilarityFactor + prevDocIsCommonFactor + prevDefinitionMatchIndexFactor;
     const finalNextDocDiff = nextDocSimilarityFactor + nextDocIsCommonFactor + nextDefinitionMatchIndexFactor;
