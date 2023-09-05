@@ -1,4 +1,4 @@
-import { compact, flatten } from 'lodash';
+import compact from 'lodash/compact';
 import { cjkRange } from '../../shared/constants/diacriticCodes';
 import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
@@ -13,22 +13,24 @@ const generateMultipleDefinitionsRegex = (keywords) => ({
   'definitions.definitions': { $in: compact(keywords.map(({ regex }) => regex.definitionsReg)) },
 });
 
-const generateMultipleVariationsRegex = (keywords) =>
-  keywords.map(({ regex }) => ({ variations: { $in: [regex.wordReg.source] } }));
+const generateMultipleVariationsRegex = (keywords) => {
+  const { regex } = keywords[0];
+  return { variations: { $in: [regex.wordReg.source] } };
+};
 
-const generateMultipleDialectsWordRegex = (keywords) =>
-  keywords.map(({ regex }) => ({ 'dialects.word': { $regex: regex.wordReg.source, $options: 'i' } }));
+const generateMultipleDialectsWordRegex = (keywords) => {
+  const { regex } = keywords[0];
+  return { 'dialects.word': { $regex: regex.wordReg.source, $options: 'i' } };
+};
 
-const generateMultipleTensesWordRegex = (keywords) =>
-  flatten(
-    Object.values(Tenses).reduce((finalRegexes, { value }) => {
-      const regexes = keywords.map(({ regex }) => ({
-        [`tenses.${value}`]: { $regex: regex.wordReg.source, $options: 'i' },
-      }));
-      finalRegexes.push(regexes);
-      return finalRegexes;
-    }, [])
-  );
+const generateMultipleTensesWordRegex = (keywords) => {
+  const tenses = Object.values(Tenses).map(({ value }) => {
+    const { regex } = keywords[0];
+    return { [`tenses.${value}`]: { $regex: regex.wordReg.source, $options: 'i' } };
+  });
+  return tenses;
+};
+
 const fullTextSearchQuery = ({ keywords, isUsingMainKey, filters = {} }) => {
   const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
   return isUsingMainKey && !keywords?.length
@@ -42,8 +44,8 @@ const fullTextSearchQuery = ({ keywords, isUsingMainKey, filters = {} }) => {
           {
             $or: compact([
               ...generateMultipleWordRegex(keywords),
-              ...generateMultipleVariationsRegex(keywords),
-              ...generateMultipleDialectsWordRegex(keywords),
+              generateMultipleVariationsRegex(keywords),
+              generateMultipleDialectsWordRegex(keywords),
               ...generateMultipleTensesWordRegex(keywords),
             ]),
           },
