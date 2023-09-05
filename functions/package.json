@@ -53,6 +53,7 @@
     "firebase-tools": "11.18.0",
     "framer-motion": "^5",
     "i18next": "^21.6.5",
+    "is-word": "^1.0.4",
     "joi": "^17.4.0",
     "lodash": "^4.17.20",
     "migrate-mongo": "^8.1.4",
