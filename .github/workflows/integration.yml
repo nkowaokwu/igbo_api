@@ -12,33 +12,31 @@ jobs:
   test:
     name: Build and Test
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     strategy:
       matrix:
         node-version: [18.x]
         mongodb-version: [4.0, 4.2]
-      
+
     steps:
-    - name: Git checkout
-      uses: actions/checkout@v2
-    - name: Use Node.js @${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.3.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
-    - name: Build Server
-      run: |
-        yarn install
-        npm install -g firebase-tools
-        firebase use default --token $FIREBASE_TOKEN
-        yarn build
-    - name: Test Server Build Process
-      run: yarn test:build
-    - name: Test API
-      run: yarn jest
-    - name: Test API Homepage
-      run: yarn cypress:ci
+      - name: Git checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js @${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.3.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Build Server
+        run: |
+          yarn install
+          yarn build
+      - name: Test Server Build Process
+        run: yarn test:build
+      - name: Test API
+        run: yarn jest
+      - name: Test API Homepage
+        run: yarn cypress:ci

@@ -22,18 +22,22 @@ const About = () => {
       <Navbar to="/" />
       <div
         className="flex flex-col px-8 mb-6 lg:justify-between xl:flex-row pt-10
-      lg:pt-32 max-w-2xl lg:max-w-6xl h-full text-gray-800 text-lg lg:text-xl w-full"
+      lg:pt-32 max-w-2xl lg:max-w-6xl text-gray-800 text-lg lg:text-xl w-full"
       >
         <div className="max-w-3xl space-y-4 mb-10 text-gray-600">
           <h1 className="text-3xl text-gray-700">{t('About')}</h1>
           <p className="mb-6">
-            {t('The Igbo API is a multidialectal, audio-supported, open-to-contribute, Igbo-English dictionary API. '
-            + 'This project focuses on enabling developers, organizations, and teams to create technology '
-            + 'that relies on the Igbo language.')}
+            {t(
+              'The Igbo API is a multidialectal, audio-supported, open-to-contribute, Igbo-English dictionary API. ' +
+                'This project focuses on enabling developers, organizations, and teams to create technology ' +
+                'that relies on the Igbo language.'
+            )}
           </p>
           <p>
-            {t('Our main goal is to make an easy-to-access, robust, lexical Igbo language resource '
-            + 'to help solve a variety of complex problems within the worlds of education to Machine Learning.')}
+            {t(
+              'Our main goal is to make an easy-to-access, robust, lexical Igbo language resource ' +
+                'to help solve a variety of complex problems within the worlds of education to Machine Learning.'
+            )}
           </p>
           {language === 'en' ? (
             <p>
@@ -44,10 +48,13 @@ const About = () => {
               , our official online Igbo-English dictionary app.
             </p>
           ) : (
-            <p dangerouslySetInnerHTML={{
-              __html: t('The Igbo API hosts and serves all word and example sentence data '
-            + 'that is shown on Nkọwa okwu, our official online Igbo-English dictionary app.'),
-            }}
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  'The Igbo API hosts and serves all word and example sentence data ' +
+                    'that is shown on Nkọwa okwu, our official online Igbo-English dictionary app.'
+                ),
+              }}
             />
           )}
           {language === 'en' ? (
@@ -59,10 +66,13 @@ const About = () => {
               </a>
             </p>
           ) : (
-            <p dangerouslySetInnerHTML={{
-              __html: t('The initial words and examples that populated this API came '
-            + "from Kay Williamson's Igbo Dictionary entitled Dictionary of Ònìchà Igbo."),
-            }}
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  'The initial words and examples that populated this API came ' +
+                    "from Kay Williamson's Igbo Dictionary entitled Dictionary of Ònìchà Igbo."
+                ),
+              }}
             />
           )}
           {language === 'en' ? (
@@ -78,16 +88,17 @@ const About = () => {
               .
             </p>
           ) : (
-            <p dangerouslySetInnerHTML={{
-              __html: t('This is an open-source project created by Ijemma Onwuzulike.'),
-            }}
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t('This is an open-source project created by Ijemma Onwuzulike.'),
+              }}
             />
           )}
         </div>
       </div>
       <div
         className="flex flex-col px-8 max-w-2xl lg:max-w-6xl
-        mb-10 lg:mb-24 h-full text-gray-800 text-lg lg:text-xl w-full"
+        mb-10 lg:mb-24 text-gray-800 text-lg lg:text-xl w-full"
       >
         <h1 className="text-3xl text-gray-700">{t('Contact')}</h1>
         <p className="mt-6 text-gray-600">

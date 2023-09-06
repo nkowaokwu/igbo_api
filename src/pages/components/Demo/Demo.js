@@ -51,9 +51,10 @@ const Demo = ({ searchWord, words }) => {
 
   const constructRequestUrl = () => {
     const appendQueries = constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
-    const requestUrl = `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || ''}`
-    + `${keyword && appendQueries ? '&' : ''}`
-    + `${appendQueries.replace('&', '')}`;
+    const requestUrl =
+      `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || ''}` +
+      `${keyword && appendQueries ? '&' : ''}` +
+      `${appendQueries.replace('&', '')}`;
     return requestUrl;
   };
 
@@ -83,7 +84,7 @@ const Demo = ({ searchWord, words }) => {
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
             <h2>{t('Enter a word below')}</h2>
             <p className="self-center md:self-start">
-              {t('Enter a word in either English or Igbo to see it\'s information')}
+              {t("Enter a word in either English or Igbo to see it's information")}
             </p>
             <Input
               size="large"
@@ -134,7 +135,7 @@ const Demo = ({ searchWord, words }) => {
             </Button>
             <p className="text-l text-center text-gray-700 self-center mb-24">
               {t('Want to see how this data is getting used? Take a look at ')}
-              <a className="link" href={DICTIONARY_APP_URL}>
+              <a className="link" href={DICTIONARY_APP_URL} data-test="nkowaokwu-link">
                 Nkọwa okwu
               </a>
             </p>

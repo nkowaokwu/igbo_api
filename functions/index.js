@@ -1,6 +1,4 @@
 const functions = require('firebase-functions');
-const { api } = require('./build/app');
+const { api } = require('./src/app');
 
-exports.api = functions
-  .https
-  .onRequest(api);
+exports.api = functions.https.onRequest(api);

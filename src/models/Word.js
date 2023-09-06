@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import every from 'lodash/every';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
-import Dialects from '../shared/constants/Dialects';
+import Dialects from '../shared/constants/Dialect';
 import Tenses from '../shared/constants/Tenses';
 import WordClass from '../shared/constants/WordClass';
 import WordAttributes from '../shared/constants/WordAttributes';
@@ -9,73 +9,97 @@ import WordTags from '../shared/constants/WordTags';
 
 const { Schema, Types } = mongoose;
 
-const definitionSchema = new Schema({
-  wordClass: {
-    type: String,
-    default: WordClass.NNC.value,
-    enum: Object.values(WordClass).map(({ value }) => value),
-  },
-  definitions: { type: [{ type: String }], default: [] },
-  nsibidi: { type: String, default: '' },
-  igboDefinitions: {
-    type: [{
-      igbo: String,
-      nsibidi: String,
-    }],
-    default: [],
-  },
-}, { _id: true });
-
-const dialectSchema = new Schema({
-  word: { type: String, required: true, index: true },
-  variations: { type: [{ type: String }], default: [] },
-  dialects: { type: [{ type: String }], validate: (v) => every(v, (dialect) => Dialects[dialect].value), default: [] },
-  pronunciation: { type: String, default: '' },
-}, { toObject: toObjectPlugin });
-
-export const wordSchema = new Schema({
-  word: { type: String, required: true },
-  wordPronunciation: { type: String, default: '' },
-  conceptualWord: { type: String, default: '' },
-  definitions: [{
-    type: definitionSchema,
-    validate: (definitions) => (
-      Array.isArray(definitions)
-      && definitions.length > 0
-    ),
-  }],
-  dialects: { type: [dialectSchema], default: [] },
-  tags: {
-    type: [String],
-    default: [],
-    validate: (v) => (
-      v.every((tag) => Object.values(WordTags).map(({ value }) => value).includes(tag))
-    ),
-  },
-  tenses: {
-    type: Object,
-    validate: (v) => {
-      const tenseValues = Object.values(Tenses);
-      Object.keys(v).every((key) => (
-        tenseValues.find(({ value: tenseValue }) => key === tenseValue)
-      ));
+const definitionSchema = new Schema(
+  {
+    wordClass: {
+      type: String,
+      default: WordClass.NNC.value,
+      enum: Object.values(WordClass).map(({ value }) => value),
     },
-    required: false,
-    default: {},
+    label: { type: String, default: '', trim: true },
+    definitions: { type: [{ type: String }], default: [] },
+    nsibidi: { type: String, default: '', index: true },
+    nsibidiCharacters: { type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }], default: [] },
+    igboDefinitions: {
+      type: [
+        {
+          igbo: String,
+          nsibidi: String,
+          nsibidiCharacters: { type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }], default: [] },
+        },
+      ],
+      default: [],
+    },
   },
-  attributes: Object.entries(WordAttributes)
-    .reduce((finalAttributes, [, { value }]) => ({
-      ...finalAttributes,
-      [value]: { type: Boolean, default: false },
-    }), {}),
-  pronunciation: { type: String, default: '' },
-  variations: { type: [{ type: String }], default: [] },
-  frequency: { type: Number },
-  relatedTerms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-  hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-  hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-  stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
-}, { toObject: toObjectPlugin, timestamps: true, autoIndex: true });
+  { _id: true, toObject: toObjectPlugin }
+);
+
+const dialectSchema = new Schema(
+  {
+    word: {
+      type: String,
+      required: true,
+      index: true,
+      trim: true,
+    },
+    variations: { type: [{ type: String }], default: [] },
+    dialects: {
+      type: [{ type: String }],
+      validate: (v) => every(v, (dialect) => Dialects[dialect].value),
+      default: [],
+    },
+    pronunciation: { type: String, default: '' },
+  },
+  { toObject: toObjectPlugin }
+);
+
+export const wordSchema = new Schema(
+  {
+    word: { type: String, required: true, trim: true },
+    wordPronunciation: { type: String, default: '', trim: true },
+    conceptualWord: { type: String, default: '', trim: true },
+    definitions: [
+      {
+        type: definitionSchema,
+        validate: (definitions) => Array.isArray(definitions) && definitions.length > 0,
+      },
+    ],
+    dialects: { type: [dialectSchema], default: [] },
+    tags: {
+      type: [String],
+      default: [],
+      validate: (v) =>
+        v.every((tag) =>
+          Object.values(WordTags)
+            .map(({ value }) => value)
+            .includes(tag)
+        ),
+    },
+    tenses: Object.values(Tenses).reduce(
+      (tenses, { value }) => ({
+        ...tenses,
+        [value]: { type: String, default: '', trim: true },
+      }),
+      {}
+    ),
+    attributes: Object.values(WordAttributes).reduce(
+      (finalAttributes, { value }) => ({
+        ...finalAttributes,
+        [value]: { type: Boolean, default: false },
+      }),
+      {}
+    ),
+    pronunciation: { type: String, default: '' },
+    variations: { type: [{ type: String }], default: [] },
+    examples: { type: [{ type: String }], default: [] },
+    frequency: { type: Number },
+    relatedTerms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+    hypernyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+    hyponyms: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+    stems: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
+  },
+  { toObject: toObjectPlugin, timestamps: true, autoIndex: true }
+);
 
 wordSchema.index({
   word: 1,

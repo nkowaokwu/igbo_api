@@ -1,10 +1,7 @@
 import fs from 'fs';
 import shell from 'shelljs';
 import flatten from 'lodash/flatten';
-import {
-  DICTIONARIES_DIR,
-  BUILD_DICTIONARIES_DIR,
-} from '../shared/constants/parseFileLocations';
+import { DICTIONARIES_DIR, BUILD_DICTIONARIES_DIR } from '../shared/constants/parseFileLocations';
 import commonDictionary from './ig-en/ig-en_1000_common.json';
 import normalizedDictionary from './ig-en/ig-en_normalized_expanded.json';
 import dictionary from './ig-en/ig-en_expanded.json';
@@ -25,13 +22,15 @@ const updateJSONDictionary = () => {
     [`${DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(dictionary)],
   ];
 
-  const buildDictionaryFilePaths = process.env.NODE_ENV === 'build'
-    ? [
-      [`${BUILD_DICTIONARIES_DIR}/ig-en_1000_common.json`, JSON.stringify(commonDictionary, null, 4)],
-      [`${BUILD_DICTIONARIES_DIR}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
-      [`${BUILD_DICTIONARIES_DIR}/ig-en_normalized_expanded.json`, JSON.stringify(normalizedDictionary, null, 4)],
-      [`${BUILD_DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(dictionary)],
-    ] : [];
+  const buildDictionaryFilePaths =
+    process.env.NODE_ENV === 'build'
+      ? [
+          [`${BUILD_DICTIONARIES_DIR}/ig-en_1000_common.json`, JSON.stringify(commonDictionary, null, 4)],
+          [`${BUILD_DICTIONARIES_DIR}/ig-en_expanded.json`, JSON.stringify(dictionary, null, 4)],
+          [`${BUILD_DICTIONARIES_DIR}/ig-en_normalized_expanded.json`, JSON.stringify(normalizedDictionary, null, 4)],
+          [`${BUILD_DICTIONARIES_DIR}/ig-en.json`, JSON.stringify(dictionary)],
+        ]
+      : [];
 
   flatten([dictionaryFilePaths, buildDictionaryFilePaths]).forEach((config) => {
     fs.writeFileSync(...config, () => {

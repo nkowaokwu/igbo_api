@@ -38,14 +38,15 @@ jobs:
           rm -rf ./node_modules; yarn install
           npm install -g firebase-tools
       - name: Install Cloud Dependencies
-        run: cd functions; rm -rf ./node_modules/; yarn; cd ..; pwd
+        run: |
+          cd functions; rm -rf ./node_modules/; yarn; cd ..; pwd
+          firebase use default --token $FIREBASE_TOKEN
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
           yarn migrate-up
       - name: Build Production Project
         run: |
-          firebase use default --token $FIREBASE_TOKEN
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
           yarn build
       - name: Deploy to prod

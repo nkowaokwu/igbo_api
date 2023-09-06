@@ -1,38 +1,55 @@
-# Contributing
+# Contributing to the Igbo API
+
+If you have questions about the Igbo API (not a bug report), please ask a question in our [Slack community](https://nkowaokwu.com/volunteer) as a volunteer.
 
 Contributions are always welcome. Before contributing please read the [Code of Conduct](./CODE_OF_CONDUCT.md) section.
 
-## Feature Requests
+## Reporting bugs
+Before opening a new issue, look for existing [issues](https://github.com/nkowaokwu/igbo_api/issues) to avoid duplication. If the issue does not exist yet, [create one](https://github.com/nkowaokwu/igbo_api/issues/new).
 
-Feature requests should be captured through the repo's [issues](https://github.com/nkowaokwu/igbo_api/issues), with a description of the expected behavior, along with a use case. Please use a label that describes the nature of the issue. If you would like to work on said issue, leave a comment on it so that you can be assigned to it by the repo owner.
+* Please post any relevant code samples or screenshots
+* If the bug involves an error, please post the **stack trace**
+* Please fully detail the nature of the bug by filling out the issue template
 
+## Requesting new features
+* Before opening a new issue, look for existing [issues](https://github.com/nkowaokwu/igbo_api/issues) to avoid duplication. If the issue does not exist yet, [create one](https://github.com/nkowaokwu/igbo_api/issues/new).
+* Please fully detail the nature of the feature request by filling out the request template
 
-Before opening an issue, please read through the [issues](https://github.com/nkowaokwu/igbo_api/issues); your issue may have already ben discussed or fixed in `master` or `gatsby-dev`.
+## Areas of contribution
+There are plenty of opportunities to support and help maintain this repo. This includes, but is not limited to:
 
-## Areas of Contribution
+1. Request new features for the Igbo API
+2. Fixing typos in code or sample/mock data
+3. Update the README or write documentation for implementations
+4. Convert files from JS to TS
+5. So much more...
 
-There are a lot of different things that can be done to support the development of this repo:
+If you have more ideas of how to improve the Igbo API, reach out to Ijemma on [Slack](https://nkowaokwu.com/volunteer) as a volunteer.
 
-1. Implement requested features
-2. Correct typos or misplaced data in the dictionary JSON files
-3. Write documentation on the project structure
-4. Collaborate on creating a roadmap for the project
+## Accepting work
+Once you find an issue you would like to work on, you can request to have that issue assigned to you to begin work. 
 
-You can also reach out to [@ijemmao](https://github.com/ijemmao) if you any other ideas.
+**Note:** Multiple people can be assigned to the same ticket. Issue assignment is only meant to help **track** who's working on what. This means that multiple contributors can be working on the same issue.
+
+## Fork the repo
+
+Please ensure that you fork this repo before making any changes. This will ensure that you are not only able to make changes in your own work environment but also able to submit PRs.
+
+**This repo is set up to only accept PRs from forked repos**
 
 ## Pull Request Process
 
 ### Before Opening a Pull Request
 
-Double check to make sure that you have done the following things:
+Double-check to make sure that you have done the following things:
 
-1. If implementing a feature request, create new unit tests to increase confidence of your changes.
+1. If implementing a feature request, create new unit tests to increase confidence in your changes.
     * **You're code will be unable to get merged without new unit tests**
 2. Check to see if your changes are non-breaking by running `yarn test`
 3. And install or build dependencies are removed
     * You can run `yarn clean` to remove unwanted files.
 4. Update the README.md with details of changes to the interface, this includes new environment 
-   variables, exposed ports, useful file locations and container parameters.
+   variables, exposed ports, useful file locations, and container parameters.
 
 ### After Opening a Pull Request
 1. Open a pull request and assign at least one reviewer, [@ijemmao](https://github.com/ijemmao).

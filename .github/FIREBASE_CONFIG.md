@@ -8,24 +8,36 @@ Individual contributors need to integrate their own Firebase project config to b
 
 Please follow this [Firebase Getting Started Guide](https://firebase.google.com/docs/web/setup) to create your own Firebase project.
 
-## Step 2: Replace the `default` Firebase Project Name
+## Step 1a: Log into Firebase via Terminal (CLI)
 
-Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project name `igbo-api-bb22d` with your new Firebase project name
+In your terminal, log into your Firebase account by running the command and following the prompts:
+
+```bash
+npx firebase login
+```
+
+## Step 1b: Select the Blaze, pay as you go Firebase plan
+
+Make sure to update your Billing options for your Firebase project. This will allow your project to use emulators. Don't worry, it's free 😉
+
+## Step 2: Replace the `default` Firebase Project ID
+
+Within [.firebaserc](https://github.com/nkowaokwu/igbo_api/blob/master/.firebaserc), replace the project ID `igbo-api-bb22d` with your new Firebase project ID
 
 ## Step 3: Replace the Firebase Config file
 
-Within [firebase.js](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.js#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
+Within [firebase.ts](https://github.com/nkowaokwu/igbo_api/blob/master/src/services/firebase.ts#L5-L13), replace the `FIREBASE_CONFIG` object with your firebase project config object
 
-## Step 4: Merging forked changes into main repo
+## Step 4: Select your default project
 
-Congrats 🎉 You have a change you want to merge into the main repo. You will need to complete a few extra steps to ensure your branch builds pass.
+Run the following command to select your default Firebase project:
 
-1. In your terminal, run `firebase login`. After following the instructions on screen, you will see a token pasted in your terminal. Save this for later
-2. Navigate to the "Settings" tab at the top of your forked repo on GitHub
-3. In the sidebar, click on the "Secrets and variables" dropdown
-4. Select "Actions"
-5. Click the green "New repository secret" button
-6. Create a new variable with the name `FIREBASE_TOKEN`
-7. Paste in the token you received from running `firebase login`
-8. Click the green "Add secret" button
-9. Submit your PR to get reviewed and merged 🚀
+```bash
+npx firebase use default
+```
+
+Selecting a Firebase project is important for Firebase to know which project configure it should use when starting your dev environment.
+
+## Step 5: Merging forked changes into main repo
+
+Congrats 🎉 You're ready to start making your first changes to your repo. Please refer to our [Contributing Guide](https://github.com/nkowaokwu/igbo_api/blob/master/.github/CONTRIBUTING.md) to learn how to contribute to the project.

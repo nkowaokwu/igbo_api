@@ -34,6 +34,8 @@
   "Example Igbo sentences": "Ọmụmaatụ ahịrịokwu Igbo {{number}}",
   "Word audio pronunciations": "Mkpụrụokwu {{number}} nwere mkpọpụta ha n’ọdio",
   "Words with Igbo definitions": "Mkpụrụokwu {{number}} na nkọwa ha n'Igbo",
+  "Igbo Proverbs": "{{number}} Ilu Igbo",
+  "Bible Verses": "{{number}} Amookwu Akwụkwọ Nsọ",
   "Standard Igbo words": "Mkpụrụokwu Igbo izugbe {{number}}",
   "GitHub Contributors": "Ndị odee {{number}} na GitHub",
   "Members in Slack": "Ndị otu {{number}}+ na Slack",
