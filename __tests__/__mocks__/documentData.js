@@ -10,14 +10,15 @@ const developerData = {
   password: 'password',
 };
 
+const developerData2 = {
+  name: 'Developer2',
+  email: 'developer2@example.com',
+  password: 'password',
+};
+
 const malformedDeveloperData = {
   email: 'developer@example.com',
   password: 'password',
 };
 
-export {
-  wordId,
-  exampleId,
-  developerData,
-  malformedDeveloperData,
-};
+export { wordId, exampleId, developerData, developerData2, malformedDeveloperData };
