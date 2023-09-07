@@ -1,5 +1,7 @@
 import { isDevelopment } from '../config';
-import { handleRequest, FALLBACK_API_KEY, findDeveloper } from '../controllers/developers/utils';
+import { handleRequest, findDeveloper } from '../controllers/utils/findDeveloper';
+
+const FALLBACK_API_KEY = 'fallback_api_key';
 
 export default async (req, res, next) => {
   try {

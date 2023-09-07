@@ -1,7 +1,14 @@
 import { compareSync } from 'bcrypt';
 import { developerSchema } from '../../models/Developer';
 import { createDbConnection } from '../../services/database';
-import { DeveloperDocument } from '../../types';
+import { DeveloperDocument, Express } from '../../types';
+
+export const handleRequest: Express.MiddleWare = (req) => {
+  const { apiLimit } = req.query;
+  const apiToken = req.headers['X-API-Key'] || req.headers['x-api-key'];
+
+  return { apiLimit, apiToken };
+};
 
 /* Finds a developer with provided information */
 export const findDeveloper = async (apiKey: string) => {
