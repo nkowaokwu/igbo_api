@@ -1,8 +1,6 @@
-import { compareSync } from 'bcrypt';
-import { developerSchema } from '../models/Developer';
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
-import { createDbConnection } from '../services/database';
 import { DeveloperDocument, Express } from '../types';
+import { findDeveloper } from '../controllers/utils/findDeveloper';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -27,31 +25,6 @@ const handleDeveloperUsage = async (developer: DeveloperDocument) => {
   }
 
   return updatedDeveloper.save();
-};
-
-/* Finds a developer with provided information */
-const findDeveloper = async (apiKey: string) => {
-  console.time('Finding developer account');
-  const connection = createDbConnection();
-  const Developer = connection.model<DeveloperDocument>('Developer', developerSchema);
-  let developer = await Developer.findOne({ apiKey });
-  if (developer) {
-    console.timeEnd('Finding developer account');
-    return developer;
-  }
-  // Legacy implementation: hashed API tokens can't be indexed
-  // This logic attempts to find the developer document and update it
-  // with the API token
-  const developers = await Developer.find({});
-  developer = developers.find((dev) => compareSync(apiKey, dev.apiKey)) || null;
-  if (developer) {
-    developer.apiKey = apiKey;
-    const updatedDeveloper = await developer.save();
-    console.timeEnd('Finding developer account');
-    return updatedDeveloper;
-  }
-  console.timeEnd('Finding developer account');
-  return developer;
 };
 
 const validateApiKey: Express.MiddleWare = async (req, res, next) => {
