@@ -5,6 +5,7 @@ import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { Express } from '../types';
 import { sendNewDeveloper } from './email';
+import { findDeveloper } from './utils/findDeveloper';
 
 const TEST_EMAIL = 'developer@example.com';
 
@@ -52,6 +53,32 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
     });
   } catch (err: any) {
     await handleCloseConnection(connection);
+    if (!isTest) {
+      console.trace(err);
+    }
+    return next(err);
+  }
+};
+
+/* Fetches a Developer in the database */
+export const getDeveloper: Express.MiddleWare = async (req, res, next) => {
+  try {
+    const { headers: data } = req;
+    const apiKey = data['x-api-key' || 'X-API-Key'];
+    if (!apiKey) {
+      throw new Error('No API key provided.');
+    }
+
+    const developer = await findDeveloper(apiKey as string);
+
+    if (!developer) {
+      throw new Error('No developer exists');
+    }
+
+    return res.send({
+      developer,
+    });
+  } catch (err) {
     if (!isTest) {
       console.trace(err);
     }

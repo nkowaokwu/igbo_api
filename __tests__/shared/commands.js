@@ -74,6 +74,9 @@ export const searchMockedTerm = (term) => {
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
 
-/* fetch developer details */
+/* Fetch developer details */
 export const getDeveloper = (options = {}) =>
-  server.get(`${API_ROUTE}/developers/developer`).set('X-API-Key', options.name || FALLBACK_API_KEY);
+  server.get(`${API_ROUTE}/developers/account`).set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+
+/** Login a developer */
+export const loginDeveloper = (data) => server.post(`${API_ROUTE}/login`).send(data);
