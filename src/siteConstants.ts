@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 /* This file includes the constants necessary to power the API homepage */
 export const PORT = 8080;
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
@@ -17,3 +21,14 @@ export const YOUTUBE = 'https://www.youtube.com/c/IjemmaOnwuzulike';
 // Projects
 export const NKOWAOKWU = 'https://nkowaokwu.com';
 export const NKOWAOKWU_CHROME = 'https://nkowaokwu.com/chrome';
+
+// Auth
+export const JWT_SECRET = process.env.JWT_SECRET || '@developer@NkowaOkwu@secret@key@';
+const COOKIE_EXPIRATION_DAYS = 90; // cookie expiration in days
+// Calculate the expiration date based on the current time and the number of days until expiration
+const expirationDate = new Date(Date.now() + COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000);
+export const cookieOptions = {
+  expires: expirationDate,
+  secure: false,
+  httpOnly: true,
+};

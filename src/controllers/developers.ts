@@ -1,19 +1,12 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-<<<<<<<< HEAD:src/controllers/developers.ts
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { MiddleWare } from '../types';
 import { sendNewDeveloper } from './email';
-========
-import { isProduction, CLIENT_TEST, isTest } from '../../config';
-import { developerSchema } from '../../models/Developer';
-import { createDbConnection, handleCloseConnection } from '../../services/database';
-import { sendNewDeveloper } from '../email';
->>>>>>>> 53662e8 (chore: move developers controller method to developers folder #627):src/controllers/developers/developers.js
-
-const TEST_EMAIL = 'developer@example.com';
+import { findDeveloper } from './utils/findDeveloper';
+import { TEST_EMAIL } from '../shared/constants/Developers';
 
 /* Creates a new apiKey to be associated with a developer */
 const generateApiKey = uuid;
@@ -66,11 +59,22 @@ export const postDeveloper: MiddleWare = async (req, res, next) => {
   }
 };
 
-export const getDeveloper = async (req, res, next) => {
+/* Fetches a Developer in the database */
+export const getDeveloper: MiddleWare = async (req, res, next) => {
   try {
-    const { developer } = req;
+    const { headers: data } = req;
+    const apiKey = data['x-api-key' || 'X-API-Key'];
+    if (!apiKey) {
+      throw new Error('No API key provided.');
+    }
 
-    return res.status(200).send({
+    const developer = await findDeveloper(apiKey as string);
+
+    if (!developer) {
+      throw new Error('No developer exists');
+    }
+
+    return res.send({
       developer,
     });
   } catch (err) {
