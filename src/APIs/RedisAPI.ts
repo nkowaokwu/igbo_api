@@ -6,6 +6,7 @@ import Version from '../shared/constants/Version';
 import { Word } from '../types';
 import { ExampleResponseData } from '../controllers/types';
 import { redisClient as defaultRedisClient } from '../middleware/attachRedisClient';
+import { PartialWordType } from '../types/word';
 
 type RedisClient = {
   get: (value: string) => void;
@@ -39,7 +40,7 @@ export const setCachedWords = async ({
   version: Version;
 }) => {
   const updatedData = assign(data);
-  updatedData.words = minimizeWords(data.words, version);
+  updatedData.words = minimizeWords(data.words as PartialWordType[], version);
   if (!redisClient.isFake) {
     await redisClient.set(key, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }

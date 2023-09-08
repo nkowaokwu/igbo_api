@@ -15,3 +15,8 @@ export interface ExampleResponseData extends ResponseData {
 export interface WordResponseData extends ResponseData {
   words: Partial<Word | WordDocument | LegacyWordDocument>[];
 }
+
+export type Filters = {
+  tags?: { $in: string[] };
+  'definitions.wordClass'?: { $in: string[] };
+};

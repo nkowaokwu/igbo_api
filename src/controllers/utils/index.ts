@@ -13,8 +13,8 @@ import WordClass from '../../shared/constants/WordClass';
 import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
-import { WordData } from './types';
-import { WithPronunciation } from '../types';
+import { WordData, Keyword } from './types';
+import { Filters, WithPronunciation } from '../types';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
@@ -246,7 +246,7 @@ export const handleQueries = async ({
     examples,
     resolve,
   };
-  const filters = {
+  const filters: Filters = {
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };
@@ -256,7 +256,7 @@ export const handleQueries = async ({
     id,
     version,
     searchWord,
-    keywords,
+    keywords: keywords as Keyword[],
     regex,
     page,
     skip,

@@ -1,4 +1,5 @@
 import WordClassEnum from '../../shared/constants/WordClassEnum';
+import { SearchRegExp } from '../../shared/utils/createRegExp';
 
 export type Meta = {
   depth: number;
@@ -28,3 +29,11 @@ export type Solution = {
 };
 
 export type TopSolution = { solution: Solution; metaData: Meta };
+
+export type Regex = SearchRegExp;
+
+export type Keyword = {
+  text: string;
+  wordClass: WordClassEnum[];
+  regex: Regex | Pick<SearchRegExp, 'wordReg' | 'definitionsReg'>;
+};
