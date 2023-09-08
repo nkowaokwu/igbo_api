@@ -11,6 +11,7 @@ const developerData = {
   password: 'password',
 };
 
+<<<<<<< HEAD
 // Generate a unique name using a UUID without hyphens
 const generateUniqueName = () => uuid().replace(/-/g, '');
 
@@ -46,6 +47,12 @@ const anotherDeveloperData = {
   name: generateUniqueName(),
   email: generateUniqueEmail(),
   password: generateUniquePassword(),
+=======
+const newDeveloperData = {
+  name: 'New Developer',
+  email: 'newdeveloper@example.com',
+  password: 'password',
+>>>>>>> 03f15e6 (Fix create login endpoint (#748))
 };
 
 const malformedDeveloperData = {
@@ -53,6 +60,7 @@ const malformedDeveloperData = {
   password: 'password',
 };
 
+<<<<<<< HEAD
 export {
   wordId,
   exampleId,
@@ -63,3 +71,6 @@ export {
   anotherDeveloperData,
   malformedDeveloperData,
 };
+=======
+export { wordId, exampleId, developerData, newDeveloperData, malformedDeveloperData };
+>>>>>>> 03f15e6 (Fix create login endpoint (#748))
