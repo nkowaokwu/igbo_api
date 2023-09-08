@@ -103,9 +103,7 @@ describe('Developers', () => {
     it('should return developer document with correct credentials', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
-      console.info(developerRes.body);
       const developerDetails = await getDeveloper({ apiKey: developerRes.body.apiKey });
-      console.log(developerDetails.body, 'test');
       expect(developerDetails.status).toEqual(200);
       expect(developerDetails.body.developer).toMatchObject({
         ...developerRes.body.developer,
