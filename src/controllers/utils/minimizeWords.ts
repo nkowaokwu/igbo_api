@@ -68,7 +68,7 @@ const minimizeWords = (words: PartialWordType[], version: Version) => {
 
     if (version === Version.VERSION_2 && minimizedWord.dialects?.length) {
       if (Array.isArray(minimizedWord.dialects))
-        minimizedWord.dialects = minimizedWord.dialects?.map((dialect) => {
+        minimizedWord.dialects = minimizedWord.dialects.map((dialect) => {
           let minimizedDialect = omit(dialect, ['variations', 'id', '_id']);
           if (!minimizedDialect.pronunciation) {
             minimizedDialect = omit(minimizedDialect, ['pronunciation']);
