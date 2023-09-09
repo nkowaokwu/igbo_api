@@ -23,7 +23,7 @@ export interface WordDialect {
   word: string;
 }
 
-interface LegacyWordDialect {
+export interface LegacyWordDialect {
   [k: string]: WordDialect;
 }
 
