@@ -33,5 +33,8 @@ export type TopSolution = { solution: Solution; metaData: Meta };
 export type Keyword = {
   text: string;
   wordClass: WordClassEnum[];
-  regex: SearchRegExp | Pick<SearchRegExp, 'wordReg' | 'definitionsReg'>;
+  regex: {
+    wordReg: RegExp;
+    definitionsReg?: RegExp;
+  };
 };

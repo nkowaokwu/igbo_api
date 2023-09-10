@@ -35,12 +35,15 @@ export const setCachedWords = async ({
   version,
 }: {
   key: string;
-  data: any;
+  data: {
+    words: PartialWordType[] | any;
+    contentLength: number;
+  };
   redisClient: RedisClient | undefined;
   version: Version;
 }) => {
   const updatedData = assign(data);
-  updatedData.words = minimizeWords(data.words as PartialWordType[], version);
+  updatedData.words = minimizeWords(data.words, version);
   if (!redisClient.isFake) {
     await redisClient.set(key, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }

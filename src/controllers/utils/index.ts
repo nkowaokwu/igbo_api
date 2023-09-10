@@ -162,17 +162,21 @@ export const handleQueries = async ({
   console.log(`Search word: ${searchWord}`);
   let keywords =
     version === Version.VERSION_2 && searchWord
-      ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
-          text,
-          wordClass,
-          regex: pick(
+      ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
+          const pickedRegex = pick(
             constructRegexQuery({
               isUsingMainKey,
               keywords: [{ text }],
             }),
             ['wordReg']
-          ),
-        }))
+          );
+          const keyWord: Partial<Keyword> = {
+            text,
+            wordClass,
+            regex: pickedRegex,
+          };
+          return keyWord;
+        })
       : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   if (!keywords.length && searchWord) {
@@ -256,7 +260,7 @@ export const handleQueries = async ({
     id,
     version,
     searchWord,
-    keywords: keywords as Keyword[],
+    keywords,
     regex,
     page,
     skip,

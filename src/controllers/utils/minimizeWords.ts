@@ -34,7 +34,7 @@ const minimizeWords = (words: PartialWordType[], version: Version) => {
             }
             return minimizedDefinition;
           }) as Partial<Definition>[] | string[])
-        : (minimizedWord.definitions as undefined);
+        : minimizedWord.definitions;
     if (!minimizedWord.variations?.length) {
       minimizedWord = omit(minimizedWord, ['variations']);
     }
