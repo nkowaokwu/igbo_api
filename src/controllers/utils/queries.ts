@@ -11,7 +11,7 @@ type Keywords = Keyword[];
 const generateMultipleNsibidi = (keywords: Keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
 
 const generateMultipleWordRegex = (keywords: Keywords) =>
-  keywords.map(({ regex }) => ({ word: { $regex: regex?.wordReg.source, $options: 'i' } }));
+  keywords.map(({ regex }) => ({ word: { $regex: regex.wordReg.source, $options: 'i' } }));
 
 const generateMultipleDefinitionsRegex = (keywords: Keywords) => ({
   'definitions.definitions': { $in: compact(keywords.map(({ regex }) => regex?.definitionsReg)) },
@@ -19,18 +19,18 @@ const generateMultipleDefinitionsRegex = (keywords: Keywords) => ({
 
 const generateMultipleVariationsRegex = (keywords: Keywords) => {
   const { regex } = keywords[0];
-  return { variations: { $in: [regex?.wordReg.source] } };
+  return { variations: { $in: [regex.wordReg.source] } };
 };
 
 const generateMultipleDialectsWordRegex = (keywords: Keywords) => {
   const { regex } = keywords[0];
-  return { 'dialects.word': { $regex: regex?.wordReg.source, $options: 'i' } };
+  return { 'dialects.word': { $regex: regex.wordReg.source, $options: 'i' } };
 };
 
 const generateMultipleTensesWordRegex = (keywords: Keywords) => {
   const tenses = Object.values(Tenses).map(({ value }) => {
     const { regex } = keywords[0];
-    return { [`tenses.${value}`]: { $regex: regex?.wordReg.source, $options: 'i' } };
+    return { [`tenses.${value}`]: { $regex: regex.wordReg.source, $options: 'i' } };
   });
   return tenses;
 };
@@ -44,7 +44,7 @@ const fullTextSearchQuery = ({
   isUsingMainKey: boolean | undefined;
   filters: Filters;
 }) => {
-  const hasNsibidi = keywords.some(({ text }) => text?.match(new RegExp(cjkRange)));
+  const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
   return isUsingMainKey && !keywords?.length
     ? filters
     : !isUsingMainKey && !keywords?.length
@@ -106,14 +106,14 @@ const definitionsQuery = ({
 
 /* Regex match query used to later to defined the Content-Range response header */
 export const searchExamplesRegexQuery = (regex: SearchRegExp) => ({
-  $or: [{ igbo: regex.wordReg }, { english: regex.definitionsReg }],
+  $or: [{ igbo: regex.wordReg }, { english: regex?.definitionsReg }],
 });
 export const searchIgboTextSearch = fullTextSearchQuery;
 export const searchDefinitionsWithinIgboTextSearch = fullTextDefinitionsSearchQuery;
 /* Since the word field is not non-accented yet,
  * a strict regex search for words has to be used as a workaround */
 export const strictSearchIgboQuery = (keywords: Keywords) => ({
-  $or: keywords.map(({ regex }) => ({ word: { $regex: regex?.wordReg } })),
+  $or: keywords.map(({ regex }) => ({ word: { $regex: regex.wordReg } })),
 });
 export const searchEnglishRegexQuery = definitionsQuery;
 export const searchForAllDevelopers = () => ({
