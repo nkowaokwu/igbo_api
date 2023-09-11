@@ -13,7 +13,7 @@ import { Keyword } from './types';
 
 type IgboSearch = {
   redisClient: RedisClientType | undefined;
-  keywords: Partial<Keyword>[];
+  keywords: Keyword[];
   strict: boolean;
   isUsingMainKey: boolean | undefined;
   version: Version;

@@ -7,7 +7,7 @@ import { Keyword } from './types';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
 
-type Keywords = Partial<Keyword>[];
+type Keywords = Keyword[];
 const generateMultipleNsibidi = (keywords: Keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
 
 const generateMultipleWordRegex = (keywords: Keywords) =>

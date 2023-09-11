@@ -170,7 +170,7 @@ export const handleQueries = async ({
             }),
             ['wordReg']
           );
-          const keyWord: Partial<Keyword> = {
+          const keyWord: Keyword = {
             text,
             wordClass,
             regex: pickedRegex,
