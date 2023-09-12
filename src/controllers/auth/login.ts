@@ -7,7 +7,6 @@ import { createDbConnection } from '../../services/database';
 import { developerSchema } from '../../models/Developer';
 import { TEST_EMAIL } from '../../shared/constants/Developers';
 import { JWT_SECRET, cookieOptions } from '../../siteConstants';
-import exclude from '../utils/exclude';
 
 const checkPassword = async (password: string, hash: string) => {
   const result = await bcrypt.compare(password, hash);
