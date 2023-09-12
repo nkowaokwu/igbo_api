@@ -17,3 +17,11 @@ export const YOUTUBE = 'https://www.youtube.com/c/IjemmaOnwuzulike';
 // Projects
 export const NKOWAOKWU = 'https://nkowaokwu.com';
 export const NKOWAOKWU_CHROME = 'https://nkowaokwu.com/chrome';
+
+// Auth
+export const JWT_SECRET = '@developer@NkowaOkwu@secret@key@';
+export const cookieOptions = {
+  expires: new Date(Date.now() + parseInt('90', 10) * 24 * 60 * 60 * 1000),
+  secure: false,
+  httpOnly: true,
+};
