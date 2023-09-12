@@ -5,7 +5,7 @@ import WordAttributeEnum from '../shared/constants/WordAttributeEnum';
 
 type WordClass = string | WordDialect;
 
-interface Definition {
+export interface Definition {
   definitions: string[];
   id?: string;
   igboDefinitions: { igbo: string; nsibidi: string }[];
@@ -14,7 +14,7 @@ interface Definition {
   wordClass: WordClass;
 }
 
-interface WordDialect {
+export interface WordDialect {
   dialects: DialectEnum[];
   editor?: string;
   id: string;
@@ -23,7 +23,7 @@ interface WordDialect {
   word: string;
 }
 
-interface LegacyWordDialect {
+export interface LegacyWordDialect {
   [k: string]: WordDialect;
 }
 
@@ -73,3 +73,6 @@ export interface LegacyWordDocument extends LegacyWord, Document<any> {
   __v: number;
   id: string;
 }
+
+export type WordType = Word | WordDocument | LegacyWordDocument;
+export type PartialWordType = Partial<Word> | Partial<WordDocument> | Partial<LegacyWordDocument>;

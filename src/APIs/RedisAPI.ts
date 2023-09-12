@@ -6,6 +6,7 @@ import Version from '../shared/constants/Version';
 import { Word } from '../types';
 import { ExampleResponseData } from '../controllers/types';
 import { redisClient as defaultRedisClient } from '../middleware/attachRedisClient';
+import { PartialWordType } from '../types/word';
 
 type RedisClient = {
   get: (value: string) => void;
@@ -34,7 +35,10 @@ export const setCachedWords = async ({
   version,
 }: {
   key: string;
-  data: any;
+  data: {
+    words: PartialWordType[] | any;
+    contentLength: number;
+  };
   redisClient: RedisClient | undefined;
   version: Version;
 }) => {
