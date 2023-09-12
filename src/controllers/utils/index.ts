@@ -14,7 +14,7 @@ import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../.
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
 import { WordData, Keyword } from './types';
-import { Filters, ExampleWithPronunciation } from '../types';
+import { ExampleWithPronunciation, Filters } from '../types';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(

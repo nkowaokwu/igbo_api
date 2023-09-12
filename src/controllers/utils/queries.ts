@@ -4,8 +4,8 @@ import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
 import StopWords from '../../shared/constants/StopWords';
 import { Keyword } from './types';
-import createRegExp, { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
+import createRegExp, { SearchRegExp } from '../../shared/utils/createRegExp';
 
 type Keywords = Keyword[];
 const generateMultipleNsibidi = (keywords: Keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
