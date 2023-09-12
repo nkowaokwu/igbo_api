@@ -27,9 +27,7 @@ const createSendToken = (developer: DeveloperT, res: Response) => {
 
   // req.token = token;
 
-  return {
-    token,
-  };
+  return token;
 };
 
 const loginDeveloperWithEmailAndPassword = async (email: string, password: string) => {
