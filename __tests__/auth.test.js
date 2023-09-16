@@ -11,8 +11,6 @@ describe('login', () => {
 
     const login = await loginDeveloper(data);
     expect(login.status).toEqual(200);
-    expect(login.body.developer).toMatchObject({
-      ...login.body.developer,
-    });
+    expect(login.body.developer).toMatchObject(loginRes.body.developer);
   });
 });
