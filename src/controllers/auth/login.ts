@@ -14,7 +14,7 @@ const checkPassword = async (password: string, hash: string) => {
 };
 
 const signToken = (email: string) => {
-  const jwtKey: string = JWT_SECRET;
+  const jwtKey = JWT_SECRET;
   const token = jwt.sign({ email }, jwtKey, { expiresIn: '1d' });
   return token;
 };
