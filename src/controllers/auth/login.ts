@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { Developer as DeveloperT, Express } from '../../types';
+import { Developer as DeveloperType, Express } from '../../types';
 import { isProduction, isTest } from '../../config';
 import { createDbConnection } from '../../services/database';
 import { developerSchema } from '../../models/Developer';
