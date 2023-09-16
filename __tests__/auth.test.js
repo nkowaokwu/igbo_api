@@ -9,7 +9,7 @@ describe('login', () => {
       password: newDeveloperData.password,
     };
 
-    const login = await loginDeveloper(data);
+    const loginRes = await loginDeveloper(data);
     expect(login.status).toEqual(200);
     expect(login.body.developer).toMatchObject(loginRes.body.developer);
   });
