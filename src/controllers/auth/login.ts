@@ -29,6 +29,9 @@ const checkPassword = async (password: string, hash: string) => {
  * @throws {Error} If an error occurs during the token signing process.
  */
 const signToken = (email: string) => {
+  console.info('JWT_SECRET');
+  console.log(JWT_SECRET);
+
   const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
   return token;
 };
