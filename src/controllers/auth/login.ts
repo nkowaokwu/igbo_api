@@ -29,7 +29,7 @@ const checkPassword = async (password: string, hash: string) => {
  * @throws {Error} If an error occurs during the token signing process.
  */
 const signToken = (email: string) => {
-  const token = jwt.sign({ email }, jwtKey, { expiresIn: '1d' });
+  const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1d' });
   return token;
 };
 
