@@ -19,7 +19,7 @@ export const NKOWAOKWU = 'https://nkowaokwu.com';
 export const NKOWAOKWU_CHROME = 'https://nkowaokwu.com/chrome';
 
 // Auth
-export const JWT_SECRET = process.env.JWT_SECRET;
+export const JWT_SECRET = process.env.JWT_SECRET as string;
 const COOKIE_EXPIRATION_DAYS = 90; // cookie expiration in days
 // Calculate the expiration date based on the current time and the number of days until expiration
 const expirationDate = new Date(Date.now() + COOKIE_EXPIRATION_DAYS * 24 * 60 * 60 * 1000);
