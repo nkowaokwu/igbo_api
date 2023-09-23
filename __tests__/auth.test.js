@@ -10,10 +10,8 @@ describe('login', () => {
     };
 
     const loginRes = await loginDeveloper(data);
-    console.log('====================================');
-    console.log(loginRes.body);
-    console.log('====================================');
-    // expect(loginRes.status).toEqual(200);
-    // expect(loginRes.body.developer).toMatchObject(loginRes.body.developer);
+
+    expect(loginRes.status).toEqual(200);
+    expect(loginRes.body.developer).toMatchObject(loginRes.body.developer);
   });
 });

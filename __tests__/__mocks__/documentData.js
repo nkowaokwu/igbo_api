@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 
 const { ObjectId } = mongoose.Types;
 
@@ -11,9 +12,9 @@ const developerData = {
 };
 
 const newDeveloperData = {
-  name: 'New Developer',
-  email: 'newdeveloper@example.com',
-  password: 'password',
+  name: `${uuid().replace(/-/g, '')}`,
+  email: `${uuid().replace(/-/g, '')}@testing.com`,
+  password: `${uuid()}`,
 };
 
 const malformedDeveloperData = {
