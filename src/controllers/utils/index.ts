@@ -14,7 +14,7 @@ import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../.
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
 import { WordData, Keyword } from './types';
-import { Filters, WithPronunciation } from '../types';
+import { Filters, ExampleWithPronunciation } from '../types';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
@@ -60,10 +60,10 @@ export const packageResponse = ({
   docs:
     | Partial<Word>
     | Partial<Example>
-    | Partial<WithPronunciation>
+    | Partial<ExampleWithPronunciation>
     | Partial<Word>[]
     | Partial<Example>[]
-    | Partial<WithPronunciation>[];
+    | Partial<ExampleWithPronunciation>[];
   contentLength: number;
   version: Version;
 }) => {
