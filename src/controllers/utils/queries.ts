@@ -4,7 +4,7 @@ import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
 import StopWords from '../../shared/constants/StopWords';
 import { Keyword } from './types';
-import { SearchRegExp } from '../../shared/utils/createRegExp';
+import createRegExp, { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
 
 type Keywords = Keyword[];
@@ -124,3 +124,9 @@ export const searchForAllVerbsAndSuffixesQuery = () => ({
     $in: [WordClass.AV.value, WordClass.PV.value, WordClass.ISUF.value, WordClass.ESUF.value],
   },
 });
+export const searchNsibidiCharactersQuery = (keyword: string) => {
+  const regex = createRegExp(keyword).wordReg;
+  return {
+    $or: [{ nsibidi: { $regex: regex } }, { definitions: { $regex: regex } }],
+  };
+};

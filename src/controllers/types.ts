@@ -4,12 +4,12 @@ type ResponseData = {
   contentLength: number;
 };
 
-export type WithPronunciation = Omit<Example, 'pronunciations'> & {
+export type ExampleWithPronunciation = Omit<Example, 'pronunciations'> & {
   pronunciation: string;
 };
 
 export interface ExampleResponseData extends ResponseData {
-  examples: Example[] | WithPronunciation[];
+  examples: Example[] | ExampleWithPronunciation[];
 }
 
 export interface WordResponseData extends ResponseData {

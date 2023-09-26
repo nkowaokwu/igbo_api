@@ -116,6 +116,7 @@ export const getWord: Express.MiddleWare = async (req, res, next) => {
       const minimizedWords = minimizeWords(words, version);
       return minimizedWords[0];
     });
+
     return packageResponse({
       res,
       docs: updatedWord,
@@ -128,7 +129,7 @@ export const getWord: Express.MiddleWare = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data: LegacyWord, connection: mongoose.Connection) => {
+export const createWord = async (data: Partial<LegacyWord>, connection: mongoose.Connection) => {
   const Word = connection.model('Word', wordSchema);
   const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 

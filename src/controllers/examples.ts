@@ -9,10 +9,10 @@ import { createDbConnection, handleCloseConnection } from '../services/database'
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
 import { Example as ExampleType, Express } from '../types';
 import Version from '../shared/constants/Version';
-import { ExampleResponseData, WithPronunciation } from './types';
+import { ExampleResponseData, ExampleWithPronunciation } from './types';
 
 /* Converts the pronunciations field to pronunciation for v1 */
-export const convertExamplePronunciations = (example: ExampleType): WithPronunciation => {
+export const convertExamplePronunciations = (example: ExampleType): ExampleWithPronunciation => {
   const updatedExample = assign(example);
   const exampleWithPronunciation = {
     ...omit(updatedExample, ['pronunciations']),
@@ -51,14 +51,11 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
       match: query,
       version,
     });
-    const allExamples = examples;
 
     responseData = await setCachedExamples({
       key: redisExamplesCacheKey,
       data: {
-        // Replaces pronunciations with pronunciation v1
-        examples:
-          version === Version.VERSION_1 ? (allExamples as ExampleType[]).map(convertExamplePronunciations) : examples,
+        examples,
         contentLength,
       },
       redisClient,
