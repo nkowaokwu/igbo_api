@@ -6,8 +6,7 @@ import { createDbConnection, handleCloseConnection } from '../services/database'
 import { Express } from '../types';
 import { sendNewDeveloper } from './email';
 import { findDeveloper } from './utils/findDeveloper';
-
-const TEST_EMAIL = 'developer@example.com';
+import { TEST_EMAIL } from '../shared/constants/Developers';
 
 /* Creates a new apiKey to be associated with a developer */
 const generateApiKey = uuid;
