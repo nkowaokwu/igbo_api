@@ -49,10 +49,16 @@ const anotherDeveloperData = {
   password: generateUniquePassword(),
 =======
 const newDeveloperData = {
+<<<<<<< HEAD
   name: 'New Developer',
   email: 'newdeveloper@example.com',
   password: 'password',
 >>>>>>> 03f15e6 (Fix create login endpoint (#748))
+=======
+  name: `${uuid().replace(/-/g, '')}`,
+  email: `${uuid().replace(/-/g, '')}@testing.com`,
+  password: `${uuid()}`,
+>>>>>>> 2b187a9 (Define the login business logic (#750))
 };
 
 const malformedDeveloperData = {

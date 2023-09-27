@@ -66,15 +66,23 @@ import { newDeveloperData } from './__mocks__/documentData';
 import { createDeveloper, loginDeveloper } from './shared/commands';
 
 describe('login', () => {
-  it('should hit the login endpoint and return a message', async () => {
-    const res = await createDeveloper(newDeveloperData);
+  it('should successfully log a developer in', async () => {
+    await createDeveloper(newDeveloperData);
     const data = {
-      email: res.body.email,
-      password: res.body.password,
+      email: newDeveloperData.email,
+      password: newDeveloperData.password,
     };
+<<<<<<< HEAD
     const login = await loginDeveloper(data);
     expect(login.status).toEqual(200);
     expect(login.body.message).toEqual('Logging in...');
 >>>>>>> 03f15e6 (Fix create login endpoint (#748))
+=======
+
+    const loginRes = await loginDeveloper(data);
+
+    expect(loginRes.status).toEqual(200);
+    expect(loginRes.body.developer).toMatchObject(loginRes.body.developer);
+>>>>>>> 2b187a9 (Define the login business logic (#750))
   });
 });
