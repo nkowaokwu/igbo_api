@@ -113,6 +113,7 @@
     "is-word": "^1.0.4",
     "jest": "29.2.2",
     "joi": "^17.4.0",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.20",
     "migrate-mongo": "^8.1.4",
     "mongoose": "^6.7.0",
@@ -163,7 +164,12 @@
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/express-rate-limit": "^6.0.0",
+<<<<<<< HEAD
     "@types/jest": "^29.5.8",
+=======
+    "@types/jest": "^29.5.4",
+    "@types/jsonwebtoken": "^9.0.2",
+>>>>>>> 7a3f647 (Define the login business logic (#750))
     "@types/morgan": "^1.9.4",
     "@types/node": "^20.3.0",
     "@types/react": "^18.2.11",

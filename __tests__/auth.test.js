@@ -2,14 +2,16 @@ import { newDeveloperData } from './__mocks__/documentData';
 import { createDeveloper, loginDeveloper } from './shared/commands';
 
 describe('login', () => {
-  it('should hit the login endpoint and return a message', async () => {
-    const res = await createDeveloper(newDeveloperData);
+  it('should successfully log a developer in', async () => {
+    await createDeveloper(newDeveloperData);
     const data = {
-      email: res.body.email,
-      password: res.body.password,
+      email: newDeveloperData.email,
+      password: newDeveloperData.password,
     };
-    const login = await loginDeveloper(data);
-    expect(login.status).toEqual(200);
-    expect(login.body.message).toEqual('Logging in...');
+
+    const loginRes = await loginDeveloper(data);
+
+    expect(loginRes.status).toEqual(200);
+    expect(loginRes.body.developer).toMatchObject(loginRes.body.developer);
   });
 });
