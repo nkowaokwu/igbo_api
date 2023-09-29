@@ -80,3 +80,6 @@ export const getDeveloper = (options = {}) =>
 
 /** Login a developer */
 export const loginDeveloper = (data) => server.post(`${API_ROUTE}/login`).send(data);
+
+/** Logout a developer */
+export const logoutDeveloper = () => server.post(`${API_ROUTE}/logout`);
