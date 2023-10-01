@@ -30,7 +30,15 @@ describe('login', () => {
 
 describe('logout', () => {
   it('should successfully log a developer out', async () => {
-    const logoutRes = await logoutDeveloper();
+    await createDeveloper(newDeveloperData);
+    const data = {
+      email: newDeveloperData.email,
+      password: newDeveloperData.password,
+    };
+
+    const loginRes = await loginDeveloper(data);
+
+    const logoutRes = await logoutDeveloper({ token: loginRes.body.token });
 
     expect(logoutRes.status).toEqual(200);
     expect(logoutRes.body).toMatchObject({

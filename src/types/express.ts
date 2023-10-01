@@ -1,5 +1,6 @@
 import { Request as ExpressRequest, Response, NextFunction } from 'express';
 import { RedisClientType } from 'redis';
+import { DeveloperDocument } from './developer';
 
 export type Query = {
   dialects: string;
@@ -19,6 +20,7 @@ export interface IgboAPIRequest extends ExpressRequest {
   query: Partial<Query>;
   isUsingMainKey?: boolean;
   redisClient?: RedisClientType;
+  developer?: DeveloperDocument;
 }
 
 export interface MiddleWare {
