@@ -39,6 +39,6 @@ export const isAuthenticated: Express.MiddleWare = async (req, res, next) => {
   await handleCloseConnection(connection);
 
   // grant access
-  req.developer = currentUser[0] as DeveloperDocument;
+  req.developer = currentUser[0];
   return next();
 };
