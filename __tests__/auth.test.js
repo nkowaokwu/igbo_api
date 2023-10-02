@@ -16,6 +16,7 @@ describe('login', () => {
   });
 
   it('should not log a developer in with incorrect credentials', async () => {
+    await createDeveloper(newDeveloperData);
     const data = {
       email: newDeveloperData.email,
       password: 'incorrect',

@@ -4,7 +4,13 @@ import { DeveloperDocument, Express } from '../types';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { developerSchema } from '../models/Developer';
 
-export const isAuthenticated: Express.MiddleWare = async (req, res, next) => {
+type Payload = {
+  email: string;
+  iat?: number;
+  exp?: number;
+};
+
+export const authenticate: Express.MiddleWare = async (req, res, next) => {
   let token: string | undefined;
   // Check if token is set
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -15,30 +21,26 @@ export const isAuthenticated: Express.MiddleWare = async (req, res, next) => {
     return next(new Error('Unauthorized. Please login to continue.'));
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let payload: any;
+  let payload: Payload;
 
   // verify token
   try {
-    payload = jwt.verify(token, JWT_SECRET);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
+    payload = jwt.verify(token, JWT_SECRET) as Payload;
+  } catch (error: unknown | any) {
     return next(new Error(error.message));
   }
 
-  // check if developer still exists in the database
+  // Csheck if developer still exists in the database
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
   const { email } = payload;
-  const currentUser = await Developer.findOne({ email });
-
+  const currentUser: DeveloperDocument | null = await Developer.findOne({ email });
   if (!currentUser) {
     return next(new Error('This User does not exist'));
   }
   await handleCloseConnection(connection);
 
   // grant access
-  req.developer = currentUser[0];
+  req.developer = currentUser;
   return next();
 };
