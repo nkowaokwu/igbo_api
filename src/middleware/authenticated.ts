@@ -6,7 +6,7 @@ import { developerSchema } from '../models/Developer';
 
 export const isAuthenticated: Express.MiddleWare = async (req, res, next) => {
   let token: string | undefined;
-  // check if token is set
+  // Check if token is set
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     [, token] = req.headers.authorization.split(' ');
   }
