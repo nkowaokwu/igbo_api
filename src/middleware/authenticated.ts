@@ -31,7 +31,7 @@ export const isAuthenticated: Express.MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
   const { email } = payload;
-  const currentUser = await Developer.find({ email });
+  const currentUser = await Developer.findOne({ email });
 
   if (!currentUser) {
     return next(new Error('This User does not exist'));
