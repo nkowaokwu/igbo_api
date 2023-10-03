@@ -149,3 +149,4 @@ functions/src
 functions/yarn.lock
 yarn.lock
 .idea
+.firebaserc
