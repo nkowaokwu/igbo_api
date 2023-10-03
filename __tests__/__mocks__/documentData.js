@@ -11,10 +11,41 @@ const developerData = {
   password: 'password',
 };
 
+// Generate a unique name using a UUID without hyphens
+const generateUniqueName = () => uuid().replace(/-/g, '');
+
+const generateUniqueEmail = () => {
+  // Generate a unique email using a UUID without hyphens and without numbers
+  const email = `${uuid().replace(/-/g, '')}@testing.com`;
+  // Remove numbers from the email
+  return email.replace(/\d/g, '');
+};
+
+// Generate a unique password using a UUID without hyphens
+const generateUniquePassword = () => uuid().replace(/-/g, '');
+
 const newDeveloperData = {
-  name: `${uuid().replace(/-/g, '')}`,
-  email: `${uuid().replace(/-/g, '')}@testing.com`,
-  password: `${uuid()}`,
+  name: generateUniqueName(),
+  email: generateUniqueEmail(),
+  password: generateUniquePassword(),
+};
+
+const developerOneData = {
+  name: generateUniqueName(),
+  email: generateUniqueEmail(),
+  password: generateUniquePassword(),
+};
+
+const developerTwoData = {
+  name: generateUniqueName(),
+  email: generateUniqueEmail(),
+  password: generateUniquePassword(),
+};
+
+const anotherDeveloperData = {
+  name: generateUniqueName(),
+  email: generateUniqueEmail(),
+  password: generateUniquePassword(),
 };
 
 const malformedDeveloperData = {
@@ -22,4 +53,13 @@ const malformedDeveloperData = {
   password: 'password',
 };
 
-export { wordId, exampleId, developerData, newDeveloperData, malformedDeveloperData };
+export {
+  wordId,
+  exampleId,
+  developerData,
+  newDeveloperData,
+  developerOneData,
+  developerTwoData,
+  anotherDeveloperData,
+  malformedDeveloperData,
+};

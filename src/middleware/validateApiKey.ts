@@ -15,13 +15,15 @@ const isSameDate = (first: Date, second: Date) =>
 /* Increments usage count and updates usage date */
 const handleDeveloperUsage = async (developer: DeveloperDocument) => {
   const updatedDeveloper = developer;
-  const isNewDay = !isSameDate(updatedDeveloper.usage.date, new Date());
-  updatedDeveloper.usage.date = new Date();
+  if (updatedDeveloper.usage) {
+    const isNewDay = !isSameDate(updatedDeveloper.usage.date || new Date(), new Date());
+    updatedDeveloper.usage.date = new Date();
 
-  if (isNewDay) {
-    updatedDeveloper.usage.count = 0;
-  } else {
-    updatedDeveloper.usage.count += 1;
+    if (isNewDay) {
+      updatedDeveloper.usage.count = 0;
+    } else {
+      updatedDeveloper.usage.count += 1;
+    }
   }
 
   return updatedDeveloper.save();
@@ -54,7 +56,7 @@ const validateApiKey: Express.MiddleWare = async (req, res, next) => {
     const developer = await findDeveloper(apiKey);
 
     if (developer) {
-      if (developer.usage.count >= determineLimit(apiLimit)) {
+      if (developer.usage!.count >= determineLimit(apiLimit)) {
         res.status(403);
         return res.send({ error: 'You have exceeded your limit of requests for the day' });
       }

@@ -1,12 +1,12 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { Developer as DeveloperType, Express } from '../../types';
-import { isProduction, isTest } from '../../config';
-import { createDbConnection, handleCloseConnection } from '../../services/database';
-import { developerSchema } from '../../models/Developer';
-import { TEST_EMAIL } from '../../shared/constants/Developers';
-import { JWT_SECRET, cookieOptions } from '../../siteConstants';
+import { Developer as DeveloperType, Express } from '../types';
+import { isProduction, isTest } from '../config';
+import { createDbConnection, handleCloseConnection } from '../services/database';
+import { developerSchema } from '../models/Developer';
+import { TEST_EMAIL } from '../shared/constants/Developers';
+import { JWT_SECRET, cookieOptions } from '../siteConstants';
 
 /**
  * Compares a hashed password with a plaintext password to check for a match.
@@ -76,7 +76,7 @@ const loginDeveloperWithEmailAndPassword = async (email: string, password: strin
 /**
  * Handles the login process for a developer.
  *
- * @param {Express.Request} req - The Express request object.
+ * @param {Express.IgboAPIRequest} req - The Express request object.
  * @param {Express.Response} res - The Express response object.
  * @param {Express.NextFunction} next - The next middleware function.
  * @returns {Promise<void>} A Promise that resolves when the login process is complete.
@@ -93,6 +93,29 @@ export const login: Express.MiddleWare = async (req, res, next) => {
       message: 'Logged in successfully',
       developer,
       token,
+    });
+  } catch (error) {
+    if (!isTest) {
+      console.trace(error);
+    }
+    return next(error);
+  }
+};
+
+/**
+ * Handles the logout process for a developer.
+ * @param {Express.IgboAPIRequest} req - The Express request object.
+ * @param {Express.Response} res - The Express response object.
+ * @param {Express.NextFunction} next - The next middleware function.
+ * @returns {Promise<void>} A Promise that resolves when the logout process is complete.
+ */
+export const logout: Express.MiddleWare = async (req, res, next) => {
+  try {
+    res.cookie('jwt', '', { expires: new Date(), httpOnly: true });
+
+    const message = 'Logged out successfully';
+    return res.status(200).send({
+      message,
     });
   } catch (error) {
     if (!isTest) {

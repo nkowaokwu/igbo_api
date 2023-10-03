@@ -11,9 +11,8 @@ import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
-import { login } from '../controllers/auth/login';
-import { logout } from '../controllers/auth/logout';
-import { authenticate } from '../middleware/authenticated';
+import { login, logout } from '../controllers/auth';
+import { authenticate } from '../middleware/authenticate';
 
 const router = express.Router();
 

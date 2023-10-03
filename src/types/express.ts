@@ -2,7 +2,7 @@ import { Request as ExpressRequest, Response, NextFunction } from 'express';
 import { RedisClientType } from 'redis';
 import { DeveloperDocument } from './developer';
 
-export type Query = {
+export interface Query {
   dialects: string;
   examples: string;
   filter: string;
@@ -14,7 +14,7 @@ export type Query = {
   tags: string;
   wordClasses: string;
   apiLimit: string;
-};
+}
 
 export interface IgboAPIRequest extends ExpressRequest {
   query: Partial<Query>;

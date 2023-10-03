@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../siteConstants';
-import { DeveloperDocument, Express } from '../types';
+import { Express } from '../types';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { developerSchema } from '../models/Developer';
 
-type Payload = {
+interface DeveloperDataType {
   email: string;
   iat?: number;
   exp?: number;
-};
+}
 
 export const authenticate: Express.MiddleWare = async (req, res, next) => {
   let token: string | undefined;
@@ -21,26 +21,29 @@ export const authenticate: Express.MiddleWare = async (req, res, next) => {
     return next(new Error('Unauthorized. Please login to continue.'));
   }
 
-  let payload: Payload;
+  let developer: DeveloperDataType;
 
-  // verify token
+  // Verify token
   try {
-    payload = jwt.verify(token, JWT_SECRET) as Payload;
-  } catch (error: unknown | any) {
-    return next(new Error(error.message));
+    developer = jwt.verify(token, JWT_SECRET) as DeveloperDataType;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return next(new Error(error.message));
+    }
+    return next(new Error('Invalid token'));
   }
 
-  // Csheck if developer still exists in the database
+  // Check if developer still exists in the database
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
-  const { email } = payload;
-  const currentUser: DeveloperDocument | null = await Developer.findOne({ email });
+  const { email } = developer;
+  const currentUser = await Developer.findOne({ email });
+  await handleCloseConnection(connection);
   if (!currentUser) {
     return next(new Error('This User does not exist'));
   }
-  await handleCloseConnection(connection);
 
-  // grant access
+  // Grant access
   req.developer = currentUser;
   return next();
 };
