@@ -5,12 +5,14 @@ export interface Developer {
   apiKey: string;
   email: string;
   password: string;
-  usage: {
+  usage?: {
     date: Date;
     count: number;
   };
+  createdAt?: NativeDate;
+  updatedAt?: NativeDate;
 }
 
 export interface DeveloperDocument extends Developer, Document<any> {
-  id: Types.ObjectId;
+  id?: Types.ObjectId;
 }
