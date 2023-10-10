@@ -1,14 +1,15 @@
 import React from 'react';
-import { Drawer, DrawerContent, useDisclosure } from '@chakra-ui/react';
+import { Drawer, DrawerContent, useBreakpointValue, useDisclosure } from '@chakra-ui/react';
 import SidebarContent from './SidebarContent';
 import MobileNav from '../Navbar/MobileNav';
 
-const Sidebar = () => {
+const Sidebar: React.FC = function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const showSidebar = useBreakpointValue({ base: false, md: true });
 
   return (
     <>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      {showSidebar ? <SidebarContent onClose={onClose} /> : null}
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -21,7 +22,6 @@ const Sidebar = () => {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
     </>
   );
