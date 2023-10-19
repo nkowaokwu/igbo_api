@@ -18,6 +18,7 @@ import { Express, LegacyWord } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
+const IGNORE_ENGLISH_WORDS = ['ego'];
 
 /* Gets words from JSON dictionary */
 export const getWordData: Express.MiddleWare = (req, res, next) => {
@@ -60,7 +61,8 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       filters,
     };
     let responseData: WordResponseData = { words: [], contentLength: 0 };
-    const isSearchWordEnglish = isEnglish.check(searchWord) && !!searchWord;
+    const isSearchWordEnglish =
+      isEnglish.check(searchWord) && !!searchWord && !IGNORE_ENGLISH_WORDS.includes(searchWord);
     if (hasQuotes || isSearchWordEnglish) {
       responseData = await searchWordUsingEnglish({
         redisClient,
