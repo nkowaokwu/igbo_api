@@ -30,12 +30,39 @@ const SubMenu = ({ isVisible, transparent }) => {
   useEffect(() => {
     changeLanguage(language);
   }, [language]);
+  // Check if the viewport matches a mobile screen width
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleMediaQueryChange = (event) => {
+      setIsMobile(event.matches);
+    };
+
+    // Initial check
+    handleMediaQueryChange(mediaQuery);
+
+    // Listen for changes in viewport width
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    // Clean up the event listener
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []); // Empty dependency array to run the effect only once
+
   return (
     <ul
       className={`navbar ${transparent ? 'transparent-navbar' : ''} 
       ${isVisible ? 'visible opacity-1' : 'hidden opacity-0'}
       ${isVisible ? '' : 'pointer-events-none'}
-      space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100`}
+      space-y-5 lg:space-y-0 lg:space-x-5 transition-all duration-100
+      ${isMobile ? 'text-red-500' : ''}`}
     >
       <li className="transition-element">
         <button
