@@ -6,8 +6,11 @@ import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
+import { rateLimiter } from '../middleware/rateLimiter';
 
 const routerV2 = express.Router();
+
+routerV2.use(rateLimiter);
 
 routerV2.get('/words', analytics, validateApiKey, attachRedisClient, getWords);
 routerV2.get('/words/:id', analytics, validateApiKey, validId, attachRedisClient, getWord);
