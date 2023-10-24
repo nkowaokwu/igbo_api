@@ -9,9 +9,17 @@ interface SidebarItemProps extends FlexProps {
   icon: React.ReactElement<IconType>;
   href: string;
   children: React.ReactNode;
+  activeBgColor?: string;
+  activeTextColor?: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = function SidebarItem({ icon, href, children }) {
+const SidebarItem: React.FC<SidebarItemProps> = function SidebarItem({
+  icon,
+  href,
+  children,
+  activeBgColor,
+  activeTextColor,
+}) {
   return (
     <Box as="a" href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
       <Flex
@@ -25,12 +33,19 @@ const SidebarItem: React.FC<SidebarItemProps> = function SidebarItem({ icon, hre
           bg: 'cyan.400',
           color: 'white',
         }}
+        bg={activeBgColor}
+        color={activeTextColor}
       >
         {icon}
         {children}
       </Flex>
     </Box>
   );
+};
+
+SidebarItem.defaultProps = {
+  activeBgColor: 'transparent',
+  activeTextColor: 'gray.800',
 };
 
 export default SidebarItem;
