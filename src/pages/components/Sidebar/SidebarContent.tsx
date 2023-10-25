@@ -12,7 +12,7 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 
-const SidebarContent: React.FC<SidebarProps> = function SidebarContent({ onClose }) {
+const SidebarContent: React.FC<SidebarProps> = ({ onClose }) => {
   const { t } = useTranslation('dashboard');
   const router = useRouter();
   const LinkItems = [

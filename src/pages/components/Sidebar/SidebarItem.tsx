@@ -13,35 +13,27 @@ interface SidebarItemProps extends FlexProps {
   activeTextColor?: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = function SidebarItem({
-  icon,
-  href,
-  children,
-  activeBgColor,
-  activeTextColor,
-}) {
-  return (
-    <Box as="a" href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
-      <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: 'cyan.400',
-          color: 'white',
-        }}
-        bg={activeBgColor}
-        color={activeTextColor}
-      >
-        {icon}
-        {children}
-      </Flex>
-    </Box>
-  );
-};
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, href, children, activeBgColor, activeTextColor }) => (
+  <Box as="a" href={href} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Flex
+      align="center"
+      p="4"
+      mx="4"
+      borderRadius="lg"
+      role="group"
+      cursor="pointer"
+      _hover={{
+        bg: 'cyan.400',
+        color: 'white',
+      }}
+      bg={activeBgColor}
+      color={activeTextColor}
+    >
+      {icon}
+      {children}
+    </Flex>
+  </Box>
+);
 
 SidebarItem.defaultProps = {
   activeBgColor: 'transparent',

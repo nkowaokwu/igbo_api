@@ -4,7 +4,7 @@ import { Box, Text, useColorModeValue, useBreakpointValue } from '@chakra-ui/rea
 import Sidebar from './components/Sidebar';
 import DashboardHeader from './components/DashboardHeader';
 
-const Dashboard: React.FC = function Dashboard() {
+const Dashboard: React.FC = () => {
   const { t } = useTranslation('dashboard');
   const ml = useBreakpointValue({ base: 10, lg: 270 });
 

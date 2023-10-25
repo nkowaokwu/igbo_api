@@ -28,7 +28,7 @@ interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
 
-const MobileNav: React.FC<MobileProps> = function MobileNav({ onOpen }) {
+const MobileNav: React.FC<MobileProps> = ({ onOpen }) => {
   const { t } = useTranslation('dashboard');
   const showLogo = useBreakpointValue({ base: false, md: false });
   const showIconBtn = useBreakpointValue({ base: 'flex', md: false });

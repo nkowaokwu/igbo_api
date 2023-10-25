@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, useBreakpointValue } from '@chakra-ui/react';
 
-const UserInfo: React.FC = function UserInfo() {
+const UserInfo: React.FC = () => {
   const ml = useBreakpointValue({ base: 10, lg: 260 });
 
   return (

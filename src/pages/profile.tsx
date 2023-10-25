@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import DashboardHeader from './components/DashboardHeader';
 import UserInfo from './components/UserInformation';
 
-const Profile: React.FC = function Profile() {
+const Profile: React.FC = () => {
   const { t } = useTranslation('dashboard');
 
   return (

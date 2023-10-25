@@ -3,7 +3,7 @@ import { Drawer, DrawerContent, useBreakpointValue, useDisclosure } from '@chakr
 import SidebarContent from './SidebarContent';
 import MobileNav from '../Navbar/MobileNav';
 
-const Sidebar: React.FC = function Sidebar() {
+const Sidebar: React.FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const showSidebar = useBreakpointValue({ base: false, md: true });
 
