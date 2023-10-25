@@ -35,9 +35,4 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon, href, children, activeB
   </Box>
 );
 
-SidebarItem.defaultProps = {
-  activeBgColor: 'transparent',
-  activeTextColor: 'gray.800',
-};
-
 export default SidebarItem;

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Box, Text, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 const UserInfo: React.FC = () => {
-  const ml = useBreakpointValue({ base: 10, lg: 260 });
+  const { t } = useTranslation('dashboard');
 
   return (
-    <Box ml={ml} p="3">
+    <Box ml={{ base: 10, lg: 260 }} p="3">
       <Box display="flex">
         <Text fontSize="md" fontWeight="bold" fontFamily="monospace" marginTop={3}>
-          Name:
+          {t('Name')}:
         </Text>
         <Text fontSize="md" ml={3} fontWeight="medium" fontFamily="monospace" marginTop={3}>
           David Egorp
@@ -16,7 +17,7 @@ const UserInfo: React.FC = () => {
       </Box>
       <Box display="flex">
         <Text fontSize="md" fontWeight="bold" fontFamily="monospace" marginTop={3}>
-          Email:
+          {t('Email')}:
         </Text>
         <Text fontSize="md" ml={3} fontWeight="medium" fontFamily="monospace" marginTop={3}>
           davibfhsdjfgorp@gmail.com
@@ -24,7 +25,7 @@ const UserInfo: React.FC = () => {
       </Box>
       <Box display="flex">
         <Text fontSize="md" fontWeight="bold" fontFamily="monospace" marginTop={3}>
-          Date joined:
+          {t('Date Joined')}:
         </Text>
         <Text fontSize="md" ml={3} fontWeight="medium" fontFamily="monospace" marginTop={3}>
           20 May, 2023

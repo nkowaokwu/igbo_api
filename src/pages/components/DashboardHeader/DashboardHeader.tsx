@@ -10,7 +10,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface DashboardHeaderProps {
@@ -22,15 +22,16 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = function Dashboard({ pag
   const { t } = useTranslation('dashboard');
   const [apiKey, setApiKey] = useState('');
   const toast = useToast();
-  const ml = useBreakpointValue({ base: 10, lg: 270 });
   const pageHeaderDisplay = useBreakpointValue({ base: 'block', lg: 'flex' });
 
-  const handleGoBack = () => {
-    router.back();
-  };
+  const handleGoBack = () => router.back();
+
+  useEffect(() => {
+    const developerApiKey = 'example-api-key'; // TODO: Remove hardcoded value
+    setApiKey(developerApiKey);
+  }, []);
 
   const handleCopyApiKey = () => {
-    setApiKey('example-api-key');
     navigator.clipboard.writeText(apiKey);
     toast({
       title: t('API key copied'),
@@ -42,8 +43,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = function Dashboard({ pag
   };
 
   return (
-    <>
-      <Box ml={ml} pt={5} display="flex">
+    <Box>
+      <Box ml={{ base: 10, lg: 270 }} pt={5} display="flex">
         <Text
           fontSize="lg"
           fontFamily="monospace"
@@ -61,14 +62,13 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = function Dashboard({ pag
           {t('Dashboard')} <ChevronRightIcon /> {t('App one')}
         </Text>
       </Box>
-      <Box ml={ml} pt={4} pr={10} display={pageHeaderDisplay} justifyContent="space-between">
+      <Box ml={{ base: 10, lg: 270 }} pt={4} pr={10} display={pageHeaderDisplay} justifyContent="space-between">
         <Text fontSize="2xl" fontWeight="bold">
           {pageTitle}
         </Text>
 
         <InputGroup style={{ maxWidth: '300px', margin: '0 auto', justifyContent: 'right', marginRight: 0 }}>
-          {/* TODO: Remove hardcoded value */}
-          <Input value="00y23804y29b3d9048hend" background="gray.200" padding={6} readOnly />
+          <Input value={apiKey} background="gray.200" padding={6} readOnly />
           <InputRightElement padding={6} onClick={handleCopyApiKey} cursor="pointer">
             <Tooltip label={t('Copy API key')}>
               <CopyIcon />
@@ -76,7 +76,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = function Dashboard({ pag
           </InputRightElement>
         </InputGroup>
       </Box>
-    </>
+    </Box>
   );
 };
 

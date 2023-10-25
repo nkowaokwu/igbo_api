@@ -22,6 +22,8 @@ const SidebarContent: React.FC<SidebarProps> = ({ onClose }) => {
     { name: t('Contact Us'), href: '/contact-us', icon: <WarningIcon /> },
   ];
 
+  const isCurrentHref = (href: string) => router.pathname === href;
+
   return (
     <Box
       transition="3s ease"
@@ -49,9 +51,9 @@ const SidebarContent: React.FC<SidebarProps> = ({ onClose }) => {
             href={link.href}
             icon={link.icon}
             _hover={{ bg: 'blue.400', color: 'white' }}
-            color={router.pathname === link.href ? 'white' : 'gray.800'}
-            activeBgColor={router.pathname === link.href ? 'blue.600' : 'transparent'}
-            activeTextColor={router.pathname === link.href ? 'white' : 'gray.800'}
+            color={isCurrentHref(link.href) ? 'white' : 'gray.800'}
+            activeBgColor={isCurrentHref(link.href) ? 'blue.600' : 'transparent'}
+            activeTextColor={isCurrentHref(link.href) ? 'white' : 'gray.800'}
           >
             <Text fontSize="md" fontFamily="monospace" fontWeight="medium" paddingLeft={3}>
               {link.name}
