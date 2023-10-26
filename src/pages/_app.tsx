@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -15,27 +14,25 @@ import '../antd-extend.css';
 import '../fonts.css';
 import '../styles.css';
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources: {
-      en,
-      ig,
-    },
-    lng: 'en',
-    fallbackLng: 'en',
-    defaultNS: 'common',
+i18n.use(initReactI18next).init({
+  resources: {
+    en,
+    ig,
+  },
+  lng: 'en',
+  fallbackLng: 'en',
+  defaultNS: 'common',
 
-    interpolation: {
-      escapeValue: false,
-    },
-  });
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
-const MainApp = ({ Component, pageProps, ...rest }) => {
+const MainApp = ({ Component, pageProps, ...rest }: { Component: React.FC; pageProps: any }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: string) => {
       gtag.pageview(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
@@ -77,9 +74,5 @@ const MainApp = ({ Component, pageProps, ...rest }) => {
   );
 };
 
-MainApp.propTypes = {
-  Component: PropTypes.func.isRequired,
-  pageProps: PropTypes.shape({}).isRequired,
-};
-
+// @ts-expect-error AppProps
 export default appWithTranslation(MainApp);

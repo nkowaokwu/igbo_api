@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { PipelineStage } from 'mongoose';
 import { compact, pick } from 'lodash';
-import { Example, Express, Word } from '../../types';
+import { Example, IgboAPIRequest, Word } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
@@ -106,7 +106,7 @@ export const handleQueries = async ({
   isUsingMainKey,
   baseUrl,
   redisClient,
-}: Express.IgboAPIRequest) => {
+}: IgboAPIRequest) => {
   const {
     keyword: keywordQuery = '',
     page: pageQuery = '0',

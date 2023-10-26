@@ -7,7 +7,7 @@ import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
-import { Example as ExampleType, Express } from '../types';
+import { Example as ExampleType, MiddleWare } from '../types';
 import Version from '../shared/constants/Version';
 import { ExampleResponseData, ExampleWithPronunciation } from './types';
 
@@ -66,7 +66,7 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
 };
 
 /* Returns examples from MongoDB */
-export const getExamples: Express.MiddleWare = async (req, res, next) => {
+export const getExamples: MiddleWare = async (req, res, next) => {
   try {
     const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, ...rest } = await handleQueries(req);
     const regexMatch =
@@ -110,7 +110,7 @@ const findExampleById = async (id: string) => {
 };
 
 /* Returns an example from MongoDB using an id */
-export const getExample: Express.MiddleWare = async (req, res, next) => {
+export const getExample: MiddleWare = async (req, res, next) => {
   try {
     const { id, version } = await handleQueries(req);
     const foundExample = await findExampleById(id).then((example) => {

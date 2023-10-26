@@ -12,8 +12,7 @@ const getGitHubContributors = async () => {
     headers: {
       ...(gitHubAuthorization ? { Authorization: `token ${gitHubAuthorization}` } : {}),
     },
-  })
-    .catch(() => ({ data: [] }));
+  }).catch(() => ({ data: [] }));
   return res.data || [];
 };
 
@@ -38,31 +37,28 @@ const getDatabaseStats = async () => {
     headers: {
       'X-API-Key': MAIN_KEY || 'main_key',
     },
-  })
-    .catch(() => ({}));
+  }).catch(() => ({}));
+  // @ts-expect-error data
   return res.data || {};
 };
 
-const getWords = async (searchWord, queries) => {
+const getWords = async (searchWord: string, queries: string) => {
   const res = await axios({
     method: 'get',
     url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${queries}`,
     headers: {
       'X-API-Key': MAIN_KEY || 'main_key',
     },
-  })
-    .catch(() => ({}));
+  }).catch(() => ({}));
+  // @ts-expect-error data
   return res.data || {};
 };
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps = async (context: any) => {
   try {
-    let promises = [async () => ({ data: [] })];
+    let promises: any[] = [async () => ({ data: [] })];
     const { res, query } = context;
-    res.setHeader(
-      'Cache-Control',
-      'public, max-age=302400, s-maxage=604800',
-    );
+    res.setHeader('Cache-Control', 'public, max-age=302400, s-maxage=604800');
     const searchWord = encodeURI(query.word);
     const queries = Object.entries(query).reduce((finalQueries, [key, value]) => {
       let updatedQueries = finalQueries;
@@ -95,6 +91,6 @@ export const getServerSideProps = async (context) => {
   }
 };
 
-const IgboAPIApp = (props) => <App {...props} />;
+const IgboAPIApp = (props: any) => <App {...props} />;
 
 export default IgboAPIApp;

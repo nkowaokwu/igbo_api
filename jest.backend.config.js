@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'igbo-api-admin',
+  displayName: 'igbo_api',
   testMatch: ['**/__tests__/*.js', '**/__tests__/*.ts'],
   testTimeout: 20000,
   testEnvironment: 'node',
