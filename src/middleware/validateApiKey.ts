@@ -1,5 +1,5 @@
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
-import { DeveloperDocument, MiddleWare, } from '../types';
+import { DeveloperDocument, MiddleWare } from '../types';
 import { findDeveloper } from '../controllers/utils/findDeveloper';
 
 const PROD_LIMIT = 2500;
