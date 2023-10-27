@@ -1,4 +1,3 @@
-// Frontend Jest Config
 module.exports = {
   displayName: 'igbo_api',
   testMatch: ['./**/__tests__/**/*.test.tsx'],
@@ -10,7 +9,7 @@ module.exports = {
     '^[./a-zA-Z0-9$_-]+\\.(svg|gif|png|less|css)$': '<rootDir>/src/__data__/assetStub.ts',
   },
   transform: {
-    '^.+\\.(js|ts|tsx)$': ['ts-jest', { tsconfig: './tsconfig.test.json' }],
+    '^.+\\.(js|ts|tsx)$': 'ts-jest',
   },
   setupFilesAfterEnv: ['./src/__tests__/shared/script.ts'],
 };
