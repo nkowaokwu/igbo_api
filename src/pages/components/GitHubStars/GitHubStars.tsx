@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Box, Link } from '@chakra-ui/react';
 import { GITHUB_REPO } from '../../../siteConstants';
 
-const GitHubStars = ({ stars }) => (
-  <div className="flex flex-row items-center justify-center space-x-4">
-    <a
+const GitHubStars = ({ stars }: { stars: number }) => (
+  <Box className="flex flex-row items-center justify-center space-x-4">
+    <Link
       href={GITHUB_REPO}
       className="hover:shadow-inner bg-gradient-to-t from-gray-100 to-white border border-gray-200
       rounded-lg p-2 font-bold text-lg -mr-1 flex flex-row items-center"
@@ -48,25 +48,21 @@ const GitHubStars = ({ stars }) => (
         />
       </svg>
       Stars
-    </a>
-    <div
+    </Link>
+    <Box
       className="hover:shadow-inner flex flex-row items-center bg-gradient-to-t
       from-gray-100 to-white border border-gray-200 rounded-lg p-2 relative ml-3"
     >
-      <div
+      <Box
         style={{ zIndex: -1 }}
         className="absolute -left-1 top-3.5 h-3 w-3 bg-gradient-to-t
         from-gray-100-to-white rounded-sm border border-gray-300 flex-none transform rotate-45"
       />
-      <a className="inset-0 btn font-bold text-lg" href={GITHUB_REPO}>
+      <Link className="inset-0 btn font-bold text-lg" href={GITHUB_REPO}>
         {stars}
-      </a>
-    </div>
-  </div>
+      </Link>
+    </Box>
+  </Box>
 );
-
-GitHubStars.propTypes = {
-  stars: PropTypes.number.isRequired,
-};
 
 export default GitHubStars;

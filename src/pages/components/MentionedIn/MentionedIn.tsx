@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
+import { Box, Image, Link } from '@chakra-ui/react';
 
 const NIGERIAN_TRIBUNE = {
   url: `https://tribuneonlineng.com/why-i-created-first-igbo-english-
@@ -28,31 +29,31 @@ const NASDAQ = {
 };
 
 const MentionedIn = () => (
-  <div className="mentioned-in w-full flex justify-center items-center lg:py-16">
-    <div
+  <Box className="mentioned-in w-full flex justify-center items-center lg:py-16">
+    <Box
       className={`w-full md:w-10/12 flex flex-col md:flex-row 
     flex-wrap items-center justify-evenly md:space-x-8 lg:space-x-0 space-y-12 my-8 md:space-y-0 md:my-0`}
     >
-      <a href={NASDAQ.url} target="_blank" rel="noreferrer">
-        <img src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '200px' }} />
-      </a>
-      <a href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
-        <img src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" />
-      </a>
-      <a href={UIU.url} target="_blank" rel="noreferrer">
-        <img src={UIU.src} alt="Umu Igbo Unite logo" />
-      </a>
-      <a href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
-        <img src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" />
-      </a>
-      <a href={NUESROOM.url} target="_blank" rel="noreferrer">
-        <img src={NUESROOM.src} alt="Nuesroom logo" />
-      </a>
-      <a href={WEDEYCODE.url} target="_blank" rel="noreferrer">
-        <img src={WEDEYCODE.src} alt="WeDeyCode logo" />
-      </a>
-    </div>
-  </div>
+      <Link href={NASDAQ.url} target="_blank" rel="noreferrer">
+        <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '200px' }} />
+      </Link>
+      <Link href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
+        <Image src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" />
+      </Link>
+      <Link href={UIU.url} target="_blank" rel="noreferrer">
+        <Image src={UIU.src} alt="Umu Igbo Unite logo" />
+      </Link>
+      <Link href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
+        <Image src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" />
+      </Link>
+      <Link href={NUESROOM.url} target="_blank" rel="noreferrer">
+        <Image src={NUESROOM.src} alt="Nuesroom logo" />
+      </Link>
+      <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer">
+        <Image src={WEDEYCODE.src} alt="WeDeyCode logo" />
+      </Link>
+    </Box>
+  </Box>
 );
 
 export default MentionedIn;

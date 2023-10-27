@@ -1,8 +1,9 @@
 import React from 'react';
+import { Box, Heading, chakra } from '@chakra-ui/react';
 import Link from 'next/link';
 
 const Error = () => (
-  <div
+  <Box
     style={{
       textAlign: 'center',
       height: '100vh',
@@ -12,13 +13,15 @@ const Error = () => (
       justifyContent: 'center',
     }}
   >
-    <h1 style={{ fontSize: '2rem' }}>Something went wrong</h1>
+    <Heading as="h1" style={{ fontSize: '2rem' }}>
+      Something went wrong
+    </Heading>
     <Link href="/" passHref>
-      <span style={{ color: 'green', cursor: 'pointer', textDecoration: 'underline' }}>
+      <chakra.span style={{ color: 'green', cursor: 'pointer', textDecoration: 'underline' }}>
         Go back to homepage
-      </span>
+      </chakra.span>
     </Link>
-  </div>
+  </Box>
 );
 
 export default Error;

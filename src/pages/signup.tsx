@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Box, Button, Heading, Text, chakra, useMediaQuery } from '@chakra-ui/react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useForm, Controller } from 'react-hook-form';
-import { useMediaQuery } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Input from './components/Input';
 import { PORT } from '../siteConstants';
@@ -34,13 +34,13 @@ const SignUp = () => {
   }, []);
 
   /* Changes the button text depending on the response */
-  const handleCreateDeveloperResponse = (text) => {
+  const handleCreateDeveloperResponse = (text: string) => {
     setButtonText(text);
     setIsButtonDisabled(true);
   };
 
   /* Sends a POST request to the Igbo API to create a new Developer */
-  const createDeveloper = (data) =>
+  const createDeveloper = (data: { [key: string]: string | number }) =>
     axios({
       method: 'post',
       url: `${igboApiRoute}/api/v1/developers`,
@@ -74,15 +74,17 @@ const SignUp = () => {
 
   return (
     <>
-      <Navbar transparent={matchesLargeScreenQuery} />
-      <div className="w-screen h-screen flex flex-row overflow-hidden">
-        <div className="flex flex-col justify-center items-center w-full lg:w-6/12">
-          <div className="w-10/12 lg:w-7/12">
-            <h1 className="text-5xl mb-6">{t('Sign up.')}</h1>
-            <h2 className="text-gray-600 font-normal mb-4">
+      <Navbar isTransparent={matchesLargeScreenQuery} />
+      <Box className="w-screen h-screen flex flex-row overflow-hidden">
+        <Box className="flex flex-col justify-center items-center w-full lg:w-6/12">
+          <Box className="w-10/12 lg:w-7/12">
+            <Heading as="h1" className="text-5xl mb-6">
+              {t('Sign up.')}
+            </Heading>
+            <Text className="text-gray-600 font-normal mb-4">
               {t('Provide some of your information so we can grant you access to the Igbo API.')}
-            </h2>
-          </div>
+            </Text>
+          </Box>
           <form
             data-test="signup-form"
             onSubmit={handleSubmit(onSubmit)}
@@ -104,7 +106,7 @@ const SignUp = () => {
                 required: true,
               }}
             />
-            {errors.name ? <span className="error">Full name is required</span> : null}
+            {errors.name ? <chakra.span className="error">Full name is required</chakra.span> : null}
             <Controller
               render={(props) => (
                 <Input
@@ -121,7 +123,7 @@ const SignUp = () => {
                 required: true,
               }}
             />
-            {errors.email ? <span className="error">Email is required</span> : null}
+            {errors.email ? <chakra.span className="error">Email is required</chakra.span> : null}
             <Controller
               render={(props) => (
                 <Input
@@ -138,33 +140,35 @@ const SignUp = () => {
                 required: true,
               }}
             />
-            {errors.password ? <span className="error">Password is required</span> : null}
-            <button type="submit" className="primary-button" disabled={isButtonDisabled}>
+            {errors.password ? <chakra.span className="error">Password is required</chakra.span> : null}
+            <Button type="submit" className="primary-button" disabled={isButtonDisabled} colorScheme="green">
               {t(buttonText)}
-            </button>
+            </Button>
             {apiKey ? (
-              <div className="my-4 text-center space-y-6">
-                <h2 className="mb-4 text-gray-800 text-2xl">{t('Custom Igbo API Key:')}</h2>
-                <div className="w-full space-x-2">
+              <Box className="my-4 text-center space-y-6">
+                <Heading as="h2" className="mb-4 text-gray-800 text-2xl">
+                  {t('Custom Igbo API Key:')}
+                </Heading>
+                <Box className="w-full space-x-2">
                   <code className="bg-gray-100 text-gray-600 p-1 w-full">{apiKey}</code>
-                </div>
-                <p className="text-red-600">
+                </Box>
+                <Text className="text-red-600">
                   {t('Please save this key in a secure location. This key will disappear once you leave this page')}
-                </p>
-                <p className="text-gray-600">
+                </Text>
+                <Text className="text-gray-600">
                   {t("We'll also send you an email with your account information along with your API key.")}
-                </p>
-              </div>
+                </Text>
+              </Box>
             ) : null}
             {errorMessage ? (
-              <p className="text-red-600 mt-4" data-test="error-message">
+              <Text className="text-red-600 mt-4" data-test="error-message">
                 {errorMessage}
-              </p>
+              </Text>
             ) : null}
           </form>
-        </div>
-        <div className="flex flex-col w-0/12 lg:w-6/12 bg-gradient-to-tr from-green-100 to-green-500" />
-      </div>
+        </Box>
+        <Box className="flex flex-col w-0/12 lg:w-6/12 bg-gradient-to-tr from-green-100 to-green-500" />
+      </Box>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { compareSync } from 'bcrypt';
 import { developerSchema } from '../models/Developer';
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
 import { createDbConnection } from '../services/database';
-import { DeveloperDocument, Express } from '../types';
+import { DeveloperDocument, MiddleWare } from '../types';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -54,7 +54,7 @@ const findDeveloper = async (apiKey: string) => {
   return developer;
 };
 
-const validateApiKey: Express.MiddleWare = async (req, res, next) => {
+const validateApiKey: MiddleWare = async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
     let apiKey = (req.headers['X-API-Key'] || req.headers['x-api-key']) as string;

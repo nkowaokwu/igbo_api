@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 import { sendNewDeveloper } from './email';
 
 const TEST_EMAIL = 'developer@example.com';
@@ -12,7 +12,7 @@ const TEST_EMAIL = 'developer@example.com';
 const generateApiKey = uuid;
 
 /* Creates a new Developer in the database */
-export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
+export const postDeveloper: MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
 
