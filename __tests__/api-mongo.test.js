@@ -18,12 +18,7 @@ import {
   NONEXISTENT_ID,
   MAIN_KEY,
 } from './shared/constants';
-import {
-  getWords,
-  getWord,
-  getWordsV2,
-  getWordV2,
-} from './shared/commands';
+import { getWords, getWord, getWordsV2, getWordV2 } from './shared/commands';
 import { expectUniqSetsOfResponses } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { createDbConnection, handleCloseConnection } from '../src/services/database';
@@ -38,16 +33,20 @@ describe('MongoDB Words', () => {
       const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'word',
-        definitions: [{
-          wordClass: 'NNC',
-          definitions: ['first definition', 'second definition'],
-        }],
-        dialects: [{
-          variations: [],
-          dialects: ['NSA'],
-          pronunciation: '',
-          word: 'dialectalWord',
-        }],
+        definitions: [
+          {
+            wordClass: 'NNC',
+            definitions: ['first definition', 'second definition'],
+          },
+        ],
+        dialects: [
+          {
+            variations: [],
+            dialects: ['NSA'],
+            pronunciation: '',
+            word: 'dialectalWord',
+          },
+        ],
         examples: [new ObjectId(), new ObjectId()],
         stems: [],
         tenses: {},
@@ -72,10 +71,12 @@ describe('MongoDB Words', () => {
       const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'word',
-        definitions: [{
-          wordClass: 'NNC',
-          definitions: ['first definition', 'second definition'],
-        }],
+        definitions: [
+          {
+            wordClass: 'NNC',
+            definitions: ['first definition', 'second definition'],
+          },
+        ],
         dialects: {
           variations: [],
           dialects: ['mismatch'],
@@ -86,30 +87,30 @@ describe('MongoDB Words', () => {
         stems: [],
       };
       const validWord = new Word(word);
-      await validWord.save()
-        .catch(async (err) => {
-          await handleCloseConnection(connection);
-          expect(err.message.includes('dialects')).toEqual(true);
-        });
+      await validWord.save().catch(async (err) => {
+        await handleCloseConnection(connection);
+        expect(err.message.includes('dialects')).toEqual(true);
+      });
     });
 
     it('should throw an error for invalid data', async () => {
       const connection = createDbConnection();
       const Word = connection.model('Word', wordSchema);
       const word = {
-        definitions: [{
-          wordClass: 'n.',
-          definitions: ['first definition', 'second definition'],
-        }],
+        definitions: [
+          {
+            wordClass: 'n.',
+            definitions: ['first definition', 'second definition'],
+          },
+        ],
         examples: ['first example'],
         stems: [],
       };
       const validWord = new Word(word);
-      await validWord.save()
-        .catch(async (err) => {
-          await handleCloseConnection(connection);
-          expect(err).not.toEqual(undefined);
-        });
+      await validWord.save().catch(async (err) => {
+        await handleCloseConnection(connection);
+        expect(err).not.toEqual(undefined);
+      });
     });
   });
 
@@ -134,14 +135,14 @@ describe('MongoDB Words', () => {
       forEach(res.body, (word) => expect(words).toContain(word.word));
     });
 
-    it('should return back \'king\' documents', async () => {
+    it("should return back 'king' documents", async () => {
       const keyword = 'king';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(10);
     });
 
-    it('should return back \'kings\' (plural) documents', async () => {
+    it("should return back 'kings' (plural) documents", async () => {
       const keyword = 'kings';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
@@ -150,10 +151,7 @@ describe('MongoDB Words', () => {
 
     it('should return back words related to paradoxa (within paraenthesis)', async () => {
       const keyword = 'paradoxa';
-      const words = [
-        'òkwùma',
-        'osisi',
-      ];
+      const words = ['òkwùma', 'osisi'];
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       forEach(res.body, (word) => expect(words).toContain(word.word));
@@ -174,21 +172,21 @@ describe('MongoDB Words', () => {
       forEach(res.body, (word) => expect(words).toContain(word.word));
     });
 
-    it('should return gbā ọ̄sọ̄ by searching \'run\'', async () => {
+    it("should return gbā ọ̄sọ̄ by searching 'run'", async () => {
       const keyword = 'run';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(10);
     });
 
-    it('should return words using stop word (\'who\') as search keyword', async () => {
+    it("should return words using stop word ('who') as search keyword", async () => {
       const keyword = 'who';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body).toHaveLength(10);
     });
 
-    it('should return words using stop word (\'what\') as search keyword', async () => {
+    it("should return words using stop word ('what') as search keyword", async () => {
       const keyword = 'what';
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
@@ -265,7 +263,7 @@ describe('MongoDB Words', () => {
       expect(result.error).not.toEqual(undefined);
     });
 
-    it('should return an error because document doesn\'t exist', async () => {
+    it("should return an error because document doesn't exist", async () => {
       const res = await getWord(INVALID_ID);
       expect(res.status).toEqual(400);
       expect(res.body.error).not.toEqual(undefined);
@@ -315,21 +313,14 @@ describe('MongoDB Words', () => {
     });
 
     it('should return at most ten words per request due to pagination', async () => {
-      const res = await Promise.all([
-        getWords(),
-        getWords({ page: '1' }),
-        getWords({ page: '2' }),
-      ]);
+      const res = await Promise.all([getWords(), getWords({ page: '1' }), getWords({ page: '2' })]);
       expectUniqSetsOfResponses(res);
     });
 
     it('should return ignore case', async () => {
       const lowerCase = 'tree';
       const upperCase = 'Tree';
-      const res = await Promise.all([
-        getWords({ keyword: lowerCase }),
-        getWords({ keyword: upperCase }),
-      ]);
+      const res = await Promise.all([getWords({ keyword: lowerCase }), getWords({ keyword: upperCase })]);
       expect(res[1].body.length).toBeGreaterThanOrEqual(res[0].body.length);
     });
 
@@ -428,23 +419,27 @@ describe('MongoDB Words', () => {
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
-      expect(every(res.body, (word) => {
-        Object.keys(word).forEach((key) => {
-          expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
-        });
-        Object.keys(word).forEach((key) => {
-          expect(EXCLUDE_KEYS).not.toContain(key);
-        });
-
-        expect(every(word.examples, (example) => {
-          EXAMPLE_KEYS_V1.forEach((key) => {
-            expect(has(word, key)).toBeTruthy();
+      expect(
+        every(res.body, (word) => {
+          Object.keys(word).forEach((key) => {
+            expect(WORD_KEYS_V1.includes(key)).toBeTruthy();
           });
-          Object.keys(example).forEach((key) => {
+          Object.keys(word).forEach((key) => {
             expect(EXCLUDE_KEYS).not.toContain(key);
           });
-        }));
-      }));
+
+          expect(
+            every(word.examples, (example) => {
+              EXAMPLE_KEYS_V1.forEach((key) => {
+                expect(has(word, key)).toBeTruthy();
+              });
+              Object.keys(example).forEach((key) => {
+                expect(EXCLUDE_KEYS).not.toContain(key);
+              });
+            })
+          );
+        })
+      );
     });
 
     it.skip('should return a sorted list of igbo terms when using english', async () => {
@@ -452,20 +447,22 @@ describe('MongoDB Words', () => {
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(5);
-      expect(every(res.body, (word, index) => {
-        if (index === 0) {
-          return true;
-        }
-        const prevWord = res.body[index - 1].definitions[0] || '';
-        const currentWord = word.definitions[0] || '';
-        const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(prevWord)) * 100;
-        const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(currentWord)) * 100;
-        return prevWordDifference >= nextWordDifference;
-      })).toEqual(true);
+      expect(
+        every(res.body, (word, index) => {
+          if (index === 0) {
+            return true;
+          }
+          const prevWord = res.body[index - 1].definitions[0] || '';
+          const currentWord = word.definitions[0] || '';
+          const prevWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(prevWord)) * 100;
+          const nextWordDifference = stringSimilarity.compareTwoStrings(keyword, diacriticless(currentWord)) * 100;
+          return prevWordDifference >= nextWordDifference;
+        })
+      ).toEqual(true);
     });
 
     it('should return a list of igbo terms when using english by using single quotes', async () => {
-      const keyword = '\'water\'';
+      const keyword = "'water'";
       const res = await getWords({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeGreaterThanOrEqual(1);
@@ -542,10 +539,12 @@ describe('MongoDB Words', () => {
       const Word = connection.model('Word', wordSchema);
       const word = {
         word: 'standardIgboWord',
-        definitions: [{
-          wordClass: 'NNC',
-          definitions: ['first definition', 'second definition'],
-        }],
+        definitions: [
+          {
+            wordClass: 'NNC',
+            definitions: ['first definition', 'second definition'],
+          },
+        ],
         dialects: [],
         examples: [new ObjectId(), new ObjectId()],
         attributes: {
@@ -583,6 +582,13 @@ describe('MongoDB Words', () => {
   });
 
   describe('/GET mongodb words V2', () => {
+    it('should return word parts of mgba for noun deconstruction', async () => {
+      const keyword = 'mgba';
+      const res = await getWordsV2({ keyword });
+      expect(res.status).toEqual(200);
+      const gbaWord = res.body.data.find(({ word }) => word === 'gba');
+      expect(gbaWord).toBeTruthy();
+    });
     it('should return word information', async () => {
       const keyword = 'bia';
       const res = await getWordsV2({ keyword });
@@ -605,14 +611,13 @@ describe('MongoDB Words', () => {
       });
       expect(WordClass[result.body.data.definitions[0].wordClass]).not.toBe(undefined);
     });
-    it('should return words using stop word (\'who\') as search keyword', async () => {
+    it("should return words using stop word ('who') as search keyword", async () => {
       const keyword = 'who';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.data).toHaveLength(10);
     });
-
-    it('should return words using stop word (\'what\') as search keyword', async () => {
+    it("should return words using stop word ('what') as search keyword", async () => {
       const keyword = 'what';
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
@@ -629,13 +634,6 @@ describe('MongoDB Words', () => {
       const res = await getWordsV2({ keyword });
       expect(res.status).toEqual(200);
       expect(res.body.data.length).toBeGreaterThanOrEqual(2);
-    });
-    it('should return word parts of mgba for noun deconstruction', async () => {
-      const keyword = 'mgba';
-      const res = await getWordsV2({ keyword });
-      expect(res.status).toEqual(200);
-      const gbaWord = res.body.data.find(({ word }) => word === 'gba');
-      expect(gbaWord).toBeTruthy();
     });
     it('should noun with broken portions or word', async () => {
       const keyword = 'ọrụ';

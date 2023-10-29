@@ -1,98 +1,100 @@
+import WordTagEnum from './WordTagEnum';
+
 export default {
-  AGRICULTURE: {
-    value: 'agriculture',
+  [WordTagEnum.AGRICULTURE]: {
+    value: WordTagEnum.AGRICULTURE,
     label: 'Agriculture',
   },
-  ARTS: {
-    value: 'arts',
+  [WordTagEnum.ARTS]: {
+    value: WordTagEnum.ARTS,
     label: 'Arts',
   },
-  BOTANY: {
-    value: 'botany',
+  [WordTagEnum.BOTANY]: {
+    value: WordTagEnum.BOTANY,
     label: 'Botany',
   },
-  COMMERCE: {
-    value: 'commerce',
+  [WordTagEnum.COMMERCE]: {
+    value: WordTagEnum.COMMERCE,
     label: 'Commerce',
   },
-  EDUCATION: {
-    value: 'education',
+  [WordTagEnum.EDUCATION]: {
+    value: WordTagEnum.EDUCATION,
     label: 'Education',
   },
-  FASHION: {
-    value: 'fashion',
+  [WordTagEnum.FASHION]: {
+    value: WordTagEnum.FASHION,
     label: 'Fashion',
   },
-  FOOD: {
-    value: 'food',
+  [WordTagEnum.FOOD]: {
+    value: WordTagEnum.FOOD,
     label: 'Food',
   },
-  GEOGRAPHY: {
-    value: 'geography',
+  [WordTagEnum.GEOGRAPHY]: {
+    value: WordTagEnum.GEOGRAPHY,
     label: 'Geography',
   },
-  KINSHIP: {
-    value: 'kinship',
+  [WordTagEnum.KINSHIP]: {
+    value: WordTagEnum.KINSHIP,
     label: 'Kinship',
   },
-  MARINE: {
-    value: 'marine',
+  [WordTagEnum.MARINE]: {
+    value: WordTagEnum.MARINE,
     label: 'Marine',
   },
-  MATHEMATICS: {
-    value: 'mathematics',
+  [WordTagEnum.MATHEMATICS]: {
+    value: WordTagEnum.MATHEMATICS,
     label: 'Mathematics',
   },
-  MEDICINE: {
-    value: 'medicine',
+  [WordTagEnum.MEDICINE]: {
+    value: WordTagEnum.MEDICINE,
     label: 'Medicine',
   },
-  CULTURE: {
-    value: 'culture',
+  [WordTagEnum.CULTURE]: {
+    value: WordTagEnum.CULTURE,
     label: 'Culture',
   },
-  LANGUAGE: {
-    value: 'language',
+  [WordTagEnum.LANGUAGE]: {
+    value: WordTagEnum.LANGUAGE,
     label: 'Language',
   },
-  LAW: {
-    value: 'law',
+  [WordTagEnum.LAW]: {
+    value: WordTagEnum.LAW,
     label: 'Law',
   },
-  PERFORMING_ARTS: {
-    value: 'performing_arts',
+  [WordTagEnum.PERFORMING_ARTS]: {
+    value: WordTagEnum.PERFORMING_ARTS,
     label: 'Performing Arts',
   },
-  POLITICS: {
-    value: 'politics',
+  [WordTagEnum.POLITICS]: {
+    value: WordTagEnum.POLITICS,
     label: 'Politics',
   },
-  RELIGION: {
-    value: 'religion',
+  [WordTagEnum.RELIGION]: {
+    value: WordTagEnum.RELIGION,
     label: 'Religion',
   },
-  SPORTS: {
-    value: 'sports',
+  [WordTagEnum.SPORTS]: {
+    value: WordTagEnum.SPORTS,
     label: 'Sports',
   },
-  TECHNOLOGY: {
-    value: 'technology',
+  [WordTagEnum.TECHNOLOGY]: {
+    value: WordTagEnum.TECHNOLOGY,
     label: 'Technology',
   },
-  TRANSPORTATION: {
-    value: 'transportation',
+  [WordTagEnum.TRANSPORTATION]: {
+    value: WordTagEnum.TRANSPORTATION,
     label: 'Transportation',
   },
-  VISUAL_ARTS: {
-    value: 'visual_arts',
+  [WordTagEnum.VISUAL_ARTS]: {
+    value: WordTagEnum.VISUAL_ARTS,
     label: 'Visual Arts',
   },
-  WEATHER: {
-    value: 'weather',
+  [WordTagEnum.WEATHER]: {
+    value: WordTagEnum.WEATHER,
     label: 'Weather',
   },
-  ZOOLOGY: {
-    value: 'zoology',
+  [WordTagEnum.ZOOLOGY]: {
+    value: WordTagEnum.ZOOLOGY,
     label: 'Zoology',
   },
 };

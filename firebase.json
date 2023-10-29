@@ -5,16 +5,14 @@
   },
   "hosting": {
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],  
-    "rewrites": [{
-      "source": "**",
-      "function": "api",
-      "region": "us-central1"
-    }],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "api",
+        "region": "us-central1"
+      }
+    ],
     "headers": [
       {
         "source": "/",
@@ -38,7 +36,7 @@
       "port": 8080
     },
     "ui": {
-      "enabled": true
+      "enabled": false
     },
     "pubsub": {
       "port": 8088

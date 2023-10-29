@@ -10,7 +10,7 @@ const clean = (text) => {
   return text.replace(/[0-9+.]/g, '').trim();
 };
 
-const removeTonalMarks = (text) => (
+const removeTonalMarks = (text) =>
   [...text].reduce((textCharacters, letter) => {
     if (letter.charCodeAt() > 128 && letter.charCodeAt() < 300) {
       const normalizedLetter = letter.normalize('NFD').replace(/[\u0300-\u036f]/, '');
@@ -20,8 +20,7 @@ const removeTonalMarks = (text) => (
       return `${textCharacters}${letter}`;
     }
     return textCharacters;
-  }, '')
-);
+  }, '');
 
 const removeDigitsAndSpecialCharacters = (text, removeAbbreviations) => {
   let updatedText = text;

@@ -22,7 +22,7 @@ Get words from dictionary
  **Request Headers**
 | Name   | Description | Example |
 | :----- | :----- | :----- |
-| **X-API-Header** *required* | Secret API token | `X-API-Header=API_token` |
+| **X-API-Key** *required* | Secret API token | `X-API-Key=API_token` |
 
  **Query Parameters**
 
@@ -74,13 +74,9 @@ Get words from dictionary
 ```js
 GET /words/{wordId}
 ```
-Returns a single word JSON object from the database
+Returns a single word JSON object from the database.
 
- **Parameters**
-
-| Name   | Description | Example |
-| :----- | :----- | :----- |
-| **wordId** *required* | The word Id (string) | `id=1234567890` |
+**`wordId`** is the Id of the word document you are requesting.
 
  **Responses**
 

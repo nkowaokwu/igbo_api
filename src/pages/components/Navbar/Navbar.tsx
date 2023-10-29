@@ -1,46 +1,49 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
+import { Box, Button, Heading, Image, Link as ChakraLink } from '@chakra-ui/react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { Link } from 'react-scroll';
 import SubMenu from './SubMenu';
-import MenuIcon from '../../assets/downchevron.svg';
 
-interface NavBarPropsInterface {
-  to: string;
-  transparent: boolean;
-}
+const menuIcon = (
+  <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+    <path d="M14 5l-6.5 7L1 5" stroke="currentColor" stroke-linecap="square" />
+  </svg>
+);
 
-const Navbar = ({ to = '/', transparent }: NavBarPropsInterface) => {
+const Navbar = ({ to = '/', isTransparent = false }: { to?: string; isTransparent?: boolean }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const matchesLargeScreenQuery = useMediaQuery('(min-width:1024px)');
   return (
-    <div
+    <Box
       className={`flex fixed items-center justify-between w-full py-5 lg:px-10
-      ${transparent ? 'transparent' : 'bg-white bg-opacity-75'} select-none`}
+      ${isTransparent ? 'transparent' : 'bg-white bg-opacity-75'} select-none`}
       style={{ zIndex: 2 }}
     >
-      <h1 className="ml-5 text-3xl font-extrabold text-gray-900 transition-element hover:text-gray-700 lg:ml-0">
+      <Heading
+        as="h1"
+        className="ml-5 text-3xl font-extrabold text-gray-900 transition-element hover:text-gray-700 lg:ml-0"
+      >
         {to ? (
-          <a href={to}>
-            <img src="https://igbo-api.s3.us-east-2.amazonaws.com/images/igboAPI.svg" alt="Igbo API logo" />
-          </a>
+          <ChakraLink href={to}>
+            <Image src="https://igbo-api.s3.us-east-2.amazonaws.com/images/igboAPI.svg" alt="Igbo API logo" />
+          </ChakraLink>
         ) : (
           <Link className="cursor-pointer" to="homepage-container" smooth offset={-100} duration={600}>
             Igbo API
           </Link>
         )}
-      </h1>
+      </Heading>
       {!matchesLargeScreenQuery ? (
-        <button
+        <Button
           type="button"
           className={`transition-element mr-5 lg:mr-0 ${isMenuVisible ? 'transform rotate-90' : ''}`}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
-          <Image src={MenuIcon} alt="down arrow as menu icon" />
-        </button>
+          {menuIcon}
+        </Button>
       ) : null}
-      <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} transparent={transparent} />
-    </div>
+      <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} isTransparent={isTransparent} />
+    </Box>
   );
 };
 

@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        mongodb-version: [4.0, 4.2]
+        mongodb-version: [5.0, 6.0]
 
     steps:
       - name: Git checkout
@@ -36,7 +36,9 @@ jobs:
           yarn build
       - name: Test Server Build Process
         run: yarn test:build
-      - name: Test API
-        run: yarn jest
+      - name: Test Backend
+        run: yarn jest:backend
+      - name: Test Frontend
+        run: yarn jest:frontend
       - name: Test API Homepage
         run: yarn cypress:ci

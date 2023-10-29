@@ -1,22 +1,30 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable max-len */
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { Box, Heading } from '@chakra-ui/react';
 
 const numberWithCommas = (x = 0) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-interface StatPropsInterface {
+const Stat = ({
+  value,
+  header,
+  exact = true,
+  children,
+}: {
   value: number;
   header: string;
   exact?: boolean;
-  children?: ReactNode;
-}
-
-const Stat = ({ value, header, exact = true, children }: StatPropsInterface) => (
-  <div className="flex flex-col items-center justify-center h-auto px-4 py-4 m-8 text-center text-gray-700 rounded-md">
-    <h1 className="text-6xl font-bold text-gray-700">{`${numberWithCommas(value)}${exact ? '' : '+'}`}</h1>
-    <h3 className="text-xl text-gray-500">{header}</h3>
+  children?: any;
+}) => (
+  <Box
+    className="flex flex-col items-center justify-center h-auto px-4 py-4 m-8 text-center text-gray-700 rounded-md"
+  >
+    <Heading as="h1" className="font-bold text-gray-700" fontSize="6xl">{`${numberWithCommas(value)}${
+      exact ? '' : '+'
+    }`}</Heading>
+    <Heading as="h3" className="text-gray-500" fontSize="3xl">
+      {header}
+    </Heading>
     {children}
-  </div>
+  </Box>
 );
 
 export default Stat;

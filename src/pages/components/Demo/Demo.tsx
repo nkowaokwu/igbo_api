@@ -1,36 +1,33 @@
-/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
-import { Button } from '@chakra-ui/react';
+import { Box, Button, Heading, Text, Link } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import { useTranslation } from 'react-i18next';
-import queryString, { ParsedQuery } from 'query-string';
+import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { Input, Checkbox } from 'antd';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
-import Word from '../../../models/interfaces/Word';
+import { Example, Word } from '../../../types';
+import { WordDialect } from '../../../types/word';
 
-interface DemoPropsInterface {
-  searchWord: string;
-  words: Word[];
-}
-
-const Demo = ({ searchWord, words }: DemoPropsInterface) => {
+const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchingWord, setIsSearchingWord] = useState(false);
-  const [keyword, setKeyword] = useState<string | string[]>(searchWord || '');
+  const [keyword, setKeyword] = useState(searchWord);
   const [queries, setQueries] = useState({});
-  const [initialQueries, setInitialQueries] = useState<ParsedQuery<string>>();
+  const [initialQueries, setInitialQueries] = useState<{ examples?: Example[]; dialects?: WordDialect; word?: string }>(
+    {}
+  );
   const [productionUrl, setProductionUrl] = useState('');
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const loadedInitialQueries = queryString.parse(window.location.search);
+      const loadedInitialQueries: { word?: string } = queryString.parse(window.location.search);
       setProductionUrl(window.origin);
       setInitialQueries(loadedInitialQueries);
       setIsLoading(false);
       setQueries(omit(loadedInitialQueries, ['word']));
-      setKeyword(loadedInitialQueries.word);
+      setKeyword(loadedInitialQueries?.word);
       if (keyword || loadedInitialQueries.word) {
         window.location.hash = 'try-it-out';
       }
@@ -49,7 +46,7 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
     window.location.href = `/?word=${keyword}${appendQueries}`;
   };
 
-  const onEnter = (e) => {
+  const onEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       onSubmit();
     }
@@ -64,7 +61,7 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
     return requestUrl;
   };
 
-  const handleDialects = ({ target }) => {
+  const handleDialects = ({ target }: { target: { checked: boolean } }) => {
     if (target.checked) {
       setQueries({ ...queries, dialects: target.checked });
     } else {
@@ -72,7 +69,7 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
     }
   };
 
-  const handleExamples = ({ target }) => {
+  const handleExamples = ({ target }: { target: { checked: boolean } }) => {
     if (target.checked) {
       setQueries({ ...queries, examples: target.checked });
     } else {
@@ -81,14 +78,18 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
   };
 
   return !isLoading ? (
-    <div className="flex justify-center mb-16">
-      <div className="flex flex-col items-center p-4 rounded-md md:items-start xl:flex-row lg:space-x-10 bg-gradient-to-tl from-blue-100 to-white">
-        <div className="p-4 mb-8 space-y-5 bg-white rounded-md shadow-2xl demo-inputs-container md:-mt-16 lg:mt-0">
+    <Box className="flex justify-center mb-16">
+      <Box
+        className="flex flex-col items-center p-4 rounded-md md:items-start xl:flex-row lg:space-x-10 bg-gradient-to-tl from-blue-100 to-white"
+      >
+        <Box className="p-4 mb-8 space-y-5 bg-white rounded-md shadow-2xl demo-inputs-container md:-mt-16 lg:mt-0">
           <form onSubmit={onSubmit} className="flex flex-col w-full space-y-5">
-            <h2>{t('Enter a word below')}</h2>
-            <p className="self-center md:self-start">
+            <Heading as="h2" fontSize="2xl">
+              {t('Enter a word below')}
+            </Heading>
+            <Text className="self-center md:self-start">
               {t("Enter a word in either English or Igbo to see it's information")}
-            </p>
+            </Text>
             <Input
               size="large"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
@@ -98,29 +99,31 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
               data-test="try-it-out-input"
               defaultValue={searchWord || initialQueries.word}
             />
-            <h2 className="text-2xl">{t('Flags')}</h2>
-            <div className="flex space-x-8">
-              <div>
+            <Heading as="h2" fontSize="2xl">
+              {t('Flags')}
+            </Heading>
+            <Box className="flex space-x-8">
+              <Box>
                 <Checkbox
                   className="flex items-center space-x-2"
-                  defaultChecked={initialQueries.dialects === 'true'}
+                  defaultChecked={!!initialQueries.dialects}
                   onChange={handleDialects}
                   data-test="dialects-flag"
                 >
                   {t('Dialects')}
                 </Checkbox>
-              </div>
-              <div>
+              </Box>
+              <Box>
                 <Checkbox
                   className="flex items-center space-x-2"
-                  defaultChecked={initialQueries.examples === 'true'}
+                  defaultChecked={!!initialQueries.examples}
                   onChange={handleExamples}
                   data-test="examples-flag"
                 >
                   {t('Examples')}
                 </Checkbox>
-              </div>
-            </div>
+              </Box>
+            </Box>
             <Input disabled value={constructRequestUrl()} className="w-full px-5 py-3" />
             <Button
               type="submit"
@@ -136,26 +139,30 @@ const Demo = ({ searchWord, words }: DemoPropsInterface) => {
             >
               {t('Submit')}
             </Button>
-            <p className="self-center mb-24 text-center text-gray-700 text-l">
+            <Text className="self-center mb-24 text-center text-gray-700 text-l">
               {t('Want to see how this data is getting used? Take a look at ')}
-              <a className="link" href={DICTIONARY_APP_URL} data-test="nkowaokwu-link">
+              <Link className="link" href={DICTIONARY_APP_URL} data-test="nkowaokwu-link">
                 Nkọwa okwu
-              </a>
-            </p>
+              </Link>
+            </Text>
           </form>
-        </div>
-        <div className="flex flex-col w-full lg:w-auto xl:-mt-24">
-          <h3 className="self-center w-full mb-5 text-2xl font-bold text-center text-gray-800 lg:text-left lg:mt-4 lg:w-auto lg:self-start">
+        </Box>
+        <Box className="flex flex-col w-full lg:w-auto xl:-mt-24">
+          <Heading
+            as="h3"
+            className="self-center w-full mb-5 text-center text-gray-800 lg:text-left lg:mt-4 lg:w-auto lg:self-start"
+            fontSize="2xl"
+          >
             {t('Response')}
-          </h3>
+          </Heading>
           <JSONPretty
             className="self-center w-full p-2 overflow-auto bg-gray-800 rounded-md jsonPretty lg:w-auto"
             id="json-pretty"
             data={responseBody}
           />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   ) : null;
 };
 

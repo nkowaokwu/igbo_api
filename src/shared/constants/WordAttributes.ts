@@ -1,34 +1,39 @@
-export default {
-  IS_STANDARD_IGBO: {
-    value: 'isStandardIgbo',
+import WordAttributeEnum from './WordAttributeEnum';
+
+// Word characteristics
+const WordAttributes = {
+  [WordAttributeEnum.IS_STANDARD_IGBO]: {
+    value: WordAttributeEnum.IS_STANDARD_IGBO,
     label: 'Is Standard Igbo',
   },
-  IS_ACCENTED: {
-    value: 'isAccented',
+  [WordAttributeEnum.IS_ACCENTED]: {
+    value: WordAttributeEnum.IS_ACCENTED,
     label: 'Is Accented',
   },
-  IS_COMMON: {
-    value: 'isCommon',
-    label: 'Is Common',
-  },
-  IS_COMPLETE: {
-    value: 'isComplete',
+  [WordAttributeEnum.IS_COMPLETE]: {
+    value: WordAttributeEnum.IS_COMPLETE,
     label: 'Is Complete',
   },
-  IS_SLANG: {
-    value: 'isSlang',
+  [WordAttributeEnum.IS_SLANG]: {
+    value: WordAttributeEnum.IS_SLANG,
     label: 'Is Slang',
   },
-  IS_CONSTRUCTED_TERM: {
-    value: 'isConstructedTerm',
+  [WordAttributeEnum.IS_CONSTRUCTED_TERM]: {
+    value: WordAttributeEnum.IS_CONSTRUCTED_TERM,
     label: 'Is Constructed Term',
   },
-  IS_BORROWED_TERM: {
-    value: 'isBorrowedTerm',
+  [WordAttributeEnum.IS_BORROWED_TERM]: {
+    value: WordAttributeEnum.IS_BORROWED_TERM,
     label: 'Is Borrowed Term',
   },
-  IS_STEM: {
-    value: 'isStem',
+  [WordAttributeEnum.IS_STEM]: {
+    value: WordAttributeEnum.IS_STEM,
     label: 'Is Stem',
   },
+  [WordAttributeEnum.IS_COMMON]: {
+    value: WordAttributeEnum.IS_COMMON,
+    label: 'Is Common Term',
+  },
 };
+
+export default WordAttributes;

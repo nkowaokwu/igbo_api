@@ -145,7 +145,10 @@ __tests__/__mocks__/dictionaries/
 .history
 
 # Firebase
+src/services/firebase.ts
 functions/node_modules
 functions/src
 functions/yarn.lock
 yarn.lock
+.idea
+.firebaserc

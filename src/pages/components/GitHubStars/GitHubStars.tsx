@@ -1,14 +1,11 @@
 /* eslint-disable max-len */
 import React from 'react';
+import { Box, Link } from '@chakra-ui/react';
 import { GITHUB_REPO } from '../../../siteConstants';
 
-interface GitHubStarsProps {
-  stars: number;
-}
-
-const GitHubStars = ({ stars }: GitHubStarsProps) => (
-  <div className="flex flex-row items-center justify-center space-x-4">
-    <a
+const GitHubStars = ({ stars }: { stars: number }) => (
+  <Box className="flex flex-row items-center justify-center space-x-4">
+    <Link
       href={GITHUB_REPO}
       className="flex flex-row items-center p-2 -mr-1 text-lg font-bold border border-gray-200 rounded-lg hover:shadow-inner bg-gradient-to-t from-gray-100 to-white"
     >
@@ -50,17 +47,19 @@ const GitHubStars = ({ stars }: GitHubStarsProps) => (
         />
       </svg>
       Stars
-    </a>
-    <div className="relative flex flex-row items-center p-2 ml-3 border border-gray-200 rounded-lg hover:shadow-inner bg-gradient-to-t from-gray-100 to-white">
-      <div
+    </Link>
+    <Box
+      className="relative flex flex-row items-center p-2 ml-3 border border-gray-200 rounded-lg hover:shadow-inner bg-gradient-to-t from-gray-100 to-white"
+    >
+      <Box
         style={{ zIndex: -1 }}
         className="absolute -left-1 top-3.5 h-3 w-3 bg-gradient-to-t
         from-gray-100-to-white rounded-sm border border-gray-300 flex-none transform rotate-45"
       />
-      <a className="inset-0 text-lg font-bold btn" href={GITHUB_REPO}>
+      <Link className="inset-0 text-lg font-bold btn" href={GITHUB_REPO}>
         {stars}
-      </a>
-    </div>
-  </div>
+      </Link>
+    </Box>
+  </Box>
 );
 export default GitHubStars;
