@@ -11,10 +11,6 @@ const developerData = {
   password: 'password',
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 404d4a7 (chore: create logout developer endpoint; add test #751 (#752))
 // Generate a unique name using a UUID without hyphens
 const generateUniqueName = () => uuid().replace(/-/g, '');
 
@@ -50,21 +46,6 @@ const anotherDeveloperData = {
   name: generateUniqueName(),
   email: generateUniqueEmail(),
   password: generateUniquePassword(),
-<<<<<<< HEAD
-=======
-const newDeveloperData = {
-<<<<<<< HEAD
-  name: 'New Developer',
-  email: 'newdeveloper@example.com',
-  password: 'password',
->>>>>>> 03f15e6 (Fix create login endpoint (#748))
-=======
-  name: `${uuid().replace(/-/g, '')}`,
-  email: `${uuid().replace(/-/g, '')}@testing.com`,
-  password: `${uuid()}`,
->>>>>>> 2b187a9 (Define the login business logic (#750))
-=======
->>>>>>> 404d4a7 (chore: create logout developer endpoint; add test #751 (#752))
 };
 
 const malformedDeveloperData = {
@@ -72,10 +53,6 @@ const malformedDeveloperData = {
   password: 'password',
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 404d4a7 (chore: create logout developer endpoint; add test #751 (#752))
 export {
   wordId,
   exampleId,
@@ -86,9 +63,3 @@ export {
   anotherDeveloperData,
   malformedDeveloperData,
 };
-<<<<<<< HEAD
-=======
-export { wordId, exampleId, developerData, newDeveloperData, malformedDeveloperData };
->>>>>>> 03f15e6 (Fix create login endpoint (#748))
-=======
->>>>>>> 404d4a7 (chore: create logout developer endpoint; add test #751 (#752))

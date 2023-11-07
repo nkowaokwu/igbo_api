@@ -1,9 +1,9 @@
 import { compareSync } from 'bcrypt';
 import { developerSchema } from '../../models/Developer';
 import { createDbConnection } from '../../services/database';
-import { DeveloperDocument, Express } from '../../types';
+import { DeveloperDocument, MiddleWare } from '../../types';
 
-export const handleRequest: Express.MiddleWare = (req) => {
+export const handleRequest: MiddleWare = (req) => {
   const { apiLimit } = req.query;
   const apiToken = req.headers['X-API-Key'] || req.headers['x-api-key'];
 
