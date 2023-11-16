@@ -1,3 +1,4 @@
+// Frontend Jest Config
 module.exports = {
   displayName: 'igbo_api',
   testMatch: ['./**/__tests__/**/*.test.tsx'],
