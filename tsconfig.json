@@ -3,7 +3,10 @@
     "outDir": "./build",
     "allowJs": true,
     "target": "ESNext",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,9 +17,18 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react",
-    "types": ["jest", "node"]
+    "jsx": "preserve",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
-  "include": ["./src/**/*", "@types", "env.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src/**/*",
+    "@types",
+    "env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

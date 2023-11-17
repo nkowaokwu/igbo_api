@@ -6,8 +6,12 @@ describe('Igbo API Homepage', () => {
   });
 
   describe('Outside links', () => {
+    beforeEach(() => {
+      cy.viewport('macbook-16');
+    });
+
     it('navigate to Nkọwa okwu website', () => {
-      cy.get('[data-test="nkowaokwu-link"]').click();
+      cy.findByTestId('nkowaokwu-link').click();
       cy.url().should('equal', 'https://nkowaokwu.com/home');
       cy.contains('Internal Server Error').should('not.exist');
     });
@@ -30,7 +34,7 @@ describe('Igbo API Homepage', () => {
     });
 
     it('render the Privacy page', () => {
-      cy.findByText('Privacy').click();
+      cy.findByText('Privacy Policy').click();
       cy.findByText('Privacy Policy').should('exist');
     });
 
@@ -112,7 +116,7 @@ describe('Igbo API Homepage', () => {
 
     it('navigate to Nkọwa okwu', () => {
       cy.visit('/');
-      cy.get('.demo-inputs-container').contains('Nkọwa okwu').click();
+      cy.findByTestId('nkowaokwu-link').scrollTo(0, -300).click();
     });
   });
 });
