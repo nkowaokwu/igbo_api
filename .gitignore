@@ -148,5 +148,6 @@ src/services/firebase.ts
 functions/node_modules
 functions/src
 functions/yarn.lock
+yarn.lock
 .idea
 .firebaserc
