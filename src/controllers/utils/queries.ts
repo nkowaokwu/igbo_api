@@ -105,8 +105,9 @@ const definitionsQuery = ({
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
-export const searchExamplesRegexQuery = (regex: SearchRegExp) => ({
+export const searchExamplesRegexQuery = ({ regex, flags }: { regex: SearchRegExp; flags: { style: string } }) => ({
   $or: [{ igbo: regex.wordReg }, { english: regex?.definitionsReg }],
+  ...(flags.style ? { style: flags.style } : {}),
 });
 export const searchIgboTextSearch = fullTextSearchQuery;
 export const searchDefinitionsWithinIgboTextSearch = fullTextDefinitionsSearchQuery;

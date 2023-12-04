@@ -68,13 +68,14 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
 /* Returns examples from MongoDB */
 export const getExamples: MiddleWare = async (req, res, next) => {
   try {
-    const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, ...rest } = await handleQueries(req);
+    const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, flags, ...rest } =
+      await handleQueries(req);
     const regexMatch =
       !isUsingMainKey && !searchWord
         ? {
             igbo: { $exists: false },
           }
-        : searchExamplesRegexQuery(regex);
+        : searchExamplesRegexQuery({ regex, flags });
     const responseData = await searchExamples({
       searchWord,
       redisClient,

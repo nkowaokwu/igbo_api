@@ -15,6 +15,7 @@ import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
 import { WordData, Keyword } from './types';
 import { Filters, ExampleWithPronunciation } from '../types';
+import ExampleStyles from '../../shared/constants/ExampleStyles';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
@@ -115,6 +116,7 @@ export const handleQueries = async ({
     strict: strictQuery,
     dialects: dialectsQuery,
     examples: examplesQuery,
+    style: stylesQuery,
     tags: tagsQuery,
     wordClasses: wordClassesQuery,
     resolve: resolveQuery,
@@ -232,6 +234,8 @@ export const handleQueries = async ({
   const strict = strictQuery === 'true';
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
+  // @ts-expect-error toUpperCase
+  const style = stylesQuery && Boolean(ExampleStyles[stylesQuery.toUpperCase()]);
   const tags = tagsQuery
     ? tagsQuery
         .replace(/[[\]']/g, '')
@@ -248,6 +252,7 @@ export const handleQueries = async ({
   const flags = {
     dialects,
     examples,
+    style,
     resolve,
   };
   const filters: Filters = {
