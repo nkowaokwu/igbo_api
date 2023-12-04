@@ -3,7 +3,6 @@ import {
   Avatar,
   Box,
   Flex,
-  FlexProps,
   HStack,
   IconButton,
   Input,
@@ -24,11 +23,7 @@ import { BellIcon, ChevronDownIcon, HamburgerIcon, Search2Icon } from '@chakra-u
 import { useTranslation } from 'react-i18next';
 import { DEFAULT_AVATAR, LOGO_URL } from '../../../shared/constants/Developers';
 
-interface MobileProps extends FlexProps {
-  onOpen: () => void;
-}
-
-const MobileNav: React.FC<MobileProps> = ({ onOpen }) => {
+const MobileNav = ({ onOpen }: { onOpen: () => void }) => {
   const { t } = useTranslation('dashboard');
   const showLogo = useBreakpointValue({ base: false, md: false });
   const showIconBtn = useBreakpointValue({ base: 'flex', md: false });

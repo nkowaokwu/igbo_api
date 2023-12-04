@@ -102,15 +102,11 @@ const revertTrimPipeline = [
 module.exports = {
   async up(db) {
     const collections = ['words', 'wordsuggestions'];
-    await Promise.all(collections.map((collection) => (
-      db.collection(collection).updateMany({}, trimPipeline)
-    )));
+    await Promise.all(collections.map((collection) => db.collection(collection).updateMany({}, trimPipeline)));
   },
 
   async down(db) {
     const collections = ['words', 'wordsuggestions'];
-    await Promise.all(collections.map((collection) => (
-      db.collection(collection).updateMany({}, revertTrimPipeline)
-    )));
+    await Promise.all(collections.map((collection) => db.collection(collection).updateMany({}, revertTrimPipeline)));
   },
 };

@@ -5,12 +5,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
-import {
-  router,
-  routerV2,
-  siteRouter,
-  testRouter,
-} from './routers';
+import { router, routerV2, siteRouter, testRouter } from './routers';
 import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
@@ -46,10 +41,7 @@ app.use(`/api/${Version.VERSION_2}`, cache(86400, 172800), routerV2);
 
 /* Grabs data from JSON dictionary */
 if (process.env.NODE_ENV !== 'production') {
-  app.use(
-    `/api/${Version.VERSION_1}/test`,
-    testRouter,
-  );
+  app.use(`/api/${Version.VERSION_1}/test`, testRouter);
 }
 
 /* Renders the API Site */

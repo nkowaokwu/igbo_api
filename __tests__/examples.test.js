@@ -1,19 +1,8 @@
 import forEach from 'lodash/forEach';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
-import {
-  getExamples,
-  getExample,
-  getExamplesV2,
-  getExampleV2,
-} from './shared/commands';
-import {
-  MAIN_KEY,
-  EXAMPLE_KEYS_V1,
-  EXAMPLE_KEYS_V2,
-  INVALID_ID,
-  NONEXISTENT_ID,
-} from './shared/constants';
+import { getExamples, getExample, getExamplesV2, getExampleV2 } from './shared/commands';
+import { MAIN_KEY, EXAMPLE_KEYS_V1, EXAMPLE_KEYS_V2, INVALID_ID, NONEXISTENT_ID } from './shared/constants';
 import { expectUniqSetsOfResponses } from './shared/utils';
 
 describe('MongoDB Examples', () => {
@@ -46,7 +35,7 @@ describe('MongoDB Examples', () => {
       expect(result.error).not.toEqual(undefined);
     });
 
-    it('should return an error because document doesn\'t exist', async () => {
+    it("should return an error because document doesn't exist", async () => {
       const res = await getExample(INVALID_ID);
       expect(res.status).toEqual(400);
       expect(res.body.error).not.toEqual(undefined);
@@ -63,11 +52,7 @@ describe('MongoDB Examples', () => {
     });
 
     it('should return different sets of example suggestions for pagination', async () => {
-      const res = await Promise.all([
-        getExamples({ page: 0 }),
-        getExamples({ page: 1 }),
-        getExamples({ page: 2 }),
-      ]);
+      const res = await Promise.all([getExamples({ page: 0 }), getExamples({ page: 1 }), getExamples({ page: 2 })]);
       expectUniqSetsOfResponses(res);
     });
 

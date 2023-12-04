@@ -4,7 +4,7 @@ import { Box, Text, useColorModeValue } from '@chakra-ui/react';
 import Sidebar from './components/Sidebar';
 import DashboardHeader from './components/DashboardHeader';
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const { t } = useTranslation('dashboard');
 
   return (

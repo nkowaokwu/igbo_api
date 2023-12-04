@@ -6,7 +6,8 @@ const stemsToObjectIdMigrationPipeline = [
         $type: 'string',
       },
     },
-  }, {
+  },
+  {
     $addFields: {
       stems: {
         $map: {
@@ -31,7 +32,8 @@ const revertStemsToObjectIdMigrationPipeline = [
         $exists: true,
       },
     },
-  }, {
+  },
+  {
     $addFields: {
       stems: {
         $map: {
@@ -46,29 +48,31 @@ const revertStemsToObjectIdMigrationPipeline = [
 module.exports = {
   async up(db) {
     const collections = ['words', 'wordsuggestions'];
-    return Promise.all(collections.map(async (collection) => {
-      const rawDocs = await db.collection(collection).aggregate(stemsToObjectIdMigrationPipeline);
-      const wordDocs = await rawDocs.toArray();
-      await Promise.all((wordDocs.map((wordDoc) => (
-        db.collection(collection).updateOne(
-          { _id: wordDoc._id },
-          { $set: { stems: wordDoc.stems } },
-        )
-      ))));
-    }));
+    return Promise.all(
+      collections.map(async (collection) => {
+        const rawDocs = await db.collection(collection).aggregate(stemsToObjectIdMigrationPipeline);
+        const wordDocs = await rawDocs.toArray();
+        await Promise.all(
+          wordDocs.map((wordDoc) =>
+            db.collection(collection).updateOne({ _id: wordDoc._id }, { $set: { stems: wordDoc.stems } })
+          )
+        );
+      })
+    );
   },
 
   async down(db) {
     const collections = ['words', 'wordsuggestions'];
-    return Promise.all(collections.map(async (collection) => {
-      const rawDocs = await db.collection(collection).aggregate(revertStemsToObjectIdMigrationPipeline);
-      const wordDocs = await rawDocs.toArray();
-      await Promise.all((wordDocs.map((wordDoc) => (
-        db.collection(collection).updateOne(
-          { _id: wordDoc._id },
-          { $set: { stems: wordDoc.stems } },
-        )
-      ))));
-    }));
+    return Promise.all(
+      collections.map(async (collection) => {
+        const rawDocs = await db.collection(collection).aggregate(revertStemsToObjectIdMigrationPipeline);
+        const wordDocs = await rawDocs.toArray();
+        await Promise.all(
+          wordDocs.map((wordDoc) =>
+            db.collection(collection).updateOne({ _id: wordDoc._id }, { $set: { stems: wordDoc.stems } })
+          )
+        );
+      })
+    );
   },
 };

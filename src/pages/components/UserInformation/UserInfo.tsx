@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
-const UserInfo: React.FC = () => {
+const UserInfo = () => {
   const { t } = useTranslation('dashboard');
 
   return (

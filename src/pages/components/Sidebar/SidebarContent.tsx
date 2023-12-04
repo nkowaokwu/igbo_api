@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Box, BoxProps, CloseButton, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import React from 'react';
+import { Box, CloseButton, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { AtSignIcon, ChatIcon, HamburgerIcon, StarIcon, WarningIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
@@ -8,11 +8,7 @@ import Link from 'next/link';
 import SidebarItem from './SidebarItem';
 import { LOGO_URL } from '../../../shared/constants/Developers';
 
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
-
-const SidebarContent: React.FC<SidebarProps> = ({ onClose }) => {
+const SidebarContent = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation('dashboard');
   const router = useRouter();
   const LinkItems = [

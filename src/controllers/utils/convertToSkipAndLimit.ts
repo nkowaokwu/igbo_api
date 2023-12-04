@@ -18,7 +18,7 @@ const isValidRange = (range: number[]): boolean => {
 };
 
 /* Takes both page and range and converts them into appropriate skip and limit */
-const convertToSkipAndLimit = ({ page, range } : { page: number, range: number[] }) => {
+const convertToSkipAndLimit = ({ page, range }: { page: number; range: number[] }) => {
   let skip = 0;
   let limit = 10;
   if (isValidRange(range)) {

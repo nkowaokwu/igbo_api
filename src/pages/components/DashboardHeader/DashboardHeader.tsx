@@ -13,11 +13,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface DashboardHeaderProps {
-  pageTitle: string;
-}
-
-const DashboardHeader: React.FC<DashboardHeaderProps> = function Dashboard({ pageTitle }) {
+const DashboardHeader = function Dashboard({ pageTitle }: { pageTitle: string }) {
   const router = useRouter();
   const { t } = useTranslation('dashboard');
   const [apiKey, setApiKey] = useState('');
