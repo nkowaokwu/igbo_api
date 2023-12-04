@@ -1,20 +1,10 @@
 import forEach from 'lodash/forEach';
 import has from 'lodash/has';
 import isEqual from 'lodash/isEqual';
-import {
-  getExamples,
-  getExample,
-  getExamplesV2,
-  getExampleV2,
-} from './shared/commands';
-import {
-  MAIN_KEY,
-  EXAMPLE_KEYS_V1,
-  EXAMPLE_KEYS_V2,
-  INVALID_ID,
-  NONEXISTENT_ID,
-} from './shared/constants';
+import { getExamples, getExample, getExamplesV2, getExampleV2 } from './shared/commands';
+import { MAIN_KEY, EXAMPLE_KEYS_V1, EXAMPLE_KEYS_V2, INVALID_ID, NONEXISTENT_ID } from './shared/constants';
 import { expectUniqSetsOfResponses } from './shared/utils';
+import ExampleStyleEnum from '../src/shared/constants/ExampleStyleEnum';
 
 describe('MongoDB Examples', () => {
   describe('/GET mongodb examples V1', () => {
@@ -28,6 +18,13 @@ describe('MongoDB Examples', () => {
       const res = await getExamples({}, { apiKey: MAIN_KEY });
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeLessThanOrEqual(10);
+    });
+
+    it('should return an example by searching with style', async () => {
+      const res = await getExamples({ style: ExampleStyleEnum.PROVERB }, { apiKey: MAIN_KEY });
+      expect(res.status).toEqual(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
+      expect(res.body[0].style).toEqual(ExampleStyleEnum.PROVERB);
     });
 
     it('should return one example', async () => {
@@ -46,7 +43,7 @@ describe('MongoDB Examples', () => {
       expect(result.error).not.toEqual(undefined);
     });
 
-    it('should return an error because document doesn\'t exist', async () => {
+    it("should return an error because document doesn't exist", async () => {
       const res = await getExample(INVALID_ID);
       expect(res.status).toEqual(400);
       expect(res.body.error).not.toEqual(undefined);
@@ -63,11 +60,7 @@ describe('MongoDB Examples', () => {
     });
 
     it('should return different sets of example suggestions for pagination', async () => {
-      const res = await Promise.all([
-        getExamples({ page: 0 }),
-        getExamples({ page: 1 }),
-        getExamples({ page: 2 }),
-      ]);
+      const res = await Promise.all([getExamples({ page: 0 }), getExamples({ page: 1 }), getExamples({ page: 2 })]);
       expectUniqSetsOfResponses(res);
     });
 
