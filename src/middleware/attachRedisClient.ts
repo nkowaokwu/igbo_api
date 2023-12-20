@@ -1,6 +1,6 @@
 import { createClient, RedisClientType } from 'redis';
 import { REDIS_HOST, REDIS_PORT, REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD } from '../config';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 
 const afterResponse = (redisClient: RedisClientType) => {
   try {
@@ -36,7 +36,7 @@ export const redisClient =
         isReady: true,
       };
 
-const attachRedisClient: Express.MiddleWare = async (req, res, next) => {
+const attachRedisClient: MiddleWare = async (req, res, next) => {
   if (!redisClient.isReady) {
     redisClient.connect();
   }

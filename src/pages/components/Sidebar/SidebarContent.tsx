@@ -1,24 +1,24 @@
 import React from 'react';
-import { Box, BoxProps, CloseButton, Flex, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, CloseButton, Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { AtSignIcon, ChatIcon, HamburgerIcon, StarIcon, WarningIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import SidebarItem from './SidebarItem';
 import { LOGO_URL } from '../../../shared/constants/Developers';
 
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
-}
-
-const SidebarContent: React.FC<SidebarProps> = function SidebarContent({ onClose }) {
+const SidebarContent = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation('dashboard');
-
+  const router = useRouter();
   const LinkItems = [
     { name: t('Profile'), href: '/profile', icon: <AtSignIcon /> },
     { name: t('Dashboard'), href: '/dashboard', icon: <ChatIcon /> },
     { name: t('API Documentation'), href: '/api-documentation', icon: <StarIcon /> },
     { name: t('Contact Us'), href: '/contact-us', icon: <WarningIcon /> },
   ];
+
+  const isCurrentHref = (href: string) => router.pathname === href;
 
   return (
     <Box
@@ -42,11 +42,20 @@ const SidebarContent: React.FC<SidebarProps> = function SidebarContent({ onClose
       </SidebarItem>
 
       {LinkItems.map((link) => (
-        <SidebarItem key={link.name} href={link.href} icon={link.icon} _hover={{ bg: 'blue.400', color: 'white' }}>
-          <Text fontSize="md" fontFamily="monospace" fontWeight="medium" paddingLeft={3}>
-            {link.name}
-          </Text>
-        </SidebarItem>
+        <Link key={link.name} href={link.href} passHref>
+          <SidebarItem
+            href={link.href}
+            icon={link.icon}
+            _hover={{ bg: 'blue.400', color: 'white' }}
+            color={isCurrentHref(link.href) ? 'white' : 'gray.800'}
+            activeBgColor={isCurrentHref(link.href) ? 'blue.600' : 'transparent'}
+            activeTextColor={isCurrentHref(link.href) ? 'white' : 'gray.800'}
+          >
+            <Text fontSize="md" fontFamily="monospace" fontWeight="medium" paddingLeft={3}>
+              {link.name}
+            </Text>
+          </SidebarItem>
+        </Link>
       ))}
     </Box>
   );

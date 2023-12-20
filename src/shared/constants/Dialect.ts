@@ -56,6 +56,11 @@ export default {
     value: DialectEnum.EGB,
     label: 'Egbema',
   },
+  [DialectEnum.EKP]: {
+    code: 'ibo-ekp',
+    value: DialectEnum.EKP,
+    label: 'Ẹkpẹyẹ',
+  },
   [DialectEnum.EZA]: {
     code: 'ibo-eza',
     value: DialectEnum.EZA,
@@ -96,6 +101,11 @@ export default {
     value: DialectEnum.MBA,
     label: 'Mbaise',
   },
+  [DialectEnum.NDL]: {
+    code: 'ibo-ndl',
+    value: DialectEnum.NDL,
+    label: 'Ndele',
+  },
   [DialectEnum.NGW]: {
     code: 'ibo-ngw',
     value: DialectEnum.NGW,
@@ -120,6 +130,16 @@ export default {
     code: 'ibo-nsu',
     value: DialectEnum.NSU,
     label: 'Nsụka',
+  },
+  [DialectEnum.OGA]: {
+    code: 'ibo-oga',
+    value: DialectEnum.OGA,
+    label: 'Ọgba',
+  },
+  [DialectEnum.OGK]: {
+    code: 'ibo-ogk',
+    value: DialectEnum.OGK,
+    label: 'Ọgbakịrị',
   },
   [DialectEnum.OGU]: {
     code: 'ibo-ogu',
@@ -165,6 +185,11 @@ export default {
     code: 'ibo-udi',
     value: DialectEnum.UDI,
     label: 'Udi',
+  },
+  [DialectEnum.UKW]: {
+    code: 'ibo-ukw',
+    value: DialectEnum.UKW,
+    label: 'Ụkwụanị',
   },
   [DialectEnum.UMU]: {
     code: 'ibo-umu',

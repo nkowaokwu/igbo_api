@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Request } from 'express';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
 
 interface TrackingEvent {
@@ -73,7 +73,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
     }
   });
 
-const analytics: Express.MiddleWare = async (req, _, next) => {
+const analytics: MiddleWare = async (req, _, next) => {
   try {
     const { method } = req;
     const developerAPIKey = req.headers['X-API-Key'] || req.headers['x-api-key'];

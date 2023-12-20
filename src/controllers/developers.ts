@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { isProduction, CLIENT_TEST, isTest } from '../config';
 import { developerSchema } from '../models/Developer';
 import { createDbConnection, handleCloseConnection } from '../services/database';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 import { sendNewDeveloper } from './email';
 import { findDeveloper } from './utils/findDeveloper';
 import { TEST_EMAIL } from '../shared/constants/Developers';
@@ -12,7 +12,7 @@ import { TEST_EMAIL } from '../shared/constants/Developers';
 const generateApiKey = uuid;
 
 /* Creates a new Developer in the database */
-export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
+export const postDeveloper: MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model('Developer', developerSchema);
 
@@ -60,7 +60,7 @@ export const postDeveloper: Express.MiddleWare = async (req, res, next) => {
 };
 
 /* Fetches a Developer in the database */
-export const getDeveloper: Express.MiddleWare = async (req, res, next) => {
+export const getDeveloper: MiddleWare = async (req, res, next) => {
   try {
     const { headers: data } = req;
     const apiKey = data['x-api-key' || 'X-API-Key'];

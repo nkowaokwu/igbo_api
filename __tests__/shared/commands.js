@@ -60,6 +60,26 @@ export const getExamplesV2 = (query = {}, options = {}) =>
     .query(query)
     .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
+    /* Searches for Nsibidi characters using the data in MongoDB V1 */
+export const getNsibidiCharacter = (id, query = {}, options = {}) =>
+server
+  .get(`${API_ROUTE}/nsibidi/${id}`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+
+/* Searches for Nsibidi characters using the data in MongoDB V2 */
+export const getNsibidiCharacterV2 = (id, query = {}, options = {}) =>
+server
+  .get(`${API_ROUTE_V2}/nsibidi/${id}`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+
+export const getNsibidiCharactersV2 = (query = {}, options = {}) =>
+server
+  .get(`${API_ROUTE_V2}/nsibidi`)
+  .query(query)
+  .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
+
 /* Hits the POST /populate route to seed the local MongoDB database */
 export const populateAPI = () => server.post(`${TEST_ROUTE}/populate`);
 

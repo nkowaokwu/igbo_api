@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Akagu';
-  src: url("public/fonts/Akagu2020.ttf");
+  src: url('public/fonts/Akagu2020.ttf');
   font-display: swap;
 }
 
@@ -13,6 +13,7 @@ html {
   width: 100vw;
   font-family: 'Inter', sans-serif;
   font-weight: normal;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -24,30 +25,38 @@ h1 {
   font-weight: 900;
 }
 
-h2, h3, a, button {
+h2,
+h3,
+a,
+button {
   font-family: 'Silka', sans-serif !important;
   font-weight: 700;
 }
 
-input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]), textarea {
+input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]),
+textarea {
   @apply transition-all;
   @apply duration-100;
-} 
-input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]):hover, textarea:hover {
+}
+input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):hover,
+textarea:hover {
   border-color: rgba(41, 123, 48, 0.4);
   box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
 }
 
-input:not([data-test="search-bar"]):not([type="checkbox"]):not([disabled]):focus, textarea:focus {
+input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):focus,
+textarea:focus {
   border-color: rgba(41, 123, 48, 0.4);
   box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
   outline: rgba(41, 123, 48, 0.4);
 }
 
-*, button:focus {
+*,
+button:focus {
   outline: rgba(41, 123, 48, 0.4);
 }
 
-.ant-checkbox-inner, .ant-checkbox-input {
-  transform: scale(1.3)
+.ant-checkbox-inner,
+.ant-checkbox-input {
+  transform: scale(1.3);
 }

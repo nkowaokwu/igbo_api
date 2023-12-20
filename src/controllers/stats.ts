@@ -3,7 +3,7 @@ import { developerSchema } from '../models/Developer';
 import { searchForAllDevelopers } from './utils/queries';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import StatTypes from '../shared/constants/StatTypes';
-import { Express, Stat as StatType, Developer as DeveloperType } from '../types';
+import { MiddleWare, Stat as StatType, Developer as DeveloperType } from '../types';
 
 const DEFAULT_STAT = {
   value: 0,
@@ -11,7 +11,7 @@ const DEFAULT_STAT = {
 };
 const DEFAULT_LENGTH: DeveloperType[] = [];
 
-export const getStats: Express.MiddleWare = async (_, res, next) => {
+export const getStats: MiddleWare = async (_, res, next) => {
   const connection = createDbConnection();
   const Stat = connection.model<StatType>('Stat', statSchema);
   const Developer = connection.model<DeveloperType>('Developer', developerSchema);

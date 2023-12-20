@@ -8,11 +8,12 @@ import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
 import Version from '../../shared/constants/Version';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
-import WordClassEnum from '../../shared/constants/WordClassEnum';
+import { Filters } from '../types';
+import { Keyword } from './types';
 
 type IgboSearch = {
   redisClient: RedisClientType | undefined;
-  keywords: { text: string; wordClass: WordClassEnum[]; regex: Pick<SearchRegExp, 'wordReg'> | SearchRegExp }[];
+  keywords: Keyword[];
   strict: boolean;
   isUsingMainKey: boolean | undefined;
   version: Version;
@@ -25,7 +26,7 @@ type IgboSearch = {
     dialects: boolean;
     resolve: boolean;
   };
-  filters: any;
+  filters: Filters;
 };
 
 /* Searches for a word with Igbo stored in MongoDB */

@@ -1,5 +1,5 @@
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
-import { DeveloperDocument, Express } from '../types';
+import { DeveloperDocument, MiddleWare } from '../types';
 import { findDeveloper } from '../controllers/utils/findDeveloper';
 
 const PROD_LIMIT = 2500;
@@ -29,7 +29,7 @@ const handleDeveloperUsage = async (developer: DeveloperDocument) => {
   return updatedDeveloper.save();
 };
 
-const validateApiKey: Express.MiddleWare = async (req, res, next) => {
+const validateApiKey: MiddleWare = async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
     let apiKey = (req.headers['X-API-Key'] || req.headers['x-api-key']) as string;

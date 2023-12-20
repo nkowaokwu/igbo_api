@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 
-const validId: Express.MiddleWare = async (req, res, next) => {
+const validId: MiddleWare = async (req, res, next) => {
   try {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {

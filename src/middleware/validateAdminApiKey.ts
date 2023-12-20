@@ -1,7 +1,7 @@
 import { MAIN_KEY, isProduction } from '../config';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 
-const validateAdminApiKey: Express.MiddleWare = async (req, res, next) => {
+const validateAdminApiKey: MiddleWare = async (req, res, next) => {
   try {
     const apiKey = req.headers['X-API-Key'] || req.headers['x-api-key'];
 

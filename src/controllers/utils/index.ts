@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { PipelineStage } from 'mongoose';
 import { compact, pick } from 'lodash';
-import { Example, Express, Word } from '../../types';
+import { Example, IgboAPIRequest, Word } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
@@ -13,8 +13,8 @@ import WordClass from '../../shared/constants/WordClass';
 import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
-import { WordData } from './types';
-import { WithPronunciation } from '../types';
+import { WordData, Keyword } from './types';
+import { ExampleWithPronunciation, Filters } from '../types';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
@@ -60,10 +60,10 @@ export const packageResponse = ({
   docs:
     | Partial<Word>
     | Partial<Example>
-    | Partial<WithPronunciation>
+    | Partial<ExampleWithPronunciation>
     | Partial<Word>[]
     | Partial<Example>[]
-    | Partial<WithPronunciation>[];
+    | Partial<ExampleWithPronunciation>[];
   contentLength: number;
   version: Version;
 }) => {
@@ -106,7 +106,7 @@ export const handleQueries = async ({
   isUsingMainKey,
   baseUrl,
   redisClient,
-}: Express.IgboAPIRequest) => {
+}: IgboAPIRequest) => {
   const {
     keyword: keywordQuery = '',
     page: pageQuery = '0',
@@ -162,17 +162,21 @@ export const handleQueries = async ({
   console.log(`Search word: ${searchWord}`);
   let keywords =
     version === Version.VERSION_2 && searchWord
-      ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
-          text,
-          wordClass,
-          regex: pick(
+      ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
+          const pickedRegex = pick(
             constructRegexQuery({
               isUsingMainKey,
               keywords: [{ text }],
             }),
             ['wordReg']
-          ),
-        }))
+          );
+          const keyWord: Keyword = {
+            text,
+            wordClass,
+            regex: pickedRegex,
+          };
+          return keyWord;
+        })
       : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   if (!keywords.length && searchWord) {
@@ -246,7 +250,7 @@ export const handleQueries = async ({
     examples,
     resolve,
   };
-  const filters = {
+  const filters: Filters = {
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };

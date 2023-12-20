@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { Developer as DeveloperType, Express } from '../types';
+import { Developer as DeveloperType, MiddleWare } from '../types';
 import { isProduction, isTest } from '../config';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { developerSchema } from '../models/Developer';
@@ -37,7 +37,7 @@ const signToken = (email: string) => {
  * Creates and sends a JSON Web Token (JWT) to the client in a response.
  *
  * @param {DeveloperType} developer - The developer data to include in the JWT payload.
- * @param {Express.Response} res - The Express response object to send the token in.
+ * @param {Response} res - The Express response object to send the token in.
  * @returns {string} The signed JWT token.
  * @throws {Error} If an error occurs during the token signing or sending process.
  */
@@ -76,13 +76,13 @@ const loginDeveloperWithEmailAndPassword = async (email: string, password: strin
 /**
  * Handles the login process for a developer.
  *
- * @param {Express.IgboAPIRequest} req - The Express request object.
- * @param {Express.Response} res - The Express response object.
- * @param {Express.NextFunction} next - The next middleware function.
+ * @param {IgboAPIRequest} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<void>} A Promise that resolves when the login process is complete.
  * @throws {Error} If an error occurs during the login process.
  */
-export const login: Express.MiddleWare = async (req, res, next) => {
+export const login: MiddleWare = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -104,12 +104,12 @@ export const login: Express.MiddleWare = async (req, res, next) => {
 
 /**
  * Handles the logout process for a developer.
- * @param {Express.IgboAPIRequest} req - The Express request object.
- * @param {Express.Response} res - The Express response object.
- * @param {Express.NextFunction} next - The next middleware function.
+ * @param {IgboAPIRequest} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function.
  * @returns {Promise<void>} A Promise that resolves when the logout process is complete.
  */
-export const logout: Express.MiddleWare = async (req, res, next) => {
+export const logout: MiddleWare = async (req, res, next) => {
   try {
     res.cookie('jwt', '', { expires: new Date(), httpOnly: true });
 

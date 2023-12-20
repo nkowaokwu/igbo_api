@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../siteConstants';
-import { Express } from '../types';
+import { MiddleWare } from '../types';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { developerSchema } from '../models/Developer';
 
@@ -10,7 +10,7 @@ interface DeveloperDataType {
   exp?: number;
 }
 
-export const authenticate: Express.MiddleWare = async (req, res, next) => {
+export const authenticate: MiddleWare = async (req, res, next) => {
   let token: string | undefined;
   // Check if token is set
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {

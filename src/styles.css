@@ -39,12 +39,10 @@
   @apply mt-6;
   @apply bg-green-500;
   @apply text-white;
-  @apply border-2;
   @apply py-2;
   @apply px-4;
   @apply hover:bg-white;
   @apply hover:text-black;
-  @apply border-green-500;
   @apply transition-all;
   @apply duration-200;
 }
@@ -145,7 +143,7 @@
 .mentioned-in img {
   @apply my-6;
   @apply mx-4;
-  transition: all .1s ease;
+  transition: all 0.1s ease;
   width: 150px;
 }
 

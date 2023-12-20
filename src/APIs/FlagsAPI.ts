@@ -2,9 +2,10 @@ import compact from 'lodash/compact';
 import assign from 'lodash/assign';
 import omit from 'lodash/omit';
 import { LegacyWordDocument, Word, WordDocument } from '../types';
+import { WordType, PartialWordType } from '../types/word';
 
 type HandleFlags = {
-  data: { words: (Word | WordDocument | LegacyWordDocument)[]; contentLength: number };
+  data: { words: WordType[]; contentLength: number };
   flags: { examples: boolean; dialects: boolean; resolve: boolean };
 };
 
@@ -16,7 +17,7 @@ export const handleWordFlags = ({
   console.time(`Handling word flags - examples: ${examples}, dialects: ${dialects}, resolve: ${resolve}`);
   const updatedWords = compact(
     words.map((word: Word | WordDocument | LegacyWordDocument) => {
-      let updatedWord: Partial<Word> | Partial<WordDocument> | Partial<LegacyWordDocument> = assign(word);
+      let updatedWord: PartialWordType = assign(word);
       if (!examples) {
         // @ts-expect-error definitions are not compatible
         updatedWord = omit(updatedWord, ['examples']);
