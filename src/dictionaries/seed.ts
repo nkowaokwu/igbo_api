@@ -3,12 +3,14 @@ import { Connection } from 'mongoose';
 import { map, flatten, keys, omit } from 'lodash';
 import { createWord } from '../controllers/words';
 import { createNsibidiCharacter } from '../controllers/nsibidi';
+import { createExample } from '../controllers/examples';
 import dictionary from './ig-en/ig-en.json';
 import nsibidiDictionary from './nsibidi/nsibidi_dictionary';
 import Dialects from '../shared/constants/Dialect';
 import WordClass from '../shared/constants/WordClass';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { MiddleWare } from '../types/express';
+import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -17,31 +19,33 @@ const populate = async (connection: Connection) => {
   if (process.env.NODE_ENV !== 'production') {
     console.blue('🌱 Seeding database...');
     connection.dropDatabase();
-    const words = await Promise.all(
-      flatten(
+    const words = flatten(
+      await Promise.all(
         map(keys(dictionary), async (key) => {
           // @ts-expect-error LegacyWord
           const value = dictionary[key];
-          return map(value, (term) => {
-            const word = omit({ ...term }, ['stems']);
-            const cleanedKey = key.replace(/\./g, '');
-            word.word = key;
-            word.definitions = [
-              {
-                wordClass: word.wordClass || WordClass.NNC.value,
-                definitions: word.definitions,
-              },
-            ];
-            word.dialects = [
-              {
-                dialects: [Dialects.NSA.value],
-                variations: [],
-                pronunciation: '',
-                word: `${cleanedKey}-dialect`,
-              },
-            ];
-            return createWord(word, connection);
-          });
+          return Promise.all(
+            map(value, (term) => {
+              const word = omit({ ...term }, ['stems']);
+              const cleanedKey = key.replace(/\./g, '');
+              word.word = key;
+              word.definitions = [
+                {
+                  wordClass: word.wordClass || WordClass.NNC.value,
+                  definitions: word.definitions,
+                },
+              ];
+              word.dialects = [
+                {
+                  dialects: [Dialects.NSA.value],
+                  variations: [],
+                  pronunciation: '',
+                  word: `${cleanedKey}-dialect`,
+                },
+              ];
+              return createWord(word, connection);
+            })
+          );
         })
       )
     );
@@ -58,6 +62,28 @@ const populate = async (connection: Connection) => {
         };
         return createNsibidiCharacter(nsibidi, connection);
       })
+    );
+    const examples = await Promise.all(
+      flatten(
+        map(keys(dictionary), async (key, index) => {
+          // @ts-expect-error LegacyWord
+          const value = dictionary[key];
+          return map(value, (term) => {
+            const example = {
+              id: term.word,
+              igbo: term.word,
+              english: `translation of ${term.word}`,
+              pronunciations: [],
+              style: index % 3 ? ExampleStyleEnum.PROVERB : ExampleStyleEnum.NO_STYLE,
+              associatedWords: [words[index].id],
+              associatedDefinitionsSchemas: [],
+              nsibidiCharacters: [],
+              updatedAt: new Date(),
+            };
+            return createExample(example, connection);
+          });
+        })
+      )
     );
 
     /* Waits for all the MongoDB document save promises to resolve */
@@ -77,7 +103,7 @@ const populate = async (connection: Connection) => {
     } catch (err) {
       console.red('🔴 Seeding failed', err);
     }
-    return [words, nsibidiCharacters];
+    return [words, nsibidiCharacters, examples];
   }
   return Promise.resolve();
 };

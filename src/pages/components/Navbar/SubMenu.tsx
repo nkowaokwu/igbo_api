@@ -16,7 +16,15 @@ import { useTranslation } from 'react-i18next';
 import i18n, { changeLanguage } from 'i18next';
 import { useRouter } from 'next/router';
 
-const SubMenu = ({ isVisible, isTransparent = false }: { isVisible: boolean; isTransparent?: boolean }) => {
+const SubMenu = ({
+  isVisible,
+  isTransparent = false,
+  onSelect,
+}: {
+  isVisible: boolean;
+  isTransparent?: boolean;
+  onSelect: () => void;
+}) => {
   const [language, setLanguage] = useState(i18n.language);
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -37,22 +45,22 @@ const SubMenu = ({ isVisible, isTransparent = false }: { isVisible: boolean; isT
       data-test="sub-menu"
     >
       <ListItem className="transition-element">
-        <Link className="cursor-pointer font-normal" href="#features">
+        <Link className="cursor-pointer font-normal" href="#features" onClick={onSelect}>
           {t('Features')}
         </Link>
       </ListItem>
       <ListItem className="transition-element">
-        <Link className="cursor-pointer font-normal" href="/about" type="button">
+        <Link className="cursor-pointer font-normal" href="/about" type="button" onClick={onSelect}>
           {t('About')}
         </Link>
       </ListItem>
       <ListItem className="transition-element">
-        <Link className="cursor-pointer font-normal" href="/docs">
+        <Link className="cursor-pointer font-normal" href="/docs" onClick={onSelect}>
           Docs
         </Link>
       </ListItem>
       <ListItem className="transition-element">
-        <Link className="cursor-pointer font-normal" href="/signup" role="link" type="button">
+        <Link className="cursor-pointer font-normal" href="/signup" role="link" type="button" onClick={onSelect}>
           {t('Get an API Key')}
         </Link>
       </ListItem>

@@ -13,8 +13,9 @@ import WordClass from '../../shared/constants/WordClass';
 import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
-import { WordData, Keyword } from './types';
+import { WordData, Keyword, Flags } from './types';
 import { Filters, ExampleWithPronunciation } from '../types';
+import ExampleStyles from '../../shared/constants/ExampleStyles';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
@@ -115,6 +116,7 @@ export const handleQueries = async ({
     strict: strictQuery,
     dialects: dialectsQuery,
     examples: examplesQuery,
+    style: stylesQuery,
     tags: tagsQuery,
     wordClasses: wordClassesQuery,
     resolve: resolveQuery,
@@ -232,6 +234,8 @@ export const handleQueries = async ({
   const strict = strictQuery === 'true';
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
+  // @ts-expect-error toUpperCase
+  const style = stylesQuery && ExampleStyles[stylesQuery.toUpperCase()].value!;
   const tags = tagsQuery
     ? tagsQuery
         .replace(/[[\]']/g, '')
@@ -245,11 +249,18 @@ export const handleQueries = async ({
         .map((wordClass) => wordClass.trim())
     : [];
   const resolve = resolveQuery === 'true';
-  const flags = {
+  const flags: Flags = {
     dialects,
     examples,
+    style,
     resolve,
   };
+  console.log(
+    `Search flags: 
+      ${Object.entries(flags)
+        .map(([key, value]) => `[${key}=${value}]`)
+        .join(',')}`
+  );
   const filters: Filters = {
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),

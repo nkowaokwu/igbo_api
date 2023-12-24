@@ -23,6 +23,7 @@
     "dev": "npm-run-all -p start:watch start:emulators start:database",
     "predev:full": "firebase functions:config:set env.redis_url=redis://localhost:6379 env.replica_set=true env.redis_status=true",
     "dev:full": "npm-run-all -p start:watch start:emulators start:database:replica",
+    "dev:light": "npm-run-all -p start:watch start start:database",
     "migrate-up": "migrate-mongo up",
     "migrate-down": "migrate-mongo down",
     "mongodump": "shx rm -rf dump/ && mongodump -d igbo_api -o dump",

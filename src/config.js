@@ -17,12 +17,10 @@ if (dotenv) {
 }
 
 export const isBuild = config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
-export const isProduction = (
-  config?.runtime?.env === Environment.PRODUCTION || process.env.NODE_ENV === Environment.PRODUCTION
-);
-export const isDevelopment = (
-  config?.runtime?.env === Environment.DEVELOPMENT || process.env.NODE_ENV === Environment.DEVELOPMENT
-);
+export const isProduction =
+  config?.runtime?.env === Environment.PRODUCTION || process.env.NODE_ENV === Environment.PRODUCTION;
+export const isDevelopment =
+  config?.runtime?.env === Environment.DEVELOPMENT || process.env.NODE_ENV === Environment.DEVELOPMENT;
 export const isTest = config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
 const useReplicaSet = config?.env?.replica_set;
 
@@ -31,14 +29,7 @@ const DB_NAME = 'igbo_api';
 const TEST_DB_NAME = 'test_igbo_api';
 
 // If running inside Docker container, it will fallback to using test_igbo_api database
-const isTestingEnvironment = (
-  isTest
-  || (
-    process.env.CONTAINER_HOST === 'mongodb'
-    && !isDevelopment
-    && !isProduction
-  )
-);
+const isTestingEnvironment = isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
 export const PORT = 8080;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';
@@ -46,11 +37,10 @@ export const FIRST_REPLICA_SET_PORT = '2717';
 export const SECOND_REPLICA_SET_PORT = '2727';
 export const THIRD_REPLICA_SET_PORT = '2737';
 export const FALLBACK_MONGO_PORT = '27017';
-export const REPLICA_SET_MONGO_ROOT = (
-  `mongodb://${MONGO_HOST}:${FIRST_REPLICA_SET_PORT},`
-  + `${MONGO_HOST}:${SECOND_REPLICA_SET_PORT},`
-  + `${MONGO_HOST}:${THIRD_REPLICA_SET_PORT}`
-);
+export const REPLICA_SET_MONGO_ROOT =
+  `mongodb://${MONGO_HOST}:${FIRST_REPLICA_SET_PORT},` +
+  `${MONGO_HOST}:${SECOND_REPLICA_SET_PORT},` +
+  `${MONGO_HOST}:${THIRD_REPLICA_SET_PORT}`;
 export const FALLBACK_MONGO_ROOT = `mongodb://${MONGO_HOST}:${FALLBACK_MONGO_PORT}`;
 export const MONGO_ROOT = useReplicaSet ? REPLICA_SET_MONGO_ROOT : FALLBACK_MONGO_ROOT;
 export const QUERIES = useReplicaSet ? `?replicaSet=${REPLICA_SET_NAME}` : '';
@@ -59,9 +49,8 @@ const LOCAL_MONGO_URI = `${MONGO_ROOT}/${DB_NAME}`;
 export const MONGO_URI = isTestingEnvironment
   ? TEST_MONGO_URI.concat(QUERIES)
   : isDevelopment
-    ? LOCAL_MONGO_URI.concat(QUERIES)
-    : config?.env?.mongo_uri
-      || LOCAL_MONGO_URI.concat(QUERIES);
+  ? LOCAL_MONGO_URI.concat(QUERIES)
+  : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
 export const FIREBASE_CONFIG = config?.env?.firebase_config; // Provide your own Firebase Config
 export const CLIENT_TEST = config?.env?.client_test;
 

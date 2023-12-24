@@ -36,13 +36,21 @@ const Navbar = ({ to = '/', isTransparent = false }: { to?: string; isTransparen
       {!matchesLargeScreenQuery ? (
         <Button
           type="button"
+          backgroundColor="transparent"
+          _hover={{ backgroundColor: 'transparent' }}
+          _active={{ backgroundColor: 'transparent' }}
+          _focus={{ backgroundColor: 'transparent' }}
           className={`transition-element mr-5 lg:mr-0 ${isMenuVisible ? 'transform rotate-90' : ''}`}
           onClick={() => setIsMenuVisible(!isMenuVisible)}
         >
           {menuIcon}
         </Button>
       ) : null}
-      <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} isTransparent={isTransparent} />
+      <SubMenu
+        isVisible={matchesLargeScreenQuery || isMenuVisible}
+        isTransparent={isTransparent}
+        onSelect={() => setIsMenuVisible(false)}
+      />
     </Box>
   );
 };
