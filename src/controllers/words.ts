@@ -14,7 +14,7 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
-import { MiddleWare, LegacyWord } from '../types';
+import { MiddleWare, LegacyWord, WordDocument } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
@@ -131,8 +131,8 @@ export const getWord: MiddleWare = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data: Partial<LegacyWord>, connection: mongoose.Connection) => {
-  const Word = connection.model('Word', wordSchema);
+export const createWord = async (data: Partial<LegacyWord>, connection: mongoose.Connection): Promise<WordDocument> => {
+  const Word = connection.model<WordDocument>('Word', wordSchema);
   const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 
   const wordData = {
@@ -146,13 +146,13 @@ export const createWord = async (data: Partial<LegacyWord>, connection: mongoose
   };
 
   const newWord = new Word(wordData);
-  await newWord.save();
+  const savedWord = await newWord.save();
 
   /* Go through each word's example and create an Example document */
   const savedExamples = map(examples, async (example) => {
     const exampleData = {
       ...example,
-      associatedWords: [newWord.id],
+      associatedWords: [savedWord.id],
     };
     const createdExample = await createExample(exampleData, connection);
     return createdExample;
@@ -161,6 +161,6 @@ export const createWord = async (data: Partial<LegacyWord>, connection: mongoose
   /* Wait for all the Examples to be created and then add them to the Word document */
   const resolvedExamples = await Promise.all(savedExamples);
   const exampleIds = getDocumentsIds(resolvedExamples);
-  newWord.examples = exampleIds;
-  return newWord.save();
+  savedWord.examples = exampleIds;
+  return savedWord.save();
 };

@@ -38,3 +38,10 @@ export type Keyword = {
     definitionsReg?: RegExp;
   };
 };
+
+export type Flags = {
+  dialects: boolean;
+  examples: boolean;
+  style: string;
+  resolve: boolean;
+};

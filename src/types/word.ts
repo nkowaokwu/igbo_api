@@ -38,7 +38,6 @@ interface WordBase {
   frequency: number;
   hypernyms: string[];
   hyponyms: string[];
-  normalized: string;
   pronunciation: string;
   relatedTerms: string[] | { id: string; _id?: Types.ObjectId }[];
   stems: string[] | { id: string; _id?: Types.ObjectId }[];
@@ -50,7 +49,7 @@ interface WordBase {
 }
 
 export interface Word extends WordBase {
-  definitions: [Definition];
+  definitions: Definition[];
   dialects: WordDialect[];
   tags: string[];
 }
@@ -63,14 +62,14 @@ export interface LegacyWord extends WordBase {
 }
 
 export interface WordDocument extends Word, Document<any> {
-  _id: Types.ObjectId;
-  __v: number;
+  _id?: Types.ObjectId;
+  __v?: number;
   id: string;
 }
 
 export interface LegacyWordDocument extends LegacyWord, Document<any> {
-  _id: Types.ObjectId;
-  __v: number;
+  _id?: Types.ObjectId;
+  __v?: number;
   id: string;
 }
 

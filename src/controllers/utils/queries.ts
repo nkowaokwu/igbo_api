@@ -3,7 +3,7 @@ import { cjkRange } from '../../shared/constants/diacriticCodes';
 import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
 import StopWords from '../../shared/constants/StopWords';
-import { Keyword } from './types';
+import { Flags, Keyword } from './types';
 import createRegExp, { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
 
@@ -105,7 +105,7 @@ const definitionsQuery = ({
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
-export const searchExamplesRegexQuery = ({ regex, flags }: { regex: SearchRegExp; flags: { style: string } }) => ({
+export const searchExamplesRegexQuery = ({ regex, flags }: { regex: SearchRegExp; flags: Flags }) => ({
   $or: [{ igbo: regex.wordReg }, { english: regex?.definitionsReg }],
   ...(flags.style ? { style: flags.style } : {}),
 });

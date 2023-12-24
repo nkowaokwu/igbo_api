@@ -19,31 +19,33 @@ const populate = async (connection: Connection) => {
   if (process.env.NODE_ENV !== 'production') {
     console.blue('🌱 Seeding database...');
     connection.dropDatabase();
-    const words = await Promise.all(
-      flatten(
+    const words = flatten(
+      await Promise.all(
         map(keys(dictionary), async (key) => {
           // @ts-expect-error LegacyWord
           const value = dictionary[key];
-          return map(value, (term) => {
-            const word = omit({ ...term }, ['stems']);
-            const cleanedKey = key.replace(/\./g, '');
-            word.word = key;
-            word.definitions = [
-              {
-                wordClass: word.wordClass || WordClass.NNC.value,
-                definitions: word.definitions,
-              },
-            ];
-            word.dialects = [
-              {
-                dialects: [Dialects.NSA.value],
-                variations: [],
-                pronunciation: '',
-                word: `${cleanedKey}-dialect`,
-              },
-            ];
-            return createWord(word, connection);
-          });
+          return Promise.all(
+            map(value, (term) => {
+              const word = omit({ ...term }, ['stems']);
+              const cleanedKey = key.replace(/\./g, '');
+              word.word = key;
+              word.definitions = [
+                {
+                  wordClass: word.wordClass || WordClass.NNC.value,
+                  definitions: word.definitions,
+                },
+              ];
+              word.dialects = [
+                {
+                  dialects: [Dialects.NSA.value],
+                  variations: [],
+                  pronunciation: '',
+                  word: `${cleanedKey}-dialect`,
+                },
+              ];
+              return createWord(word, connection);
+            })
+          );
         })
       )
     );
