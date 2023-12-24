@@ -100,6 +100,14 @@ describe('MongoDB Examples', () => {
         expect(example.igbo).not.toEqual(undefined);
       });
     });
+
+    it('should return examples by style', async () => {
+      const res = await getExamples({ style: ExampleStyleEnum.PROVERB });
+      expect(res.status).toEqual(200);
+      forEach(res.body, (example) => {
+        expect(example.style).toEqual(ExampleStyleEnum.PROVERB);
+      });
+    });
   });
 
   describe('/GET mongodb examples V2', () => {
