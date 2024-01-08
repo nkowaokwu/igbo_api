@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MONGO_URI, isProduction, isTest } from '../config';
+import { MONGO_URI, isTest } from '../config';
 
 const DISCONNECTED = 0;
 
@@ -11,13 +11,7 @@ export const createDbConnection = (): mongoose.Connection => {
     readPreference: isTest ? 'primary' : 'nearest',
   });
 
-  console.log('Attempting MongoDB URI:', MONGO_URI);
   connection.on('error', console.error.bind(console, 'connection error:'));
-  connection.once('open', () => {
-    if (isProduction) {
-      console.log('🗄 Database is connected', process.env.CI, MONGO_URI);
-    }
-  });
   return connection;
 };
 
@@ -26,11 +20,6 @@ export const disconnectDatabase = (): void => {
   const db = mongoose.connection;
   if (db.readyState !== DISCONNECTED) {
     db.close();
-    db.once('close', () => {
-      if (isProduction) {
-        console.log('🗃 Database is connection closed', process.env.CI, MONGO_URI);
-      }
-    });
   }
 };
 

@@ -121,7 +121,6 @@ export const handleQueries = async ({
     wordClasses: wordClassesQuery,
     resolve: resolveQuery,
   } = query;
-  console.time('Handling queries');
   const { id } = params;
   let allVerbsAndSuffixes: WordData = { verbs: [], suffixes: [] };
   const hasQuotes = keywordQuery && keywordQuery.match(/["'].*["']/) !== null;
@@ -130,12 +129,9 @@ export const handleQueries = async ({
   const allVerbsAndSuffixesQuery: PipelineStage.Match['$match'] = searchForAllVerbsAndSuffixesQuery();
   const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({ key: version, redisClient });
   if (version === Version.VERSION_2) {
-    console.time('Searching all verbs and suffixes');
     if (cachedAllVerbsAndSuffixes) {
-      console.log('Getting all verbs and suffixes from cache');
       allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
-      console.log('Getting all verbs and suffixes from database');
       const allVerbsAndSuffixesDb = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version }))
         .words;
       allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
@@ -145,9 +141,7 @@ export const handleQueries = async ({
         version,
       });
     }
-    console.timeEnd('Searching all verbs and suffixes');
   }
-  console.time('Generating filters, searchWord, and regexes');
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '').replace(/[Aa]na m /, 'm ');
   const searchWordParts = compact(searchWord.split(' '));
@@ -159,9 +153,6 @@ export const handleQueries = async ({
     }),
     {}
   );
-  console.timeEnd('Generating filters, searchWord, and regexes');
-  console.log('Word splits:', searchWordParts);
-  console.log(`Search word: ${searchWord}`);
   let keywords =
     version === Version.VERSION_2 && searchWord
       ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
@@ -182,7 +173,6 @@ export const handleQueries = async ({
       : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   if (!keywords.length && searchWord) {
-    console.time('Attempting to breakdown noun');
     keywords =
       version === Version.VERSION_2
         ? expandNoun(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
@@ -197,15 +187,12 @@ export const handleQueries = async ({
             ),
           }))
         : [];
-    console.timeEnd('Attempting to breakdown noun');
   }
   if (!keywords.length && searchWord) {
-    console.time('Expand phrase time');
     keywords = (
       version === Version.VERSION_2
-        ? searchWordParts.map((searchWordPart, searchWordPartIndex) => {
+        ? searchWordParts.map((searchWordPart) => {
             const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes);
-            console.time(`Expand phrase part ${searchWordPartIndex}`);
             const result = expandedVerb.length
               ? expandedVerb.map(({ text, wordClass }) => ({
                   text,
@@ -220,14 +207,12 @@ export const handleQueries = async ({
                 }))
               : // @ts-expect-error no index signature with parameter type string
                 [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
-            console.timeEnd(`Expand phrase part ${searchWordPartIndex}`);
+
             return result;
           })
         : []
     ).flat();
-    console.timeEnd('Expand phrase time');
   }
-  console.time('Generating page, rank, skip, limit, and other flags');
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });
@@ -265,8 +250,6 @@ export const handleQueries = async ({
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };
-  console.timeEnd('Generating page, rank, skip, limit, and other flags');
-  console.timeEnd('Handling queries');
   return {
     id,
     version,

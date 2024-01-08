@@ -60,7 +60,6 @@ export const findWordsWithMatch = async ({
 }) => {
   const connection = createDbConnection();
   const Word = connection.model<WordDocument>('Word', wordSchema);
-  console.time(`Aggregation completion time: ${queryLabel || 'N/A'}`);
   try {
     let words = generateAggregationBase<WordDocument>(Word, match);
 
@@ -133,12 +132,10 @@ export const findWordsWithMatch = async ({
       return cleanedWord as WordDocument;
     });
 
-    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err: any) {
     console.log('An error occurred', err);
-    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     throw err;
   }

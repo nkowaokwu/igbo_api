@@ -13,7 +13,6 @@ type MinimizedWord = Omit<PartialWordType, 'definitions' | 'examples' | 'dialect
   stems?: (string | Partial<{ id: string; _id?: Types.ObjectId }>)[];
 };
 const minimizeWords = (words: PartialWordType[], version: Version) => {
-  console.time('Minimize words');
   const minimizedWords = words.map((word) => {
     let minimizedWord: Partial<MinimizedWord> = assign(word);
     minimizedWord = omit(minimizedWord, ['hypernyms', 'hyponyms', 'updatedAt', 'createdAt']);
@@ -102,7 +101,6 @@ const minimizeWords = (words: PartialWordType[], version: Version) => {
     }
     return minimizedWord;
   });
-  console.timeEnd('Minimize words');
   return minimizedWords;
 };
 

@@ -14,7 +14,6 @@ export const handleWordFlags = ({
   data: { words, contentLength },
   flags: { examples, dialects, resolve },
 }: HandleFlags) => {
-  console.time(`Handling word flags - examples: ${examples}, dialects: ${dialects}, resolve: ${resolve}`);
   const updatedWords = compact(
     words.map((word: Word | WordDocument | LegacyWordDocument) => {
       let updatedWord: PartialWordType = assign(word);
@@ -41,6 +40,5 @@ export const handleWordFlags = ({
       return updatedWord;
     })
   );
-  console.timeEnd(`Handling word flags - examples: ${examples}, dialects: ${dialects}, resolve: ${resolve}`);
   return { words: updatedWords, contentLength };
 };
