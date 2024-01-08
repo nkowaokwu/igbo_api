@@ -31,12 +31,10 @@ const handleDeveloperUsage = async (developer: DeveloperDocument) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async (apiKey: string) => {
-  console.time('Finding developer account');
   const connection = createDbConnection();
   const Developer = connection.model<DeveloperDocument>('Developer', developerSchema);
   let developer = await Developer.findOne({ apiKey });
   if (developer) {
-    console.timeEnd('Finding developer account');
     return developer;
   }
   // Legacy implementation: hashed API tokens can't be indexed
@@ -47,10 +45,8 @@ const findDeveloper = async (apiKey: string) => {
   if (developer) {
     developer.apiKey = apiKey;
     const updatedDeveloper = await developer.save();
-    console.timeEnd('Finding developer account');
     return updatedDeveloper;
   }
-  console.timeEnd('Finding developer account');
   return developer;
 };
 

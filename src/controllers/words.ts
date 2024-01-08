@@ -38,7 +38,6 @@ export const getWordData: MiddleWare = (req, res, next) => {
 /* Reuseable base controller function for getting words */
 const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
   try {
-    console.time('Getting words from database');
     const {
       version,
       searchWord,
@@ -81,8 +80,6 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
         ...searchQueries,
       });
     }
-    console.log(`Number of words for search word "${searchWord}": ${responseData.contentLength}`);
-    console.timeEnd('Getting words from database');
     return packageResponse({
       res,
       docs: responseData.words,

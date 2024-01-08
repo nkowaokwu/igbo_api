@@ -35,38 +35,30 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
 
     // Avoid sending GA events
     if (isProduction) {
-      console.time('Sending production tracking data');
       axios({
         method: 'post',
         url: `${GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
         data,
       })
-        .then((res) => {
-          console.log('Logging the data:', JSON.parse(data), JSON.parse(data).events[0].params);
-          console.log({ status: res.status, response: res.data });
-          console.timeEnd('Sending production tracking data');
+        .then(() => {
           resolve(true);
         })
         .catch((err: any) => {
           console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
-          console.timeEnd('Sending production tracking data');
           reject(new Error(err));
         });
     } else {
-      console.time('Sending development tracking data');
       axios({
         method: 'post',
         url: `${DEBUG_GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
         data,
       })
         .then(() => {
-          console.timeEnd('Sending development tracking data');
           resolve(true);
         })
         .catch((err: any) => {
           if (isProduction) {
             console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
-            console.timeEnd('Sending development tracking data');
             reject(new Error(err));
           }
         });

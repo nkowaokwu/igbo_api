@@ -33,22 +33,18 @@ const searchWordUsingEnglish = async ({
   flags,
   filters,
 }: EnglishSearch) => {
-  console.time(`searchWordUsingEnglish for ${searchWord}`);
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `"${searchWord}"-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
   if (cachedWords) {
-    console.log('Return words from cache for English search');
     responseData = {
       words: cachedWords.words,
       contentLength: cachedWords.contentLength,
     };
   } else {
     const query = searchEnglishRegexQuery({ regex, searchWord, filters });
-    console.time(`Searching English words for ${searchWord}`);
     const { words, contentLength } = await findWordsWithMatch({ match: query, version });
-    console.timeEnd(`Searching English words for ${searchWord}`);
     responseData = await setCachedWords({
       key: redisWordsCacheKey,
       data: { words, contentLength },
@@ -61,7 +57,6 @@ const searchWordUsingEnglish = async ({
   let sortedWords = sortDocsBy(searchWord, responseData.words, sortKey, version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
 
-  console.timeEnd(`searchWordUsingEnglish for ${searchWord}`);
   return handleWordFlags({
     data: { words: sortedWords, contentLength: responseData.contentLength },
     flags,

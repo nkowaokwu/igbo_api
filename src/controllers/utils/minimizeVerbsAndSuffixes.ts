@@ -11,7 +11,6 @@ const isVerb = (wordClass: WordClassEnum) =>
   wordClass === WordClassEnum.MV;
 
 const minimizeVerbsAndSuffixes = (words: Word[], version: Version) => {
-  console.time('Minimize words');
   const minimizedWords = words.reduce(
     (finalVerbsAndSuffixes, word) => {
       const minimizedWord = pick(assign(word), ['word', 'definitions']) as MinimizedWord;
@@ -28,7 +27,6 @@ const minimizeVerbsAndSuffixes = (words: Word[], version: Version) => {
     },
     { verbs: [], suffixes: [] } as { verbs: MinimizedWord[]; suffixes: MinimizedWord[] }
   );
-  console.timeEnd('Minimize words');
   return minimizedWords;
 };
 
