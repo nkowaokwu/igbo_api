@@ -4,6 +4,7 @@ import diacriticCodes from '../constants/diacriticCodes';
 
 export interface SearchRegExp {
   wordReg: RegExp;
+  exampleReg: RegExp;
   definitionsReg: RegExp;
   hardDefinitionsReg?: RegExp;
 }
@@ -67,12 +68,13 @@ const createRegExp = (rawSearchWord: string, hardMatch = false): SearchRegExp =>
       : `${startWordBoundary}(^${front}${regexWordString}${back}$)${endWordBoundary}`,
     'i'
   );
-
+  const exampleReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
   const definitionsReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
   const hardDefinitionsReg = new RegExp(`${startWordBoundary}(${hardRegexWordString})${endWordBoundary}`, 'i');
 
   return {
     wordReg,
+    exampleReg,
     definitionsReg,
     hardDefinitionsReg,
   };

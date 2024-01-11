@@ -22,6 +22,10 @@ const createSimpleRegExp = (keywords: { text: string }[]) => ({
     `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`).join('|')}`,
     'i'
   ),
+  exampleReg: new RegExp(
+    `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).exampleReg.source})`).join('|')}`,
+    'i'
+  ),
   definitionsReg: new RegExp(
     `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).definitionsReg.source})`).join('|')}`,
     'i'
@@ -48,7 +52,7 @@ const constructRegexQuery = ({
     ? createSimpleRegExp(keywords)
     : keywords?.length
     ? createSimpleRegExp(keywords)
-    : { wordReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ };
+    : { wordReg: /^[.{0,}\n{0,}]/, exampleReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ };
 
 /* Packages the res response with sorting */
 export const packageResponse = ({
