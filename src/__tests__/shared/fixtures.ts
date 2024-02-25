@@ -1,5 +1,5 @@
 import WordClass from '../../shared/constants/WordClass';
-import { Word, Definition } from '../../types';
+import { Word, Definition, Example } from '../../types';
 
 export const wordFixture = (wordData: Partial<Word>) => ({
   definitions: [],
@@ -38,4 +38,18 @@ export const definitionFixture = (definitionData: Partial<Definition>) => ({
   nsibidi: '',
   nsibidiCharacters: [],
   ...definitionData,
+});
+
+export const exampleFixture = (exampleData: Partial<Example>) => ({
+  igbo: '',
+  english: '',
+  meaning: '',
+  nsibidi: '',
+  pronunciations: [],
+  id: '',
+  associatedDefinitionsSchemas: [],
+  associatedWords: [],
+  nsibidiCharacters: [],
+  updatedAt: new Date(),
+  ...exampleData,
 });

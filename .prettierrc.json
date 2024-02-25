@@ -1,5 +1,4 @@
 {
-  "jsxBracketSameLine": true,
   "parser": "flow",
   "printWidth": 100,
   "singleQuote": true,

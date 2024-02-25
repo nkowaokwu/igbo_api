@@ -9,19 +9,25 @@ const Environment = {
 };
 
 const config = functions.config();
+// @ts-expect-error NODE_ENV
 const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
+// @ts-expect-error NODE_ENV
 const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
 
 if (dotenv) {
   dotenv.config();
 }
 
-export const isBuild = config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
+export const isBuild =
+  config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
 export const isProduction =
-  config?.runtime?.env === Environment.PRODUCTION || process.env.NODE_ENV === Environment.PRODUCTION;
+  config?.runtime?.env === Environment.PRODUCTION ||
+  process.env.NODE_ENV === Environment.PRODUCTION;
 export const isDevelopment =
-  config?.runtime?.env === Environment.DEVELOPMENT || process.env.NODE_ENV === Environment.DEVELOPMENT;
-export const isTest = config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
+  config?.runtime?.env === Environment.DEVELOPMENT ||
+  process.env.NODE_ENV === Environment.DEVELOPMENT;
+export const isTest =
+  config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
 const useReplicaSet = config?.env?.replica_set;
 
 // Database
@@ -29,7 +35,8 @@ const DB_NAME = 'igbo_api';
 const TEST_DB_NAME = 'test_igbo_api';
 
 // If running inside Docker container, it will fallback to using test_igbo_api database
-const isTestingEnvironment = isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
+const isTestingEnvironment =
+  isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
 export const PORT = 8080;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';
@@ -49,8 +56,8 @@ const LOCAL_MONGO_URI = `${MONGO_ROOT}/${DB_NAME}`;
 export const MONGO_URI = isTestingEnvironment
   ? TEST_MONGO_URI.concat(QUERIES)
   : isDevelopment
-  ? LOCAL_MONGO_URI.concat(QUERIES)
-  : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
+    ? LOCAL_MONGO_URI.concat(QUERIES)
+    : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
 export const FIREBASE_CONFIG = config?.env?.firebase_config; // Provide your own Firebase Config
 export const CLIENT_TEST = config?.env?.client_test;
 
@@ -64,7 +71,8 @@ export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
 
 // SendGrid API
 export const SENDGRID_API_KEY = config?.sendgrid?.api_key || '';
-export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE = config?.sendgrid?.new_developer_account_template || '';
+export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE =
+  config?.sendgrid?.new_developer_account_template || '';
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
 
 if (sgMail && !isTest) {

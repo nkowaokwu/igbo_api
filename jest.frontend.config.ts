@@ -1,5 +1,5 @@
 // Frontend Jest Config
-module.exports = {
+export default {
   displayName: 'igbo_api',
   testMatch: ['./**/__tests__/**/*.test.tsx'],
   testTimeout: 20000,

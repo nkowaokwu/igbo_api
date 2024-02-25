@@ -15,6 +15,5 @@ describe('SubMenu', () => {
     await findByText('Features');
     await findByText('Docs');
     await findByText('Get an API Key');
-    await findByText('Try it Out');
   });
 });

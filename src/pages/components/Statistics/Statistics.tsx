@@ -22,8 +22,8 @@ const Statistics = ({
         Crunching the Numbers
       </Heading>
       <Text className="px-6 lg:px-0 lg:pb-12 text-gray-500">
-        The Igbo API is the most robust, Igbo-English dictionary API that is maintained by our wonderful volunteer
-        community.
+        The Igbo API is the most robust, Igbo-English dictionary API that is maintained by our
+        wonderful volunteer community.
       </Text>
       <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         <Stat value={totalWords} header="Words in the database" />
@@ -37,7 +37,7 @@ const Statistics = ({
       </Box>
       <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         {contributors ? (
-          <Stat value={contributors.length - 1} header={`${contributors.length - 1} GitHub Contributors`}>
+          <Stat value={contributors.length - 1} header="GitHub Contributors">
             <Box className="flex flex-row flex-wrap items-center justify-center mt-4">
               {contributors
                 .slice(0, 18)

@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { createDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
 import { developerData, malformedDeveloperData, wordId, exampleId } from './__mocks__/documentData';
 
@@ -32,8 +33,10 @@ describe('Developers', () => {
     it('should get all words with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      const res = await getWords({}, {}, { apiKey: developerRes.body.apiKey });
+      await new Promise((resolve) => {
+        setTimeout(resolve, 5000);
+      });
+      const res = await getWords({}, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(200);
     });
 
@@ -47,7 +50,7 @@ describe('Developers', () => {
     it('should get examples with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
-      const res = await getExamples({}, {}, { apiKey: developerRes.body.apiKey });
+      const res = await getExamples({}, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(200);
     });
 
@@ -92,7 +95,7 @@ describe('Developers', () => {
     it('should increase the count by maxing usage limit', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
-      const wordsRes = await getWords({ keyword: 'eat' });
+      const wordsRes = await getWords({ keyword: 'eat' }, {});
       const limitWordId = wordsRes.body[0].id;
       await getWord(limitWordId, {}, { apiKey: developerRes.body.apiKey });
       await getWord(limitWordId, {}, { apiKey: developerRes.body.apiKey });

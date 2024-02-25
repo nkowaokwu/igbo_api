@@ -1,4 +1,4 @@
-import * as next from '../../node_modules/next/router';
+import * as next from 'next/dist/client/router';
 
 export const useRouter = jest.fn(() => ({
   push: jest.fn(),

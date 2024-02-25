@@ -14,5 +14,7 @@ export default async () => {
     await mongoose.connection.db.dropDatabase();
   }
   await populateAPI();
-  await new Promise((resolve) => setTimeout(resolve, 10000));
+  await new Promise((resolve) => {
+    setTimeout(resolve, 10000);
+  });
 };

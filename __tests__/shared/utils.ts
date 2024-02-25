@@ -1,8 +1,7 @@
-import forEach from 'lodash/forEach';
-import difference from 'lodash/difference';
-import map from 'lodash/map';
+import { forEach, difference, map } from 'lodash';
+import { expect } from '@jest/globals';
 
-export const expectUniqSetsOfResponses = (res, responseLength = 10) => {
+export const expectUniqSetsOfResponses = (res: any[], responseLength = 10) => {
   forEach(res, (docsRes, index) => {
     expect(docsRes.status).toEqual(200);
     expect(docsRes.body.length).toBeLessThanOrEqual(responseLength);

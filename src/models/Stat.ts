@@ -8,7 +8,7 @@ export const statSchema = new Schema(
     authorId: { type: String, default: 'SYSTEM' },
     value: { type: Schema.Types.Mixed, default: null },
   },
-  { toObject: toObjectPlugin, timestamps: true },
+  { toObject: toObjectPlugin, timestamps: true }
 );
 
 toJSONPlugin(statSchema);

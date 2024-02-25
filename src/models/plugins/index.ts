@@ -5,7 +5,7 @@
 import mongoose from 'mongoose';
 
 /* Replaces the _id key with id */
-export const toJSONPlugin = (schema) => {
+export const toJSONPlugin = (schema: mongoose.Schema) => {
   const toJSON = schema.methods.toJSON || mongoose.Document.prototype.toJSON;
   schema.set('toJSON', {
     virtuals: true,
@@ -20,11 +20,11 @@ export const toJSONPlugin = (schema) => {
   };
 };
 
-export const toObjectPlugin = ({
-  transform: (doc, ret) => {
+export const toObjectPlugin = {
+  transform: (doc: mongoose.Document, ret: mongoose.Document) => {
     // remove the _id and __v of every document before returning the result
     ret.id = doc.id.toString();
     delete ret._id;
     delete ret.__v;
   },
-});
+};

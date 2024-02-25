@@ -1,5 +1,6 @@
+import { expect } from '@jest/globals';
 import fs from 'fs';
-import keys from 'lodash/keys';
+import { keys } from 'lodash';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
 import { searchTerm, searchMockedTerm } from './shared/commands';
 
@@ -11,10 +12,9 @@ if (!fs.existsSync(mocksDir)) {
 describe('Parse', () => {
   describe('Dictionaries', () => {
     it('should create dictionaries', async () => {
-      await import('../src/dictionaries/buildDictionaries')
-        .catch((err) => {
-          throw err;
-        });
+      await import('../src/dictionaries/buildDictionaries').catch((err) => {
+        throw err;
+      });
     });
 
     it('should keep same-cell text in the definition property', async () => {
@@ -28,7 +28,9 @@ describe('Parse', () => {
 
     it('should include the correct A. B. text for ewu chī', async () => {
       const keyword = 'chi';
-      const { body: { chi: res } } = await searchTerm(keyword);
+      const {
+        body: { chi: res },
+      } = await searchTerm(keyword);
       const termDefinitions = res[0].definitions;
       expect(termDefinitions.length).toBeGreaterThanOrEqual(2);
     });
@@ -78,7 +80,7 @@ describe('Parse', () => {
         const withAbbreviations = 'n. noun. num. num.eral aux. v. aux.v. infl. suff.';
         const withoutAbbreviations = replaceAbbreviations(withAbbreviations);
         expect(withoutAbbreviations).toEqual(
-          'noun noun. numeral num.eral auxiliary verb aux.verb inflectional suffix',
+          'noun noun. numeral num.eral auxiliary verb aux.verb inflectional suffix'
         );
       });
     });

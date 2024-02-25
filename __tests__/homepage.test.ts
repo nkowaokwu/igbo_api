@@ -1,3 +1,4 @@
+import { expect } from '@jest/globals';
 import { getLocalUrlRoute } from './shared/commands';
 import { SITE_TITLE, DOCS_SITE_TITLE } from './shared/constants';
 

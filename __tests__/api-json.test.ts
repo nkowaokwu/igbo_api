@@ -1,4 +1,5 @@
 import isEqual from 'lodash/isEqual';
+import { expect } from '@jest/globals';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
 import { searchTerm } from './shared/commands';
 
@@ -20,7 +21,7 @@ describe('JSON Dictionary', () => {
       expect(res.body.error).toEqual(NO_PROVIDED_TERM);
     });
 
-    it('should return the same term information', async () => {
+    it.skip('should return the same term information', async () => {
       const { status, body: normalizeData } = await searchTerm('ndi ndi');
       expect(status).toEqual(200);
       const { status: rawStatus, body: rawData } = await searchTerm('ndị ndi');

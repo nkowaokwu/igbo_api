@@ -15,9 +15,4 @@ const malformedDeveloperData = {
   password: 'password',
 };
 
-export {
-  wordId,
-  exampleId,
-  developerData,
-  malformedDeveloperData,
-};
+export { wordId, exampleId, developerData, malformedDeveloperData };

@@ -6,6 +6,9 @@ import Tenses from '../shared/constants/Tenses';
 import WordClass from '../shared/constants/WordClass';
 import WordAttributes from '../shared/constants/WordAttributes';
 import WordTags from '../shared/constants/WordTags';
+import DialectEnum from '../shared/constants/DialectEnum';
+import WordTagEnum from '../shared/constants/WordTagEnum';
+import { Definition } from '../types';
 
 const { Schema, Types } = mongoose;
 
@@ -25,7 +28,10 @@ const definitionSchema = new Schema(
         {
           igbo: String,
           nsibidi: String,
-          nsibidiCharacters: { type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }], default: [] },
+          nsibidiCharacters: {
+            type: [{ type: Types.ObjectId, ref: 'NsibidiCharacter' }],
+            default: [],
+          },
         },
       ],
       default: [],
@@ -45,7 +51,7 @@ const dialectSchema = new Schema(
     variations: { type: [{ type: String }], default: [] },
     dialects: {
       type: [{ type: String }],
-      validate: (v) => every(v, (dialect) => Dialects[dialect].value),
+      validate: (v: DialectEnum[]) => every(v, (dialect) => Dialects[dialect].value),
       default: [],
     },
     pronunciation: { type: String, default: '' },
@@ -61,14 +67,15 @@ export const wordSchema = new Schema(
     definitions: [
       {
         type: definitionSchema,
-        validate: (definitions) => Array.isArray(definitions) && definitions.length > 0,
+        validate: (definitions: Definition[]) =>
+          Array.isArray(definitions) && definitions.length > 0,
       },
     ],
     dialects: { type: [dialectSchema], default: [] },
     tags: {
       type: [String],
       default: [],
-      validate: (v) =>
+      validate: (v: WordTagEnum[]) =>
         v.every((tag) =>
           Object.values(WordTags)
             .map(({ value }) => value)
