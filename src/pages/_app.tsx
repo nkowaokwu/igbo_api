@@ -11,7 +11,6 @@ import en from '../public/locales/en';
 import ig from '../public/locales/ig';
 import * as gtag from '../lib/gtag';
 import '../antd-extend.css';
-import '../fonts.css';
 import '../styles.css';
 
 i18n.use(initReactI18next).init({
@@ -28,7 +27,7 @@ i18n.use(initReactI18next).init({
   },
 });
 
-const MainApp = ({ Component, pageProps, ...rest }: { Component: React.FC; pageProps: any }) => {
+const MainApp = ({ Component, pageProps, ...rest }: { Component: React.FC, pageProps: any }) => {
   const router = useRouter();
 
   useEffect(() => {
