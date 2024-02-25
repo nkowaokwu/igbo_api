@@ -22,9 +22,11 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
       borderColor="gray.300"
       borderWidth="1px"
       borderRadius="md"
-      mt="4"
-    >
-      <Heading as="h1" className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900" pb="0">
+      mt="4">
+      <Heading
+        as="h1"
+        className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900"
+        pb="0">
         {to ? (
           <ChakraLink href={to}>
             <Heading fontSize="2xl" pb="0">
@@ -32,7 +34,12 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
             </Heading>
           </ChakraLink>
         ) : (
-          <Link className="cursor-pointer" to="homepage-container" smooth offset={-100} duration={600}>
+          <Link
+            className="cursor-pointer"
+            to="homepage-container"
+            smooth
+            offset={-100}
+            duration={600}>
             Igbo API
           </Link>
         )}
@@ -44,13 +51,17 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
           _hover={{ backgroundColor: 'transparent' }}
           _active={{ backgroundColor: 'transparent' }}
           _focus={{ backgroundColor: 'transparent' }}
-          className={`transition-element mr-5 lg:mr-0 ${isMenuVisible ? 'transform rotate-90' : ''}`}
-          onClick={() => setIsMenuVisible(!isMenuVisible)}
-        >
+          className={`transition-element mr-5 lg:mr-0 ${
+            isMenuVisible ? 'transform rotate-90' : ''
+          }`}
+          onClick={() => setIsMenuVisible(!isMenuVisible)}>
           {menuIcon}
         </Button>
       ) : null}
-      <SubMenu isVisible={matchesLargeScreenQuery || isMenuVisible} onSelect={() => setIsMenuVisible(false)} />
+      <SubMenu
+        isVisible={matchesLargeScreenQuery || isMenuVisible}
+        onSelect={() => setIsMenuVisible(false)}
+      />
       <TryItOut size="sm" borderRadius="full" />
     </Box>
   );
