@@ -7,21 +7,19 @@ const Card = ({
   icon,
   tooltipLabel,
 }: {
-  title: string;
-  description: string;
-  icon: string;
-  tooltipLabel?: string;
+  title: string,
+  description: string,
+  icon: string,
+  tooltipLabel?: string,
 }) => (
   <Tooltip label={tooltipLabel}>
     <Box
-      style={{
-        minHeight: 120,
-      }}
+      minHeight="120px"
+      height="full"
       className={`w-full flex flex-col items-center py-4 cursor-default
       shadow-sm rounded-lg px-5`}
       borderColor="gray.200"
-      borderWidth="1px"
-    >
+      borderWidth="1px">
       <Box className="flex flex-row items-center space-x-2 w-full">
         <chakra.span className="rounded-full text-3xl w-16 bg-white my-4 justify-center text-center">
           {icon}
@@ -36,8 +34,7 @@ const Card = ({
               maxWidth: 400,
             }}
             className="text-gray-500"
-            fontSize="sm"
-          >
+            fontSize="sm">
             {description}
           </Text>
         </Box>
