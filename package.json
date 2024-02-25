@@ -133,6 +133,7 @@
     "react-fade-in": "^1.1.1",
     "react-hook-form": "^6.13.1",
     "react-i18next": "^11.15.3",
+    "react-icons": "^5.0.1",
     "react-json-pretty": "^2.2.0",
     "react-reveal": "^1.2.2",
     "react-scroll": "^1.8.1",

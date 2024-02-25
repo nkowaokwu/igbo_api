@@ -17,7 +17,7 @@ const Error = () => (
       Something went wrong
     </Heading>
     <Link href="/" passHref>
-      <chakra.span style={{ color: 'green', cursor: 'pointer', textDecoration: 'underline' }}>
+      <chakra.span style={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}>
         Go back to homepage
       </chakra.span>
     </Link>

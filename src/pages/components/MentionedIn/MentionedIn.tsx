@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Box, Image, Link } from '@chakra-ui/react';
+import { Box, Text, Image, Link, Tooltip } from '@chakra-ui/react';
 
 const NIGERIAN_TRIBUNE = {
   url: `https://tribuneonlineng.com/why-i-created-first-igbo-english-
@@ -29,28 +29,44 @@ const NASDAQ = {
 };
 
 const MentionedIn = () => (
-  <Box className="mentioned-in w-full flex justify-center items-center lg:py-16">
+  <Box className="mentioned-in w-full flex flex-col justify-center items-center space-y-12">
+    {' '}
+    <Text textAlign="center" fontWeight="semibold" fontSize="xl">
+      Mentioned in
+    </Text>
     <Box
-      className={`w-full md:w-10/12 flex flex-col md:flex-row 
-    flex-wrap items-center justify-evenly md:space-x-8 lg:space-x-0 space-y-12 my-8 md:space-y-0 md:my-0`}
+      className={`flex flex-row flex-wrap w-full md:w-6/12 space-x-4
+    flex-wrap items-center justify-evenly`}
     >
       <Link href={NASDAQ.url} target="_blank" rel="noreferrer">
-        <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '200px' }} />
+        <Tooltip label="Nasdaq">
+          <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '140px' }} />
+        </Tooltip>
       </Link>
       <Link href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
-        <Image src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" />
+        <Tooltip label="Nigerian Tribune">
+          <Image src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" style={{ width: '140px' }} />
+        </Tooltip>
       </Link>
       <Link href={UIU.url} target="_blank" rel="noreferrer">
-        <Image src={UIU.src} alt="Umu Igbo Unite logo" />
+        <Tooltip label="Umu Igbo Unite">
+          <Image src={UIU.src} alt="Umu Igbo Unite logo" style={{ width: '110px' }} />
+        </Tooltip>
       </Link>
       <Link href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
-        <Image src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" />
+        <Tooltip label="Built in Africa">
+          <Image src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" style={{ width: '130px' }} />
+        </Tooltip>
       </Link>
       <Link href={NUESROOM.url} target="_blank" rel="noreferrer">
-        <Image src={NUESROOM.src} alt="Nuesroom logo" />
+        <Tooltip label="Nuesroom">
+          <Image src={NUESROOM.src} alt="Nuesroom logo" style={{ width: '140px' }} />
+        </Tooltip>
       </Link>
       <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer">
-        <Image src={WEDEYCODE.src} alt="WeDeyCode logo" />
+        <Tooltip label="WeDeyCode">
+          <Image src={WEDEYCODE.src} alt="WeDeyCode logo" style={{ width: '90px' }} />
+        </Tooltip>
       </Link>
     </Box>
   </Box>
