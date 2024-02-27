@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import { createDeveloper, getExample, getExamples, getWord, getWords } from './shared/commands';
 import { developerData, malformedDeveloperData, wordId, exampleId } from './__mocks__/documentData';
 

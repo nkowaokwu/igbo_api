@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { expect } from '@jest/globals';
 import { forEach, has, isEqual, uniqBy, some, every } from 'lodash';
 import stringSimilarity from 'string-similarity';
 import diacriticless from 'diacriticless';

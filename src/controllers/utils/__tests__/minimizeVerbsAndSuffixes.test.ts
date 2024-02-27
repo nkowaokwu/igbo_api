@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import Version from '../../../shared/constants/Version';
 import WordClass from '../../../shared/constants/WordClass';
 import { definitionFixture, wordFixture } from '../../../__tests__/shared/fixtures';

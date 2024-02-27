@@ -30,9 +30,12 @@ jobs:
         uses: supercharge/mongodb-github-action@1.3.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Install Project Dependencies
+        run: |
+          rm -rf ./node_modules; yarn install
+          npm install -g firebase-tools
       - name: Build Server
         run: |
-          yarn install
           yarn build
       - name: Test Server Build Process
         run: yarn test:build
@@ -40,5 +43,3 @@ jobs:
         run: yarn jest:backend
       - name: Test Frontend
         run: yarn jest:frontend
-      # - name: Test API Homepage
-      #   run: yarn cypress:ci
