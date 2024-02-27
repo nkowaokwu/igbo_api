@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import { getNsibidiCharactersV2 } from './shared/commands';
 
 describe('MongoDB Nsibidi Characters', () => {

@@ -1,5 +1,4 @@
 import { forEach, has, isEqual } from 'lodash';
-import { expect } from '@jest/globals';
 import { getExamples, getExample, getExamplesV2, getExampleV2 } from './shared/commands';
 import {
   MAIN_KEY,

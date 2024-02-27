@@ -4,7 +4,12 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['**/functions/*.js', '**/node_modules/'],
+  ignorePatterns: [
+    '**/functions/*.js',
+    '**/node_modules/',
+    '**/__tests__/**/*.ts',
+    '**/__tests__/**/*.tsx',
+  ],
   // Prettier plugin should be the last to always override preceding plugins
   extends: ['next', 'airbnb', 'plugin:cypress/recommended', 'prettier'],
   parserOptions: {

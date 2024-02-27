@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import fs from 'fs';
 import { keys } from 'lodash';
 import replaceAbbreviations from '../src/shared/utils/replaceAbbreviations';
