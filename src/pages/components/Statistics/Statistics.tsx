@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Link, Image, Tooltip } from '@chakra-ui/react';
-import { useTranslation } from 'react-i18next';
+import { Box, Heading, Text, Link, Image, Tooltip } from '@chakra-ui/react';
 import Stat from './Stat';
 import { ProjectStats } from '../../../types';
 
@@ -16,32 +15,29 @@ const Statistics = ({
   contributors = [],
   stars = 0,
 }: ProjectStats) => {
-  const { t } = useTranslation('common');
   const totalSlackMembers = 320;
   return (
     <Box className="flex flex-col items-center justify-center w-full odd:space-y-6">
+      <Heading as="h2" id="try-it-out" className="text-4xl font-bold" fontSize="6xl">
+        Crunching the Numbers
+      </Heading>
+      <Text className="px-6 lg:px-0 lg:pb-12 text-gray-500">
+        The Igbo API is the most robust, Igbo-English dictionary API that is maintained by our
+        wonderful volunteer community.
+      </Text>
       <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
-        <Stat value={totalWords} header={t('Words in the database').replace('{{number}}', `${totalWords}`)} />
-        <Stat value={totalExamples} header={t('Example Igbo sentences').replace('{{number}}', `${totalExamples}`)} />
-        <Stat
-          value={totalAudioPronunciations}
-          header={t('Word audio pronunciations').replace('{{number}}', `${totalAudioPronunciations}`)}
-        />
-        <Stat
-          value={totalIgboDefinitions}
-          header={t('Words with Igbo definitions').replace('{{number}}', `${totalIgboDefinitions}`)}
-        />
-        <Stat value={totalProverbs} header={t('Igbo Proverbs').replace('{{number}}', `${totalProverbs}`)} />
-        <Stat value={totalBibleVerses} header={t('Bible Verses').replace('{{number}}', `${totalBibleVerses}`)} />
-        <Stat value={totalNsibidiWords} header={t('Words in Nsịbịdị').replace('{{number}}', `${totalNsibidiWords}`)} />
-        <Stat value={totalDevelopers} header={t('Developers using the Igbo API')} />
+        <Stat value={totalWords} header="Words in the database" />
+        <Stat value={totalExamples} header="Example Igbo sentences" />
+        <Stat value={totalAudioPronunciations} header="Word audio pronunciations" />
+        <Stat value={totalIgboDefinitions} header="Words with Igbo definitions" />
+        <Stat value={totalProverbs} header="Igbo Proverbs" />
+        <Stat value={totalBibleVerses} header="Bible Verses" />
+        <Stat value={totalNsibidiWords} header="Words in Nsịbịdị" />
+        <Stat value={totalDevelopers} header="Developers using the Igbo API" />
       </Box>
       <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         {contributors ? (
-          <Stat
-            value={contributors.length - 1}
-            header={t('GitHub Contributors').replace('{{number}}', `${contributors.length - 1}`)}
-          >
+          <Stat value={contributors.length - 1} header="GitHub Contributors">
             <Box className="flex flex-row flex-wrap items-center justify-center mt-4">
               {contributors
                 .slice(0, 18)
@@ -62,12 +58,8 @@ const Statistics = ({
             </Box>
           </Stat>
         ) : null}
-        <Stat
-          value={totalSlackMembers}
-          header={t('Members in Slack').replace('{{number}}', `${totalSlackMembers}`)}
-          exact={false}
-        />
-        <Stat value={stars} header={t('GitHub stars').replace('{{number}}', `${stars}`)} />
+        <Stat value={totalSlackMembers} header="Members in Slack" exact={false} />
+        <Stat value={stars} header="GitHub stars" />
       </Box>
     </Box>
   );

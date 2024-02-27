@@ -3,11 +3,6 @@
 @tailwind utilities;
 @import './general.css';
 
-*::selection {
-  @apply bg-green-400;
-  @apply text-white;
-}
-
 .transition-element {
   @apply flex;
   @apply items-center;
@@ -24,12 +19,12 @@
 
 .link {
   @apply transition-element;
-  @apply text-green-400;
+  @apply text-blue-400;
   @apply inline;
 }
 
 .link:hover {
-  @apply text-green-700;
+  @apply text-blue-700;
 }
 
 .primary-button {
@@ -37,7 +32,7 @@
   @apply rounded-full;
   @apply w-full;
   @apply mt-6;
-  @apply bg-green-500;
+  @apply bg-blue-500;
   @apply text-white;
   @apply py-2;
   @apply px-4;
@@ -73,7 +68,7 @@
   @apply text-white;
 }
 .transparent-navbar li:hover {
-  @apply text-green-200;
+  @apply text-blue-200;
 }
 
 .error {
@@ -141,12 +136,10 @@
 }
 
 .mentioned-in img {
-  @apply my-6;
-  @apply mx-4;
   transition: all 0.1s ease;
   width: 150px;
 }
 
 .mentioned-in img:hover {
-  filter: invert(44%) sepia(25%) saturate(728%) hue-rotate(89deg) brightness(94%) contrast(81%);
+  /* filter: invert(44%) sepia(25%) saturate(728%) hue-rotate(89deg) brightness(94%) contrast(81%); */
 }

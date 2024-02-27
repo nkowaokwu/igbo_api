@@ -5,8 +5,8 @@ import { LegacyWordDocument, Word, WordDocument } from '../types';
 import { WordType, PartialWordType } from '../types/word';
 
 type HandleFlags = {
-  data: { words: WordType[]; contentLength: number };
-  flags: { examples: boolean; dialects: boolean; resolve: boolean };
+  data: { words: WordType[], contentLength: number },
+  flags: { examples: boolean, dialects: boolean, resolve: boolean },
 };
 
 /* FlagsAPI cleans returned MongoDB data to match client-provided flags */
@@ -33,7 +33,10 @@ export const handleWordFlags = ({
         }
         if (updatedWord.relatedTerms) {
           updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) =>
-            (typeof relatedTerm === 'string' ? relatedTerm : relatedTerm?._id || relatedTerm.id).toString()
+            (typeof relatedTerm === 'string'
+              ? relatedTerm
+              : relatedTerm?._id || relatedTerm.id
+            ).toString()
           );
         }
       }

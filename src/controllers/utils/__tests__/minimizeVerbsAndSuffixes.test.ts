@@ -1,31 +1,34 @@
+import { expect } from '@jest/globals';
 import Version from '../../../shared/constants/Version';
 import WordClass from '../../../shared/constants/WordClass';
+import { definitionFixture, wordFixture } from '../../../__tests__/shared/fixtures';
 import minimizeVerbsAndSuffixes from '../minimizeVerbsAndSuffixes';
+import WordClassEnum from '../../../shared/constants/WordClassEnum';
 
 describe('minimizeVerbsAndSuffixes', () => {
   it('minimizes the verbs and suffixes to include basic fields', () => {
     const words = [
-      {
+      wordFixture({
         word: 'first word',
-        definitions: [{ wordClass: WordClass.NNC.value, definitions: [] }],
+        definitions: [definitionFixture({})],
         stems: [],
         relatedTerms: [],
         id: '123',
-      },
-      {
+      }),
+      wordFixture({
         word: 'second word',
-        definitions: [{ wordClass: WordClass.ADV.value, definitions: [] }],
+        definitions: [definitionFixture({ wordClass: WordClassEnum.ADV })],
         stems: [],
         relatedTerms: [],
         id: '456',
-      },
-      {
+      }),
+      wordFixture({
         word: 'third word',
-        definitions: [{ wordClass: WordClass.PREP.value, definitions: [] }],
+        definitions: [definitionFixture({ wordClass: WordClassEnum.PREP })],
         stems: [],
         relatedTerms: [],
         id: '789',
-      },
+      }),
     ];
     const minimizedWords = minimizeVerbsAndSuffixes(words, Version.VERSION_2);
     expect(minimizedWords).toEqual({

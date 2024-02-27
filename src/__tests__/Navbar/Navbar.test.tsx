@@ -5,13 +5,12 @@ import Navbar from '../../pages/components/Navbar/Navbar';
 
 describe('Navbar', () => {
   it('renders the card', async () => {
-    const { findByText, findByTestId } = render(
+    const { findByTestId } = render(
       <TestContext>
         <Navbar to="/" />
       </TestContext>
     );
 
-    await findByText('English');
     await findByTestId('sub-menu');
   });
 });

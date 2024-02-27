@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./dist",
     "allowJs": true,
     "target": "ESNext",
     "lib": [
@@ -10,10 +10,10 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "noEmit": false,
     "incremental": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,7 +24,8 @@
     ]
   },
   "include": [
-    "./src/**/*",
+    "./**/*.ts",
+    "./**/*.tsx",
     "@types",
     "env.d.ts"
   ],

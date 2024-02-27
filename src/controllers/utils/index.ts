@@ -19,20 +19,31 @@ import ExampleStyles from '../../shared/constants/ExampleStyles';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
-    `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`).join('|')}`,
+    `${keywords
+      .map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`)
+      .join('|')}`,
     'i'
   ),
   exampleReg: new RegExp(
-    `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).exampleReg.source})`).join('|')}`,
+    `${keywords
+      .map((keyword) => `(${createRegExp(keyword.text, true).exampleReg.source})`)
+      .join('|')}`,
     'i'
   ),
   definitionsReg: new RegExp(
-    `${keywords.map((keyword) => `(${createRegExp(keyword.text, true).definitionsReg.source})`).join('|')}`,
+    `${keywords
+      .map((keyword) => `(${createRegExp(keyword.text, true).definitionsReg.source})`)
+      .join('|')}`,
     'i'
   ),
   hardDefinitionsReg: new RegExp(
     `${keywords
-      .map((keyword) => `(${(createRegExp(keyword.text, true).hardDefinitionsReg || { source: keyword.text }).source})`)
+      .map(
+        (keyword) =>
+          `(${
+            (createRegExp(keyword.text, true).hardDefinitionsReg || { source: keyword.text }).source
+          })`
+      )
       .join('|')}`,
     'i'
   ),
@@ -45,14 +56,18 @@ const constructRegexQuery = ({
   isUsingMainKey,
   keywords,
 }: {
-  isUsingMainKey: boolean | undefined;
-  keywords: { text: string }[];
+  isUsingMainKey: boolean | undefined,
+  keywords: { text: string }[],
 }) =>
   isUsingMainKey
     ? createSimpleRegExp(keywords)
     : keywords?.length
-    ? createSimpleRegExp(keywords)
-    : { wordReg: /^[.{0,}\n{0,}]/, exampleReg: /^[.{0,}\n{0,}]/, definitionsReg: /^[.{0,}\n{0,}]/ };
+      ? createSimpleRegExp(keywords)
+      : {
+          wordReg: /^[.{0,}\n{0,}]/,
+          exampleReg: /^[.{0,}\n{0,}]/,
+          definitionsReg: /^[.{0,}\n{0,}]/,
+        };
 
 /* Packages the res response with sorting */
 export const packageResponse = ({
@@ -61,16 +76,16 @@ export const packageResponse = ({
   contentLength,
   version,
 }: {
-  res: Response;
+  res: Response,
   docs:
     | Partial<Word>
     | Partial<Example>
     | Partial<ExampleWithPronunciation>
     | Partial<Word>[]
     | Partial<Example>[]
-    | Partial<ExampleWithPronunciation>[];
-  contentLength: number;
-  version: Version;
+    | Partial<ExampleWithPronunciation>[],
+  contentLength: number,
+  version: Version,
 }) => {
   res.set({ 'Content-Range': contentLength });
   const response = version === Version.VERSION_2 ? { data: docs, length: contentLength } : docs;
@@ -84,7 +99,9 @@ const convertFilterToKeyword = (filter = '{"word": ""}') => {
     const firstFilterKey = Object.keys(parsedFilter)[0];
     return parsedFilter[firstFilterKey];
   } catch {
-    throw new Error(`Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`);
+    throw new Error(
+      `Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`
+    );
   }
 };
 
@@ -93,14 +110,15 @@ const searchAllVerbsAndSuffixes = async ({
   query,
   version,
 }: {
-  query: PipelineStage.Match['$match'];
-  version: Version;
-}): Promise<{ words: Word[]; contentLength: number }> => {
-  const { words, contentLength } = (await findWordsWithMatch({
+  query: PipelineStage.Match['$match'],
+  version: Version,
+}): Promise<{ words: Word[], contentLength: number }> => {
+  const { words, contentLength } = await findWordsWithMatch({
     match: query,
     version,
     lean: true,
-  })) as { words: Word[]; contentLength: number };
+  });
+  // @ts-expect-error types
   return { words, contentLength };
 };
 
@@ -130,14 +148,19 @@ export const handleQueries = async ({
   const hasQuotes = keywordQuery && keywordQuery.match(/["'].*["']/) !== null;
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
-  const allVerbsAndSuffixesQuery: PipelineStage.Match['$match'] = searchForAllVerbsAndSuffixesQuery();
-  const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({ key: version, redisClient });
+  const allVerbsAndSuffixesQuery: PipelineStage.Match['$match'] =
+    searchForAllVerbsAndSuffixesQuery();
+  const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({
+    key: version,
+    redisClient,
+  });
   if (version === Version.VERSION_2) {
     if (cachedAllVerbsAndSuffixes) {
       allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
     } else {
-      const allVerbsAndSuffixesDb = (await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version }))
-        .words;
+      const allVerbsAndSuffixesDb = (
+        await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })
+      ).words;
       allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
         key: version,
         data: allVerbsAndSuffixesDb,
@@ -153,7 +176,10 @@ export const handleQueries = async ({
   const regexes = searchWordParts.reduce(
     (regexesObject, searchWordPart) => ({
       ...regexesObject,
-      [searchWordPart]: constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWordPart }] }),
+      [searchWordPart]: constructRegexQuery({
+        isUsingMainKey,
+        keywords: [{ text: searchWordPart }],
+      }),
     }),
     {}
   );
@@ -181,7 +207,11 @@ export const handleQueries = async ({
       version === Version.VERSION_2
         ? expandNoun(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
             text,
-            wordClass: wordClass.concat([WordClass.NNC.value, WordClass.PRN.value, WordClass.NNP.value]),
+            wordClass: wordClass.concat([
+              WordClass.NNC.value,
+              WordClass.PRN.value,
+              WordClass.NNP.value,
+            ]),
             regex: pick(
               constructRegexQuery({
                 isUsingMainKey,
@@ -224,7 +254,7 @@ export const handleQueries = async ({
   const dialects = dialectsQuery === 'true';
   const examples = examplesQuery === 'true';
   // @ts-expect-error toUpperCase
-  const style = stylesQuery && ExampleStyles[stylesQuery.toUpperCase()].value!;
+  const style = stylesQuery && ExampleStyles[stylesQuery.toUpperCase()].value;
   const tags = tagsQuery
     ? tagsQuery
         .replace(/[[\]']/g, '')
@@ -244,12 +274,7 @@ export const handleQueries = async ({
     style,
     resolve,
   };
-  console.log(
-    `Search flags: 
-      ${Object.entries(flags)
-        .map(([key, value]) => `[${key}=${value}]`)
-        .join(',')}`
-  );
+
   const filters: Filters = {
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
