@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { expect } from '@jest/globals';
 import { forEach, has, isEqual, uniqBy, some, every } from 'lodash';
 import stringSimilarity from 'string-similarity';
-// @ts-expect-error types
 import diacriticless from 'diacriticless';
 import { wordSchema } from '../src/models/Word';
 import WordClass from '../src/shared/constants/WordClass';
