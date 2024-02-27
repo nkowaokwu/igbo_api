@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import { expect } from '@jest/globals';
 import createRegExp, { removeSpecialCharacters } from '../createRegExp';
 
 describe('createRegExp', () => {

@@ -1,5 +1,4 @@
 import isEqual from 'lodash/isEqual';
-import { expect } from '@jest/globals';
 import { NO_PROVIDED_TERM } from '../src/shared/constants/errorMessages';
 import { searchTerm } from './shared/commands';
 

@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals';
 import { exampleFixture } from '../../__tests__/shared/fixtures';
 import { convertExamplePronunciations } from '../examples';
 
