@@ -9,6 +9,8 @@ module.exports = {
     '**/node_modules/',
     '**/__tests__/**/*.ts',
     '**/__tests__/**/*.tsx',
+    '**/__mocks__/**/*.ts',
+    '**/__mocks__/**/*.tsx',
   ],
   // Prettier plugin should be the last to always override preceding plugins
   extends: ['next', 'airbnb', 'plugin:cypress/recommended', 'prettier'],
