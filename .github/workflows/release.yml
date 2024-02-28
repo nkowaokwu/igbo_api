@@ -19,7 +19,7 @@ jobs:
       - name: Use Node.js v20
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: 20
       - name: Install Dependencies
         run: yarn install
       - name: Release
