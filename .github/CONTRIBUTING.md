@@ -45,9 +45,9 @@ Double-check to make sure that you have done the following things:
 
 1. If implementing a feature request, create new unit tests to increase confidence in your changes.
     * **You're code will be unable to get merged without new unit tests**
-2. Check to see if your changes are non-breaking by running `yarn test`
+2. Check to see if your changes are non-breaking by running `npm run test`
 3. And install or build dependencies are removed
-    * You can run `yarn clean` to remove unwanted files.
+    * You can run `npm run clean` to remove unwanted files.
 4. Update the README.md with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations, and container parameters.
 
