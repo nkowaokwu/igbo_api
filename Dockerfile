@@ -4,15 +4,15 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 ENV PORT=8080
 ENV CONTAINER_HOST=mongodb
 
 EXPOSE 8080
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

@@ -17,7 +17,7 @@ jobs:
           node-version: 18
 
       - name: Install Node.js dependencies
-        run: yarn install
+        run: npm install
 
       - name: Run ESLint
-        run: yarn run eslint ./src --ext .js,.jsx,.ts,.tsx -c ./.eslintrc.js
+        run: npx eslint ./src --ext .js,.jsx,.ts,.tsx -c ./.eslintrc.js

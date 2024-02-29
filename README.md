@@ -27,7 +27,6 @@ Let's get the Igbo API running locally on your machine.
 To run this project locally, please install the following:
 
 - [Node.js](https://nodejs.org/en/download/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install)
 - [Mongo for Windows](https://www.mongodb.com/docs/v3.0/tutorial/install-mongodb-on-windows/)
 - [Mongo for Mac](https://www.mongodb.com/docs/v3.0/tutorial/install-mongodb-on-os-x/)
 - [Firebase](https://console.firebase.google.com/)
@@ -50,13 +49,13 @@ Navigate into the project directory and install its dependencies:
 
 ```
 cd igbo_api/
-yarn install
+npm install
 ```
 
 Build the frontend for the site:
 
 ```
-yarn build
+npm run build
 ```
 
 ### 2. Connect Firebase Project
@@ -70,7 +69,7 @@ Please follow the [Firebase Configuration Guide here](./.github/FIREBASE_CONFIG.
 Once you've configured your project, you can start the Igbo API dev server by running:
 
 ```
-yarn dev
+npm run dev
 ```
 
 Navigate to [localhost:8080](http://localhost:8080/) to see the API
@@ -80,7 +79,7 @@ Navigate to [localhost:8080](http://localhost:8080/) to see the API
 To start the dev API server while running [MongoDB Replica sets](https://docs.mongodb.com/manual/replication/) and the [Redis cache](https://redis.io/), run:
 
 ```
-yarn dev:full
+npm run dev:full
 ```
 
 To start a Redis server, run:
@@ -101,7 +100,7 @@ If you don't want to run a local Node and MongoDB, you can use [Docker](https://
 Run the following command:
 
 ```
-yarn start:docker
+npm run start:docker
 ```
 
 Navigate to [localhost:8080](http://localhost:8080) to see the API
@@ -111,7 +110,7 @@ Navigate to [localhost:8080](http://localhost:8080) to see the API
 To start up the front site for the API, run:
 
 ```
-yarn dev:site
+npm run dev:site
 ```
 
 Navigate to [localhost:3000](http://localhost:3000) to see the API front site
@@ -125,7 +124,7 @@ To populate the database complete the following steps:
 The following command places the JSON dictionaries in the `build/` directory:
 
 ```
-yarn build:dictionaries
+npm run build:dictionaries
 ```
 
 Here's an example JSON dictionary file: [ig-en/ig-en_expanded.json](./src/dictionaries/ig-en/ig-en_expanded.json)
@@ -137,7 +136,7 @@ Now that the data has been parsed, it needs to be used to populate, or seed, the
 Start the development server:
 
 ```
-yarn dev
+npm run dev
 ```
 
 Then make a `POST` request to the following route:
@@ -179,7 +178,7 @@ The database has gone through a number of migrations since the beginning of this
 shape as the data in the production MongoDB database, run all MongoDB migration scripts with the following command:
 
 ```
-yarn migrate-up
+npm run migrate-up
 ```
 
 ## Testing
@@ -189,13 +188,13 @@ yarn migrate-up
 Frontend tests focus specifically on the Igbo API homepage using Cypress. First, run:
 
 ```
-yarn build
+npm run build
 ```
 
 To watch frontend tests, run:
 
 ```
-yarn cypress
+npm run cypress
 ```
 
 ### Backend
@@ -203,7 +202,7 @@ yarn cypress
 Backend tests use both locally stored MongoDB and JSON data, so to spin up an instance of MongoDB and start the tests at the same time, run:
 
 ```
-yarn test
+npm run test
 ```
 
 If you want to run your MongoDB instance and tests in separate terminals, you can run:
