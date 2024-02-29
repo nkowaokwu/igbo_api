@@ -147,6 +147,7 @@ __tests__/__mocks__/dictionaries/
 src/services/firebase.ts
 functions/node_modules
 functions/src
+functions/dictionaries
 functions/yarn.lock
 yarn.lock
 .idea
