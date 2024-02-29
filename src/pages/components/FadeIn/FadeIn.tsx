@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@chakra-ui/react';
-// @ts-expect-error Types
-import ReactFadeIn from 'react-fade-in';
+import { Box, SlideFade } from '@chakra-ui/react';
 
 const FadeIn = ({ children }: { children: any }) => {
   const [isBrowser, setIsBrowser] = useState(false);
@@ -14,7 +12,9 @@ const FadeIn = ({ children }: { children: any }) => {
   return !isBrowser ? (
     <Box className="w-full">{children}</Box>
   ) : (
-    <ReactFadeIn className="w-full">{children}</ReactFadeIn>
+    <SlideFade in offsetY="20px" className="w-full">
+      {children}
+    </SlideFade>
   );
 };
 

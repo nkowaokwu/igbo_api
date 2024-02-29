@@ -12,7 +12,7 @@ const SignUp = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [igboApiRoute, setIgboApiRoute] = useState('');
   const [apiKey, setApiKey] = useState('');
-  const { handleSubmit, control, errors } = useForm();
+  const { handleSubmit, control, formState: { errors } } = useForm();
 
   useEffect(() => {
     const productionApiRoute = 'https://igboapi.com';
