@@ -35,20 +35,20 @@ jobs:
           node-version: '18'
       - name: Install Project Dependencies
         run: |
-          rm -rf ./node_modules; yarn install
+          rm -rf ./node_modules; npm install
           npm install -g firebase-tools
       - name: Install Cloud Dependencies
         run: |
-          cd functions; rm -rf ./node_modules/; yarn; cd ..; pwd
+          cd functions; rm -rf ./node_modules/; npm install; cd ..; pwd
           firebase use default --token $FIREBASE_TOKEN
       - name: Migrate MongoDB Data
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
-          yarn migrate-up
+          npm run migrate-up
       - name: Build Production Project
         run: |
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
-          yarn build
+          npm run build
       - name: Deploy Production Firebase Functions
         run: |
           firebase deploy --project=igbo-api-bb22d --only functions

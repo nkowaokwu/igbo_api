@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 20
       - name: Install Dependencies
-        run: yarn install
+        run: npm install
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_ACCESS_TOKEN }}

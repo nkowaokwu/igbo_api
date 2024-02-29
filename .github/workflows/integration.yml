@@ -32,14 +32,14 @@ jobs:
           mongodb-version: ${{ matrix.mongodb-version }}
       - name: Install Project Dependencies
         run: |
-          rm -rf ./node_modules; yarn install
+          rm -rf ./node_modules; npm install
           npm install -g firebase-tools
       - name: Build Server
         run: |
-          yarn build
+          npm run build
       - name: Test Server Build Process
-        run: yarn test:build
+        run: npm run test:build
       - name: Test Backend
-        run: yarn jest:backend
+        run: npm run jest:backend
       - name: Test Frontend
-        run: yarn jest:frontend
+        run: npm run jest:frontend

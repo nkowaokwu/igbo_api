@@ -5,19 +5,19 @@
   "author": "Ijemma Onwuzulike",
   "main": "server.js",
   "scripts": {
-    "build": "rm -rf dist/ && yarn build:site && yarn build:src",
+    "build": "rm -rf dist/ && npm run build:site && npm run build:src",
     "build:functions": "rm -rf functions/src && shx cp -r ./dist ./functions && shx cp -r ./dist/src/dictionaries/ig-en ./functions/dictionaries",
-    "build:src": "tsc && cross-env NODE_ENV=build yarn build:dictionaries && yarn build:functions",
+    "build:src": "tsc && cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
     "build:dictionaries:ig:en": "[ ! -d \"./dist/src/dictionaries\" ] && shx mkdir ./dist/src/dictionaries || echo '' && [ ! -d \"./dist/src/dictionaries/ig-en\" ] && shx mkdir ./dist/src/dictionaries/ig-en || echo 'Igbo to English dictionaries dir already exists'",
     "build:dictionaries:en:ig": "[ ! -d \"./dist/src/dictionaries\" ] && shx mkdir ./dist/src/dictionaries || echo '' && [ ! -d \"./dist/src/dictionaries/en-ig\" ] && shx mkdir ./dist/src/dictionaries/en-ig || echo 'English to Igbo dictionaries dir already exists'",
     "build:dictionaries:nsibidi": "[ ! -d \"./dist/src/dictionaries\" ] && shx mkdir ./dist/src/dictionaries || echo '' && [ ! -d \"./dist/src/dictionaries/nsibidi\" ] && shx mkdir ./dist/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
-    "prebuild:dictionaries": "yarn build:dictionaries:nsibidi && yarn build:dictionaries:ig:en && yarn build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./dist/dictionaries && shx cp -r ./src/dictionaries/en-ig ./dist/dictionaries",
+    "prebuild:dictionaries": "npm run build:dictionaries:nsibidi && npm run build:dictionaries:ig:en && npm run build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./dist/dictionaries && shx cp -r ./src/dictionaries/en-ig ./dist/dictionaries",
     "build:dictionaries": "node ./dist/src/dictionaries/buildDictionaries.js",
-    "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && yarn build:fonts && yarn build:assets",
+    "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && npm run build:fonts && npm run build:assets",
     "build:fonts": "shx cp -r ./src/public/fonts/ ./dist/fonts",
     "build:assets": "shx cp -r ./src/pages/assets/ ./dist/assets",
     "start:emulators": "node_modules/.bin/firebase emulators:start --only functions,hosting",
-    "start:watch": "nodemon --watch './src' --ext ts,js,tsx,jsx --ignore './functions' --verbose --exec yarn build:src",
+    "start:watch": "nodemon --watch './src' --ext ts,js,tsx,jsx --ignore './functions' --verbose --exec npm run build:src",
     "clean": "shx rm -rf node_modules/ dist/ out/ yarn.lock package-lock.json *.log",
     "kill:project": "fkill :5005 :8085 :8080 :8088 -fs",
     "predev": "firebase functions:config:set runtime.env=development && firebase use staging",
@@ -37,7 +37,7 @@
     "cypress:run": "cypress run",
     "jest:backend": "cross-env NODE_ENV=test jest --forceExit --runInBand --config=jest.backend.config.ts",
     "jest:frontend": "cross-env NODE_ENV=test jest --forceExit --runInBand --config=jest.frontend.config.ts",
-    "jest": "yarn jest:backend && yarn jest:frontend",
+    "jest": "npm run jest:backend && npm run jest:frontend",
     "prestart:database": "[ ! -d \"./db\" ] && shx mkdir ./db || echo 'Database directory exists'",
     "prestart:database:replica": "[ ! -d \"./mongos\" ] && shx mkdir ./mongos || echo 'Parent database directory exists'",
     "prestart:database:primary": "[ ! -d \"./mongos/db1\" ] && shx mkdir ./mongos/db1 || echo 'Primary database directory exists'",
@@ -45,7 +45,7 @@
     "prestart:database:secondary:second": "[ ! -d \"./mongos/db3\" ] && shx mkdir ./mongos/db3 || echo 'Second secondary database directory exists'",
     "start": "node ./dist/src/server.js",
     "start:docker": "docker-compose up",
-    "test:build": "cross-env NODE_ENV=build yarn start",
+    "test:build": "cross-env NODE_ENV=build npm run start",
     "dev:site": "firebase functions:config:set runtime.env=development && next",
     "start:database": "mongod --port 27017 --dbpath ./db --quiet &>/dev/null",
     "start:database:replica": "npm-run-all -p start:database:primary start:database:secondary:first start:database:secondary:second",
@@ -55,8 +55,7 @@
   },
   "engines": {
     "node": ">=18",
-    "npm": "8",
-    "yarn": "1.22.x"
+    "npm": ">=8"
   },
   "husky": {
     "hooks": {
@@ -135,8 +134,7 @@
     "tailwindcss": "3",
     "typescript": "^4.0.3",
     "unicharadata": "^9.0.0-alpha.6",
-    "uuid": "^8.3.2",
-    "yarn": "^1.22.10"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
