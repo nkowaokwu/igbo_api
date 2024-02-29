@@ -82,7 +82,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
-    "@material-ui/core": "^4.11.0",
     "@sendgrid/mail": "^7.4.0",
     "@testing-library/cypress": "^7.0.3",
     "antd": "^4.14.0",
