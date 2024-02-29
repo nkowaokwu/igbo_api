@@ -49,8 +49,11 @@ jobs:
         run: |
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
           yarn build
-      - name: Deploy to prod
+      - name: Deploy Production Firebase Functions
         run: |
-          firebase deploy --project=igbo-api-bb22d --only functions,hosting
+          firebase deploy --project=igbo-api-bb22d --only functions
+      - name: Deploy Production Firebase Hosting
+        run: |
+          firebase deploy --project=igbo-api-bb22d --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
