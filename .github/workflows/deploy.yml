@@ -51,6 +51,6 @@ jobs:
           yarn build
       - name: Deploy to prod
         run: |
-          firebase deploy --project=igbo-api-admin --only functions,hosting
+          firebase deploy --project=igbo-api-bb22d --only functions,hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
