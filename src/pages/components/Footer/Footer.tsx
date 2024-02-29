@@ -31,12 +31,29 @@ const categories = [
     ],
   },
   {
-    title: 'Organization',
+    title: 'About the Igbo API',
     links: [
       {
         label: 'About',
         href: '/about',
       },
+      { label: 'GitHub', href: GITHUB_REPO },
+      { label: 'Twitter', href: TWITTER },
+    ],
+  },
+
+  {
+    title: 'More',
+    links: [
+      { label: 'Instagram', href: INSTAGRAM },
+      { label: 'LinkedIn', href: LINKEDIN },
+      { label: 'YouTube', href: YOUTUBE },
+      { label: 'Email', href: `mailto:${API_FROM_EMAIL}` },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
       {
         label: 'Terms of Service',
         href: '/terms',
@@ -47,49 +64,40 @@ const categories = [
       },
     ],
   },
-  {
-    title: 'Social',
-    links: [
-      { label: 'GitHub', href: GITHUB_REPO },
-      { label: 'Twitter', href: TWITTER },
-      { label: 'Instagram', href: INSTAGRAM },
-      { label: 'LinkedIn', href: LINKEDIN },
-      { label: 'YouTube', href: YOUTUBE },
-      { label: 'Email', href: `mailto:${API_FROM_EMAIL}` },
-    ],
-  },
 ];
 
 const Footer = () => (
   <Box className="w-full">
     <Box className="w-full bg-gray-100" style={{ height: '1px' }} />
-    <footer
-      className={`flex flex-col text-center lg:text-left lg:flex-row
-          justify-center w-full bg-gradient-to-t py-4`}
-    >
-      <Box className="flex flex-row items-center justify-center">
-        <Box>
-          <Box
-            className="flex flex-col lg:flex-row justify-center items-center
-              lg:items-start my-6 space-y-12 lg:space-y-0 lg:space-x-32"
-          >
-            {categories.map(({ title, links }) => (
-              <Box key={title} className="spacy-y-4">
-                <Heading as="h3" mb={2} fontSize="xl">
-                  {title}
-                </Heading>
-                <UnorderedList className="space-y-2" ml={0}>
-                  {links.map(({ label, href }) => (
-                    <ListItem key={label} listStyleType="none">
-                      <Link href={href} fontWeight="normal" color="gray.500">
-                        {label}
-                      </Link>
-                    </ListItem>
-                  ))}
-                </UnorderedList>
-              </Box>
-            ))}
-          </Box>
+    <footer className="flex justify-center w-full bg-gradient-to-t py-4">
+      <Box
+        className="flex flex-col text-left items-center
+          justify-center w-10/12 md:w-1/2 space-y-10"
+      >
+        <Box className="flex flex-row items-start w-full">
+          <Link href="/">
+            <Heading fontSize="2xl" pb="0" textAlign="left">
+              IgboAPI
+            </Heading>
+          </Link>
+        </Box>
+        <Box className="grid grid-cols-2 md:grid-cols-4 gap-8 w-full">
+          {categories.map(({ title, links }) => (
+            <Box key={title} className="space-y-2">
+              <Heading as="h3" fontSize="md">
+                {title}
+              </Heading>
+              <UnorderedList className="space-y-2" ml={0}>
+                {links.map(({ label, href }) => (
+                  <ListItem key={label} listStyleType="none">
+                    <Link href={href} fontWeight="normal" color="gray.500">
+                      {label}
+                    </Link>
+                  </ListItem>
+                ))}
+              </UnorderedList>
+            </Box>
+          ))}
         </Box>
       </Box>
     </footer>
