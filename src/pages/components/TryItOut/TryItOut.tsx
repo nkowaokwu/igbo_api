@@ -16,6 +16,7 @@ const TryItOut = ({ size, ...props }: ButtonProps) => {
       color="white"
       transitionDuration="200ms"
       size={size || 'lg'}
+      px="6"
       onClick={() => {
         router.push('/#try-it-out');
         window.scrollBy({ top: -100, behavior: 'smooth' });

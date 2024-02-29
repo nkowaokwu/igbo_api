@@ -8,14 +8,16 @@ import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 import { Example, Word } from '../../../types';
 import { WordDialect } from '../../../types/word';
 
-const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => {
+const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSearchingWord, setIsSearchingWord] = useState(false);
   const [keyword, setKeyword] = useState(searchWord);
   const [queries, setQueries] = useState({});
-  const [initialQueries, setInitialQueries] = useState<{ examples?: Example[]; dialects?: WordDialect; word?: string }>(
-    {}
-  );
+  const [initialQueries, setInitialQueries] = useState<{
+    examples?: Example[],
+    dialects?: WordDialect,
+    word?: string,
+  }>({});
   const [productionUrl, setProductionUrl] = useState('');
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
@@ -51,7 +53,8 @@ const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => 
   };
 
   const constructRequestUrl = () => {
-    const appendQueries = constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
+    const appendQueries =
+      constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
     const requestUrl =
       `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || ''}` +
       `${keyword && appendQueries ? '&' : ''}` +
@@ -78,7 +81,12 @@ const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => 
   return !isLoading ? (
     <Box className="flex flex-col items-center space-y-12">
       <Box className="flex flex-col items-center">
-        <Heading as="h2" id="try-it-out" className="text-4xl text-blue-500 font-bold" fontSize="6xl">
+        <Heading
+          as="h2"
+          id="try-it-out"
+          className="text-4xl text-blue-500 font-bold"
+          fontSize="6xl"
+        >
           Test Drive the API
         </Heading>
         <Text className="px-6 lg:px-0 text-center lg:text-left text-gray-500">
@@ -156,7 +164,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => 
             </Text>
           </form>
         </Box>
-        <Box className="flex flex-col lg:w-auto">
+        <Box className="flex flex-col w-full lg:w-auto">
           <Heading
             as="h3"
             className="text-center lg:text-left self-center lg:mt-4
@@ -166,7 +174,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string; words: Word[] }) => 
             Response
           </Heading>
           <JSONPretty
-            className="jsonPretty self-center lg:w-auto bg-gray-800 rounded-md p-2 overflow-auto"
+            className="jsonPretty self-center lg:w-auto bg-gray-800 rounded-md p-2 overflow-auto w-full"
             id="json-pretty"
             data={responseBody}
           />

@@ -5,12 +5,13 @@ import Navbar from '../../pages/components/Navbar/Navbar';
 
 describe('Navbar', () => {
   it('renders the card', async () => {
-    const { findByTestId } = render(
+    const { findByText } = render(
       <TestContext>
         <Navbar to="/" />
       </TestContext>
     );
 
-    await findByTestId('sub-menu');
+    await findByText('IgboAPI');
+    await findByText('Try it Out');
   });
 });
