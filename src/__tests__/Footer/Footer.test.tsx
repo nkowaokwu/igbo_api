@@ -11,20 +11,26 @@ describe('Footer', () => {
       </TestContext>
     );
 
+    await findByText('IgboAPI');
+
     await findByText('Projects');
     await findByText('Igbo API');
     await findByText('Nkọwa okwu');
     await findByText('Chrome Extension');
-    await findByText('Organization');
+
+    await findByText('About the Igbo API');
     await findByText('About');
-    await findByText('Terms of Service');
-    await findByText('Privacy Policy');
-    await findByText('Social');
     await findByText('GitHub');
     await findByText('Twitter');
+
+    await findByText('More');
     await findByText('Instagram');
     await findByText('LinkedIn');
     await findByText('YouTube');
     await findByText('Email');
+
+    await findByText('Legal');
+    await findByText('Terms of Service');
+    await findByText('Privacy Policy');
   });
 });

@@ -17,13 +17,13 @@ const About = () => (
           About
         </Heading>
         <Text className="mb-6">
-          The Igbo API is a multidialectal, audio-supported, open-to-contribute, Igbo-English dictionary API. This
-          project focuses on enabling developers, organizations, and teams to create technology that relies on the Igbo
-          language.
+          The Igbo API is a multi-dialectal, audio-supported, open-to-contribute, Igbo-English
+          dictionary API. This project focuses on enabling developers, organizations, and teams to
+          create technology that relies on the Igbo language.
         </Text>
         <Text>
-          Our main goal is to make an easy-to-access, robust, lexical Igbo language resource to help solve a variety of
-          complex problems within the worlds of education to Machine Learning.
+          Our main goal is to make an easy-to-access, robust, lexical Igbo language resource to help
+          solve a variety of complex problems within the worlds of education to Machine Learning.
         </Text>
         <Text>
           {'The Igbo API hosts and serves all word and example sentence data that is shown on '}
@@ -36,7 +36,10 @@ const About = () => (
         <Text>
           {`The initial words and examples that populated this API came
               from Kay Williamson's Igbo Dictionary entitled `}
-          <Link className="link" href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf">
+          <Link
+            className="link"
+            href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf"
+          >
             {'Dictionary of Ònìchà Igbo. '}
           </Link>
         </Text>
