@@ -13,6 +13,7 @@ const NavigationMenu = () => (
       _hover={{ backgroundColor: 'transparent' }}
       _focus={{ backgroundColor: 'transparent' }}
       _active={{ backgroundColor: 'transparent' }}
+      data-test="drop-down-button"
     />
     <MenuList>
       {navigationLinks.map(({ href, label }) => (
