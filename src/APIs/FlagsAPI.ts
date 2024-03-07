@@ -1,8 +1,7 @@
-import compact from 'lodash/compact';
-import assign from 'lodash/assign';
-import omit from 'lodash/omit';
+import { compact, assign, omit } from 'lodash';
 import { LegacyWordDocument, Word, WordDocument } from '../types';
 import { WordType, PartialWordType } from '../types/word';
+import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 
 type HandleFlags = {
   data: { words: WordType[], contentLength: number },
@@ -20,6 +19,11 @@ export const handleWordFlags = ({
       if (!examples) {
         // @ts-expect-error definitions are not compatible
         updatedWord = omit(updatedWord, ['examples']);
+      } else if (updatedWord.examples) {
+        // Only includes Examples that are created in the Igbo API Editor Platform
+        updatedWord.examples = updatedWord.examples.filter(
+          (example) => !example.source || example.source === SuggestionSourceEnum.INTERNAL
+        );
       }
       if (!dialects) {
         // @ts-expect-error definitions are not compatible

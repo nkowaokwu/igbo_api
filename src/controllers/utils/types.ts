@@ -41,6 +41,6 @@ export type Keyword = {
 export type Flags = {
   dialects: boolean,
   examples: boolean,
-  style: string,
   resolve: boolean,
+  style: string,
 };
