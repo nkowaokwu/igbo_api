@@ -6,9 +6,11 @@ import StopWords from '../../shared/constants/StopWords';
 import { Flags, Keyword } from './types';
 import createRegExp, { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
+import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
 
 type Keywords = Keyword[];
-const generateMultipleNsibidi = (keywords: Keywords) => keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
+const generateMultipleNsibidi = (keywords: Keywords) =>
+  keywords.map(({ text }) => ({ 'definitions.nsibidi': text }));
 
 const generateMultipleWordRegex = (keywords: Keywords) =>
   keywords.map(({ regex }) => ({ word: { $regex: regex.wordReg.source, $options: 'i' } }));
@@ -40,30 +42,30 @@ const fullTextSearchQuery = ({
   isUsingMainKey,
   filters = {},
 }: {
-  keywords: Keywords;
-  isUsingMainKey: boolean | undefined;
-  filters: Filters;
+  keywords: Keywords,
+  isUsingMainKey: boolean | undefined,
+  filters: Filters,
 }) => {
   const hasNsibidi = keywords.some(({ text }) => text.match(new RegExp(cjkRange)));
   return isUsingMainKey && !keywords?.length
     ? filters
     : !isUsingMainKey && !keywords?.length
-    ? { _id: { $exists: false }, id: { $exists: false } }
-    : hasNsibidi
-    ? { $and: [{ $or: generateMultipleNsibidi(keywords) }, filters] }
-    : {
-        $and: [
-          {
-            $or: compact([
-              ...generateMultipleWordRegex(keywords),
-              generateMultipleVariationsRegex(keywords),
-              generateMultipleDialectsWordRegex(keywords),
-              ...generateMultipleTensesWordRegex(keywords),
-            ]),
-          },
-        ],
-        ...filters,
-      };
+      ? { _id: { $exists: false }, id: { $exists: false } }
+      : hasNsibidi
+        ? { $and: [{ $or: generateMultipleNsibidi(keywords) }, filters] }
+        : {
+            $and: [
+              {
+                $or: compact([
+                  ...generateMultipleWordRegex(keywords),
+                  generateMultipleVariationsRegex(keywords),
+                  generateMultipleDialectsWordRegex(keywords),
+                  ...generateMultipleTensesWordRegex(keywords),
+                ]),
+              },
+            ],
+            ...filters,
+          };
 };
 const fullTextDefinitionsSearchQuery = ({
   keywords,
@@ -71,31 +73,31 @@ const fullTextDefinitionsSearchQuery = ({
   searchWord = '',
   filters,
 }: {
-  keywords: Keywords;
-  isUsingMainKey: boolean | undefined;
-  filters: Filters;
-  searchWord: string;
+  keywords: Keywords,
+  isUsingMainKey: boolean | undefined,
+  filters: Filters,
+  searchWord: string,
 }) =>
   !isUsingMainKey && !keywords?.length
     ? { _id: { $exists: false }, id: { $exists: false } }
     : !keywords?.length
-    ? filters
-    : {
-        $and: [
-          filters,
-          StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
-          generateMultipleDefinitionsRegex(keywords),
-        ],
-      };
+      ? filters
+      : {
+          $and: [
+            filters,
+            StopWords.includes(searchWord.toLowerCase()) ? {} : { $text: { $search: searchWord } },
+            generateMultipleDefinitionsRegex(keywords),
+          ],
+        };
 
 const definitionsQuery = ({
   regex,
   searchWord = '',
   filters,
 }: {
-  regex: SearchRegExp;
-  searchWord: string;
-  filters: Filters;
+  regex: SearchRegExp,
+  searchWord: string,
+  filters: Filters,
 }) => ({
   $and: [
     filters,
@@ -105,8 +107,18 @@ const definitionsQuery = ({
 });
 
 /* Regex match query used to later to defined the Content-Range response header */
-export const searchExamplesRegexQuery = ({ regex, flags }: { regex: SearchRegExp; flags: Flags }) => ({
-  $or: [{ igbo: regex.exampleReg }, { english: regex?.definitionsReg }],
+export const searchExamplesRegexQuery = ({
+  regex,
+  flags,
+}: {
+  regex: SearchRegExp,
+  flags: Flags,
+}) => ({
+  $and: [
+    { $or: [{ igbo: regex.exampleReg }, { english: regex?.definitionsReg }] },
+    // Only getting Examples that are created in the Igbo API Editor Platform
+    { $or: [{ source: { $exists: false } }, { source: { $eq: SuggestionSourceEnum.INTERNAL } }] },
+  ],
   ...(flags.style ? { style: flags.style } : {}),
 });
 export const searchIgboTextSearch = fullTextSearchQuery;
