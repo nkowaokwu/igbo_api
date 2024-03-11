@@ -4,7 +4,7 @@ import { FormFieldName } from '../../../types';
 
 const Input = React.forwardRef(
   (
-     { header, type = '', field, ...rest }:
+    { header, type = '', field, ...rest }:
     { header: string; type?: string; field: Partial<FormFieldName> } & InputProps,
     ref: React.ForwardedRef<HTMLInputElement>
   ) => (
