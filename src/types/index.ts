@@ -5,3 +5,4 @@ export type { Stat } from './stat';
 export type { Word, LegacyWord, WordDocument, LegacyWordDocument, Definition } from './word';
 export type { NsibidiCharacter, NsibidiCharacterDocument } from './nsibidiCharacter';
 export type { ProjectStats, GitHubStats, DatabaseStats } from './databaseStats';
+export type { FormFieldName } from './formFields';
