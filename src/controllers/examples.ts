@@ -7,12 +7,12 @@ import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
-import { Example as ExampleType, Express } from '../types';
+import { Example as ExampleType, MiddleWare } from '../types';
 import Version from '../shared/constants/Version';
-import { ExampleResponseData, WithPronunciation } from './types';
+import { ExampleResponseData, ExampleWithPronunciation } from './types';
 
 /* Converts the pronunciations field to pronunciation for v1 */
-export const convertExamplePronunciations = (example: ExampleType): WithPronunciation => {
+export const convertExamplePronunciations = (example: ExampleType): ExampleWithPronunciation => {
   const updatedExample = assign(example);
   const exampleWithPronunciation = {
     ...omit(updatedExample, ['pronunciations']),
@@ -51,14 +51,11 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
       match: query,
       version,
     });
-    const allExamples = examples;
 
     responseData = await setCachedExamples({
       key: redisExamplesCacheKey,
       data: {
-        // Replaces pronunciations with pronunciation v1
-        examples:
-          version === Version.VERSION_1 ? (allExamples as ExampleType[]).map(convertExamplePronunciations) : examples,
+        examples,
         contentLength,
       },
       redisClient,
@@ -69,15 +66,16 @@ const searchExamples = async ({ redisClient, searchWord, query, version, skip, l
 };
 
 /* Returns examples from MongoDB */
-export const getExamples: Express.MiddleWare = async (req, res, next) => {
+export const getExamples: MiddleWare = async (req, res, next) => {
   try {
-    const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, ...rest } = await handleQueries(req);
+    const { version, searchWord, regex, skip, limit, redisClient, isUsingMainKey, flags, ...rest } =
+      await handleQueries(req);
     const regexMatch =
       !isUsingMainKey && !searchWord
         ? {
             igbo: { $exists: false },
           }
-        : searchExamplesRegexQuery(regex);
+        : searchExamplesRegexQuery({ regex, flags });
     const responseData = await searchExamples({
       searchWord,
       redisClient,
@@ -113,7 +111,7 @@ const findExampleById = async (id: string) => {
 };
 
 /* Returns an example from MongoDB using an id */
-export const getExample: Express.MiddleWare = async (req, res, next) => {
+export const getExample: MiddleWare = async (req, res, next) => {
   try {
     const { id, version } = await handleQueries(req);
     const foundExample = await findExampleById(id).then((example) => {

@@ -3,6 +3,17 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  "functions": [
+    {
+      "source": "functions",
+      "ignore": [
+          "node_modules",
+          ".git",
+          "firebase-debug.log",
+          "firebase-debug.*.log"
+      ]
+    }
+  ],
   "hosting": {
     "public": "public",
     "ignore": [
@@ -38,7 +49,7 @@
       "port": 8080
     },
     "ui": {
-      "enabled": true
+      "enabled": false
     },
     "pubsub": {
       "port": 8088

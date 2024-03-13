@@ -280,8 +280,6 @@ export default (rawWord: string, wordData: WordData): Solution[] => {
         nestedWordClassEnum === WordClassEnum.ESUF || nestedWordClassEnum === WordClassEnum.ISUF
     )
   );
-  console.time('Expand verb time');
-  console.log('Expanding word: ', word);
   helper(word, { verbs, suffixes: wordSuffixes }, firstPointer, secondPointer, [], { depth: 0 });
   const finalSolution =
     compact(
@@ -297,7 +295,5 @@ export default (rawWord: string, wordData: WordData): Solution[] => {
         return solution;
       })
     ) || [];
-  console.timeEnd('Expand verb time');
-  console.log('Expanded verb: ', finalSolution);
   return finalSolution;
 };

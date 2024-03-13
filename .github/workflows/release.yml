@@ -16,12 +16,12 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Use Node.js v18
+      - name: Use Node.js v20
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: 20
       - name: Install Dependencies
-        run: yarn install
+        run: npm install
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_ACCESS_TOKEN }}

@@ -1,15 +1,21 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import { Aggregate, Model as ModelType, PipelineStage } from 'mongoose';
-import { assign, flatten, omit } from 'lodash';
+import { assign, flatten, flow, merge, omit } from 'lodash';
 import Version from '../../shared/constants/Version';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
 import Dialects from '../../shared/constants/Dialect';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
 import WordAttributeEnum from '../../shared/constants/WordAttributeEnum';
-import { Example as ExampleType, Word as WordType, WordDocument, LegacyWordDocument } from '../../types';
-import { ExampleResponseData } from '../types';
+import {
+  Example as ExampleType,
+  NsibidiCharacter as NsibidiCharacterType,
+  WordDocument,
+  LegacyWordDocument,
+} from '../../types';
+import { ExampleWithPronunciation } from '../types';
+import { nsibidiCharacterSchema } from '../../models/NsibidiCharacter';
 
 type NestedDoc = { _id?: string; __v?: number };
 
@@ -17,8 +23,8 @@ type NestedDoc = { _id?: string; __v?: number };
  * Removes _id and __v from nested documents
  * Normalizes (removes accent marks) from word and example's igbo
  */
-const removeKeysInNestedDoc = (docs: WordDocument[], nestedDocsKey: keyof WordType) => {
-  docs.forEach((doc: WordType) => {
+const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
+  docs.forEach((doc: T) => {
     // @ts-expect-error not assignable to never
     doc[nestedDocsKey] = ((doc[nestedDocsKey] as NestedDoc[]) || []).map((nestedDoc: NestedDoc) => {
       const updatedNestedDoc = assign(nestedDoc, { id: nestedDoc._id });
@@ -54,7 +60,6 @@ export const findWordsWithMatch = async ({
 }) => {
   const connection = createDbConnection();
   const Word = connection.model<WordDocument>('Word', wordSchema);
-  console.time(`Aggregation completion time: ${queryLabel || 'N/A'}`);
   try {
     let words = generateAggregationBase<WordDocument>(Word, match);
 
@@ -127,12 +132,10 @@ export const findWordsWithMatch = async ({
       return cleanedWord as WordDocument;
     });
 
-    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     return { words: finalWords, contentLength };
   } catch (err: any) {
     console.log('An error occurred', err);
-    console.timeEnd(`Aggregation completion time: ${queryLabel || 'N/A'}`);
     await handleCloseConnection(connection);
     throw err;
   }
@@ -142,9 +145,9 @@ export const findExamplesWithMatch = async ({
   match,
   version,
 }: {
-  match: PipelineStage.Match['$match'];
+  match: Record<string, RegExp | object>;
   version: Version;
-}): Promise<ExampleResponseData> => {
+}): Promise<{ examples: ExampleWithPronunciation[]; contentLength: number }> => {
   const connection = createDbConnection();
   const Example = connection.model<ExampleType>('Example', exampleSchema);
   try {
@@ -162,17 +165,58 @@ export const findExamplesWithMatch = async ({
       pronunciations: 1,
     });
 
-    const resolvedExamples = await examples;
-
     // Returns only the first pronunciation for the example sentence
-    const allExamples = resolvedExamples.map((example) =>
-      omit({ ...example, pronunciation: example.pronunciations[0]?.audio }, ['pronunciations'])
-    );
+    const allExamples = (await examples).map((example) => {
+      const cleanedExample = merge(example, { pronunciation: '' });
+      cleanedExample.pronunciation = cleanedExample.pronunciations[0]?.audio;
+      return omit(cleanedExample, ['pronunciations']);
+    });
     const contentLength = allExamples.length;
 
     await handleCloseConnection(connection);
     return { examples: allExamples, contentLength };
-  } catch (err: any) {
+  } catch (err) {
+    await handleCloseConnection(connection);
+    throw err;
+  }
+};
+
+export const findNsibidiCharactersWithMatch = async ({
+  match,
+  version,
+}: {
+  match: Record<string, RegExp | object>;
+  version: Version;
+}): Promise<{ nsibidiCharacters: NsibidiCharacterType[]; contentLength: number }> => {
+  const connection = createDbConnection();
+  const NsibidiCharacter = connection.model<NsibidiCharacterType>('NsibidiCharacter', nsibidiCharacterSchema);
+
+  if (version !== Version.VERSION_2) {
+    return { nsibidiCharacters: [], contentLength: 0 };
+  }
+
+  try {
+    let nsibidiCharacters = generateAggregationBase<NsibidiCharacterType>(NsibidiCharacter, match);
+    nsibidiCharacters = nsibidiCharacters.project({
+      id: '$_id',
+      _id: 0,
+      nsibidi: 1,
+      definitions: 1,
+      pronunciation: 1,
+      radicals: 1,
+      wordClass: 1,
+    });
+
+    const cleanNsibidiCharacters = flow([
+      (docs) => removeKeysInNestedDoc<NsibidiCharacterType>(docs, 'definitions'),
+      (docs) => removeKeysInNestedDoc<NsibidiCharacterType>(docs, 'radicals'),
+    ]);
+    const cleanedNsibidiCharacters = cleanNsibidiCharacters(await nsibidiCharacters);
+    const contentLength = cleanedNsibidiCharacters.length;
+
+    await handleCloseConnection(connection);
+    return { nsibidiCharacters: cleanedNsibidiCharacters, contentLength };
+  } catch (err) {
     await handleCloseConnection(connection);
     throw err;
   }

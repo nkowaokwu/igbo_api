@@ -78,7 +78,6 @@ export default (rawWord: string, wordData: WordData): Solution[] => {
       ({ wordClass: nestedWordClass }) => nestedWordClass === WordClassEnum.AV || nestedWordClass === WordClassEnum.PV
     )
   );
-  console.time('Expand noun time');
   helper(word, { verbs }, firstPointer, secondPointer, [], { depth: 0 });
   const finalSolution =
     compact(
@@ -92,7 +91,5 @@ export default (rawWord: string, wordData: WordData): Solution[] => {
         return solution;
       })
     ) || [];
-  console.timeEnd('Expand noun time');
-  console.log('Expanded noun: ', finalSolution);
   return finalSolution;
 };

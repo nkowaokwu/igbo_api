@@ -1,11 +1,11 @@
-import compact from 'lodash/compact';
-import assign from 'lodash/assign';
-import omit from 'lodash/omit';
+import { compact, assign, omit } from 'lodash';
 import { LegacyWordDocument, Word, WordDocument } from '../types';
+import { WordType, PartialWordType } from '../types/word';
+import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 
 type HandleFlags = {
-  data: { words: (Word | WordDocument | LegacyWordDocument)[]; contentLength: number };
-  flags: { examples: boolean; dialects: boolean; resolve: boolean };
+  data: { words: WordType[], contentLength: number },
+  flags: { examples: boolean, dialects: boolean, resolve: boolean },
 };
 
 /* FlagsAPI cleans returned MongoDB data to match client-provided flags */
@@ -13,13 +13,17 @@ export const handleWordFlags = ({
   data: { words, contentLength },
   flags: { examples, dialects, resolve },
 }: HandleFlags) => {
-  console.time(`Handling word flags - examples: ${examples}, dialects: ${dialects}, resolve: ${resolve}`);
   const updatedWords = compact(
     words.map((word: Word | WordDocument | LegacyWordDocument) => {
-      let updatedWord: Partial<Word> | Partial<WordDocument> | Partial<LegacyWordDocument> = assign(word);
+      let updatedWord: PartialWordType = assign(word);
       if (!examples) {
         // @ts-expect-error definitions are not compatible
         updatedWord = omit(updatedWord, ['examples']);
+      } else if (updatedWord.examples) {
+        // Only includes Examples that are created in the Igbo API Editor Platform
+        updatedWord.examples = updatedWord.examples.filter(
+          (example) => !example.source || example.source === SuggestionSourceEnum.INTERNAL
+        );
       }
       if (!dialects) {
         // @ts-expect-error definitions are not compatible
@@ -33,13 +37,15 @@ export const handleWordFlags = ({
         }
         if (updatedWord.relatedTerms) {
           updatedWord.relatedTerms = updatedWord.relatedTerms.map((relatedTerm) =>
-            (typeof relatedTerm === 'string' ? relatedTerm : relatedTerm?._id || relatedTerm.id).toString()
+            (typeof relatedTerm === 'string'
+              ? relatedTerm
+              : relatedTerm?._id || relatedTerm.id
+            ).toString()
           );
         }
       }
       return updatedWord;
     })
   );
-  console.timeEnd(`Handling word flags - examples: ${examples}, dialects: ${dialects}, resolve: ${resolve}`);
   return { words: updatedWords, contentLength };
 };

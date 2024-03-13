@@ -6,8 +6,12 @@ describe('Igbo API Homepage', () => {
   });
 
   describe('Outside links', () => {
+    beforeEach(() => {
+      cy.viewport('macbook-16');
+    });
+
     it('navigate to Nkọwa okwu website', () => {
-      cy.get('[data-test="nkowaokwu-link"]').click();
+      cy.findByTestId('nkowaokwu-link').click({ force: true });
       cy.url().should('equal', 'https://nkowaokwu.com/home');
       cy.contains('Internal Server Error').should('not.exist');
     });
@@ -24,14 +28,14 @@ describe('Igbo API Homepage', () => {
     });
 
     it('render the About page', () => {
-      cy.get('li').contains('About').click();
+      cy.get('li').contains('About').click({ force: true });
       cy.findByText('Contact');
-      cy.contains('Email:');
+      cy.contains('kedu@nkowaokwu.com');
     });
 
     it('render the Privacy page', () => {
-      cy.findByText('Privacy').click();
-      cy.findByText('Privacy Policy').should('exist');
+      cy.findByText('Privacy Policy').click();
+      cy.get('h1').contains('Privacy Policy').should('exist');
     });
 
     it('render the Terms or Service page', () => {
@@ -42,10 +46,12 @@ describe('Igbo API Homepage', () => {
     describe('Try it Out', () => {
       it('enter a word and select flag', () => {
         cy.visit('/');
-        cy.findByTestId('try-it-out-input').clear().type('biko');
+        cy.findByTestId('try-it-out-input').clear({ force: true }).type('biko', { force: true });
         cy.findByTestId('dialects-flag').click();
         cy.get('button').contains('Submit').click();
-        cy.get('input[value="http://localhost:8080/api/v1/words?keyword=biko&dialects=true"]');
+        cy.get('code')
+          .contains('http://localhost:8080/api/v1/words?keyword=biko&dialects=true')
+          .should('exist');
       });
     });
 
@@ -99,20 +105,21 @@ describe('Igbo API Homepage', () => {
     });
 
     it('render the About page', () => {
-      cy.findByAltText('down arrow as menu icon').click();
-      cy.get('button').contains('About').click();
+      cy.findByTestId('drop-down-button').click();
+      cy.get('button').contains('About').click({ force: true });
       cy.findByText('Contact');
-      cy.contains('Email:');
+      cy.contains('kedu@nkowaokwu.com');
     });
     it('render the Sign up page', () => {
-      cy.findByAltText('down arrow as menu icon').click();
-      cy.get('button').contains('Get an API Key').click();
+      cy.findByTestId('drop-down-button').click();
+      cy.get('button').contains('Get an API Key').click({ force: true });
       cy.findByText('Sign up.');
     });
 
     it('navigate to Nkọwa okwu', () => {
       cy.visit('/');
-      cy.get('.demo-inputs-container').contains('Nkọwa okwu').click();
+      cy.scrollTo(0, -300);
+      cy.findByTestId('nkowaokwu-link').click({ force: true });
     });
   });
 });

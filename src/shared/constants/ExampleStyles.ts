@@ -1,18 +1,24 @@
+import ExampleStyleEnum from './ExampleStyleEnum';
+
 export default {
-  NO_STYLE: {
+  UNSPECIFIED: {
     value: '',
+    label: 'Unspecified',
+  },
+  NO_STYLE: {
+    value: ExampleStyleEnum.NO_STYLE,
     label: 'No Style',
   },
   STANDARD: {
-    value: 'standard',
+    value: ExampleStyleEnum.STANDARD,
     label: 'Standard',
   },
   PROVERB: {
-    value: 'proverb',
+    value: ExampleStyleEnum.PROVERB,
     label: 'Proverb',
   },
   BIBLICAL: {
-    value: 'biblical',
+    value: ExampleStyleEnum.BIBLICAL,
     label: 'biblical',
   },
 };

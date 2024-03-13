@@ -1,9 +1,11 @@
 import { Request as ExpressRequest, Response, NextFunction } from 'express';
 import { RedisClientType } from 'redis';
+import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
 
 export type Query = {
   dialects: string;
   examples: string;
+  style: ExampleStyleEnum;
   filter: string;
   keyword: string;
   page: string;

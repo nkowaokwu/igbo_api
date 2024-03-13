@@ -2,7 +2,7 @@ import { compareSync } from 'bcrypt';
 import { developerSchema } from '../models/Developer';
 import { MAIN_KEY, isTest, isDevelopment, isProduction } from '../config';
 import { createDbConnection } from '../services/database';
-import { DeveloperDocument, Express } from '../types';
+import { DeveloperDocument, MiddleWare } from '../types';
 
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
@@ -31,12 +31,10 @@ const handleDeveloperUsage = async (developer: DeveloperDocument) => {
 
 /* Finds a developer with provided information */
 const findDeveloper = async (apiKey: string) => {
-  console.time('Finding developer account');
   const connection = createDbConnection();
   const Developer = connection.model<DeveloperDocument>('Developer', developerSchema);
   let developer = await Developer.findOne({ apiKey });
   if (developer) {
-    console.timeEnd('Finding developer account');
     return developer;
   }
   // Legacy implementation: hashed API tokens can't be indexed
@@ -47,14 +45,12 @@ const findDeveloper = async (apiKey: string) => {
   if (developer) {
     developer.apiKey = apiKey;
     const updatedDeveloper = await developer.save();
-    console.timeEnd('Finding developer account');
     return updatedDeveloper;
   }
-  console.timeEnd('Finding developer account');
   return developer;
 };
 
-const validateApiKey: Express.MiddleWare = async (req, res, next) => {
+const validateApiKey: MiddleWare = async (req, res, next) => {
   try {
     const { apiLimit } = req.query;
     let apiKey = (req.headers['X-API-Key'] || req.headers['x-api-key']) as string;

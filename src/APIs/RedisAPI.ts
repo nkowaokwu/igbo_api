@@ -6,6 +6,7 @@ import Version from '../shared/constants/Version';
 import { Word } from '../types';
 import { ExampleResponseData } from '../controllers/types';
 import { redisClient as defaultRedisClient } from '../middleware/attachRedisClient';
+import { PartialWordType } from '../types/word';
 
 type RedisClient = {
   get: (value: string) => void;
@@ -19,11 +20,8 @@ type GetValue = {
 };
 
 export const getCachedWords = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
-  console.time('Getting cached words');
   const rawCachedWords = await redisClient.get(key);
   const cachedWords = typeof rawCachedWords === 'string' ? JSON.parse(rawCachedWords) : rawCachedWords;
-  console.log(`Retrieved cached data for words ${key}:`, !!cachedWords);
-  console.timeEnd('Getting cached words');
   return cachedWords;
 };
 
@@ -34,7 +32,10 @@ export const setCachedWords = async ({
   version,
 }: {
   key: string;
-  data: any;
+  data: {
+    words: PartialWordType[] | any;
+    contentLength: number;
+  };
   redisClient: RedisClient | undefined;
   version: Version;
 }) => {
@@ -49,7 +50,6 @@ export const setCachedWords = async ({
 export const getCachedExamples = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
   const rawCachedExamples = await redisClient.get(key);
   const cachedExamples = typeof rawCachedExamples === 'string' ? JSON.parse(rawCachedExamples) : rawCachedExamples;
-  console.log(`Retrieved cached data for examples ${key}:`, !!cachedExamples);
   return cachedExamples;
 };
 
@@ -69,15 +69,12 @@ export const setCachedExamples = async ({
 };
 
 export const getAllCachedVerbsAndSuffixes = async ({ key, redisClient = defaultRedisClient }: GetValue) => {
-  console.time(`Searching cached verbs and suffixes: verbs-and-suffixes-${key}`);
   const redisAllVerbsAndSuffixesKey = `verbs-and-suffixes-${key}`;
   const rawCachedAllVerbsAndSuffixes = await redisClient.get(redisAllVerbsAndSuffixesKey);
   const cachedAllVerbsAndSuffixes =
     typeof rawCachedAllVerbsAndSuffixes === 'string'
       ? JSON.parse(rawCachedAllVerbsAndSuffixes)
       : rawCachedAllVerbsAndSuffixes;
-  console.log(`Retrieved cached data for verbs and suffixes ${key}:`, !!cachedAllVerbsAndSuffixes);
-  console.timeEnd(`Searching cached verbs and suffixes: verbs-and-suffixes-${key}`);
   return cachedAllVerbsAndSuffixes;
 };
 
@@ -97,6 +94,5 @@ export const setAllCachedVerbsAndSuffixes = async ({
   if (!redisClient.isFake) {
     await redisClient.set(redisAllVerbsAndSuffixesKey, JSON.stringify(updatedData), { EX: REDIS_CACHE_EXPIRATION });
   }
-  console.log(`Setting verbs and suffixes cache: ${JSON.stringify(updatedData, null, 2).length}`);
   return updatedData;
 };

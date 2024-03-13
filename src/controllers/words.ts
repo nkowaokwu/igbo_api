@@ -14,13 +14,14 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
-import { Express, LegacyWord } from '../types';
+import { MiddleWare, LegacyWord, WordDocument } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
+const IGNORE_ENGLISH_WORDS = ['ego'];
 
 /* Gets words from JSON dictionary */
-export const getWordData: Express.MiddleWare = (req, res, next) => {
+export const getWordData: MiddleWare = (req, res, next) => {
   try {
     const { keyword } = req.query;
     const searchWord = removePrefix(keyword);
@@ -35,9 +36,8 @@ export const getWordData: Express.MiddleWare = (req, res, next) => {
 };
 
 /* Reuseable base controller function for getting words */
-const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
+const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
   try {
-    console.time('Getting words from database');
     const {
       version,
       searchWord,
@@ -60,7 +60,8 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
       filters,
     };
     let responseData: WordResponseData = { words: [], contentLength: 0 };
-    const isSearchWordEnglish = isEnglish.check(searchWord) && !!searchWord;
+    const isSearchWordEnglish =
+      isEnglish.check(searchWord) && !!searchWord && !IGNORE_ENGLISH_WORDS.includes(searchWord);
     if (hasQuotes || isSearchWordEnglish) {
       responseData = await searchWordUsingEnglish({
         redisClient,
@@ -79,8 +80,6 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
         ...searchQueries,
       });
     }
-    console.log(`Number of words for search word "${searchWord}": ${responseData.contentLength}`);
-    console.timeEnd('Getting words from database');
     return packageResponse({
       res,
       docs: responseData.words,
@@ -92,7 +91,7 @@ const getWordsFromDatabase: Express.MiddleWare = async (req, res, next) => {
   }
 };
 /* Gets words from MongoDB */
-export const getWords: Express.MiddleWare = async (req, res, next) => {
+export const getWords: MiddleWare = async (req, res, next) => {
   try {
     return getWordsFromDatabase(req, res, next);
   } catch (err: any) {
@@ -101,7 +100,7 @@ export const getWords: Express.MiddleWare = async (req, res, next) => {
 };
 
 /* Returns a word from MongoDB using an id */
-export const getWord: Express.MiddleWare = async (req, res, next) => {
+export const getWord: MiddleWare = async (req, res, next) => {
   try {
     const { id, flags, version } = await handleQueries(req);
 
@@ -116,6 +115,7 @@ export const getWord: Express.MiddleWare = async (req, res, next) => {
       const minimizedWords = minimizeWords(words, version);
       return minimizedWords[0];
     });
+
     return packageResponse({
       res,
       docs: updatedWord,
@@ -128,8 +128,8 @@ export const getWord: Express.MiddleWare = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data: LegacyWord, connection: mongoose.Connection) => {
-  const Word = connection.model('Word', wordSchema);
+export const createWord = async (data: Partial<LegacyWord>, connection: mongoose.Connection): Promise<WordDocument> => {
+  const Word = connection.model<WordDocument>('Word', wordSchema);
   const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 
   const wordData = {
@@ -143,13 +143,13 @@ export const createWord = async (data: LegacyWord, connection: mongoose.Connecti
   };
 
   const newWord = new Word(wordData);
-  await newWord.save();
+  const savedWord = await newWord.save();
 
   /* Go through each word's example and create an Example document */
   const savedExamples = map(examples, async (example) => {
     const exampleData = {
       ...example,
-      associatedWords: [newWord.id],
+      associatedWords: [savedWord.id],
     };
     const createdExample = await createExample(exampleData, connection);
     return createdExample;
@@ -158,6 +158,6 @@ export const createWord = async (data: LegacyWord, connection: mongoose.Connecti
   /* Wait for all the Examples to be created and then add them to the Word document */
   const resolvedExamples = await Promise.all(savedExamples);
   const exampleIds = getDocumentsIds(resolvedExamples);
-  newWord.examples = exampleIds;
-  return newWord.save();
+  savedWord.examples = exampleIds;
+  return savedWord.save();
 };

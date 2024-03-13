@@ -4,6 +4,7 @@ import diacriticCodes from '../constants/diacriticCodes';
 
 export interface SearchRegExp {
   wordReg: RegExp;
+  exampleReg: RegExp;
   definitionsReg: RegExp;
   hardDefinitionsReg?: RegExp;
 }
@@ -24,7 +25,7 @@ const getIsLastLetterDuplicated = ({
 
 export const removeSpecialCharacters = (word: string) => word.replace(/[()!~@#$%&*\=+[\]{},<>?|\\_\/]/g, '');
 
-export default (rawSearchWord: string, hardMatch = false): SearchRegExp => {
+const createRegExp = (rawSearchWord: string, hardMatch = false): SearchRegExp => {
   /* Front and back ensure the regexp will match with whole words */
   const front = '(?:^|[^a-zA-Z\u00c0-\u1ee5])';
   const back = '(?![a-zA-Z\u00c0-\u1ee5]+|,|s[a-zA-Z\u00c0-\u1ee5]+)';
@@ -67,13 +68,16 @@ export default (rawSearchWord: string, hardMatch = false): SearchRegExp => {
       : `${startWordBoundary}(^${front}${regexWordString}${back}$)${endWordBoundary}`,
     'i'
   );
-
+  const exampleReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
   const definitionsReg = new RegExp(`${startWordBoundary}(${regexWordString})${endWordBoundary}`, 'i');
   const hardDefinitionsReg = new RegExp(`${startWordBoundary}(${hardRegexWordString})${endWordBoundary}`, 'i');
 
   return {
     wordReg,
+    exampleReg,
     definitionsReg,
     hardDefinitionsReg,
   };
 };
+
+export default createRegExp;

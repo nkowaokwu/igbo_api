@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        mongodb-version: [4.0, 4.2]
+        mongodb-version: [5.0, 6.0]
 
     steps:
       - name: Git checkout
@@ -30,13 +30,16 @@ jobs:
         uses: supercharge/mongodb-github-action@1.3.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Install Project Dependencies
+        run: |
+          rm -rf ./node_modules; npm install
+          npm install -g firebase-tools
       - name: Build Server
         run: |
-          yarn install
-          yarn build
+          npm run build
       - name: Test Server Build Process
-        run: yarn test:build
-      - name: Test API
-        run: yarn jest
-      - name: Test API Homepage
-        run: yarn cypress:ci
+        run: npm run test:build
+      - name: Test Backend
+        run: npm run jest:backend
+      - name: Test Frontend
+        run: npm run jest:frontend

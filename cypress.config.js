@@ -8,7 +8,7 @@ module.exports = defineConfig({
     chromeWebSecurity: false,
     execTimeout: 5000,
     retries: {
-      runMode: 2,
+      runMode: 1,
     },
     pageLoadTimeout: 30000,
     taskTimeout: 30000,

@@ -4,7 +4,14 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['**/functions/*.js', '**/*.d.ts'],
+  ignorePatterns: [
+    '**/functions/*.js',
+    '**/node_modules/',
+    '**/__tests__/**/*.ts',
+    '**/__tests__/**/*.tsx',
+    '**/__mocks__/**/*.ts',
+    '**/__mocks__/**/*.tsx',
+  ],
   // Prettier plugin should be the last to always override preceding plugins
   extends: ['next', 'airbnb', 'plugin:cypress/recommended', 'prettier'],
   parserOptions: {
@@ -17,6 +24,7 @@ module.exports = {
     'function-paren-newline': ['off'],
     'import/prefer-default-export': ['off'],
     'import/extensions': ['off'],
+    'import/no-extraneous-dependencies': ['off'],
     'newline-per-chained-call': ['off'],
     'no-console': ['off'],
     'no-misleading-character-class': ['off'],
@@ -24,9 +32,10 @@ module.exports = {
     'no-promise-executor-return': ['off'],
     'no-underscore-dangle': ['off'],
     'no-useless-escape': ['off'],
-    'react/jsx-filename-extension': ['off'],
     'react/function-component-definition': ['off'],
+    'react/jsx-filename-extension': ['off'],
     'react/jsx-props-no-spreading': ['off'],
+    'react/require-default-props': ['off'],
     'react/no-danger': ['off'],
     '@next/next/no-html-link-for-pages': ['off'],
     '@next/next/no-img-element': ['off'],
@@ -53,11 +62,17 @@ module.exports = {
       rules: {
         'import/prefer-default-export': ['off'],
         'import/extensions': ['warn'],
+        'import/no-extraneous-dependencies': ['off'],
         'max-len': ['error', { code: 120 }],
         'no-misleading-character-class': ['off'],
         'no-nested-ternary': ['off'],
         'no-underscore-dangle': ['off'],
         'no-useless-escape': ['off'],
+        'import/no-relative-packages': ['off'],
+        'react/function-component-definition': ['off'],
+        'react/require-default-props': ['off'],
+        'react/jsx-props-no-spreading': ['off'],
+        'react/no-unknown-property': ['off'],
         '@typescript-eslint/no-unused-vars': [
           'warn',
           {

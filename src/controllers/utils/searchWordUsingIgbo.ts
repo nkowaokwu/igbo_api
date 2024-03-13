@@ -8,11 +8,12 @@ import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
 import Version from '../../shared/constants/Version';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
-import WordClassEnum from '../../shared/constants/WordClassEnum';
+import { Filters } from '../types';
+import { Keyword } from './types';
 
 type IgboSearch = {
   redisClient: RedisClientType | undefined;
-  keywords: { text: string; wordClass: WordClassEnum[]; regex: Pick<SearchRegExp, 'wordReg'> | SearchRegExp }[];
+  keywords: Keyword[];
   strict: boolean;
   isUsingMainKey: boolean | undefined;
   version: Version;
@@ -25,7 +26,7 @@ type IgboSearch = {
     dialects: boolean;
     resolve: boolean;
   };
-  filters: any;
+  filters: Filters;
 };
 
 /* Searches for a word with Igbo stored in MongoDB */
@@ -42,13 +43,11 @@ const searchWordUsingIgbo = async ({
   flags,
   filters,
 }: IgboSearch) => {
-  console.time(`searchWordUsingIgbo for ${searchWord}`);
   let responseData = { words: [], contentLength: 0 };
   const redisWordsCacheKey = `${searchWord}-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
   if (cachedWords) {
-    console.log('Return words from cache for Igbo search');
     responseData = {
       words: cachedWords.words,
       contentLength: cachedWords.contentLength,
@@ -69,12 +68,10 @@ const searchWordUsingIgbo = async ({
       searchWord,
       filters,
     });
-    console.time(`Searching Igbo words for ${searchWord}`);
     const [igboResults, englishResults] = await Promise.all([
       findWordsWithMatch({ match: igboQuery, version, queryLabel: 'igbo' }),
       findWordsWithMatch({ match: definitionsWithinIgboQuery, version, queryLabel: 'definitions' }),
     ]);
-    console.timeEnd(`Searching Igbo words for ${searchWord}`);
     // Prevents from duplicate word documents from being included in the final words array
     const words = searchWord
       ? uniqWith(
@@ -95,7 +92,6 @@ const searchWordUsingIgbo = async ({
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
 
-  console.timeEnd(`searchWordUsingIgbo for ${searchWord}`);
   return handleWordFlags({
     data: { words: sortedWords, contentLength: responseData.contentLength },
     flags,

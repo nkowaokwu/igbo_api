@@ -4,14 +4,19 @@ type ResponseData = {
   contentLength: number;
 };
 
-export type WithPronunciation = Omit<Example, 'pronunciations'> & {
+export type ExampleWithPronunciation = Omit<Example, 'pronunciations'> & {
   pronunciation: string;
 };
 
 export interface ExampleResponseData extends ResponseData {
-  examples: Example[] | WithPronunciation[];
+  examples: Example[] | ExampleWithPronunciation[];
 }
 
 export interface WordResponseData extends ResponseData {
   words: Partial<Word | WordDocument | LegacyWordDocument>[];
 }
+
+export type Filters = {
+  tags?: { $in: string[] };
+  'definitions.wordClass'?: { $in: string[] };
+};
