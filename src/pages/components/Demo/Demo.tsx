@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Heading, Text, Link, Code } from '@chakra-ui/react';
+import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
-import { Input, Checkbox } from 'antd';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 import { Example, Word } from '../../../types';
 import { WordDialect } from '../../../types/word';
