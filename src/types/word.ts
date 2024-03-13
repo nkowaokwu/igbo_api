@@ -8,7 +8,7 @@ type WordClass = string | WordDialect;
 export interface Definition {
   definitions: string[];
   id?: string;
-  igboDefinitions: { igbo: string; nsibidi: string }[];
+  igboDefinitions: { igbo: string, nsibidi: string }[];
   nsibidi: string;
   nsibidiCharacters: string[];
   wordClass: WordClass;
@@ -27,9 +27,7 @@ export interface LegacyWordDialect {
   [k: string]: WordDialect;
 }
 
-type Attribute = {
-  [key in WordAttributeEnum]: boolean;
-};
+type Attribute = { [key in WordAttributeEnum]: boolean };
 
 interface WordBase {
   attributes: Attribute;
@@ -39,8 +37,8 @@ interface WordBase {
   hypernyms: string[];
   hyponyms: string[];
   pronunciation: string;
-  relatedTerms: string[] | { id: string; _id?: Types.ObjectId }[];
-  stems: string[] | { id: string; _id?: Types.ObjectId }[];
+  relatedTerms: string[] | { id: string, _id?: Types.ObjectId }[];
+  stems: string[] | { id: string, _id?: Types.ObjectId }[];
   id: string;
   updatedAt: Date;
   variations: string[];
