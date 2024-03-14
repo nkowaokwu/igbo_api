@@ -7,6 +7,10 @@
       "dom",
       "esnext"
     ],
+    "baseUrl": "./",
+    "paths": {
+      "src": ["./src"]
+    },
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
