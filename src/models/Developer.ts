@@ -17,6 +17,7 @@ export const developerSchema = new Schema(
       date: { type: Date, default: new Date().toISOString() },
       count: { type: Number, default: 0 },
     },
+    firebaseId: { type: String, default: '' },
     stripeId: { type: String, default: '' },
   },
   { toObject: toObjectPlugin, timestamps: true }

@@ -67,6 +67,7 @@ module.exports = {
         'no-misleading-character-class': ['off'],
         'no-nested-ternary': ['off'],
         'no-underscore-dangle': ['off'],
+        'no-unused-vars': ['error'],
         'no-useless-escape': ['off'],
         'import/no-relative-packages': ['off'],
         'react/function-component-definition': ['off'],

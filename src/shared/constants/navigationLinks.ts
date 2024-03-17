@@ -13,6 +13,6 @@ export const navigationLinks: { href: string, label: string }[] = [
   },
   {
     href: '/signup',
-    label: 'Get an API Key',
+    label: 'Sign Up',
   },
 ];

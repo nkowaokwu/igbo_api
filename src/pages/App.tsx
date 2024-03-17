@@ -19,10 +19,10 @@ const App = ({
   databaseStats,
   gitHubStats = { contributors: [], stars: 0 },
 }: {
-  searchWord: string;
-  words: Word[];
-  databaseStats: DatabaseStats;
-  gitHubStats: GitHubStats;
+  searchWord: string,
+  words: Word[],
+  databaseStats: DatabaseStats,
+  gitHubStats: GitHubStats,
 }) => {
   const router = useRouter();
   return (
@@ -42,8 +42,8 @@ const App = ({
             <FadeIn>
               <Box className="w-full flex flex-col items-center">
                 <Text className="px-6 lg:px-0 text-center text-gray-500 w-10/12">
-                  Access thousands of Igbo words, audio pronunciations, and example sentences to power the future of
-                  Igbo technology.
+                  Access thousands of Igbo words, audio pronunciations, and example sentences to
+                  power the future of Igbo technology.
                 </Text>
               </Box>
               <br />
@@ -76,7 +76,7 @@ const App = ({
             onClick={() => router.push('/signup')}
             rightIcon={<FiKey />}
           >
-            Get an API Key
+            Sign Up
           </Button>
         </Box>
       </Box>

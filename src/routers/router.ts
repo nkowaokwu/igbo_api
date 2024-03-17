@@ -3,10 +3,11 @@ import rateLimit from 'express-rate-limit';
 import { MiddleWare } from '../types';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
-import { postDeveloper } from '../controllers/developers';
+import { postDeveloper, putDeveloper } from '../controllers/developers';
 import { getStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
+import validateUpdateDeveloperBody from '../middleware/validateUpdateDeveloperBody';
 import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
@@ -30,6 +31,7 @@ router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
 router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
+router.put('/developers', createDeveloperLimiter, validateUpdateDeveloperBody, putDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 

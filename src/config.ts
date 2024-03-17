@@ -9,10 +9,8 @@ const Environment = {
 };
 
 const config = functions.config();
-// @ts-expect-error NODE_ENV
-const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
-// @ts-expect-error NODE_ENV
-const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
+const dotenv = process.env.NODE_ENV !== Environment.BUILD ? require('dotenv') : null;
+const sgMail = process.env.NODE_ENV !== Environment.BUILD ? require('@sendgrid/mail') : null;
 
 if (dotenv) {
   dotenv.config();

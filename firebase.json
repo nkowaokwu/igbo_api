@@ -39,6 +39,9 @@
     ]
   },
   "emulators": {
+        "auth": {
+      "port": 9799
+    },
     "functions": {
       "port": 5005
     },

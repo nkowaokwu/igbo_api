@@ -6,12 +6,13 @@ export interface DeveloperClientData {
   email: string;
   password: string;
   stripeId: string;
+  firebaseId: string;
 }
 
 export interface Developer extends DeveloperClientData {
   usage: {
-    date: Date;
-    count: number;
+    date: Date,
+    count: number,
   };
 }
 

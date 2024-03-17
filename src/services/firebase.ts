@@ -1,6 +1,8 @@
-import { getApp, initializeApp } from 'firebase/app';
+import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { isProduction } from '../config';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
+// import { isProduction } from '../config';
+import firebaseSdkConfig from '../../firebase.json';
 
 interface FirebaseConfig {
   apiKey: string;
@@ -31,10 +33,27 @@ const PRODUCTION_FIREBASE_CONFIG: FirebaseConfig = {
   measurementId: 'G-YGGV667F2H',
 };
 
-initializeApp(isProduction ? PRODUCTION_FIREBASE_CONFIG : STAGING_FIREBASE_CONFIG);
+const apps = getApps();
 
-const functions = getFunctions(getApp());
-if (!isProduction) {
-  connectFunctionsEmulator(functions, 'localhost', 5005);
-  console.debug('Using Functions emulator: http://localhost:5005');
+let currentApp;
+// Initialize Firebase
+if (!apps.length) {
+  currentApp = initializeApp(true ? PRODUCTION_FIREBASE_CONFIG : STAGING_FIREBASE_CONFIG);
+} else {
+  currentApp = getApp();
+}
+
+export const app = currentApp;
+export const auth = getAuth(currentApp);
+const functions = getFunctions(currentApp);
+
+if (!false) {
+  connectFunctionsEmulator(functions, 'localhost', firebaseSdkConfig.emulators.functions.port);
+  connectAuthEmulator(auth, `http://localhost:${firebaseSdkConfig.emulators.auth.port}`);
+  console.debug(
+    `Using Functions emulator: http://localhost:${firebaseSdkConfig.emulators.functions.port}`
+  );
+  console.debug(
+    `Using Functions emulator: http://localhost:${firebaseSdkConfig.emulators.auth.port}`
+  );
 }

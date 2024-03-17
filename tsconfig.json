@@ -35,6 +35,7 @@
   ],
   "exclude": [
     "node_modules",
+    "functions",
     "./**/__tests__/**/*.ts",
     "./**/__tests__/**/*.tsx",
     "./**/__mocks__/**/*.ts",
