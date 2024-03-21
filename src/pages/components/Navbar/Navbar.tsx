@@ -36,7 +36,7 @@ const Navbar = ({ to = '/' }: { to?: string }) => (
               offset={-100}
               duration={600}
             >
-              Igbo API
+              IgboAPI
             </Link>
           )}
         </Heading>

@@ -6,6 +6,27 @@ configure({ testIdAttribute: 'data-test' });
 jest.mock('i18next');
 jest.mock('next/router');
 
+global.fetch = jest.fn();
+window.scrollTo = jest.fn();
+
+Object.defineProperty(window, 'MediaRecorder', {
+  writable: true,
+  value: jest.fn().mockImplementation(() => ({
+    start: jest.fn(),
+    ondataavailable: jest.fn(),
+    onerror: jest.fn(),
+    state: '',
+    stop: jest.fn(),
+    pause: jest.fn(),
+    resume: jest.fn(),
+  })),
+});
+
+Object.defineProperty(MediaRecorder, 'isTypeSupported', {
+  writable: true,
+  value: () => true,
+});
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
