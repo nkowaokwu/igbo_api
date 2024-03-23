@@ -81,7 +81,6 @@ export const getServerSideProps = async (context: any) => {
       },
     };
   } catch (err) {
-    console.trace(err);
     return {
       props: {
         searchWord: '',

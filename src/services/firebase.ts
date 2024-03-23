@@ -1,7 +1,7 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
-// import { isProduction } from '../config';
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
+import { isProduction } from '../config';
 import firebaseSdkConfig from '../../firebase.json';
 
 interface FirebaseConfig {
@@ -47,7 +47,7 @@ export const app = currentApp;
 export const auth = getAuth(currentApp);
 const functions = getFunctions(currentApp);
 
-if (!false) {
+if (!isProduction) {
   connectFunctionsEmulator(functions, 'localhost', firebaseSdkConfig.emulators.functions.port);
   connectAuthEmulator(auth, `http://localhost:${firebaseSdkConfig.emulators.auth.port}`);
   console.debug(

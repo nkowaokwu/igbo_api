@@ -26,6 +26,7 @@ export interface IgboAPIRequest extends ExpressRequest {
   headers: ExpressRequest['headers'];
   user?: DecodedIdToken;
   developer?: Developer;
+  params: { [key: string]: string };
 }
 
 export interface MiddleWare {
