@@ -96,17 +96,14 @@ export const putDeveloper: MiddleWare = async (req, res, next) => {
   }
 };
 
-/** Gets a Developer by the MongoDB Id, Firebase Id, Email */
+/** Gets a Developer by the Firebase Id */
 export const getDeveloper: MiddleWare = async (req, res, next) => {
   const connection = createDbConnection();
   const Developer = connection.model<DeveloperType>('Developer', developerSchema);
-  const { firebaseId, email } = req.body;
-  const { id } = req.params;
+  const { id: firebaseId } = req.params;
 
   try {
-    const developer = await Developer.findOne({
-      $or: [{ firebaseId }, { email }, { _id: new Types.ObjectId(id) }],
-    });
+    const developer = await Developer.findOne({ firebaseId });
     if (!developer) {
       throw new Error('No associated developer found.');
     }

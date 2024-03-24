@@ -31,7 +31,7 @@ const App = ({
       <Box className="flex flex-col items-center space-y-44">
         <Box
           className="relative flex flex-col justify-center items-center 
-        w-full md:w-10/12 xl:w-6/12 my-32 space-y-4"
+        w-full md:w-10/12 xl:w-6/12 md:mt-64 lg:my-32 space-y-4"
         >
           <FadeIn>
             <Heading as="h1" className="text-center lg:mt-24" width="full" fontSize="6xl">
@@ -47,7 +47,7 @@ const App = ({
                 </Text>
               </Box>
               <br />
-              <Box className="w-full flex flex-col lg:flex-row justify-center items-center lg:space-x-4">
+              <Box className="w-full flex flex-col md:flex-row justify-center items-center md:space-x-4">
                 <TryItOut />
                 <GitHubStars stars={gitHubStats.stars} />
               </Box>

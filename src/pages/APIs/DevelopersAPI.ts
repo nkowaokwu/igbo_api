@@ -66,9 +66,6 @@ export const getDeveloper = async (firebaseId: string): Promise<Developer> => {
   const res = await axios<Developer>({
     method: 'GET',
     url: `/api/v1/developers/${firebaseId}`,
-    data: {
-      firebaseId,
-    },
   });
   return res.data;
 };
