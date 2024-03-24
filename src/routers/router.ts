@@ -3,7 +3,7 @@ import rateLimit from 'express-rate-limit';
 import { MiddleWare } from '../types';
 import { getWords, getWord } from '../controllers/words';
 import { getExamples, getExample } from '../controllers/examples';
-import { postDeveloper, putDeveloper } from '../controllers/developers';
+import { getDeveloper, postDeveloper, putDeveloper } from '../controllers/developers';
 import { getStats } from '../controllers/stats';
 import validId from '../middleware/validId';
 import validateDeveloperBody from '../middleware/validateDeveloperBody';
@@ -17,7 +17,7 @@ const router = express.Router();
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const REQUESTS_PER_MS = 20;
-const createDeveloperLimiter: MiddleWare = rateLimit({
+const developerRateLimiter: MiddleWare = rateLimit({
   windowMs: FIFTEEN_MINUTES,
   max: REQUESTS_PER_MS,
 });
@@ -30,8 +30,9 @@ router.get('/words/:id', validateApiKey, validId, attachRedisClient, getWord);
 router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
-router.post('/developers', createDeveloperLimiter, validateDeveloperBody, postDeveloper);
-router.put('/developers', createDeveloperLimiter, validateUpdateDeveloperBody, putDeveloper);
+router.get('/developers/:id', postDeveloper, validateUpdateDeveloperBody, getDeveloper);
+router.post('/developers', developerRateLimiter, validateDeveloperBody, postDeveloper);
+router.put('/developers', developerRateLimiter, validateUpdateDeveloperBody, putDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
 

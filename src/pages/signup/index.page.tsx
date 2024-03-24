@@ -5,10 +5,10 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { useForm, Controller, FieldValues } from 'react-hook-form';
 import Login from './login';
-import Navbar from './components/Navbar';
-import Input from './components/Input';
-import { auth } from '../services/firebase';
-import { postDeveloper } from './APIs/DevelopersAPI';
+import Navbar from '../components/Navbar';
+import Input from '../components/Input';
+import { auth } from '../../services/firebase';
+import { postDeveloper } from '../APIs/DevelopersAPI';
 
 enum AuthState {
   SIGNING_IN,

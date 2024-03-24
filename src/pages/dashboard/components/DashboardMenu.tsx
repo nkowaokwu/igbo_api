@@ -10,7 +10,7 @@ const DashboardMenu = () => {
   const router = useRouter();
   const logOut = async () => {
     try {
-      await signOut(auth);
+      signOut(auth);
       router.push('/');
     } catch (err) {
       console.error('Unable to sign out', err);

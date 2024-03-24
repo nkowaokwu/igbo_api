@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import Image from 'next/image';
 import { Box, Button } from '@chakra-ui/react';
-import { auth } from '../services/firebase';
-import getAWSAsset from './utils/getAWSAsset';
-import { putDeveloper } from './APIs/DevelopersAPI';
+import { auth } from '../../services/firebase';
+import getAWSAsset from '../utils/getAWSAsset';
+import { putDeveloper } from '../APIs/DevelopersAPI';
 
 const provider = new GoogleAuthProvider();
 

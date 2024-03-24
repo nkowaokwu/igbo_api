@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Heading, Text, Link, chakra } from '@chakra-ui/react';
 import { FiMail } from 'react-icons/fi';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import { DICTIONARY_APP_URL } from '../siteConstants';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { DICTIONARY_APP_URL } from '../../siteConstants';
 
 const About = () => (
   <Box className="flex flex-col items-center h-screen">

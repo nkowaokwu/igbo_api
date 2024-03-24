@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Box,
-  Heading,
-  Text,
-  UnorderedList,
-  ListItem,
-} from '@chakra-ui/react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import { API_FROM_EMAIL } from '../siteConstants';
+import { Box, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { API_FROM_EMAIL } from '../../siteConstants';
 
 const Privacy = () => (
   <>
@@ -17,23 +11,29 @@ const Privacy = () => (
       <Box className="w-11/12 lg:w-6/12 flex flex-col justify-start py-3 lg:py-10">
         {/* Privacy Policy Start */}
         <Box className="privacy-container space-y-4">
-          <Heading as="h1" fontSize="2xl">Privacy Policy</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Privacy Policy
+          </Heading>
           <Text>Last updated: June 2, 2022</Text>
           <Text>
-            This Privacy Policy describes Our policies and procedures on the
-            collection, use and disclosure of Your information when You use
-            the Service and tells You about Your privacy rights and how the
-            law protects You.
+            This Privacy Policy describes Our policies and procedures on the collection, use and
+            disclosure of Your information when You use the Service and tells You about Your privacy
+            rights and how the law protects You.
           </Text>
-          <Heading as="h1" fontSize="2xl">Interpretation and Definitions</Heading>
-          <Heading as="h2" fontSize="xl">Interpretation</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Interpretation and Definitions
+          </Heading>
+          <Heading as="h2" fontSize="xl">
+            Interpretation
+          </Heading>
           <Text>
-            The words of which the initial letter is capitalized have meanings
-            defined under the following conditions. The following definitions
-            shall have the same meaning regardless of whether they appear in
-            singular or in plural.
+            The words of which the initial letter is capitalized have meanings defined under the
+            following conditions. The following definitions shall have the same meaning regardless
+            of whether they appear in singular or in plural.
           </Text>
-          <Heading as="h2" fontSize="xl">Definitions</Heading>
+          <Heading as="h2" fontSize="xl">
+            Definitions
+          </Heading>
           <Text>For the purposes of this Privacy Policy:</Text>
           <UnorderedList>
             <ListItem>
@@ -138,14 +138,17 @@ const Privacy = () => (
               </Text>
             </ListItem>
           </UnorderedList>
-          <Heading as="h1" fontSize="2xl">Collecting and Using Your Personal Data</Heading>
-          <Heading as="h2" fontSize="xl">Types of Data Collected</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Collecting and Using Your Personal Data
+          </Heading>
+          <Heading as="h2" fontSize="xl">
+            Types of Data Collected
+          </Heading>
           <Heading as="h3">Personal Data</Heading>
           <Text>
-            While using Our Service, We may ask You to provide Us with certain
-            personally identifiable information that can be used to contact or
-            identify You. Personally identifiable information may include, but
-            is not limited to:
+            While using Our Service, We may ask You to provide Us with certain personally
+            identifiable information that can be used to contact or identify You. Personally
+            identifiable information may include, but is not limited to:
           </Text>
           <UnorderedList>
             <ListItem>
@@ -171,22 +174,20 @@ const Privacy = () => (
             and other diagnostic data.`}
           </Text>
           <Text>
-            When You access the Service by or through a mobile device, We may
-            collect certain information automatically, including, but not
-            limited to, the type of mobile device You use, Your mobile device
-            unique ID, the IP address of Your mobile device, Your mobile
-            operating system, the type of mobile Internet browser You use,
-            unique device identifiers and other diagnostic data.
+            When You access the Service by or through a mobile device, We may collect certain
+            information automatically, including, but not limited to, the type of mobile device You
+            use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile
+            operating system, the type of mobile Internet browser You use, unique device identifiers
+            and other diagnostic data.
           </Text>
           <Text>
-            We may also collect information that Your browser sends whenever
-            You visit our Service or when You access the Service by or through
-            a mobile device.
+            We may also collect information that Your browser sends whenever You visit our Service
+            or when You access the Service by or through a mobile device.
           </Text>
           <Heading as="h3">Information from Third-Party Social Media Services</Heading>
           <Text>
-            The Company allows You to create an account and log in to use the
-            Service through the following Third-party Social Media Services:
+            The Company allows You to create an account and log in to use the Service through the
+            following Third-party Social Media Services:
           </Text>
           <UnorderedList>
             <ListItem>Google</ListItem>
@@ -209,10 +210,9 @@ const Privacy = () => (
           </Text>
           <Heading as="h3">Tracking Technologies and Cookies</Heading>
           <Text>
-            We use Cookies and similar tracking technologies to track the
-            activity on Our Service and store certain information. Tracking
-            technologies used are beacons, tags, and scripts to collect and
-            track information and to improve and analyze Our Service. The
+            We use Cookies and similar tracking technologies to track the activity on Our Service
+            and store certain information. Tracking technologies used are beacons, tags, and scripts
+            to collect and track information and to improve and analyze Our Service. The
             technologies We use may include:
           </Text>
           <UnorderedList>
@@ -242,10 +242,7 @@ const Privacy = () => (
             </a>
             .
           </Text>
-          <Text>
-            We use both Session and Persistent Cookies for the purposes set
-            out below:
-          </Text>
+          <Text>We use both Session and Persistent Cookies for the purposes set out below:</Text>
           <UnorderedList>
             <ListItem>
               <Text>
@@ -254,13 +251,11 @@ const Privacy = () => (
               <Text>Type: Session Cookies</Text>
               <Text>Administered by: Us</Text>
               <Text>
-                Purpose: These Cookies are essential to provide You with
-                services available through the Website and to enable You to
-                use some of its features. They help to authenticate users and
-                prevent fraudulent use of user accounts. Without these
-                Cookies, the services that You have asked for cannot be
-                provided, and We only use these Cookies to provide You with
-                those services.
+                Purpose: These Cookies are essential to provide You with services available through
+                the Website and to enable You to use some of its features. They help to authenticate
+                users and prevent fraudulent use of user accounts. Without these Cookies, the
+                services that You have asked for cannot be provided, and We only use these Cookies
+                to provide You with those services.
               </Text>
             </ListItem>
             <ListItem>
@@ -270,27 +265,26 @@ const Privacy = () => (
               <Text>Type: Persistent Cookies</Text>
               <Text>Administered by: Us</Text>
               <Text>
-                Purpose: These Cookies allow us to remember choices You make
-                when You use the Website, such as remembering your login
-                details or language preference. The purpose of these Cookies
-                is to provide You with a more personal experience and to avoid
-                You having to re-enter your preferences every time You use the
-                Website.
+                Purpose: These Cookies allow us to remember choices You make when You use the
+                Website, such as remembering your login details or language preference. The purpose
+                of these Cookies is to provide You with a more personal experience and to avoid You
+                having to re-enter your preferences every time You use the Website.
               </Text>
             </ListItem>
           </UnorderedList>
           <Text>
-            For more information about the cookies we use and your choices
-            regarding cookies, please visit our Cookies Policy or the Cookies
-            section of our Privacy Policy.
+            For more information about the cookies we use and your choices regarding cookies, please
+            visit our Cookies Policy or the Cookies section of our Privacy Policy.
           </Text>
-          <Heading as="h2" fontSize="xl">Use of Your Personal Data</Heading>
+          <Heading as="h2" fontSize="xl">
+            Use of Your Personal Data
+          </Heading>
           <Text>The Company may use Personal Data for the following purposes:</Text>
           <UnorderedList>
             <ListItem>
               <Text>
-                <strong>To provide and maintain our Service</strong>
-                , including to monitor the usage of our Service.
+                <strong>To provide and maintain our Service</strong>, including to monitor the usage
+                of our Service.
               </Text>
             </ListItem>
             <ListItem>
@@ -364,10 +358,7 @@ const Privacy = () => (
               </Text>
             </ListItem>
           </UnorderedList>
-          <Text>
-            We may share Your personal information in the following
-            situations:
-          </Text>
+          <Text>We may share Your personal information in the following situations:</Text>
           <UnorderedList>
             <ListItem>
               <strong>With Service Providers:</strong>
@@ -416,23 +407,25 @@ const Privacy = () => (
               personal information for any other purpose with Your consent.`}
             </ListItem>
           </UnorderedList>
-          <Heading as="h2" fontSize="xl">Retention of Your Personal Data</Heading>
+          <Heading as="h2" fontSize="xl">
+            Retention of Your Personal Data
+          </Heading>
           <Text>
-            The Company will retain Your Personal Data only for as long as is
-            necessary for the purposes set out in this Privacy Policy. We will
-            retain and use Your Personal Data to the extent necessary to
-            comply with our legal obligations (for example, if we are required
-            to retain your data to comply with applicable laws), resolve
-            disputes, and enforce our legal agreements and policies.
+            The Company will retain Your Personal Data only for as long as is necessary for the
+            purposes set out in this Privacy Policy. We will retain and use Your Personal Data to
+            the extent necessary to comply with our legal obligations (for example, if we are
+            required to retain your data to comply with applicable laws), resolve disputes, and
+            enforce our legal agreements and policies.
           </Text>
           <Text>
-            The Company will also retain Usage Data for internal analysis
-            purposes. Usage Data is generally retained for a shorter period of
-            time, except when this data is used to strengthen the security or
-            to improve the functionality of Our Service, or We are legally
-            obligated to retain this data for longer time periods.
+            The Company will also retain Usage Data for internal analysis purposes. Usage Data is
+            generally retained for a shorter period of time, except when this data is used to
+            strengthen the security or to improve the functionality of Our Service, or We are
+            legally obligated to retain this data for longer time periods.
           </Text>
-          <Heading as="h2" fontSize="xl">Transfer of Your Personal Data</Heading>
+          <Heading as="h2" fontSize="xl">
+            Transfer of Your Personal Data
+          </Heading>
           <Text>
             {`Your information, including Personal Data, is processed at the
             Company's operating offices and in any other places where the
@@ -443,68 +436,63 @@ const Privacy = () => (
             differ than those from Your jurisdiction.`}
           </Text>
           <Text>
-            Your consent to this Privacy Policy followed by Your submission of
-            such information represents Your agreement to that transfer.
+            Your consent to this Privacy Policy followed by Your submission of such information
+            represents Your agreement to that transfer.
           </Text>
           <Text>
-            The Company will take all steps reasonably necessary to ensure
-            that Your data is treated securely and in accordance with this
-            Privacy Policy and no transfer of Your Personal Data will take
-            place to an organization or a country unless there are adequate
-            controls in place including the security of Your data and other
-            personal information.
+            The Company will take all steps reasonably necessary to ensure that Your data is treated
+            securely and in accordance with this Privacy Policy and no transfer of Your Personal
+            Data will take place to an organization or a country unless there are adequate controls
+            in place including the security of Your data and other personal information.
           </Text>
-          <Heading as="h2" fontSize="xl">Disclosure of Your Personal Data</Heading>
+          <Heading as="h2" fontSize="xl">
+            Disclosure of Your Personal Data
+          </Heading>
           <Heading as="h3">Business Transactions</Heading>
           <Text>
-            If the Company is involved in a merger, acquisition or asset sale,
-            Your Personal Data may be transferred. We will provide notice
-            before Your Personal Data is transferred and becomes subject to a
-            different Privacy Policy.
+            If the Company is involved in a merger, acquisition or asset sale, Your Personal Data
+            may be transferred. We will provide notice before Your Personal Data is transferred and
+            becomes subject to a different Privacy Policy.
           </Text>
           <Heading as="h3">Law enforcement</Heading>
           <Text>
-            Under certain circumstances, the Company may be required to
-            disclose Your Personal Data if required to do so by law or in
-            response to valid requests by public authorities (e.g. a court or
-            a government agency).
+            Under certain circumstances, the Company may be required to disclose Your Personal Data
+            if required to do so by law or in response to valid requests by public authorities (e.g.
+            a court or a government agency).
           </Text>
           <Heading as="h3">Other legal requirements</Heading>
           <Text>
-            The Company may disclose Your Personal Data in the good faith
-            belief that such action is necessary to:
+            The Company may disclose Your Personal Data in the good faith belief that such action is
+            necessary to:
           </Text>
           <UnorderedList>
             <ListItem>Comply with a legal obligation</ListItem>
             <ListItem>Protect and defend the rights or property of the Company</ListItem>
             <ListItem>
-              Prevent or investigate possible wrongdoing in connection with
-              the Service
+              Prevent or investigate possible wrongdoing in connection with the Service
             </ListItem>
-            <ListItem>
-              Protect the personal safety of Users of the Service or the
-              public
-            </ListItem>
+            <ListItem>Protect the personal safety of Users of the Service or the public</ListItem>
             <ListItem>Protect against legal liability</ListItem>
           </UnorderedList>
-          <Heading as="h2" fontSize="xl">Security of Your Personal Data</Heading>
+          <Heading as="h2" fontSize="xl">
+            Security of Your Personal Data
+          </Heading>
           <Text>
-            The security of Your Personal Data is important to Us, but
-            remember that no method of transmission over the Internet, or
-            method of electronic storage is 100% secure. While We strive to
-            use commercially acceptable means to protect Your Personal Data,
-            We cannot guarantee its absolute security.
+            The security of Your Personal Data is important to Us, but remember that no method of
+            transmission over the Internet, or method of electronic storage is 100% secure. While We
+            strive to use commercially acceptable means to protect Your Personal Data, We cannot
+            guarantee its absolute security.
           </Text>
-          <Heading as="h1" fontSize="2xl">{'Children\'s Privacy'}</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Children&apos;s Privacy
+          </Heading>
           <Text>
-            Our Service does not address anyone under the age of 13. We do not
-            knowingly collect personally identifiable information from anyone
-            under the age of 13. If You are a parent or guardian and You are
-            aware that Your child has provided Us with Personal Data, please
-            contact Us. If We become aware that We have collected Personal
-            Data from anyone under the age of 13 without verification of
-            parental consent, We take steps to remove that information from
-            Our servers.
+            Our Service does not address anyone under the age of 13. We do not knowingly collect
+            personally identifiable information from anyone under the age of 13. If You are a parent
+            or guardian and You are aware that Your child has provided Us with Personal Data, please
+            contact Us. If We become aware that We have collected Personal Data from anyone under
+            the age of 13 without verification of parental consent, We take steps to remove that
+            information from Our servers.
           </Text>
           <Text>
             {`If We need to rely on consent as a legal basis for processing Your
@@ -512,7 +500,9 @@ const Privacy = () => (
             may require Your parent's consent before We collect and use that
             information.`}
           </Text>
-          <Heading as="h1" fontSize="2xl">Links to Other Websites</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Links to Other Websites
+          </Heading>
           <Text>
             {`Our Service may contain links to other websites that are not
             operated by Us. If You click on a third party link, You will be
@@ -520,14 +510,15 @@ const Privacy = () => (
             review the Privacy Policy of every site You visit.`}
           </Text>
           <Text>
-            We have no control over and assume no responsibility for the
-            content, privacy policies or practices of any third party sites or
-            services.
+            We have no control over and assume no responsibility for the content, privacy policies
+            or practices of any third party sites or services.
           </Text>
-          <Heading as="h1" fontSize="2xl">Changes to this Privacy Policy</Heading>
+          <Heading as="h1" fontSize="2xl">
+            Changes to this Privacy Policy
+          </Heading>
           <Text>
-            We may update Our Privacy Policy from time to time. We will notify
-            You of any changes by posting the new Privacy Policy on this page.
+            We may update Our Privacy Policy from time to time. We will notify You of any changes by
+            posting the new Privacy Policy on this page.
           </Text>
           <Text>
             {`We will let You know via email and/or a prominent notice on Our
@@ -535,19 +526,19 @@ const Privacy = () => (
             "Last updated" date at the top of this Privacy Policy.`}
           </Text>
           <Text>
-            You are advised to review this Privacy Policy periodically for any
-            changes. Changes to this Privacy Policy are effective when they
-            are posted on this page.
+            You are advised to review this Privacy Policy periodically for any changes. Changes to
+            this Privacy Policy are effective when they are posted on this page.
           </Text>
-          <Heading as="h1" fontSize="2xl">Contact Us</Heading>
-          <Text>
-            If you have any questions about this Privacy Policy, You can
-            contact us:
-          </Text>
+          <Heading as="h1" fontSize="2xl">
+            Contact Us
+          </Heading>
+          <Text>If you have any questions about this Privacy Policy, You can contact us:</Text>
           <UnorderedList>
             <ListItem>
               {'By email: '}
-              <a className="link" href={`mailto:${API_FROM_EMAIL}`}>{API_FROM_EMAIL}</a>
+              <a className="link" href={`mailto:${API_FROM_EMAIL}`}>
+                {API_FROM_EMAIL}
+              </a>
             </ListItem>
           </UnorderedList>
         </Box>
