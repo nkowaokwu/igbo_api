@@ -45,7 +45,6 @@ const SignUp = () => {
         setErrorMessage(res.data?.error);
       }
     } catch (err) {
-      console.log(err);
       handleCreateDeveloperResponse('An error occurred');
     }
   };
@@ -56,7 +55,7 @@ const SignUp = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
       await createDeveloper({ ...data, firebaseId: userCredential.user.uid });
     } catch (err) {
-      console.log('Unable to create user account');
+      // Error
     }
   };
 

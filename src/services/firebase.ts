@@ -1,7 +1,6 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { isProduction } from '../config';
 import firebaseSdkConfig from '../../firebase.json';
 
 interface FirebaseConfig {
@@ -47,13 +46,15 @@ export const app = currentApp;
 export const auth = getAuth(currentApp);
 const functions = getFunctions(currentApp);
 
+const isProduction =
+  typeof window !== 'undefined' ? window?.location?.host === 'igboapi.com' : false;
 if (!isProduction) {
   connectFunctionsEmulator(functions, 'localhost', firebaseSdkConfig.emulators.functions.port);
   connectAuthEmulator(auth, `http://localhost:${firebaseSdkConfig.emulators.auth.port}`);
-  console.debug(
+  console.info(
     `Using Functions emulator: http://localhost:${firebaseSdkConfig.emulators.functions.port}`
   );
-  console.debug(
+  console.info(
     `Using Functions emulator: http://localhost:${firebaseSdkConfig.emulators.auth.port}`
   );
 }

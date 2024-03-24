@@ -1,9 +1,10 @@
 import { User } from 'firebase/auth';
 import axiosBase, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { auth } from '../../services/firebase';
+import { Developer } from '../../types';
+import isProduction from '../utils/isProduction';
 
-const API_ROUTE =
-  process?.env?.NODE_ENV !== 'development' ? 'http://localhost:8080' : 'https://igboapi.com';
+const API_ROUTE = !isProduction() ? 'http://localhost:8080' : 'https://igboapi.com';
 
 export const createAuthorizationHeader = async (): Promise<string> => {
   const { currentUser } = auth;
@@ -33,7 +34,7 @@ export const axios = async <T>(config: AxiosRequestConfig): Promise<AxiosPromise
  * @returns
  */
 export const postDeveloper = async (data: { [key: string]: string | number }) => {
-  const res = await axios({
+  const res = await axios<{ message: string, apiKey: string }>({
     method: 'POST',
     url: '/api/v1/developers',
     data,
@@ -48,7 +49,7 @@ export const postDeveloper = async (data: { [key: string]: string | number }) =>
  * @returns
  */
 export const putDeveloper = async (user: User) => {
-  const res = await axios({
+  const res = await axios<{ message: string, developer: Developer }>({
     method: 'PUT',
     url: '/api/v1/developers',
     data: {
@@ -58,5 +59,16 @@ export const putDeveloper = async (user: User) => {
     },
   });
 
+  return res.data;
+};
+
+export const getDeveloper = async (firebaseId: string): Promise<Developer> => {
+  const res = await axios<Developer>({
+    method: 'GET',
+    url: `/api/v1/developers/${firebaseId}`,
+    data: {
+      firebaseId,
+    },
+  });
   return res.data;
 };
