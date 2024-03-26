@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
 import { SuggestionSourceEnum } from '../../src/shared/constants/SuggestionSourceEnum';
 import WordAttributeEnum from '../../src/shared/constants/WordAttributeEnum';
-import { Example, IgboAPIRequest, Word } from '../../src/types';
+import { Example, Word } from '../../src/types';
 import { WordDialect } from '../../src/types/word';
 import { Flags } from '../../src/controllers/utils/types';
-import { HeapStatistics } from 'v8';
+import { capitalize } from 'lodash';
 
 interface RequestOptions {
   noAuthorizationHeader?: boolean;
@@ -66,15 +66,26 @@ export const flagsFixture = (data?: Partial<Flags>) => ({
 });
 
 export const requestFixture = (
-  { body, params }: { body: { [key: string]: string }, params?: { [key: string]: string } },
+  {
+    body = {},
+    params = {},
+    headers = {},
+  }: {
+    body?: { [key: string]: string },
+    params?: { [key: string]: string },
+    headers?: { [key: string]: string },
+  },
   options?: RequestOptions
 ) => ({
   body,
   params,
-  headers: {},
+  headers,
   query: {},
+  get: (header: string) => headers[header] || headers[capitalize(header)],
 });
+export const statusSendMock = jest.fn();
 export const responseFixture = () => ({
+  status: jest.fn(() => ({ send: statusSendMock })),
   send: jest.fn(),
 });
 export const nextFunctionFixture = () => jest.fn();

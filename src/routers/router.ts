@@ -12,6 +12,7 @@ import validateApiKey from '../middleware/validateApiKey';
 import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
+import developerAuthorization from '../middleware/developerAuthorization';
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ router.get('/words/:id', validateApiKey, validId, attachRedisClient, getWord);
 router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
-router.get('/developers/:id', developerRateLimiter, getDeveloper);
+router.get('/developers/:id', developerRateLimiter, developerAuthorization, getDeveloper);
 router.post('/developers', developerRateLimiter, validateDeveloperBody, postDeveloper);
 router.put('/developers', developerRateLimiter, validateUpdateDeveloperBody, putDeveloper);
 
