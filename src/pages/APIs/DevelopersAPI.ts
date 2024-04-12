@@ -48,7 +48,7 @@ export const postDeveloper = async (data: { [key: string]: string | number }) =>
  * @param user Object includes user's Firebase Id and email
  * @returns
  */
-export const putDeveloper = async (user: User) => {
+export const putDeveloper = async (user: Partial<User>) => {
   const res = await axios<{ message: string, developer: Developer }>({
     method: 'PUT',
     url: '/api/v1/developers',

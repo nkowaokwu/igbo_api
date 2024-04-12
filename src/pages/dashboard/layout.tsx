@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, SlideFade } from '@chakra-ui/react';
+import { useAtom } from 'jotai';
 import DashboardMenu from './components/DashboardMenu';
 import AuthManager from '../managers/AuthManager';
 import DashboardSideMenu from './components/DashboardSideMenu';
 import { getDeveloper } from '../APIs/DevelopersAPI';
-import { Developer } from '../../types';
 import { auth } from '../../services/firebase';
+import { developerAtom } from '../atoms/dashboard';
 
 const DashboardLayout = ({ children }: { children: any }) => {
-  const [developer, setDeveloper] = useState<Developer>();
+  const [developer, setDeveloper] = useAtom(developerAtom);
 
-  useEffect(() => {
-    (async () => {
-      if (auth.currentUser) {
-        const fetchedDeveloper = await getDeveloper(auth.currentUser.uid);
-        setDeveloper(fetchedDeveloper);
-      }
-    })();
-  }, [developer]);
+  if (auth.currentUser && !developer) {
+    getDeveloper(auth.currentUser.uid).then((fetchedDeveloper) => {
+      setDeveloper(fetchedDeveloper);
+    });
+  }
 
   return (
     <Box className="flex flex-row overflow-y-hidden	overflow-x-hidden w-full">
@@ -34,7 +32,7 @@ const DashboardLayout = ({ children }: { children: any }) => {
         </Box>
         <AuthManager>
           <SlideFade in offsetX="-20px" offsetY="0px" className="w-full p-4">
-            {developer ? children({ developer }) : developer}
+            {developer ? children({ developer }) : null}
           </SlideFade>
         </AuthManager>
       </Box>

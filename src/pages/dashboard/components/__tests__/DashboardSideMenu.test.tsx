@@ -13,6 +13,7 @@ describe('DashboardSideMenu', () => {
 
     await findByText('IgboAPI');
     await findByText('Home');
+    await findByText('Credentials');
     await findByText('Profile');
   });
 });

@@ -11,13 +11,18 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { FiHome, FiUser, FiZap, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiHome, FiUser, FiLock, FiZap, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const navigationOptions = [
   {
     label: 'Home',
     route: '/dashboard',
     icon: FiHome,
+  },
+  {
+    label: 'Credentials',
+    route: '/dashboard/credentials',
+    icon: FiLock,
   },
   {
     label: 'Profile',
@@ -32,6 +37,7 @@ const DashboardSideMenu = () => {
   const toggleSideMenu = () => {
     setIsSideMenuOpen(!isSideMenuOpen);
   };
+
   return (
     <Box
       className={`h-screen flex flex-col justify-between transition-all ${isSideMenuOpen ? 'w-2/12' : ''}`}

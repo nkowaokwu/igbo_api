@@ -31,7 +31,7 @@ router.get('/words/:id', validateApiKey, validId, attachRedisClient, getWord);
 router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
-router.get('/developers/:id', developerRateLimiter, developerAuthorization, getDeveloper);
+router.get('/developers/:id', developerAuthorization, getDeveloper);
 router.post('/developers', developerRateLimiter, validateDeveloperBody, postDeveloper);
 router.put('/developers', developerRateLimiter, validateUpdateDeveloperBody, putDeveloper);
 

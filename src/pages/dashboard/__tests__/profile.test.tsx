@@ -2,7 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { render } from '@testing-library/react';
 import TestContext from '../../../__tests__/components/TestContext';
-import Profile from '../profile';
+import Profile from '../profile.page';
+
+jest.mock('../../APIs/DevelopersAPI');
 
 describe('Profile', () => {
   it('renders the dashboard profile route', async () => {
@@ -13,9 +15,9 @@ describe('Profile', () => {
     );
 
     await findAllByText('Home');
-    await findByText('Your usage across all IgboAPI services.');
-    await findByText('Daily IgboAPI Usage');
-    await findByText(/Daily limit:/);
-    await findByText(moment().format('MMMM DD, YYYY'));
+    await findAllByText('Profile');
+    await findByText('developer');
+    await findByText('email');
+    await findByText('Stripe Connected');
   });
 });

@@ -4,6 +4,8 @@ import { render } from '@testing-library/react';
 import TestContext from '../../../__tests__/components/TestContext';
 import Dashboard from '../dashboard';
 
+jest.mock('../../APIs/DevelopersAPI');
+
 describe('Dashboard', () => {
   it('renders the dashboard main route', async () => {
     const { findAllByText, findByText } = render(
@@ -16,6 +18,6 @@ describe('Dashboard', () => {
     await findByText('Your usage across all IgboAPI services.');
     await findByText('Daily IgboAPI Usage');
     await findByText(/Daily limit:/);
-    await findByText(moment().format('MMMM DD, YYYY'));
+    await findByText(new RegExp(moment().format('MMMM DD, YYYY')));
   });
 });
