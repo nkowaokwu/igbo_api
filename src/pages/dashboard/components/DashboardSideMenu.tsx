@@ -11,7 +11,15 @@ import {
   Button,
 } from '@chakra-ui/react';
 import Link from 'next/link';
-import { FiHome, FiUser, FiLock, FiZap, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import {
+  FiHome,
+  FiUser,
+  FiLock,
+  FiZap,
+  FiChevronLeft,
+  FiChevronRight,
+  FiShoppingBag,
+} from 'react-icons/fi';
 
 const navigationOptions = [
   {
@@ -28,6 +36,11 @@ const navigationOptions = [
     label: 'Profile',
     route: '/dashboard/profile',
     icon: FiUser,
+  },
+  {
+    label: 'Plans',
+    route: '/dashboard/plans',
+    icon: FiShoppingBag,
   },
 ];
 

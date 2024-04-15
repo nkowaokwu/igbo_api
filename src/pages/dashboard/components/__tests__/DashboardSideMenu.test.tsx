@@ -15,5 +15,6 @@ describe('DashboardSideMenu', () => {
     await findByText('Home');
     await findByText('Credentials');
     await findByText('Profile');
+    await findByText('Plans');
   });
 });

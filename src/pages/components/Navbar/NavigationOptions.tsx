@@ -4,10 +4,9 @@ import { navigationLinks } from '../../../shared/constants/navigationLinks';
 
 const NavigationOptions = () => (
   <UnorderedList
-    className="w-full flex flex-row justify-center items-center space-x-3"
+    className="w-full flex flex-row justify-center items-center space-x-6"
     data-test="sub-menu"
   >
-    x
     {navigationLinks.map(({ href, label }) => (
       <ListItem className="transition-element" key={label}>
         <Link className="cursor-pointer font-normal" href={href} role="link" fontWeight="semibold">
