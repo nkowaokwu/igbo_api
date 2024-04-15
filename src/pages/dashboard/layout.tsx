@@ -7,8 +7,9 @@ import DashboardSideMenu from './components/DashboardSideMenu';
 import { getDeveloper } from '../APIs/DevelopersAPI';
 import { auth } from '../../services/firebase';
 import { developerAtom } from '../atoms/dashboard';
+import { Developer } from '../../types';
 
-const DashboardLayout = ({ children }: { children: any }) => {
+const DashboardLayout = ({ children }: { children: ({ developer } : { developer: Developer}) => any }) => {
   const [developer, setDeveloper] = useAtom(developerAtom);
 
   if (auth.currentUser && !developer) {

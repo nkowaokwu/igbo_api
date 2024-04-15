@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
-import { router, routerV2, siteRouter, testRouter } from './routers';
+import { router, routerV2, siteRouter, stripeRouter, testRouter } from './routers';
 import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
@@ -34,6 +34,9 @@ app.use('/_next', express.static('./dist'));
 app.use('/assets', cache(), express.static('./dist/assets'));
 app.use('/fonts', cache(), express.static('./dist/fonts'));
 app.use('/services', cache(), express.static('./services'));
+
+/* Stripe */
+app.use('/stripe', stripeRouter);
 
 /* Grabs data from MongoDB */
 app.use(`/api/${Version.VERSION_1}`, cache(86400, 172800), router);

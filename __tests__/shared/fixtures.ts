@@ -74,7 +74,7 @@ export const requestFixture = (
     body?: { [key: string]: string },
     params?: { [key: string]: string },
     headers?: { [key: string]: string },
-  },
+  } = {},
   options?: RequestOptions
 ) => ({
   body,
@@ -87,5 +87,6 @@ export const statusSendMock = jest.fn();
 export const responseFixture = () => ({
   status: jest.fn(() => ({ send: statusSendMock })),
   send: jest.fn(),
+  redirect: jest.fn(),
 });
 export const nextFunctionFixture = () => jest.fn();

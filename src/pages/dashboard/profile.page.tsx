@@ -1,11 +1,10 @@
 import React from 'react';
 import { Avatar, Box, Heading, Text, Badge } from '@chakra-ui/react';
 import DashboardLayout from './layout';
-import { Developer } from '../../types';
 
 const Profile = () => (
   <DashboardLayout>
-    {({ developer }: { developer: Developer }) => (
+    {({ developer }) => (
       <Box className="flex flex-col justify-center items-center">
         <Avatar size="lg" />
         <Heading as="h1">Profile</Heading>

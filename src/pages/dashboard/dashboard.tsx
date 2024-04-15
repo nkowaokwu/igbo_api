@@ -11,11 +11,10 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import DashboardLayout from './layout';
-import { Developer } from '../../types';
 
 const Dashboard = () => (
   <DashboardLayout>
-    {({ developer }: { developer: Developer }) => (
+    {({ developer }) => (
       <Skeleton isLoaded={Boolean(developer)}>
         <Box mb={4}>
           <Heading as="h1">Home</Heading>

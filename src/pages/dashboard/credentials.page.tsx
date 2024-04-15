@@ -3,7 +3,6 @@ import { Box, Heading, IconButton, Input, Text, Tooltip } from '@chakra-ui/react
 import { FiEye, FiEyeOff, FiCopy } from 'react-icons/fi';
 
 import DashboardLayout from './layout';
-import { Developer } from '../../types';
 
 const Credentials = () => {
   const [isApiKeyVisible, setIsApiKeyVisible] = useState(false);
@@ -19,7 +18,7 @@ const Credentials = () => {
 
   return (
     <DashboardLayout>
-      {({ developer }: { developer: Developer }) => (
+      {({ developer }) => (
         <>
           <Box mb={4}>
             <Heading as="h1">API Keys</Heading>

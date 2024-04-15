@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import rateLimit from 'express-rate-limit';
 import { MiddleWare } from '../types';
 import { getWords, getWord } from '../controllers/words';
@@ -14,7 +14,7 @@ import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
 import developerAuthorization from '../middleware/developerAuthorization';
 
-const router = express.Router();
+const router = Router();
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 const REQUESTS_PER_MS = 20;

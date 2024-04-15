@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 import nextjs from 'next';
 import compact from 'lodash/compact';
 import { parse } from 'url';
@@ -8,7 +8,7 @@ const handle = nextApp.getRequestHandler();
 
 const routes = compact([/^\/$/]);
 
-const siteRouter = express.Router();
+const siteRouter = Router();
 
 siteRouter.use(async (req, res, next) => {
   try {
