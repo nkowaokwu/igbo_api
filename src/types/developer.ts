@@ -1,4 +1,5 @@
 import { Document, Types } from 'mongoose';
+import Plan from '../shared/constants/Plan';
 
 export interface DeveloperClientData {
   name: string;
@@ -7,6 +8,7 @@ export interface DeveloperClientData {
   password: string;
   stripeId: string;
   firebaseId: string;
+  plan: Plan;
 }
 
 export interface Developer extends DeveloperClientData {

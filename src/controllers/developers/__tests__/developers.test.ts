@@ -11,11 +11,12 @@ import {
   putDeveloper,
 } from '../../developers';
 import { Model } from '../../../../__mocks__/mongoose';
+import Plan from '../../../shared/constants/Plan';
 
 class Developer {
   local = {};
   constructor(value: object) {
-    this.local = value;
+    this.local = { ...value, plan: Plan.STARTER };
   }
 
   static find() {
@@ -42,6 +43,7 @@ describe('developers', () => {
     expect(res.email).toEqual('email');
     expect(res.apiKey).toBeTruthy();
     expect(res.password).toBeTruthy();
+    expect(res.plan).toEqual(Plan.STARTER);
   });
 
   it('posts new developer', async () => {
