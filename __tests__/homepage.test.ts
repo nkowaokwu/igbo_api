@@ -2,7 +2,7 @@ import { getLocalUrlRoute } from './shared/commands';
 import { SITE_TITLE, DOCS_SITE_TITLE } from './shared/constants';
 
 describe.skip('API Homepage', () => {
-  it('should render the built site', async () => {
+  it('render the built site', async () => {
     const res = await getLocalUrlRoute();
     expect(res.status).toEqual(200);
     expect(res.type).toEqual('text/html');
@@ -12,7 +12,7 @@ describe.skip('API Homepage', () => {
     expect(res.text).toContain(SITE_TITLE);
   });
 
-  it('should render the docs site', async () => {
+  it('render the docs site', async () => {
     const res = await getLocalUrlRoute('/docs');
     expect(res.status).toEqual(200);
     expect(res.type).toEqual('text/html');

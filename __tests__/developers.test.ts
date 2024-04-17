@@ -3,19 +3,19 @@ import { developerData, malformedDeveloperData, wordId, exampleId } from './__mo
 
 describe('Developers', () => {
   describe('/POST mongodb developers', () => {
-    it('should create a new developer', async () => {
+    it('create a new developer', async () => {
       const res = await createDeveloper(developerData);
       expect(res.status).toEqual(200);
       expect(res.body.message).not.toEqual(undefined);
     });
 
-    it('should throw an error while creating a new developer', async () => {
+    it('throw an error while creating a new developer', async () => {
       const res = await createDeveloper(malformedDeveloperData);
       expect(res.status).toEqual(400);
       expect(res.body.error).not.toEqual(undefined);
     });
 
-    it('should throw an error by using the same email for new developers', async () => {
+    it('throw an error by using the same email for new developers', async () => {
       const repeatedDeveloper = {
         ...developerData,
         email: 'email@example.com',
@@ -29,7 +29,7 @@ describe('Developers', () => {
   });
 
   describe('Using Developer API Keys', () => {
-    it('should get all words with API key', async () => {
+    it('get all words with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       await new Promise((resolve) => {
@@ -39,59 +39,59 @@ describe('Developers', () => {
       expect(res.status).toEqual(200);
     });
 
-    it('should search for a word with API key', async () => {
+    it('search for a word with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       const res = await getWord(wordId, {}, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(404);
     });
 
-    it('should get examples with API key', async () => {
+    it('get examples with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       const res = await getExamples({}, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(200);
     });
 
-    it('should search for an example with API key', async () => {
+    it('search for an example with API key', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       const res = await getExample(exampleId, {}, { apiKey: developerRes.body.apiKey });
       expect(res.status).toEqual(404);
     });
 
-    it('should throw an error getting words with invalid API key', async () => {
+    it('throw an error getting words with invalid API key', async () => {
       const res = await getWords({}, { apiKey: 'invalid key' });
       expect(res.status).toEqual(401);
       expect(res.body.error).not.toEqual(undefined);
     });
 
-    it('should throw an error getting a word with invalid API key', async () => {
+    it('throw an error getting a word with invalid API key', async () => {
       const res = await getWord(wordId, {}, { apiKey: 'invalid key' });
       expect(res.status).toEqual(401);
       expect(res.body.error).not.toEqual(undefined);
     });
 
-    it('should throw an error getting examples with invalid API key', async () => {
+    it('throw an error getting examples with invalid API key', async () => {
       const res = await getExamples({}, { apiKey: 'invalid key' });
       expect(res.status).toEqual(401);
       expect(res.body.error).not.toEqual(undefined);
     });
 
-    it('should throw an error getting an example with invalid API key', async () => {
+    it('throw an error getting an example with invalid API key', async () => {
       const res = await getExample(exampleId, {}, { apiKey: 'invalid key' });
       expect(res.status).toEqual(401);
       expect(res.body.error).not.toEqual(undefined);
     });
 
-    it('should throw no error getting examples with mismatching origin', async () => {
+    it('throw no error getting examples with mismatching origin', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       const res = await getExamples({}, { apiKey: developerRes.body.apiKey, origin: 'invalid' });
       expect(res.status).toEqual(200);
     });
 
-    it('should increase the count by maxing usage limit', async () => {
+    it('increase the count by maxing usage limit', async () => {
       const developerRes = await createDeveloper(developerData);
       expect(developerRes.status).toEqual(200);
       const wordsRes = await getWords({ keyword: 'eat' }, {});
