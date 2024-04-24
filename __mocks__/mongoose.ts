@@ -4,7 +4,7 @@ export { Types, Schema, Document } from 'mongoose';
 export class Model {
   local = {};
   constructor(value: object) {
-    this.local = value;
+    this.local = { ...value, toJSON: () => value };
   }
 
   static find() {

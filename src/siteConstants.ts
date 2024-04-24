@@ -7,6 +7,9 @@ export const DICTIONARY_APP_URL = 'https://nkowaokwu.com';
 export const GITHUB_REPO = 'https://github.com/nkowaokwu/igbo_api';
 export const GITHUB_CONTRIBUTORS = 'https://api.github.com/repos/nkowaokwu/igbo_api/contributors';
 export const GITHUB_STARS = 'https://api.github.com/repos/nkowaokwu/igbo_api';
+export const SERVER_DOMAIN = window.location.host.includes('localhost')
+  ? 'http://localhost:8080'
+  : 'https://igboapi.com';
 
 // Social media
 export const TWITTER = 'https://twitter.com/nkowaokwu';

@@ -14,6 +14,9 @@ class Stripe {
       create: jest.fn(() => ({ url: 'portal_session_url' })),
     },
   };
+  webhooks = {
+    constructEvent: jest.fn(() => ({ object: {} })),
+  };
 
   constructor(apiKey: string) {
     this.apiKey = apiKey;
