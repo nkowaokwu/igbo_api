@@ -4,6 +4,14 @@ import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
 import { Developer } from './developer';
 
+export type StripeBody = {
+  email?: string,
+  password?: string,
+  name?: string,
+  lookupKey?: string,
+  developerId?: string,
+};
+
 export type Query = {
   dialects: string,
   examples: string,
@@ -27,6 +35,7 @@ export interface IgboAPIRequest extends ExpressRequest {
   user?: DecodedIdToken;
   developer?: Developer;
   params: { [key: string]: string };
+  body: ExpressRequest['body'] & StripeBody;
 }
 
 export interface MiddleWare {

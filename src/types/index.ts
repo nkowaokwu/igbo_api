@@ -1,5 +1,5 @@
 export type { MiddleWare, IgboAPIRequest, Query } from './express';
-export type { Developer, DeveloperDocument } from './developer';
+export type { Developer, DeveloperDocument, DeveloperResponse } from './developer';
 export type { Example, ExampleDocument } from './example';
 export type { Stat } from './stat';
 export type { Word, LegacyWord, WordDocument, LegacyWordDocument, Definition } from './word';
