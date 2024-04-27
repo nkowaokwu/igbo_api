@@ -1,4 +1,4 @@
 import { atom } from 'jotai';
-import { Developer } from '../../types';
+import { DeveloperResponse } from '../../types';
 
-export const developerAtom = atom<Developer | undefined>(undefined);
+export const developerAtom = atom<DeveloperResponse | undefined>(undefined);

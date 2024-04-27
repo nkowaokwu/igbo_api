@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import axiosBase, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { auth } from '../../services/firebase';
-import { Developer } from '../../types';
+import { Developer, DeveloperResponse } from '../../types';
 import isProduction from '../utils/isProduction';
 
 const API_ROUTE = !isProduction() ? 'http://localhost:8080' : 'https://igboapi.com';
@@ -62,8 +62,8 @@ export const putDeveloper = async (user: Partial<User>) => {
   return res.data;
 };
 
-export const getDeveloper = async (firebaseId: string): Promise<Developer> => {
-  const res = await axios<Developer>({
+export const getDeveloper = async (firebaseId: string): Promise<DeveloperResponse> => {
+  const res = await axios<DeveloperResponse>({
     method: 'GET',
     url: `/api/v1/developers/${firebaseId}`,
   });

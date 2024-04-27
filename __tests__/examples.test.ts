@@ -10,6 +10,8 @@ import {
 import { expectUniqSetsOfResponses } from './shared/utils';
 import ExampleStyleEnum from '../src/shared/constants/ExampleStyleEnum';
 
+jest.unmock('mongoose');
+
 describe('MongoDB Examples', () => {
   describe('/GET mongodb examples V1', () => {
     it('should return no examples by searching', async () => {

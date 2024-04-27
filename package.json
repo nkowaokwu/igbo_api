@@ -19,7 +19,7 @@
     "start:emulators": "node_modules/.bin/firebase emulators:start --only functions,hosting,auth",
     "start:watch": "nodemon --watch './src' --ext ts,js,tsx,jsx --ignore './functions' --verbose --exec npm run build:src",
     "clean": "shx rm -rf node_modules/ dist/ out/ yarn.lock package-lock.json *.log",
-    "kill:project": "fkill :5005 :8085 :8080 :8088 -fs",
+    "kill:project": "fkill :5005 :8085 :8080 :8081 :8088 -fs",
     "predev": "firebase functions:config:set runtime.env=development && firebase use staging",
     "dev": "npm-run-all -p start:watch start:emulators start:database",
     "predev:full": "firebase functions:config:set env.redis_url=redis://localhost:6379 env.replica_set=true env.redis_status=true",

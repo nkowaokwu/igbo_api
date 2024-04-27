@@ -12,7 +12,7 @@ describe('NavigationMenu', () => {
     );
 
     await findByText('Features');
-    await findByText('About');
+    await findByText('Pricing');
     await findByText('Docs');
     await findByText('Sign Up');
   });

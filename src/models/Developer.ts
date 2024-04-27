@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 import Plan from '../shared/constants/Plan';
+import AccountStatus from '../shared/constants/AccountStatus';
 
 const { Schema } = mongoose;
 export const developerSchema = new Schema(
@@ -21,6 +22,11 @@ export const developerSchema = new Schema(
     firebaseId: { type: String, default: '' },
     stripeId: { type: String, default: '' },
     plan: { type: String, enum: Object.values(Plan), default: Plan.STARTER },
+    accountStatus: {
+      type: String,
+      enum: Object.values(AccountStatus),
+      default: AccountStatus.UNPAID,
+    },
   },
   { toObject: toObjectPlugin, timestamps: true }
 );

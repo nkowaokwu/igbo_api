@@ -7,7 +7,8 @@ import { DeveloperDocument, MiddleWare } from '../types';
 const PROD_LIMIT = 2500;
 const FALLBACK_API_KEY = 'fallback_api_key';
 
-const determineLimit = (apiLimit = '') => (isTest ? parseInt(apiLimit, 10) || PROD_LIMIT : PROD_LIMIT);
+const determineLimit = (apiLimit = '') =>
+  isTest ? parseInt(apiLimit, 10) || PROD_LIMIT : PROD_LIMIT;
 
 const isSameDate = (first: Date, second: Date) =>
   first.getFullYear() === second.getFullYear() &&

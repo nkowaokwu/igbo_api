@@ -10,13 +10,12 @@ import {
   postDeveloperHelper,
   putDeveloper,
 } from '../../developers';
-import { Model } from '../../../../__mocks__/mongoose';
 import Plan from '../../../shared/constants/Plan';
 
 class Developer {
   local = {};
   constructor(value: object) {
-    this.local = { ...value, plan: Plan.STARTER };
+    this.local = { ...value, plan: Plan.STARTER, toJSON: () => value };
   }
 
   static find() {
@@ -26,17 +25,17 @@ class Developer {
   static findOne() {}
 
   save() {
-    return this.local;
+    return { ...this.local, toJSON: () => this.local };
   }
 }
 
 describe('developers', () => {
   it('helps post a new developer', async () => {
-    const userData = { email: 'email', password: 'password', name: 'name' };
+    const data = { email: 'email', password: 'password', name: 'name' };
     const res = await postDeveloperHelper({
       // @ts-expect-error Developer
       Developer,
-      userData,
+      data,
     });
 
     expect(res.name).toEqual('name');
@@ -51,11 +50,11 @@ describe('developers', () => {
     const req = requestFixture({ body: userData });
     const res = responseFixture();
     const next = nextFunctionFixture();
-    // @ts-expect-error Args
     await postDeveloper(req, res, next);
     expect(res.send).toHaveBeenCalledWith({
       message: 'Success email sent to email',
       apiKey: 'generated-uuid',
+      id: 'static',
     });
   });
 
@@ -64,11 +63,11 @@ describe('developers', () => {
     const req = requestFixture({ body: userData });
     const res = responseFixture();
     const next = nextFunctionFixture();
-    // @ts-expect-error Args
     await putDeveloper(req, res, next);
     expect(res.send).toHaveBeenCalledWith({
       message: 'Saved Developer account',
       developer: {
+        id: 'static',
         type: 'static',
       },
     });
@@ -79,13 +78,12 @@ describe('developers', () => {
     const req = requestFixture({ body: userData, params: { id: '6596b5d786c9fa24816fe294' } });
     const res = responseFixture();
     const next = nextFunctionFixture();
-    // @ts-expect-error Args
     await getDeveloper(req, res, next);
     expect(res.send).toHaveBeenCalled();
   });
 
   it('gets developer by firebase id', async () => {
     const firebaseId = 'firebaseId';
-    expect(await getDeveloperByFirebaseId(firebaseId)).toEqual({ type: 'static' });
+    expect(await getDeveloperByFirebaseId(firebaseId)).toEqual({ id: 'static', type: 'static' });
   });
 });

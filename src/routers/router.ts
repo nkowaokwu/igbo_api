@@ -13,6 +13,7 @@ import validateAdminApiKey from '../middleware/validateAdminApiKey';
 import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
 import developerAuthorization from '../middleware/developerAuthorization';
+import testRouter from './testRouter';
 
 const router = Router();
 
@@ -36,5 +37,10 @@ router.post('/developers', developerRateLimiter, validateDeveloperBody, postDeve
 router.put('/developers', developerRateLimiter, validateUpdateDeveloperBody, putDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
+
+/* Grabs data from JSON dictionary */
+if (process.env.NODE_ENV !== 'production') {
+  router.use('/test', testRouter);
+}
 
 export default router;

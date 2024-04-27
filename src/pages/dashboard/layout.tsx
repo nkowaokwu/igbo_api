@@ -7,9 +7,31 @@ import DashboardSideMenu from './components/DashboardSideMenu';
 import { getDeveloper } from '../APIs/DevelopersAPI';
 import { auth } from '../../services/firebase';
 import { developerAtom } from '../atoms/dashboard';
-import { Developer } from '../../types';
+import { DeveloperResponse } from '../../types';
+import Plan from '../../shared/constants/Plan';
+import AccountStatus from '../../shared/constants/AccountStatus';
 
-const DashboardLayout = ({ children }: { children: ({ developer } : { developer: Developer}) => any }) => {
+export const DEFAULT_DEVELOPER = {
+  id: '',
+  name: 'developer',
+  apiKey: 'apiKey',
+  email: 'email',
+  password: 'password',
+  stripeId: 'stripeId',
+  firebaseId: 'firebaseId',
+  plan: Plan.STARTER,
+  accountStatus: AccountStatus.UNPAID,
+  usage: {
+    data: new Date(),
+    count: 0,
+  },
+};
+
+const DashboardLayout = ({
+  children,
+}: {
+  children: (arg: { developer: DeveloperResponse }) => JSX.Element,
+}) => {
   const [developer, setDeveloper] = useAtom(developerAtom);
 
   if (auth.currentUser && !developer) {

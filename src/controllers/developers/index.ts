@@ -1,9 +1,9 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { Document, Model, Types } from 'mongoose';
+import { Document, FilterQuery, Types } from 'mongoose';
 import { isProduction, CLIENT_TEST, isTest } from '../../config';
 import { developerSchema } from '../../models/Developer';
-import { createDbConnection, handleCloseConnection } from '../../services/database';
+import { createDbConnection } from '../../services/database';
 import { Developer as DeveloperType, MiddleWare } from '../../types';
 import { sendNewDeveloper } from '../email';
 
@@ -18,13 +18,14 @@ type DeveloperDocument = Document<unknown, any, DeveloperType> &
   Omit<DeveloperType & { _id: Types.ObjectId }, never>;
 
 export const postDeveloperHelper = async ({
-  Developer,
-  userData,
+  data,
 }: {
-  Developer: Model<DeveloperType>,
-  userData: { email: string, password: string, name: string },
+  data: { email: string, password: string, name: string },
 }): Promise<DeveloperDocument> => {
-  const { email, password, name } = userData;
+  const connection = createDbConnection();
+  const Developer = connection.model<DeveloperType>('Developer', developerSchema);
+
+  const { email, password, name } = data;
   const developers = await Developer.find({ email });
   if (developers.length && email !== TEST_EMAIL) {
     throw new Error('This email is already used.');
@@ -42,18 +43,49 @@ export const postDeveloperHelper = async ({
     apiKey,
     password: hashedPassword,
   });
-  return developer.save();
+
+  const savedDeveloper = developer.save();
+
+  return savedDeveloper;
+};
+
+export const putDeveloperHelper = async ({
+  query,
+  data,
+}: {
+  query: FilterQuery<DeveloperType>,
+  data: Partial<DeveloperType>,
+}) => {
+  const connection = createDbConnection();
+  const Developer = connection.model<DeveloperType>('Developer', developerSchema);
+
+  let developer = await Developer.findOne(query);
+  if (!developer && data.email && data.name) {
+    const defaultData = { email: data.email, password: DEFAULT_PASSWORD, name: data.name };
+    developer = await postDeveloperHelper({ data: defaultData });
+  }
+
+  if (!developer) {
+    throw new Error('No developer to update');
+  }
+
+  Object.entries(data).forEach(([key, value]) => {
+    // @ts-expect-error developer can be null
+    developer[key] = value;
+  });
+
+  const savedDeveloper = await developer.save();
+  return { message: 'Saved Developer account', developer: savedDeveloper.toJSON() };
 };
 
 /* Creates a new Developer in the database */
 export const postDeveloper: MiddleWare = async (req, res, next) => {
-  const connection = createDbConnection();
-  const Developer = connection.model<DeveloperType>('Developer', developerSchema);
   try {
-    const { body: data } = req;
-    const { email, password, name } = data;
-    const userData = { email, password, name };
-    const developer = await postDeveloperHelper({ Developer, userData });
+    const {
+      body: { email, password, name },
+    } = req;
+    const data = { email, password, name };
+    const developer = await postDeveloperHelper({ data });
 
     if (!isTest) {
       try {
@@ -62,13 +94,13 @@ export const postDeveloper: MiddleWare = async (req, res, next) => {
         console.error(err?.response?.body?.errors);
       }
     }
-    await handleCloseConnection(connection);
+
     return res.send({
       message: `Success email sent to ${email}`,
       apiKey: developer.apiKey,
+      id: developer.id,
     });
   } catch (err) {
-    await handleCloseConnection(connection);
     if (!isTest) {
       console.error(err);
     }
@@ -78,19 +110,10 @@ export const postDeveloper: MiddleWare = async (req, res, next) => {
 
 /** Updates an existing Developer in the database */
 export const putDeveloper: MiddleWare = async (req, res, next) => {
-  const connection = createDbConnection();
-  const Developer = connection.model<DeveloperType>('Developer', developerSchema);
-  const { firebaseId, email, displayName } = req.body;
+  const { id } = req.params;
 
   try {
-    let developer = await Developer.findOne({ $or: [{ firebaseId }, { email }] });
-    if (!developer) {
-      const userData = { email, password: DEFAULT_PASSWORD, name: displayName };
-      developer = await postDeveloperHelper({ Developer, userData });
-    }
-    developer.firebaseId = firebaseId;
-    const savedDeveloper = await developer.save();
-    return res.send({ message: 'Saved Developer account', developer: savedDeveloper });
+    return res.send(await putDeveloperHelper({ query: { _id: id }, data: req.body }));
   } catch (err) {
     return next(err);
   }

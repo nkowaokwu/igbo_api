@@ -98,3 +98,8 @@ export const REDIS_CACHE_EXPIRATION = 604800;
 
 // GitHub
 export const GITHUB_STATS_TOKEN = config?.github?.stats_token;
+
+// Stripe
+export const STRIPE_SECRET_KEY =
+  config?.env?.stripe_secret_key || 'sk_test_hpwuITjteocLizB8Afq7H3cV00FEEViC1s';
+export const STRIPE_ENDPOINT_SECRET = config?.env?.stripe_endpoint_secret || 'local_endpoint';

@@ -5,6 +5,7 @@ import { Example, Word } from '../../src/types';
 import { WordDialect } from '../../src/types/word';
 import { Flags } from '../../src/controllers/utils/types';
 import { capitalize } from 'lodash';
+import { NextFunction, Request, Response } from 'express';
 
 interface RequestOptions {
   noAuthorizationHeader?: boolean;
@@ -76,17 +77,19 @@ export const requestFixture = (
     headers?: { [key: string]: string },
   } = {},
   options?: RequestOptions
-) => ({
+): Request => ({
   body,
   params,
   headers,
   query: {},
+  // @ts-expect-error get
   get: (header: string) => headers[header] || headers[capitalize(header)],
 });
 export const statusSendMock = jest.fn();
-export const responseFixture = () => ({
+export const responseFixture = (): Response => ({
+  // @ts-expect-error status
   status: jest.fn(() => ({ send: statusSendMock })),
   send: jest.fn(),
   redirect: jest.fn(),
 });
-export const nextFunctionFixture = () => jest.fn();
+export const nextFunctionFixture = (): NextFunction => jest.fn();

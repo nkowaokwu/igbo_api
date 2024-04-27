@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
 export { Types, Schema, Document } from 'mongoose';
+import Plan from '../src/shared/constants/Plan';
 
 export class Model {
   local = {};
   constructor(value: object) {
-    this.local = { ...value, toJSON: () => value };
+    this.local = { ...value, toJSON: () => value, id: 'static', plan: Plan.STARTER };
   }
 
   static find() {
@@ -13,14 +14,22 @@ export class Model {
 
   static findOne() {
     return {
+      id: 'static',
       type: 'static',
-      toJSON: () => ({ type: 'static' }),
-      save: () => ({ type: 'static' }),
+      toJSON: () => ({ id: 'static', type: 'static' }),
+      save: () => ({
+        id: 'static',
+        type: 'static',
+        toJSON: () => ({
+          id: 'static',
+          type: 'static',
+        }),
+      }),
     };
   }
 
   save() {
-    return { ...this.local, save: () => this.local };
+    return { ...this.local, save: () => ({ ...this.local, toJSON: () => this.local }) };
   }
 }
 

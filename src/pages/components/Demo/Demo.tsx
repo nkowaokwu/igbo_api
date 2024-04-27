@@ -108,7 +108,12 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
               size="large"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
               onKeyPress={onEnter}
-              className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
+              className="w-full border-gray-600"
+              height={12}
+              borderRadius="10px"
+              borderWidth="2px"
+              py={5}
+              px={3}
               placeholder="⌨️ i.e. please or biko"
               data-test="try-it-out-input"
               defaultValue={searchWord || initialQueries.word}
@@ -138,7 +143,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
                 </Checkbox>
               </Box>
             </Box>
-            <Code userSelect="none" className="w-full py-3 px-5" wordBreak="break-all">
+            <Code userSelect="none" className="w-full" p={3} wordBreak="break-all">
               {constructRequestUrl()}
             </Code>
             <Button
