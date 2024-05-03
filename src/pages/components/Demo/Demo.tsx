@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import queryString from 'query-string';
@@ -18,6 +18,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
     word?: string,
   }>({});
   const [productionUrl, setProductionUrl] = useState('');
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,7 +29,9 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
       setQueries(omit(loadedInitialQueries, ['word']));
       setKeyword(loadedInitialQueries?.word);
       if (keyword || loadedInitialQueries.word) {
-        window.location.hash = 'try-it-out';
+        if (headingRef.current) {
+          headingRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -81,6 +84,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
     <Box className="flex flex-col items-center space-y-12">
       <Box className="flex flex-col items-center">
         <Heading
+          ref={headingRef}
           as="h2"
           id="try-it-out"
           className="text-4xl text-blue-500 font-bold"

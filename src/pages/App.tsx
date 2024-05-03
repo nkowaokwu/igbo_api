@@ -31,23 +31,29 @@ const App = ({
       <Box className="flex flex-col items-center space-y-44">
         <Box
           className="relative flex flex-col justify-center items-center 
-        w-full md:w-10/12 xl:w-6/12 md:mt-64 lg:my-32 space-y-4"
+          w-full xl:w-6/12 mt-32 md:mt-64 lg:my-32 space-y-4"
+          zIndex={-1}
         >
           <FadeIn>
-            <Heading as="h1" className="text-center lg:mt-24" width="full" fontSize="6xl">
+            <Heading
+              as="h1"
+              className="text-center lg:mt-24 z-1"
+              width="full"
+              fontSize={['5xl', '6xl']}
+            >
               The First African Language API
             </Heading>
           </FadeIn>
           <Box className="text-xl md:text-xl w-full mb-4 mt-8 leading-10">
             <FadeIn>
               <Box className="w-full flex flex-col items-center">
-                <Text className="px-6 lg:px-0 text-center text-gray-500 w-10/12">
+                <Text className="text-center text-gray-500 w-10/12">
                   Access thousands of Igbo words, audio pronunciations, and example sentences to
                   power the future of Igbo technology.
                 </Text>
               </Box>
               <br />
-              <Box className="w-full flex flex-col md:flex-row justify-center items-center md:space-x-4">
+              <Box className="w-full flex flex-row justify-center items-center space-x-4">
                 <TryItOut />
                 <GitHubStars stars={gitHubStats.stars} />
               </Box>

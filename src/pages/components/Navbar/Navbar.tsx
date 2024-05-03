@@ -9,7 +9,7 @@ const Navbar = ({ to = '/' }: { to?: string }) => (
   <Box className="fixed w-full flex justify-center items-center">
     <Box
       className={`flex items-center justify-between w-10/12 p-2 px-4 
-      backdrop-blur-md select-none w-8/12`}
+      backdrop-blur-md select-none`}
       style={{ zIndex: 2 }}
       borderColor="gray.300"
       borderWidth="1px"
