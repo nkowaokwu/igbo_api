@@ -4,7 +4,7 @@ import { MiddleWare } from '../types';
 const developersJoiSchema = Joi.object().keys({
   firebaseId: Joi.string().required(),
   email: Joi.string().allow('', null).optional(),
-  displayName: Joi.string().allow('', null).optional(),
+  name: Joi.string().allow('', null).optional(),
 });
 
 const validateUpdateDeveloperBody: MiddleWare = (req, res, next) => {

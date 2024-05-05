@@ -55,7 +55,7 @@ export const putDeveloper = async (user: Partial<User>) => {
     data: {
       firebaseId: user.uid,
       email: user.email,
-      displayName: user.displayName,
+      name: user.displayName,
     },
   });
 

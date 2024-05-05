@@ -59,7 +59,7 @@ describe('developers', () => {
   });
 
   it('puts a developer', async () => {
-    const userData = { email: 'email', firebaseId: 'firebaseId', displayName: 'name' };
+    const userData = { email: 'email', firebaseId: 'firebaseId', name: 'name' };
     const req = requestFixture({ body: userData });
     const res = responseFixture();
     const next = nextFunctionFixture();
