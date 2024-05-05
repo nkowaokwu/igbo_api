@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, SlideFade } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
+import Error from './error';
 import DashboardMenu from './components/DashboardMenu';
 import AuthManager from '../managers/AuthManager';
 import DashboardNavigationMenu from './components/DashboardNavigationMenu';
@@ -49,7 +50,7 @@ const DashboardLayout = ({
         </Box>
         <AuthManager>
           <SlideFade in offsetX="-20px" offsetY="0px" className="w-full h-full p-4">
-            {developer ? children({ developer }) : null}
+            {developer ? children({ developer }) : <Error />}
           </SlideFade>
         </AuthManager>
       </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as functions from 'firebase-functions';
 import './shared/utils/wrapConsole';
 
@@ -58,6 +59,7 @@ export const MONGO_URI = isTestingEnvironment
     ? LOCAL_MONGO_URI.concat(QUERIES)
     : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
 export const FIREBASE_CONFIG = config?.env?.firebase_config; // Provide your own Firebase Config
+export const FIREBASE_SERVICE_ACCOUNT = config?.env?.firebase_service_account; // Provide your own Firebase Service Account
 export const CLIENT_TEST = config?.env?.client_test;
 
 export const CORS_CONFIG = {
