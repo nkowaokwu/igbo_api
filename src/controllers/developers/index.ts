@@ -114,7 +114,12 @@ export const putDeveloper: MiddleWare = async (req, res, next) => {
 
   try {
     return res.send(await putDeveloperHelper({ query: { _id: id }, data: req.body }));
-  } catch (err) {
+  } catch (err: any) {
+    // TODO: write test to make sure that when there's no developer, the postDeveloper method
+    // gets called
+    if (err.message === 'No developer to update') {
+      return postDeveloper(req, res, next);
+    }
     return next(err);
   }
 };
