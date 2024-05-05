@@ -41,14 +41,14 @@ const DashboardLayout = ({
   }
 
   return (
-    <Box className="flex flex-row overflow-y-hidden	overflow-x-hidden w-full">
+    <Box className="flex flex-row overflow-y-hidden	overflow-x-hidden w-full h-screen bg-gray-100">
       <Box className="w-full">
-        <Box className="w-full p-2" borderBottomColor="gray.200" borderBottomWidth="1px">
+        <Box className="w-full p-2 bg-white" borderBottomColor="gray.200" borderBottomWidth="1px">
           <DashboardMenu />
           <DashboardNavigationMenu />
         </Box>
         <AuthManager>
-          <SlideFade in offsetX="-20px" offsetY="0px" className="w-full p-4">
+          <SlideFade in offsetX="-20px" offsetY="0px" className="w-full h-full p-4">
             {developer ? children({ developer }) : null}
           </SlideFade>
         </AuthManager>

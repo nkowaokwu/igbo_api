@@ -53,14 +53,12 @@ const DashboardNavigationMenu = () => {
   return (
     <Box className="w-full">
       <Box className="relative">
-        <Box
-          ref={setNavigationHoverSlider}
-          className="absolute transition-all bg-gray-200 rounded"
-          height={10}
-          zIndex={-1}
-        />
-        <Box className="absolute transition-all bg-black" height="3px" bottom="0" />
-        <UnorderedList listStyleType="none" m={0} className="flex flex-row items-center">
+        <UnorderedList
+          listStyleType="none"
+          m={0}
+          className="flex flex-row items-center relative"
+          zIndex={1}
+        >
           {navigationOptions.map(({ label, route }, index) => (
             <ListItem
               key={label}
@@ -84,6 +82,14 @@ const DashboardNavigationMenu = () => {
             </ListItem>
           ))}
         </UnorderedList>
+        <Box
+          ref={setNavigationHoverSlider}
+          className="absolute transition-all bg-gray-200 rounded"
+          pointerEvents="none"
+          height={10}
+          top={0}
+          zIndex={0}
+        />
       </Box>
     </Box>
   );
