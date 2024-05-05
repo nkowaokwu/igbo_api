@@ -1,7 +1,15 @@
 import React from 'react';
-import { Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
+} from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
 import { auth } from '../../../services/firebase';
@@ -17,28 +25,38 @@ const DashboardMenu = () => {
     }
   };
   return (
-    <Menu>
-      <MenuButton
-        as={Button}
-        rightIcon={<ChevronDownIcon />}
-        borderColor="gray.200"
-        borderWidth="2px"
-        backgroundColor="white"
-        _hover={{
-          backgroundColor: 'gray.100',
-        }}
-        _active={{
-          backgroundColor: 'gray.100',
-        }}
+    <Box className="flex flex-row justify-between items-center px-2">
+      <Heading
+        as="h1"
+        m={0}
+        p={0}
+        fontSize="lg"
+        height="fit"
+        color="black"
+        display="flex"
+        alignItems="center"
+        className="space-x-2"
       >
-        Actions
-      </MenuButton>
-      <MenuList>
-        <MenuItem onClick={logOut} icon={<FiLogOut />}>
-          Log out
-        </MenuItem>
-      </MenuList>
-    </Menu>
+        IgboAPI
+      </Heading>
+      <Menu>
+        <MenuButton
+          as={Button}
+          px={0}
+          backgroundColor="transparent"
+          _hover={{ backgroundColor: 'transparent' }}
+          _active={{ backgroundColor: 'transparent' }}
+          _focus={{ backgroundColor: 'transparent' }}
+        >
+          <Avatar bgGradient="linear(to-br, yellow.200, orange.500)" size="sm" icon={<> </>} />
+        </MenuButton>
+        <MenuList>
+          <MenuItem onClick={logOut} icon={<FiLogOut />}>
+            Log out
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    </Box>
   );
 };
 export default DashboardMenu;

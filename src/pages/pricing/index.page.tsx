@@ -23,7 +23,12 @@ const pricingTiers: PricingTier[] = [
     description: 'Built for startups and larger organizations looking to scale their services.',
     callToAction: 'Sign in to upgrade',
     navigation: '/dashboard',
-    features: ['first', 'second', 'third', 'fourth'],
+    features: [
+      'Igbo API v2',
+      'Resolvable data',
+      'Beta access to IgboSpeech',
+      'Beta access to Igbo OCR',
+    ],
   },
 ];
 
