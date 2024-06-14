@@ -10,13 +10,13 @@ if (!fs.existsSync(mocksDir)) {
 
 describe('Parse', () => {
   describe('Dictionaries', () => {
-    it('should create dictionaries', async () => {
+    it('create dictionaries', async () => {
       await import('../src/dictionaries/buildDictionaries').catch((err) => {
         throw err;
       });
     });
 
-    it('should keep same-cell text in the definition property', async () => {
+    it('keep same-cell text in the definition property', async () => {
       const keyword = 'ama';
       const res = await searchTerm(keyword);
       expect(res.status).toEqual(200);
@@ -25,7 +25,7 @@ describe('Parse', () => {
       expect(res.body[keyword][0].examples).toHaveLength(1);
     });
 
-    it('should include the correct A. B. text for ewu chī', async () => {
+    it('include the correct A. B. text for ewu chī', async () => {
       const keyword = 'chi';
       const {
         body: { chi: res },
@@ -34,7 +34,7 @@ describe('Parse', () => {
       expect(termDefinitions.length).toBeGreaterThanOrEqual(2);
     });
 
-    it('should include all words -kwù-', async () => {
+    it('include all words -kwù-', async () => {
       const keyword = '-kwù-';
       const res = await searchTerm(keyword);
       expect(res.status).toEqual(200);
@@ -44,29 +44,29 @@ describe('Parse', () => {
 
   describe('Utils', () => {
     describe('Regex Search', () => {
-      it('should return term information without included dashes', async () => {
+      it('return term information without included dashes', async () => {
         const res = searchMockedTerm('bia');
         keys(res).forEach((key) => {
           expect(key.charAt(0)).toEqual('b');
         });
       });
 
-      it('should return term with apostrophe by using spaces', async () => {
+      it('return term with apostrophe by using spaces', async () => {
         const res = searchMockedTerm('n oge');
         expect(keys(res)[0]).toEqual("n'oge");
       });
 
-      it('should return term with space with non word characters', async () => {
+      it('return term with space with non word characters', async () => {
         const res = searchMockedTerm('n oge');
         expect(keys(res)[0]).toEqual("n'oge");
       });
 
-      it('should return term with apostrophe by using apostrophe', async () => {
+      it('return term with apostrophe by using apostrophe', async () => {
         const res = searchMockedTerm('ànì');
         expect(keys(res)[0]).toEqual('ànì');
       });
 
-      it('should return all matching terms', async () => {
+      it('return all matching terms', async () => {
         const keyword = 'be';
         const res = await searchTerm(keyword);
         expect(res.status).toEqual(200);
@@ -75,7 +75,7 @@ describe('Parse', () => {
     });
 
     describe('Abbreviations', () => {
-      it('should replace all present valid abbreviations', async () => {
+      it('replace all present valid abbreviations', async () => {
         const withAbbreviations = 'n. noun. num. num.eral aux. v. aux.v. infl. suff.';
         const withoutAbbreviations = replaceAbbreviations(withAbbreviations);
         expect(withoutAbbreviations).toEqual(
