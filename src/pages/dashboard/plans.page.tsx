@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Heading, Link, Text, chakra } from '@chakra-ui/react';
+import { Box, Heading, Link, Text, chakra } from '@chakra-ui/react';
 import { capitalize } from 'lodash';
 import DashboardLayout from './layout';
 import Plan from '../../shared/constants/Plan';
