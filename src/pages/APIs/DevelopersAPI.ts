@@ -4,13 +4,13 @@ import { auth } from '../../services/firebase';
 import { Developer, DeveloperResponse } from '../../types';
 import isProduction from '../utils/isProduction';
 
-const API_ROUTE = !isProduction() ? 'http://localhost:8080' : 'https://igboapi.com';
+const API_ROUTE = !isProduction()
+  ? 'http://localhost:8080/igbo-api-staging-99a67/us-central1/api'
+  : 'https://igboapi.com';
 
 export const createAuthorizationHeader = async (): Promise<string> => {
   const { currentUser } = auth;
-  const accessToken = currentUser
-    ? await currentUser.getIdToken()
-    : localStorage.getItem('igbo-api-admin-access') || '';
+  const accessToken = (await currentUser?.getIdToken?.()) || '';
   return `Bearer ${accessToken}`;
 };
 

@@ -69,7 +69,7 @@ const categories = [
 const Footer = () => (
   <Box className="flex flex-col justify-center items-center w-full">
     <Box className="w-full bg-gray-100" style={{ height: '1px' }} />
-    <footer className="w-9/12 grid grid-cols-5 bg-gradient-to-t py-16">
+    <footer className="w-9/12 grid grid-cols-1 lg:grid-cols-5 bg-gradient-to-t py-16 space-y-8 lg:space-y-0">
       <Box className="flex flex-row items-start">
         <Link href="/">
           <Heading fontSize="2xl" pb="0" textAlign="left">

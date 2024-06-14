@@ -18,7 +18,7 @@ import { MiddleWare, LegacyWord, WordDocument } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
-const IGNORE_ENGLISH_WORDS = ['ego'];
+const IGNORE_ENGLISH_WORDS = ['ego', 'la'];
 
 /* Gets words from JSON dictionary */
 export const getWordData: MiddleWare = (req, res, next) => {

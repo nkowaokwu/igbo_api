@@ -88,7 +88,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
           as="h2"
           id="try-it-out"
           className="text-4xl text-blue-500 font-bold"
-          fontSize="6xl"
+          fontSize={{ base: '5xl', lg: '6xl' }}
         >
           Test Drive the API
         </Heading>

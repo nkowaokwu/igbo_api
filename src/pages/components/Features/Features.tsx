@@ -5,7 +5,7 @@ import Card from '../Card';
 const Features = () => (
   <Box>
     <Box className="w-full flex flex-col items-center lg:text-left my-6 space-y-4">
-      <Heading as="h2" id="features" fontSize="6xl" className="font-bold">
+      <Heading as="h2" id="features" fontSize={{ base: '5xl', lg: '6xl' }} className="font-bold">
         Build Igbo Apps
       </Heading>
       <Text className="text-xl px-6 lg:px-0 text-gray-500">

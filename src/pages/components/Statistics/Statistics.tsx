@@ -18,7 +18,13 @@ const Statistics = ({
   const totalSlackMembers = 320;
   return (
     <Box className="flex flex-col items-center justify-center w-full">
-      <Heading as="h2" id="try-it-out" className="text-4xl font-bold" fontSize="6xl">
+      <Heading
+        as="h2"
+        id="try-it-out"
+        className="text-4xl font-bold"
+        textAlign="center"
+        fontSize={{ base: '5xl', lg: '6xl' }}
+      >
         Crunching the Numbers
       </Heading>
       <Text className="px-6 lg:px-0 lg:pb-12 text-gray-500">

@@ -65,7 +65,11 @@ const App = ({
         <Demo searchWord={searchWord} words={words} />
         <Statistics {...databaseStats} {...gitHubStats} />
         <Box className="flex flex-col justify-center items-center" pb="44">
-          <Heading as="h2" className="text-2xl text-center items-center p-5" fontSize="6xl">
+          <Heading
+            as="h2"
+            className="text-2xl text-center items-center p-5"
+            fontSize={{ base: '5xl', lg: '6xl' }}
+          >
             Start Building Today
           </Heading>
           <Button
