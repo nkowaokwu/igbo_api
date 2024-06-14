@@ -3,10 +3,11 @@ export const navigationLinks: { href: string, label: string }[] = [
     href: '#features',
     label: 'Features',
   },
-  {
-    href: '/pricing',
-    label: 'Pricing',
-  },
+  // TODO: uncomment when pricing is available
+  // {
+  //   href: '/pricing',
+  //   label: 'Pricing',
+  // },
   {
     href: '/docs',
     label: 'Docs',

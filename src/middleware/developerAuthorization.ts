@@ -25,7 +25,7 @@ const developerAuthorization: MiddleWare = async (req, res, next) => {
 
     return next();
   } catch (err: any) {
-    return res.status(404).send({ error: err?.message || 'Unable to authorize request.' });
+    return res.status(403).send({ error: err?.message || 'Unable to authorize request.' });
   }
 };
 

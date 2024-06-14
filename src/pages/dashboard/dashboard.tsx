@@ -22,7 +22,14 @@ const Dashboard = () => (
             Your usage across all IgboAPI services.
           </Text>
         </Box>
-        <Stat borderColor="gray.200" borderWidth="1px" borderRadius="md" p={4} maxWidth="400px">
+        <Stat
+          borderColor="gray.200"
+          borderWidth="1px"
+          borderRadius="md"
+          p={4}
+          maxWidth="400px"
+          backgroundColor="white"
+        >
           <>
             <Box className="flex flex-row justify-between items-center">
               <StatLabel>Daily IgboAPI Usage</StatLabel>

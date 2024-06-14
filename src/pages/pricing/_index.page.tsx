@@ -35,11 +35,14 @@ const pricingTiers: PricingTier[] = [
 const Pricing = () => (
   <Box>
     <Navbar />
-    <Box className="space-y-12 md:pt-64 lg:py-32">
+    <Box className="space-y-12 md:pt-64 lg:py-32 mb-12">
       <Heading as="h1" textAlign="center">
         Pricing
       </Heading>
-      <Box className="flex flex-row justify-center items-center space-x-14 w-full">
+      <Box
+        className="flex flex-col lg:flex-row justify-center items-center 
+      space-y-8 lg:space-y-0 lg:space-x-14 w-full"
+      >
         {pricingTiers.map((pricingTier) => (
           <PricingCard key={pricingTier.title} {...pricingTier} />
         ))}

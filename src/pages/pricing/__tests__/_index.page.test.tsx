@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import TestContext from '../../../__tests__/components/TestContext';
-import Pricing from '../index.page';
+import Pricing from '../_index.page';
 
 describe('Pricing', () => {
   it('renders the pricing page', async () => {

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, SlideFade } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Box, Skeleton, SlideFade } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Error from './error';
 import DashboardMenu from './components/DashboardMenu';
 import AuthManager from '../managers/AuthManager';
@@ -33,16 +34,22 @@ const DashboardLayout = ({
 }: {
   children: (arg: { developer: DeveloperResponse }) => JSX.Element,
 }) => {
+  const [user, isLoadingUser] = useAuthState(auth);
+  const [isLoadingDeveloper, setIsLoadingDeveloper] = useState(false);
   const [developer, setDeveloper] = useAtom(developerAtom);
 
-  if (auth.currentUser && !developer) {
-    getDeveloper(auth.currentUser.uid).then((fetchedDeveloper) => {
-      setDeveloper(fetchedDeveloper);
-    });
-  }
+  useEffect(() => {
+    if (user && !developer) {
+      setIsLoadingDeveloper(true);
+      getDeveloper(user.uid).then((fetchedDeveloper) => {
+        setDeveloper(fetchedDeveloper);
+        setIsLoadingDeveloper(false);
+      });
+    }
+  }, [user, developer, setDeveloper]);
 
   return (
-    <Box className="flex flex-row overflow-y-hidden	overflow-x-hidden w-full h-screen bg-gray-100">
+    <Box className="flex flex-row overflow-y-hidden	overflow-x-hidden w-full h-screen bg-gray-50">
       <Box className="w-full">
         <Box className="w-full p-2 bg-white" borderBottomColor="gray.200" borderBottomWidth="1px">
           <DashboardMenu />
@@ -50,7 +57,13 @@ const DashboardLayout = ({
         </Box>
         <AuthManager>
           <SlideFade in offsetX="-20px" offsetY="0px" className="w-full h-full p-4">
-            {developer ? children({ developer }) : <Error />}
+            {isLoadingUser || isLoadingDeveloper ? (
+              <Skeleton />
+            ) : developer ? (
+              children({ developer })
+            ) : (
+              <Error />
+            )}
           </SlideFade>
         </AuthManager>
       </Box>

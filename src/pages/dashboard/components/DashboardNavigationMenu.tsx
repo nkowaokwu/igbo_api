@@ -43,7 +43,7 @@ const DashboardNavigationMenu = () => {
       const hoveredTabPositions = getTabPositionsFromIndex(hoveredTabIndex);
 
       navigationHoverSlider.style.opacity = '1';
-      navigationHoverSlider.style.left = `${hoveredTabPositions.left - 7}px`;
+      navigationHoverSlider.style.left = `${hoveredTabPositions.left - 8}px`;
       navigationHoverSlider.style.width = `${hoveredTabPositions.width}px`;
     } else if (hoveredTabIndex === -1 && navigationHoverSlider) {
       navigationHoverSlider.style.opacity = '0';
@@ -52,7 +52,7 @@ const DashboardNavigationMenu = () => {
 
   return (
     <Box className="w-full">
-      <Box className="relative">
+      <Box className="relative" zIndex={0}>
         <UnorderedList
           listStyleType="none"
           m={0}
@@ -88,7 +88,7 @@ const DashboardNavigationMenu = () => {
           pointerEvents="none"
           height={10}
           top={0}
-          zIndex={0}
+          zIndex={-1}
         />
       </Box>
     </Box>

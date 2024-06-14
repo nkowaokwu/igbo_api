@@ -76,7 +76,7 @@ const SignUp = () => {
               </Heading>
               <Box mb="4">
                 <Text className="text-gray-600">
-                  Create an account to gain access to the Igbo API.
+                  Create an account to generate a developer token for the Igbo API.
                 </Text>
                 <Box className="flex space-x-1">
                   <Text className="text-gray-600" color="gray.500" fontSize="sm">

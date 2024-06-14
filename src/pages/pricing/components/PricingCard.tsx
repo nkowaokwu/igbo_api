@@ -39,7 +39,9 @@ const PricingCard = ({
         </Heading>
       </Box>
       <Text fontSize="md">{description}</Text>
-      <Button onClick={handleCallToAction}>{callToAction}</Button>
+      <Button onClick={handleCallToAction} zIndex={-1}>
+        {callToAction}
+      </Button>
       <Box>
         {features.map((feature) => (
           <Box key={feature} className="flex flex-row items-center space-x-2">

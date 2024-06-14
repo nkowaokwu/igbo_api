@@ -14,10 +14,12 @@ const adminApps = getAdminApps();
 let currentAdminApp;
 // Initialize Admin Firebase
 if (!adminApps.length) {
-  currentAdminApp = initializeAdminApp({
-    credential: admin.credential.cert(JSON.parse(FIREBASE_SERVICE_ACCOUNT)),
-    databaseURL,
-  });
+  currentAdminApp = isProduction
+    ? initializeAdminApp({
+        credential: admin.credential.cert(FIREBASE_SERVICE_ACCOUNT),
+        databaseURL,
+      })
+    : initializeAdminApp({ projectId: 'igbo-api-staging-99a67' });
 } else {
   currentAdminApp = getAdminApp();
 }

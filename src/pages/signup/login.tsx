@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Box, Button } from '@chakra-ui/react';
 import { auth } from '../../services/firebase';
 import getAWSAsset from '../utils/getAWSAsset';
-import { putDeveloper } from '../APIs/DevelopersAPI';
+import { getDeveloper, putDeveloper } from '../APIs/DevelopersAPI';
 
 const provider = new GoogleAuthProvider();
 
@@ -20,10 +20,13 @@ const Login = () => {
 
   const handleSignIn = async () => {
     const user = await signInWithGoogle();
-    if (user) {
+    try {
+      await putDeveloper(user);
+    } catch (err) {
+      await getDeveloper(user.uid);
+    } finally {
       router.push('/dashboard');
     }
-    await putDeveloper(user);
   };
   return (
     <Box>

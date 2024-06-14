@@ -31,7 +31,7 @@ const Credentials = () => {
               <Input
                 pointerEvents="none"
                 borderColor="gray.100"
-                backgroundColor="gray.50"
+                backgroundColor="white"
                 defaultValue={developer.apiKey}
                 type={isApiKeyVisible ? 'text' : 'password'}
               />

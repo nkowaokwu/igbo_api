@@ -22,7 +22,8 @@ const Plans = () => (
         <form action={`${SERVER_DOMAIN}/stripe/checkout`} method="POST">
           <input type="hidden" name="lookupKey" value="igbo_api_team" />
           <input type="hidden" name="developerId" value={developer.id} />
-          <Button type="submit">Upgrade plan</Button>
+          {/* TODO: uncomment this when ready to use Stripe */}
+          {/* <Button type="submit">Upgrade plan</Button> */}
         </form>
       </Box>
     )}

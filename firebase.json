@@ -39,17 +39,17 @@
     ]
   },
   "emulators": {
-        "auth": {
-      "port": 9799
+    "auth": {
+      "port": 9709
     },
     "functions": {
-      "port": 5005
+      "port": 8848
     },
     "firestore": {
       "port": 8085
     },
     "hosting": {
-      "port": 8081
+      "port": 5061
     },
     "ui": {
       "enabled": false

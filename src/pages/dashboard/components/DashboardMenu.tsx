@@ -8,6 +8,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
+  Link,
 } from '@chakra-ui/react';
 import { FiLogOut } from 'react-icons/fi';
 import { signOut } from 'firebase/auth';
@@ -19,26 +20,28 @@ const DashboardMenu = () => {
   const logOut = async () => {
     try {
       signOut(auth);
-      router.push('/');
+      router.push('');
     } catch (err) {
       console.error('Unable to sign out', err);
     }
   };
   return (
     <Box className="flex flex-row justify-between items-center px-2">
-      <Heading
-        as="h1"
-        m={0}
-        p={0}
-        fontSize="lg"
-        height="fit"
-        color="black"
-        display="flex"
-        alignItems="center"
-        className="space-x-2"
-      >
-        IgboAPI
-      </Heading>
+      <Link href="/">
+        <Heading
+          as="h1"
+          m={0}
+          p={0}
+          fontSize="lg"
+          height="fit"
+          color="black"
+          display="flex"
+          alignItems="center"
+          className="space-x-2"
+        >
+          IgboAPI
+        </Heading>
+      </Link>
       <Menu>
         <MenuButton
           as={Button}
