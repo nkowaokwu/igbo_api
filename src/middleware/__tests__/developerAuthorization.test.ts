@@ -27,7 +27,7 @@ describe('developerAuthorization', () => {
     const next = nextFunctionFixture();
     await developerAuthorization(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.status).toHaveBeenCalledWith(403);
     expect(statusSendMock).toHaveBeenCalledWith({ error: 'Malformatted authorization header.' });
   });
 
@@ -40,7 +40,7 @@ describe('developerAuthorization', () => {
     const next = nextFunctionFixture();
     await developerAuthorization(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.status).toHaveBeenCalledWith(403);
     expect(statusSendMock).toHaveBeenCalledWith({
       error: 'Unable to access this resource.',
     });
