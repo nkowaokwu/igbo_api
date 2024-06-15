@@ -1,10 +1,37 @@
 import React from 'react';
+import * as NextNavigation from 'next/navigation';
 import { render } from '@testing-library/react';
+import * as StatsAPI from '../StatsAPI';
 import TestContext from '../../__tests__/components/TestContext';
 import App from '../index.page';
 
+jest.mock('next/navigation');
+jest.mock('../StatsAPI');
+
 describe('App', () => {
   it('renders the app', async () => {
+    jest.spyOn(StatsAPI, 'getStats').mockResolvedValue({
+      databaseStats: {
+        totalWords: 100,
+        totalExamples: 200,
+        totalAudioPronunciations: 300,
+        totalIgboDefinitions: 400,
+        totalProverbs: 500,
+        totalBibleVerses: 600,
+        totalNsibidiWords: 700,
+        totalDevelopers: 800,
+      },
+      contributors: [],
+      stars: 900,
+    });
+    jest.spyOn(StatsAPI, 'getWords').mockResolvedValue({ data: [] });
+    jest.spyOn(NextNavigation, 'useSearchParams').mockReturnValue(
+      // @ts-expect-error
+      new Map([
+        ['dialects', ''],
+        ['examples', ''],
+      ])
+    );
     const props = {
       searchWord: '',
       words: [],

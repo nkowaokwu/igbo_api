@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { configure } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import ChakraTheme from '../../shared/constants/ChakraTheme';
 
 configure({ testIdAttribute: 'data-test' });
@@ -45,8 +46,12 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+const queryClient = new QueryClient();
+
 const TestContext = ({ children }: { children: ReactElement }) => (
-  <ChakraProvider theme={ChakraTheme}>{children}</ChakraProvider>
+  <QueryClientProvider client={queryClient}>
+    <ChakraProvider theme={ChakraTheme}>{children}</ChakraProvider>
+  </QueryClientProvider>
 );
 
 export default TestContext;
