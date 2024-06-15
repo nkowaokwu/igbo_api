@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import TestContext from '../../__tests__/components/TestContext';
-import App from '../App';
+import App from '../index.page';
 
 describe('App', () => {
   it('renders the app', async () => {

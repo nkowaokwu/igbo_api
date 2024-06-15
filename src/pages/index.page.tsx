@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
-import { Box, Button, Heading, Text } from '@chakra-ui/react';
+import { Box, Button, Heading, Skeleton, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { FiKey } from 'react-icons/fi';
 import { getStats } from 'src/pages/StatsAPI';
@@ -21,13 +21,14 @@ const App = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const word = searchParams.get('word') || '';
-  const { isPending, data } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ['getStats'],
     queryFn: getStats,
   });
 
-  if (isPending) return <>loading...</>;
-  // @ts-expect-error
+  if (isPending) return <Skeleton />;
+  if (error) return <Text>An error occurred.</Text>;
+
   const { databaseStats, contributors, stars } = data;
 
   return (

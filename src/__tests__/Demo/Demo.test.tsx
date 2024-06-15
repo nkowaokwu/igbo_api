@@ -7,7 +7,7 @@ describe('Demo', () => {
   it('renders the demo', async () => {
     const { findByText } = render(
       <TestContext>
-        <Demo searchWord="word" words={[]} />
+        <Demo defaultWord="word" />
       </TestContext>
     );
 
