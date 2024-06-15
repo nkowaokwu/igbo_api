@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import JSONPretty from 'react-json-pretty';
-import { getWords } from 'src/pages/StatsAPI';
+import { getWords } from '../../../pages/StatsAPI';
 import { APP_URL, DICTIONARY_APP_URL } from '../../siteConstants';
 
 const Demo = ({ defaultWord }: { defaultWord: string }) => {

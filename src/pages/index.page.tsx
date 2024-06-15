@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Box, Button, Heading, Skeleton, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { FiKey } from 'react-icons/fi';
-import { getStats } from 'src/pages/StatsAPI';
+import { getStats } from './StatsAPI';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
