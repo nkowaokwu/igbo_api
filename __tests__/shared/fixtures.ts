@@ -1,11 +1,11 @@
 import { Types } from 'mongoose';
+import { capitalize } from 'lodash';
+import { NextFunction, Request, Response } from 'express';
 import { SuggestionSourceEnum } from '../../src/shared/constants/SuggestionSourceEnum';
 import WordAttributeEnum from '../../src/shared/constants/WordAttributeEnum';
 import { Example, Word } from '../../src/types';
 import { WordDialect } from '../../src/types/word';
 import { Flags } from '../../src/controllers/utils/types';
-import { capitalize } from 'lodash';
-import { NextFunction, Request, Response } from 'express';
 
 interface RequestOptions {
   noAuthorizationHeader?: boolean;

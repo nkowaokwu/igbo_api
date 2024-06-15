@@ -39,7 +39,6 @@ describe('Stripe', () => {
   describe('/POST Stripe Webhook', () => {
     it('handle webhooks', async () => {
       const res = await postWebhook();
-      console.log(res.body);
       expect(res.status).toEqual(200);
     });
   });

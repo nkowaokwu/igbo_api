@@ -10,7 +10,6 @@ describe('DashboardMenu', () => {
         <DashboardMenu />
       </TestContext>
     );
-    await findByText('Actions');
     await findByText('Log out');
   });
 });

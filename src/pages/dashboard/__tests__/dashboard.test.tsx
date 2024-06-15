@@ -15,6 +15,9 @@ describe('Dashboard', () => {
     );
 
     await findAllByText('Home');
+    await findAllByText('Credentials');
+    await findAllByText('Profile');
+    await findAllByText('Plans');
     await findByText('Your usage across all IgboAPI services.');
     await findByText('Daily IgboAPI Usage');
     await findByText(/Daily limit:/);

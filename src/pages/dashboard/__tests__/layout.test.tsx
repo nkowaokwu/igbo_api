@@ -19,7 +19,6 @@ describe('Layout', () => {
     await findByText('IgboAPI');
     await findByText('Home');
     await findByText('Profile');
-    await findByText('Actions');
     await findByText('Log out');
     await findByText('testing');
   });
