@@ -6,7 +6,7 @@ import NavigationOptions from './NavigationOptions';
 import TryItOut from '../TryItOut';
 
 const Navbar = ({ to = '/' }: { to?: string }) => (
-  <Box className="fixed w-full flex justify-center items-center">
+  <Box className="fixed w-full flex justify-center items-center" zIndex={1}>
     <Box
       className={`flex items-center justify-between w-10/12 p-2 px-4 
       backdrop-blur-md select-none`}
