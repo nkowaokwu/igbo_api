@@ -2,15 +2,15 @@ import {
   requestFixture,
   responseFixture,
   nextFunctionFixture,
-} from '../../../../__tests__/shared/fixtures';
+} from '../../../__tests__/shared/fixtures';
 import {
   getDeveloper,
   getDeveloperByFirebaseId,
   postDeveloper,
   postDeveloperHelper,
   putDeveloper,
-} from '../../developers';
-import Plan from '../../../shared/constants/Plan';
+} from '../developers';
+import Plan from '../../shared/constants/Plan';
 
 class Developer {
   local = {};

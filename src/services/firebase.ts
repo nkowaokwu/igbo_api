@@ -1,12 +1,11 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
+import { isProduction } from '../config';
 import firebaseSdkConfig from '../../firebase.json';
 import { PRODUCTION_FIREBASE_CONFIG, STAGING_FIREBASE_CONFIG } from './firebaseConfigs';
 
 const apps = getApps();
-const isProduction =
-  typeof window !== 'undefined' ? window?.location?.host === 'igboapi.com' : false;
 
 let currentApp;
 // Initialize Firebase
