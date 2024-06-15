@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import compression from 'compression';
 import './shared/utils/wrapConsole';
-import { router, routerV2, siteRouter, stripeRouter } from './routers';
+import { router, routerV2, stripeRouter } from './routers';
 import cache from './middleware/cache';
 import logger from './middleware/logger';
 import errorHandler from './middleware/errorHandler';
@@ -42,9 +42,6 @@ app.use(`/api/${Version.VERSION_2}`, cache(86400, 172800), routerV2);
 
 /* Stripe */
 app.use('/stripe', stripeRouter);
-
-/* Renders the API Site */
-app.use(siteRouter, cache());
 
 /* Handles all uncaught errors */
 app.use(errorHandler);
