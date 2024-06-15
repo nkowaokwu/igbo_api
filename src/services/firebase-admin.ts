@@ -1,5 +1,6 @@
 import {
   initializeApp as initializeAdminApp,
+  applicationDefault,
   getApps as getAdminApps,
   getApp as getAdminApp,
 } from 'firebase-admin/app';
@@ -10,7 +11,7 @@ let currentAdminApp;
 // Initialize Admin Firebase
 if (!adminApps.length) {
   currentAdminApp = !isProduction
-    ? initializeAdminApp()
+    ? initializeAdminApp({ credential: applicationDefault(), projectId: 'igbo-api-bb22d' })
     : initializeAdminApp({ projectId: 'igbo-api-staging-99a67' });
 } else {
   currentAdminApp = getAdminApp();
