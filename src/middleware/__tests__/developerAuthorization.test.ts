@@ -1,3 +1,4 @@
+import * as admin from 'firebase-admin';
 import developerAuthorization from '../developerAuthorization';
 import {
   requestFixture,
@@ -6,8 +7,14 @@ import {
   statusSendMock,
 } from '../../../__tests__/shared/fixtures';
 
+jest.mock('firebase-admin');
+
 describe('developerAuthorization', () => {
   it('authorizes the developer with Firebase', async () => {
+    // @ts-expect-error
+    jest.spyOn(admin, 'auth').mockImplementation(() => ({
+      verifyIdToken: () => ({ uid: 'authorization', email: 'testing@email.com' }),
+    }));
     const req = requestFixture({
       params: { id: 'authorization' },
       headers: { authorization: 'Bearer authorization' },
@@ -28,7 +35,9 @@ describe('developerAuthorization', () => {
     await developerAuthorization(req, res, next);
     expect(next).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(403);
-    expect(statusSendMock).toHaveBeenCalledWith({ error: 'Malformatted authorization header.' });
+    expect(statusSendMock).toHaveBeenCalledWith({
+      error: 'Incorrectly formatted authorization header.',
+    });
   });
 
   it('req params id does not match decoded user uid', async () => {
@@ -40,7 +49,7 @@ describe('developerAuthorization', () => {
     const next = nextFunctionFixture();
     await developerAuthorization(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.status).toHaveBeenCalledWith(404);
     expect(statusSendMock).toHaveBeenCalledWith({
       error: 'Unable to access this resource.',
     });

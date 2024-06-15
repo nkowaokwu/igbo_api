@@ -136,17 +136,17 @@ export const getDeveloper: MiddleWare = async (req, res, next) => {
   }
 };
 
-/** Gets a Developer by Firebase Id */
-export const getDeveloperByFirebaseId = async (firebaseId: string) => {
+/** Gets a Developer by email */
+export const getDeveloperByEmail = async (email: string) => {
   const connection = createDbConnection();
   const Developer = connection.model<DeveloperType>('Developer', developerSchema);
   try {
-    const developer = await Developer.findOne({ firebaseId });
+    const developer = await Developer.findOne({ email });
     if (!developer) {
       throw new Error('No developer exists');
     }
     return developer.toJSON();
   } catch (err: any) {
-    throw new Error(err?.message || 'Unable to find developer with Firebase Id');
+    throw new Error(err?.message || 'Unable to find developer with email');
   }
 };
