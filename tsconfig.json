@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./build",
     "allowJs": true,
     "target": "ESNext",
     "lib": [
