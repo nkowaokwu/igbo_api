@@ -56,10 +56,6 @@
     "start:database:secondary:first": "mongod --port 2727 --dbpath ./mongos/db2 --replSet rs0 --quiet",
     "start:database:secondary:second": "mongod --port 2737 --dbpath ./mongos/db3 --replSet rs0 --quiet"
   },
-  "engines": {
-    "node": ">=18",
-    "npm": ">=8"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run precommit",
