@@ -13,7 +13,7 @@
     "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
     "prebuild:dictionaries": "npm run build:dictionaries:nsibidi && npm run build:dictionaries:ig:en && npm run build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./build/dictionaries && shx cp -r ./src/dictionaries/en-ig ./build/dictionaries",
     "build:dictionaries": "node ./build/src/dictionaries/buildDictionaries.js",
-    "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && npm run build:fonts && npm run build:assets",
+    "build:site": "next build && npm run build:fonts && npm run build:assets",
     "build:fonts": "shx cp -r ./src/public/fonts/ ./dist/fonts",
     "build:assets": "shx cp -r ./src/pages/assets/ ./dist/assets",
     "start:emulators": "export FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9709; node_modules/.bin/firebase emulators:start --only functions,hosting,auth",

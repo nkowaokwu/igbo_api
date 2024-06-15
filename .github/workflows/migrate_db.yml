@@ -1,0 +1,31 @@
+name: Migrate MongoDB Schemas
+
+on:
+  push:
+    branches:
+      - master
+env:
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
+  MONGO_URI: ${{ secrets.MONGO_URI }}
+  NODE_ENV: production
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '18'
+      - name: Install Project Dependencies
+        run: |
+          rm -rf ./node_modules; npm install
+          npm install -g firebase-tools
+      - name: Migrate MongoDB Data
+        run: |
+          firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
+          npm run migrate-up
