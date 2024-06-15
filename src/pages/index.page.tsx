@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { Box, Button, Heading, Text } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { FiKey } from 'react-icons/fi';
+import { getStats } from 'src/pages/StatsAPI';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
@@ -13,8 +14,6 @@ import MentionedIn from './components/MentionedIn';
 import GitHubStars from './components/GitHubStars';
 import Features from './components/Features';
 import TryItOut from './components/TryItOut';
-import { DatabaseStats, GitHubStats, Word } from '../types';
-import { getStats } from 'src/pages/StatsAPI';
 
 const queryClient = new QueryClient();
 

@@ -4,8 +4,8 @@ import { useSearchParams } from 'next/navigation';
 import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import JSONPretty from 'react-json-pretty';
-import { APP_URL, DICTIONARY_APP_URL } from '../../siteConstants';
 import { getWords } from 'src/pages/StatsAPI';
+import { APP_URL, DICTIONARY_APP_URL } from '../../siteConstants';
 
 const Demo = ({ defaultWord }: { defaultWord: string }) => {
   const searchParams = useSearchParams();
@@ -17,21 +17,21 @@ const Demo = ({ defaultWord }: { defaultWord: string }) => {
   });
   const headingRef = useRef<HTMLHeadingElement | null>(null);
 
+  const constructQueryString = () => {
+    const queryString = Object.entries(queries).reduce((finalQueryString, [key, value]) => {
+      if (key === 'word' || !value) {
+        return finalQueryString;
+      }
+      return `${finalQueryString}&${key}=${value}`;
+    }, '');
+
+    return queryString;
+  };
+
   const { isPending, data } = useQuery({
     queryKey: ['getWords'],
     queryFn: () => getWords(defaultWord, constructQueryString()),
   });
-
-  const constructQueryString = () => {
-    let queryString = '';
-    for (const key in queries) {
-      if (key === 'word' || !queries[key]) {
-        continue;
-      }
-      queryString += `&${key}=${queries[key]}`;
-    }
-    return queryString;
-  };
 
   const onSubmit = (e = { preventDefault: () => {} }) => {
     e.preventDefault();
