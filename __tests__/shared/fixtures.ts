@@ -1,9 +1,15 @@
 import { Types } from 'mongoose';
+import { capitalize } from 'lodash';
+import { NextFunction, Request, Response } from 'express';
 import { SuggestionSourceEnum } from '../../src/shared/constants/SuggestionSourceEnum';
 import WordAttributeEnum from '../../src/shared/constants/WordAttributeEnum';
 import { Example, Word } from '../../src/types';
 import { WordDialect } from '../../src/types/word';
 import { Flags } from '../../src/controllers/utils/types';
+
+interface RequestOptions {
+  noAuthorizationHeader?: boolean;
+}
 
 export const wordFixture = (data?: Partial<Word>) => ({
   attributes: Object.values(WordAttributeEnum).reduce(
@@ -59,3 +65,31 @@ export const flagsFixture = (data?: Partial<Flags>) => ({
   style: '',
   ...data,
 });
+
+export const requestFixture = (
+  {
+    body = {},
+    params = {},
+    headers = {},
+  }: {
+    body?: { [key: string]: string },
+    params?: { [key: string]: string },
+    headers?: { [key: string]: string },
+  } = {},
+  options?: RequestOptions
+): Request => ({
+  body,
+  params,
+  headers,
+  query: {},
+  // @ts-expect-error get
+  get: (header: string) => headers[header] || headers[capitalize(header)],
+});
+export const statusSendMock = jest.fn();
+export const responseFixture = (): Response => ({
+  // @ts-expect-error status
+  status: jest.fn(() => ({ send: statusSendMock })),
+  send: jest.fn(),
+  redirect: jest.fn(),
+});
+export const nextFunctionFixture = (): NextFunction => jest.fn();

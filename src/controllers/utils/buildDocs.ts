@@ -17,7 +17,7 @@ import {
 import { ExampleWithPronunciation } from '../types';
 import { nsibidiCharacterSchema } from '../../models/NsibidiCharacter';
 
-type NestedDoc = { _id?: string; __v?: number };
+type NestedDoc = { _id?: string, __v?: number };
 
 /**
  * Removes _id and __v from nested documents
@@ -41,8 +41,10 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
  * @param {*} match
  * @returns Word aggregation pipeline
  */
-const generateAggregationBase = <T>(Model: ModelType<T>, match: PipelineStage.Match['$match']): Aggregate<T[]> =>
-  Model.aggregate<T>().match(match);
+const generateAggregationBase = <T>(
+  Model: ModelType<T>,
+  match: PipelineStage.Match['$match']
+): Aggregate<T[]> => Model.aggregate<T>().match(match);
 
 /* Performs a outer left lookup to append associated examples
  * and returns a plain word object, not a Mongoose Query
@@ -51,12 +53,11 @@ export const findWordsWithMatch = async ({
   match,
   version,
   lean = false,
-  queryLabel = '',
 }: {
-  match: PipelineStage.Match['$match'];
-  version: Version;
-  lean?: boolean;
-  queryLabel?: string;
+  match: PipelineStage.Match['$match'],
+  version: Version,
+  lean?: boolean,
+  queryLabel?: string,
 }) => {
   const connection = createDbConnection();
   const Word = connection.model<WordDocument>('Word', wordSchema);
@@ -145,9 +146,9 @@ export const findExamplesWithMatch = async ({
   match,
   version,
 }: {
-  match: Record<string, RegExp | object>;
-  version: Version;
-}): Promise<{ examples: ExampleWithPronunciation[]; contentLength: number }> => {
+  match: Record<string, RegExp | object>,
+  version: Version,
+}): Promise<{ examples: ExampleWithPronunciation[], contentLength: number }> => {
   const connection = createDbConnection();
   const Example = connection.model<ExampleType>('Example', exampleSchema);
   try {
@@ -185,11 +186,14 @@ export const findNsibidiCharactersWithMatch = async ({
   match,
   version,
 }: {
-  match: Record<string, RegExp | object>;
-  version: Version;
-}): Promise<{ nsibidiCharacters: NsibidiCharacterType[]; contentLength: number }> => {
+  match: Record<string, RegExp | object>,
+  version: Version,
+}): Promise<{ nsibidiCharacters: NsibidiCharacterType[], contentLength: number }> => {
   const connection = createDbConnection();
-  const NsibidiCharacter = connection.model<NsibidiCharacterType>('NsibidiCharacter', nsibidiCharacterSchema);
+  const NsibidiCharacter = connection.model<NsibidiCharacterType>(
+    'NsibidiCharacter',
+    nsibidiCharacterSchema
+  );
 
   if (version !== Version.VERSION_2) {
     return { nsibidiCharacters: [], contentLength: 0 };

@@ -21,6 +21,8 @@ import Tenses from '../src/shared/constants/Tenses';
 import { Word as WordType } from '../src/types';
 import WordClassEnum from '../src/shared/constants/WordClassEnum';
 
+jest.unmock('mongoose');
+
 const { ObjectId } = mongoose.Types;
 
 describe('MongoDB Words', () => {

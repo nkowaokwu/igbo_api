@@ -27,15 +27,15 @@ textarea {
 }
 input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):hover,
 textarea:hover {
-  border-color: rgba(41, 123, 48, 0.4);
-  box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
+  border-color: rgba(41, 60, 123, 0.4);
+  box-shadow: 0 0 0 4px rgba(41, 98, 123, 0.1);
 }
 
 input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):focus,
 textarea:focus {
-  border-color: rgba(41, 123, 48, 0.4);
-  box-shadow: 0 0 0 4px rgba(66, 196, 77, 0.1);
-  outline: rgba(41, 123, 48, 0.4);
+  border-color: rgba(41, 60, 123, 0.4);
+  box-shadow: 0 0 0 4px rgba(41, 98, 123, 0.1);
+  outline: rgba(41, 60, 123, 0.4);
 }
 
 *,

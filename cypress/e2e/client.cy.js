@@ -112,7 +112,7 @@ describe('Igbo API Homepage', () => {
     });
     it('render the Sign up page', () => {
       cy.findByTestId('drop-down-button').click();
-      cy.get('button').contains('Get an API Key').click({ force: true });
+      cy.get('button').contains('Sign Up').click({ force: true });
       cy.findByText('Sign up.');
     });
 
