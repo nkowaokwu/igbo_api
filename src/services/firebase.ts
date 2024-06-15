@@ -5,8 +5,7 @@ import firebaseSdkConfig from '../../firebase.json';
 import { PRODUCTION_FIREBASE_CONFIG, STAGING_FIREBASE_CONFIG } from './firebaseConfigs';
 
 const apps = getApps();
-const isProduction =
-  typeof window !== 'undefined' ? window?.location?.host === 'igboapi.com' : false;
+const isProduction = process.env.NODE_ENV === 'production';
 
 let currentApp;
 // Initialize Firebase
