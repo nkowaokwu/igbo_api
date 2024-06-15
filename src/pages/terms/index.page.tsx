@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { Box, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
-import { APP_URL } from '../../siteConstants';
+import { APP_URL } from '../siteConstants';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 

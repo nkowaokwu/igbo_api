@@ -3,7 +3,7 @@ import { Box, Heading, Link, Text, chakra } from '@chakra-ui/react';
 import { capitalize } from 'lodash';
 import DashboardLayout from './layout';
 import Plan from '../../shared/constants/Plan';
-import { API_FROM_EMAIL, SERVER_DOMAIN } from '../../siteConstants';
+import { API_FROM_EMAIL, SERVER_DOMAIN } from '../siteConstants';
 
 const Plans = () => (
   <DashboardLayout>

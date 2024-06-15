@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { DecodedIdToken } from 'firebase-admin/auth';
 
 export const decodedIdTokenFixture = (data: object = {}): DecodedIdToken => ({
@@ -15,4 +16,13 @@ export const decodedIdTokenFixture = (data: object = {}): DecodedIdToken => ({
   sub: 'sub',
   uid: 'uid',
   ...data,
+});
+
+export const axiosResponseFixture = (request: object = {}): AxiosResponse<any> => ({
+  status: 200,
+  statusText: '',
+  headers: {},
+  config: {},
+  data: {},
+  ...request,
 });

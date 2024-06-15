@@ -10,7 +10,7 @@ import {
   NKOWAOKWU,
   NKOWAOKWU_CHROME,
   APP_URL,
-} from '../../../siteConstants';
+} from '../../siteConstants';
 
 const categories = [
   {
