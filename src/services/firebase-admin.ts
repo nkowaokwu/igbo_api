@@ -8,6 +8,8 @@ import { isProduction } from '../config';
 
 const adminApps = getAdminApps();
 let currentAdminApp;
+
+console.log('what is the environment', isProduction, adminApps.length);
 // Initialize Admin Firebase
 if (!adminApps.length) {
   currentAdminApp = !isProduction
