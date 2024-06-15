@@ -17,7 +17,7 @@ const developerAuthorization: MiddleWare = async (req, res, next) => {
     req.user = decoded;
 
     if (!req.user.email) {
-      return res.status(404).send({ error: 'No user email associated with Firebase' });
+      return res.status(404).send({ error: 'No user email associated with Firebase.' });
     }
 
     // Getting developer by email associated with Firebase account
@@ -25,7 +25,7 @@ const developerAuthorization: MiddleWare = async (req, res, next) => {
     req.developer = developer;
 
     if (req.user.uid !== id) {
-      return res.status(404).send({ error: 'Unable to access this resource ' });
+      return res.status(404).send({ error: 'Unable to access this resource.' });
     }
 
     return next();
