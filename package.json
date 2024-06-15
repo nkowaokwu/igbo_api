@@ -106,6 +106,7 @@
     "jotai": "^2.7.1",
     "lodash": "^4.17.20",
     "migrate-mongo": "^8.1.4",
+    "moment": "^2.30.1",
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",
     "next": "^14.1.0",
