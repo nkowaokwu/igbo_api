@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import { getDeveloperByFirebaseId } from '../controllers/developers';
+import { getDeveloperByEmail } from '../controllers/developers';
 import { MiddleWare } from '../types';
 
 const developerAuthorization: MiddleWare = async (req, res, next) => {
@@ -8,7 +8,7 @@ const developerAuthorization: MiddleWare = async (req, res, next) => {
     // Decoding authorization header for Firebase
     const authorizationHeader = req.get('authorization') || '';
     if (!authorizationHeader.startsWith('Bearer ')) {
-      throw new Error('Malformatted authorization header.');
+      return res.status(403).send({ error: 'Incorrectly formatted authorization header.' });
     }
 
     const token = authorizationHeader.split(' ')[1] || '';
@@ -16,11 +16,16 @@ const developerAuthorization: MiddleWare = async (req, res, next) => {
 
     req.user = decoded;
 
-    const developer = await getDeveloperByFirebaseId(req.user.uid);
+    if (!req.user.email) {
+      return res.status(404).send({ error: 'No user email associated with Firebase.' });
+    }
+
+    // Getting developer by email associated with Firebase account
+    const developer = await getDeveloperByEmail(req.user.email);
     req.developer = developer;
 
     if (req.user.uid !== id) {
-      throw new Error('Unable to access this resource.');
+      return res.status(404).send({ error: 'Unable to access this resource.' });
     }
 
     return next();

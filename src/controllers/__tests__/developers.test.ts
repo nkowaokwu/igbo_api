@@ -5,7 +5,7 @@ import {
 } from '../../../__tests__/shared/fixtures';
 import {
   getDeveloper,
-  getDeveloperByFirebaseId,
+  getDeveloperByEmail,
   postDeveloper,
   postDeveloperHelper,
   putDeveloper,
@@ -82,8 +82,8 @@ describe('developers', () => {
     expect(res.send).toHaveBeenCalled();
   });
 
-  it('gets developer by firebase id', async () => {
-    const firebaseId = 'firebaseId';
-    expect(await getDeveloperByFirebaseId(firebaseId)).toEqual({ id: 'static', type: 'static' });
+  it('gets developer by email', async () => {
+    const email = 'testing@email.com';
+    expect(await getDeveloperByEmail(email)).toEqual({ id: 'static', type: 'static' });
   });
 });
