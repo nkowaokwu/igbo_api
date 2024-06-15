@@ -1,11 +1,11 @@
 import { hash } from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 import { Document, FilterQuery, Types } from 'mongoose';
-import { isProduction, CLIENT_TEST, isTest } from '../../config';
-import { developerSchema } from '../../models/Developer';
-import { createDbConnection } from '../../services/database';
-import { Developer as DeveloperType, MiddleWare } from '../../types';
-import { sendNewDeveloper } from '../email';
+import { isProduction, CLIENT_TEST, isTest } from '../config';
+import { developerSchema } from '../models/Developer';
+import { createDbConnection } from '../services/database';
+import { Developer as DeveloperType, MiddleWare } from '../types';
+import { sendNewDeveloper } from './email';
 
 const TEST_EMAIL = 'developer@example.com';
 // If a Developer account is created by a user creating an
