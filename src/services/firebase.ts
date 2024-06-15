@@ -1,11 +1,11 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { isProduction } from '../config';
 import firebaseSdkConfig from '../../firebase.json';
 import { PRODUCTION_FIREBASE_CONFIG, STAGING_FIREBASE_CONFIG } from './firebaseConfigs';
 
 const apps = getApps();
+const isProduction = process.env.NODE_ENV === 'production';
 
 let currentApp;
 // Initialize Firebase
