@@ -1,45 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'next/navigation';
 import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
-import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
-import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
-import { Example, Word } from '../../../types';
-import { WordDialect } from '../../../types/word';
+import { getWords } from '../../StatsAPI';
+import { APP_URL, DICTIONARY_APP_URL } from '../../siteConstants';
 
-const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const Demo = ({ defaultWord }: { defaultWord: string }) => {
+  const searchParams = useSearchParams();
   const [isSearchingWord, setIsSearchingWord] = useState(false);
-  const [keyword, setKeyword] = useState(searchWord);
-  const [queries, setQueries] = useState({});
-  const [initialQueries, setInitialQueries] = useState<{
-    examples?: Example[],
-    dialects?: WordDialect,
-    word?: string,
-  }>({});
-  const [productionUrl, setProductionUrl] = useState('');
+  const [keyword, setKeyword] = useState(defaultWord);
+  const [queries, setQueries] = useState<{ [key: string]: string }>({
+    dialects: searchParams.get('dialects') || '',
+    examples: searchParams.get('examples') || '',
+  });
   const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const responseBody = JSON.stringify(words, null, 4);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const loadedInitialQueries: { word?: string } = queryString.parse(window.location.search);
-      setProductionUrl(window.origin);
-      setInitialQueries(loadedInitialQueries);
-      setIsLoading(false);
-      setQueries(omit(loadedInitialQueries, ['word']));
-      setKeyword(loadedInitialQueries?.word);
-      if (keyword || loadedInitialQueries.word) {
-        if (headingRef.current) {
-          headingRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const constructQueryString = () => {
-    const queriesString = queryString.stringify(queries);
-    return queriesString ? `&${queriesString}` : '';
+    const queryString = Object.entries(queries).reduce((finalQueryString, [key, value]) => {
+      if (key === 'word' || !value) {
+        return finalQueryString;
+      }
+      return `${finalQueryString}&${key}=${value}`;
+    }, '');
+
+    return queryString;
   };
+
+  const { isPending, data } = useQuery({
+    queryKey: ['getWords'],
+    queryFn: () => getWords(defaultWord, constructQueryString()),
+  });
 
   const onSubmit = (e = { preventDefault: () => {} }) => {
     e.preventDefault();
@@ -55,32 +47,31 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
   };
 
   const constructRequestUrl = () => {
-    const appendQueries =
-      constructQueryString() || queryString.stringify(omit(initialQueries, ['word']));
+    const appendQueries = constructQueryString();
     const requestUrl =
-      `${productionUrl || API_ROUTE}/api/v1/words?keyword=${keyword || ''}` +
+      `${APP_URL}/api/v1/words?keyword=${keyword || ''}` +
       `${keyword && appendQueries ? '&' : ''}` +
       `${appendQueries.replace('&', '')}`;
     return requestUrl;
   };
 
   const handleDialects = ({ target }: { target: { checked: boolean } }) => {
-    if (target.checked) {
-      setQueries({ ...queries, dialects: target.checked });
-    } else {
-      setQueries(omit(queries, ['dialects']));
-    }
+    setQueries(
+      target.checked
+        ? { ...queries, dialects: String(target.checked) }
+        : omit(queries, ['dialects'])
+    );
   };
 
   const handleExamples = ({ target }: { target: { checked: boolean } }) => {
-    if (target.checked) {
-      setQueries({ ...queries, examples: target.checked });
-    } else {
-      setQueries(omit(queries, ['examples']));
-    }
+    setQueries(
+      target.checked
+        ? { ...queries, examples: String(target.checked) }
+        : omit(queries, ['examples'])
+    );
   };
 
-  return !isLoading ? (
+  return (
     <Box className="flex flex-col items-center space-y-12">
       <Box className="flex flex-col items-center">
         <Heading
@@ -120,7 +111,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
               px={3}
               placeholder="⌨️ i.e. please or biko"
               data-test="try-it-out-input"
-              defaultValue={searchWord || initialQueries.word}
+              defaultValue={defaultWord}
             />
             <Heading as="h2" fontSize="2xl">
               Flags
@@ -129,7 +120,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
               <Box>
                 <Checkbox
                   className="flex items-center space-x-2"
-                  defaultChecked={!!initialQueries.dialects}
+                  defaultChecked={Boolean(searchParams.get('dialects'))}
                   onChange={handleDialects}
                   data-test="dialects-flag"
                 >
@@ -139,7 +130,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
               <Box>
                 <Checkbox
                   className="flex items-center space-x-2"
-                  defaultChecked={!!initialQueries.examples}
+                  defaultChecked={Boolean(searchParams.get('examples'))}
                   onChange={handleExamples}
                   data-test="examples-flag"
                 >
@@ -184,12 +175,12 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
           <JSONPretty
             className="jsonPretty self-center lg:w-auto bg-gray-800 rounded-md p-2 overflow-auto w-full"
             id="json-pretty"
-            data={responseBody}
+            data={!isPending ? data : []}
           />
         </Box>
       </Box>
     </Box>
-  ) : null;
+  );
 };
 
 export default Demo;

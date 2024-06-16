@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Heading, Text, UnorderedList, ListItem } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { API_FROM_EMAIL } from '../../siteConstants';
+import { API_FROM_EMAIL } from '../siteConstants';
 
 const Privacy = () => (
   <>

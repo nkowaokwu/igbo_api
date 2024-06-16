@@ -1,7 +1,8 @@
 /* This file includes the constants necessary to power the API homepage */
+const isProduction = process.env.NODE_ENV === 'production';
 export const PORT = 8080;
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
-export const APP_URL = 'https://igboapi.com';
+export const APP_URL = isProduction ? 'https://igboapi.com' : 'http://localhost:8080';
 export const API_ROUTE = APP_URL;
 export const DICTIONARY_APP_URL = 'https://nkowaokwu.com';
 export const GITHUB_REPO = 'https://github.com/nkowaokwu/igbo_api';

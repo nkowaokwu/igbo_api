@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 import { Box, Link } from '@chakra-ui/react';
-import { GITHUB_REPO } from '../../../siteConstants';
+import { GITHUB_REPO } from '../../siteConstants';
 
 const GitHubStars = ({ stars }: { stars: number }) => (
   <Box className="flex flex-row items-center justify-center space-x-4">

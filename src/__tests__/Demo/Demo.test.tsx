@@ -1,13 +1,23 @@
 import React from 'react';
+import * as NextNavigation from 'next/navigation';
 import { render } from '@testing-library/react';
 import TestContext from '../components/TestContext';
 import Demo from '../../pages/components/Demo/Demo';
 
+jest.mock('next/navigation');
+
 describe('Demo', () => {
   it('renders the demo', async () => {
+    jest.spyOn(NextNavigation, 'useSearchParams').mockReturnValue(
+      // @ts-expect-error
+      new Map([
+        ['dialects', ''],
+        ['examples', ''],
+      ])
+    );
     const { findByText } = render(
       <TestContext>
-        <Demo searchWord="word" words={[]} />
+        <Demo defaultWord="word" />
       </TestContext>
     );
 
