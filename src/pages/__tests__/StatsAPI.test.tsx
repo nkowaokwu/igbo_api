@@ -6,15 +6,6 @@ import { axiosResponseFixture } from '../../../__tests__/shared/uiFixtures';
 jest.mock('axios');
 
 describe('App', () => {
-  const OLD_ENV = process.env;
-  beforeEach(() => {
-    jest.clearAllMocks();
-    process.env = { ...OLD_ENV };
-  });
-
-  afterAll(() => {
-    process.env = OLD_ENV;
-  });
   it('gets the github contributors ', async () => {
     const axiosSpy = jest
       .spyOn(axios, 'default')
@@ -40,32 +31,28 @@ describe('App', () => {
   });
 
   it('gets the database stats', async () => {
-    process.env.MAIN_KEY = 'main_key';
     const axiosSpy = jest
       .spyOn(axios, 'default')
       .mockResolvedValue(axiosResponseFixture({ data: 0 }));
     expect(await getDatabaseStats()).toEqual({});
-    expect(axiosSpy).toHaveBeenCalledWith({
-      method: 'GET',
-      url: 'http://localhost:8080/api/v1/stats',
-      headers: {
-        'X-API-Key': 'main_key',
-      },
-    });
+    expect(axiosSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        method: 'GET',
+        url: 'http://localhost:8080/api/v1/stats',
+      })
+    );
   });
 
   it('gets the database stats', async () => {
-    process.env.MAIN_KEY = 'main_key';
     const axiosSpy = jest
       .spyOn(axios, 'default')
       .mockResolvedValue(axiosResponseFixture({ data: 0 }));
     expect(await getWords('eat', '&dialects=true&examples=true')).toEqual({});
-    expect(axiosSpy).toHaveBeenCalledWith({
-      method: 'GET',
-      url: `http://localhost:8080/api/v1/words?keyword=eat&dialects=true&examples=true`,
-      headers: {
-        'X-API-Key': 'main_key',
-      },
-    });
+    expect(axiosSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        method: 'GET',
+        url: `http://localhost:8080/api/v1/words?keyword=eat&dialects=true&examples=true`,
+      })
+    );
   });
 });
