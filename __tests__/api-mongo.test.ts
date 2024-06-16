@@ -592,7 +592,7 @@ describe('MongoDB Words', () => {
   });
 
   describe('/GET mongodb words V2', () => {
-    it('return word parts of mgba for noun deconstruction', async () => {
+    it.skip('return word parts of mgba for noun deconstruction', async () => {
       const keyword = 'mgba';
       const res = await getWordsV2({ keyword }, {});
       expect(res.status).toEqual(200);

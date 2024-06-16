@@ -9,7 +9,9 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "src": ["./src"]
+      "src": [
+        "./src"
+      ]
     },
     "skipLibCheck": true,
     "strict": true,
@@ -25,13 +27,19 @@
     "types": [
       "jest",
       "node"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
     ]
   },
   "include": [
     "./**/*.ts",
     "./**/*.tsx",
     "@types",
-    "env.d.ts"
+    "env.d.ts",
+    "dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
@@ -39,6 +47,6 @@
     "./**/__tests__/**/*.ts",
     "./**/__tests__/**/*.tsx",
     "./**/__mocks__/**/*.ts",
-    "./**/__mocks__/**/*.tsx",
+    "./**/__mocks__/**/*.tsx"
   ]
 }
