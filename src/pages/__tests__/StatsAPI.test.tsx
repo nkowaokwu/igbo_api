@@ -6,8 +6,14 @@ import { axiosResponseFixture } from '../../../__tests__/shared/uiFixtures';
 jest.mock('axios');
 
 describe('App', () => {
+  const OLD_ENV = process.env;
   beforeEach(() => {
     jest.clearAllMocks();
+    process.env = { ...OLD_ENV };
+  });
+
+  afterAll(() => {
+    process.env = OLD_ENV;
   });
   it('gets the github contributors ', async () => {
     const axiosSpy = jest
@@ -34,6 +40,7 @@ describe('App', () => {
   });
 
   it('gets the database stats', async () => {
+    process.env.MAIN_KEY = 'main_key';
     const axiosSpy = jest
       .spyOn(axios, 'default')
       .mockResolvedValue(axiosResponseFixture({ data: 0 }));
@@ -48,6 +55,7 @@ describe('App', () => {
   });
 
   it('gets the database stats', async () => {
+    process.env.MAIN_KEY = 'main_key';
     const axiosSpy = jest
       .spyOn(axios, 'default')
       .mockResolvedValue(axiosResponseFixture({ data: 0 }));
