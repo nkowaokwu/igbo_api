@@ -1,17 +1,14 @@
 import * as axios from 'axios';
-import {
-  getGitHubContributors,
-  getGitHubStars,
-  getDatabaseStats,
-  getWords,
-  getStats,
-} from '../StatsAPI';
-import { API_ROUTE, GITHUB_CONTRIBUTORS, GITHUB_STARS } from '../siteConstants';
+import { getGitHubContributors, getGitHubStars, getDatabaseStats, getWords } from '../StatsAPI';
+import { GITHUB_CONTRIBUTORS, GITHUB_STARS } from '../siteConstants';
 import { axiosResponseFixture } from '../../../__tests__/shared/uiFixtures';
 
 jest.mock('axios');
 
 describe('App', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it('gets the github contributors ', async () => {
     const axiosSpy = jest
       .spyOn(axios, 'default')
@@ -43,7 +40,7 @@ describe('App', () => {
     expect(await getDatabaseStats()).toEqual({});
     expect(axiosSpy).toHaveBeenCalledWith({
       method: 'GET',
-      url: `${API_ROUTE}/api/v1/stats`,
+      url: 'http://localhost:8080/api/v1/stats',
       headers: {
         'X-API-Key': 'main_key',
       },
@@ -57,7 +54,7 @@ describe('App', () => {
     expect(await getWords('eat', '&dialects=true&examples=true')).toEqual({});
     expect(axiosSpy).toHaveBeenCalledWith({
       method: 'GET',
-      url: `${API_ROUTE}/api/v1/words?keyword=eat&dialects=true&examples=true`,
+      url: `http://localhost:8080/api/v1/words?keyword=eat&dialects=true&examples=true`,
       headers: {
         'X-API-Key': 'main_key',
       },
