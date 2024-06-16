@@ -7,7 +7,7 @@
   "scripts": {
     "build": "rm -rf build/ rm -rf .next/ && npm run build:site && npm run build:src",
     "build:src": "tsc && npm run build:site:media && cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
-    "build:functions": "rm -rf functions/src && shx cp -r ./build ./functions && shx cp -r ./build/src/dictionaries/ig-en ./functions/dictionaries",
+    "build:functions": "rm -rf functions/src && shx cp -r ./build ./functions && shx cp -r ./.next ./functions && shx cp -r ./build/src/dictionaries/ig-en ./functions/dictionaries",
     "build:dictionaries:ig:en": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/ig-en\" ] && shx mkdir ./build/src/dictionaries/ig-en || echo 'Igbo to English dictionaries dir already exists'",
     "build:dictionaries:en:ig": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/en-ig\" ] && shx mkdir ./build/src/dictionaries/en-ig || echo 'English to Igbo dictionaries dir already exists'",
     "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
