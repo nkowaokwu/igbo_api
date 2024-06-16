@@ -8,7 +8,7 @@ import { getWords } from '../../StatsAPI';
 import { APP_URL, DICTIONARY_APP_URL } from '../../siteConstants';
 
 const Demo = ({ defaultWord }: { defaultWord: string }) => {
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const [isSearchingWord, setIsSearchingWord] = useState(false);
   const [keyword, setKeyword] = useState(defaultWord);
   const [queries, setQueries] = useState<{ [key: string]: string }>({

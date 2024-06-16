@@ -19,7 +19,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() || new Map();
   const word = searchParams.get('word') || '';
   const { isPending, error, data } = useQuery({
     queryKey: ['getStats'],

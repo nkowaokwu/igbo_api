@@ -8,6 +8,7 @@ env:
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
   MONGO_URI: ${{ secrets.MONGO_URI }}
+  GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
   NODE_ENV: production
 
 jobs:
