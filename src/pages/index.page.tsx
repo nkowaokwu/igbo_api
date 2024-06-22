@@ -5,6 +5,7 @@ import { MAIN_KEY, GITHUB_STATS_TOKEN } from '../config';
 import App from './App';
 
 const getGitHubContributors = async () => {
+  console.time('Fetching GitHub Contributors SSR');
   const gitHubAuthorization = GITHUB_STATS_TOKEN;
   const res = await axios({
     method: 'get',
@@ -13,10 +14,12 @@ const getGitHubContributors = async () => {
       ...(gitHubAuthorization ? { Authorization: `token ${gitHubAuthorization}` } : {}),
     },
   }).catch(() => ({ data: [] }));
+  console.time('Fetching GitHub Contributors SSR');
   return res.data || [];
 };
 
 const getGitHubStars = async () => {
+  console.time('Fetching GitHub Stars SSR');
   const gitHubAuthorization = GITHUB_STATS_TOKEN;
   const res = await axios({
     method: 'get',
@@ -27,10 +30,12 @@ const getGitHubStars = async () => {
   })
     .then(({ data }) => ({ data: data.watchers_count }))
     .catch(() => ({ data: 0 }));
+  console.timeEnd('Fetching GitHub Stars SSR');
   return res.data || 0;
 };
 
 const getDatabaseStats = async () => {
+  console.time('Fetching Database Stats SSR');
   const res = await axios({
     method: 'get',
     url: `${API_ROUTE}/api/v1/stats`,
@@ -38,11 +43,13 @@ const getDatabaseStats = async () => {
       'X-API-Key': MAIN_KEY || 'main_key',
     },
   }).catch(() => ({}));
+  console.timeEnd('Fetching Database Stats SSR');
   // @ts-expect-error data
   return res.data || {};
 };
 
 const getWords = async (searchWord: string, queries: string) => {
+  console.time(`Fetching Words SSR - ${searchWord}`);
   const res = await axios({
     method: 'get',
     url: `${API_ROUTE}/api/v1/words?keyword=${searchWord}${queries}`,
@@ -50,6 +57,7 @@ const getWords = async (searchWord: string, queries: string) => {
       'X-API-Key': MAIN_KEY || 'main_key',
     },
   }).catch(() => ({}));
+  console.timeEnd(`Fetching Words SSR - ${searchWord}`);
   // @ts-expect-error data
   return res.data || {};
 };
@@ -81,7 +89,6 @@ export const getServerSideProps = async (context: any) => {
       },
     };
   } catch (err) {
-    console.trace(err);
     return {
       props: {
         searchWord: '',

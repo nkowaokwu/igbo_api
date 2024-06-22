@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { Request } from 'express';
 import { MiddleWare } from '../types';
-import { GA_TRACKING_ID, GA_API_SECRET, GA_URL, DEBUG_GA_URL, isProduction as isProductionConfig } from '../config';
+import {
+  GA_TRACKING_ID,
+  GA_API_SECRET,
+  GA_URL,
+  isProduction as isProductionConfig,
+} from '../config';
 
 interface TrackingEvent {
   clientIdentifier: string | string[] | undefined;
@@ -48,20 +53,7 @@ const trackEvent = ({ clientIdentifier, category, action, keyword }: TrackingEve
           reject(new Error(err));
         });
     } else {
-      axios({
-        method: 'post',
-        url: `${DEBUG_GA_URL}?measurement_id=${params.measurement_id}&api_secret=${params.api_secret}`,
-        data,
-      })
-        .then(() => {
-          resolve(true);
-        })
-        .catch((err: any) => {
-          if (isProduction) {
-            console.log(typeof err?.toJSON === 'function' ? err.toJSON() : err);
-            reject(new Error(err));
-          }
-        });
+      resolve(true);
     }
   });
 

@@ -18,7 +18,7 @@ import { MiddleWare, LegacyWord, WordDocument } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
-const IGNORE_ENGLISH_WORDS = ['ego'];
+const IGNORE_ENGLISH_WORDS = ['ego', 'la'];
 
 /* Gets words from JSON dictionary */
 export const getWordData: MiddleWare = (req, res, next) => {
@@ -128,7 +128,10 @@ export const getWord: MiddleWare = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (data: Partial<LegacyWord>, connection: mongoose.Connection): Promise<WordDocument> => {
+export const createWord = async (
+  data: Partial<LegacyWord>,
+  connection: mongoose.Connection
+): Promise<WordDocument> => {
   const Word = connection.model<WordDocument>('Word', wordSchema);
   const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
 

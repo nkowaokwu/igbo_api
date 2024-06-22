@@ -10,7 +10,6 @@ import ChakraTheme from '../shared/constants/ChakraTheme';
 import en from '../public/locales/en';
 import ig from '../public/locales/ig';
 import * as gtag from '../lib/gtag';
-import '../antd-extend.css';
 import '../styles.css';
 
 i18n.use(initReactI18next).init({

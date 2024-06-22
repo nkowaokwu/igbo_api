@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as functions from 'firebase-functions';
 import './shared/utils/wrapConsole';
 
@@ -9,10 +10,8 @@ const Environment = {
 };
 
 const config = functions.config();
-// @ts-expect-error NODE_ENV
-const dotenv = process.env.NODE_ENV !== 'build' ? require('dotenv') : null;
-// @ts-expect-error NODE_ENV
-const sgMail = process.env.NODE_ENV !== 'build' ? require('@sendgrid/mail') : null;
+const dotenv = process.env.NODE_ENV !== Environment.BUILD ? require('dotenv') : null;
+const sgMail = process.env.NODE_ENV !== Environment.BUILD ? require('@sendgrid/mail') : null;
 
 if (dotenv) {
   dotenv.config();
@@ -38,6 +37,7 @@ const TEST_DB_NAME = 'test_igbo_api';
 const isTestingEnvironment =
   isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
 export const PORT = 8080;
+export const PROD_LIMIT = 2500;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';
 export const FIRST_REPLICA_SET_PORT = '2717';
@@ -59,6 +59,7 @@ export const MONGO_URI = isTestingEnvironment
     ? LOCAL_MONGO_URI.concat(QUERIES)
     : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
 export const FIREBASE_CONFIG = config?.env?.firebase_config; // Provide your own Firebase Config
+export const FIREBASE_SERVICE_ACCOUNT = config?.env?.firebase_service_account; // Provide your own Firebase Service Account
 export const CLIENT_TEST = config?.env?.client_test;
 
 export const CORS_CONFIG = {
@@ -99,3 +100,8 @@ export const REDIS_CACHE_EXPIRATION = 604800;
 
 // GitHub
 export const GITHUB_STATS_TOKEN = config?.github?.stats_token;
+
+// Stripe
+export const STRIPE_SECRET_KEY =
+  config?.env?.stripe_secret_key || 'sk_test_hpwuITjteocLizB8Afq7H3cV00FEEViC1s';
+export const STRIPE_ENDPOINT_SECRET = config?.env?.stripe_endpoint_secret || 'local_endpoint';

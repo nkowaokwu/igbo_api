@@ -5,7 +5,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import { navigationLinks } from '../../../shared/constants/navigationLinks';
 
 const NavigationMenu = () => (
-  <Menu>
+  <Menu placement="bottom">
     <MenuButton
       as={IconButton}
       icon={<FiChevronDown />}

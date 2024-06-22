@@ -23,14 +23,14 @@ describe('Statistics', () => {
       </TestContext>
     );
 
-    await findByText('Words in the database');
-    await findByText('Example Igbo sentences');
-    await findByText('Word audio pronunciations');
-    await findByText('Words with Igbo definitions');
-    await findByText('Igbo Proverbs');
-    await findByText('Bible Verses');
-    await findByText('Words in Nsịbịdị');
-    await findByText('Developers using the Igbo API');
+    await findByText('Igbo words');
+    await findByText('Igbo sentences');
+    await findByText('Word recordings');
+    await findByText('Igbo definitions');
+    await findByText('Igbo proverbs');
+    await findByText('Bible verses');
+    await findByText('Nsịbịdị words');
+    await findByText('Igbo API Developers');
     await findByText('GitHub Contributors');
     await findByText('Members in Slack');
   });

@@ -29,15 +29,12 @@ const NASDAQ = {
 };
 
 const MentionedIn = () => (
-  <Box className="mentioned-in w-full flex flex-col justify-center items-center space-y-12">
+  <Box className="mentioned-in w-10/12 lg:w-full flex flex-col justify-center items-center space-y-12">
     {' '}
     <Text textAlign="center" fontWeight="semibold" fontSize="xl">
       Mentioned in
     </Text>
-    <Box
-      className={`flex flex-row flex-wrap w-full md:w-6/12 space-x-4
-    flex-wrap items-center justify-evenly`}
-    >
+    <Box className="grid grid-cols-3 lg:grid-cols-6 gap-12">
       <Link href={NASDAQ.url} target="_blank" rel="noreferrer">
         <Tooltip label="Nasdaq">
           <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '140px' }} />
@@ -45,7 +42,11 @@ const MentionedIn = () => (
       </Link>
       <Link href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
         <Tooltip label="Nigerian Tribune">
-          <Image src={NIGERIAN_TRIBUNE.src} alt="Nigerian Tribune logo" style={{ width: '140px' }} />
+          <Image
+            src={NIGERIAN_TRIBUNE.src}
+            alt="Nigerian Tribune logo"
+            style={{ width: '140px' }}
+          />
         </Tooltip>
       </Link>
       <Link href={UIU.url} target="_blank" rel="noreferrer">

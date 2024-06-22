@@ -2,7 +2,6 @@ import { compact, isEqual } from 'lodash';
 import WordClassEnum from '../../shared/constants/WordClassEnum';
 import removeAccents from '../../shared/utils/removeAccents';
 import PartTypes from '../../shared/constants/PartTypes';
-import { Word } from '../../types';
 import { Meta, WordData, Solution, TopSolution, MinimizedWord } from './types';
 
 /* --- Definitions --- */
@@ -68,7 +67,9 @@ const isRootVerb = (root: string, wordData: WordData): MinimizedWord | undefined
 const isSuffix = (root: string, wordData: WordData): MinimizedWord | undefined =>
   (wordData.suffixes || []).find(
     ({ word: headword, definitions = [] }) =>
-      definitions.find(({ wordClass }) => wordClass === WordClassEnum.ESUF || wordClass === WordClassEnum.ISUF) &&
+      definitions.find(
+        ({ wordClass }) => wordClass === WordClassEnum.ESUF || wordClass === WordClassEnum.ISUF
+      ) &&
       (removeAccents.removeExcluding(headword).replace('-', '').normalize('NFC') === root ||
         definitions.find(({ nsibidi }) => nsibidi && nsibidi.replace('-', '') === root))
   );
@@ -100,7 +101,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (!updatedMeta.isPreviousVerb && isRootVerb(currentRange, wordData)) {
         solution.push({
           type: PartTypes.VERB_ROOT,
@@ -109,7 +112,9 @@ const helper = (
           wordClass: [WordClassEnum.AV, WordClassEnum.PV],
         });
         updatedMeta.isPreviousVerb = true;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (
         !updatedMeta.isPreviousStativePrefix &&
         !updatedMeta.isPreviousVerb &&
@@ -127,7 +132,14 @@ const helper = (
           // forkedUpdatedMeta.isNegatorPrefixed = true;
           // forkedUpdatedMeta.negativePrefix = currentRange;
           solutions.push(
-            ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, forkedUpdatedMeta)
+            ...helper(
+              word,
+              wordData,
+              localSecondPoint,
+              localSecondPoint + 1,
+              solution,
+              forkedUpdatedMeta
+            )
           );
         }
       } else if (updatedMeta.isPreviousStativePrefix && stativePairs.includes(currentRange)) {
@@ -137,7 +149,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousStativePrefix = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (
         negativesOrPast.includes(currentRange) &&
         negativePrefixes.includes(currentRange[currentRange.length - 1])
@@ -150,7 +164,9 @@ const helper = (
         updatedMeta.isPreviousVerb = !updatedMeta.isNegatorPrefixed;
         updatedMeta.negativePrefix = '';
         updatedMeta.isNegatorPrefixed = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (suffixes.includes(currentRange)) {
         solution.push({
           type: PartTypes.STATIVE,
@@ -158,7 +174,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (rv.includes(currentRange)) {
         solution.push({
           type: PartTypes.QUALIFIER_OR_PAST,
@@ -166,7 +184,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (imperatives.includes(currentRange)) {
         solution.push({
           type: PartTypes.IMPERATIVE,
@@ -174,7 +194,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = true;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (isSuffix(currentRange, wordData)) {
         solution.push({
           type: PartTypes.EXTENSIONAL_SUFFIX,
@@ -183,7 +205,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = true;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (multiplePeople.includes(currentRange)) {
         // TODO: could be other meaning
         solution.push({
@@ -192,7 +216,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (stativePrefixes.includes(currentRange)) {
         solution.push({
           type: PartTypes.STATIVE_PREFIX,
@@ -201,7 +227,9 @@ const helper = (
         });
         updatedMeta.isPreviousVerb = false;
         updatedMeta.isPreviousStativePrefix = true;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (nots.includes(currentRange)) {
         solution.push({
           type: PartTypes.NEGATIVE,
@@ -209,7 +237,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (hasNotYet.includes(currentRange)) {
         solution.push({
           type: PartTypes.NEGATIVE_POTENTIAL,
@@ -217,7 +247,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (had.includes(currentRange)) {
         solution.push({
           type: PartTypes.PERFECT_PAST,
@@ -225,7 +257,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (shallBe.includes(currentRange)) {
         solution.push({
           type: PartTypes.POTENTIAL_CONTINUOUS_PREFIX,
@@ -233,7 +267,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (will.includes(currentRange)) {
         solution.push({
           type: PartTypes.FUTURE_CONTINUOUS,
@@ -241,7 +277,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       } else if (hasBeenAndStill.includes(currentRange)) {
         solution.push({
           type: PartTypes.PAST_PERFECT_CONTINUOUS_PREFIX,
@@ -249,7 +287,9 @@ const helper = (
           wordClass: [WordClassEnum.ISUF, WordClassEnum.ESUF],
         });
         updatedMeta.isPreviousVerb = false;
-        solutions.push(...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta));
+        solutions.push(
+          ...helper(word, wordData, localSecondPoint, localSecondPoint + 1, solution, updatedMeta)
+        );
       }
       localSecondPoint += 1;
     }
@@ -285,7 +325,9 @@ export default (rawWord: string, wordData: WordData): Solution[] => {
     compact(
       topSolutions.map(({ solution, metaData }) => {
         const cleanedText = removeAccents
-          .removeExcluding([...solution.text].reduce((finalString, letter) => `${finalString}${letter}`, '') || '')
+          .removeExcluding(
+            [...solution.text].reduce((finalString, letter) => `${finalString}${letter}`, '') || ''
+          )
           .normalize('NFC');
 
         // TODO: requiring matching parts to be complete set

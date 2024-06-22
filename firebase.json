@@ -16,14 +16,16 @@
   ],
   "hosting": {
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "api",
-        "region": "us-central1"
-      }
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ],
+    "rewrites": [{
+      "source": "**",
+      "function": "api",
+      "region": "us-central1"
+    }],
     "headers": [
       {
         "source": "/",
@@ -37,14 +39,17 @@
     ]
   },
   "emulators": {
+    "auth": {
+      "port": 9709
+    },
     "functions": {
-      "port": 5005
+      "port": 8848
     },
     "firestore": {
-      "port": 8085
+      "port": 8455
     },
     "hosting": {
-      "port": 8080
+      "port": 5061
     },
     "ui": {
       "enabled": false

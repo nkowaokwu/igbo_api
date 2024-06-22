@@ -16,9 +16,9 @@ if (sgMail && sgMail.setApiKey && !isTest) {
 }
 
 type EmailTemplate = {
-  to: string[];
-  templateId: string;
-  dynamic_template_data: Omit<DeveloperEmailConfig, 'to'>;
+  to: string[],
+  templateId: string,
+  dynamic_template_data: Omit<DeveloperEmailConfig, 'to'>,
 };
 /* Builds the message object that will help send the email */
 const constructMessage = (messageFields: EmailTemplate) => ({
@@ -53,9 +53,9 @@ export const sendEmail = (message: MailDataRequired) =>
       })();
 
 type DeveloperEmailConfig = {
-  apiKey: string;
-  name: string;
-  to: string;
+  apiKey: string,
+  name: string,
+  to: string,
 };
 /* Email sent out to newly signed up Developers */
 export const sendNewDeveloper = (data: DeveloperEmailConfig) => {

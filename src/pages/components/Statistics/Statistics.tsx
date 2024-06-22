@@ -17,23 +17,32 @@ const Statistics = ({
 }: ProjectStats) => {
   const totalSlackMembers = 320;
   return (
-    <Box className="flex flex-col items-center justify-center w-full odd:space-y-6">
-      <Heading as="h2" id="try-it-out" className="text-4xl font-bold" fontSize="6xl">
+    <Box className="flex flex-col items-center justify-center w-full">
+      <Heading
+        as="h2"
+        id="try-it-out"
+        className="text-4xl font-bold"
+        textAlign="center"
+        fontSize={{ base: '5xl', lg: '6xl' }}
+      >
         Crunching the Numbers
       </Heading>
       <Text className="px-6 lg:px-0 lg:pb-12 text-gray-500">
         The Igbo API is the most robust, Igbo-English dictionary API that is maintained by our
         wonderful volunteer community.
       </Text>
-      <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
-        <Stat value={totalWords} header="Words in the database" />
-        <Stat value={totalExamples} header="Example Igbo sentences" />
-        <Stat value={totalAudioPronunciations} header="Word audio pronunciations" />
-        <Stat value={totalIgboDefinitions} header="Words with Igbo definitions" />
-        <Stat value={totalProverbs} header="Igbo Proverbs" />
-        <Stat value={totalBibleVerses} header="Bible Verses" />
-        <Stat value={totalNsibidiWords} header="Words in Nsịbịdị" />
-        <Stat value={totalDevelopers} header="Developers using the Igbo API" />
+      <Box
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 
+      my-4 items-center justify-center w-full lg:w-9/12"
+      >
+        <Stat value={totalWords} header="Igbo words" />
+        <Stat value={totalExamples} header="Igbo sentences" />
+        <Stat value={totalAudioPronunciations} header="Word recordings" />
+        <Stat value={totalIgboDefinitions} header="Igbo definitions" />
+        <Stat value={totalProverbs} header="Igbo proverbs" />
+        <Stat value={totalBibleVerses} header="Bible verses" />
+        <Stat value={totalNsibidiWords} header="Nsịbịdị words" />
+        <Stat value={totalDevelopers} header="Igbo API Developers" />
       </Box>
       <Box className="flex flex-row flex-wrap items-center justify-center w-full lg:w-9/12">
         {contributors ? (
@@ -58,6 +67,8 @@ const Statistics = ({
             </Box>
           </Stat>
         ) : null}
+      </Box>
+      <Box className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 w-full lg:w-9/12">
         <Stat value={totalSlackMembers} header="Members in Slack" exact={false} />
         <Stat value={stars} header="GitHub stars" />
       </Box>

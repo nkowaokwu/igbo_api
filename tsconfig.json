@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./build",
     "allowJs": true,
     "target": "ESNext",
     "lib": [
       "dom",
       "esnext"
     ],
+    "baseUrl": "./",
+    "paths": {
+      "src": [
+        "./src"
+      ]
+    },
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,19 +27,26 @@
     "types": [
       "jest",
       "node"
+    ],
+    "plugins": [
+      {
+        "name": "next"
+      }
     ]
   },
   "include": [
     "./**/*.ts",
     "./**/*.tsx",
     "@types",
-    "env.d.ts"
+    "env.d.ts",
+    "dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
+    "functions",
     "./**/__tests__/**/*.ts",
     "./**/__tests__/**/*.tsx",
     "./**/__mocks__/**/*.ts",
-    "./**/__mocks__/**/*.tsx",
+    "./**/__mocks__/**/*.tsx"
   ]
 }

@@ -5,9 +5,8 @@ export const LOCAL_ROUTE = '/';
 export const API_ROUTE = `/api/${Version.VERSION_1}`;
 export const API_ROUTE_V2 = `/api/${Version.VERSION_2}`;
 export const TEST_ROUTE = `/api/${Version.VERSION_1}/test`;
+export const STRIPE_ROUTE = '/stripe';
 export const API_URL = 'https://igboapi.com';
-
-export const SAVE_DOC_DELAY = 2000;
 
 export const WORD_KEYS_V1 = [
   'variations',
