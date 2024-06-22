@@ -80,6 +80,51 @@ A single example JSON object will be returned.
   "associatedDefinitionsSchemas": [],
 }
  ```
+###### Proverbs
+ Proverbs are gotten with the `examples` endpoint the same way examples are gotten. The only exception
+ is that the `style` parameter is set to `proverb`.
+
+ For example, this is a GET request for three (3) proverbs about `war`.
+
+ **Parameters**
+
+| Name   | Description | Example |
+| :----- | :----- | :----- |
+| **keyword** *required* | Keyword for querying words |  `keyword=war` |
+| **style** | Style for requested example sentences | `style=proverb` |
+| **page** | Page for results | `page=1` |
+| **range** | Page for result using [x,y] syntax, max range includes 25 documents | `range=[0, 2]` |
+
+ **Responses**
+ ```JSON
+[
+    {
+        "igbo": "Agha akpara akpa anaghi eri ngworo",
+        "english": "A cripple does not die in a pre-announced war",
+        "meaning": "To be forewarned is to be forearmed",
+        "style": "proverb",
+        "id": "626723c3211eef35ea97cb1e"
+    },
+    {
+        "igbo": "Mgbe nne amụbeghị ọchịagha ọkwa ndị ọgụ na agarị?",
+        "english": "When the warlord was not yet born, people still went to wars, didn't they?",
+        "meaning": "No one is indispensible",
+        "style": "proverb",
+        "associatedWords": [
+            "63a5c6d97f1a8438af9676d9"
+        ],
+        "id": "626723c3211eef35ea97c9a9",
+        "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/63d7f1b8ddd11755a36f8472.mp3"
+    },
+    {
+        "igbo": "Anaghi agwa ochi nti na agha esula",
+        "english": "You don't tell an obstinate man that the war has broken out",
+        "meaning": "When people don't listen to premonition are damned to face the consequences",
+        "style": "proverb",
+        "id": "626723c3211eef35ea97cb07"
+    }
+]
+ ```
 
   **Response Code**
 <Tabs items={['200', '400', '403', '404']}>
