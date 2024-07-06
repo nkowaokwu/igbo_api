@@ -53,34 +53,8 @@ Get examples from dictionary
 
  ***
 
- ###### Get a Single Example
+ **Get Poverbs**
 
-
-```js
-GET /examples/{exampleId}
-```
-Returns a single example JSON object from the database
-
-**`exampleId`** is the Id of the example document you are requesting.
-
- **Responses**
-
-A single example JSON object will be returned.
-
- ```js
-{
-  "nsibidi": "",
-  "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
-  "english": "Agụ is eating unripe mango",
-  "associatedWords": [],
-  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
-  "updatedAt": "2022-05-02T06:18:09.906Z",
-  "meaning": "",
-  "style": "",
-  "associatedDefinitionsSchemas": [],
-}
- ```
-###### Proverbs
  Proverbs are gotten with the `examples` endpoint the same way examples are gotten. The only exception
  is that the `style` parameter is set to `proverb`.
 
@@ -125,6 +99,37 @@ A single example JSON object will be returned.
     }
 ]
  ```
+
+ ***
+
+ ###### Get a Single Example
+
+
+```js
+GET /examples/{exampleId}
+```
+Returns a single example JSON object from the database
+
+**`exampleId`** is the Id of the example document you are requesting.
+
+ **Responses**
+
+A single example JSON object will be returned.
+
+ ```js
+{
+  "nsibidi": "",
+  "igbo": "Agụ nà-àtakwo mangō ācharọ acha",
+  "english": "Agụ is eating unripe mango",
+  "associatedWords": [],
+  "pronunciation": "https://igbo-api.s3.us-east-2.amazonaws.com/audio-pronunciations/620c4c01ebaecf171e074c89.webm",
+  "updatedAt": "2022-05-02T06:18:09.906Z",
+  "meaning": "",
+  "style": "",
+  "associatedDefinitionsSchemas": [],
+}
+ ```
+
 
   **Response Code**
 <Tabs items={['200', '400', '403', '404']}>
