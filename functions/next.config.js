@@ -9,5 +9,6 @@ const withNextra = nextra({
 module.exports = withNextra({
   distDir: 'dist',
   generateBuildId: async () => 'api-homepage',
+  pageExtensions: ['page.tsx'],
   i18n,
 });

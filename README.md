@@ -72,14 +72,16 @@ Once you've configured your project, you can start the Igbo API dev server by ru
 npm run dev
 ```
 
-Navigate to [localhost:8080](http://localhost:8080/) to see the API
+Navigate to [localhost:3000](http://localhost:3000/) to see the UI.
+
+Use [localhost:8080/igbo-api-staging-99a67/us-central1/api/api](http://localhost:8080/igbo-api-staging-99a67/us-central1/api/api) to access the API.
 
 ### Optional: Development with Replica Sets and Redis
 
 To start the dev API server while running [MongoDB Replica sets](https://docs.mongodb.com/manual/replication/) and the [Redis cache](https://redis.io/), run:
 
 ```
-npm run dev:full
+npm run dev:full:database
 ```
 
 To start a Redis server, run:
@@ -104,16 +106,6 @@ npm run start:docker
 ```
 
 Navigate to [localhost:8080](http://localhost:8080) to see the API
-
-### API Site
-
-To start up the front site for the API, run:
-
-```
-npm run dev:site
-```
-
-Navigate to [localhost:3000](http://localhost:3000) to see the API front site
 
 ## Seeding the Database 🌱
 
@@ -210,3 +202,5 @@ If you want to run your MongoDB instance and tests in separate terminals, you ca
 ## Next Steps
 
 Visit our 📚 [documentation website](https://igboapi.com/docs) to learn how to use the Igbo API within your own project.
+
+export FIREBASE_AUTH_EMULATOR_HOST="http://localhost:9799" && yarn start

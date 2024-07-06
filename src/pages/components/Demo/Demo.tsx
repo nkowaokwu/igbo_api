@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, Heading, Text, Link, Code } from '@chakra-ui/react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, Button, Checkbox, Heading, Input, Text, Link, Code } from '@chakra-ui/react';
 import omit from 'lodash/omit';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
-import { Input, Checkbox } from 'antd';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
 import { Example, Word } from '../../../types';
 import { WordDialect } from '../../../types/word';
@@ -19,6 +18,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
     word?: string,
   }>({});
   const [productionUrl, setProductionUrl] = useState('');
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
   const responseBody = JSON.stringify(words, null, 4);
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -29,7 +29,9 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
       setQueries(omit(loadedInitialQueries, ['word']));
       setKeyword(loadedInitialQueries?.word);
       if (keyword || loadedInitialQueries.word) {
-        window.location.hash = 'try-it-out';
+        if (headingRef.current) {
+          headingRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -82,10 +84,11 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
     <Box className="flex flex-col items-center space-y-12">
       <Box className="flex flex-col items-center">
         <Heading
+          ref={headingRef}
           as="h2"
           id="try-it-out"
           className="text-4xl text-blue-500 font-bold"
-          fontSize="6xl"
+          fontSize={{ base: '5xl', lg: '6xl' }}
         >
           Test Drive the API
         </Heading>
@@ -109,7 +112,12 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
               size="large"
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
               onKeyPress={onEnter}
-              className="h-12 w-full border-gray-600 border-solid border-2 rounded-md px-3 py-5"
+              className="w-full border-gray-600"
+              height={12}
+              borderRadius="10px"
+              borderWidth="2px"
+              py={5}
+              px={3}
               placeholder="⌨️ i.e. please or biko"
               data-test="try-it-out-input"
               defaultValue={searchWord || initialQueries.word}
@@ -139,7 +147,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
                 </Checkbox>
               </Box>
             </Box>
-            <Code userSelect="none" className="w-full py-3 px-5" wordBreak="break-all">
+            <Code userSelect="none" className="w-full" p={3} wordBreak="break-all">
               {constructRequestUrl()}
             </Code>
             <Button

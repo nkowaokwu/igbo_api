@@ -1,5 +1,7 @@
 import { getNsibidiCharactersV2 } from './shared/commands';
 
+jest.unmock('mongoose');
+
 describe('MongoDB Nsibidi Characters', () => {
   describe('/GET mongodb nsibidi characters V2', () => {
     it('return nsibidi character by searching', async () => {

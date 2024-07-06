@@ -49,18 +49,15 @@ const revertPronunciationsMigrationPipeline = [
 module.exports = {
   async up(db) {
     const collections = ['examplesuggestions'];
-    return collections.map((collection) => (
-      db.collection(collection).updateMany(
-        {},
-        examplePronunciationsMigrationPipeline,
-      )
-    ));
+    return collections.map((collection) =>
+      db.collection(collection).updateMany({}, examplePronunciationsMigrationPipeline)
+    );
   },
 
   async down(db) {
     const collections = ['examplesuggestions'];
-    return collections.map((collection) => (
+    return collections.map((collection) =>
       db.collection(collection).updateMany({}, revertPronunciationsMigrationPipeline)
-    ));
+    );
   },
 };

@@ -1,7 +1,10 @@
 import { RedisClientType } from 'redis';
-import fs from 'fs';
 import { compact, uniqWith } from 'lodash';
-import { searchIgboTextSearch, strictSearchIgboQuery, searchDefinitionsWithinIgboTextSearch } from './queries';
+import {
+  searchIgboTextSearch,
+  strictSearchIgboQuery,
+  searchDefinitionsWithinIgboTextSearch,
+} from './queries';
 import { findWordsWithMatch } from './buildDocs';
 import { sortDocsBy } from './sortDocsBy';
 import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
@@ -12,21 +15,21 @@ import { Filters } from '../types';
 import { Keyword } from './types';
 
 type IgboSearch = {
-  redisClient: RedisClientType | undefined;
-  keywords: Keyword[];
-  strict: boolean;
-  isUsingMainKey: boolean | undefined;
-  version: Version;
-  regex: SearchRegExp;
-  searchWord: string;
-  skip: number;
-  limit: number;
+  redisClient: RedisClientType | undefined,
+  keywords: Keyword[],
+  strict: boolean,
+  isUsingMainKey: boolean | undefined,
+  version: Version,
+  regex: SearchRegExp,
+  searchWord: string,
+  skip: number,
+  limit: number,
   flags: {
-    examples: boolean;
-    dialects: boolean;
-    resolve: boolean;
-  };
-  filters: Filters;
+    examples: boolean,
+    dialects: boolean,
+    resolve: boolean,
+  },
+  filters: Filters,
 };
 
 /* Searches for a word with Igbo stored in MongoDB */

@@ -1,7 +1,14 @@
 import request from 'supertest';
 import { Types } from 'mongoose';
 import app from '../../src/app';
-import { API_ROUTE, API_ROUTE_V2, FALLBACK_API_KEY, LOCAL_ROUTE, TEST_ROUTE } from './constants';
+import {
+  API_ROUTE,
+  API_ROUTE_V2,
+  FALLBACK_API_KEY,
+  LOCAL_ROUTE,
+  STRIPE_ROUTE,
+  TEST_ROUTE,
+} from './constants';
 import createRegExp from '../../src/shared/utils/createRegExp';
 import { resultsFromDictionarySearch } from '../../src/services/words';
 import mockedData from '../__mocks__/data.mock.json';
@@ -29,6 +36,12 @@ type Options = Partial<{
 const server = request(app);
 
 export const createDeveloper = (data: object) => server.post(`${API_ROUTE}/developers`).send(data);
+
+export const getDeveloper = (id: Id, options: Options) =>
+  server
+    .get(`${API_ROUTE}/developers/${id}`)
+    .set('Authorization', `Bearer ${options.apiKey || FALLBACK_API_KEY}`)
+    .set('X-API-Key', options.apiKey || FALLBACK_API_KEY);
 
 /* Searches for words using the data in MongoDB V2 */
 export const getWords = (query: Query, options: Options) =>
@@ -115,3 +128,10 @@ export const searchMockedTerm = (term: string) => {
   const { wordReg: regexTerm } = createRegExp(term);
   return resultsFromDictionarySearch(regexTerm, term, mockedData);
 };
+
+/* Stripe */
+export const postCheckoutSession = (data: { developerId: string, lookupKey: string }) =>
+  server.post(`${STRIPE_ROUTE}/checkout`).send(data);
+export const postPortalSession = (data: { sessionId: string }) =>
+  server.post(`${STRIPE_ROUTE}/portal`).send(data);
+export const postWebhook = () => server.post(`${STRIPE_ROUTE}/webhook`);

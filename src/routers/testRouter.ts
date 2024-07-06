@@ -1,8 +1,8 @@
-import express from 'express';
+import { Router } from 'express';
 import { getWordData } from '../controllers/words';
 import { seedDatabase } from '../dictionaries/seed';
 
-const testRouter = express.Router();
+const testRouter = Router();
 
 testRouter.get('/', (_, res) => {
   res.send('Welcome to the Igbo English Dictionary API');
