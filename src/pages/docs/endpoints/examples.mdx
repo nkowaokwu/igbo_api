@@ -29,10 +29,9 @@ Get examples from dictionary
 | Name   | Description | Example |
 | :----- | :----- | :----- |
 | **keyword** *required* | Keyword for querying words |  `keyword=ego` |
-| **style** | Style for requested example sentences | `style=no_style` |standard|proverb|biblical` |
+| **style** | Style for requested example sentences | `style=no_style \| standard \| proverb \| biblical` |
 | **page** | Page for results | `page=1` |
 | **range** | Page for result using [x,y] syntax, max range includes 25 documents | `range=[0, 24]` |
-
 
  **Responses**
 
@@ -54,7 +53,6 @@ Get examples from dictionary
  ***
 
  ###### Get a Single Example
-
 
 ```js
 GET /examples/{exampleId}
