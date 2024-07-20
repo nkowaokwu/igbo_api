@@ -202,5 +202,3 @@ If you want to run your MongoDB instance and tests in separate terminals, you ca
 ## Next Steps
 
 Visit our 📚 [documentation website](https://igboapi.com/docs) to learn how to use the Igbo API within your own project.
-
-export FIREBASE_AUTH_EMULATOR_HOST="http://localhost:9799" && yarn start
