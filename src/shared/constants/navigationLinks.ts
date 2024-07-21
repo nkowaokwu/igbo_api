@@ -9,7 +9,7 @@ export const navigationLinks: { href: string, label: string }[] = [
   //   label: 'Pricing',
   // },
   {
-    href: '/docs',
+    href: 'https://nkwaokwu.mintlify.app',
     label: 'Docs',
   },
   {
