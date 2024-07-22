@@ -15,6 +15,6 @@ describe('NavigationMenu', () => {
     // TODO: uncomment when pricing is available
     // await findByText('Pricing');
     await findByText('Docs');
-    await findByText('Sign Up');
+    await findByText('Log In');
   });
 });

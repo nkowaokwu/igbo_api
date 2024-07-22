@@ -1,12 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { signInWithPopup, GoogleAuthProvider, GithubAuthProvider, User } from 'firebase/auth';
-import Image from 'next/image';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { Box, Button } from '@chakra-ui/react';
 import { auth } from '../../services/firebase';
-import getAWSAsset from '../utils/getAWSAsset';
 import { getDeveloper, putDeveloper } from '../APIs/DevelopersAPI';
 
 const googleProvider = new GoogleAuthProvider();
