@@ -27,6 +27,10 @@ const NASDAQ = {
   url: 'https://thecenter.nasdaq.org/foe-ijemma-onwuzulike-nkowa-okwu',
   src: 'https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/images/learningHomePage/mentionedIn/nasdaq.png',
 };
+const TECHPOINT = {
+  url: 'https://techpoint.africa/2024/07/18/ijemma-onwuzulike-and-igbospeech/',
+  src: 'https://nkowaokwu.s3.us-west-1.amazonaws.com/assets/images/learningHomePage/mentionedIn/techpoint.png',
+};
 
 const MentionedIn = () => (
   <Box className="mentioned-in w-10/12 lg:w-full flex flex-col justify-center items-center space-y-12">
@@ -34,7 +38,7 @@ const MentionedIn = () => (
     <Text textAlign="center" fontWeight="semibold" fontSize="xl">
       Mentioned in
     </Text>
-    <Box className="grid grid-cols-3 lg:grid-cols-6 gap-12">
+    <Box className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-12">
       <Link href={NASDAQ.url} target="_blank" rel="noreferrer">
         <Tooltip label="Nasdaq">
           <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '140px' }} />
@@ -67,6 +71,11 @@ const MentionedIn = () => (
       <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer">
         <Tooltip label="WeDeyCode">
           <Image src={WEDEYCODE.src} alt="WeDeyCode logo" style={{ width: '90px' }} />
+        </Tooltip>
+      </Link>
+      <Link href={TECHPOINT.url} target="_blank" rel="noreferrer">
+        <Tooltip label="Techpoint">
+          <Image src={TECHPOINT.src} alt="Techpoint logo" style={{ width: '150px' }} />
         </Tooltip>
       </Link>
     </Box>
