@@ -17,14 +17,17 @@ import { auth } from '../../../services/firebase';
 
 const DashboardMenu = () => {
   const router = useRouter();
+
   const logOut = async () => {
     try {
-      signOut(auth);
-      router.push('');
+      await signOut(auth).then(() => {
+        router.push('/');
+      });
     } catch (err) {
       console.error('Unable to sign out', err);
     }
   };
+
   return (
     <Box className="flex flex-row justify-between items-center px-2">
       <Link href="/">

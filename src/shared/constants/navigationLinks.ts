@@ -9,11 +9,11 @@ export const navigationLinks: { href: string, label: string }[] = [
   //   label: 'Pricing',
   // },
   {
-    href: 'https://nkwaokwu.mintlify.app',
+    href: '/docs',
     label: 'Docs',
   },
   {
     href: '/signup',
-    label: 'Sign Up',
+    label: 'Log In',
   },
 ];

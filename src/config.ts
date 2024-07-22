@@ -69,6 +69,7 @@ export const CORS_CONFIG = {
 
 // API Homepage
 export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
+export const API_DOCS = isProduction ? 'https://igboapi.com/docs' : `http://localhost:${PORT}/docs`;
 
 // SendGrid API
 export const SENDGRID_API_KEY = config?.sendgrid?.api_key || '';
