@@ -68,7 +68,7 @@ const MentionedIn = () => (
           <Image src={NUESROOM.src} alt="Nuesroom logo" style={{ width: '140px' }} />
         </Tooltip>
       </Link>
-      <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer">
+      <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer" className="flex justify-center">
         <Tooltip label="WeDeyCode">
           <Image src={WEDEYCODE.src} alt="WeDeyCode logo" style={{ width: '90px' }} />
         </Tooltip>
