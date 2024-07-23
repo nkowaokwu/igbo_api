@@ -14,6 +14,6 @@ export const navigationLinks: { href: string, label: string }[] = [
   },
   {
     href: '/signup',
-    label: 'Sign Up',
+    label: 'Log In',
   },
 ];

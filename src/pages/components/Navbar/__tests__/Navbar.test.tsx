@@ -12,6 +12,6 @@ describe('Navbar', () => {
     );
 
     await findByText('IgboAPI');
-    await findByText('Try it Out');
+    await findByText('Sign Up');
   });
 });

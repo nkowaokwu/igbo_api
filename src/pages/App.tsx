@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Heading, Text } from '@chakra-ui/react';
-import { FiKey } from 'react-icons/fi';
+import { FiKey, FiTerminal } from 'react-icons/fi';
 import FadeIn from './components/FadeIn';
 import Navbar from './components/Navbar';
 import Demo from './components/Demo';
@@ -10,7 +10,6 @@ import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
 import GitHubStars from './components/GitHubStars';
 import Features from './components/Features';
-import TryItOut from './components/TryItOut';
 import { DatabaseStats, GitHubStats, Word } from '../types';
 
 const App = ({
@@ -54,7 +53,24 @@ const App = ({
               </Box>
               <br />
               <Box className="w-full flex flex-row justify-center items-center space-x-4">
-                <TryItOut />
+                <Button
+                  className="transition-all duration-200"
+                  backgroundColor="blue.500"
+                  _hover={{
+                    backgroundColor: 'blue.400',
+                  }}
+                  color="white"
+                  transitionDuration="200ms"
+                  size="lg"
+                  px="6"
+                  onClick={() => {
+                    router.push('/#try-it-out');
+                    window.scrollBy({ top: -100, behavior: 'smooth' });
+                  }}
+                  leftIcon={<FiTerminal />}
+                >
+                  Try it Out
+                </Button>
                 <GitHubStars stars={gitHubStats.stars} />
               </Box>
             </FadeIn>
