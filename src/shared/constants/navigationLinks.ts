@@ -13,6 +13,10 @@ export const navigationLinks: { href: string, label: string }[] = [
     label: 'Docs',
   },
   {
+    href: 'https://huggingface.co/nkowaokwu',
+    label: 'Research',
+  },
+  {
     href: '/signup',
     label: 'Log In',
   },
