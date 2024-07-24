@@ -14,7 +14,7 @@ const getGitHubContributors = async () => {
       ...(gitHubAuthorization ? { Authorization: `token ${gitHubAuthorization}` } : {}),
     },
   }).catch(() => ({ data: [] }));
-  console.time('Fetching GitHub Contributors SSR');
+  console.timeEnd('Fetching GitHub Contributors SSR');
   return res.data || [];
 };
 
