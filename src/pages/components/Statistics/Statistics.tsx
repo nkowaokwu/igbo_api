@@ -15,7 +15,7 @@ const Statistics = ({
   contributors = [],
   stars = 0,
 }: ProjectStats) => {
-  const totalSlackMembers = 320;
+  const totalSlackMembers = 400;
   return (
     <Box className="flex flex-col items-center justify-center w-full">
       <Heading
