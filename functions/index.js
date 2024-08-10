@@ -1,4 +1,11 @@
-const functions = require('firebase-functions');
+const { onRequest } = require('firebase-functions/v2/https');
+
 const { api } = require('./build/src/app');
 
-exports.api = functions.https.onRequest(api);
+exports.api_2 = onRequest(
+  {
+    cors: true,
+    concurrency: 500,
+  },
+  api
+);
