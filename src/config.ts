@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import * as functions from 'firebase-functions';
+import { defineBoolean, defineInt, defineString } from 'firebase-functions/params';
 import './shared/utils/wrapConsole';
 
 const Environment = {
@@ -9,7 +9,41 @@ const Environment = {
   TEST: 'test',
 };
 
-const config = functions.config();
+// Firebase
+const RUNTIME_ENV = defineString('RUNTIME_ENV').value();
+const ENV_REPLICA_SET = defineBoolean('ENV_REPLICA_SET').value();
+const ENV_MONGO_URI = defineString('ENV_MONGO_URI').value();
+const ENV_FIREBASE_CONFIG = defineString('ENV_FIREBASE_CONFIG').value();
+const ENV_FIREBASE_SERVICE_ACCOUNT = defineString('ENV_FIREBASE_SERVICE_ACCOUNT').value();
+const ENV_CLIENT_TEST = defineBoolean('ENV_CLIENT_TEST').value();
+
+// SendGrid
+const SENDGRID_API_KEY_SOURCE = defineString('SENDGRID_API_KEY').value();
+const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE_SOURCE = defineString(
+  'SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE'
+).value();
+
+// Igbo API
+const ENV_MAIN_KEY = defineString('ENV_MAIN_KEY').value();
+
+// Google Analytics
+const ANALYTICS_GA_TRACKING_ID = defineString('ANALYTICS_GA_TRACKING_ID').value();
+const ANALYTICS_GA_API_SECRET = defineString('ANALYTICS_GA_API_SECRET').value();
+
+// Redis
+const ENV_REDIS_PORT = defineInt('ENV_REDIS_PORT').value();
+const ENV_REDIS_URL = defineString('ENV_REDIS_URL').value();
+const ENV_REDIS_HOST = defineString('ENV_REDIS_HOST').value();
+const ENV_REDIS_USERNAME = defineString('ENV_REDIS_USERNAME').value();
+const ENV_REDIS_PASSWORD = defineString('ENV_REDIS_PASSWORD').value();
+
+// GitHub
+const GITHUB_STATS_TOKEN_SOURCE = defineString('GITHUB_STATS_TOKEN').value();
+
+// Stripe
+const STRIPE_SECRET_KEY_SOURCE = defineString('STRIPE_SECRET_KEY').value();
+const STRIPE_ENDPOINT_SECRET_SOURCE = defineString('STRIPE_ENDPOINT_SECRET').value();
+
 const dotenv = process.env.NODE_ENV !== Environment.BUILD ? require('dotenv') : null;
 const sgMail = process.env.NODE_ENV !== Environment.BUILD ? require('@sendgrid/mail') : null;
 
@@ -18,16 +52,13 @@ if (dotenv) {
 }
 
 export const isBuild =
-  config?.runtime?.env === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
+  RUNTIME_ENV === Environment.BUILD || process.env.NODE_ENV === Environment.BUILD;
 export const isProduction =
-  config?.runtime?.env === Environment.PRODUCTION ||
-  process.env.NODE_ENV === Environment.PRODUCTION;
+  RUNTIME_ENV === Environment.PRODUCTION || process.env.NODE_ENV === Environment.PRODUCTION;
 export const isDevelopment =
-  config?.runtime?.env === Environment.DEVELOPMENT ||
-  process.env.NODE_ENV === Environment.DEVELOPMENT;
-export const isTest =
-  config?.runtime?.env === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
-const useReplicaSet = config?.env?.replica_set;
+  RUNTIME_ENV === Environment.DEVELOPMENT || process.env.NODE_ENV === Environment.DEVELOPMENT;
+export const isTest = RUNTIME_ENV === Environment.TEST || process.env.NODE_ENV === Environment.TEST;
+const useReplicaSet = ENV_REPLICA_SET;
 
 // Database
 const DB_NAME = 'igbo_api';
@@ -57,10 +88,10 @@ export const MONGO_URI = isTestingEnvironment
   ? TEST_MONGO_URI.concat(QUERIES)
   : isDevelopment
     ? LOCAL_MONGO_URI.concat(QUERIES)
-    : config?.env?.mongo_uri || LOCAL_MONGO_URI.concat(QUERIES);
-export const FIREBASE_CONFIG = config?.env?.firebase_config; // Provide your own Firebase Config
-export const FIREBASE_SERVICE_ACCOUNT = config?.env?.firebase_service_account; // Provide your own Firebase Service Account
-export const CLIENT_TEST = config?.env?.client_test;
+    : ENV_MONGO_URI || LOCAL_MONGO_URI.concat(QUERIES);
+export const FIREBASE_CONFIG = ENV_FIREBASE_CONFIG; // Provide your own Firebase Config
+export const FIREBASE_SERVICE_ACCOUNT = ENV_FIREBASE_SERVICE_ACCOUNT; // Provide your own Firebase Service Account
+export const CLIENT_TEST = ENV_CLIENT_TEST;
 
 export const CORS_CONFIG = {
   origin: true,
@@ -69,14 +100,12 @@ export const CORS_CONFIG = {
 
 // API Homepage
 export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
-export const API_DOCS = isProduction
-  ? 'https://nkwaokwu.mintlify.app/'
-  : `http://localhost:${PORT}/docs`;
+export const API_DOCS = 'https://docs.igboapi.com';
 
 // SendGrid API
-export const SENDGRID_API_KEY = config?.sendgrid?.api_key || '';
+export const SENDGRID_API_KEY = SENDGRID_API_KEY_SOURCE || '';
 export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE =
-  config?.sendgrid?.new_developer_account_template || '';
+  SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE_SOURCE;
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
 
 if (sgMail && !isTest) {
@@ -84,27 +113,27 @@ if (sgMail && !isTest) {
 }
 
 // API Key Secrets
-export const MAIN_KEY = config?.env?.main_key || 'main_key';
+export const MAIN_KEY = ENV_MAIN_KEY || 'main_key';
 
 // Google Analytics
-export const GA_TRACKING_ID = config?.analytics?.ga_tracking_id;
-export const GA_API_SECRET = config?.analytics?.ga_api_secret;
+export const GA_TRACKING_ID = ANALYTICS_GA_TRACKING_ID;
+export const GA_API_SECRET = ANALYTICS_GA_API_SECRET;
 export const GA_URL = 'https://www.google-analytics.com/mp/collect';
 export const DEBUG_GA_URL = 'https://www.google-analytics.com/debug/mp/collect';
 
 // Redis
-export const REDIS_HOST = config?.env?.redis_host;
-export const REDIS_PORT = config?.env?.redis_port;
-export const REDIS_USERNAME = config?.env?.redis_username;
-export const REDIS_PASSWORD = config?.env?.redis_password;
-export const REDIS_URL = config?.env?.redis_url;
+export const REDIS_HOST = ENV_REDIS_HOST;
+export const REDIS_PORT = ENV_REDIS_PORT;
+export const REDIS_USERNAME = ENV_REDIS_USERNAME;
+export const REDIS_PASSWORD = ENV_REDIS_PASSWORD;
+export const REDIS_URL = ENV_REDIS_URL;
 // Busts the cache every 7 days
 export const REDIS_CACHE_EXPIRATION = 604800;
 
 // GitHub
-export const GITHUB_STATS_TOKEN = config?.github?.stats_token;
+export const GITHUB_STATS_TOKEN = GITHUB_STATS_TOKEN_SOURCE;
 
 // Stripe
 export const STRIPE_SECRET_KEY =
-  config?.env?.stripe_secret_key || 'sk_test_hpwuITjteocLizB8Afq7H3cV00FEEViC1s';
-export const STRIPE_ENDPOINT_SECRET = config?.env?.stripe_endpoint_secret || 'local_endpoint';
+  STRIPE_SECRET_KEY_SOURCE || 'sk_test_hpwuITjteocLizB8Afq7H3cV00FEEViC1s';
+export const STRIPE_ENDPOINT_SECRET = STRIPE_ENDPOINT_SECRET_SOURCE || 'local_endpoint';
