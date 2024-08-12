@@ -36,7 +36,7 @@ const TEST_DB_NAME = 'test_igbo_api';
 // If running inside Docker container, it will fallback to using test_igbo_api database
 const isTestingEnvironment =
   isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
-export const PORT = 8080;
+export const PORT = process.env.PORT || 8080;
 export const PROD_LIMIT = 2500;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';

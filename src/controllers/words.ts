@@ -61,7 +61,10 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
     };
     let responseData: WordResponseData = { words: [], contentLength: 0 };
     const isSearchWordEnglish =
-      isEnglish.check(searchWord) && !!searchWord && !IGNORE_ENGLISH_WORDS.includes(searchWord);
+      isEnglish.check(searchWord) &&
+      Boolean(searchWord) &&
+      !IGNORE_ENGLISH_WORDS.includes(searchWord);
+
     if (hasQuotes || isSearchWordEnglish) {
       responseData = await searchWordUsingEnglish({
         redisClient,
