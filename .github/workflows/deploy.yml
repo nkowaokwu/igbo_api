@@ -83,7 +83,7 @@ jobs:
           envkey_RUNTIME_ENV: "production"
           envkey_STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           envkey_STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
-          directory: funcsions
+          directory: functions
       - name: Build Production Project
         run: |
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
