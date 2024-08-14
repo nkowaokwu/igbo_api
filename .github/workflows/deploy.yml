@@ -53,7 +53,9 @@ jobs:
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
           npm run migrate-up
-      - name: Make envfile
+      - name: Create .env
+        run: touch ./functions/.env
+      - name: Update .env
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_ENV_VPC_CONNECTOR: ${{ secrets.VPC_CONNECTOR }}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
@@ -94,3 +96,5 @@ jobs:
           firebase deploy --project=igbo-api-bb22d --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Delete .env
+        run: rm -rf ./functions/.env
