@@ -12,15 +12,22 @@ env:
   MAIN_KEY: ${{ secrets.MAIN_KEY }}
   MONGO_URI: ${{ secrets.MONGO_URI }}
   SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-  SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE: ${{ secrets.SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE }}
+  SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE: ${{ secrets.NEW_DEVELOPER_ACCOUNT_TEMPLATE }}
   GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
   GA_API_SECRET: ${{ secrets.GA_API_SECRET }}
+  REDIS_HOST: ${{ secrets.REDIS_HOST }}
   REDIS_URL: ${{ secrets.REDIS_URL }}
-  GITHUB_STATS_TOKEN: ${{ secrets.GITHUB_STATS_TOKEN }}
+  REDIS_PORT: ${{ secrets.REDIS_PORT }}
+  REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
+  REDIS_STATUS: ${{ secrets.REDIS_STATUS }}
+  REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+  GITHUB_STATS_TOKEN: ${{ secrets.STATS_TOKEN }}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
   AWS_REGION: ${{ secrets.AWS_REGION }}
+  STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+  STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
   NODE_ENV: production
 
 jobs:
@@ -46,6 +53,35 @@ jobs:
         run: |
           firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
           npm run migrate-up
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          ENV_VPC_CONNECTOR: ${{ secrets.VPC_CONNECTOR }}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+          ENV_REDIS_PORT: ${{ secrets.REDIS_PORT }}
+          ENV_MONGO_URI: ${{ secrets.MONGO_URI }}
+          ENV_REDIS_URL: ${{ secrets.REDIS_URL }}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+          ENV_REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          ENV_CLIENT_TEST: false
+          ENV_REDIS_USERNAME: ${{ secrets.REDIS_USERNAME }}
+          ENV_FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
+          ENV_FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          ENV_REDIS_STATUS: true
+          ENV_REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          ENV_MAIN_KEY: ${{ secrets.MAIN_KEY }}
+          ENV_REPLICA_SET: true
+          ANALYTICS_GA_TRACKING_ID: ${{ secrets.GA_TRACKING_ID }}
+          ANALYTICS_GA_API_SECRET: ${{ secrets.GA_API_SECRET }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE: ${{ secrets.NEW_DEVELOPER_ACCOUNT_TEMPLATE }}
+          GITHUB_STATS_TOKEN: ${{ secrets.STATS_TOKEN }}
+          AWS_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION:  ${{ secrets.AWS_REGION }}
+          RUNTIME_ENV: "production"
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
+          directory: functions
       - name: Build Production Project
         run: |
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
