@@ -17,5 +17,6 @@ describe('NavigationOptions', () => {
     await findByText('Docs');
     await findByText('Research');
     await findByText('Log In');
+    await findByText('IgboSpeech');
   });
 });

@@ -17,6 +17,10 @@ export const navigationLinks: { href: string, label: string }[] = [
     label: 'Research',
   },
   {
+    href: 'https://speech.igboapi.com',
+    label: 'IgboSpeech',
+  },
+  {
     href: '/signup',
     label: 'Log In',
   },
