@@ -18,6 +18,10 @@ export interface Developer extends DeveloperClientData {
     date: Date,
     count: number,
   };
+  speechToTextUsage: {
+    date: Date,
+    count: number,
+  };
 }
 
 export interface DeveloperDocument extends Developer, Document<any> {

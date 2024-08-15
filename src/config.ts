@@ -2,7 +2,7 @@
 import { defineBoolean, defineInt, defineString } from 'firebase-functions/params';
 import './shared/utils/wrapConsole';
 
-const Environment = {
+export const Environment = {
   BUILD: 'build',
   PRODUCTION: 'production',
   DEVELOPMENT: 'development',

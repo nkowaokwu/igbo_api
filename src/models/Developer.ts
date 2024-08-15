@@ -19,6 +19,10 @@ export const developerSchema = new Schema(
       date: { type: Date, default: new Date().toISOString() },
       count: { type: Number, default: 0 },
     },
+    speechToTextUsage: {
+      date: { type: Date, default: new Date().toISOString() },
+      count: { type: Number, default: 0 },
+    },
     firebaseId: { type: String, default: '' },
     stripeId: { type: String, default: '' },
     plan: { type: String, enum: Object.values(Plan), default: Plan.STARTER },
