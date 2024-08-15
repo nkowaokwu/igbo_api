@@ -1,11 +1,11 @@
 import { Response } from 'express';
 import { PipelineStage } from 'mongoose';
-import { pick } from 'lodash';
+// import { pick } from 'lodash';
 import { Example, IgboAPIRequest, Word } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
 import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
-import expandVerb from './expandVerb';
+// import expandVerb from './expandVerb';
 // import expandNoun from './expandNoun';
 import { findWordsWithMatch } from './buildDocs';
 import Version from '../../shared/constants/Version';
@@ -183,24 +183,24 @@ export const handleQueries = async ({
   //   }),
   //   {}
   // );
-  const keywords =
-    version === Version.VERSION_2 && searchWord
-      ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
-          const pickedRegex = pick(
-            constructRegexQuery({
-              isUsingMainKey,
-              keywords: [{ text }],
-            }),
-            ['wordReg']
-          );
-          const keyWord: Keyword = {
-            text,
-            wordClass,
-            regex: pickedRegex,
-          };
-          return keyWord;
-        })
-      : [];
+  const keywords: Keyword[] = [];
+  // version === Version.VERSION_2 && searchWord
+  //   ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
+  //       const pickedRegex = pick(
+  //         constructRegexQuery({
+  //           isUsingMainKey,
+  //           keywords: [{ text }],
+  //         }),
+  //         ['wordReg']
+  //       );
+  //       const keyWord: Keyword = {
+  //         text,
+  //         wordClass,
+  //         regex: pickedRegex,
+  //       };
+  //       return keyWord;
+  //     })
+  //   : [];
   // Attempt to breakdown as noun if there is no breakdown as verb
   // if (!keywords.length && searchWord) {
   //   keywords =
