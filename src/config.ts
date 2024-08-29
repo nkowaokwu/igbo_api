@@ -101,6 +101,11 @@ export const CORS_CONFIG = {
 export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
 export const API_DOCS = 'https://docs.igboapi.com';
 
+// IgboSpeech
+export const SPEECH_TO_TEXT_API = isProduction
+  ? 'https://speech.igboapi.com'
+  : 'http://localhost:3333';
+
 // SendGrid API
 export const SENDGRID_API_KEY = SENDGRID_API_KEY_SOURCE || '';
 export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE =

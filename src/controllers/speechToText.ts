@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { MiddleWare } from '../types';
 import { fetchBase64Data } from './utils/fetchBase64Data';
-import { parseAWSIdFromKey, parseAWSIdFromUri } from './utils/parseAWS';
+import { parseAWSIdFromUri } from './utils/parseAWS';
+import { MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
 
-const SPEECH_TO_TEXT_API = 'https://speech.igboapi.com';
+interface AudioMetadata {
+  audioId: string;
+  audioUrl: string;
+}
 
 interface Prediction {
   transcription: string;
@@ -19,26 +23,31 @@ interface Prediction {
 export const getTranscription: MiddleWare = async (req, res, next) => {
   try {
     const { audioUrl: audio } = req.body;
-    if (!audio.startsWith('https://')) {
-      throw new Error('Audio URL must be hosted publicly.');
+    if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
+      throw new Error('Audio URL must either be hosted publicly or a valid base64.');
     }
 
     let payload = { id: '', url: '' };
-    const base64 = await fetchBase64Data(audio);
+    const base64 = audio.startsWith('https://') ? await fetchBase64Data(audio) : audio;
 
     // If the audio doesn't come from Igbo API S3, we will pass into IgboSpeech
     if (!audio.includes('igbo-api.s3.us-east-2')) {
-      const { data: response } = await axios.request({
-        method: 'POST',
-        url: `${SPEECH_TO_TEXT_API}/audio`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: { base64 },
-      });
+      const { data: response } = await axios
+        .request<AudioMetadata>({
+          method: 'POST',
+          url: `${SPEECH_TO_TEXT_API}/audio`,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': MAIN_KEY,
+          },
+          data: { base64 },
+        })
+        .catch((err) => {
+          console.log('Error requesting /audio', err);
+          return { data: { audioId: '', audioUrl: '' } };
+        });
 
-      const audioId = parseAWSIdFromKey(response.Key);
-      payload = { id: audioId, url: response.Location };
+      payload = { id: response.audioId, url: response.audioUrl };
     } else {
       const audioId = parseAWSIdFromUri(audio);
       payload = { id: audioId, url: audio };
@@ -50,11 +59,12 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       url: `${SPEECH_TO_TEXT_API}/predict`,
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': MAIN_KEY,
       },
       data: payload,
     });
 
-    return res.send(response);
+    return res.send({ transcription: response.transcription });
   } catch (err) {
     return next();
   }

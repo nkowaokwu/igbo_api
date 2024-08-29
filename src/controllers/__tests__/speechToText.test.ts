@@ -11,7 +11,10 @@ jest.mock('axios');
 jest.mock('../utils/fetchBase64Data');
 
 describe('speechToText', () => {
-  it('calls audio IgboSpeech audio endpoint to upload audio', async () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+  it('calls audio IgboSpeech audio endpoint to upload audio with url', async () => {
     const req = requestFixture({ body: { audioUrl: 'https://igboapi.com' } });
     const res = responseFixture();
     const next = nextFunctionFixture();
@@ -19,24 +22,59 @@ describe('speechToText', () => {
     // @ts-expect-error
     fetchBase64Data.mockResolvedValue(base64);
     jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { Key: '/audioId.com/', Location: 'https://igboapi.com' },
+      data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
     });
     await getTranscription(req, res, next);
     // @ts-expect-error
     expect(axios.request.mock.calls[0][0]).toMatchObject({
       method: 'POST',
-      url: 'https://speech.igboapi.com/audio',
+      url: 'http://localhost:3333/audio',
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
       },
       data: { base64 },
     });
     // @ts-expect-error
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
-      url: 'https://speech.igboapi.com/predict',
+      url: 'http://localhost:3333/predict',
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
+      },
+      data: { id: 'audioId', url: 'https://igboapi.com' },
+    });
+  });
+
+  it('calls audio IgboSpeech audio endpoint to upload audio with base64', async () => {
+    const base64 = 'data:audio';
+    const req = requestFixture({ body: { audioUrl: base64 } });
+    const res = responseFixture();
+    const next = nextFunctionFixture();
+    // @ts-expect-error
+    fetchBase64Data.mockResolvedValue(base64);
+    jest.spyOn(axios, 'request').mockResolvedValue({
+      data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
+    });
+    await getTranscription(req, res, next);
+    // @ts-expect-error
+    expect(axios.request.mock.calls[0][0]).toMatchObject({
+      method: 'POST',
+      url: 'http://localhost:3333/audio',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
+      },
+      data: { base64 },
+    });
+    // @ts-expect-error
+    expect(axios.request.mock.calls[1][0]).toMatchObject({
+      method: 'POST',
+      url: 'http://localhost:3333/predict',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
       },
       data: { id: 'audioId', url: 'https://igboapi.com' },
     });
@@ -57,17 +95,19 @@ describe('speechToText', () => {
     await getTranscription(req, res, next);
     expect(axios.request).not.toHaveBeenCalledWith({
       method: 'POST',
-      url: 'https://speech.igboapi.com/audio',
+      url: 'http://localhost:3333/audio',
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
       },
       data: { base64 },
     });
     expect(axios.request).toHaveBeenCalledWith({
       method: 'POST',
-      url: 'https://speech.igboapi.com/predict',
+      url: 'http://localhost:3333/predict',
       headers: {
         'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
       },
       data: { id: 'audioId', url: audioUrl },
     });
