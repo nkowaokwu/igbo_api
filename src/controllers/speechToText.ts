@@ -1,30 +1,13 @@
 import axios from 'axios';
 import { MiddleWare } from '../types';
+import { fetchBase64Data } from './utils/fetchBase64Data';
+import { parseAWSIdFromKey, parseAWSIdFromUri } from './utils/parseAWS';
 
 const SPEECH_TO_TEXT_API = 'https://speech.igboapi.com';
 
 interface Prediction {
   transcription: string;
 }
-
-/**
- * Parses out the document Id (typically the ExampleSuggestion) from the AWS URI.
- * @param awsId AWS URI
- * @returns Audio Id
- */
-const parseAWSId = (awsId: string) => awsId.split('.')[0].split('/')[1];
-
-/**
- * Fetches the audio from the url and returns its base64 string
- * @param url
- * @returns base64 string of audio
- */
-const fetchBase64Data = async (url: string) => {
-  const fetchedAudio = await fetch(url);
-  const data = await fetchedAudio.arrayBuffer();
-  const base64 = btoa(String.fromCharCode(...new Uint8Array(data)));
-  return base64;
-};
 
 /**
  * Talks to Speech-to-Text model to transcribe provided audio URL
@@ -41,7 +24,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
     }
 
     let payload = { id: '', url: '' };
-    const base64 = fetchBase64Data(audio);
+    const base64 = await fetchBase64Data(audio);
 
     // If the audio doesn't come from Igbo API S3, we will pass into IgboSpeech
     if (!audio.includes('igbo-api.s3.us-east-2')) {
@@ -54,10 +37,10 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
         data: { base64 },
       });
 
-      const audioId = parseAWSId(response.Key);
+      const audioId = parseAWSIdFromKey(response.Key);
       payload = { id: audioId, url: response.Location };
     } else {
-      const audioId = parseAWSId(audio);
+      const audioId = parseAWSIdFromUri(audio);
       payload = { id: audioId, url: audio };
     }
 
