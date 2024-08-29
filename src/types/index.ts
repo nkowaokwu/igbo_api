@@ -6,6 +6,7 @@ export type {
   OutgoingLegacyExample,
   ExampleDocument,
 } from './example';
+export type { DeveloperUsage, DeveloperUsageDocument } from './developerUsage';
 export type { Stat } from './stat';
 export type {
   IncomingWord,

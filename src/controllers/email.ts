@@ -7,13 +7,8 @@ import {
   SENDGRID_API_KEY,
   isTest,
   isProduction,
+  Environment,
 } from '../config';
-
-const sgMail = (process.env.NODE_ENV as string) !== 'build' ? require('@sendgrid/mail') : {};
-
-if (sgMail && sgMail.setApiKey && !isTest) {
-  sgMail.setApiKey(SENDGRID_API_KEY);
-}
 
 type EmailTemplate = {
   to: string[],
@@ -29,8 +24,16 @@ const constructMessage = (messageFields: EmailTemplate) => ({
 });
 
 /* Wrapper around SendGrid function to handle errors */
-export const sendEmail = (message: MailDataRequired) =>
-  !isTest
+export const sendEmail = (message: MailDataRequired) => {
+  const sgMail =
+    // eslint-disable-next-line global-require
+    (process.env.NODE_ENV as string) !== Environment.BUILD ? require('@sendgrid/mail') : {};
+
+  if (!isTest) {
+    sgMail.setApiKey(SENDGRID_API_KEY);
+  }
+
+  return !isTest
     ? sgMail
         .send(message)
         .then(() => {
@@ -51,6 +54,7 @@ export const sendEmail = (message: MailDataRequired) =>
         }
         return Promise.resolve();
       })();
+};
 
 type DeveloperEmailConfig = {
   apiKey: string,

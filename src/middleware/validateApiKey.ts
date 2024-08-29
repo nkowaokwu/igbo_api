@@ -1,7 +1,7 @@
-import { authorizeDeveloperUsage } from 'src/middleware/helpers/authorizeDeveloperUsage';
+import { authorizeDeveloperUsage } from './helpers/authorizeDeveloperUsage';
+import { findDeveloper } from './helpers/findDeveloper';
 import { MAIN_KEY, isDevelopment, isProduction } from '../config';
 import { MiddleWare } from '../types';
-import { findDeveloper } from './helpers/findDeveloper';
 
 const FALLBACK_API_KEY = 'fallback_api_key';
 
