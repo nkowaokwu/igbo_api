@@ -8,8 +8,8 @@ describe('database', () => {
   });
 
   it('disconnects from the database', async () => {
-    const connection = createDbConnection();
-    await handleCloseConnection(connection);
+    // @ts-expect-error connection
+    await handleCloseConnection({ readyState: 1, close: closeMock });
     expect(closeMock).toHaveBeenCalled();
   });
 });
