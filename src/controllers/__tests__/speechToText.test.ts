@@ -18,8 +18,7 @@ describe('speechToText', () => {
     const base64 = 'base64';
     // @ts-expect-error
     fetchBase64Data.mockResolvedValue(base64);
-    // @ts-expect-error
-    axios.request.mockResolvedValue({
+    jest.spyOn(axios, 'request').mockResolvedValue({
       data: { Key: '/audioId.com/', Location: 'https://igboapi.com' },
     });
     await getTranscription(req, res, next);
@@ -54,8 +53,7 @@ describe('speechToText', () => {
     const base64 = 'base64';
     // @ts-expect-error
     fetchBase64Data.mockResolvedValue(base64);
-    // @ts-expect-error
-    axios.request.mockResolvedValue({});
+    jest.spyOn(axios, 'request').mockResolvedValue({});
     await getTranscription(req, res, next);
     expect(axios.request).not.toHaveBeenCalledWith({
       method: 'POST',
