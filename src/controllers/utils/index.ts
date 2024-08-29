@@ -15,19 +15,19 @@ const createSimpleRegExp = (keywords: { text: string }[]) => ({
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`)
       .join('|')}`,
-    'i',
+    'i'
   ),
   exampleReg: new RegExp(
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).exampleReg.source})`)
       .join('|')}`,
-    'i',
+    'i'
   ),
   definitionsReg: new RegExp(
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).definitionsReg.source})`)
       .join('|')}`,
-    'i',
+    'i'
   ),
   hardDefinitionsReg: new RegExp(
     `${keywords
@@ -35,10 +35,10 @@ const createSimpleRegExp = (keywords: { text: string }[]) => ({
         (keyword) =>
           `(${
             (createRegExp(keyword.text, true).hardDefinitionsReg || { source: keyword.text }).source
-          })`,
+          })`
       )
       .join('|')}`,
-    'i',
+    'i'
   ),
 });
 
@@ -93,7 +93,7 @@ const convertFilterToKeyword = (filter = '{"word": ""}') => {
     return parsedFilter[firstFilterKey];
   } catch {
     throw new Error(
-      `Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`,
+      `Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`
     );
   }
 };
@@ -125,7 +125,6 @@ export const handleQueries = async ({
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '').replace(/[Aa]na m /, 'm ');
-  // const searchWordParts = compact(searchWord.split(' '));
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
   const keywords: Keyword[] = [];
   const page = parseInt(pageQuery, 10);
