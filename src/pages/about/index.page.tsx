@@ -1,13 +1,11 @@
 import React from 'react';
 import { Box, Heading, Text, Link, chakra } from '@chakra-ui/react';
 import { FiMail } from 'react-icons/fi';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { DICTIONARY_APP_URL } from '../../siteConstants';
 
 const About = () => (
   <Box className="flex flex-col items-center h-screen">
-    <Navbar to="/" />
     <Box
       className="flex flex-col px-8 mb-6 lg:justify-between xl:flex-row pt-10
       lg:pt-32 max-w-2xl lg:max-w-6xl text-gray-800 text-lg lg:text-xl w-full"
@@ -72,7 +70,6 @@ const About = () => (
         </Link>
       </Text>
     </Box>
-    <Footer />
   </Box>
 );
 

@@ -1,5 +1,20 @@
 import React from 'react';
-import { Box, Heading, Link, ListItem, UnorderedList } from '@chakra-ui/react';
+import {
+  Box,
+  Heading,
+  Link,
+  ListItem,
+  UnorderedList,
+  Text,
+  VStack,
+  HStack,
+  IconButton,
+  Tooltip,
+} from '@chakra-ui/react';
+import { FiGithub, FiTwitter, FiInstagram, FiLinkedin, FiYoutube, FiMail } from 'react-icons/fi';
+
+import Image from 'next/image';
+import nkowaokwuLogoWhite from '../../assets/nkowaokwu_white.svg';
 import {
   API_FROM_EMAIL,
   GITHUB_REPO,
@@ -10,11 +25,21 @@ import {
   NKOWAOKWU,
   NKOWAOKWU_CHROME,
   APP_URL,
+  SPEECH_TO_TEXT_APP_URL,
 } from '../../../siteConstants';
+
+const socialMedia = [
+  { label: 'GitHub', href: GITHUB_REPO, icon: <FiGithub color="white" /> },
+  { label: 'Twitter', href: TWITTER, icon: <FiTwitter color="white" /> },
+  { label: 'Instagram', href: INSTAGRAM, icon: <FiInstagram color="white" /> },
+  { label: 'LinkedIn', href: LINKEDIN, icon: <FiLinkedin color="white" /> },
+  { label: 'YouTube', href: YOUTUBE, icon: <FiYoutube color="white" /> },
+  { label: 'Email', href: `mailto:${API_FROM_EMAIL}`, icon: <FiMail color="white" /> },
+];
 
 const categories = [
   {
-    title: 'Projects',
+    title: 'Company',
     links: [
       {
         label: 'Igbo API',
@@ -28,27 +53,27 @@ const categories = [
         label: 'Chrome Extension',
         href: NKOWAOKWU_CHROME,
       },
+      {
+        label: 'IgboSpeech',
+        href: SPEECH_TO_TEXT_APP_URL,
+      },
     ],
   },
   {
-    title: 'About the Igbo API',
+    title: 'Resources',
     links: [
       {
-        label: 'About',
-        href: '/about',
+        label: 'Documentation',
+        href: '/docs',
       },
-      { label: 'GitHub', href: GITHUB_REPO },
-      { label: 'Twitter', href: TWITTER },
-    ],
-  },
-
-  {
-    title: 'More',
-    links: [
-      { label: 'Instagram', href: INSTAGRAM },
-      { label: 'LinkedIn', href: LINKEDIN },
-      { label: 'YouTube', href: YOUTUBE },
-      { label: 'Email', href: `mailto:${API_FROM_EMAIL}` },
+      {
+        label: 'Share Feedback',
+        href: '#',
+      },
+      {
+        label: 'Feature Request',
+        href: '#',
+      },
     ],
   },
   {
@@ -67,25 +92,31 @@ const categories = [
 ];
 
 const Footer = () => (
-  <Box className="flex flex-col justify-center items-center w-full">
-    <Box className="w-full bg-gray-100" style={{ height: '1px' }} />
-    <footer className="w-9/12 grid grid-cols-1 lg:grid-cols-5 bg-gradient-to-t py-16 space-y-8 lg:space-y-0">
-      <Box className="flex flex-row items-start">
+  <VStack
+    className="flex flex-col justify-center items-center w-full py-12"
+    backgroundColor="blue.900"
+    mt={12}
+    gap={12}
+  >
+    <footer className="w-11/12 grid grid-cols-1 lg:grid-cols-4 space-y-8 lg:space-y-0">
+      <VStack alignItems="start">
         <Link href="/">
-          <Heading fontSize="2xl" pb="0" textAlign="left">
-            IgboAPI
-          </Heading>
+          <Image src={nkowaokwuLogoWhite} alt="Nkọwa okwu logo" height={30} />
         </Link>
-      </Box>
+        <Text color="white">
+          Join the growing number of professionals and educators who trust IgboSpeech for their
+          transcription needs.
+        </Text>
+      </VStack>
       {categories.map(({ title, links }) => (
         <Box key={title} className="space-y-2">
-          <Heading as="h3" fontSize="md">
+          <Heading as="h3" fontSize="xl" color="white">
             {title}
           </Heading>
           <UnorderedList className="space-y-2" ml={0}>
             {links.map(({ label, href }) => (
               <ListItem key={label} listStyleType="none">
-                <Link href={href} fontWeight="normal" color="gray.500">
+                <Link href={href} fontWeight="normal" color="white">
                   {label}
                 </Link>
               </ListItem>
@@ -94,7 +125,27 @@ const Footer = () => (
         </Box>
       ))}
     </footer>
-  </Box>
+    <HStack display="flex" justifyContent="space-between" className="w-11/12">
+      <Text color="white" textAlign="left" flex={1}>
+        © {new Date().getFullYear()} Nkọwa okwu. All rights reserved.
+      </Text>
+      {socialMedia.map(({ label, href, icon }) => (
+        <Tooltip label={label} key={label}>
+          <IconButton
+            aria-label={label}
+            icon={icon}
+            variant="ghost"
+            _hover={{ backgroundColor: 'transparent' }}
+            _active={{ backgroundColor: 'transparent' }}
+            _focus={{ backgroundColor: 'transparent' }}
+            onClick={() => {
+              window.location.href = href;
+            }}
+          />
+        </Tooltip>
+      ))}
+    </HStack>
+  </VStack>
 );
 
 export default Footer;
