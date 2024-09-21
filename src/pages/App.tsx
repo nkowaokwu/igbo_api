@@ -10,7 +10,7 @@ import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
 import GitHubStars from './components/GitHubStars';
 import Features from './components/Features';
-import { DatabaseStats, GitHubStats, Word } from '../types';
+import { DatabaseStats, GitHubStats, OutgoingWord as Word } from '../types';
 
 const App = ({
   searchWord,
