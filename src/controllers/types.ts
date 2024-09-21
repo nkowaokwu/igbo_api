@@ -1,22 +1,19 @@
-import { Example, LegacyWordDocument, Word, WordDocument } from '../types';
+import { Document } from 'mongoose';
+import { OutgoingExample, OutgoingLegacyExample, OutgoingWord, OutgoingLegacyWord } from '../types';
 
 type ResponseData = {
-  contentLength: number;
-};
-
-export type ExampleWithPronunciation = Omit<Example, 'pronunciations'> & {
-  pronunciation: string;
+  contentLength: number,
 };
 
 export interface ExampleResponseData extends ResponseData {
-  examples: Example[] | ExampleWithPronunciation[];
+  examples: OutgoingExample[] | OutgoingLegacyExample[];
 }
 
 export interface WordResponseData extends ResponseData {
-  words: Partial<Word | WordDocument | LegacyWordDocument>[];
+  words: Partial<OutgoingWord | Document<OutgoingWord> | Document<OutgoingLegacyWord>>[];
 }
 
 export type Filters = {
-  tags?: { $in: string[] };
-  'definitions.wordClass'?: { $in: string[] };
+  tags?: { $in: string[] },
+  'definitions.wordClass'?: { $in: string[] },
 };

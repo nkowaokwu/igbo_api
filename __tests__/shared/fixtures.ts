@@ -3,15 +3,16 @@ import { capitalize } from 'lodash';
 import { NextFunction, Request, Response } from 'express';
 import { SuggestionSourceEnum } from '../../src/shared/constants/SuggestionSourceEnum';
 import WordAttributeEnum from '../../src/shared/constants/WordAttributeEnum';
-import { Example, Word } from '../../src/types';
+import { OutgoingExample, OutgoingWord } from '../../src/types';
 import { WordDialect } from '../../src/types/word';
 import { Flags } from '../../src/controllers/utils/types';
+import LanguageEnum from '../../src/shared/constants/LanguageEnum';
 
 interface RequestOptions {
   noAuthorizationHeader?: boolean;
 }
 
-export const wordFixture = (data?: Partial<Word>) => ({
+export const wordFixture = (data?: Partial<OutgoingWord>) => ({
   attributes: Object.values(WordAttributeEnum).reduce(
     (finalAttributes, attribute) => ({ ...finalAttributes, [attribute]: false }),
     {}
@@ -34,17 +35,17 @@ export const wordFixture = (data?: Partial<Word>) => ({
   ...data,
 });
 
-export const exampleFixture = (data?: Partial<Example>) => ({
+export const exampleFixture = (data?: Partial<OutgoingExample>) => ({
   id: `${new Types.ObjectId()}`,
   associatedDefinitionsSchemas: [],
   associatedWords: [],
-  english: '',
-  igbo: '',
+  source: { text: '', language: LanguageEnum.UNSPECIFIED, pronunciations: [] },
+  translations: [{ text: '', language: LanguageEnum.UNSPECIFIED, pronunciations: [] }],
   meaning: '',
   nsibidi: '',
   nsibidiCharacters: [],
   pronunciations: [],
-  source: SuggestionSourceEnum.INTERNAL,
+  origin: SuggestionSourceEnum.INTERNAL,
   updatedAt: new Date(),
   ...data,
 });

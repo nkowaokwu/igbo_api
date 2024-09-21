@@ -1,5 +1,5 @@
 import { Document, Types } from 'mongoose';
-import { Example } from './example';
+import { IncomingExample } from './example';
 import DialectEnum from '../shared/constants/DialectEnum';
 import WordAttributeEnum from '../shared/constants/WordAttributeEnum';
 
@@ -32,7 +32,6 @@ type Attribute = { [key in WordAttributeEnum]: boolean };
 interface WordBase {
   attributes: Attribute;
   conceptualWord: string;
-  examples?: Example[];
   frequency: number;
   hypernyms: string[];
   hyponyms: string[];
@@ -46,30 +45,27 @@ interface WordBase {
   wordPronunciation: string;
 }
 
-export interface Word extends WordBase {
+export interface IncomingWord extends WordBase {
   definitions: Definition[];
   dialects: WordDialect[];
   tags: string[];
+  examples?: IncomingExample[];
 }
 
-export interface LegacyWord extends WordBase {
+export interface IncomingLegacyWord extends WordBase {
   definitions: string[];
   wordClass: WordClass;
   nsibidi: string;
   dialects: LegacyWordDialect;
+  examples?: IncomingExample[];
 }
 
-export interface WordDocument extends Word, Document<any> {
-  _id?: Types.ObjectId;
-  __v?: number;
-  id: string;
-}
+export interface OutgoingWord extends IncomingWord {}
 
-export interface LegacyWordDocument extends LegacyWord, Document<any> {
-  _id?: Types.ObjectId;
-  __v?: number;
-  id: string;
-}
+export interface OutgoingLegacyWord extends IncomingLegacyWord {}
 
-export type WordType = Word | WordDocument | LegacyWordDocument;
-export type PartialWordType = Partial<Word> | Partial<WordDocument> | Partial<LegacyWordDocument>;
+export type WordType = OutgoingWord | Document<OutgoingWord> | Document<OutgoingLegacyWord>;
+export type PartialWordType =
+  | Partial<OutgoingWord>
+  | Document<Partial<OutgoingWord>>
+  | Document<Partial<OutgoingLegacyWord>>;

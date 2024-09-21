@@ -15,6 +15,6 @@ export default async () => {
   }
   await populateAPI();
   await new Promise((resolve) => {
-    setTimeout(resolve, 10000);
+    setTimeout(resolve, 2000);
   });
 };
