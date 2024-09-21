@@ -11,6 +11,7 @@ import WordClass from '../shared/constants/WordClass';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { MiddleWare } from '../types/express';
 import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
+import LanguageEnum from '../shared/constants/LanguageEnum';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -56,8 +57,8 @@ const populate = async (connection: Connection) => {
           definitions: [{ text: defs || '' }],
           pronunciation: pro || '',
           wordClass:
-            Object.values(WordClass).find(({ nsibidiValue }) => nsibidiValue === form)?.nsibidiValue ||
-            WordClass.ADJ.nsibidiValue,
+            Object.values(WordClass).find(({ nsibidiValue }) => nsibidiValue === form)
+              ?.nsibidiValue || WordClass.ADJ.nsibidiValue,
           radicals: [],
         };
         return createNsibidiCharacter(nsibidi, connection);
@@ -71,8 +72,14 @@ const populate = async (connection: Connection) => {
           return map(value, (term) => {
             const example = {
               id: term.word,
-              igbo: term.word,
-              english: `translation of ${term.word}`,
+              source: { text: term.word, language: LanguageEnum.IGBO, pronunciations: [] },
+              translations: [
+                {
+                  text: `translation of ${term.word}`,
+                  language: LanguageEnum.ENGLISH,
+                  pronunciations: [],
+                },
+              ],
               pronunciations: [],
               style: index % 3 ? ExampleStyleEnum.PROVERB : ExampleStyleEnum.NO_STYLE,
               associatedWords: [words[index].id],

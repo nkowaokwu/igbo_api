@@ -169,7 +169,7 @@ export const findExamplesWithMatch = async ({
     // Returns only the first pronunciation for the example sentence
     const allExamples = (await examples).map((example) => {
       const cleanedExample = merge(example, { pronunciation: '' });
-      cleanedExample.pronunciation = cleanedExample.pronunciations[0]?.audio;
+      cleanedExample.pronunciation = cleanedExample.source.pronunciations?.[0]?.audio || '';
 
       // To prevent v1 an v2, source and translations will be converted back to igbo and english
       cleanedExample.igbo = cleanedExample.source?.text;

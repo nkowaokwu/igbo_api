@@ -3,13 +3,12 @@ import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 import LanguageEnum from '../shared/constants/LanguageEnum';
 
 export type Example = {
-  id: string,
   associatedDefinitionsSchemas: string[],
   associatedWords: string[],
   english?: string,
   igbo?: string,
-  source?: Translation,
-  translations?: Translation[],
+  source: Translation,
+  translations: Translation[],
   meaning?: string,
   nsibidi?: string,
   nsibidiCharacters: string[],
@@ -19,9 +18,9 @@ export type Example = {
 };
 
 type Translation = {
-  _id: string,
   language: LanguageEnum,
   text: string,
+  pronunciations: Pronunciation[],
 };
 
 type Pronunciation = {

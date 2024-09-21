@@ -116,7 +116,10 @@ export const searchExamplesRegexQuery = ({
 }) => ({
   $and: [
     {
-      $or: [{ source: { text: regex.exampleReg } }, { 'translations.text': regex?.definitionsReg }],
+      $or: [
+        { 'source.text': { $regex: regex.exampleReg } },
+        { 'translations.text': regex?.definitionsReg },
+      ],
     },
     // Only getting Examples that are created in the Igbo API Editor Platform
     { $or: [{ origin: { $exists: false } }, { origin: { $eq: SuggestionSourceEnum.INTERNAL } }] },
