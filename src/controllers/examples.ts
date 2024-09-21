@@ -29,15 +29,22 @@ export const createExample = async (data: ExampleType, connection: Connection) =
 };
 
 type SearchExamplesArg = {
-  limit: number;
-  query: PipelineStage.Match['$match'];
-  redisClient: RedisClientType | undefined;
-  searchWord: string;
-  skip: number;
-  version: Version;
+  limit: number,
+  query: PipelineStage.Match['$match'],
+  redisClient: RedisClientType | undefined,
+  searchWord: string,
+  skip: number,
+  version: Version,
 };
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = async ({ redisClient, searchWord, query, version, skip, limit }: SearchExamplesArg) => {
+const searchExamples = async ({
+  redisClient,
+  searchWord,
+  query,
+  version,
+  skip,
+  limit,
+}: SearchExamplesArg) => {
   let responseData: ExampleResponseData = { contentLength: 0, examples: [] };
   const redisExamplesCacheKey = `example-${searchWord}-${version}`;
   const cachedExamples = await getCachedExamples({ key: redisExamplesCacheKey, redisClient });
@@ -73,7 +80,7 @@ export const getExamples: MiddleWare = async (req, res, next) => {
     const regexMatch =
       !isUsingMainKey && !searchWord
         ? {
-            igbo: { $exists: false },
+            source: { $exists: false },
           }
         : searchExamplesRegexQuery({ regex, flags });
     const responseData = await searchExamples({

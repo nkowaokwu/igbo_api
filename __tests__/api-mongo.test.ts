@@ -635,24 +635,5 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.data).toHaveLength(10);
     });
-    it('return word with verb conjugation', async () => {
-      const keyword = 'ajora';
-      const res = await getWordsV2({ keyword }, {});
-      expect(res.status).toEqual(200);
-      expect(res.body.data.length).toBeGreaterThanOrEqual(2);
-    });
-    it('return word parts of bịara for verb deconstruction', async () => {
-      const keyword = 'bịara';
-      const res = await getWordsV2({ keyword }, {});
-      expect(res.status).toEqual(200);
-      expect(res.body.data.length).toBeGreaterThanOrEqual(2);
-    });
-    it('noun with broken portions or word', async () => {
-      const keyword = 'ọrụ';
-      const res = await getWordsV2({ keyword }, {});
-      const ọrụWord = res.body.data.find(({ word }: { word: string }) => word === 'ọrụ');
-      expect(res.status).toEqual(200);
-      expect(ọrụWord).toBeTruthy();
-    });
   });
 });

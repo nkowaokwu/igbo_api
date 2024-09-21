@@ -22,7 +22,7 @@ export const handleWordFlags = ({
       } else if (updatedWord.examples) {
         // Only includes Examples that are created in the Igbo API Editor Platform
         updatedWord.examples = updatedWord.examples.filter(
-          (example) => !example.source || example.source === SuggestionSourceEnum.INTERNAL
+          (example) => !example.origin || example.origin === SuggestionSourceEnum.INTERNAL
         );
       }
       if (!dialects) {

@@ -157,8 +157,8 @@ export const findExamplesWithMatch = async ({
     examples = examples.project({
       id: '$_id',
       _id: 0,
-      igbo: 1,
-      english: 1,
+      source: 1,
+      translations: 1,
       meaning: 1,
       style: 1,
       associatedWords: 1,
@@ -170,6 +170,10 @@ export const findExamplesWithMatch = async ({
     const allExamples = (await examples).map((example) => {
       const cleanedExample = merge(example, { pronunciation: '' });
       cleanedExample.pronunciation = cleanedExample.pronunciations[0]?.audio;
+
+      // To prevent v1 an v2, source and translations will be converted back to igbo and english
+      cleanedExample.igbo = cleanedExample.source?.text;
+      cleanedExample.english = cleanedExample.translations?.[0]?.text;
       return omit(cleanedExample, ['pronunciations']);
     });
     const contentLength = allExamples.length;

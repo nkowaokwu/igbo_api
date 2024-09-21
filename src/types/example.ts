@@ -1,5 +1,6 @@
 import { Document, Types } from 'mongoose';
 import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
+import LanguageEnum from '../shared/constants/LanguageEnum';
 
 export type Example = {
   id: string,
@@ -7,12 +8,20 @@ export type Example = {
   associatedWords: string[],
   english?: string,
   igbo?: string,
+  source?: Translation,
+  translations?: Translation[],
   meaning?: string,
   nsibidi?: string,
   nsibidiCharacters: string[],
   pronunciations: Pronunciation[],
-  source?: SuggestionSourceEnum,
+  origin?: SuggestionSourceEnum,
   updatedAt: Date,
+};
+
+type Translation = {
+  _id: string,
+  language: LanguageEnum,
+  text: string,
 };
 
 type Pronunciation = {

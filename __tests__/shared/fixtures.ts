@@ -44,7 +44,7 @@ export const exampleFixture = (data?: Partial<Example>) => ({
   nsibidi: '',
   nsibidiCharacters: [],
   pronunciations: [],
-  source: SuggestionSourceEnum.INTERNAL,
+  origin: SuggestionSourceEnum.INTERNAL,
   updatedAt: new Date(),
   ...data,
 });

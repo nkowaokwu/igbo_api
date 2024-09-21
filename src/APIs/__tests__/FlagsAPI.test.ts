@@ -8,8 +8,8 @@ describe('FlagsAPI', () => {
       word: 'first word',
       examples: [
         exampleFixture({ igbo: 'first example' }),
-        exampleFixture({ igbo: 'second example', source: SuggestionSourceEnum.INTERNAL }),
-        exampleFixture({ igbo: 'second example', source: SuggestionSourceEnum.IGBO_SPEECH }),
+        exampleFixture({ igbo: 'second example', origin: SuggestionSourceEnum.INTERNAL }),
+        exampleFixture({ igbo: 'second example', origin: SuggestionSourceEnum.IGBO_SPEECH }),
       ],
     }),
     wordFixture({

@@ -2,12 +2,22 @@ import mongoose from 'mongoose';
 import { toJSONPlugin, toObjectPlugin } from './plugins';
 import ExampleStyles from '../shared/constants/ExampleStyles';
 import SentenceTypes from '../shared/constants/SentenceTypes';
+import LanguageEnum from '../shared/constants/LanguageEnum';
 
 const { Schema, Types } = mongoose;
+
+const languageSuggestionSchema = new Schema({
+  language: { type: String, enum: Object.values(LanguageEnum), default: LanguageEnum.UNSPECIFIED },
+  text: { type: String, default: '', trim: true },
+});
+
 export const exampleSchema = new Schema(
   {
-    igbo: { type: String, default: '' },
-    english: { type: String, default: '' },
+    source: {
+      type: languageSuggestionSchema,
+      default: { language: LanguageEnum.UNSPECIFIED, text: '' },
+    },
+    translations: { type: [{ type: languageSuggestionSchema }], default: [] },
     meaning: { type: String, default: '' },
     nsibidi: { type: String, default: '' },
     type: {
@@ -39,10 +49,10 @@ exampleSchema.index({
   associatedWords: 1,
 });
 exampleSchema.index({
-  english: 1,
+  source: 1,
 });
 exampleSchema.index({
-  igbo: 1,
+  translations: 1,
 });
 
 toJSONPlugin(exampleSchema);
