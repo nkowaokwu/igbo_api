@@ -16,9 +16,7 @@ export type IncomingExample = ExampleBase & {
   translations: Translation[],
 };
 
-export type OutgoingExample = IncomingExample & {
-  pronunciation: string,
-};
+export type OutgoingExample = IncomingExample & {};
 
 export type OutgoingLegacyExample = ExampleBase & {
   igbo: string,

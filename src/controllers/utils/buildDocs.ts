@@ -12,7 +12,6 @@ import {
   IncomingExample,
   NsibidiCharacter as NsibidiCharacterType,
   OutgoingExample,
-  OutgoingLegacyExample,
   OutgoingWord,
   OutgoingLegacyWord,
 } from '../../types';
@@ -34,7 +33,7 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
         delete updatedNestedDoc._id;
         delete updatedNestedDoc.__v;
         return updatedNestedDoc;
-      },
+      }
     );
     return updatedDoc;
   });
@@ -48,7 +47,7 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
  */
 const generateAggregationBase = <T>(
   Model: ModelType<T>,
-  match: PipelineStage.Match['$match'],
+  match: PipelineStage.Match['$match']
 ): Aggregate<T[]> => Model.aggregate<T>().match(match);
 
 /* Performs a outer left lookup to append associated examples
@@ -135,7 +134,7 @@ export const findWordsWithMatch = async ({
               dialects: dialect.dialects.map((d) => Dialects[d].label),
             },
           }),
-          {},
+          {}
         );
         return word;
       }
@@ -177,11 +176,21 @@ export const findExamplesWithMatch = async ({
 
     // Returns only the first pronunciation for the example sentence
     const allExamples = (await examples).map((example) => {
-      const cleanedExample: OutgoingLegacyExample = omit(
-        assign({ ...example, igbo: '', english: '', pronunciation: '' }),
-        ['source', 'translations'],
+      const cleanedExample = omit(
+        assign({
+          ...example,
+          igbo: '',
+          english: '',
+          pronunciation: '',
+          pronunciations: [] as string[],
+        }),
+        ['source', 'translations']
       );
-      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
+      if (version === Version.VERSION_1) {
+        cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
+      } else {
+        cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
+      }
 
       // To prevent v1 an v2, source and translations will be converted back to igbo and english
       cleanedExample.igbo = example.source.text;
@@ -209,7 +218,7 @@ export const findNsibidiCharactersWithMatch = async ({
   const connection = createDbConnection();
   const NsibidiCharacter = connection.model<NsibidiCharacterType>(
     'NsibidiCharacter',
-    nsibidiCharacterSchema,
+    nsibidiCharacterSchema
   );
 
   if (version !== Version.VERSION_2) {

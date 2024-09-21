@@ -11,8 +11,8 @@ import { IncomingExample, MiddleWare, OutgoingExample, OutgoingLegacyExample } f
 import Version from '../shared/constants/Version';
 import { ExampleResponseData } from './types';
 
-/* Converts the pronunciations field to pronunciation for v1 */
-export const convertExamplePronunciations = (example: OutgoingExample): OutgoingLegacyExample => {
+/* Converts example for v1 */
+export const convertToV1Example = (example: OutgoingExample): OutgoingLegacyExample => {
   const updatedExample = assign(example);
   const exampleWithPronunciation = {
     ...omit(updatedExample, ['source', 'translations']),
@@ -20,6 +20,19 @@ export const convertExamplePronunciations = (example: OutgoingExample): Outgoing
     english: updatedExample.translations[0].text,
     pronunciation: updatedExample.source.pronunciations?.[0]?.audio || '',
   };
+  return exampleWithPronunciation;
+};
+
+/* Converts example for v2 */
+export const convertToV2Example = (example: OutgoingExample): OutgoingExample => {
+  const updatedExample = assign(example);
+  const exampleWithPronunciation = {
+    ...omit(updatedExample, ['source', 'translations']),
+    igbo: updatedExample.source.text,
+    english: updatedExample.translations[0].text,
+    pronunciations: updatedExample.source.pronunciations.map(({ audio }) => audio),
+  };
+  // @ts-expect-error different versions
   return exampleWithPronunciation;
 };
 
@@ -128,9 +141,9 @@ export const getExample: MiddleWare = async (req, res, next) => {
         throw new Error('No example exists with the provided id.');
       }
       if (version === Version.VERSION_1) {
-        return convertExamplePronunciations(example.toJSON());
+        return convertToV1Example(example.toJSON());
       }
-      return example;
+      return convertToV2Example(example.toJSON());
     });
     return packageResponse({
       res,

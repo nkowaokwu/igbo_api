@@ -1,21 +1,24 @@
 import { exampleFixture } from '../../__tests__/shared/fixtures';
-import { convertExamplePronunciations } from '../examples';
+import LanguageEnum from '../../shared/constants/LanguageEnum';
+import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
+import { convertToV1Example } from '../examples';
 
 describe('examples', () => {
   it('converts example pronunciations to pronunciation for v1', () => {
-    const updatedAt = new Date();
     const example = exampleFixture({
-      igbo: 'igbo',
-      english: 'english',
+      source: {
+        text: 'igbo',
+        language: LanguageEnum.IGBO,
+        pronunciations: [
+          { audio: 'first audio', speaker: '', _id: '', approvals: [], denials: [], review: true },
+        ],
+      },
+      translations: [{ text: 'english', language: LanguageEnum.ENGLISH, pronunciations: [] }],
       meaning: 'meaning',
       nsibidi: 'nsibidi',
-      pronunciations: [
-        { audio: 'first audio', speaker: '', _id: '', approvals: [], denials: [], review: true },
-      ],
-      updatedAt,
     });
 
-    expect(convertExamplePronunciations(example)).toEqual({
+    expect(convertToV1Example(example)).toMatchObject({
       id: '',
       igbo: 'igbo',
       english: 'english',
@@ -25,7 +28,6 @@ describe('examples', () => {
       associatedDefinitionsSchemas: [],
       associatedWords: [],
       nsibidiCharacters: [],
-      updatedAt,
     });
   });
 });

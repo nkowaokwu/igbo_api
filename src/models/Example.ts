@@ -9,6 +9,15 @@ const { Schema, Types } = mongoose;
 const languageSuggestionSchema = new Schema({
   language: { type: String, enum: Object.values(LanguageEnum), default: LanguageEnum.UNSPECIFIED },
   text: { type: String, default: '', trim: true },
+  pronunciations: {
+    type: [
+      {
+        audio: { type: String, default: '' },
+        speaker: { type: String, default: '' },
+      },
+    ],
+    default: [],
+  },
 });
 
 export const exampleSchema = new Schema(
@@ -32,15 +41,6 @@ export const exampleSchema = new Schema(
     },
     associatedWords: { type: [{ type: Types.ObjectId, ref: 'Word' }], default: [] },
     associatedDefinitionsSchemas: { type: [{ type: Types.ObjectId }], default: [] },
-    pronunciations: {
-      type: [
-        {
-          audio: { type: String, default: '' },
-          speaker: { type: String, default: '' },
-        },
-      ],
-      default: [],
-    },
   },
   { toObject: toObjectPlugin, timestamps: true }
 );

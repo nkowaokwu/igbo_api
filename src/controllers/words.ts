@@ -123,6 +123,7 @@ export const getWord: MiddleWare = async (req, res, next) => {
 
     return packageResponse({
       res,
+      // @ts-expect-error different versions
       docs: updatedWord,
       contentLength: 1,
       version,

@@ -18,7 +18,7 @@ import { expectUniqSetsOfResponses } from './shared/utils';
 import createRegExp from '../src/shared/utils/createRegExp';
 import { createDbConnection, handleCloseConnection } from '../src/services/database';
 import Tenses from '../src/shared/constants/Tenses';
-import { Word as WordType } from '../src/types';
+import { IncomingWord as WordType } from '../src/types';
 import WordClassEnum from '../src/shared/constants/WordClassEnum';
 
 jest.unmock('mongoose');
@@ -405,7 +405,7 @@ describe('MongoDB Words', () => {
       expect(res.status).toEqual(200);
       expect(res.body.length).toBeLessThanOrEqual(10);
       expect(res.body[0].word).toEqual('-mụ-mù');
-      expect(some(res.body, (word) => isEqual(word.variations, ['-mu-mù']))).toEqual(true);
+      expect(res.body[0].variations).toEqual(['-mu-mù']);
     });
 
     it('return unique words when searching for term', async () => {

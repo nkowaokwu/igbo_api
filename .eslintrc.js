@@ -40,6 +40,7 @@ module.exports = {
     '@next/next/no-html-link-for-pages': ['off'],
     '@next/next/no-img-element': ['off'],
     '@typescript-eslint/no-empty-interface': ['off'],
+    '@typescript-eslint/ban-types': ['off'],
   },
   overrides: [
     {
@@ -85,6 +86,7 @@ module.exports = {
         ],
         '@typescript-eslint/no-empty-function': ['warn'],
         '@typescript-eslint/no-empty-interface': ['off'],
+        '@typescript-eslint/ban-types': ['off'],
         'prefer-const': 'error',
       },
     },

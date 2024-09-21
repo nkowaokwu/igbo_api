@@ -12,6 +12,7 @@ import { OutgoingExample } from '../../types';
 
 type MinimizedWord = Omit<
   Partial<OutgoingWord> | Partial<OutgoingLegacyWord>,
+  // @ts-expect-error trailing comma
   'definitions' | 'examples' | 'dialects' | 'relatedTerms' | 'stems',
 > & {
   definitions: Partial<Definition>[] | string[] | undefined,
@@ -23,7 +24,7 @@ type MinimizedWord = Omit<
 };
 const minimizeWords = (
   words: Partial<OutgoingWord>[] | Partial<OutgoingLegacyWord>[],
-  version: Version,
+  version: Version
 ) => {
   const minimizedWords = words.map((word) => {
     let minimizedWord: Partial<MinimizedWord> = assign(word);

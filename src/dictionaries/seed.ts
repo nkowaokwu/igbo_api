@@ -68,14 +68,14 @@ const populate = async (connection: Connection) => {
                 stems: [],
                 id: '',
                 updatedAt: new Date(),
-                variations: [],
+                variations: term.variations,
                 wordPronunciation: '',
               };
               return createWord(word, connection);
-            }),
+            })
           );
-        }),
-      ),
+        })
+      )
     );
     const nsibidiCharacters = await Promise.all(
       nsibidiDictionary.map(({ sym, pro, form, defs }) => {
@@ -89,7 +89,7 @@ const populate = async (connection: Connection) => {
           radicals: [],
         };
         return createNsibidiCharacter(nsibidi, connection);
-      }),
+      })
     );
     const examples = await Promise.all(
       flatten(
@@ -119,8 +119,8 @@ const populate = async (connection: Connection) => {
             };
             return createExample(example, connection);
           });
-        }),
-      ),
+        })
+      )
     );
 
     /* Waits for all the MongoDB document save promises to resolve */

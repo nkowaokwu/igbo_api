@@ -11,7 +11,9 @@ describe('queries', () => {
     const query = searchExamplesRegexQuery({ regex, flags });
     expect(query.$and).toHaveLength(2);
     expect(query.$and[0].$or).toMatchObject([
-      { source: { text: /(\W|^)((t)([eEèéēÈÉĒ]+[´́`¯̣̄̀]{0,})(s)(t)(?:es|[sx]|ing)?)(\W|$)/i } },
+      {
+        'source.text': { $regex: /(\W|^)((t)([eEèéēÈÉĒ]+[´́`¯̣̄̀]{0,})(s)(t)(?:es|[sx]|ing)?)(\W|$)/i },
+      },
       { 'translations.text': /(\W|^)((t)([eEèéēÈÉĒ]+[´́`¯̣̄̀]{0,})(s)(t)(?:es|[sx]|ing)?)(\W|$)/i },
     ]);
     expect(query.$and[1].$or).toEqual([

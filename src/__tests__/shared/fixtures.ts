@@ -1,7 +1,9 @@
+import LanguageEnum from '../../shared/constants/LanguageEnum';
+import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
 import WordClass from '../../shared/constants/WordClass';
-import { Word, Definition, Example } from '../../types';
+import { Definition, IncomingExample, IncomingWord } from '../../types';
 
-export const wordFixture = (wordData: Partial<Word>) => ({
+export const wordFixture = (wordData: Partial<IncomingWord>) => ({
   definitions: [],
   dialects: [],
   tags: [],
@@ -40,16 +42,16 @@ export const definitionFixture = (definitionData: Partial<Definition>) => ({
   ...definitionData,
 });
 
-export const exampleFixture = (exampleData: Partial<Example>) => ({
-  igbo: '',
-  english: '',
+export const exampleFixture = (exampleData: Partial<IncomingExample>) => ({
+  source: { text: '', language: LanguageEnum.UNSPECIFIED, pronunciations: [] },
+  translations: [{ text: '', language: LanguageEnum.UNSPECIFIED, pronunciations: [] }],
   meaning: '',
   nsibidi: '',
-  pronunciations: [],
   id: '',
   associatedDefinitionsSchemas: [],
   associatedWords: [],
   nsibidiCharacters: [],
   updatedAt: new Date(),
+  origin: SuggestionSourceEnum.INTERNAL,
   ...exampleData,
 });
