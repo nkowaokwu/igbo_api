@@ -1,6 +1,6 @@
 import { Response } from 'express';
 import { Connection } from 'mongoose';
-import { map, flatten, keys, omit } from 'lodash';
+import { map, flatten, keys } from 'lodash';
 import { createWord } from '../controllers/words';
 import { createNsibidiCharacter } from '../controllers/nsibidi';
 import { createExample } from '../controllers/examples';
@@ -12,6 +12,7 @@ import { createDbConnection, handleCloseConnection } from '../services/database'
 import { MiddleWare } from '../types/express';
 import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
 import LanguageEnum from '../shared/constants/LanguageEnum';
+import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -27,28 +28,54 @@ const populate = async (connection: Connection) => {
           const value = dictionary[key];
           return Promise.all(
             map(value, (term) => {
-              const word = omit({ ...term }, ['stems']);
-              const cleanedKey = key.replace(/\./g, '');
-              word.word = key;
-              word.definitions = [
-                {
-                  wordClass: word.wordClass || WordClass.NNC.value,
-                  definitions: word.definitions,
+              const word = {
+                word: key,
+                definitions: [
+                  {
+                    wordClass: term.wordClass || WordClass.NNC.value,
+                    definitions: term.definitions,
+                    igboDefinitions: [],
+                    nsibidi: '',
+                    nsibidiCharacters: [],
+                  },
+                ],
+                dialects: [
+                  {
+                    id: '',
+                    dialects: [Dialects.NSA.value],
+                    variations: [],
+                    pronunciation: '',
+                    word: `${key.replace(/\./g, '')}-dialect`,
+                  },
+                ],
+                tags: [],
+                attributes: {
+                  isAccented: false,
+                  isBorrowedTerm: false,
+                  isCommon: false,
+                  isComplete: false,
+                  isConstructedTerm: false,
+                  isSlang: false,
+                  isStandardIgbo: false,
+                  isStem: false,
                 },
-              ];
-              word.dialects = [
-                {
-                  dialects: [Dialects.NSA.value],
-                  variations: [],
-                  pronunciation: '',
-                  word: `${cleanedKey}-dialect`,
-                },
-              ];
+                conceptualWord: '',
+                frequency: 0,
+                hypernyms: [],
+                hyponyms: [],
+                pronunciation: '',
+                relatedTerms: [],
+                stems: [],
+                id: '',
+                updatedAt: new Date(),
+                variations: [],
+                wordPronunciation: '',
+              };
               return createWord(word, connection);
-            })
+            }),
           );
-        })
-      )
+        }),
+      ),
     );
     const nsibidiCharacters = await Promise.all(
       nsibidiDictionary.map(({ sym, pro, form, defs }) => {
@@ -62,7 +89,7 @@ const populate = async (connection: Connection) => {
           radicals: [],
         };
         return createNsibidiCharacter(nsibidi, connection);
-      })
+      }),
     );
     const examples = await Promise.all(
       flatten(
@@ -86,11 +113,14 @@ const populate = async (connection: Connection) => {
               associatedDefinitionsSchemas: [],
               nsibidiCharacters: [],
               updatedAt: new Date(),
+              meaning: '',
+              nsibidi: '',
+              origin: SuggestionSourceEnum.INTERNAL,
             };
             return createExample(example, connection);
           });
-        })
-      )
+        }),
+      ),
     );
 
     /* Waits for all the MongoDB document save promises to resolve */

@@ -1,4 +1,4 @@
-import map from 'lodash/map';
+import { map, omit } from 'lodash';
 import mongoose from 'mongoose';
 import isWord from 'is-word';
 import removePrefix from '../shared/utils/removePrefix';
@@ -14,7 +14,7 @@ import { createExample } from './examples';
 import { wordSchema } from '../models/Word';
 import { handleWordFlags } from '../APIs/FlagsAPI';
 import minimizeWords from './utils/minimizeWords';
-import { MiddleWare, LegacyWord, WordDocument } from '../types';
+import { MiddleWare, IncomingWord } from '../types';
 import { WordResponseData } from './types';
 
 const isEnglish = isWord('american-english');
@@ -114,7 +114,9 @@ export const getWord: MiddleWare = async (req, res, next) => {
       if (!data.words[0]) {
         throw new Error('No word exists with the provided id.');
       }
+      // @ts-expect-error different versions
       const { words } = handleWordFlags({ data, flags });
+      // @ts-expect-error different versions
       const minimizedWords = minimizeWords(words, version);
       return minimizedWords[0];
     });
@@ -131,32 +133,18 @@ export const getWord: MiddleWare = async (req, res, next) => {
 };
 
 /* Creates Word documents in MongoDB database for testing */
-export const createWord = async (
-  data: Partial<LegacyWord>,
-  connection: mongoose.Connection
-): Promise<WordDocument> => {
-  const Word = connection.model<WordDocument>('Word', wordSchema);
-  const { examples, word, wordClass, definitions, variations, stems, dialects, ...rest } = data;
+export const createWord = async (data: IncomingWord, connection: mongoose.Connection) => {
+  const Word = connection.model<IncomingWord>('Word', wordSchema);
 
-  const wordData = {
-    word,
-    wordClass,
-    definitions,
-    variations,
-    stems,
-    dialects,
-    ...rest,
-  };
-
-  const newWord = new Word(wordData);
+  const newWord = new Word(data);
   const savedWord = await newWord.save();
 
   /* Go through each word's example and create an Example document */
-  const savedExamples = map(examples, async (example) => {
-    const exampleData = {
+  const savedExamples = map(data.examples, async (example) => {
+    const exampleData = omit({
       ...example,
       associatedWords: [savedWord.id],
-    };
+    });
     const createdExample = await createExample(exampleData, connection);
     return createdExample;
   });

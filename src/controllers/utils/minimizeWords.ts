@@ -1,18 +1,30 @@
 import { assign, omit, pick } from 'lodash';
 import { Types } from 'mongoose';
 import Version from '../../shared/constants/Version';
-import { Definition, LegacyWordDialect, PartialWordType, WordDialect } from '../../types/word';
-import { Example } from '../../types';
+import {
+  Definition,
+  LegacyWordDialect,
+  OutgoingLegacyWord,
+  OutgoingWord,
+  WordDialect,
+} from '../../types/word';
+import { OutgoingExample } from '../../types';
 
-type MinimizedWord = Omit<PartialWordType, 'definitions' | 'examples' | 'dialects' | 'relatedTerms' | 'stems'> & {
-  definitions: Partial<Definition>[] | string[] | undefined;
-  examples: Partial<Example>[];
-  tenses: string[] | undefined;
-  dialects?: Partial<WordDialect>[] | LegacyWordDialect | undefined;
-  relatedTerms?: (string | Partial<{ id: string; _id?: Types.ObjectId }>)[];
-  stems?: (string | Partial<{ id: string; _id?: Types.ObjectId }>)[];
+type MinimizedWord = Omit<
+  Partial<OutgoingWord> | Partial<OutgoingLegacyWord>,
+  'definitions' | 'examples' | 'dialects' | 'relatedTerms' | 'stems',
+> & {
+  definitions: Partial<Definition>[] | string[] | undefined,
+  examples: Partial<OutgoingExample>[],
+  tenses: string[] | undefined,
+  dialects?: Partial<WordDialect>[] | LegacyWordDialect | undefined,
+  relatedTerms?: (string | Partial<{ id: string, _id?: Types.ObjectId }>)[],
+  stems?: (string | Partial<{ id: string, _id?: Types.ObjectId }>)[],
 };
-const minimizeWords = (words: PartialWordType[], version: Version) => {
+const minimizeWords = (
+  words: Partial<OutgoingWord>[] | Partial<OutgoingLegacyWord>[],
+  version: Version,
+) => {
   const minimizedWords = words.map((word) => {
     let minimizedWord: Partial<MinimizedWord> = assign(word);
     minimizedWord = omit(minimizedWord, ['hypernyms', 'hyponyms', 'updatedAt', 'createdAt']);

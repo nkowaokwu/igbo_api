@@ -1,40 +1,33 @@
 import { Response } from 'express';
-import { PipelineStage } from 'mongoose';
-// import { pick } from 'lodash';
-import { Example, IgboAPIRequest, Word } from '../../types';
+import { IgboAPIRequest, OutgoingExample, OutgoingWord } from '../../types';
 import removePrefix from '../../shared/utils/removePrefix';
-import { searchForAllVerbsAndSuffixesQuery } from './queries';
 import createRegExp from '../../shared/utils/createRegExp';
-// import expandVerb from './expandVerb';
-// import expandNoun from './expandNoun';
-import { findWordsWithMatch } from './buildDocs';
 import Version from '../../shared/constants/Version';
-// import WordClass from '../../shared/constants/WordClass';
-import { getAllCachedVerbsAndSuffixes, setAllCachedVerbsAndSuffixes } from '../../APIs/RedisAPI';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
-import { WordData, Keyword, Flags } from './types';
-import { Filters, ExampleWithPronunciation } from '../types';
+import { Keyword, Flags } from './types';
+import { Filters } from '../types';
 import ExampleStyles from '../../shared/constants/ExampleStyles';
+import { OutgoingLegacyWord } from '../../types/word';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).wordReg.source})`)
       .join('|')}`,
-    'i'
+    'i',
   ),
   exampleReg: new RegExp(
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).exampleReg.source})`)
       .join('|')}`,
-    'i'
+    'i',
   ),
   definitionsReg: new RegExp(
     `${keywords
       .map((keyword) => `(${createRegExp(keyword.text, true).definitionsReg.source})`)
       .join('|')}`,
-    'i'
+    'i',
   ),
   hardDefinitionsReg: new RegExp(
     `${keywords
@@ -42,10 +35,10 @@ const createSimpleRegExp = (keywords: { text: string }[]) => ({
         (keyword) =>
           `(${
             (createRegExp(keyword.text, true).hardDefinitionsReg || { source: keyword.text }).source
-          })`
+          })`,
       )
       .join('|')}`,
-    'i'
+    'i',
   ),
 });
 
@@ -78,12 +71,12 @@ export const packageResponse = ({
 }: {
   res: Response,
   docs:
-    | Partial<Word>
-    | Partial<Example>
-    | Partial<ExampleWithPronunciation>
-    | Partial<Word>[]
-    | Partial<Example>[]
-    | Partial<ExampleWithPronunciation>[],
+    | Partial<OutgoingWord>
+    | Partial<OutgoingLegacyWord>
+    | Partial<OutgoingExample>
+    | Partial<OutgoingWord>[]
+    | Partial<OutgoingLegacyWord>[]
+    | Partial<OutgoingExample>[],
   contentLength: number,
   version: Version,
 }) => {
@@ -100,26 +93,9 @@ const convertFilterToKeyword = (filter = '{"word": ""}') => {
     return parsedFilter[firstFilterKey];
   } catch {
     throw new Error(
-      `Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`
+      `Invalid filter query syntax. Expected: {"word":"filter"}, Received: ${filter}`,
     );
   }
-};
-
-/* Gets all verbs and suffixes within the Igbo API */
-const searchAllVerbsAndSuffixes = async ({
-  query,
-  version,
-}: {
-  query: PipelineStage.Match['$match'],
-  version: Version,
-}): Promise<{ words: Word[], contentLength: number }> => {
-  const { words, contentLength } = await findWordsWithMatch({
-    match: query,
-    version,
-    lean: true,
-  });
-  // @ts-expect-error types
-  return { words, contentLength };
 };
 
 /* Handles all the queries for searching in the database */
@@ -144,109 +120,14 @@ export const handleQueries = async ({
     resolve: resolveQuery,
   } = query;
   const { id } = params;
-  let allVerbsAndSuffixes: WordData = { verbs: [], suffixes: [] };
   const hasQuotes = keywordQuery && keywordQuery.match(/["'].*["']/) !== null;
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
-  const allVerbsAndSuffixesQuery: PipelineStage.Match['$match'] =
-    searchForAllVerbsAndSuffixesQuery();
-  const cachedAllVerbsAndSuffixes = await getAllCachedVerbsAndSuffixes({
-    key: version,
-    redisClient,
-  });
-  if (version === Version.VERSION_2) {
-    if (cachedAllVerbsAndSuffixes) {
-      allVerbsAndSuffixes = cachedAllVerbsAndSuffixes;
-    } else {
-      const allVerbsAndSuffixesDb = (
-        await searchAllVerbsAndSuffixes({ query: allVerbsAndSuffixesQuery, version })
-      ).words;
-      allVerbsAndSuffixes = await setAllCachedVerbsAndSuffixes({
-        key: version,
-        data: allVerbsAndSuffixesDb,
-        redisClient,
-        version,
-      });
-    }
-  }
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '').replace(/[Aa]na m /, 'm ');
   // const searchWordParts = compact(searchWord.split(' '));
   const regex = constructRegexQuery({ isUsingMainKey, keywords: [{ text: searchWord }] });
-  // const regexes = searchWordParts.reduce(
-  //   (regexesObject, searchWordPart) => ({
-  //     ...regexesObject,
-  //     [searchWordPart]: constructRegexQuery({
-  //       isUsingMainKey,
-  //       keywords: [{ text: searchWordPart }],
-  //     }),
-  //   }),
-  //   {}
-  // );
   const keywords: Keyword[] = [];
-  // version === Version.VERSION_2 && searchWord
-  //   ? expandVerb(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => {
-  //       const pickedRegex = pick(
-  //         constructRegexQuery({
-  //           isUsingMainKey,
-  //           keywords: [{ text }],
-  //         }),
-  //         ['wordReg']
-  //       );
-  //       const keyWord: Keyword = {
-  //         text,
-  //         wordClass,
-  //         regex: pickedRegex,
-  //       };
-  //       return keyWord;
-  //     })
-  //   : [];
-  // Attempt to breakdown as noun if there is no breakdown as verb
-  // if (!keywords.length && searchWord) {
-  //   keywords =
-  //     version === Version.VERSION_2
-  //       ? expandNoun(searchWord, allVerbsAndSuffixes).map(({ text, wordClass }) => ({
-  //           text,
-  //           wordClass: wordClass.concat([
-  //             WordClass.NNC.value,
-  //             WordClass.PRN.value,
-  //             WordClass.NNP.value,
-  //           ]),
-  //           regex: pick(
-  //             constructRegexQuery({
-  //               isUsingMainKey,
-  //               keywords: [{ text }],
-  //             }),
-  //             ['wordReg']
-  //           ),
-  //         }))
-  //       : [];
-  // }
-  // if (!keywords.length && searchWord) {
-  //   keywords = (
-  //     version === Version.VERSION_2
-  //       ? searchWordParts.map((searchWordPart) => {
-  //           const expandedVerb = expandVerb(searchWordPart, allVerbsAndSuffixes);
-  //           const result = expandedVerb.length
-  //             ? expandedVerb.map(({ text, wordClass }) => ({
-  //                 text,
-  //                 wordClass,
-  //                 regex: pick(
-  //                   constructRegexQuery({
-  //                     isUsingMainKey,
-  //                     keywords: [{ text }],
-  //                   }),
-  //                   ['wordReg']
-  //                 ),
-  //               }))
-  //             : // @ts-expect-error no index signature with parameter type string
-  //               [{ text: searchWordPart, wordClass: [], regex: regexes[searchWordPart] }];
-
-  //           return result;
-  //         })
-  //       : []
-  //   ).flat();
-  // }
   const page = parseInt(pageQuery, 10);
   const range = parseRange(rangeQuery);
   const { skip, limit } = convertToSkipAndLimit({ page, range });

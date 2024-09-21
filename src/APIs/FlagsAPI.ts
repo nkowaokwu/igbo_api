@@ -1,10 +1,9 @@
 import { compact, assign, omit } from 'lodash';
-import { LegacyWordDocument, Word, WordDocument } from '../types';
-import { WordType, PartialWordType } from '../types/word';
+import { OutgoingLegacyWord, OutgoingWord } from '../types/word';
 import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 
 type HandleFlags = {
-  data: { words: WordType[], contentLength: number },
+  data: { words: OutgoingWord[] | OutgoingLegacyWord[], contentLength: number },
   flags: { examples: boolean, dialects: boolean, resolve: boolean },
 };
 
@@ -14,25 +13,25 @@ export const handleWordFlags = ({
   flags: { examples, dialects, resolve },
 }: HandleFlags) => {
   const updatedWords = compact(
-    words.map((word: Word | WordDocument | LegacyWordDocument) => {
-      let updatedWord: PartialWordType = assign(word);
+    words.map((word) => {
+      let updatedWord: Partial<OutgoingWord | OutgoingLegacyWord> = assign(word);
       if (!examples) {
-        // @ts-expect-error definitions are not compatible
+        // @ts-expect-error version difference
         updatedWord = omit(updatedWord, ['examples']);
       } else if (updatedWord.examples) {
         // Only includes Examples that are created in the Igbo API Editor Platform
         updatedWord.examples = updatedWord.examples.filter(
-          (example) => !example.origin || example.origin === SuggestionSourceEnum.INTERNAL
+          (example) => !example.origin || example.origin === SuggestionSourceEnum.INTERNAL,
         );
       }
       if (!dialects) {
-        // @ts-expect-error definitions are not compatible
+        // @ts-expect-error version difference
         updatedWord = omit(updatedWord, ['dialects']);
       }
       if (!resolve) {
         if (updatedWord.stems) {
           updatedWord.stems = updatedWord.stems.map((stem) =>
-            (typeof stem === 'string' ? stem : stem?._id || stem.id).toString()
+            (typeof stem === 'string' ? stem : stem?._id || stem.id).toString(),
           );
         }
         if (updatedWord.relatedTerms) {
@@ -40,12 +39,12 @@ export const handleWordFlags = ({
             (typeof relatedTerm === 'string'
               ? relatedTerm
               : relatedTerm?._id || relatedTerm.id
-            ).toString()
+            ).toString(),
           );
         }
       }
       return updatedWord;
-    })
+    }),
   );
   return { words: updatedWords, contentLength };
 };

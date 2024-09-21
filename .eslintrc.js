@@ -39,6 +39,7 @@ module.exports = {
     'react/no-danger': ['off'],
     '@next/next/no-html-link-for-pages': ['off'],
     '@next/next/no-img-element': ['off'],
+    '@typescript-eslint/no-empty-interface': ['off'],
   },
   overrides: [
     {
@@ -83,6 +84,7 @@ module.exports = {
           },
         ],
         '@typescript-eslint/no-empty-function': ['warn'],
+        '@typescript-eslint/no-empty-interface': ['off'],
         'prefer-const': 'error',
       },
     },

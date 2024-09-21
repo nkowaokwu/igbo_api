@@ -7,22 +7,24 @@ import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
-import { Example as ExampleType, MiddleWare } from '../types';
+import { IncomingExample, MiddleWare, OutgoingExample, OutgoingLegacyExample } from '../types';
 import Version from '../shared/constants/Version';
-import { ExampleResponseData, ExampleWithPronunciation } from './types';
+import { ExampleResponseData } from './types';
 
 /* Converts the pronunciations field to pronunciation for v1 */
-export const convertExamplePronunciations = (example: ExampleType): ExampleWithPronunciation => {
+export const convertExamplePronunciations = (example: OutgoingExample): OutgoingLegacyExample => {
   const updatedExample = assign(example);
   const exampleWithPronunciation = {
-    ...omit(updatedExample, ['pronunciations']),
-    pronunciation: updatedExample.pronunciations?.[0]?.audio || '',
+    ...omit(updatedExample, ['source', 'translations']),
+    igbo: updatedExample.source.text,
+    english: updatedExample.translations[0].text,
+    pronunciation: updatedExample.source.pronunciations?.[0]?.audio || '',
   };
   return exampleWithPronunciation;
 };
 
 /* Create a new Example object in MongoDB */
-export const createExample = async (data: ExampleType, connection: Connection) => {
+export const createExample = async (data: IncomingExample, connection: Connection) => {
   const Example = connection.model('Example', exampleSchema);
   const example = new Example(data);
   return example.save();
@@ -106,7 +108,7 @@ export const getExamples: MiddleWare = async (req, res, next) => {
 
 const findExampleById = async (id: string) => {
   const connection = createDbConnection();
-  const Example = connection.model<ExampleType>('Example', exampleSchema);
+  const Example = connection.model<OutgoingExample>('Example', exampleSchema);
   try {
     const example = await Example.findById(id);
     await handleCloseConnection(connection);

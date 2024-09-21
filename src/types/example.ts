@@ -2,19 +2,28 @@ import { Document, Types } from 'mongoose';
 import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
 import LanguageEnum from '../shared/constants/LanguageEnum';
 
-export type Example = {
+type ExampleBase = {
   associatedDefinitionsSchemas: string[],
   associatedWords: string[],
-  english?: string,
-  igbo?: string,
+  meaning: string,
+  nsibidi: string,
+  nsibidiCharacters: string[],
+  origin: SuggestionSourceEnum,
+};
+
+export type IncomingExample = ExampleBase & {
   source: Translation,
   translations: Translation[],
-  meaning?: string,
-  nsibidi?: string,
-  nsibidiCharacters: string[],
-  pronunciations: Pronunciation[],
-  origin?: SuggestionSourceEnum,
-  updatedAt: Date,
+};
+
+export type OutgoingExample = IncomingExample & {
+  pronunciation: string,
+};
+
+export type OutgoingLegacyExample = ExampleBase & {
+  igbo: string,
+  english: string,
+  pronunciation: string,
 };
 
 type Translation = {
@@ -32,7 +41,7 @@ type Pronunciation = {
   speaker: string,
 };
 
-export interface ExampleDocument extends Example, Document<any> {
+export interface ExampleDocument extends IncomingExample, Document<any> {
   _id: Types.ObjectId;
   __v: number;
   id: string;
