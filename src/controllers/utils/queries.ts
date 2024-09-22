@@ -1,6 +1,5 @@
 import compact from 'lodash/compact';
 import { cjkRange } from '../../shared/constants/diacriticCodes';
-import WordClass from '../../shared/constants/WordClass';
 import Tenses from '../../shared/constants/Tenses';
 import StopWords from '../../shared/constants/StopWords';
 import { Flags, Keyword } from './types';
@@ -136,11 +135,6 @@ export const strictSearchIgboQuery = (keywords: Keywords) => ({
 export const searchEnglishRegexQuery = definitionsQuery;
 export const searchForAllDevelopers = () => ({
   name: { $ne: '' },
-});
-export const searchForAllVerbsAndSuffixesQuery = () => ({
-  'definitions.wordClass': {
-    $in: [WordClass.AV.value, WordClass.PV.value, WordClass.ISUF.value, WordClass.ESUF.value],
-  },
 });
 export const searchNsibidiCharactersQuery = (keyword: string) => {
   const regex = createRegExp(keyword).wordReg;

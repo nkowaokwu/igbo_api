@@ -10,6 +10,7 @@ export default async () => {
     await mongoose.connection.collection('words').dropIndexes();
     await mongoose.connection.collection('examples').dropIndexes();
     await mongoose.connection.collection('developers').dropIndexes();
+    await mongoose.connection.collection('developerUsages').dropIndexes();
     await mongoose.connection.collection('nsibidicharacters').dropIndexes();
     await mongoose.connection.db.dropDatabase();
   }

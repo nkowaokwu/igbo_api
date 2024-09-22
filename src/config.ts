@@ -2,7 +2,7 @@
 import { defineBoolean, defineInt, defineString } from 'firebase-functions/params';
 import './shared/utils/wrapConsole';
 
-const Environment = {
+export const Environment = {
   BUILD: 'build',
   PRODUCTION: 'production',
   DEVELOPMENT: 'development',
@@ -45,7 +45,6 @@ const STRIPE_SECRET_KEY_SOURCE = defineString('STRIPE_SECRET_KEY').value();
 const STRIPE_ENDPOINT_SECRET_SOURCE = defineString('STRIPE_ENDPOINT_SECRET').value();
 
 const dotenv = process.env.NODE_ENV !== Environment.BUILD ? require('dotenv') : null;
-const sgMail = process.env.NODE_ENV !== Environment.BUILD ? require('@sendgrid/mail') : null;
 
 if (dotenv) {
   dotenv.config();
@@ -102,13 +101,19 @@ export const CORS_CONFIG = {
 export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
 export const API_DOCS = 'https://docs.igboapi.com';
 
+// IgboSpeech
+export const SPEECH_TO_TEXT_API = isProduction
+  ? 'https://speech.igboapi.com'
+  : 'http://localhost:3333';
+
 // SendGrid API
 export const SENDGRID_API_KEY = SENDGRID_API_KEY_SOURCE || '';
 export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE =
   SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE_SOURCE;
 export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
 
-if (sgMail && !isTest) {
+if (process.env.NODE_ENV !== Environment.BUILD && !isTest) {
+  const sgMail = require('@sendgrid/mail'); // eslint-disable-line
   sgMail.setApiKey(SENDGRID_API_KEY);
 }
 
