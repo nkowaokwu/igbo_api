@@ -22,7 +22,6 @@ interface Prediction {
  */
 export const getTranscription: MiddleWare = async (req, res, next) => {
   try {
-    console.log('what is here?', req.body);
     const { audioUrl: audio } = req.body;
     if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
       console.log('Audio URL must either be hosted publicly or a valid base64');
@@ -34,7 +33,6 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
 
     // If the audio doesn't come from Igbo API S3, we will pass into IgboSpeech
     if (!audio.includes('igbo-api.s3.us-east-2')) {
-      console.log('about to upload audio via IgboSpeech');
       const { data: response } = await axios
         .request<AudioMetadata>({
           method: 'POST',
@@ -52,12 +50,10 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
 
       payload = { id: response.audioId, url: response.audioUrl };
     } else {
-      console.log('nvm going to use the audio uri');
       const audioId = parseAWSIdFromUri(audio);
       payload = { id: audioId, url: audio };
     }
 
-    console.log('about to predict');
     // Talks to prediction endpoint
     const { data: response } = await axios.request<Prediction>({
       method: 'POST',
@@ -68,11 +64,9 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       },
       data: payload,
     });
-    console.log('done with the prediction');
 
     return res.send({ transcription: response.transcription });
   } catch (err) {
-    console.log('error within speechToText', err);
     return next();
   }
 };
