@@ -22,6 +22,7 @@ interface Prediction {
  */
 export const getTranscription: MiddleWare = async (req, res, next) => {
   try {
+    console.log('what is here?', req.body);
     const { audioUrl: audio } = req.body;
     if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
       console.log('Audio URL must either be hosted publicly or a valid base64');
