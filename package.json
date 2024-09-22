@@ -44,7 +44,7 @@
     "jest:backend": "npm run jest:backend:database && npm run jest:backend:no-database",
     "jest:frontend": "cross-env NODE_ENV=test jest --forceExit --runInBand --config=jest.frontend.config.ts",
     "jest": "npm run jest:backend && npm run jest:frontend",
-    "prestart:database": "[ ! -d \"./db\" ] && shx mkdir ./db || echo 'Database directory exists' && yarn migrate-up",
+    "prestart:database": "[ ! -d \"./db\" ] && shx mkdir ./db || echo 'Database directory exists'",
     "prestart:database:replica": "[ ! -d \"./mongos\" ] && shx mkdir ./mongos || echo 'Parent database directory exists'",
     "prestart:database:primary": "[ ! -d \"./mongos/db1\" ] && shx mkdir ./mongos/db1 || echo 'Primary database directory exists'",
     "prestart:database:secondary:first": "[ ! -d \"./mongos/db2\" ] && shx mkdir ./mongos/db2 || echo 'First secondary database directory exists'",

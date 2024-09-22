@@ -12,6 +12,7 @@ const validateApiKey: MiddleWare = async (req, res, next) => {
     /* Official sites can bypass validation */
     if (apiKey === MAIN_KEY) {
       req.isUsingMainKey = true;
+      console.log('Using the main key');
       return next();
     }
     req.isUsingMainKey = false;
@@ -31,6 +32,7 @@ const validateApiKey: MiddleWare = async (req, res, next) => {
     const developer = await findDeveloper(apiKey);
 
     if (!developer) {
+      console.log('no developer found');
       return res.status(401).send({ error: 'Your API key is invalid' });
     }
 
@@ -38,6 +40,7 @@ const validateApiKey: MiddleWare = async (req, res, next) => {
 
     return next();
   } catch (err: any) {
+    console.log('error within validateApiKey', err);
     res.status(400);
     return res.send({ error: err.message });
   }
