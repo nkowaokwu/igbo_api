@@ -112,7 +112,14 @@ export const findWordsWithMatch = async ({
       })
       .append({ $unset: `attributes.${WordAttributeEnum.IS_COMPLETE}` });
 
-    const cleanedWords = removeKeysInNestedDoc<OutgoingWord>(await words, 'examples');
+    const cleanedWords = removeKeysInNestedDoc<OutgoingWord>(await words, 'examples').map(
+      (word) => {
+        const updatedWord = assign(word);
+        // @ts-expect-error different versions
+        updatedWord.examples = cleanExamples({ examples: updatedWord.examples, version });
+        return updatedWord;
+      }
+    );
     const contentLength = cleanedWords.length;
 
     const finalWords = cleanedWords.map((cleanedWord: OutgoingWord) => {
@@ -150,6 +157,30 @@ export const findWordsWithMatch = async ({
   }
 };
 
+const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
+  examples.map((example) => {
+    const cleanedExample = omit(
+      assign({
+        ...example,
+        igbo: '',
+        english: '',
+        pronunciation: '',
+        pronunciations: [] as string[],
+      }),
+      ['source', 'translations']
+    );
+    if (version === Version.VERSION_1) {
+      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
+    } else {
+      cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
+    }
+
+    // To prevent v1 an v2, source and translations will be converted back to igbo and english
+    cleanedExample.igbo = example.source.text;
+    cleanedExample.english = example.translations[0]?.text;
+    return cleanedExample;
+  });
+
 export const findExamplesWithMatch = async ({
   match,
   version,
@@ -175,28 +206,7 @@ export const findExamplesWithMatch = async ({
     });
 
     // Returns only the first pronunciation for the example sentence
-    const allExamples = (await examples).map((example) => {
-      const cleanedExample = omit(
-        assign({
-          ...example,
-          igbo: '',
-          english: '',
-          pronunciation: '',
-          pronunciations: [] as string[],
-        }),
-        ['source', 'translations']
-      );
-      if (version === Version.VERSION_1) {
-        cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
-      } else {
-        cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
-      }
-
-      // To prevent v1 an v2, source and translations will be converted back to igbo and english
-      cleanedExample.igbo = example.source.text;
-      cleanedExample.english = example.translations[0]?.text;
-      return cleanedExample;
-    });
+    const allExamples = cleanExamples({ examples: await examples, version });
     const contentLength = allExamples.length;
 
     await handleCloseConnection(connection);
