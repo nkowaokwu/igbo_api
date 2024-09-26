@@ -40,6 +40,30 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
   return docs;
 };
 
+const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
+  examples.map((example) => {
+    const cleanedExample = omit(
+      assign({
+        ...example,
+        igbo: '',
+        english: '',
+        pronunciation: '',
+        pronunciations: [] as string[],
+      }),
+      ['source', 'translations']
+    );
+    if (version === Version.VERSION_1) {
+      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
+    } else {
+      cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
+    }
+
+    // To prevent v1 an v2, source and translations will be converted back to igbo and english
+    cleanedExample.igbo = example.source.text;
+    cleanedExample.english = example.translations[0]?.text;
+    return cleanedExample;
+  });
+
 /**
  * Creates foundation for Word aggregation pipeline
  * @param {*} match
@@ -156,30 +180,6 @@ export const findWordsWithMatch = async ({
     throw err;
   }
 };
-
-const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
-  examples.map((example) => {
-    const cleanedExample = omit(
-      assign({
-        ...example,
-        igbo: '',
-        english: '',
-        pronunciation: '',
-        pronunciations: [] as string[],
-      }),
-      ['source', 'translations']
-    );
-    if (version === Version.VERSION_1) {
-      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
-    } else {
-      cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
-    }
-
-    // To prevent v1 an v2, source and translations will be converted back to igbo and english
-    cleanedExample.igbo = example.source.text;
-    cleanedExample.english = example.translations[0]?.text;
-    return cleanedExample;
-  });
 
 export const findExamplesWithMatch = async ({
   match,
