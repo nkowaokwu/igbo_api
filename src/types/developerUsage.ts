@@ -10,6 +10,6 @@ export interface DeveloperUsage {
   };
 }
 
-export interface DeveloperUsageDocument extends DeveloperUsage, Document<any> {
+export interface DeveloperUsageDocument extends DeveloperUsage, Document {
   id: Types.ObjectId;
 }

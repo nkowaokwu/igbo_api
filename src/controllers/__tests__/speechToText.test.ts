@@ -19,13 +19,13 @@ describe('speechToText', () => {
     const res = responseFixture();
     const next = nextFunctionFixture();
     const base64 = 'base64';
-    // @ts-expect-error
+    // @ts-expect-error resolving value
     fetchBase64Data.mockResolvedValue(base64);
     jest.spyOn(axios, 'request').mockResolvedValue({
       data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
     });
     await getTranscription(req, res, next);
-    // @ts-expect-error
+    // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[0][0]).toMatchObject({
       method: 'POST',
       url: 'http://localhost:3333/audio',
@@ -35,7 +35,7 @@ describe('speechToText', () => {
       },
       data: { base64 },
     });
-    // @ts-expect-error
+    // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
       url: 'http://localhost:3333/predict',
@@ -52,13 +52,13 @@ describe('speechToText', () => {
     const req = requestFixture({ body: { audioUrl: base64 } });
     const res = responseFixture();
     const next = nextFunctionFixture();
-    // @ts-expect-error
+    // @ts-expect-error resolved value
     fetchBase64Data.mockResolvedValue(base64);
     jest.spyOn(axios, 'request').mockResolvedValue({
       data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
     });
     await getTranscription(req, res, next);
-    // @ts-expect-error
+    // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[0][0]).toMatchObject({
       method: 'POST',
       url: 'http://localhost:3333/audio',
@@ -68,7 +68,7 @@ describe('speechToText', () => {
       },
       data: { base64 },
     });
-    // @ts-expect-error
+    // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
       url: 'http://localhost:3333/predict',
@@ -89,7 +89,7 @@ describe('speechToText', () => {
     const res = responseFixture();
     const next = nextFunctionFixture();
     const base64 = 'base64';
-    // @ts-expect-error
+    // @ts-expect-error resolved value
     fetchBase64Data.mockResolvedValue(base64);
     jest.spyOn(axios, 'request').mockResolvedValue({});
     await getTranscription(req, res, next);

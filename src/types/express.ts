@@ -43,5 +43,5 @@ export interface MiddleWare {
 }
 
 export interface ErrorMiddleWare {
-  (error: any, req: IgboAPIRequest, res: Response, next: NextFunction): void;
+  (error: Error, req: IgboAPIRequest, res: Response, next: NextFunction): void;
 }

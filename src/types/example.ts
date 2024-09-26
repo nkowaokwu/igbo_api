@@ -39,7 +39,7 @@ type Pronunciation = {
   speaker: string,
 };
 
-export interface ExampleDocument extends IncomingExample, Document<any> {
+export interface ExampleDocument extends IncomingExample, Document {
   _id: Types.ObjectId;
   __v: number;
   id: string;

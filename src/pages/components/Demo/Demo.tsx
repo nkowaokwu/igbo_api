@@ -34,7 +34,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
         }
       }
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const constructQueryString = () => {
     const queriesString = queryString.stringify(queries);

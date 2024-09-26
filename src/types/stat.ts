@@ -7,6 +7,6 @@ export interface Stat {
   value: number;
 }
 
-export interface StatDocument extends Stat, Document<any> {
+export interface StatDocument extends Stat, Document {
   id: Types.ObjectId;
 }

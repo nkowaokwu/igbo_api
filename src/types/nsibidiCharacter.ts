@@ -8,7 +8,7 @@ export type NsibidiCharacter = {
   wordClass: string;
 };
 
-export interface NsibidiCharacterDocument extends NsibidiCharacter, Document<any> {
+export interface NsibidiCharacterDocument extends NsibidiCharacter, Document {
   _id: Types.ObjectId;
   __v: number;
   id: string;
