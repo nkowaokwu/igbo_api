@@ -41,3 +41,7 @@ export interface IgboAPIRequest extends ExpressRequest {
 export interface MiddleWare {
   (req: IgboAPIRequest, res: Response, next: NextFunction): void;
 }
+
+export interface ErrorMiddleWare {
+  (error: any, req: IgboAPIRequest, res: Response, next: NextFunction): void;
+}

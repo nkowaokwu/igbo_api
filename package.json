@@ -146,6 +146,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@eslint/js": "^9.11.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
@@ -169,18 +170,10 @@
     "@types/string-similarity": "^4.0.0",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
     "cypress": "^12.14.0",
-    "eslint": "8.34.0",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-next": "^14.1.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-cypress": "2.12.1",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-react": "7.32.2",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react": "^7.36.1",
+    "globals": "^15.9.0",
     "husky": "^4.3.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^10.4.0",
@@ -190,7 +183,8 @@
     "prettier": "3.2.5",
     "supertest": "^6.3.1",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.7.0"
   },
   "standard-version": {
     "skip": {

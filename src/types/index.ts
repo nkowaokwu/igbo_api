@@ -1,4 +1,4 @@
-export type { MiddleWare, IgboAPIRequest, Query } from './express';
+export type { MiddleWare, ErrorMiddleWare, IgboAPIRequest, Query } from './express';
 export type { Developer, DeveloperDocument, DeveloperResponse } from './developer';
 export type {
   IncomingExample,
