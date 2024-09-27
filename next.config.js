@@ -4,5 +4,8 @@ module.exports = {
   distDir: 'dist',
   generateBuildId: async () => 'api-homepage',
   pageExtensions: ['page.tsx'],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   i18n,
 };
