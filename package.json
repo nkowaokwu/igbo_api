@@ -73,8 +73,8 @@
       "./node_modules/.bin/prettier --write",
       "./node_modules/.bin/eslint"
     ],
-    "src*.{ts,tsx}": [
-      "echo \"run it back\"; exit 1"
+    "**/*.ts?(x)": [
+      "./node_modules/.bin/tsc"
     ]
   },
   "license": "ISC",

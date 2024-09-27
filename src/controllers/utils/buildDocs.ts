@@ -54,7 +54,7 @@ const cleanExamples = ({ examples, version }: { examples: IncomingExample[], ver
       ['source', 'translations']
     );
     if (version === Version.VERSION_1) {
-      cleanedExample.pronunciationss = example.source.pronunciations?.[0]?.audio || '';
+      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
     } else {
       cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
     }
