@@ -35,7 +35,7 @@
     "cors": "^2.8.5",
     "diacriticless": "^1.0.1",
     "dotenv": "^16.0.3",
-    "express": "^4.17.1",
+    "express": "4.21.0",
     "express-rate-limit": "^5.2.3",
     "firebase": "^10.12.2",
     "firebase-admin": "^12.1.1",

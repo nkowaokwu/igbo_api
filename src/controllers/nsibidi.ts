@@ -1,7 +1,6 @@
-import { NextFunction, Response } from 'express';
 import mongoose, { Connection } from 'mongoose';
 import { handleQueries, packageResponse } from './utils';
-import { IgboAPIRequest, MiddleWare } from '../types/express';
+import { MiddleWare } from '../types/express';
 import { searchNsibidiCharactersQuery } from './utils/queries';
 import { findNsibidiCharactersWithMatch } from './utils/buildDocs';
 import { nsibidiCharacterSchema } from '../models/NsibidiCharacter';
@@ -13,10 +12,11 @@ export const getNsibidiCharacters: MiddleWare = async (req, res, next) => {
 
     const query = searchNsibidiCharactersQuery(searchWord);
 
-    const { nsibidiCharacters: allNsibidiCharacters, contentLength } = await findNsibidiCharactersWithMatch({
-      match: query,
-      version,
-    });
+    const { nsibidiCharacters: allNsibidiCharacters, contentLength } =
+      await findNsibidiCharactersWithMatch({
+        match: query,
+        version,
+      });
     const nsibidiCharacters = allNsibidiCharacters.slice(skip, skip + limit);
 
     return packageResponse({
