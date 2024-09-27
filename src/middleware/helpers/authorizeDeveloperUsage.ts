@@ -53,13 +53,13 @@ const handleDeveloperUsage = async ({
  * @param param0
  */
 export const authorizeDeveloperUsage = async ({
-  route,
+  path,
   developer,
 }: {
-  route: string,
+  path: string,
   developer: DeveloperDocument,
 }) =>
   handleDeveloperUsage({
     developer,
-    apiType: route.startsWith('speech-to-text') ? ApiType.SPEECH_TO_TEXT : ApiType.DICTIONARY,
+    apiType: path.startsWith('speech-to-text') ? ApiType.SPEECH_TO_TEXT : ApiType.DICTIONARY,
   });

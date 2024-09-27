@@ -1,5 +1,3 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
 import { Aggregate, Model as ModelType, PipelineStage } from 'mongoose';
 import { assign, flatten, flow, omit } from 'lodash';
 import Version from '../../shared/constants/Version';
@@ -42,13 +40,16 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
 
 const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
   examples.map((example) => {
-    const cleanedExample = omit(
+    const cleanedExample: Omit<IncomingExample, 'source' | 'translations'> & {
+      igbo: string,
+      english: string,
+      pronunciation?: string,
+      pronunciations?: string[],
+    } = omit(
       assign({
         ...example,
         igbo: '',
         english: '',
-        pronunciation: '',
-        pronunciations: [] as string[],
       }),
       ['source', 'translations']
     );

@@ -1,4 +1,4 @@
-import { assign, omit, pick } from 'lodash';
+import { assign, omit } from 'lodash';
 import { Types } from 'mongoose';
 import Version from '../../shared/constants/Version';
 import {
@@ -19,8 +19,8 @@ type MinimizedWord = Omit<
   examples: Partial<OutgoingExample>[],
   tenses: string[] | undefined,
   dialects?: Partial<WordDialect>[] | LegacyWordDialect | undefined,
-  relatedTerms?: (string | Partial<{ id: string, _id?: Types.ObjectId }>)[],
-  stems?: (string | Partial<{ id: string, _id?: Types.ObjectId }>)[],
+  relatedTerms?: (string | Partial<{ word: string, _id: Types.ObjectId }>)[],
+  stems?: (string | Partial<{ word: string, _id: Types.ObjectId }>)[],
 };
 const minimizeWords = (
   words: Partial<OutgoingWord>[] | Partial<OutgoingLegacyWord>[],
@@ -52,10 +52,9 @@ const minimizeWords = (
     }
     if (minimizedWord.examples?.length) {
       minimizedWord.examples = minimizedWord.examples?.map((example) => {
-        let minimizedExample = assign(example);
-        minimizedExample = omit(minimizedExample, [
+        const originalExample = assign(example);
+        const minimizedExample = omit(originalExample, [
           'associatedWords',
-          'pronunciation',
           'updatedAt',
           'createdAt',
           'meaning',
@@ -64,13 +63,8 @@ const minimizeWords = (
           'archived',
           'id',
         ]);
-        if (!minimizedExample.nsibidi) {
-          minimizedExample = omit(minimizedExample, ['nsibidi']);
-        }
         return minimizedExample;
       });
-    } else {
-      minimizedWord = omit(minimizedWord, ['example']);
     }
 
     const tensesValues = Object.values(minimizedWord.tenses || {});
@@ -92,23 +86,46 @@ const minimizeWords = (
     }
 
     if (minimizedWord.relatedTerms?.length) {
-      minimizedWord.relatedTerms = minimizedWord.relatedTerms?.map((relatedTerm) => {
-        if (typeof relatedTerm === 'string' || !relatedTerm) {
-          return relatedTerm;
-        }
-        return pick(relatedTerm, ['word', 'id', '_id']);
-      });
+      minimizedWord.relatedTerms = (minimizedWord.relatedTerms || [])
+        .map((relatedTerm): string | { word: string, id: string } => {
+          if (typeof relatedTerm === 'string' || !relatedTerm) {
+            return relatedTerm;
+          }
+          return {
+            word: relatedTerm.word || '',
+            id: (relatedTerm._id || '').toString(),
+          };
+        })
+        .filter((relatedTerm) => Boolean(relatedTerm))
+        .filter((relatedTerm) => {
+          if (typeof relatedTerm === 'string') {
+            return relatedTerm;
+          }
+          return relatedTerm.word && relatedTerm.id;
+        });
     } else {
       minimizedWord = omit(minimizedWord, ['relatedTerms']);
     }
 
     if (minimizedWord.stems?.length) {
-      minimizedWord.stems = minimizedWord.stems?.map((stem) => {
-        if (typeof stem === 'string' || !stem) {
-          return stem;
-        }
-        return pick(stem, ['word', 'id', '_id']);
-      });
+      minimizedWord.stems = minimizedWord.stems
+        ?.map((stem): { word: string, id: string } | string => {
+          if (typeof stem === 'string' || !stem) {
+            return stem;
+          }
+
+          return {
+            word: stem.word || '',
+            id: (stem._id || '').toString(),
+          };
+        })
+        .filter((stem) => stem)
+        .filter((relatedTerm) => {
+          if (typeof relatedTerm === 'string') {
+            return relatedTerm;
+          }
+          return relatedTerm.word && relatedTerm.id;
+        });
     } else {
       minimizedWord = omit(minimizedWord, ['stems']);
     }

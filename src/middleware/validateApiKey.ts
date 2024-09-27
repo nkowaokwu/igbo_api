@@ -34,7 +34,7 @@ const validateApiKey: MiddleWare = async (req, res, next) => {
       return res.status(401).send({ error: 'Your API key is invalid' });
     }
 
-    await authorizeDeveloperUsage({ route: req.route, developer });
+    await authorizeDeveloperUsage({ path: req.route.path, developer });
 
     return next();
   } catch (err: any) {
