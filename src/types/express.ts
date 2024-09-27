@@ -34,6 +34,8 @@ export interface IgboAPIRequest extends ExpressRequest {
   headers: ExpressRequest['headers'];
   user?: DecodedIdToken;
   developer?: Developer;
+  baseUrl: string;
+  method: string;
   params: { [key: string]: string };
   body: ExpressRequest['body'] & StripeBody;
 }
