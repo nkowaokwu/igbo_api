@@ -21,3 +21,6 @@ jobs:
 
       - name: Run ESLint
         run: npx eslint ./src
+
+      - name: Run TS
+        run: npx tsc --noEmit

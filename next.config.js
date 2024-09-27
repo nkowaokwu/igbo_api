@@ -12,10 +12,3 @@ module.exports = {
   },
   i18n,
 };
-
-// TODO: create a migration that migrates:
-// Project.type
-// ExampleSuggestion.translations.createdAt
-// ExampleSuggestion.translations.updatedAt
-// Example.translations.createdAt
-// Example.translations.updatedAt

@@ -6,11 +6,11 @@
   "main": "server.js",
   "scripts": {
     "build": "rm -rf dist/ && rm -rf build/ && npm run build:site && npm run build:src",
-    "build:src": "cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
+    "build:src": "tsc && cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
     "build:functions": "rm -rf functions/src && shx cp -r ./build ./functions && shx cp -r ./dist ./functions && shx cp -r ./build/src/dictionaries/ig-en ./functions/dictionaries",
+    "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
     "build:dictionaries:ig:en": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/ig-en\" ] && shx mkdir ./build/src/dictionaries/ig-en || echo 'Igbo to English dictionaries dir already exists'",
     "build:dictionaries:en:ig": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/en-ig\" ] && shx mkdir ./build/src/dictionaries/en-ig || echo 'English to Igbo dictionaries dir already exists'",
-    "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
     "prebuild:dictionaries": "npm run build:dictionaries:nsibidi && npm run build:dictionaries:ig:en && npm run build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./build/dictionaries && shx cp -r ./src/dictionaries/en-ig ./build/dictionaries",
     "build:dictionaries": "node ./build/src/dictionaries/buildDictionaries.js",
     "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && npm run build:fonts && npm run build:assets",
@@ -73,8 +73,8 @@
       "./node_modules/.bin/prettier --write",
       "./node_modules/.bin/eslint"
     ],
-    "**/*.ts?(x)": [
-      "./node_modules/.bin/tsc"
+    "**/*.ts": [
+      "bash -c tsc --noEmit"
     ]
   },
   "license": "ISC",
