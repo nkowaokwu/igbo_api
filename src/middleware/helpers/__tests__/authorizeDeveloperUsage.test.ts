@@ -65,13 +65,13 @@ describe('authorizeDeveloperUsage', () => {
   });
 
   it('throws error unable finding developer usage', async () => {
-    const route = 'speech-to-text';
+    const path = 'speech-to-text';
     const developer = developerFixture({});
     // @ts-expect-error mockReturnValue
     findDeveloperUsage.mockReturnValue(undefined);
 
     // @ts-expect-error developer
-    authorizeDeveloperUsage({ route, developer }).catch((err) => {
+    authorizeDeveloperUsage({ path, developer }).catch((err) => {
       expect(err.message).toEqual('No developer usage found');
     });
   });
