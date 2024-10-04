@@ -14,7 +14,7 @@ jest.mock('../createDeveloperUsage');
 
 describe('authorizeDeveloperUsage', () => {
   it("authorizes the current developer's usage", async () => {
-    const route = 'speech-to-text';
+    const path = 'speech-to-text';
     const developer = developerFixture({});
     const developerUsage = developerUsageFixture({});
     // @ts-expect-error mockReturnValue
@@ -25,12 +25,12 @@ describe('authorizeDeveloperUsage', () => {
     });
 
     // @ts-expect-error developer
-    const res = await authorizeDeveloperUsage({ route, developer });
+    const res = await authorizeDeveloperUsage({ path, developer });
     expect(res).toEqual(developerUsage);
   });
 
   it("updates the current developer's usage", async () => {
-    const route = 'speech-to-text';
+    const path = 'speech-to-text';
     const developer = developerFixture({});
     const developerUsage = developerUsageFixture({});
     const developerUsageDocument = {
@@ -42,12 +42,12 @@ describe('authorizeDeveloperUsage', () => {
     findDeveloperUsage.mockReturnValue(developerUsageDocument);
 
     // @ts-expect-error developer
-    await authorizeDeveloperUsage({ route, developer });
+    await authorizeDeveloperUsage({ path, developer });
     expect(developerUsageDocument.usage.count).toEqual(1);
   });
 
   it('creates a fallback developer usage if none exist exclusively for Igbo API', async () => {
-    const route = 'igbo_api';
+    const path = 'igbo_api';
     const developer = developerFixture({ id: documentId });
     const developerUsage = developerUsageFixture({});
     const developerUsageDocument = {
@@ -60,7 +60,7 @@ describe('authorizeDeveloperUsage', () => {
     // @ts-expect-error mockReturnValue
     createDeveloperUsage.mockReturnValue(developerUsageDocument);
     // @ts-expect-error developer
-    await authorizeDeveloperUsage({ route, developer });
+    await authorizeDeveloperUsage({ path, developer });
     expect(createDeveloperUsage).toHaveBeenCalled();
   });
 
@@ -77,7 +77,7 @@ describe('authorizeDeveloperUsage', () => {
   });
 
   it('throws error due to exceeding usage limit', async () => {
-    const route = 'speech-to-text';
+    const path = 'speech-to-text';
     const developer = developerFixture({});
     const developerUsage = developerUsageFixture({
       usage: { date: new Date(), count: ApiUsageLimit[ApiType.SPEECH_TO_TEXT] + 1 },
@@ -90,7 +90,7 @@ describe('authorizeDeveloperUsage', () => {
     });
 
     // @ts-expect-error developer
-    authorizeDeveloperUsage({ route, developer }).catch((err) => {
+    authorizeDeveloperUsage({ path, developer }).catch((err) => {
       expect(err.message).toEqual('You have exceeded your limit for this API for the day.');
     });
   });
