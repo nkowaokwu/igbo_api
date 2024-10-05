@@ -40,19 +40,19 @@ const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
 
 const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
   examples.map((example) => {
-    const cleanedExample: Omit<IncomingExample, 'source' | 'translations'> & {
-      igbo: string,
-      english: string,
-      pronunciation?: string,
-      pronunciations?: string[],
-    } = omit(
+    const cleanedExample = omit(
       assign({
         ...example,
         igbo: '',
         english: '',
       }),
-      ['source', 'translations']
-    );
+      ['source', 'translations', 'projectId']
+    ) as Omit<IncomingExample, 'source' | 'translations' | 'projectId'> & {
+      igbo: string,
+      english: string,
+      pronunciation?: string,
+      pronunciations?: string[],
+    };
     if (version === Version.VERSION_1) {
       cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
     } else {
@@ -141,7 +141,7 @@ export const findWordsWithMatch = async ({
       (word) => {
         const updatedWord = assign(word);
         // @ts-expect-error different versions
-        updatedWord.examples = cleanExamples({ examples: updatedWord.examples, version });
+        updatedWord.examples = cleanExamples({ examples: updatedWord.examples || [], version });
         return updatedWord;
       }
     );
