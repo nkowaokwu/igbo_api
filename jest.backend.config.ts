@@ -9,7 +9,11 @@ export default {
   ],
   testTimeout: 20000,
   testEnvironment: 'node',
+  roots: ['<rootDir>/src', '<rootDir>'],
   moduleFileExtensions: ['ts', 'js', 'json'],
+  moduleNameMapper: {
+    'src/(.*)': '<rootDir>/src/$1',
+  },
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },

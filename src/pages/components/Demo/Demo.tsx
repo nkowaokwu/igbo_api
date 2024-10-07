@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 import queryString from 'query-string';
 import JSONPretty from 'react-json-pretty';
 import { API_ROUTE, DICTIONARY_APP_URL } from '../../../siteConstants';
-import { Example, Word } from '../../../types';
+import { OutgoingExample as Example, OutgoingWord as Word } from '../../../types';
 import { WordDialect } from '../../../types/word';
 
 const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => {
@@ -34,7 +34,7 @@ const Demo = ({ searchWord, words }: { searchWord?: string, words: Word[] }) => 
         }
       }
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const constructQueryString = () => {
     const queriesString = queryString.stringify(queries);

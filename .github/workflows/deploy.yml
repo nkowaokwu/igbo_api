@@ -36,11 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - name: Install Project Dependencies
         run: |
           rm -rf ./node_modules; npm install
@@ -49,10 +49,6 @@ jobs:
         run: |
           cd functions; rm -rf ./node_modules/; npm install; cd ..; pwd
           firebase use default --token $FIREBASE_TOKEN
-      - name: Migrate MongoDB Data
-        run: |
-          firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
-          npm run migrate-up
       - name: Create .env
         run: touch ./functions/.env
       - name: Update .env
@@ -88,6 +84,10 @@ jobs:
         run: |
           firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
           npm run build
+      - name: Migrate MongoDB Data
+        run: |
+          firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
+          npm run migrate-up
       - name: Deploy Production Firebase Functions
         run: |
           firebase deploy --project=igbo-api-bb22d --only functions

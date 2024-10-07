@@ -1,16 +1,16 @@
 {
   "name": "igbo-api",
-  "version": "1.63.4",
+  "version": "1.63.6",
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "author": "Ijemma Onwuzulike",
   "main": "server.js",
   "scripts": {
     "build": "rm -rf dist/ && rm -rf build/ && npm run build:site && npm run build:src",
-    "build:src": "tsc && cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
+    "build:src": "tsc -p ./tsconfig.json && cross-env NODE_ENV=build npm run build:dictionaries && npm run build:functions",
     "build:functions": "rm -rf functions/src && shx cp -r ./build ./functions && shx cp -r ./dist ./functions && shx cp -r ./build/src/dictionaries/ig-en ./functions/dictionaries",
+    "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
     "build:dictionaries:ig:en": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/ig-en\" ] && shx mkdir ./build/src/dictionaries/ig-en || echo 'Igbo to English dictionaries dir already exists'",
     "build:dictionaries:en:ig": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/en-ig\" ] && shx mkdir ./build/src/dictionaries/en-ig || echo 'English to Igbo dictionaries dir already exists'",
-    "build:dictionaries:nsibidi": "[ ! -d \"./build/src/dictionaries\" ] && shx mkdir ./build/src/dictionaries || echo '' && [ ! -d \"./build/src/dictionaries/nsibidi\" ] && shx mkdir ./build/src/dictionaries/nsibidi || echo 'Nsibidi dictionary dir already exists'",
     "prebuild:dictionaries": "npm run build:dictionaries:nsibidi && npm run build:dictionaries:ig:en && npm run build:dictionaries:en:ig && shx cp -r ./src/dictionaries/ig-en ./build/dictionaries && shx cp -r ./src/dictionaries/en-ig ./build/dictionaries",
     "build:dictionaries": "node ./build/src/dictionaries/buildDictionaries.js",
     "build:site": "cross-env NEXT_PUBLIC_GA_ID=$GA_TRACKING_ID next build && npm run build:fonts && npm run build:assets",
@@ -72,6 +72,9 @@
     "*.{js,ts}": [
       "./node_modules/.bin/prettier --write",
       "./node_modules/.bin/eslint"
+    ],
+    "**/*.ts": [
+      "bash -c tsc --noEmit"
     ]
   },
   "license": "ISC",
@@ -88,6 +91,7 @@
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@sendgrid/mail": "^7.4.0",
     "@testing-library/cypress": "^10.0.1",
+    "@types/express": "^4.17.11",
     "antd": "^4.14.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
@@ -99,7 +103,7 @@
     "cross-env": "^7.0.2",
     "diacriticless": "^1.0.1",
     "dotenv": "^16.0.3",
-    "express": "^4.17.1",
+    "express": "4.17.1",
     "express-rate-limit": "^5.2.3",
     "firebase": "^10.12.2",
     "firebase-admin": "^12.1.1",
@@ -139,13 +143,14 @@
     "string-similarity": "^4.0.2",
     "stripe": "^15.1.0",
     "tailwindcss": "3",
-    "typescript": "^4.0.3",
+    "typescript": "^5.6.2",
     "unicharadata": "^9.0.0-alpha.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@eslint/js": "^9.11.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
@@ -168,18 +173,10 @@
     "@types/string-similarity": "^4.0.0",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.59.6",
-    "@typescript-eslint/parser": "^5.59.6",
     "cypress": "^12.14.0",
-    "eslint": "8.34.0",
-    "eslint-config-airbnb": "19.0.4",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-config-next": "^14.1.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-cypress": "2.12.1",
-    "eslint-plugin-import": "2.27.5",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-react": "7.32.2",
+    "eslint": "^9.11.1",
+    "eslint-plugin-react": "^7.36.1",
+    "globals": "^15.9.0",
     "husky": "^4.3.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^10.4.0",
@@ -189,7 +186,8 @@
     "prettier": "3.2.5",
     "supertest": "^6.3.1",
     "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.7.0"
   },
   "standard-version": {
     "skip": {

@@ -18,7 +18,7 @@ export const developerSchema = new Schema(
     usage: {
       date: { type: Date, default: new Date().toISOString() },
       count: { type: Number, default: 0 },
-    },
+    }, // DEPRECATED: Please use DeveloperUsage
     firebaseId: { type: String, default: '' },
     stripeId: { type: String, default: '' },
     plan: { type: String, enum: Object.values(Plan), default: Plan.STARTER },

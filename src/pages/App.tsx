@@ -10,7 +10,7 @@ import Statistics from './components/Statistics';
 import MentionedIn from './components/MentionedIn';
 import GitHubStars from './components/GitHubStars';
 import Features from './components/Features';
-import { DatabaseStats, GitHubStats, Word } from '../types';
+import { DatabaseStats, GitHubStats, OutgoingWord as Word } from '../types';
 
 const App = ({
   searchWord,
@@ -31,7 +31,6 @@ const App = ({
         <Box
           className="relative flex flex-col justify-center items-center 
           w-full xl:w-6/12 mt-32 md:mt-64 lg:my-32 space-y-4"
-          zIndex={-1}
         >
           <FadeIn>
             <Heading

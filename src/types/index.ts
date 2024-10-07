@@ -1,8 +1,20 @@
-export type { MiddleWare, IgboAPIRequest, Query } from './express';
+export type { MiddleWare, ErrorMiddleWare, IgboAPIRequest, Query } from './express';
 export type { Developer, DeveloperDocument, DeveloperResponse } from './developer';
-export type { Example, ExampleDocument } from './example';
+export type {
+  IncomingExample,
+  OutgoingExample,
+  OutgoingLegacyExample,
+  ExampleDocument,
+} from './example';
+export type { DeveloperUsage, DeveloperUsageDocument } from './developerUsage';
 export type { Stat } from './stat';
-export type { Word, LegacyWord, WordDocument, LegacyWordDocument, Definition } from './word';
+export type {
+  IncomingWord,
+  IncomingLegacyWord,
+  OutgoingWord,
+  OutgoingLegacyWord,
+  Definition,
+} from './word';
 export type { NsibidiCharacter, NsibidiCharacterDocument } from './nsibidiCharacter';
 export type { ProjectStats, GitHubStats, DatabaseStats } from './databaseStats';
 export type { FormFieldName } from './formFields';

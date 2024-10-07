@@ -1,22 +1,22 @@
-import { NextFunction, Response } from 'express';
 import mongoose, { Connection } from 'mongoose';
 import { handleQueries, packageResponse } from './utils';
-import { IgboAPIRequest } from '../types/express';
+import { MiddleWare } from '../types/express';
 import { searchNsibidiCharactersQuery } from './utils/queries';
 import { findNsibidiCharactersWithMatch } from './utils/buildDocs';
 import { nsibidiCharacterSchema } from '../models/NsibidiCharacter';
 import { NsibidiCharacter } from '../types/nsibidiCharacter';
 
-export const getNsibidiCharacters = async (req: IgboAPIRequest, res: Response, next: NextFunction) => {
+export const getNsibidiCharacters: MiddleWare = async (req, res, next) => {
   try {
     const { searchWord, version, skip, limit } = await handleQueries(req);
 
     const query = searchNsibidiCharactersQuery(searchWord);
 
-    const { nsibidiCharacters: allNsibidiCharacters, contentLength } = await findNsibidiCharactersWithMatch({
-      match: query,
-      version,
-    });
+    const { nsibidiCharacters: allNsibidiCharacters, contentLength } =
+      await findNsibidiCharactersWithMatch({
+        match: query,
+        version,
+      });
     const nsibidiCharacters = allNsibidiCharacters.slice(skip, skip + limit);
 
     return packageResponse({
@@ -30,7 +30,7 @@ export const getNsibidiCharacters = async (req: IgboAPIRequest, res: Response, n
   }
 };
 
-export const getNsibidiCharacter = async (req: IgboAPIRequest, res: Response, next: NextFunction) => {
+export const getNsibidiCharacter: MiddleWare = async (req, res, next) => {
   try {
     const { id, version } = await handleQueries(req);
 

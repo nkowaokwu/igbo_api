@@ -4,16 +4,21 @@ import { flagsFixture } from '../../../../__tests__/shared/fixtures';
 import { SuggestionSourceEnum } from '../../../shared/constants/SuggestionSourceEnum';
 
 describe('queries', () => {
-  it('creates an searchExamplesRegexQuery', () => {
+  it('creates a searchExamplesRegexQuery', () => {
     const regex = createRegExp('testing');
     const flags = flagsFixture();
 
     const query = searchExamplesRegexQuery({ regex, flags });
     expect(query.$and).toHaveLength(2);
-    expect(query.$and[0].$or).toBeDefined();
+    expect(query.$and[0].$or).toMatchObject([
+      {
+        'source.text': { $regex: /(\W|^)((t)([eEèéēÈÉĒ]+[´́`¯̣̄̀]{0,})(s)(t)(?:es|[sx]|ing)?)(\W|$)/i },
+      },
+      { 'translations.text': /(\W|^)((t)([eEèéēÈÉĒ]+[´́`¯̣̄̀]{0,})(s)(t)(?:es|[sx]|ing)?)(\W|$)/i },
+    ]);
     expect(query.$and[1].$or).toEqual([
-      { source: { $exists: false } },
-      { source: { $eq: SuggestionSourceEnum.INTERNAL } },
+      { origin: { $exists: false } },
+      { origin: { $eq: SuggestionSourceEnum.INTERNAL } },
     ]);
   });
 });

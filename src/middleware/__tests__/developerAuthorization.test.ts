@@ -11,7 +11,7 @@ jest.mock('firebase-admin');
 
 describe('developerAuthorization', () => {
   it('authorizes the developer with Firebase', async () => {
-    // @ts-expect-error
+    // @ts-expect-error Auth
     jest.spyOn(admin, 'auth').mockImplementation(() => ({
       verifyIdToken: () => ({ uid: 'authorization', email: 'testing@email.com' }),
     }));
