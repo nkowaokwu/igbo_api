@@ -36,6 +36,11 @@ export default {
     value: DialectEnum.ANI,
     label: 'Anịọcha',
   },
+  [DialectEnum.ASA]: {
+    code: 'ibo-asa',
+    value: DialectEnum.ASA,
+    label: 'Asa',
+  },
   [DialectEnum.AWK]: {
     code: 'ibo-awk',
     value: DialectEnum.AWK,
@@ -106,6 +111,11 @@ export default {
     value: DialectEnum.NDL,
     label: 'Ndele',
   },
+  [DialectEnum.NDO]: {
+    code: 'ibo-ndo',
+    value: DialectEnum.NDO,
+    label: 'Ndoki',
+  },
   [DialectEnum.NGW]: {
     code: 'ibo-ngw',
     value: DialectEnum.NGW,
@@ -120,6 +130,11 @@ export default {
     code: 'ibo-nkp',
     value: DialectEnum.NKP,
     label: 'Mkpọọ',
+  },
+  [DialectEnum.NKR]: {
+    code: 'ibo-nkr',
+    value: DialectEnum.NKR,
+    label: 'Nkporo',
   },
   [DialectEnum.NSA]: {
     code: 'ibo-nsa',
