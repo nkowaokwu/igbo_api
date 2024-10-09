@@ -4,11 +4,11 @@ import { getWords, getWord } from '../controllers/words';
 import { getExample, getExamples } from '../controllers/examples';
 import { getNsibidiCharacter, getNsibidiCharacters } from '../controllers/nsibidi';
 import { getTranscription } from '../controllers/speechToText';
+import { getTranslation } from '..//controllers/translation';
 import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
-import { getTranslation } from 'src/controllers/translation';
 import { MiddleWare } from 'src/types';
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
