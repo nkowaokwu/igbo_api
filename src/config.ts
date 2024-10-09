@@ -26,6 +26,9 @@ const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE_SOURCE = defineString(
 // Igbo API
 const ENV_MAIN_KEY = defineString('ENV_MAIN_KEY').value();
 
+// Nkọwa Okwu AI Models
+const ENV_IGBO_TO_ENGLISH_URL = defineString('ENV_IGBO_TO_ENGLISH_URL').value();
+
 // Google Analytics
 const ANALYTICS_GA_TRACKING_ID = defineString('ANALYTICS_GA_TRACKING_ID').value();
 const ANALYTICS_GA_API_SECRET = defineString('ANALYTICS_GA_API_SECRET').value();
@@ -101,11 +104,12 @@ export const CORS_CONFIG = {
 export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
 export const API_DOCS = 'https://docs.igboapi.com';
 
-// IgboSpeech
+// Nkọwa okwu AI Models
 export const SPEECH_TO_TEXT_API = isProduction
   ? 'https://speech.igboapi.com'
   : 'http://localhost:3333';
 
+export const IGBO_TO_ENGLISH_API = ENV_IGBO_TO_ENGLISH_URL;
 // SendGrid API
 export const SENDGRID_API_KEY = SENDGRID_API_KEY_SOURCE || '';
 export const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE =
