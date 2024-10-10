@@ -37,13 +37,7 @@ routerV2.get(
 
 // Speech-to-Text
 routerV2.post('/speech-to-text', analytics, validateApiKey, getTranscription);
-routerV2.post(
-  '/igbo-to-english',
-  translationRateLimiter,
-  analytics,
-  validateApiKey,
-  getTranslation
-);
+routerV2.post('/translate', translationRateLimiter, analytics, validateApiKey, getTranslation);
 
 // Redirects to V1
 routerV2.post('/developers', (_, res) => res.redirect('/api/v1/developers'));
