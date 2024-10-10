@@ -3,6 +3,7 @@ import { findDeveloperUsage } from './findDeveloperUsage';
 import { createDeveloperUsage } from './createDeveloperUsage';
 import { DeveloperUsageDocument } from '../../types/developerUsage';
 import ApiType from '../../shared/constants/ApiType';
+import ApiTypeToRoute from '../../shared/constants/ApiTypeToRoute';
 import ApiUsageLimit from '../../shared/constants/ApiUsageLimit';
 import { DeveloperDocument } from '../../types';
 
@@ -58,8 +59,27 @@ export const authorizeDeveloperUsage = async ({
 }: {
   path: string,
   developer: DeveloperDocument,
-}) =>
-  handleDeveloperUsage({
+}) => {
+  const extractedPath = getPath(path);
+  return handleDeveloperUsage({
     developer,
-    apiType: path.startsWith('speech-to-text') ? ApiType.SPEECH_TO_TEXT : ApiType.DICTIONARY,
+    apiType: getApiTypeFromRoute(extractedPath),
   });
+};
+
+const getApiTypeFromRoute = (route: string): ApiType => {
+  switch (route) {
+    case ApiTypeToRoute.SPEECH_TO_TEXT:
+      return ApiType.SPEECH_TO_TEXT;
+    case ApiTypeToRoute.TRANSLATE:
+      return ApiType.TRANSLATE;
+    default:
+      return ApiType.DICTIONARY;
+  }
+};
+
+const getPath = (path: string) => {
+  // Extract router path from full path
+  // ex. speech-to-text/params=param -> speech-to-text
+  return path.split(/[\/\?]/)[0];
+};
