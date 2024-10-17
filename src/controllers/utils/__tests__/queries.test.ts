@@ -1,6 +1,6 @@
 import createRegExp from '../../../shared/utils/createRegExp';
 import { searchExamplesRegexQuery } from '../queries';
-import { flagsFixture } from '../../../../__tests__/shared/fixtures';
+import { flagsFixture } from '../../../__tests__/shared/fixtures';
 import { SuggestionSourceEnum } from '../../../shared/constants/SuggestionSourceEnum';
 
 describe('queries', () => {

@@ -3,7 +3,7 @@ import {
   requestFixture,
   responseFixture,
   nextFunctionFixture,
-} from '../../../__tests__/shared/fixtures';
+} from '../../__tests__/shared/fixtures';
 
 describe('authorizeCheckoutSession', () => {
   it('authorizes the current checkout session', async () => {

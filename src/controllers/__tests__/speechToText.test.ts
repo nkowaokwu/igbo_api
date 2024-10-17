@@ -3,7 +3,7 @@ import {
   requestFixture,
   responseFixture,
   nextFunctionFixture,
-} from '../../../__tests__/shared/fixtures';
+} from '../../__tests__/shared/fixtures';
 import { getTranscription } from '../speechToText';
 import { fetchBase64Data } from '../utils/fetchBase64Data';
 

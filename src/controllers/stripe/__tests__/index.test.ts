@@ -3,7 +3,7 @@ import {
   nextFunctionFixture,
   requestFixture,
   responseFixture,
-} from '../../../../__tests__/shared/fixtures';
+} from '../../../__tests__/shared/fixtures';
 import {
   handleCustomerSubscriptionCreated,
   handleCustomerSubscriptionDeleted,

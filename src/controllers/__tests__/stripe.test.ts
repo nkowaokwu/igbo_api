@@ -1,5 +1,5 @@
 jest.mock('stripe');
-import { requestFixture, responseFixture } from '../../../__tests__/shared/fixtures';
+import { requestFixture, responseFixture } from '../../__tests__/shared/fixtures';
 import { postCheckoutSession, postPortalSession } from '../stripe';
 
 describe('Credentials', () => {

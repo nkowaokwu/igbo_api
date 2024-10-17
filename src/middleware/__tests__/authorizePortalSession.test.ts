@@ -3,7 +3,7 @@ import {
   requestFixture,
   responseFixture,
   nextFunctionFixture,
-} from '../../../__tests__/shared/fixtures';
+} from '../../__tests__/shared/fixtures';
 
 describe('authorizePortalSession', () => {
   it('authorizes the current portal session', async () => {
