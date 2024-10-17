@@ -5,7 +5,7 @@ import {
   responseFixture,
   nextFunctionFixture,
   statusSendMock,
-} from '../../../__tests__/shared/fixtures';
+} from '../../__tests__/shared/fixtures';
 
 jest.mock('firebase-admin');
 
