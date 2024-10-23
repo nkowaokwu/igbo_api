@@ -10,6 +10,8 @@ interface Translation {
   translation: string;
 }
 
+// Due to limit on inputs used to train the model, the maximum
+// Igbo translation input is 120 characters
 const TRANSLATION_INPUT_MAX_LENGTH = 120;
 
 /**
