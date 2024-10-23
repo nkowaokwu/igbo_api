@@ -4,7 +4,7 @@ import { getWords, getWord } from '../controllers/words';
 import { getExample, getExamples } from '../controllers/examples';
 import { getNsibidiCharacter, getNsibidiCharacters } from '../controllers/nsibidi';
 import { getTranscription } from '../controllers/speechToText';
-import { getTranslation } from '..//controllers/translation';
+import { getTranslation } from '../controllers/translation';
 import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
