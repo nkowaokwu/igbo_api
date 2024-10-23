@@ -11,13 +11,14 @@ import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
 import { MiddleWare } from 'src/types';
 
-const ONE_DAY = 24 * 60 * 60 * 1000;
-const REQUESTS_PER_MS_TRANSLATION = 5;
+// TODO: add rate limiting with upstash
+// const ONE_DAY = 24 * 60 * 60 * 1000;
+// const REQUESTS_PER_MS_TRANSLATION = 5;
 
-const translationRateLimiter: MiddleWare = rateLimit({
-  windowMs: ONE_DAY,
-  max: REQUESTS_PER_MS_TRANSLATION,
-});
+// const translationRateLimiter: MiddleWare = rateLimit({
+//   windowMs: ONE_DAY,
+//   max: REQUESTS_PER_MS_TRANSLATION,
+// });
 
 const routerV2 = Router();
 
@@ -37,7 +38,7 @@ routerV2.get(
 
 // Speech-to-Text
 routerV2.post('/speech-to-text', analytics, validateApiKey, getTranscription);
-routerV2.post('/translate', translationRateLimiter, analytics, validateApiKey, getTranslation);
+routerV2.post('/translate', analytics, validateApiKey, getTranslation);
 
 // Redirects to V1
 routerV2.post('/developers', (_, res) => res.redirect('/api/v1/developers'));
