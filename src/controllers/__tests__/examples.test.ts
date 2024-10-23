@@ -1,6 +1,5 @@
 import { exampleFixture } from '../../__tests__/shared/fixtures';
 import LanguageEnum from '../../shared/constants/LanguageEnum';
-import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
 import { convertToV1Example } from '../examples';
 
 describe('examples', () => {

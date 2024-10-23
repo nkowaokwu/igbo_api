@@ -1,12 +1,24 @@
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { getWords, getWord } from '../controllers/words';
 import { getExample, getExamples } from '../controllers/examples';
 import { getNsibidiCharacter, getNsibidiCharacters } from '../controllers/nsibidi';
 import { getTranscription } from '../controllers/speechToText';
+import { getTranslation } from '../controllers/translation';
 import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
+import { MiddleWare } from 'src/types';
+
+// TODO: add rate limiting with upstash
+// const ONE_DAY = 24 * 60 * 60 * 1000;
+// const REQUESTS_PER_MS_TRANSLATION = 5;
+
+// const translationRateLimiter: MiddleWare = rateLimit({
+//   windowMs: ONE_DAY,
+//   max: REQUESTS_PER_MS_TRANSLATION,
+// });
 
 const routerV2 = Router();
 
@@ -26,6 +38,7 @@ routerV2.get(
 
 // Speech-to-Text
 routerV2.post('/speech-to-text', analytics, validateApiKey, getTranscription);
+routerV2.post('/translate', analytics, validateApiKey, getTranslation);
 
 // Redirects to V1
 routerV2.post('/developers', (_, res) => res.redirect('/api/v1/developers'));
