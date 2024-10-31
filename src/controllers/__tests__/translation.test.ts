@@ -13,7 +13,7 @@ describe('translation', () => {
   });
   it('calls Nkọwa okwu ML translation server', async () => {
     const req = requestFixture({
-      body: { igbo: 'aka' },
+      body: { text: 'aka', sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,
@@ -22,7 +22,7 @@ describe('translation', () => {
     const res = responseFixture();
     const next = nextFunctionFixture();
     jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { igbo: 'aka' },
+      data: { text: 'aka', sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
     });
     await getTranslation(req, res, next);
     expect(res.send).toHaveBeenCalled();
@@ -30,7 +30,7 @@ describe('translation', () => {
 
   it('throws validation error when input is too long', async () => {
     const req = requestFixture({
-      body: { igbo: 'aka'.repeat(100) },
+      body: { text: 'aka'.repeat(100), sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,
@@ -39,7 +39,7 @@ describe('translation', () => {
     const res = responseFixture();
     const next = nextFunctionFixture();
     jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { igbo: 'aka'.repeat(100) },
+      data: { text: 'aka'.repeat(100), sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
     });
     await getTranslation(req, res, next);
     expect(next).toHaveBeenCalledWith(
@@ -48,7 +48,7 @@ describe('translation', () => {
   });
   it('throws validation error when input string is empty', async () => {
     const req = requestFixture({
-      body: { igbo: '' },
+      body: { text: '', sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,
@@ -57,9 +57,45 @@ describe('translation', () => {
     const res = responseFixture();
     const next = nextFunctionFixture();
     jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { igbo: '' },
+      data: { text: '', sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
     });
     await getTranslation(req, res, next);
     expect(next).toHaveBeenCalledWith(new Error('Cannot translate empty string'));
+  });
+  it('throws validation error for unsupported language combinations', async () => {
+    const req = requestFixture({
+      body: { text: 'aka', sourceLanguageCode: 'ibo', destinationLanguageCode: 'hau' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': MAIN_KEY,
+      },
+    });
+    const res = responseFixture();
+    const next = nextFunctionFixture();
+    jest.spyOn(axios, 'request').mockResolvedValue({
+      data: { text: 'aka', sourceLanguageCode: 'ibo', destinationLanguageCode: 'hau' },
+    });
+    await getTranslation(req, res, next);
+    expect(next).toHaveBeenCalledWith(new Error('ibo to hau translation is not yet supported'));
+  });
+  it('throws validation error for missing keys', async () => {
+    const req = requestFixture({
+      body: { text: 'aka' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': MAIN_KEY,
+      },
+    });
+    const res = responseFixture();
+    const next = nextFunctionFixture();
+    jest.spyOn(axios, 'request').mockResolvedValue({
+      data: { text: 'aka' },
+    });
+    await getTranslation(req, res, next);
+    expect(next).toHaveBeenCalledWith(
+      new Error(
+        'Validation error: Required at "sourceLanguageCode"; Required at "destinationLanguageCode"'
+      )
+    );
   });
 });
