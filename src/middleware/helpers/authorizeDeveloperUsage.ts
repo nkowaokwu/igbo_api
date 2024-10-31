@@ -67,6 +67,13 @@ export const authorizeDeveloperUsage = async ({
   });
 };
 
+/**
+ * The function maps route strings to the APIType Enum that would represent usage
+ * of the route
+ * @param route The string name of the route
+ * @returns The ApiType of the route passed as input. For example /speech-to-text would
+ *          route to the Speech-to-Text API type
+ */
 const getApiTypeFromRoute = (route: string): ApiType => {
   switch (route) {
     case ApiTypeToRoute.SPEECH_TO_TEXT:
