@@ -1,17 +1,21 @@
-import { dialectFixture, exampleFixture, wordFixture } from '../../../__tests__/shared/fixtures';
+import {
+  dialectFixture,
+  outgoingExampleFixture,
+  outgoingWordFixture,
+} from '../../__tests__/shared/fixtures';
 import LanguageEnum from '../../shared/constants/LanguageEnum';
 import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
 import { handleWordFlags } from '../FlagsAPI';
 
 describe('FlagsAPI', () => {
   const words = [
-    wordFixture({
+    outgoingWordFixture({
       word: 'first word',
       examples: [
-        exampleFixture({
+        outgoingExampleFixture({
           source: { text: 'first example', language: LanguageEnum.IGBO, pronunciations: [] },
         }),
-        exampleFixture({
+        outgoingExampleFixture({
           source: {
             text: 'second example',
             language: LanguageEnum.IGBO,
@@ -19,7 +23,7 @@ describe('FlagsAPI', () => {
           },
           origin: SuggestionSourceEnum.INTERNAL,
         }),
-        exampleFixture({
+        outgoingExampleFixture({
           source: {
             text: 'second example',
             language: LanguageEnum.IGBO,
@@ -29,14 +33,14 @@ describe('FlagsAPI', () => {
         }),
       ],
     }),
-    wordFixture({
+    outgoingWordFixture({
       word: 'second word',
       dialects: [dialectFixture({ word: 'second-word-dialect' })],
     }),
-    wordFixture({
+    outgoingWordFixture({
       word: 'third word',
-      stems: [wordFixture({ word: 'first stem' })],
-      relatedTerms: [wordFixture({ word: 'first related term' })],
+      stems: [outgoingWordFixture({ word: 'first stem' })],
+      relatedTerms: [outgoingWordFixture({ word: 'first related term' })],
     }),
   ];
 

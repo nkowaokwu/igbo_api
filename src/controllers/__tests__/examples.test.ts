@@ -1,10 +1,10 @@
-import { exampleFixture } from '../../__tests__/shared/fixtures';
+import { incomingExampleFixture } from '../../__tests__/shared/fixtures';
 import LanguageEnum from '../../shared/constants/LanguageEnum';
 import { convertToV1Example } from '../examples';
 
 describe('examples', () => {
   it('converts example pronunciations to pronunciation for v1', () => {
-    const example = exampleFixture({
+    const example = incomingExampleFixture({
       source: {
         text: 'igbo',
         language: LanguageEnum.IGBO,
