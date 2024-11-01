@@ -98,7 +98,7 @@ export const CORS_CONFIG = {
 };
 
 // API Homepage
-export const API_ROUTE = isProduction ? '' : `http://localhost:${PORT}`;
+export const API_ROUTE = isProduction ? 'https://igboapi.com' : `http://localhost:8080`; //${PORT}`;
 export const API_DOCS = 'https://docs.igboapi.com';
 
 // IgboSpeech

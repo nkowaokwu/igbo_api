@@ -1,7 +1,5 @@
-import React from 'react';
-import { Box, Heading, Text, Link, chakra } from '@chakra-ui/react';
+import { Box, Heading, Link, Text, chakra } from '@chakra-ui/react';
 import { FiMail } from 'react-icons/fi';
-import { DICTIONARY_APP_URL } from '../../siteConstants';
 
 const About = () => (
   <Box className="flex flex-col items-center h-screen">
@@ -14,31 +12,8 @@ const About = () => (
           About
         </Heading>
         <Text className="mb-6">
-          The Igbo API is a multi-dialectal, audio-supported, open-to-contribute, Igbo-English
-          dictionary API. This project focuses on enabling developers, organizations, and teams to
-          create technology that relies on the Igbo language.
-        </Text>
-        <Text>
-          Our main goal is to make an easy-to-access, robust, lexical Igbo language resource to help
-          solve a variety of complex problems within the worlds of education to Machine Learning.
-        </Text>
-        <Text>
-          {'The Igbo API hosts and serves all word and example sentence data that is shown on '}
-          <Link className="link" href={DICTIONARY_APP_URL}>
-            Nkọwa okwu
-          </Link>
-          , our official online Igbo-English dictionary app.
-        </Text>
-
-        <Text>
-          {`The initial words and examples that populated this API came
-              from Kay Williamson's Igbo Dictionary entitled `}
-          <Link
-            className="link"
-            href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf"
-          >
-            {'Dictionary of Ònìchà Igbo. '}
-          </Link>
+          The Igbo API is a multi-modal, multi-purpose, feature-rich AI solution made available
+          through an API.
         </Text>
         <Text>
           {'This is an '}

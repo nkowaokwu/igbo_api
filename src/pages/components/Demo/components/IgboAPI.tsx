@@ -4,9 +4,9 @@ import queryString from 'query-string';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import JSONPretty from 'react-json-pretty';
-import { getDictionaryEndpoint } from 'src/APIs/PredictionAPI';
 import { OutgoingExample } from '../../../../types';
 import { OutgoingWord, WordDialect } from '../../../../types/word';
+import { getDictionaryEndpoint } from '../../../APIs/PredictionAPI';
 
 const IgboAPI = ({ searchWord }: { searchWord: string }) => {
   const [words, setWords] = useState<OutgoingWord[]>([]);

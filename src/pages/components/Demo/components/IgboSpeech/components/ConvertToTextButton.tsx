@@ -2,9 +2,9 @@ import { Box, Button, Collapse, Text } from '@chakra-ui/react';
 import { useAtom, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import { FiZap } from 'react-icons/fi';
-import { postAudio, TranscriptionAudio } from '../../../../../../APIs/AudioAPI';
-import { postSpeechToTextEndpoint } from '../../../../../../APIs/PredictionAPI';
 import Feedback from '../../../../../../shared/constants/Feedback';
+import { blobUrlToBase64 } from '../../../../../../shared/utils/blobUrlToBase64';
+import { postSpeechToTextEndpoint } from '../../../../../APIs/PredictionAPI';
 import {
   audioDataAtom,
   feedbackAtom,
@@ -15,6 +15,11 @@ import {
   predictionTextAtom,
   selectedDefaultAudioAtom,
 } from '../../../../../atoms';
+
+interface ConvertedAudio {
+  base64: string;
+  audioUrl: string;
+}
 
 const ConvertToTextButton = ({
   mediaBlobUrl,
@@ -40,23 +45,21 @@ const ConvertToTextButton = ({
     setIsFeedbackSubmitted(false);
     setHumanTranscription('');
     setFeedback(Feedback.UNSPECIFIED);
-    setAudioData({ audioId: '', audioUrl: '' });
+    setAudioData({ audioUrl: '' });
   };
 
-  const predictText = async ({ audioId, audioUrl }: { audioId: string, audioUrl: string }) => {
+  const predictText = async (convertedAudio: ConvertedAudio) => {
     try {
       setPredictLoading(true);
-      const startPredictionTime = performance.now();
+      // const startPredictionTime = performance.now();
       const { transcription } = await postSpeechToTextEndpoint({
-        audioId,
-        audioUrl,
+        base64: convertedAudio.base64,
       });
-      const endPredictionTime = performance.now();
+      // const endPredictionTime = performance.now();
 
       setPredictText(transcription);
       setAudioData({
-        audioId,
-        audioUrl,
+        audioUrl: convertedAudio.audioUrl,
       });
 
       // track('Transcription', {
@@ -72,12 +75,12 @@ const ConvertToTextButton = ({
     }
   };
 
-  const uploadToAWS = async () => {
+  const convertToBase64 = async () => {
     if (!mediaBlobUrl) return undefined;
     try {
       setPredictLoading(true);
-      const res = await postAudio({ url: mediaBlobUrl });
-      return res;
+      const res = await blobUrlToBase64({ url: mediaBlobUrl });
+      return { base64: res, audioUrl: mediaBlobUrl };
     } catch (err) {
       setPredictText('Error occurred.');
       setPredictLoading(false);
@@ -87,14 +90,14 @@ const ConvertToTextButton = ({
   };
 
   const handlePredictText = async () => {
-    let res: TranscriptionAudio | void = undefined;
+    let res: ConvertedAudio | void = undefined;
 
     if (selectedDefaultAudio) {
       // Construct res if working with default audio
-      res = selectedDefaultAudio;
+      res = { base64: '', audioUrl: selectedDefaultAudio.audioUrl };
     } else {
       // Fetch audio from AWS to construct res
-      res = await uploadToAWS();
+      res = await convertToBase64();
       if (!res) return;
     }
 

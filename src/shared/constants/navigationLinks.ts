@@ -100,12 +100,12 @@ export const navigationLinks: NavigationLink[] = [
         href: '/use-cases/interview-transcription',
         enabled: true,
       },
-      {
-        title: 'Translate Conversations',
-        subtitle: 'Translate between Igbo and English',
-        href: '/use-cases/translate',
-        enabled: true,
-      },
+      // {
+      //   title: 'Translate Conversations',
+      //   subtitle: 'Translate between Igbo and English',
+      //   href: '/use-cases/translate',
+      //   enabled: true,
+      // },
     ],
   },
   {

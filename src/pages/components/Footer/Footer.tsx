@@ -17,11 +17,12 @@ import {
   API_FROM_EMAIL,
   APP_URL,
   GITHUB_REPO,
+  HUGGING_FACE,
   INSTAGRAM,
+  KAGGLE,
   LINKEDIN,
   NKOWAOKWU,
   NKOWAOKWU_CHROME,
-  SPEECH_TO_TEXT_APP_URL,
   TWITTER,
   YOUTUBE,
 } from '../../../siteConstants';
@@ -52,10 +53,6 @@ const categories = [
         label: 'Chrome Extension',
         href: NKOWAOKWU_CHROME,
       },
-      {
-        label: 'IgboSpeech',
-        href: SPEECH_TO_TEXT_APP_URL,
-      },
     ],
   },
   {
@@ -66,12 +63,16 @@ const categories = [
         href: '/docs',
       },
       {
-        label: 'Share Feedback',
-        href: '#',
+        label: 'Hugging Face',
+        href: HUGGING_FACE,
       },
       {
-        label: 'Feature Request',
-        href: '#',
+        label: 'Kaggle',
+        href: KAGGLE,
+      },
+      {
+        label: 'GitHub',
+        href: GITHUB_REPO,
       },
     ],
   },
