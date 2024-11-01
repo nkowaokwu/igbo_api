@@ -9,11 +9,13 @@ interface IgboEnglishTranslationMetadata {
   igbo: string;
 }
 
-const TranslationRequestBody = z.object({
-  text: z.string(),
-  sourceLanguageCode: z.nativeEnum(LanguageEnum),
-  destinationLanguageCode: z.nativeEnum(LanguageEnum),
-});
+const TranslationRequestBody = z
+  .object({
+    text: z.string(),
+    sourceLanguageCode: z.nativeEnum(LanguageEnum),
+    destinationLanguageCode: z.nativeEnum(LanguageEnum),
+  })
+  .strict();
 
 interface Translation {
   translation: string;
