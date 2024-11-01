@@ -145,7 +145,8 @@
     "tailwindcss": "3",
     "typescript": "^5.6.2",
     "unicharadata": "^9.0.0-alpha.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
