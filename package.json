@@ -59,7 +59,7 @@
     "start:database:secondary:second": "mongod --port 2737 --dbpath ./mongos/db3 --replSet rs0 --quiet"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "npm": ">=8"
   },
   "husky": {
@@ -69,7 +69,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts}": [
+    "*.{js,ts,tsx}": [
       "./node_modules/.bin/prettier --write",
       "./node_modules/.bin/eslint"
     ],
@@ -116,6 +116,7 @@
     "joi": "^17.4.0",
     "jotai": "^2.7.1",
     "lodash": "^4.17.20",
+    "mic-recorder-to-mp3": "^2.2.2",
     "migrate-mongo": "^8.1.4",
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",
@@ -173,6 +174,7 @@
     "@types/string-similarity": "^4.0.0",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^9.0.2",
+    "@typescript-eslint/parser": "^8.12.2",
     "cypress": "^12.14.0",
     "eslint": "^9.11.1",
     "eslint-plugin-react": "^7.36.1",

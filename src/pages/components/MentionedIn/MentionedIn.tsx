@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Box, Text, Image, Link, Tooltip } from '@chakra-ui/react';
+import { Box, Text, Image, Link, Tooltip, HStack } from '@chakra-ui/react';
 
 const NIGERIAN_TRIBUNE = {
   url: `https://tribuneonlineng.com/why-i-created-first-igbo-english-
@@ -33,15 +33,18 @@ const TECHPOINT = {
 };
 
 const MentionedIn = () => (
-  <Box className="mentioned-in w-10/12 lg:w-full flex flex-col justify-center items-center space-y-12">
-    {' '}
+  <Box
+    className="mentioned-in w-full flex flex-col justify-center items-center space-y-4"
+    backgroundColor="gray.200"
+    p={12}
+  >
     <Text textAlign="center" fontWeight="semibold" fontSize="xl">
-      Mentioned in
+      Featured in
     </Text>
-    <Box className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-12">
+    <HStack className="flex flex-row justify-between w-full">
       <Link href={NASDAQ.url} target="_blank" rel="noreferrer">
         <Tooltip label="Nasdaq">
-          <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '140px' }} />
+          <Image src={NASDAQ.src} alt="Nasdaq logo" style={{ width: '110px' }} />
         </Tooltip>
       </Link>
       <Link href={NIGERIAN_TRIBUNE.url} target="_blank" rel="noreferrer">
@@ -55,30 +58,30 @@ const MentionedIn = () => (
       </Link>
       <Link href={UIU.url} target="_blank" rel="noreferrer">
         <Tooltip label="Umu Igbo Unite">
-          <Image src={UIU.src} alt="Umu Igbo Unite logo" style={{ width: '110px' }} />
+          <Image src={UIU.src} alt="Umu Igbo Unite logo" style={{ width: '90px' }} />
         </Tooltip>
       </Link>
       <Link href={BUILT_IN_AFRICA.url} target="_blank" rel="noreferrer">
         <Tooltip label="Built in Africa">
-          <Image src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" style={{ width: '130px' }} />
+          <Image src={BUILT_IN_AFRICA.src} alt="Built in Africa logo" style={{ width: '100px' }} />
         </Tooltip>
       </Link>
       <Link href={NUESROOM.url} target="_blank" rel="noreferrer">
         <Tooltip label="Nuesroom">
-          <Image src={NUESROOM.src} alt="Nuesroom logo" style={{ width: '140px' }} />
+          <Image src={NUESROOM.src} alt="Nuesroom logo" style={{ width: '110px' }} />
         </Tooltip>
       </Link>
       <Link href={WEDEYCODE.url} target="_blank" rel="noreferrer" className="flex justify-center">
         <Tooltip label="WeDeyCode">
-          <Image src={WEDEYCODE.src} alt="WeDeyCode logo" style={{ width: '90px' }} />
+          <Image src={WEDEYCODE.src} alt="WeDeyCode logo" style={{ width: '70px' }} />
         </Tooltip>
       </Link>
       <Link href={TECHPOINT.url} target="_blank" rel="noreferrer">
         <Tooltip label="Techpoint">
-          <Image src={TECHPOINT.src} alt="Techpoint logo" style={{ width: '150px' }} />
+          <Image src={TECHPOINT.src} alt="Techpoint logo" style={{ width: '120px' }} />
         </Tooltip>
       </Link>
-    </Box>
+    </HStack>
   </Box>
 );
 

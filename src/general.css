@@ -20,30 +20,20 @@ body {
   overflow-x: hidden;
 }
 
-input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]),
-textarea {
-  @apply transition-all;
-  @apply duration-100;
-}
-input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):hover,
-textarea:hover {
-  border-color: rgba(41, 60, 123, 0.4);
-  box-shadow: 0 0 0 4px rgba(41, 98, 123, 0.1);
-}
-
-input:not([data-test='search-bar']):not([type='checkbox']):not([disabled]):focus,
-textarea:focus {
-  border-color: rgba(41, 60, 123, 0.4);
-  box-shadow: 0 0 0 4px rgba(41, 98, 123, 0.1);
-  outline: rgba(41, 60, 123, 0.4);
-}
-
 *,
 button:focus {
   outline: rgba(41, 123, 48, 0.4);
 }
 
-.ant-checkbox-inner,
-.ant-checkbox-input {
-  transform: scale(1.3);
+audio::-webkit-media-controls-panel {
+  @apply bg-white;
+  @apply border-solid;
+}
+audio::-webkit-media-controls-enclosure {
+  @apply rounded-md;
+  @apply border-solid;
+  @apply border-gray-200;
+}
+audio::-webkit-media-controls-timeline {
+  stroke: #f5fbff;
 }

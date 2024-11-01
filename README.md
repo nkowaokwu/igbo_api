@@ -14,4 +14,4 @@
 
 Visit our [docs website](https://docs.igboapi.com) to get started with using the Igbo API.
 
-Visit the [Igbo API Docs repo](https://github.com/nkowaokwu/igbo_api_docs) to improve our docs.
+Visit the [Igbo API Docs repo](https://github.com/nkowaokwu/igbo_api_docs) to help improve our docs.
