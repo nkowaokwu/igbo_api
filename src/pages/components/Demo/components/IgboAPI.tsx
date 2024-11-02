@@ -2,7 +2,6 @@ import { Box, Button, Checkbox, Heading, Input, Text } from '@chakra-ui/react';
 import { omit } from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useRef, useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
 import { LuSearch } from 'react-icons/lu';
 import JSONPretty from 'react-json-pretty';
 import { OutgoingExample } from '../../../../types';
@@ -117,7 +116,6 @@ const IgboAPI = ({ searchWord }: { searchWord: string }) => {
             <Button
               type="submit"
               className="w-full transition-all duration-100"
-              leftIcon={<FiSearch />}
               backgroundColor="blue.600"
               color="white"
               width={28}

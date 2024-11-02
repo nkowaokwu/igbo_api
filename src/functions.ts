@@ -33,6 +33,9 @@ const fetchSpeechToText = async ({ data }: { data: SpeechToTextRequest }) => {
     .request<TranscriptionAudio>({
       method: 'POST',
       url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
+      headers: {
+        'X-API-Key': MAIN_KEY,
+      },
       data: { base64 },
     })
     .catch((err) => {
