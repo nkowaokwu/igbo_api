@@ -3,12 +3,14 @@ import { omit } from 'lodash';
 import queryString from 'query-string';
 import React, { useEffect, useRef, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { LuSearch } from 'react-icons/lu';
 import JSONPretty from 'react-json-pretty';
 import { OutgoingExample } from '../../../../types';
 import { OutgoingWord, WordDialect } from '../../../../types/word';
 import { getDictionaryEndpoint } from '../../../APIs/PredictionAPI';
 
 const IgboAPI = ({ searchWord }: { searchWord: string }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const [words, setWords] = useState<OutgoingWord[]>([]);
   const [keyword, setKeyword] = useState(searchWord);
   const [queries, setQueries] = useState<{ dialects?: boolean, examples?: boolean }>({});
@@ -116,15 +118,22 @@ const IgboAPI = ({ searchWord }: { searchWord: string }) => {
               type="submit"
               className="w-full transition-all duration-100"
               leftIcon={<FiSearch />}
-              backgroundColor="blue.500"
-              width={28}
+              backgroundColor="blue.600"
               color="white"
-              _hover={{
-                backgroundColor: 'blue.400',
-              }}
-              borderRadius="full"
+              width={28}
               isLoading={isSearchingWord}
               isDisabled={isSearchingWord}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              rightIcon={
+                <LuSearch
+                  style={{
+                    position: 'relative',
+                    left: isHovered ? 4 : 0,
+                    transition: 'left .2s ease',
+                  }}
+                />
+              }
             >
               Search
             </Button>

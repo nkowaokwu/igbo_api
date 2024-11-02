@@ -1,18 +1,24 @@
-import { Box, Heading, HStack, Text, Textarea, VStack } from '@chakra-ui/react';
-import { debounce } from 'lodash';
-import { ChangeEvent, useState } from 'react';
+import { Box, Button, Heading, HStack, Spinner, Text, Textarea, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { LuRefreshCcw } from 'react-icons/lu';
 import { postTranslationEndpoint } from '../../../APIs/PredictionAPI';
 
 const Translate = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPredictLoading, setIsPredictLoading] = useState(false);
   const [translation, setTranslation] = useState('');
-  const debouncedFetch = debounce(async (text: string) => {
-    const translation = await postTranslationEndpoint({ text });
-    setTranslation(translation.translation);
-  }, 500);
+  const [text, setText] = useState('');
 
-  const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    debouncedFetch(e.target.value);
+  const handleTranslate = async () => {
+    try {
+      setIsPredictLoading(true);
+      const fetchedTranslation = await postTranslationEndpoint({ text });
+      setTranslation(fetchedTranslation.translation);
+    } finally {
+      setIsPredictLoading(false);
+    }
   };
+
   return (
     <Box maxWidth="1200px" width="full">
       <VStack width="full" p={4} gap={4}>
@@ -26,7 +32,8 @@ const Translate = () => {
               height={32}
               width="full"
               p={2}
-              onChange={handleTextChange}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
               fontSize="lg"
               resize="none"
             />
@@ -35,7 +42,17 @@ const Translate = () => {
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
               English
             </Heading>
-            <Box height={32} backgroundColor="gray.50" width="full" p={2} overflow="overlay">
+            <Box
+              height={32}
+              backgroundColor="gray.50"
+              width="full"
+              p={2}
+              overflow="overlay"
+              {...(isPredictLoading
+                ? { display: 'flex', justifyContent: 'center', alignItems: 'center' }
+                : {})}
+            >
+              {isPredictLoading ? <Spinner /> : null}
               <Text fontSize="lg">{translation}</Text>
             </Box>
           </VStack>
@@ -43,6 +60,29 @@ const Translate = () => {
         <Text textAlign="center" fontStyle="italic" fontSize="sm" color="gray">
           Type in Igbo to see it&apos;s English translation
         </Text>
+        <Button
+          onClick={handleTranslate}
+          backgroundColor="blue.600"
+          color="white"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          _hover={{
+            backgroundColor: 'blue.500',
+          }}
+          isLoading={isPredictLoading}
+          rightIcon={
+            <LuRefreshCcw
+              style={{
+                position: 'relative',
+                left: isHovered ? 4 : 0,
+                transition: 'left .2s ease',
+              }}
+            />
+          }
+          p={6}
+        >
+          Translate
+        </Button>
       </VStack>
     </Box>
   );

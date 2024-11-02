@@ -35,11 +35,11 @@ export const getDictionaryEndpoint = async ({
   keyword: string,
   params: { dialects?: boolean, examples?: boolean },
 }): Promise<DictionaryResponse> => {
-  const { data: result } = useCallable('demo', {
+  const { data } = useCallable('demo', {
     type: DemoOption.DICTIONARY,
     data: { keyword, params },
   });
-  return result || { words: [] };
+  return { words: data.result?.data || [] };
 };
 
 /**
@@ -52,13 +52,11 @@ export const postSpeechToTextEndpoint = async ({
 }: {
   base64: string,
 }): Promise<SpeechToTextResponse> => {
-  const { data: result } = useCallable('demo', {
+  const { data } = useCallable('demo', {
     type: DemoOption.SPEECH_TO_TEXT,
-    data: {
-      base64,
-    },
+    data: { base64 },
   });
-  return result || { transcription: '' };
+  return data.result || { transcription: '' };
 };
 
 /**
@@ -71,7 +69,7 @@ export const postTranslationEndpoint = async ({
 }: {
   text: string,
 }): Promise<TranslationResponse> => {
-  const { data: result } = useCallable('demo', {
+  const { data } = useCallable('demo', {
     type: DemoOption.TRANSLATE,
     data: {
       text,
@@ -79,5 +77,5 @@ export const postTranslationEndpoint = async ({
       destinationLanguageCode: LanguageEnum.ENGLISH,
     },
   });
-  return result || { translation: '' };
+  return data.result || { translation: 'fdsafdafsd' };
 };

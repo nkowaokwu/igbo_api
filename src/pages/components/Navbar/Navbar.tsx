@@ -14,7 +14,6 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
       backgroundColor="white"
       zIndex={1}
       p={4}
-      mb={12}
     >
       <Box className="flex items-center justify-between w-11/12" style={{ zIndex: 2 }}>
         <Box className="flex flex-row items-center">

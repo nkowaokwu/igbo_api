@@ -95,7 +95,6 @@ const Footer = () => (
   <VStack
     className="flex flex-col justify-center items-center w-full py-12"
     backgroundColor="blue.900"
-    mt={12}
     gap={12}
   >
     <footer className="w-11/12 grid grid-cols-1 lg:grid-cols-4 space-y-8 lg:space-y-0">
@@ -103,7 +102,7 @@ const Footer = () => (
         <Link href="/">
           <Image src={nkowaokwuLogoWhite} alt="Nkọwa okwu logo" height={30} />
         </Link>
-        <Text color="white">
+        <Text color="white" fontSize="sm">
           Join the growing number of professionals and educators who trust IgboSpeech for their
           transcription needs.
         </Text>
