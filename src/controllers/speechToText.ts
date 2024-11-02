@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
+import Endpoint from '../shared/constants/Endpoint';
 import { MiddleWare } from '../types';
 import { fetchBase64Data } from './utils/fetchBase64Data';
 import { parseAWSIdFromUri } from './utils/parseAWS';
-import { MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
 
 interface AudioMetadata {
   audioId: string;
@@ -36,7 +37,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       const { data: response } = await axios
         .request<AudioMetadata>({
           method: 'POST',
-          url: `${SPEECH_TO_TEXT_API}/audio`,
+          url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
           headers: {
             'Content-Type': 'application/json',
             'X-API-Key': MAIN_KEY,

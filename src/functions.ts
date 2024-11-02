@@ -1,8 +1,7 @@
 import axios from 'axios';
 import * as functions from 'firebase-functions/v1';
-import { API_ROUTE, MAIN_KEY, SPEECH_TO_TEXT_API } from './config';
+import { API_ROUTE, MAIN_KEY } from './config';
 import DemoOption from './shared/constants/DemoOption';
-import Endpoint from './shared/constants/Endpoint';
 import LanguageEnum from './shared/constants/LanguageEnum';
 
 interface SpeechToTextRequest {
@@ -29,19 +28,6 @@ interface DictionaryRequest {
 
 const fetchSpeechToText = async ({ data }: { data: SpeechToTextRequest }) => {
   const { base64 } = data;
-  const { data: response } = await axios
-    .request<TranscriptionAudio>({
-      method: 'POST',
-      url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
-      headers: {
-        'X-API-Key': MAIN_KEY,
-      },
-      data: { base64 },
-    })
-    .catch((err) => {
-      console.error('Error while posting audio url for speech to text demo:', err);
-      throw err;
-    });
   return (
     await axios
       .request({
@@ -52,7 +38,7 @@ const fetchSpeechToText = async ({ data }: { data: SpeechToTextRequest }) => {
           'X-API-Key': MAIN_KEY,
         },
         data: {
-          audioUrl: response.audioUrl,
+          audioUrl: base64,
         },
       })
       .catch((err) => {
