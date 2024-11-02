@@ -148,6 +148,8 @@ functions/node_modules
 functions/src
 functions/dictionaries
 functions/yarn.lock
+functions/pnpm-lock.yaml
 yarn.lock
+pnpm-lock.yaml
 .idea
 .firebaserc
