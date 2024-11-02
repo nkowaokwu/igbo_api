@@ -7,7 +7,6 @@ import Footer from '../components/Footer';
 
 const Terms = () => (
   <>
-    <Navbar />
     <Box style={{ minHeight: '96vh' }} className="flex flex-col items-center py-12">
       <Box className="w-11/12 lg:w-6/12 flex flex-col justify-start py-3 lg:py-10">
         {/* Terms and Conditions Start */}
@@ -477,7 +476,6 @@ const Terms = () => (
         </Box>
       </Box>
     </Box>
-    <Footer />
   </>
 );
 

@@ -3,8 +3,6 @@ import { capitalize } from 'lodash';
 import { Box, Heading } from '@chakra-ui/react';
 import PricingCard from './components/PricingCard';
 import { PricingTier } from './types';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import Plan from '../../shared/constants/Plan';
 
 const pricingTiers: PricingTier[] = [
@@ -34,7 +32,6 @@ const pricingTiers: PricingTier[] = [
 
 const Pricing = () => (
   <Box>
-    <Navbar />
     <Box className="space-y-12 md:pt-64 lg:py-32 mb-12">
       <Heading as="h1" textAlign="center">
         Pricing
@@ -48,7 +45,6 @@ const Pricing = () => (
         ))}
       </Box>
     </Box>
-    <Footer />
   </Box>
 );
 

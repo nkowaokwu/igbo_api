@@ -1,17 +1,18 @@
+import bodyParser from 'body-parser';
+import compression from 'compression';
+import cors from 'cors';
+import express from 'express';
+import morgan from 'morgan';
+import { CORS_CONFIG } from './config';
+import { onDemo } from './functions';
+import cache from './middleware/cache';
+import errorHandler from './middleware/errorHandler';
+import logger from './middleware/logger';
+import { router, routerV2, siteRouter, stripeRouter } from './routers';
 import './services/firebase';
 import './services/firebase-admin';
-import express from 'express';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import compression from 'compression';
-import './shared/utils/wrapConsole';
-import { router, routerV2, siteRouter, stripeRouter } from './routers';
-import cache from './middleware/cache';
-import logger from './middleware/logger';
-import errorHandler from './middleware/errorHandler';
 import Version from './shared/constants/Version';
-import { CORS_CONFIG } from './config';
+import './shared/utils/wrapConsole';
 
 const app = express();
 
@@ -52,3 +53,4 @@ app.use(errorHandler);
 export default app;
 
 export const api = app;
+export const demo = onDemo;

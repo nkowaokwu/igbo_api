@@ -49,7 +49,6 @@
 .jsonPretty {
   height: 500px;
   max-height: 600px;
-  max-width: 95vw;
   overflow: overlay;
   font-size: 1em;
   color: rgb(153, 218, 255);
@@ -62,23 +61,10 @@
   color: rgb(255, 255, 255);
 }
 
-.demo-inputs-container {
-  max-width: 600px;
-  width: 100%;
-}
-
-@media (max-width: 768px) {
-  .demo-inputs-container {
-    max-width: 600px;
-  }
-}
-
 @media (min-width: 768px) {
   .jsonPretty {
     height: 450px;
     max-height: 600px;
-    max-width: 600px !important;
-    width: 600px !important;
     overflow: overlay;
     font-size: 1em;
   }

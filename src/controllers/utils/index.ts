@@ -1,14 +1,14 @@
 import { Response } from 'express';
-import { IgboAPIRequest, OutgoingExample, OutgoingWord } from '../../types';
-import removePrefix from '../../shared/utils/removePrefix';
-import createRegExp from '../../shared/utils/createRegExp';
+import ExampleStyles from '../../shared/constants/ExampleStyles';
 import Version from '../../shared/constants/Version';
+import createRegExp from '../../shared/utils/createRegExp';
+import removePrefix from '../../shared/utils/removePrefix';
+import { IgboAPIRequest, OutgoingExample, OutgoingWord } from '../../types';
+import { OutgoingLegacyWord } from '../../types/word';
+import { Filters } from '../types';
 import convertToSkipAndLimit from './convertToSkipAndLimit';
 import parseRange from './parseRange';
-import { Keyword, Flags } from './types';
-import { Filters } from '../types';
-import ExampleStyles from '../../shared/constants/ExampleStyles';
-import { OutgoingLegacyWord } from '../../types/word';
+import { Flags, Keyword } from './types';
 
 const createSimpleRegExp = (keywords: { text: string }[]) => ({
   wordReg: new RegExp(

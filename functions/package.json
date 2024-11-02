@@ -9,7 +9,7 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "main": "index.js",
   "dependencies": {
@@ -48,6 +48,7 @@
     "joi": "^17.4.0",
     "jotai": "^2.7.1",
     "lodash": "^4.17.20",
+    "mic-recorder-to-mp3": "^2.2.2",
     "migrate-mongo": "^8.1.4",
     "mongoose": "^6.7.0",
     "morgan": "^1.10.0",

@@ -18,7 +18,7 @@ const NavigationMenu = () => (
     <MenuList>
       {navigationLinks.map(({ href, label }) => (
         <MenuItem key={label}>
-          <Link href={href}>{label}</Link>
+          <Link href={href || ''}>{label}</Link>
         </MenuItem>
       ))}
     </MenuList>
