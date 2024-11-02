@@ -1,5 +1,4 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { OutgoingWord as Word } from '../types';
 import Demo from './components/Demo';
 import FadeIn from './components/FadeIn';
 import LastCall from './components/LastCall';
@@ -8,10 +7,8 @@ import Products from './components/Products';
 
 const App = ({
   searchWord,
-  words,
 }: {
   searchWord: string,
-  words: Word[],
   // databaseStats: DatabaseStats,
   // gitHubStats: GitHubStats,
 }) => (
@@ -38,8 +35,8 @@ const App = ({
           <FadeIn>
             <Box className="w-full flex flex-col items-center">
               <Text className="text-center text-gray-500 w-full md:w-9/12">
-                An advanced, open-source AI platform to promote the Igbo language through advanced
-                language technology
+                An advanced, open-source AI platform to promote the Igbo language through language
+                technology
               </Text>
             </Box>
           </FadeIn>

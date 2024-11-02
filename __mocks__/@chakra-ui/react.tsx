@@ -12,6 +12,7 @@ export const {
   DrawerOverlay,
   Center,
   Square,
+  Collapse,
   Container,
   Flex,
   Grid,
@@ -136,6 +137,7 @@ export const {
   useToast,
   chakra,
   extendTheme,
+  createMultiStyleConfigHelpers,
   ChakraProvider,
 } = Chakra;
 
