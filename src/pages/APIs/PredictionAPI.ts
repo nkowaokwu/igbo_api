@@ -39,7 +39,7 @@ export const getDictionaryEndpoint = async ({
     type: DemoOption.DICTIONARY,
     data: { keyword, params },
   });
-  return { words: data.result?.data || [] };
+  return { words: data?.data || [] };
 };
 
 /**
@@ -56,7 +56,7 @@ export const postSpeechToTextEndpoint = async ({
     type: DemoOption.SPEECH_TO_TEXT,
     data: { base64 },
   });
-  return data.result || { transcription: '' };
+  return data || { transcription: '' };
 };
 
 /**
@@ -77,5 +77,5 @@ export const postTranslationEndpoint = async ({
       destinationLanguageCode: LanguageEnum.ENGLISH,
     },
   });
-  return data.result || { translation: '' };
+  return data || { translation: '' };
 };
