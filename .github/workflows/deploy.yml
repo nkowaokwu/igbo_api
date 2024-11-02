@@ -79,6 +79,7 @@ jobs:
           envkey_RUNTIME_ENV: "production"
           envkey_STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           envkey_STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
+          envkey_ENV_IGBO_TO_ENGLISH_URL: ${{ secrets.ENV_IGBO_TO_ENGLISH_URL }}
           directory: functions
       - name: Build Production Project
         run: |
