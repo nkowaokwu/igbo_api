@@ -29,11 +29,16 @@ interface DictionaryRequest {
 
 const fetchSpeechToText = async ({ data }: { data: SpeechToTextRequest }) => {
   const { base64 } = data;
-  const { data: response } = await axios.request<TranscriptionAudio>({
-    method: 'POST',
-    url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
-    data: { base64 },
-  });
+  const { data: response } = await axios
+    .request<TranscriptionAudio>({
+      method: 'POST',
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
+      data: { base64 },
+    })
+    .catch((err) => {
+      console.error('Error while posting audio url for speech to text demo:', err);
+      throw err;
+    });
   return (
     await axios
       .request({
@@ -48,7 +53,7 @@ const fetchSpeechToText = async ({ data }: { data: SpeechToTextRequest }) => {
         },
       })
       .catch((err) => {
-        console.log('Error while posting speech to text prediction for demo:', err);
+        console.error('Error while posting speech to text prediction for demo:', err);
         return { data: { transcription: '' } };
       })
   ).data;
@@ -68,7 +73,7 @@ const fetchDictionary = async ({ data }: { data: DictionaryRequest }) => {
         params,
       })
       .catch((err) => {
-        console.log('Error while fetching words for demo:', err);
+        console.error('Error while fetching words for demo:', err);
         return { data: { words: [] } };
       })
   ).data;
@@ -92,7 +97,7 @@ const fetchTranslate = async ({ data }: { data: TranslationRequest }) => {
         },
       })
       .catch((err) => {
-        console.log('Error while posting translation prediction demo:', err);
+        console.error('Error while posting translation prediction demo:', err);
         return { data: { translation: '' } };
       })
   ).data;
@@ -103,22 +108,30 @@ const demoInternal = async (payload: {
   data: SpeechToTextRequest | DictionaryRequest | TranslationRequest,
 }): Promise<Error | any> => {
   const { type, data } = payload;
-  let response = {};
-  switch (type) {
-    case DemoOption.SPEECH_TO_TEXT:
-      response = await fetchSpeechToText({ data: data as SpeechToTextRequest });
-      break;
-    case DemoOption.DICTIONARY:
-      response = await fetchDictionary({ data: data as DictionaryRequest });
-      break;
-    case DemoOption.TRANSLATE:
-      response = await fetchTranslate({ data: data as TranslationRequest });
-      break;
-    default:
-      throw new Error('Invalid demo type.');
-  }
+  try {
+    let response = {};
+    switch (type) {
+      case DemoOption.SPEECH_TO_TEXT:
+        response = await fetchSpeechToText({ data: data as SpeechToTextRequest });
+        break;
+      case DemoOption.DICTIONARY:
+        response = await fetchDictionary({ data: data as DictionaryRequest });
+        break;
+      case DemoOption.TRANSLATE:
+        response = await fetchTranslate({ data: data as TranslationRequest });
+        break;
+      default:
+        throw new Error('Invalid demo type.');
+    }
 
-  return response;
+    return response;
+  } catch (err: any) {
+    throw new functions.https.HttpsError(
+      'internal',
+      err?.message || `Error with ${type} demo`,
+      err
+    );
+  }
 };
 
 export const onDemo = functions.https.onCall(demoInternal);

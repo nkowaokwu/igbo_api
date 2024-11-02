@@ -35,7 +35,7 @@ export const getDictionaryEndpoint = async ({
   keyword: string,
   params: { dialects?: boolean, examples?: boolean },
 }): Promise<DictionaryResponse> => {
-  const { data } = useCallable('demo', {
+  const { data } = await useCallable('demo', {
     type: DemoOption.DICTIONARY,
     data: { keyword, params },
   });
@@ -52,7 +52,7 @@ export const postSpeechToTextEndpoint = async ({
 }: {
   base64: string,
 }): Promise<SpeechToTextResponse> => {
-  const { data } = useCallable('demo', {
+  const { data } = await useCallable('demo', {
     type: DemoOption.SPEECH_TO_TEXT,
     data: { base64 },
   });
@@ -69,7 +69,7 @@ export const postTranslationEndpoint = async ({
 }: {
   text: string,
 }): Promise<TranslationResponse> => {
-  const { data } = useCallable('demo', {
+  const { data } = await useCallable('demo', {
     type: DemoOption.TRANSLATE,
     data: {
       text,
@@ -77,5 +77,5 @@ export const postTranslationEndpoint = async ({
       destinationLanguageCode: LanguageEnum.ENGLISH,
     },
   });
-  return data.result || { translation: 'fdsafdafsd' };
+  return data.result || { translation: '' };
 };
