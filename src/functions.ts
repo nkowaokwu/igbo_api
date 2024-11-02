@@ -126,11 +126,7 @@ const demoInternal = async (payload: {
 
     return response;
   } catch (err: any) {
-    throw new functions.https.HttpsError(
-      'internal',
-      err?.message || `Error with ${type} demo`,
-      err
-    );
+    throw new functions.https.HttpsError('internal', err?.message || `Error with ${type} demo`);
   }
 };
 

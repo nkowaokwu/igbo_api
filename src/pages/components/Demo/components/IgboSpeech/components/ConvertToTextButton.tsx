@@ -53,7 +53,7 @@ const ConvertToTextButton = ({
       setPredictLoading(true);
       // const startPredictionTime = performance.now();
       const { transcription } = await postSpeechToTextEndpoint({
-        base64: convertedAudio.base64,
+        base64: convertedAudio.base64 || convertedAudio.audioUrl,
       });
       // const endPredictionTime = performance.now();
 
