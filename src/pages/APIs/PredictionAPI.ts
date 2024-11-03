@@ -50,12 +50,11 @@ export const postSpeechToTextEndpoint = async ({
 }: {
   base64: string,
 }): Promise<SpeechToTextResponse> => {
-  // const { data } = await useCallable('demo', {
-  //   type: DemoOption.SPEECH_TO_TEXT,
-  //   data: { base64 },
-  // });
-  // return data || { transcription: '' };
-  return { transcription: 'testing' };
+  const { data } = await useCallable('demo', {
+    type: DemoOption.SPEECH_TO_TEXT,
+    data: { base64 },
+  });
+  return data || { transcription: '' };
 };
 
 /**
