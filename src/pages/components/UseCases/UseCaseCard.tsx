@@ -21,7 +21,7 @@ const UseCaseCard = ({
     gap={12}
   >
     <VStack alignItems="start" className="w-full lg:w-1/2">
-      <Heading as={as} color="gray.900" fontSize="5xl">
+      <Heading as={as} color="gray.900" fontSize="4xl">
         {label}
       </Heading>
       <Text>{description}</Text>

@@ -8,7 +8,7 @@ const IgboSpeech = () => {
   const mediaBlobUrl = useAtomValue(mediaBlobUrlAtom);
   return (
     <>
-      <ResultText />
+      <ResultText mediaBlobUrl={mediaBlobUrl} predictText={predictText} />
       <ConvertToTextButton
         mediaBlobUrl={mediaBlobUrl}
         hasPredicted={Boolean(mediaBlobUrl && predictText)}

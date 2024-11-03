@@ -2,7 +2,7 @@ import { As } from '@chakra-ui/react';
 
 const useCases = [
   {
-    label: 'Generate Subtitle',
+    label: 'Generate Subtitles',
     as: 'h1' as As,
     description:
       'Generate Igbo subtitles to reach more native speakers across the world. Perfect for content-producing teams.',

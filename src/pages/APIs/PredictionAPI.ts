@@ -15,9 +15,7 @@ export interface Dictionary {
   words: OutgoingWord[];
 }
 
-interface SpeechToTextResponse extends Prediction {
-  exampleSuggestionId: string;
-}
+interface SpeechToTextResponse extends Prediction {}
 
 interface TranslationResponse extends Translation {}
 
@@ -52,11 +50,12 @@ export const postSpeechToTextEndpoint = async ({
 }: {
   base64: string,
 }): Promise<SpeechToTextResponse> => {
-  const { data } = await useCallable('demo', {
-    type: DemoOption.SPEECH_TO_TEXT,
-    data: { base64 },
-  });
-  return data || { transcription: '' };
+  // const { data } = await useCallable('demo', {
+  //   type: DemoOption.SPEECH_TO_TEXT,
+  //   data: { base64 },
+  // });
+  // return data || { transcription: '' };
+  return { transcription: 'testing' };
 };
 
 /**

@@ -27,7 +27,7 @@ export const AudioPlayer = () => {
     >
       <Box
         className="flex w-full flex-row items-center justify-between space-x-2"
-        width={{ base: '100%', md: 600 }}
+        minWidth={{ base: '100%', md: 600 }}
       >
         <AudioPlayerBase ref={audioRef} url={mediaBlobUrl} />
         {!(mediaBlobUrl && predictText) ? (

@@ -33,7 +33,7 @@ const ResultText = ({
       <DragState />
       <Box
         borderColor="gray.300"
-        className="w-full flex flex-row justify-between items-center mb-2 pt-2 px-2"
+        className="w-full flex flex-row justify-between items-center mb-2"
       >
         <AudioPlayer />
       </Box>
@@ -51,7 +51,7 @@ const ResultText = ({
             overflow="visible"
             textAlign="left"
             backgroundColor="gray.100"
-            borderBottomRadius="md"
+            borderTopRadius="md"
             py={2}
             px={4}
           >
