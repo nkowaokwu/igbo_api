@@ -16,11 +16,11 @@ const UseCaseCard = ({
   <HStack
     key={label}
     width="full"
-    flexDirection={{ base: 'column', md: flexDirection }}
+    flexDirection={{ base: 'column', lg: flexDirection }}
     justifyContent="space-between"
     gap={12}
   >
-    <VStack alignItems="start" className="w-full md:w-1/2">
+    <VStack alignItems="start" className="w-full lg:w-1/2">
       <Heading as={as} color="gray.900" fontSize="5xl">
         {label}
       </Heading>
