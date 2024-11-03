@@ -109,7 +109,9 @@ const useRecorder = (): [string, boolean, () => void, () => void, number] => {
                 isClosable: true,
               });
             }
-            return setAudioBlob(reader.result as string);
+            if (reader.result !== 'data:audio/mp3;base64,') {
+              return setAudioBlob(reader.result as string);
+            }
           };
           setIsRecording(false);
           if (durationRef.current) {

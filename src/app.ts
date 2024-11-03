@@ -17,8 +17,8 @@ import './shared/utils/wrapConsole';
 const app = express();
 
 app.use(compression());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.raw());
 
 if (process.env.NODE_ENV === 'development') {

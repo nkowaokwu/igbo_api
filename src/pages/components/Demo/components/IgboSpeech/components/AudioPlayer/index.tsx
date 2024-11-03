@@ -16,10 +16,6 @@ export const AudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [audioBlob, isRecording, startRecording, stopRecording, recordingDuration] = useRecorder();
 
-  const handleStartRecording = () => {
-    startRecording();
-  };
-
   useEffect(() => {
     setMediaBlobUrl(audioBlob);
   }, [audioBlob]);
@@ -36,8 +32,8 @@ export const AudioPlayer = () => {
         <AudioPlayerBase ref={audioRef} url={mediaBlobUrl} />
         {!(mediaBlobUrl && predictText) ? (
           <RecordButton
-            isActive={status === 'recording'}
-            startRecording={handleStartRecording}
+            isActive={isRecording}
+            startRecording={startRecording}
             stopRecording={stopRecording}
             pauseRecording={stopRecording}
           />
