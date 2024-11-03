@@ -27,7 +27,7 @@ describe('Demo', () => {
     );
 
     userEvent.click(await findByText('Translate'));
-    await findByText("Type in Igbo to see it's English translation");
+    await findByText('Type in Igbo to see its English translation');
   });
 
   it('renders the demo for dictionary', async () => {

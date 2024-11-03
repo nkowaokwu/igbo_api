@@ -26,6 +26,8 @@ const NavigationOptions = () => (
             href={href}
             role="link"
             fontWeight="semibold"
+            color="gray.900"
+            textDecoration="none"
           >
             {label}
           </Link>
@@ -51,6 +53,8 @@ const NavigationOptions = () => (
                       href={optionHref}
                       role="link"
                       target={isExternal ? '_blank' : ''}
+                      color="gray.900"
+                      textDecoration="none"
                     >
                       <Box width="full">
                         <Text className="space-x-2" fontSize="md">

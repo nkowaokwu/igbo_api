@@ -115,7 +115,7 @@ const Footer = () => (
           <UnorderedList className="space-y-2" ml={0}>
             {links.map(({ label, href }) => (
               <ListItem key={label} listStyleType="none">
-                <Link href={href} fontWeight="normal" color="white">
+                <Link href={href} fontWeight="normal" color="white" textDecoration="none">
                   {label}
                 </Link>
               </ListItem>

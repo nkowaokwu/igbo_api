@@ -22,7 +22,11 @@ export const YOUTUBE = 'https://www.youtube.com/c/IjemmaOnwuzulike';
 // Projects
 export const NKOWAOKWU = 'https://nkowaokwu.com';
 export const NKOWAOKWU_CHROME = 'https://nkowaokwu.com/chrome';
+export const SABBI_DASHBOARD = 'https://dashboard.sabbidata.com';
 
 // Resources
 export const HUGGING_FACE = 'https://huggingface.co/nkowaokwu';
 export const KAGGLE = 'https://www.kaggle.com/organizations/nkowaokwu';
+
+// Donate
+export const DONATE_URL = 'https://donate.stripe.com/dR62aP6UlcmE3kIfYY';

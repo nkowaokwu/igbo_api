@@ -77,7 +77,7 @@ const IgboAPI = ({ searchWord }: { searchWord: string }) => {
       <Box className="space-y-5 w-full" mb={responseBody !== '{}' ? 8 : ''}>
         <form onSubmit={onSubmit} className="flex flex-col w-full space-y-3">
           <Text fontStyle="italic" color="gray.400" pointerEvents="none">
-            Enter a word in either Igbo or English to see it&apos;s information
+            Enter a word in either Igbo or English to see its information
           </Text>
           <Input
             size="large"

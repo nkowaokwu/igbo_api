@@ -1,7 +1,6 @@
-import React from 'react';
 import { Box, Button, Heading, HStack, Text, VStack } from '@chakra-ui/react';
-import { FiKey, FiVideo } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+import { FiKey, FiVideo } from 'react-icons/fi';
 
 const LastCall = () => {
   const router = useRouter();
@@ -22,11 +21,11 @@ const LastCall = () => {
           fontSize={{ base: '4xl', lg: '5xl' }}
           color="white"
         >
-          Join the Movement to Promote and Elevate African Languages
+          Connect to a Larger Nigerian Audience
         </Heading>
         <Text color="white" textAlign="center">
-          Be a part of the digital revolution in language technology. Whether you&apos;re a
-          developer, educator, or language enthusiast.
+          Start using the Igbo API to build uniquely-Igbo digital experiences. Everything from
+          generating subtitles, transcribing conversations, translating messages, and more.
         </Text>
         <HStack>
           <Button

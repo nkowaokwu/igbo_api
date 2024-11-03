@@ -31,6 +31,8 @@ export default extendTheme({
     },
     Link: {
       baseStyle: {
+        textDecoration: 'underline',
+        color: 'blue.500',
         _hover: {
           textDecoration: 'none',
         },

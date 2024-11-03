@@ -83,31 +83,31 @@ export const navigationLinks: NavigationLink[] = [
   //   href: '/pricing',
   //   label: 'Pricing',
   // },
-  {
-    href: '',
-    label: 'Use Cases',
-    type: NavigationType.DROPDOWN,
-    options: [
-      {
-        title: 'Generate Subtitles',
-        subtitle: 'Convert speech into live subtitles',
-        href: '/use-cases/subtitle-generation',
-        enabled: true,
-      },
-      {
-        title: 'Transcribe Interviews',
-        subtitle: 'Accurately transcribe live conversations',
-        href: '/use-cases/interview-transcription',
-        enabled: true,
-      },
-      // {
-      //   title: 'Translate Conversations',
-      //   subtitle: 'Translate between Igbo and English',
-      //   href: '/use-cases/translate',
-      //   enabled: true,
-      // },
-    ],
-  },
+  // {
+  //   href: '',
+  //   label: 'Use Cases',
+  //   type: NavigationType.DROPDOWN,
+  //   options: [
+  //     {
+  //       title: 'Generate Subtitles',
+  //       subtitle: 'Convert speech into live subtitles',
+  //       href: '/use-cases/subtitle-generation',
+  //       enabled: true,
+  //     },
+  //     {
+  //       title: 'Transcribe Interviews',
+  //       subtitle: 'Accurately transcribe live conversations',
+  //       href: '/use-cases/interview-transcription',
+  //       enabled: true,
+  //     },
+  //     // {
+  //     //   title: 'Translate Conversations',
+  //     //   subtitle: 'Translate between Igbo and English',
+  //     //   href: '/use-cases/translate',
+  //     //   enabled: true,
+  //     // },
+  //   ],
+  // },
   {
     label: 'Resources',
     type: NavigationType.DROPDOWN,
