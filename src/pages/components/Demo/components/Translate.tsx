@@ -58,7 +58,7 @@ const Translate = () => {
           </VStack>
         </HStack>
         <Text textAlign="center" fontStyle="italic" fontSize="sm" color="gray">
-          Type in Igbo to see it&apos;s English translation
+          Type in Igbo to see its English translation
         </Text>
         <Button
           onClick={handleTranslate}
