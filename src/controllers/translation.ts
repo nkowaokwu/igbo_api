@@ -73,7 +73,7 @@ export const getTranslation: MiddleWare = async (req, res, next) => {
       data: payload,
     });
 
-    return res.send({ translation: response.translation });
+    return res.status(200).json({ translation: response.translation });
   } catch (err) {
     return next(err);
   }
