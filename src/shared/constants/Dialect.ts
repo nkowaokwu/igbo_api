@@ -87,7 +87,7 @@ export default {
     label: 'Ihuoma',
   },
   [DialectEnum.IKK]: {
-    code: 'ibo-ika',
+    code: 'ibo-ikk',
     value: DialectEnum.IKK,
     label: 'Ika',
   },
