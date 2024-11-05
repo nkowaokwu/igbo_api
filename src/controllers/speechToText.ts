@@ -66,7 +66,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       data: payload,
     });
 
-    return res.status(200).json({ transcription: response.transcription });
+    return res.send({ transcription: response.transcription });
   } catch (err) {
     return next();
   }
