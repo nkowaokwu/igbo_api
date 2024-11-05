@@ -16,6 +16,8 @@ enum DialectEnum {
   EZE = 'EZE',
   EZM = 'EZM',
   IHU = 'IHU',
+  IKK = 'IKK',
+  IKW = 'IKW',
   IQW = 'IQW',
   ISU = 'ISU',
   IZZ = 'IZZ',
