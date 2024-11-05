@@ -7,6 +7,8 @@ import {
 import { MAIN_KEY } from '../../../__tests__/shared/constants';
 import { getTranslation } from '../translation';
 
+jest.mock('axios');
+
 describe('translation', () => {
   beforeEach(() => {
     jest.resetAllMocks();
