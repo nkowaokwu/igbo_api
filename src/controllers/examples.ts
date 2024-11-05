@@ -7,37 +7,59 @@ import { searchExamplesRegexQuery } from './utils/queries';
 import { findExamplesWithMatch } from './utils/buildDocs';
 import { createDbConnection, handleCloseConnection } from '../services/database';
 import { getCachedExamples, setCachedExamples } from '../APIs/RedisAPI';
-import { Example as ExampleType, MiddleWare } from '../types';
+import { IncomingExample, MiddleWare, OutgoingExample, OutgoingLegacyExample } from '../types';
 import Version from '../shared/constants/Version';
-import { ExampleResponseData, ExampleWithPronunciation } from './types';
+import { ExampleResponseData } from './types';
 
-/* Converts the pronunciations field to pronunciation for v1 */
-export const convertExamplePronunciations = (example: ExampleType): ExampleWithPronunciation => {
+/* Converts example for v1 */
+export const convertToV1Example = (example: OutgoingExample): OutgoingLegacyExample => {
   const updatedExample = assign(example);
   const exampleWithPronunciation = {
-    ...omit(updatedExample, ['pronunciations']),
-    pronunciation: updatedExample.pronunciations?.[0]?.audio || '',
+    ...omit(updatedExample, ['source', 'translations']),
+    igbo: updatedExample.source.text,
+    english: updatedExample.translations[0].text,
+    pronunciation: updatedExample.source.pronunciations?.[0]?.audio || '',
   };
   return exampleWithPronunciation;
 };
 
+/* Converts example for v2 */
+export const convertToV2Example = (example: OutgoingExample): OutgoingExample => {
+  const updatedExample = assign(example);
+  const exampleWithPronunciation = {
+    ...omit(updatedExample, ['source', 'translations']),
+    igbo: updatedExample.source.text,
+    english: updatedExample.translations[0].text,
+    pronunciations: updatedExample.source.pronunciations.map(({ audio }) => audio),
+  };
+  // @ts-expect-error different versions
+  return exampleWithPronunciation;
+};
+
 /* Create a new Example object in MongoDB */
-export const createExample = async (data: ExampleType, connection: Connection) => {
+export const createExample = async (data: IncomingExample, connection: Connection) => {
   const Example = connection.model('Example', exampleSchema);
   const example = new Example(data);
   return example.save();
 };
 
 type SearchExamplesArg = {
-  limit: number;
-  query: PipelineStage.Match['$match'];
-  redisClient: RedisClientType | undefined;
-  searchWord: string;
-  skip: number;
-  version: Version;
+  limit: number,
+  query: PipelineStage.Match['$match'],
+  redisClient: RedisClientType | undefined,
+  searchWord: string,
+  skip: number,
+  version: Version,
 };
 /* Uses regex to search for examples with both Igbo and English */
-const searchExamples = async ({ redisClient, searchWord, query, version, skip, limit }: SearchExamplesArg) => {
+const searchExamples = async ({
+  redisClient,
+  searchWord,
+  query,
+  version,
+  skip,
+  limit,
+}: SearchExamplesArg) => {
   let responseData: ExampleResponseData = { contentLength: 0, examples: [] };
   const redisExamplesCacheKey = `example-${searchWord}-${version}`;
   const cachedExamples = await getCachedExamples({ key: redisExamplesCacheKey, redisClient });
@@ -73,7 +95,7 @@ export const getExamples: MiddleWare = async (req, res, next) => {
     const regexMatch =
       !isUsingMainKey && !searchWord
         ? {
-            igbo: { $exists: false },
+            source: { $exists: false },
           }
         : searchExamplesRegexQuery({ regex, flags });
     const responseData = await searchExamples({
@@ -99,7 +121,7 @@ export const getExamples: MiddleWare = async (req, res, next) => {
 
 const findExampleById = async (id: string) => {
   const connection = createDbConnection();
-  const Example = connection.model<ExampleType>('Example', exampleSchema);
+  const Example = connection.model<OutgoingExample>('Example', exampleSchema);
   try {
     const example = await Example.findById(id);
     await handleCloseConnection(connection);
@@ -119,9 +141,9 @@ export const getExample: MiddleWare = async (req, res, next) => {
         throw new Error('No example exists with the provided id.');
       }
       if (version === Version.VERSION_1) {
-        return convertExamplePronunciations(example.toJSON());
+        return convertToV1Example(example.toJSON());
       }
-      return example;
+      return convertToV2Example(example.toJSON());
     });
     return packageResponse({
       res,

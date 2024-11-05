@@ -8,6 +8,4 @@ const dialects = dataset.flatMap((word) => {
   return { dialects: word.dialects, variations: word.variations || [] };
 });
 
-// console.log(dialects);
-
 fs.writeFileSync('igbo-api-dialects.json', JSON.stringify(dialects, null, 2));

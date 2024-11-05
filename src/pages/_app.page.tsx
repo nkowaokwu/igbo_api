@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import Script from 'next/script';
-import { useRouter } from 'next/router';
 import { ChakraProvider } from '@chakra-ui/react';
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import { appWithTranslation } from 'next-i18next';
 import Head from 'next/head';
-import ChakraTheme from '../shared/constants/ChakraTheme';
+import { useRouter } from 'next/router';
+import Script from 'next/script';
+import React, { useEffect } from 'react';
+import { initReactI18next } from 'react-i18next';
+import * as gtag from '../lib/gtag';
 import en from '../public/locales/en';
 import ig from '../public/locales/ig';
-import * as gtag from '../lib/gtag';
+import ChakraTheme from '../shared/constants/ChakraTheme';
 import '../styles.css';
 
 i18n.use(initReactI18next).init({

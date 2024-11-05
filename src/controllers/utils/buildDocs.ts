@@ -1,7 +1,5 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
 import { Aggregate, Model as ModelType, PipelineStage } from 'mongoose';
-import { assign, flatten, flow, merge, omit } from 'lodash';
+import { assign, flatten, flow, omit } from 'lodash';
 import Version from '../../shared/constants/Version';
 import { wordSchema } from '../../models/Word';
 import { exampleSchema } from '../../models/Example';
@@ -9,12 +7,12 @@ import Dialects from '../../shared/constants/Dialect';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
 import WordAttributeEnum from '../../shared/constants/WordAttributeEnum';
 import {
-  Example as ExampleType,
+  IncomingExample,
   NsibidiCharacter as NsibidiCharacterType,
-  WordDocument,
-  LegacyWordDocument,
+  OutgoingExample,
+  OutgoingWord,
+  OutgoingLegacyWord,
 } from '../../types';
-import { ExampleWithPronunciation } from '../types';
 import { nsibidiCharacterSchema } from '../../models/NsibidiCharacter';
 
 type NestedDoc = { _id?: string, __v?: number };
@@ -25,16 +23,47 @@ type NestedDoc = { _id?: string, __v?: number };
  */
 const removeKeysInNestedDoc = <T>(docs: T[], nestedDocsKey: keyof T) => {
   docs.forEach((doc: T) => {
+    const updatedDoc = assign(doc);
     // @ts-expect-error not assignable to never
-    doc[nestedDocsKey] = ((doc[nestedDocsKey] as NestedDoc[]) || []).map((nestedDoc: NestedDoc) => {
-      const updatedNestedDoc = assign(nestedDoc, { id: nestedDoc._id });
-      delete updatedNestedDoc._id;
-      delete updatedNestedDoc.__v;
-      return updatedNestedDoc;
-    });
+    updatedDoc[nestedDocsKey] = ((doc[nestedDocsKey] as NestedDoc[]) || []).map(
+      (nestedDoc: NestedDoc) => {
+        const updatedNestedDoc = assign(nestedDoc, { id: nestedDoc._id });
+        delete updatedNestedDoc._id;
+        delete updatedNestedDoc.__v;
+        return updatedNestedDoc;
+      }
+    );
+    return updatedDoc;
   });
   return docs;
 };
+
+const cleanExamples = ({ examples, version }: { examples: IncomingExample[], version: Version }) =>
+  examples.map((example) => {
+    const cleanedExample = omit(
+      assign({
+        ...example,
+        igbo: '',
+        english: '',
+      }),
+      ['source', 'translations', 'projectId']
+    ) as Omit<IncomingExample, 'source' | 'translations' | 'projectId'> & {
+      igbo: string,
+      english: string,
+      pronunciation?: string,
+      pronunciations?: string[],
+    };
+    if (version === Version.VERSION_1) {
+      cleanedExample.pronunciation = example.source.pronunciations?.[0]?.audio || '';
+    } else {
+      cleanedExample.pronunciations = example.source.pronunciations.map(({ audio }) => audio);
+    }
+
+    // To prevent v1 an v2, source and translations will be converted back to igbo and english
+    cleanedExample.igbo = example.source.text;
+    cleanedExample.english = example.translations[0]?.text;
+    return cleanedExample;
+  });
 
 /**
  * Creates foundation for Word aggregation pipeline
@@ -60,9 +89,9 @@ export const findWordsWithMatch = async ({
   queryLabel?: string,
 }) => {
   const connection = createDbConnection();
-  const Word = connection.model<WordDocument>('Word', wordSchema);
+  const Word = connection.model<OutgoingWord>('Word', wordSchema);
   try {
-    let words = generateAggregationBase<WordDocument>(Word, match);
+    let words = generateAggregationBase<OutgoingWord>(Word, match);
 
     if (!lean) {
       words = words.lookup({
@@ -108,13 +137,24 @@ export const findWordsWithMatch = async ({
       })
       .append({ $unset: `attributes.${WordAttributeEnum.IS_COMPLETE}` });
 
-    const cleanedWords = removeKeysInNestedDoc(await words, 'examples');
+    const cleanedWords = removeKeysInNestedDoc<OutgoingWord>(await words, 'examples').map(
+      (word) => {
+        const updatedWord = assign(word);
+        // @ts-expect-error different versions
+        updatedWord.examples = cleanExamples({ examples: updatedWord.examples || [], version });
+        return updatedWord;
+      }
+    );
     const contentLength = cleanedWords.length;
 
-    const finalWords = cleanedWords.map((cleanedWord: WordDocument) => {
+    const finalWords = cleanedWords.map((cleanedWord: OutgoingWord) => {
       if (version === Version.VERSION_1) {
-        // @ts-expect-error mistake to convert WordDocument to LegacyWordDocument
-        const word = omit(assign(cleanedWord) as LegacyWordDocument, ['tags']);
+        const word: OutgoingLegacyWord = assign(omit(cleanedWord, ['tags', 'dialects']), {
+          wordClass: '',
+          nsibidi: '',
+          definitions: [],
+          dialects: {},
+        });
         word.wordClass = cleanedWord.definitions[0].wordClass;
         word.nsibidi = cleanedWord.definitions[0].nsibidi;
         word.definitions = flatten(cleanedWord.definitions.map(({ definitions }) => definitions));
@@ -128,9 +168,9 @@ export const findWordsWithMatch = async ({
           }),
           {}
         );
-        return word as LegacyWordDocument;
+        return word;
       }
-      return cleanedWord as WordDocument;
+      return cleanedWord;
     });
 
     await handleCloseConnection(connection);
@@ -148,17 +188,17 @@ export const findExamplesWithMatch = async ({
 }: {
   match: Record<string, RegExp | object>,
   version: Version,
-}): Promise<{ examples: ExampleWithPronunciation[], contentLength: number }> => {
+}): Promise<{ examples: OutgoingExample[], contentLength: number }> => {
   const connection = createDbConnection();
-  const Example = connection.model<ExampleType>('Example', exampleSchema);
+  const Example = connection.model<IncomingExample>('Example', exampleSchema);
   try {
-    let examples = generateAggregationBase<ExampleType>(Example, match);
+    let examples = generateAggregationBase<IncomingExample>(Example, match);
 
     examples = examples.project({
       id: '$_id',
       _id: 0,
-      igbo: 1,
-      english: 1,
+      source: 1,
+      translations: 1,
       meaning: 1,
       style: 1,
       associatedWords: 1,
@@ -167,14 +207,11 @@ export const findExamplesWithMatch = async ({
     });
 
     // Returns only the first pronunciation for the example sentence
-    const allExamples = (await examples).map((example) => {
-      const cleanedExample = merge(example, { pronunciation: '' });
-      cleanedExample.pronunciation = cleanedExample.pronunciations[0]?.audio;
-      return omit(cleanedExample, ['pronunciations']);
-    });
+    const allExamples = cleanExamples({ examples: await examples, version });
     const contentLength = allExamples.length;
 
     await handleCloseConnection(connection);
+    // @ts-expect-error incorrect example types
     return { examples: allExamples, contentLength };
   } catch (err) {
     await handleCloseConnection(connection);

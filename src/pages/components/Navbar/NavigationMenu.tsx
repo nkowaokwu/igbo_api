@@ -1,6 +1,5 @@
-import React from 'react';
+import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import Link from 'next/link';
-import { Menu, MenuButton, MenuList, MenuItem, IconButton } from '@chakra-ui/react';
 import { FiChevronDown } from 'react-icons/fi';
 import { navigationLinks } from '../../../shared/constants/navigationLinks';
 
@@ -18,7 +17,7 @@ const NavigationMenu = () => (
     <MenuList>
       {navigationLinks.map(({ href, label }) => (
         <MenuItem key={label}>
-          <Link href={href}>{label}</Link>
+          <Link href={href || ''}>{label}</Link>
         </MenuItem>
       ))}
     </MenuList>

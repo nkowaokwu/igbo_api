@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable no-misleading-character-class */
 import createRegExp, { removeSpecialCharacters } from '../createRegExp';
 
 describe('createRegExp', () => {

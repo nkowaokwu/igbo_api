@@ -1,8 +1,23 @@
-import { extendTheme } from '@chakra-ui/react';
+import { createMultiStyleConfigHelpers, extendTheme } from '@chakra-ui/react';
 import { Inter } from 'next/font/google';
 
 export const interComponent = Inter({ subsets: ['latin'] });
 export const inter = interComponent.style.fontFamily;
+
+const helpers = createMultiStyleConfigHelpers(['list', 'item']);
+
+const Menu = helpers.defineMultiStyleConfig({
+  baseStyle: {
+    list: {
+      paddingRight: 4,
+    },
+    item: {
+      marginLeft: 2,
+      marginRight: 2,
+      borderRadius: 'md',
+    },
+  },
+});
 
 export default extendTheme({
   components: {
@@ -10,14 +25,14 @@ export default extendTheme({
       baseStyle: {
         letterSpacing: '-0.05em',
         color: 'gray.900',
-        background: 'linear-gradient(180deg,#555,#000)',
-        textFillColor: 'transparent',
         backgroundClip: 'text',
         paddingBottom: '12px',
       },
     },
     Link: {
       baseStyle: {
+        textDecoration: 'underline',
+        color: 'blue.500',
         _hover: {
           textDecoration: 'none',
         },
@@ -25,14 +40,14 @@ export default extendTheme({
     },
     Text: {
       baseStyle: {
-        letterSpacing: '-0.05em',
         color: 'black',
         fontSize: '18px',
       },
     },
+    Menu,
   },
   fonts: {
     heading: inter,
-    body: 'Inter,Noto Sans,Inter,-apple-system,BlinkMacSystemFont,Noto Sans,Arial',
+    body: 'Noto Sans,-apple-system,BlinkMacSystemFont,Arial',
   },
 });

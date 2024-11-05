@@ -1,25 +1,46 @@
-import { dialectFixture, exampleFixture, wordFixture } from '../../../__tests__/shared/fixtures';
+import {
+  dialectFixture,
+  outgoingExampleFixture,
+  outgoingWordFixture,
+} from '../../__tests__/shared/fixtures';
+import LanguageEnum from '../../shared/constants/LanguageEnum';
 import { SuggestionSourceEnum } from '../../shared/constants/SuggestionSourceEnum';
 import { handleWordFlags } from '../FlagsAPI';
 
 describe('FlagsAPI', () => {
   const words = [
-    wordFixture({
+    outgoingWordFixture({
       word: 'first word',
       examples: [
-        exampleFixture({ igbo: 'first example' }),
-        exampleFixture({ igbo: 'second example', source: SuggestionSourceEnum.INTERNAL }),
-        exampleFixture({ igbo: 'second example', source: SuggestionSourceEnum.IGBO_SPEECH }),
+        outgoingExampleFixture({
+          source: { text: 'first example', language: LanguageEnum.IGBO, pronunciations: [] },
+        }),
+        outgoingExampleFixture({
+          source: {
+            text: 'second example',
+            language: LanguageEnum.IGBO,
+            pronunciations: [],
+          },
+          origin: SuggestionSourceEnum.INTERNAL,
+        }),
+        outgoingExampleFixture({
+          source: {
+            text: 'second example',
+            language: LanguageEnum.IGBO,
+            pronunciations: [],
+          },
+          origin: SuggestionSourceEnum.IGBO_SPEECH,
+        }),
       ],
     }),
-    wordFixture({
+    outgoingWordFixture({
       word: 'second word',
       dialects: [dialectFixture({ word: 'second-word-dialect' })],
     }),
-    wordFixture({
+    outgoingWordFixture({
       word: 'third word',
-      stems: [wordFixture({ word: 'first stem' })],
-      relatedTerms: [wordFixture({ word: 'first related term' })],
+      stems: [outgoingWordFixture({ word: 'first stem' })],
+      relatedTerms: [outgoingWordFixture({ word: 'first related term' })],
     }),
   ];
 
@@ -30,7 +51,7 @@ describe('FlagsAPI', () => {
         dialects: false,
         resolve: false,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[0].examples).toHaveLength(2);
     });
@@ -41,7 +62,7 @@ describe('FlagsAPI', () => {
         dialects: false,
         resolve: false,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[0].examples).toBeUndefined();
     });
@@ -54,7 +75,7 @@ describe('FlagsAPI', () => {
         dialects: true,
         resolve: false,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[1].dialects).toHaveLength(1);
       // @ts-expect-error dialects
@@ -67,7 +88,7 @@ describe('FlagsAPI', () => {
         dialects: false,
         resolve: false,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[0].dialects).toBeUndefined();
     });
@@ -80,7 +101,7 @@ describe('FlagsAPI', () => {
         dialects: false,
         resolve: true,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[2].stems).toHaveLength(1);
       expect(result.words[2].relatedTerms).toHaveLength(1);
@@ -100,7 +121,7 @@ describe('FlagsAPI', () => {
         dialects: false,
         resolve: false,
       };
-      // @ts-expect-error words
+      // @ts-expect-error different versions
       const result = handleWordFlags({ data: { words, contentLength: words.length }, flags });
       expect(result.words[2].stems).toHaveLength(1);
       // @ts-expect-error stems

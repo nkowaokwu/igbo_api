@@ -1,79 +1,142 @@
-import React from 'react';
-import { Box, Heading, Text, Link, chakra } from '@chakra-ui/react';
-import { FiMail } from 'react-icons/fi';
-import Navbar from '../components/Navbar';
+import { Box, Button, Heading, Link, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
+import { LuMail } from 'react-icons/lu';
+import Donate from 'src/pages/components/Donate';
+import { HUGGING_FACE, SABBI_DASHBOARD } from '../../siteConstants';
 import Footer from '../components/Footer';
-import { DICTIONARY_APP_URL } from '../../siteConstants';
+import Navbar from '../components/Navbar';
 
-const About = () => (
-  <Box className="flex flex-col items-center h-screen">
-    <Navbar to="/" />
-    <Box
-      className="flex flex-col px-8 mb-6 lg:justify-between xl:flex-row pt-10
-      lg:pt-32 max-w-2xl lg:max-w-6xl text-gray-800 text-lg lg:text-xl w-full"
-    >
-      <Box className="max-w-3xl space-y-4 mb-10 text-gray-600">
-        <Heading as="h1" className="text-3xl text-gray-700">
-          About
-        </Heading>
-        <Text className="mb-6">
-          The Igbo API is a multi-dialectal, audio-supported, open-to-contribute, Igbo-English
-          dictionary API. This project focuses on enabling developers, organizations, and teams to
-          create technology that relies on the Igbo language.
-        </Text>
-        <Text>
-          Our main goal is to make an easy-to-access, robust, lexical Igbo language resource to help
-          solve a variety of complex problems within the worlds of education to Machine Learning.
-        </Text>
-        <Text>
-          {'The Igbo API hosts and serves all word and example sentence data that is shown on '}
-          <Link className="link" href={DICTIONARY_APP_URL}>
-            Nkọwa okwu
-          </Link>
-          , our official online Igbo-English dictionary app.
-        </Text>
-
-        <Text>
-          {`The initial words and examples that populated this API came
-              from Kay Williamson's Igbo Dictionary entitled `}
-          <Link
-            className="link"
-            href="http://www.columbia.edu/itc/mealac/pritchett/00fwp/igbo/IGBO%20Dictionary.pdf"
-          >
-            {'Dictionary of Ònìchà Igbo. '}
-          </Link>
-        </Text>
-        <Text>
-          {'This is an '}
-          <Link className="link" href="https://github.com/nkowaokwu/igbo_api">
-            open-source project
-          </Link>
-          {' created by '}
-          <Link className="link" href="https://twitter.com/ijemmaohno">
-            Ijemma Onwuzulike
-          </Link>
-          .
-        </Text>
+const About = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  return (
+    <>
+      <Navbar to="/" />
+      <Box pt={24} className="w-full">
+        <Box className="flex flex-col items-center" py={12}>
+          <Box className="w-11/12 md:w-8/12 xl:w-6/12">
+            <VStack width="full" px={4} alignItems="start" gap={12}>
+              <Heading
+                as="h1"
+                className="z-1 w-8/12"
+                width="full"
+                fontSize={['4xl', '5xl']}
+                color="gray.900"
+              >
+                Building High-Quality Advanced Igbo Language Technology
+              </Heading>
+              <VStack width="full" alignItems="start">
+                <Heading as="h2" fontSize="3xl" color="gray.900">
+                  The Igbo API | Building Unique Igbo Language Experiences
+                </Heading>
+                <Text>
+                  With over 525 native languages, Nigeria is the 3rd linguistics diverse countries
+                  on the platform. It&apos;s home to fourth most spoken African language: Igbo.
+                  Despite there being more than 35 million speakers, popular language recognition
+                  platforms like Google&apos;s Assistant, Amazon&apos;s Alexa, and Apple&apos;s Siri
+                  don&apos;t offer support for native Igbo speakers to interact with technology with
+                  their voice.
+                </Text>
+                <Text>
+                  More than half the Nigerian population is projected to be connected to the
+                  internet by 2027. This is a major sign that there will be more people online that
+                  want to be able to community in their primary language.
+                </Text>
+                <Text>
+                  The Igbo API is the first, open-source, multi-purpose African language API that
+                  offers AI features like automatic speech recognition, machine translation, and
+                  more allowing developers to build experiences that connect with a broader African
+                  population.
+                </Text>
+              </VStack>
+              <VStack width="full" alignItems="start">
+                <Heading as="h2" fontSize="3xl" color="gray.900">
+                  Frequently Asked Questions
+                </Heading>
+                <Heading as="h3" fontSize="2xl" color="gray.900">
+                  What features are currently available?
+                </Heading>
+                <Text>
+                  The Igbo API offers four different features: Speech-To-Text transcriptions, Igbo
+                  to and from English translations, and an Igbo dictionary via a REST API.
+                </Text>
+                <Heading as="h3" fontSize="2xl" color="gray.900">
+                  What data was used to train these models?
+                </Heading>
+                <Text>
+                  Our open-source dataset can be found on our{' '}
+                  <Link
+                    href={HUGGING_FACE}
+                    target="_blank"
+                    textDecoration="underline"
+                    color="blue.500"
+                  >
+                    Hugging Face
+                  </Link>
+                  . The data was sourced by an open-source community of more than 500 volunteer
+                  audio recorders and translators. We were funded in 2021 by the{' '}
+                  <Link href="https://lacunafund.org">Lacuna Fund</Link> that allowed us to build
+                  the largest Igbo-English dictionary and a good portion of the data to train our
+                  models.
+                </Text>
+                <Heading as="h3" fontSize="2xl" color="gray.900">
+                  How can I use the Igbo API?
+                </Heading>
+                <Text>
+                  You can get started by{' '}
+                  <Link href="/signup">signing up for a developer token.</Link>
+                  <br />
+                  Then you can visit our <Link href="/docs">documentation site</Link> to start using
+                  the Igbo API.
+                </Text>
+                <Heading as="h3" fontSize="2xl" color="gray.900">
+                  I speak Igbo, how can I contribute?
+                </Heading>
+                <Text>
+                  We are looking for more native Igbo speakers to record audio and translate
+                  sentences. If you would like to contribute to the dataset that will directly
+                  improve the quality of the model, you can create an account on{' '}
+                  <Link href={SABBI_DASHBOARD} target="_blank">
+                    Sabbi
+                  </Link>{' '}
+                  our data-protected Igbo language data collection platform.
+                </Text>
+              </VStack>
+              <VStack alignItems="start">
+                <Heading as="h3" fontSize="2xl" color="gray.900" mb={0}>
+                  Have a Question? Reach out
+                </Heading>
+                <Link className="link" href="mailto:kedu@nkowaokwu.com">
+                  <Button
+                    backgroundColor="blue.600"
+                    color="white"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    _hover={{
+                      backgroundColor: 'blue.500',
+                    }}
+                    rightIcon={
+                      <LuMail
+                        style={{
+                          position: 'relative',
+                          left: isHovered ? 4 : 0,
+                          transition: 'left .2s ease',
+                        }}
+                      />
+                    }
+                    p={6}
+                  >
+                    Contact us
+                  </Button>
+                </Link>
+              </VStack>
+            </VStack>
+          </Box>
+        </Box>
+        <Donate />
+        <Footer />
       </Box>
-    </Box>
-    <Box
-      className="flex flex-col px-8 max-w-2xl lg:max-w-6xl
-        mb-10 lg:mb-24 text-gray-800 text-lg lg:text-xl w-full"
-    >
-      <Heading as="h1" className="text-gray-700" fontSize="2xl">
-        Contact
-      </Heading>
-      <Text className="mt-6 text-gray-600 flex flex-row items-center space-x-2">
-        <chakra.span>
-          <FiMail />
-        </chakra.span>
-        <Link className="link" href="mailto:kedu@nkowaokwu.com">
-          kedu@nkowaokwu.com
-        </Link>
-      </Text>
-    </Box>
-    <Footer />
-  </Box>
-);
+    </>
+  );
+};
 
 export default About;

@@ -1,5 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import TestContext from '../../../../__tests__/components/TestContext';
 import Navbar from '../Navbar';
 
@@ -11,7 +11,7 @@ describe('Navbar', () => {
       </TestContext>
     );
 
-    await findByText('IgboAPI');
-    await findByText('Sign Up');
+    await findByText('Log In');
+    await findByText('Get Started');
   });
 });

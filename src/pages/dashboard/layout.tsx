@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
 import { Box, Skeleton, SlideFade } from '@chakra-ui/react';
 import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Error from './error';
-import DashboardMenu from './components/DashboardMenu';
-import AuthManager from '../managers/AuthManager';
-import DashboardNavigationMenu from './components/DashboardNavigationMenu';
-import { getDeveloper } from '../APIs/DevelopersAPI';
 import { auth } from '../../services/firebase';
-import { developerAtom } from '../atoms/dashboard';
-import { DeveloperResponse } from '../../types';
-import Plan from '../../shared/constants/Plan';
 import AccountStatus from '../../shared/constants/AccountStatus';
+import Plan from '../../shared/constants/Plan';
+import { DeveloperResponse } from '../../types';
+import { getDeveloper } from '../APIs/DevelopersAPI';
+import { developerAtom } from '../atoms/dashboardAtoms';
+import AuthManager from '../managers/AuthManager';
+import DashboardMenu from './components/DashboardMenu';
+import DashboardNavigationMenu from './components/DashboardNavigationMenu';
+import Error from './error';
 
 export const DEFAULT_DEVELOPER = {
   id: '',

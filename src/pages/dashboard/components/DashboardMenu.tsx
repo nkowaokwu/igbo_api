@@ -1,18 +1,17 @@
-import React from 'react';
 import {
+  Avatar,
   Box,
   Button,
   Heading,
+  Link,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Avatar,
-  Link,
+  MenuList,
 } from '@chakra-ui/react';
-import { FiLogOut } from 'react-icons/fi';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { FiLogOut } from 'react-icons/fi';
 import { auth } from '../../../services/firebase';
 
 const DashboardMenu = () => {

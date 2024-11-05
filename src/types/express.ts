@@ -34,10 +34,16 @@ export interface IgboAPIRequest extends ExpressRequest {
   headers: ExpressRequest['headers'];
   user?: DecodedIdToken;
   developer?: Developer;
+  baseUrl: string;
+  method: string;
   params: { [key: string]: string };
   body: ExpressRequest['body'] & StripeBody;
 }
 
 export interface MiddleWare {
   (req: IgboAPIRequest, res: Response, next: NextFunction): void;
+}
+
+export interface ErrorMiddleWare {
+  (error: Error, req: IgboAPIRequest, res: Response, next: NextFunction): void;
 }

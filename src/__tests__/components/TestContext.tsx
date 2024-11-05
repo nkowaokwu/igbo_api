@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
-import { configure } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { configure } from '@testing-library/react';
+import React, { ReactElement } from 'react';
 import ChakraTheme from '../../shared/constants/ChakraTheme';
 
 configure({ testIdAttribute: 'data-test' });
@@ -12,6 +12,11 @@ jest.mock('@chakra-ui/react');
 
 global.fetch = jest.fn();
 window.scrollTo = jest.fn();
+
+// @ts-expect-error mediaDevices
+window.navigator.mediaDevices = {
+  getUserMedia: async () => null,
+};
 
 Object.defineProperty(window, 'MediaRecorder', {
   writable: true,

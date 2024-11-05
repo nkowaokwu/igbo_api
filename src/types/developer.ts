@@ -20,7 +20,7 @@ export interface Developer extends DeveloperClientData {
   };
 }
 
-export interface DeveloperDocument extends Developer, Document<any> {
+export interface DeveloperDocument extends Developer, Document {
   id: Types.ObjectId;
 }
 
