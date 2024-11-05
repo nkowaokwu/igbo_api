@@ -25,7 +25,7 @@ describe('translation', () => {
       data: { text: 'aka', sourceLanguageCode: 'ibo', destinationLanguageCode: 'eng' },
     });
     await getTranslation(req, res, next);
-    expect(res.send).toHaveBeenCalled();
+    expect(res.json).toHaveBeenCalled();
   });
 
   it('throws validation error when input is too long', async () => {
