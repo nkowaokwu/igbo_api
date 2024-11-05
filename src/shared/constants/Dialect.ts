@@ -87,7 +87,11 @@ export default {
     label: 'Ihuoma',
   },
   [DialectEnum.IKK]: {
+<<<<<<< HEAD
     code: 'ibo-ikk',
+=======
+    code: 'ibo-ika',
+>>>>>>> 6f5d50e (chore: adds support for Ika and ikwere dialect)
     value: DialectEnum.IKK,
     label: 'Ika',
   },
