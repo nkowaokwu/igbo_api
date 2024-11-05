@@ -4,7 +4,7 @@ import {
   responseFixture,
   nextFunctionFixture,
 } from '../../__tests__/shared/fixtures';
-import { MAIN_KEY } from '../../../__tests__/shared/constants';
+import { API_ROUTE, MAIN_KEY } from '../../../__tests__/shared/constants';
 import { getTranslation } from '../translation';
 
 describe('translation', () => {
@@ -26,7 +26,17 @@ describe('translation', () => {
     });
     await getTranslation(req, res, next);
     // TODO: fix this test
-    // expect(res.json).toHaveBeenCalled();
+    jest.mock('axios');
+    // @ts-expect-error non-existing value
+    expect(axios.request.mock.calls[0][0]).toMatchObject({
+      method: 'POST',
+      url: '',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': 'main_key',
+      },
+      data: { igbo: 'aka' },
+    });
   });
 
   it('throws validation error when input is too long', async () => {

@@ -185,7 +185,6 @@ export const responseFixture = (): Response => ({
   // @ts-expect-error status
   status: jest.fn(() => ({ send: statusSendMock })),
   send: jest.fn(),
-  json: jest.fn(),
   redirect: jest.fn(),
 });
 export const nextFunctionFixture = (): NextFunction => jest.fn();
