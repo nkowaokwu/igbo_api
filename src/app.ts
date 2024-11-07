@@ -16,10 +16,11 @@ import './shared/utils/wrapConsole';
 
 const app = express();
 
-app.use(compression());
-app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.raw());
+// app.set('view engine', 'jade');
+app.use(express.json());
+// app.use(express.json({ limit: '50mb' }));
+// app.use(express.urlencoded({ extended: false, limit: '50mb' }));
+// app.use(compression());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
