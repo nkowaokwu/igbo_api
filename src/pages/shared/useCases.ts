@@ -1,9 +1,7 @@
-import { As } from '@chakra-ui/react';
-
 const useCases = [
   {
     label: 'Generate Subtitles',
-    as: 'h1' as As,
+    as: 'h1',
     description:
       'Generate Igbo subtitles to reach more native speakers across the world. Perfect for content-producing teams.',
     image:
@@ -11,7 +9,7 @@ const useCases = [
   },
   {
     label: 'Transcribe Conversations',
-    as: 'h1' as As,
+    as: 'h1',
     description:
       'Convert Igbo speech into text, in real-time. Perfect for team capturing customer conversations like telehealth or insurance companies.',
     image:
@@ -19,12 +17,12 @@ const useCases = [
   },
   {
     label: 'Build Language Learning Services',
-    as: 'h1' as As,
+    as: 'h1',
     description:
       'Rely on the +25,000 Igbo words and +100,000 Igbo sentences to build experiences for language learners. Perfect for e-learning teams.',
     image:
       'https://images.pexels.com/photos/27541898/pexels-photo-27541898/free-photo-of-drummers.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
-];
+] as const;
 
 export default useCases;
