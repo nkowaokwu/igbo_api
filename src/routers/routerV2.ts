@@ -8,6 +8,7 @@ import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
+import cache from 'src/middleware/cache';
 
 const routerV2 = Router();
 
@@ -27,7 +28,7 @@ routerV2.get(
 
 // Speech-to-Text
 routerV2.post('/speech-to-text', analytics, validateApiKey, getTranscription);
-routerV2.post('/translate', analytics, validateApiKey, getTranslation);
+routerV2.post('/translate', cache(0, 0, true), analytics, validateApiKey, getTranslation);
 
 // Redirects to V1
 routerV2.post('/developers', (_, res) => res.redirect('/api/v1/developers'));
