@@ -2,13 +2,10 @@ import { useCallable } from '../../pages/hooks/useCallable';
 import DemoOption from '../../shared/constants/DemoOption';
 import LanguageEnum from '../../shared/constants/LanguageEnum';
 import { OutgoingWord } from '../../types';
+import { Translation } from '../../controllers/translation';
 
 export interface Prediction {
   transcription: string;
-}
-
-export interface Translation {
-  translation: string;
 }
 
 export interface Dictionary {
