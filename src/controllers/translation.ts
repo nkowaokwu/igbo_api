@@ -9,13 +9,11 @@ interface IgboEnglishTranslationMetadata {
   igbo: string;
 }
 
-const TranslationRequestBody = z
-  .object({
-    text: z.string(),
-    sourceLanguageCode: z.nativeEnum(LanguageEnum),
-    destinationLanguageCode: z.nativeEnum(LanguageEnum),
-  })
-  .strict();
+const TranslationRequestBody = z.object({
+  text: z.string(),
+  sourceLanguageCode: z.nativeEnum(LanguageEnum),
+  destinationLanguageCode: z.nativeEnum(LanguageEnum),
+});
 
 export interface Translation {
   translation: string;
@@ -35,6 +33,7 @@ const IGBO_ENGLISH_TRANSLATION_INPUT_MAX_LENGTH = 120;
 export const getTranslation: MiddleWare = async (req, res, next) => {
   try {
     console.log('entered translation endpoint');
+    console.log('request body', req.body);
     const requestBodyValidation = TranslationRequestBody.safeParse(req.body);
     if (!requestBodyValidation.success) {
       throw fromError(requestBodyValidation.error);
