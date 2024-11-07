@@ -17,7 +17,7 @@ const TranslationRequestBody = z
   })
   .strict();
 
-interface Translation {
+export interface Translation {
   translation: string;
 }
 
@@ -73,7 +73,7 @@ export const getTranslation: MiddleWare = async (req, res, next) => {
       data: payload,
     });
 
-    return res.send({ transcription: response.translation });
+    return res.send({ translation: response.translation });
   } catch (err) {
     return next(err);
   }

@@ -1,4 +1,4 @@
-import { As, Box, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 
 const UseCaseCard = ({
   label,
@@ -8,7 +8,7 @@ const UseCaseCard = ({
   flexDirection,
 }: {
   label: string,
-  as: As,
+  as: 'h1' | 'h2' | 'h3',
   description: string,
   image: string,
   flexDirection: 'row' | 'row-reverse',
