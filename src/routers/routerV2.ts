@@ -8,7 +8,7 @@ import validId from '../middleware/validId';
 import validateApiKey from '../middleware/validateApiKey';
 import analytics from '../middleware/analytics';
 import attachRedisClient from '../middleware/attachRedisClient';
-import cache from 'src/middleware/cache';
+import cache from '../middleware/cache';
 
 const routerV2 = Router();
 
