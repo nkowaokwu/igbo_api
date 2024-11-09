@@ -14,7 +14,7 @@ import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
 import developerAuthorization from '../middleware/developerAuthorization';
 import testRouter from './testRouter';
-import noCache from 'src/middleware/noCache';
+import noCache from '../middleware/noCache';
 
 const router = Router();
 
