@@ -5,10 +5,6 @@ import { z } from 'zod';
 import { fromError } from 'zod-validation-error';
 import LanguageEnum from '../shared/constants/LanguageEnum';
 
-interface IgboEnglishTranslationMetadata {
-  igbo: string;
-}
-
 const TranslationRequestBody = z.object({
   text: z.string(),
   sourceLanguageCode: z.nativeEnum(LanguageEnum),
