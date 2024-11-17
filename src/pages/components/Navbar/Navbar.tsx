@@ -16,7 +16,7 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
       p={4}
     >
       <Box className="flex items-center justify-between w-11/12" style={{ zIndex: 2 }}>
-        <Box className="flex flex-row items-center">
+        <Box className="flex flex-row items-center" flex={1}>
           <Heading
             as="h1"
             className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900"
@@ -43,9 +43,11 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
           </Show>
         </Box>
         <Show above="md">
-          <NavigationOptions />
+          <Box flex={4}>
+            <NavigationOptions />
+          </Box>
         </Show>
-        <Box display="flex" flexDirection="row" className="space-x-3">
+        <Box display="flex" flexDirection="row" className="space-x-3" flex={1}>
           <Button
             className="transition-all duration-200"
             backgroundColor="white"

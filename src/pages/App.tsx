@@ -1,4 +1,5 @@
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import CallToAction from './components/CallToAction';
 import Demo from './components/Demo';
 import Donate from './components/Donate';
 import FadeIn from './components/FadeIn';
@@ -16,9 +17,10 @@ const App = ({ searchWord }: { searchWord: string }) => (
       className="overflow-x-hidden flex flex-col items-center"
       id="homepage-container"
       width="full"
-      pt={24}
+      pt={20}
       pb={24}
     >
+      <CallToAction />
       <VStack width="full" gap={24}>
         <Box
           className="relative flex flex-col justify-center items-center 
