@@ -5,28 +5,50 @@ import { z } from 'zod';
 import { fromError } from 'zod-validation-error';
 import LanguageEnum from '../shared/constants/LanguageEnum';
 
+
+export interface Translation {
+  translation: string;
+}
+
+export type LanguageCode = `${LanguageEnum}`
+
+type SupportedLanguage = {
+  [key in LanguageCode]?: {
+    maxInputLength: number,
+    translationAPI: string,
+  }
+}
+const SUPPORTED_TRANSLATIONS: { [key in LanguageCode]: SupportedLanguage} = {
+  [LanguageEnum.IGBO]: {
+    [LanguageEnum.ENGLISH]: {
+      maxInputLength: 120,
+      translationAPI: IGBO_TO_ENGLISH_API,
+    },
+  },
+  [LanguageEnum.ENGLISH]: {
+    [LanguageEnum.IGBO]: {
+      maxInputLength: 150,
+      translationAPI: ENGLIGH_TO_IGBO_API,
+    },
+  },
+  [LanguageEnum.YORUBA]: {},
+  [LanguageEnum.HAUSA]: {},
+  [LanguageEnum.UNSPECIFIED]: {},
+};
+
 const TranslationRequestBody = z.object({
   text: z.string(),
   sourceLanguageCode: z.nativeEnum(LanguageEnum),
   destinationLanguageCode: z.nativeEnum(LanguageEnum),
 });
 
-export interface Translation {
-  translation: string;
+const PayloadKeyMap = {
+  [LanguageEnum.IGBO]: 'igbo',
+  [LanguageEnum.ENGLISH]: 'english',
+  [LanguageEnum.YORUBA]: 'yoruba',
+  [LanguageEnum.HAUSA]: 'hausa',
+  [LanguageEnum.UNSPECIFIED]: 'unspecified',
 }
-
-// TODO: move this information to remote config
-const SUPPORTED_TRANSLATIONS = {
-  [`${LanguageEnum.IGBO}to${LanguageEnum.ENGLISH}`]: {
-    maxInputLength: 120,
-    translationAPI: IGBO_TO_ENGLISH_API,
-  },
-  [`${LanguageEnum.ENGLISH}to${LanguageEnum.IGBO}`]: {
-    maxInputLength: 150,
-    translationAPI: ENGLIGH_TO_IGBO_API,
-  },
-} as const;
-type SupportedTranslationCodes = keyof typeof SUPPORTED_TRANSLATIONS;
 
 /**
  * Talks to Igbo-to-English translation model to translate the provided text.
@@ -43,42 +65,42 @@ export const getTranslation: MiddleWare = async (req, res, next) => {
     }
 
     const requestBody = requestBodyValidation.data;
+    const sourceLanguage = requestBody.sourceLanguageCode
+    const destinationLanguage = requestBody.destinationLanguageCode
 
-    if (requestBody.sourceLanguageCode === requestBody.destinationLanguageCode) {
+    if (sourceLanguage === destinationLanguage) {
       throw new Error('Source and destination languages must be different');
     }
 
     if (
-      !(
-        `${requestBody.sourceLanguageCode}to${requestBody.destinationLanguageCode}` in
-        SUPPORTED_TRANSLATIONS
-      )
+      !(sourceLanguage in SUPPORTED_TRANSLATIONS &&
+      destinationLanguage in SUPPORTED_TRANSLATIONS[sourceLanguage])
     ) {
       throw new Error(
-        `${requestBody.sourceLanguageCode} to ${requestBody.destinationLanguageCode} translation is not yet supported`
+        `${sourceLanguage} to ${destinationLanguage} translation is not yet supported`
       );
     }
     const textToTranslate = requestBody.text;
+    const maxInputLength = SUPPORTED_TRANSLATIONS[sourceLanguage][destinationLanguage]!.maxInputLength
     if (!textToTranslate) {
       throw new Error('Cannot translate empty string');
     }
-    const translationKey =
-      `${requestBody.sourceLanguageCode}to${requestBody.destinationLanguageCode}` as SupportedTranslationCodes;
-    // TODO: update this use map based on language
-    if (textToTranslate.length > SUPPORTED_TRANSLATIONS[translationKey].maxInputLength) {
+
+    if (textToTranslate.length > maxInputLength) {
       throw new Error(
-        `Cannot translate text greater than ${SUPPORTED_TRANSLATIONS[translationKey].maxInputLength} characters`
+        `Cannot translate text greater than ${maxInputLength} characters`
       );
     }
 
     // TODO: joint model will standardize request
-    const payload =
-      translationKey == 'ibotoeng' ? { igbo: textToTranslate } : { english: textToTranslate };
+    const payload = {
+      [PayloadKeyMap[sourceLanguage]]: textToTranslate
+    }
 
     // Talks to translation endpoint
     const { data: response } = await axios.request<Translation>({
       method: 'POST',
-      url: SUPPORTED_TRANSLATIONS[translationKey].translationAPI,
+      url: SUPPORTED_TRANSLATIONS[sourceLanguage][destinationLanguage]!.translationAPI,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,
