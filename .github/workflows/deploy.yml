@@ -80,6 +80,7 @@ jobs:
           envkey_STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           envkey_STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
           envkey_ENV_IGBO_TO_ENGLISH_URL: ${{ secrets.ENV_IGBO_TO_ENGLISH_URL }}
+          envkey_ENV_ENGLISH_TO_IGBO_URL: ${{ secrets.ENV_ENGLISH_TO_IGBO_URL }}
           directory: functions
       - name: Build Production Project
         run: |
