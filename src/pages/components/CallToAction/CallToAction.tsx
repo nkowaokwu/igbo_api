@@ -1,6 +1,6 @@
 import { Button, HStack, Link, Text } from '@chakra-ui/react';
 import { LuArrowRight } from 'react-icons/lu';
-import { VOLUNTEER_PAGE_URL } from 'src/siteConstants';
+import { VOLUNTEER_PAGE_URL } from '../../../../src/siteConstants';
 
 const CallToAction = () => (
   <HStack
