@@ -4,6 +4,7 @@ export const API_FROM_EMAIL = 'kedu@nkowaokwu.com';
 export const APP_URL = 'https://igboapi.com';
 export const API_ROUTE = APP_URL;
 export const DICTIONARY_APP_URL = 'https://nkowaokwu.com';
+export const VOLUNTEER_PAGE_URL = 'https://nkowaokwu.com/volunteer';
 export const SPEECH_TO_TEXT_APP_URL = 'https://speech.igboapi.com';
 export const GITHUB_REPO = 'https://github.com/nkowaokwu/igbo_api';
 export const GITHUB_CONTRIBUTORS = 'https://api.github.com/repos/nkowaokwu/igbo_api/contributors';

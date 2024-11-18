@@ -1,8 +1,6 @@
 import { Box, Button, Link as ChakraLink, Heading, Show } from '@chakra-ui/react';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Link } from 'react-scroll';
-import NkowaokwuLogo from '../../assets/nkowaokwu.svg';
 import NavigationMenu from './NavigationMenu';
 import NavigationOptions from './NavigationOptions';
 
@@ -16,15 +14,24 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
       p={4}
     >
       <Box className="flex items-center justify-between w-11/12" style={{ zIndex: 2 }}>
-        <Box className="flex flex-row items-center">
+        <Box className="flex flex-row items-center" flex={1}>
           <Heading
             as="h1"
             className="transition-element text-3xl font-extrabold hover:text-gray-700 text-gray-900"
             pb="0"
+            color="black"
+            fontSize={{ base: '2xl', md: '3xl' }}
           >
             {to ? (
-              <ChakraLink href={to}>
-                <Image alt="Nkọwa okwu logo" src={NkowaokwuLogo} height={40} width={150} />
+              <ChakraLink
+                href={to}
+                color="black"
+                textDecoration="none"
+                _hover={{ textDecoration: 'none' }}
+                _active={{ textDecoration: 'none' }}
+                _focus={{ textDecoration: 'none' }}
+              >
+                Igbo API
               </ChakraLink>
             ) : (
               <Link
@@ -34,7 +41,7 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
                 offset={-100}
                 duration={600}
               >
-                <Image alt="Nkọwa okwu logo" src={NkowaokwuLogo} height={40} width={150} />
+                Igbo API
               </Link>
             )}
           </Heading>
@@ -43,9 +50,11 @@ const Navbar = ({ to = '/' }: { to?: string }) => {
           </Show>
         </Box>
         <Show above="md">
-          <NavigationOptions />
+          <Box flex={4}>
+            <NavigationOptions />
+          </Box>
         </Show>
-        <Box display="flex" flexDirection="row" className="space-x-3">
+        <Box display="flex" flexDirection="row" className="space-x-3" flex={1}>
           <Button
             className="transition-all duration-200"
             backgroundColor="white"
