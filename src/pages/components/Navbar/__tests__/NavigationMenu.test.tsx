@@ -10,8 +10,8 @@ describe('NavigationMenu', () => {
         <NavigationMenu />
       </TestContext>
     );
-
-    await findByText('Use Cases');
+    // TODO: uncomment when there is use cases section
+    // await findByText('Use Cases');
     // TODO: uncomment when pricing is available
     // await findByText('Pricing');
     await findByText('Resources');

@@ -11,7 +11,8 @@ describe('NavigationOptions', () => {
       </TestContext>
     );
 
-    await findByText('Use Cases');
+    // TODO: use cases section not yet available
+    // await findByText('Use Cases');
     // TODO: uncomment when pricing is available
     // await findByText('Pricing');
     await findByText('Resources');
