@@ -97,7 +97,7 @@ const Footer = () => (
     backgroundColor="blue.900"
     gap={12}
   >
-    <footer className="w-11/12 grid grid-cols-1 lg:grid-cols-4 space-y-8 lg:space-y-0">
+    <footer className="w-11/12 gap-4 grid grid-cols-1 lg:grid-cols-4 space-y-8 lg:space-y-0">
       <VStack alignItems="start">
         <Link href="/">
           <Image src={nkowaokwuLogoWhite} alt="Nkọwa okwu logo" height={30} />

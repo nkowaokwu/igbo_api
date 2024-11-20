@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
+import { IGBO_STT_API, MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
 import Endpoint from '../shared/constants/Endpoint';
 import { MiddleWare } from '../types';
 import { fetchBase64Data } from './utils/fetchBase64Data';
@@ -22,6 +22,7 @@ interface Prediction {
  * @returns Audio transcription
  */
 export const getTranscription: MiddleWare = async (req, res, next) => {
+  console.log('inside speech to text endpoint');
   try {
     const { audioUrl: audio } = req.body;
     if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
@@ -58,7 +59,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
     // Talks to prediction endpoint
     const { data: response } = await axios.request<Prediction>({
       method: 'POST',
-      url: `${SPEECH_TO_TEXT_API}/predict`,
+      url: IGBO_STT_API,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,

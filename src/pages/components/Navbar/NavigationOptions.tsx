@@ -16,6 +16,7 @@ import { navigationLinks, NavigationType } from '../../../shared/constants/navig
 const NavigationOptions = () => (
   <UnorderedList
     className="w-full flex flex-row justify-center items-center space-x-6"
+    ml={0}
     data-test="sub-menu"
   >
     {navigationLinks.map(({ href, label, type, options }) => (
