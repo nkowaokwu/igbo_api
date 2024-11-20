@@ -98,6 +98,7 @@ export const getTranslation: MiddleWare = async (req, res, next) => {
     }
 
     // Talks to translation endpoint
+    console.log(`translating on ${SUPPORTED_TRANSLATIONS[sourceLanguage][destinationLanguage]!.translationAPI} `)
     const { data: response } = await axios.request<Translation>({
       method: 'POST',
       url: SUPPORTED_TRANSLATIONS[sourceLanguage][destinationLanguage]!.translationAPI,
