@@ -14,7 +14,6 @@ import attachRedisClient from '../middleware/attachRedisClient';
 import analytics from '../middleware/analytics';
 import developerAuthorization from '../middleware/developerAuthorization';
 import testRouter from './testRouter';
-import noCache from '../middleware/noCache';
 
 const router = Router();
 
@@ -34,7 +33,7 @@ router.get('/examples', validateApiKey, attachRedisClient, getExamples);
 router.get('/examples/:id', validateApiKey, validId, attachRedisClient, getExample);
 
 router.get('/developers/:id', developerAuthorization, getDeveloper);
-router.post('/developers', noCache, developerRateLimiter, validateDeveloperBody, postDeveloper);
+router.post('/developers', developerRateLimiter, validateDeveloperBody, postDeveloper);
 router.put('/developers', developerRateLimiter, validateUpdateDeveloperBody, putDeveloper);
 
 router.get('/stats', validateAdminApiKey, attachRedisClient, getStats);
