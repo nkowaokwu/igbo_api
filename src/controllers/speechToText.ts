@@ -22,6 +22,7 @@ interface Prediction {
  * @returns Audio transcription
  */
 export const getTranscription: MiddleWare = async (req, res, next) => {
+  console.log('inside speech to text endpoint');
   try {
     const { audioUrl: audio } = req.body;
     if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
