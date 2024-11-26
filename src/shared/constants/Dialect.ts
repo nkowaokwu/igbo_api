@@ -86,6 +86,16 @@ export default {
     value: DialectEnum.IHU,
     label: 'Ihuoma',
   },
+  [DialectEnum.IKK]: {
+    code: 'ibo-ikk',
+    value: DialectEnum.IKK,
+    label: 'Ika',
+  },
+  [DialectEnum.IKW]: {
+    code: 'ibo-ikw',
+    value: DialectEnum.IKW,
+    label: 'Ikwere',
+  },
   [DialectEnum.IQW]: {
     code: 'ibo-iqw',
     value: DialectEnum.IQW,
