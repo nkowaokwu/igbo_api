@@ -30,7 +30,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       throw new Error('Audio URL must either be hosted publicly or a valid base64.');
     }
 
-    let payload = { id: '', url: '' };
+    let payload = { audioUrl: '' };
     const base64 = audio.startsWith('https://') ? await fetchBase64Data(audio) : audio;
 
     // If the audio doesn't come from Igbo API S3, we will pass into IgboSpeech
@@ -50,10 +50,9 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
           return { data: { audioId: '', audioUrl: '' } };
         });
 
-      payload = { id: response.audioId, url: response.audioUrl };
+      payload = { audioUrl: response.audioUrl };
     } else {
-      const audioId = parseAWSIdFromUri(audio);
-      payload = { id: audioId, url: audio };
+      payload = { audioUrl: audio };
     }
 
     // Talks to prediction endpoint
