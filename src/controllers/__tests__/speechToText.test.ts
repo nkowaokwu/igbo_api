@@ -1,9 +1,10 @@
 import axios from 'axios';
 import {
+  nextFunctionFixture,
   requestFixture,
   responseFixture,
-  nextFunctionFixture,
 } from '../../__tests__/shared/fixtures';
+import { IGBO_STT_API } from '../../config';
 import { getTranscription } from '../speechToText';
 import { fetchBase64Data } from '../utils/fetchBase64Data';
 
@@ -38,12 +39,12 @@ describe('speechToText', () => {
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
-      url: 'http://localhost:3333/predict',
+      url: IGBO_STT_API,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { id: 'audioId', url: 'https://igboapi.com' },
+      data: { audioUrl: 'https://igboapi.com' },
     });
   });
 
@@ -71,12 +72,12 @@ describe('speechToText', () => {
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
-      url: 'http://localhost:3333/predict',
+      url: IGBO_STT_API,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { id: 'audioId', url: 'https://igboapi.com' },
+      data: { audioUrl: 'https://igboapi.com' },
     });
   });
 
@@ -104,12 +105,12 @@ describe('speechToText', () => {
     });
     expect(axios.request).toHaveBeenCalledWith({
       method: 'POST',
-      url: 'http://localhost:3333/predict',
+      url: IGBO_STT_API,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { id: 'audioId', url: audioUrl },
+      data: { audioUrl },
     });
   });
 
