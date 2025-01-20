@@ -146,6 +146,7 @@ export const handleQueries = async ({
         .replace(/[[\]']/g, '')
         .split(',')
         .map((wordClass) => wordClass.trim())
+        .sort()
     : [];
   const resolve = resolveQuery === 'true';
   const flags: Flags = {
@@ -159,6 +160,7 @@ export const handleQueries = async ({
     ...(tags?.length ? { tags: { $in: tags } } : {}),
     ...(wordClasses?.length ? { 'definitions.wordClass': { $in: wordClasses } } : {}),
   };
+
   return {
     id,
     version,

@@ -1,17 +1,17 @@
-import { RedisClientType } from 'redis';
 import { compact, uniqWith } from 'lodash';
-import {
-  searchIgboTextSearch,
-  strictSearchIgboQuery,
-  searchDefinitionsWithinIgboTextSearch,
-} from './queries';
-import { findWordsWithMatch } from './buildDocs';
-import { sortDocsBy } from './sortDocsBy';
-import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
+import { RedisClientType } from 'redis';
 import { handleWordFlags } from '../../APIs/FlagsAPI';
+import { getCachedWords, setCachedWords } from '../../APIs/RedisAPI';
 import Version from '../../shared/constants/Version';
 import { SearchRegExp } from '../../shared/utils/createRegExp';
 import { Filters } from '../types';
+import { findWordsWithMatch } from './buildDocs';
+import {
+  searchDefinitionsWithinIgboTextSearch,
+  searchIgboTextSearch,
+  strictSearchIgboQuery,
+} from './queries';
+import { sortDocsBy } from './sortDocsBy';
 import { Keyword } from './types';
 
 type IgboSearch = {
@@ -47,7 +47,7 @@ const searchWordUsingIgbo = async ({
   filters,
 }: IgboSearch) => {
   let responseData = { words: [], contentLength: 0 };
-  const redisWordsCacheKey = `${searchWord}-${version}`;
+  const redisWordsCacheKey = `${searchWord}-${JSON.stringify(filters)}-${version}`;
   const cachedWords = await getCachedWords({ key: redisWordsCacheKey, redisClient });
 
   if (cachedWords) {
