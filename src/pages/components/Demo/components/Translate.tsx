@@ -1,5 +1,16 @@
-import { Box, Button, Heading, HStack, Spinner, Text, Textarea, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Spinner,
+  Text,
+  Textarea,
+  VStack,
+  Icon,
+} from '@chakra-ui/react';
+import { MdSwapHoriz } from 'react-icons/md';
+import { useState } from 'react';
 import { LuRefreshCcw } from 'react-icons/lu';
 import { postTranslationEndpoint } from '../../../APIs/PredictionAPI';
 
@@ -30,16 +41,13 @@ const Translate = () => {
   return (
     <Box maxWidth="1200px" width="full">
       <VStack width="full" p={4} gap={4}>
-        <Button
-          textAlign="center"
-          fontStyle="italic"
-          fontSize="sm"
-          color="gray"
-          onClick={switchLanguagePair}
+        <HStack
+          flexDirection={{ base: 'column', md: 'row' }}
+          width="full"
+          gap={6}
+          display="flex"
+          position="relative"
         >
-          SWITCH
-        </Button>
-        <HStack flexDirection={{ base: 'column', md: 'row' }} width="full" gap={6} display="flex">
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
               {languagePair.from}
@@ -55,6 +63,28 @@ const Translate = () => {
               resize="none"
             />
           </VStack>
+
+          <Box
+            position={{ base: 'relative', md: 'absolute' }}
+            left={{ md: '50%' }}
+            transform={{ md: 'translateX(-50%)' }}
+            zIndex={1}
+          >
+            <Button
+              aria-label="Switch languages"
+              onClick={switchLanguagePair}
+              size="sm"
+              rounded="full"
+              bg="white"
+              shadow="md"
+              _hover={{ bg: 'gray.50' }}
+              height="40px"
+              width="40px"
+            >
+              {isPredictLoading ? <Spinner size="sm" /> : <Icon as={MdSwapHoriz} boxSize={5} />}
+            </Button>
+          </Box>
+
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
               {languagePair.to}
@@ -75,7 +105,7 @@ const Translate = () => {
           </VStack>
         </HStack>
         <Text textAlign="center" fontStyle="italic" fontSize="sm" color="gray">
-          Type in Igbo to see its English translation
+          Type in {languagePair.from} to see its {languagePair.to} translation
         </Text>
         <Button
           onClick={handleTranslate}
