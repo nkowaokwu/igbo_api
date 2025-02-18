@@ -67,7 +67,8 @@ const Translate = () => {
           <Box
             position={{ base: 'relative', md: 'absolute' }}
             left={{ md: '50%' }}
-            transform={{ md: 'translateX(-50%)' }}
+            top={{ md: '60%' }}
+            transform={{ md: 'translate(-50%, -60%)' }}
             zIndex={1}
           >
             <Button
