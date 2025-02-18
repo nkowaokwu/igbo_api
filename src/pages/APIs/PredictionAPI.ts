@@ -82,7 +82,7 @@ export const postTranslationEndpoint = async ({
  * @param {string} lang User-readable language name (e.g. 'Igbo', 'English')
  * @returns {LanguageEnum} The corresponding LanguageEnum value
  */
-const getLanguageEnumHelper = (lang: string): LanguageEnum => {
+export const getLanguageEnumHelper = (lang: string): LanguageEnum => {
   let op = LanguageEnum.UNSPECIFIED;
   switch (lang) {
     case 'Igbo':
