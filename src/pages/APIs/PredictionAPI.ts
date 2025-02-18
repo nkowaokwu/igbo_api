@@ -61,16 +61,37 @@ export const postSpeechToTextEndpoint = async ({
  */
 export const postTranslationEndpoint = async ({
   text,
+  languagePair,
 }: {
   text: string,
+  languagePair: { from: string, to: string },
 }): Promise<TranslationResponse> => {
   const { data } = await useCallable('demo', {
     type: DemoOption.TRANSLATE,
     data: {
       text,
-      sourceLanguageCode: LanguageEnum.IGBO,
-      destinationLanguageCode: LanguageEnum.ENGLISH,
+      sourceLanguageCode: getLanguageEnumHelper(languagePair.from),
+      destinationLanguageCode: getLanguageEnumHelper(languagePair.to),
     },
   });
   return data || { translation: '' };
+};
+
+/**
+ * Maps user-readable language names to their corresponding LanguageEnum values
+ * @param {string} lang User-readable language name (e.g. 'Igbo', 'English')
+ * @returns {LanguageEnum} The corresponding LanguageEnum value
+ */
+const getLanguageEnumHelper = (lang: string): LanguageEnum => {
+  let op = LanguageEnum.UNSPECIFIED;
+  switch (lang) {
+    case 'Igbo':
+      op = LanguageEnum.IGBO;
+      break;
+    case 'English':
+      op = LanguageEnum.ENGLISH;
+      break;
+  }
+
+  return op;
 };

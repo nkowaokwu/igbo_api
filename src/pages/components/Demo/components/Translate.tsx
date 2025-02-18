@@ -1,5 +1,5 @@
 import { Box, Button, Heading, HStack, Spinner, Text, Textarea, VStack } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LuRefreshCcw } from 'react-icons/lu';
 import { postTranslationEndpoint } from '../../../APIs/PredictionAPI';
 
@@ -8,27 +8,44 @@ const Translate = () => {
   const [isPredictLoading, setIsPredictLoading] = useState(false);
   const [translation, setTranslation] = useState('');
   const [text, setText] = useState('');
+  const [languagePair, setLanguagePair] = useState({ from: 'Igbo', to: 'English' });
 
   const handleTranslate = async () => {
     try {
       setIsPredictLoading(true);
-      const fetchedTranslation = await postTranslationEndpoint({ text });
+      const fetchedTranslation = await postTranslationEndpoint({ text, languagePair });
       setTranslation(fetchedTranslation.translation);
     } finally {
       setIsPredictLoading(false);
     }
   };
 
+  const switchLanguagePair = () => {
+    setLanguagePair({
+      from: languagePair.to,
+      to: languagePair.from,
+    });
+  };
+
   return (
     <Box maxWidth="1200px" width="full">
       <VStack width="full" p={4} gap={4}>
+        <Button
+          textAlign="center"
+          fontStyle="italic"
+          fontSize="sm"
+          color="gray"
+          onClick={switchLanguagePair}
+        >
+          SWITCH
+        </Button>
         <HStack flexDirection={{ base: 'column', md: 'row' }} width="full" gap={6} display="flex">
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
-              Igbo
+              {languagePair.from}
             </Heading>
             <Textarea
-              placeholder="Kedu aha gị?"
+              placeholder={languagePair.from === 'Igbo' ? 'Kedu aha gị?' : 'What is your name?'}
               height={32}
               width="full"
               p={2}
@@ -40,7 +57,7 @@ const Translate = () => {
           </VStack>
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
-              English
+              {languagePair.to}
             </Heading>
             <Box
               height={32}
