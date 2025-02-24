@@ -13,13 +13,15 @@ import { MdSwapHoriz } from 'react-icons/md';
 import { useState } from 'react';
 import { LuRefreshCcw } from 'react-icons/lu';
 import { postTranslationEndpoint } from '../../../APIs/PredictionAPI';
+import LanguageEnum from 'src/shared/constants/LanguageEnum';
+import languageEnumLabels from 'src/shared/constants/LanguageEnumLabels';
 
 const Translate = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPredictLoading, setIsPredictLoading] = useState(false);
   const [translation, setTranslation] = useState('');
   const [text, setText] = useState('');
-  const [languagePair, setLanguagePair] = useState({ from: 'Igbo', to: 'English' });
+  const [languagePair, setLanguagePair] = useState({ from: LanguageEnum.IGBO, to: LanguageEnum.ENGLISH });
 
   const handleTranslate = async () => {
     try {
@@ -50,10 +52,10 @@ const Translate = () => {
         >
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
-              {languagePair.from}
+              {languageEnumLabels[languagePair.from].label}
             </Heading>
             <Textarea
-              placeholder={languagePair.from === 'Igbo' ? 'Kedu aha gị?' : 'What is your name?'}
+              placeholder={languagePair.from === LanguageEnum.IGBO ? 'Kedu aha gị?' : 'What is your name?'}
               height={32}
               width="full"
               p={2}
@@ -88,7 +90,7 @@ const Translate = () => {
 
           <VStack width="full" textAlign="start">
             <Heading color="gray.800" fontSize="xl" width="full" textAlign="center">
-              {languagePair.to}
+              {languageEnumLabels[languagePair.to].label}
             </Heading>
             <Box
               height={32}
@@ -106,7 +108,7 @@ const Translate = () => {
           </VStack>
         </HStack>
         <Text textAlign="center" fontStyle="italic" fontSize="sm" color="gray">
-          Type in {languagePair.from} to see its {languagePair.to} translation
+          Type in {languageEnumLabels[languagePair.from].label} to see its {languageEnumLabels[languagePair.to].label} translation
         </Text>
         <Button
           onClick={handleTranslate}

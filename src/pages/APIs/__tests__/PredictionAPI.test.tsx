@@ -3,7 +3,6 @@ import LanguageEnum from '../../../shared/constants/LanguageEnum';
 import * as useCallable from '../../hooks/useCallable';
 import {
   getDictionaryEndpoint,
-  getLanguageEnumHelper,
   postSpeechToTextEndpoint,
   postTranslationEndpoint,
 } from '../PredictionAPI';
@@ -35,8 +34,8 @@ describe('PredictionAPI', () => {
   it('postTranslationEndpoint', () => {
     const text = 'text';
     const languagePair = {
-      from: 'Igbo',
-      to: 'English',
+      from: LanguageEnum.IGBO,
+      to: LanguageEnum.ENGLISH,
     };
     const useCallableSpy = jest.spyOn(useCallable, 'useCallable');
     postTranslationEndpoint({ text, languagePair });
@@ -44,8 +43,8 @@ describe('PredictionAPI', () => {
       type: DemoOption.TRANSLATE,
       data: {
         text,
-        sourceLanguageCode: getLanguageEnumHelper(languagePair.from),
-        destinationLanguageCode: getLanguageEnumHelper(languagePair.to),
+        sourceLanguageCode: languagePair.from,
+        destinationLanguageCode: languagePair.to,
       },
     });
   });
