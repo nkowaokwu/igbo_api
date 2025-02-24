@@ -19,9 +19,9 @@ export const STAGING_FIREBASE_CONFIG: FirebaseConfig = {
 
 export const PRODUCTION_FIREBASE_CONFIG: FirebaseConfig = {
   apiKey: 'AIzaSyBDXPLmvu7YEagwdgp_W4uoZhCglbXrG6M',
-  authDomain: 'igboapi-3d392.firebaseapp.com',
-  projectId: 'igboapi-3d392',
-  storageBucket: 'igboapi-3d392.appspot.com',
+  authDomain: 'igboapi-bb22d.firebaseapp.com',
+  projectId: 'igboapi-bb22d',
+  storageBucket: 'igboapi-bb22d.appspot.com',
   messagingSenderId: '299917108135',
   appId: '1:299917108135:web:e5053fceeba3155b624c82',
   measurementId: 'G-YGGV667F2H',
