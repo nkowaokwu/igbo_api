@@ -58,7 +58,6 @@ const PayloadKeyMap = {
  * @returns English text translation of the provided Igbo text
  */
 export const getTranslation: MiddleWare = async (req, res, next) => {
-  console.log("inside translation endpoint")
   try {
     const requestBodyValidation = TranslationRequestBody.safeParse(req.body);
     if (!requestBodyValidation.success) {
