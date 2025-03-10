@@ -3,6 +3,8 @@ import { IGBO_STT_API, MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
 import Endpoint from '../shared/constants/Endpoint';
 import { MiddleWare } from '../types';
 import { fetchBase64Data } from './utils/fetchBase64Data';
+import { z } from 'zod';
+import { fromError } from 'zod-validation-error';
 import { parseAWSIdFromUri } from './utils/parseAWS';
 
 interface AudioMetadata {
@@ -14,6 +16,10 @@ interface Prediction {
   transcription: string;
 }
 
+const TranscriptionRequestBody = z.object({
+  audioUrl: z.string(),
+});
+
 /**
  * Talks to Speech-to-Text model to transcribe provided audio URL
  * @param req
@@ -22,9 +28,12 @@ interface Prediction {
  * @returns Audio transcription
  */
 export const getTranscription: MiddleWare = async (req, res, next) => {
-  console.log('inside speech to text endpoint');
   try {
-    const { audioUrl: audio } = req.body;
+    const requestBodyValidation = TranscriptionRequestBody.safeParse(req.body);
+    if (!requestBodyValidation.success) {
+      throw fromError(requestBodyValidation.error);
+    }
+    const { audioUrl: audio } = requestBodyValidation.data;
     if (!audio.startsWith('https://') && !audio.startsWith('data:audio')) {
       console.log('Audio URL must either be hosted publicly or a valid base64');
       throw new Error('Audio URL must either be hosted publicly or a valid base64.');
@@ -68,6 +77,6 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
 
     return res.send({ transcription: response.transcription });
   } catch (err) {
-    return next();
+    return next(err);
   }
 };
