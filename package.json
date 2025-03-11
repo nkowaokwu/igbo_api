@@ -29,6 +29,7 @@
     "dev:light": "npm-run-all -p start:watch start:database",
     "dev:site": "npm-run-all -p start:emulators dev:site:next",
     "dev:site:next": "firebase functions:config:set runtime.env=development && next -p 3035",
+    "lint": "eslint ./src",
     "migrate-up": "migrate-mongo up",
     "migrate-down": "migrate-mongo down",
     "mongodump": "shx rm -rf dump/ && mongodump -d igbo_api -o dump",
