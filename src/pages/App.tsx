@@ -28,17 +28,15 @@ const App = ({ searchWord }: { searchWord: string }) => (
           mt={12}
           zIndex={-1}
         >
-          <FadeIn>
-            <Heading
-              as="h1"
-              className="text-center z-1 w-8/12"
-              width="full"
-              fontSize={['4xl', '5xl']}
-              color="gray.900"
-            >
-              Empowering Igbo Communication with Cutting-Edge AI
-            </Heading>
-          </FadeIn>
+          <Heading
+            as="h1"
+            className="text-center z-1 w-8/12"
+            width="full"
+            fontSize={['4xl', '5xl']}
+            color="gray.900"
+          >
+            Empowering Igbo Communication with Cutting-Edge AI
+          </Heading>
           <Box className="text-xl md:text-xl mb-4 mt-8 leading-10">
             <FadeIn>
               <Box className="w-full flex flex-col items-center">
