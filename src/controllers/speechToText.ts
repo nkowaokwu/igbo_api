@@ -29,7 +29,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
       throw new Error('Audio URL must either be hosted publicly or a valid base64.');
     }
 
-    let payload = { url: '' };
+    let payload = { url: '', id: '' };
     const base64 = audio.startsWith('https://') ? await fetchBase64Data(audio) : audio;
 
     // If the audio doesn't come from Igbo API S3, we will pass into IgboSpeech
@@ -49,14 +49,10 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
           return { data: { audioId: '', audioUrl: '' } };
         });
 
-      console.log('audio endpoint response', response);
-
-      payload = { url: response.audioUrl };
+      payload = { url: response.audioUrl, id: response.audioId };
     } else {
-      payload = { url: audio };
+      payload = { url: audio, id: '' };
     }
-
-    console.log('The payload', payload);
 
     // Talks to prediction endpoint
     const { data: response } = await axios.request<Prediction>({
