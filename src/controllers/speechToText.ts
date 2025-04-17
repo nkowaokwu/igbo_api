@@ -49,10 +49,14 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
           return { data: { audioId: '', audioUrl: '' } };
         });
 
+      console.log('audio endpoint response', response);
+
       payload = { audioUrl: response.audioUrl };
     } else {
       payload = { audioUrl: audio };
     }
+
+    console.log('The payload', payload);
 
     // Talks to prediction endpoint
     const { data: response } = await axios.request<Prediction>({
