@@ -1,18 +1,18 @@
 import { Response } from 'express';
+import { flatten, keys, map } from 'lodash';
 import { Connection } from 'mongoose';
-import { map, flatten, keys } from 'lodash';
-import { createWord } from '../controllers/words';
-import { createNsibidiCharacter } from '../controllers/nsibidi';
 import { createExample } from '../controllers/examples';
-import dictionary from './ig-en/ig-en.json';
-import nsibidiDictionary from './nsibidi/nsibidi_dictionary';
-import Dialects from '../shared/constants/Dialect';
-import WordClass from '../shared/constants/WordClass';
+import { createNsibidiCharacter } from '../controllers/nsibidi';
+import { createWord } from '../controllers/words';
 import { createDbConnection, handleCloseConnection } from '../services/database';
-import { MiddleWare } from '../types/express';
+import Dialects from '../shared/constants/Dialect';
 import ExampleStyleEnum from '../shared/constants/ExampleStyleEnum';
 import LanguageEnum from '../shared/constants/LanguageEnum';
 import { SuggestionSourceEnum } from '../shared/constants/SuggestionSourceEnum';
+import WordClass from '../shared/constants/WordClass';
+import { MiddleWare } from '../types/express';
+import dictionary from './ig-en/ig-en.json';
+import nsibidiDictionary from './nsibidi/nsibidi_dictionary';
 
 const WRITE_DB_DELAY = 15000;
 
@@ -109,7 +109,7 @@ const populate = async (connection: Connection) => {
               ],
               pronunciations: [],
               style: index % 3 ? ExampleStyleEnum.PROVERB : ExampleStyleEnum.NO_STYLE,
-              associatedWords: [words[index].id],
+              associatedWords: [(words[index] as { id: string }).id],
               associatedDefinitionsSchemas: [],
               nsibidiCharacters: [],
               updatedAt: new Date(),
