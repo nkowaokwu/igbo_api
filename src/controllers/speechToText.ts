@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IGBO_STT_API, MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
+import { MAIN_KEY, SPEECH_TO_TEXT_API } from '../config';
 import Endpoint from '../shared/constants/Endpoint';
 import { MiddleWare } from '../types';
 import { fetchBase64Data } from './utils/fetchBase64Data';
@@ -57,7 +57,7 @@ export const getTranscription: MiddleWare = async (req, res, next) => {
     // Talks to prediction endpoint
     const { data: response } = await axios.request<Prediction>({
       method: 'POST',
-      url: IGBO_STT_API,
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.PREDICT}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': MAIN_KEY,

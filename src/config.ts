@@ -26,6 +26,9 @@ const SENDGRID_NEW_DEVELOPER_ACCOUNT_TEMPLATE_SOURCE = defineString(
 // Igbo API
 const ENV_MAIN_KEY = defineString('ENV_MAIN_KEY').value();
 
+// IgboSpeech
+const ENV_SPEECH_TO_TEXT_API = defineString('ENV_SPEECH_TO_TEXT_API').value();
+
 // Nkọwa okwu AI Models
 const ENV_IGBO_STT_URL = defineString('ENV_IGBO_STT_URL').value();
 const ENV_IGBO_TO_ENGLISH_URL = defineString('ENV_IGBO_TO_ENGLISH_URL').value();
@@ -107,9 +110,7 @@ export const API_ROUTE = isProduction ? 'https://igboapi.com' : `http://localhos
 export const API_DOCS = 'https://docs.igboapi.com';
 
 // Nkọwa okwu AI Models
-export const SPEECH_TO_TEXT_API = isProduction
-  ? 'https://speech.igboapi.com'
-  : 'http://localhost:3333';
+export const SPEECH_TO_TEXT_API = isProduction ? ENV_SPEECH_TO_TEXT_API : 'http://localhost:3333';
 export const IGBO_STT_API = ENV_IGBO_STT_URL;
 export const IGBO_TO_ENGLISH_API = ENV_IGBO_TO_ENGLISH_URL;
 export const ENGLIGH_TO_IGBO_API = ENV_ENGLISH_TO_IGBO_URL;
