@@ -5,7 +5,7 @@ exports.api_2 = onRequest(
   {
     cors: true,
     concurrency: 500,
-    memory: '1GiB',
+    memory: '2GiB',
   },
   api
 );

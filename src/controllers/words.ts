@@ -18,7 +18,24 @@ import searchWordUsingEnglish from './utils/searchWordUsingEnglish';
 import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
 
 const isEnglish = isWord('american-english');
-const IGNORE_ENGLISH_WORDS = ['ego', 'la', 'mu', 'one', 'no', 'nu'];
+const IGNORE_ENGLISH_WORDS = [
+  'Ego',
+  'ego',
+  'La',
+  'la',
+  'Mu',
+  'mu',
+  'One',
+  'one',
+  'No',
+  'no',
+  'Nu',
+  'nu',
+  'Chi',
+  'chi',
+  'Ge',
+  'ge',
+];
 
 /* Gets words from JSON dictionary */
 export const getWordData: MiddleWare = (req, res, next) => {
