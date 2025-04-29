@@ -35,6 +35,8 @@ const IGNORE_ENGLISH_WORDS = [
   'chi',
   'Ge',
   'ge',
+  'We',
+  'we',
 ];
 
 /* Gets words from JSON dictionary */
