@@ -33,14 +33,18 @@ describe('PredictionAPI', () => {
 
   it('postTranslationEndpoint', () => {
     const text = 'text';
+    const languagePair = {
+      from: LanguageEnum.IGBO,
+      to: LanguageEnum.ENGLISH,
+    };
     const useCallableSpy = jest.spyOn(useCallable, 'useCallable');
-    postTranslationEndpoint({ text });
+    postTranslationEndpoint({ text, languagePair });
     expect(useCallableSpy).toHaveBeenCalledWith('demo', {
       type: DemoOption.TRANSLATE,
       data: {
         text,
-        sourceLanguageCode: LanguageEnum.IGBO,
-        destinationLanguageCode: LanguageEnum.ENGLISH,
+        sourceLanguageCode: languagePair.from,
+        destinationLanguageCode: languagePair.to,
       },
     });
   });
