@@ -61,15 +61,17 @@ export const postSpeechToTextEndpoint = async ({
  */
 export const postTranslationEndpoint = async ({
   text,
+  languagePair,
 }: {
   text: string,
+  languagePair: { from: LanguageEnum, to: LanguageEnum },
 }): Promise<TranslationResponse> => {
   const { data } = await useCallable('demo', {
     type: DemoOption.TRANSLATE,
     data: {
       text,
-      sourceLanguageCode: LanguageEnum.IGBO,
-      destinationLanguageCode: LanguageEnum.ENGLISH,
+      sourceLanguageCode: languagePair.from,
+      destinationLanguageCode: languagePair.to,
     },
   });
   return data || { translation: '' };
