@@ -73,7 +73,7 @@ const TEST_DB_NAME = 'test_igbo_api';
 const isTestingEnvironment =
   isTest || (process.env.CONTAINER_HOST === 'mongodb' && !isDevelopment && !isProduction);
 export const PORT = process.env.PORT || 8080;
-export const PROD_LIMIT = 2500;
+export const PROD_LIMIT = 500;
 export const MONGO_HOST = process.env.CONTAINER_HOST || '127.0.0.1';
 export const REPLICA_SET_NAME = 'rs0';
 export const FIRST_REPLICA_SET_PORT = '2717';
