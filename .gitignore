@@ -153,3 +153,6 @@ yarn.lock
 pnpm-lock.yaml
 .idea
 .firebaserc
+
+# compiled agent-skill dictionary DB
+.agents/skills/igbo/data/
