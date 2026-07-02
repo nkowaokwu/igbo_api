@@ -52,7 +52,7 @@
     "start": "node ./build/src/server.js",
     "start:docker": "docker-compose up",
     "test:build": "cross-env NODE_ENV=build npm run start",
-    "start:database": "mongod --port 27017 --dbpath ./db --quiet &>/dev/null",
+    "start:database": "mongod --port 27017 --dbpath ./db --quiet",
     "start:database:replica": "npm-run-all -p start:database:primary start:database:secondary:first start:database:secondary:second",
     "start:database:primary": "mongod --port 2717 --dbpath ./mongos/db1 --replSet rs0 --quiet",
     "start:database:secondary:first": "mongod --port 2727 --dbpath ./mongos/db2 --replSet rs0 --quiet",
