@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Use Node.js @20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v7
         with:
           node-version: 24
       - name: Log into Docker Account
