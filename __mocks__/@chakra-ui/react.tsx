@@ -84,6 +84,7 @@ export const {
   Image,
   Icon,
   IconButton,
+  createIcon,
   Hide,
   Fade,
   SlideFade,
