@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js @20
         uses: actions/setup-node@v1
         with:
-          node-version: 20
+          node-version: 24
       - name: Log into Docker Account
         run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
         env:
