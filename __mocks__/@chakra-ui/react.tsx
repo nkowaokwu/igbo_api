@@ -136,6 +136,7 @@ export const {
   useTheme,
   useToast,
   chakra,
+  createIcon,
   extendTheme,
   createMultiStyleConfigHelpers,
   ChakraProvider,

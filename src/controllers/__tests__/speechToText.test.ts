@@ -4,7 +4,8 @@ import {
   requestFixture,
   responseFixture,
 } from '../../__tests__/shared/fixtures';
-import { IGBO_STT_API } from '../../config';
+import { SPEECH_TO_TEXT_API } from '../../config';
+import Endpoint from '../../shared/constants/Endpoint';
 import { getTranscription } from '../speechToText';
 import { fetchBase64Data } from '../utils/fetchBase64Data';
 
@@ -22,14 +23,15 @@ describe('speechToText', () => {
     const base64 = 'base64';
     // @ts-expect-error resolving value
     fetchBase64Data.mockResolvedValue(base64);
-    jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
-    });
+    jest
+      .spyOn(axios, 'request')
+      .mockResolvedValueOnce({ data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' } })
+      .mockResolvedValueOnce({ data: { transcription: 'transcription' } });
     await getTranscription(req, res, next);
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[0][0]).toMatchObject({
       method: 'POST',
-      url: 'http://localhost:3333/audio',
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
@@ -39,13 +41,14 @@ describe('speechToText', () => {
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
-      url: IGBO_STT_API,
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.PREDICT}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { audioUrl: 'https://igboapi.com' },
+      data: { url: 'https://igboapi.com', id: 'audioId' },
     });
+    expect(res.send).toHaveBeenCalledWith({ transcription: 'transcription' });
   });
 
   it('calls audio IgboSpeech audio endpoint to upload audio with base64', async () => {
@@ -55,14 +58,15 @@ describe('speechToText', () => {
     const next = nextFunctionFixture();
     // @ts-expect-error resolved value
     fetchBase64Data.mockResolvedValue(base64);
-    jest.spyOn(axios, 'request').mockResolvedValue({
-      data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' },
-    });
+    jest
+      .spyOn(axios, 'request')
+      .mockResolvedValueOnce({ data: { audioId: 'audioId', audioUrl: 'https://igboapi.com' } })
+      .mockResolvedValueOnce({ data: { transcription: 'transcription' } });
     await getTranscription(req, res, next);
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[0][0]).toMatchObject({
       method: 'POST',
-      url: 'http://localhost:3333/audio',
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
@@ -72,13 +76,14 @@ describe('speechToText', () => {
     // @ts-expect-error non-existing value
     expect(axios.request.mock.calls[1][0]).toMatchObject({
       method: 'POST',
-      url: IGBO_STT_API,
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.PREDICT}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { audioUrl: 'https://igboapi.com' },
+      data: { url: 'https://igboapi.com', id: 'audioId' },
     });
+    expect(res.send).toHaveBeenCalledWith({ transcription: 'transcription' });
   });
 
   it('does not call audio IgboSpeech audio endpoint to upload audio', async () => {
@@ -92,11 +97,11 @@ describe('speechToText', () => {
     const base64 = 'base64';
     // @ts-expect-error resolved value
     fetchBase64Data.mockResolvedValue(base64);
-    jest.spyOn(axios, 'request').mockResolvedValue({});
+    jest.spyOn(axios, 'request').mockResolvedValue({ data: { transcription: 'transcription' } });
     await getTranscription(req, res, next);
     expect(axios.request).not.toHaveBeenCalledWith({
       method: 'POST',
-      url: 'http://localhost:3333/audio',
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.AUDIO}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
@@ -105,13 +110,14 @@ describe('speechToText', () => {
     });
     expect(axios.request).toHaveBeenCalledWith({
       method: 'POST',
-      url: IGBO_STT_API,
+      url: `${SPEECH_TO_TEXT_API}/${Endpoint.PREDICT}`,
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': 'main_key',
       },
-      data: { audioUrl },
+      data: { url: audioUrl, id: '' },
     });
+    expect(res.send).toHaveBeenCalledWith({ transcription: 'transcription' });
   });
 
   it('throws error due to non-public audio url', () => {
