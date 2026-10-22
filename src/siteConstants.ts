@@ -24,6 +24,7 @@ export const YOUTUBE = 'https://www.youtube.com/c/IjemmaOnwuzulike';
 export const NKOWAOKWU = 'https://nkowaokwu.com';
 export const NKOWAOKWU_CHROME = 'https://nkowaokwu.com/chrome';
 export const SABBI_DASHBOARD = 'https://dashboard.sabbidata.com';
+export const SABBI_HOME = 'https://sabbidata.com/';
 
 // Resources
 export const HUGGING_FACE = 'https://huggingface.co/nkowaokwu';

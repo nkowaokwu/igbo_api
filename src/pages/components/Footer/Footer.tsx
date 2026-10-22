@@ -23,6 +23,7 @@ import {
   LINKEDIN,
   NKOWAOKWU,
   NKOWAOKWU_CHROME,
+  SABBI_HOME,
   TWITTER,
   YOUTUBE,
 } from '../../../siteConstants';
@@ -52,6 +53,10 @@ const categories = [
       {
         label: 'Chrome Extension',
         href: NKOWAOKWU_CHROME,
+      },
+      {
+        label: 'Sabbi',
+        href: SABBI_HOME,
       },
     ],
   },
