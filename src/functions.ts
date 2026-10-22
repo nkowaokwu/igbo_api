@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as functions from 'firebase-functions/v1';
+import { CallableRequest, HttpsError, onCall } from 'firebase-functions/v2/https';
 import { API_ROUTE, MAIN_KEY } from './config';
 import DemoOption from './shared/constants/DemoOption';
 import LanguageEnum from './shared/constants/LanguageEnum';
@@ -115,10 +115,10 @@ const demoInternal = async (payload: {
 
     return response;
   } catch (err: any) {
-    throw new functions.https.HttpsError('internal', err?.message || `Error with ${type} demo`);
+    throw new HttpsError('internal', err?.message || `Error with ${type} demo`);
   }
 };
 
-export const onDemo = functions.https.onCall(demoInternal);
+export const onDemo = onCall((request: CallableRequest) => demoInternal(request.data));
 
 export const TEST_ONLY = { demoInternal };
