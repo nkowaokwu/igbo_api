@@ -1,6 +1,6 @@
 {
   "name": "igbo-api",
-  "version": "1.64.3",
+  "version": "1.64.4",
   "description": "Igbo Dictionary API contains Igbo words, definitions, and examples",
   "author": "Ijemma Onwuzulike",
   "main": "server.js",
@@ -160,7 +160,7 @@
     "@testing-library/dom": "^9.3.3",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.5.1",
+    "@testing-library/user-event": "^14.6.7",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/express-rate-limit": "^6.0.0",
