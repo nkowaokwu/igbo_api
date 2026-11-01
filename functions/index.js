@@ -10,4 +10,4 @@ exports.api_2 = onRequest(
   api
 );
 
-exports.demo = demo;
+exports.demo_2 = demo;

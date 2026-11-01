@@ -5,7 +5,6 @@ on:
     branches:
       - master
 env:
-  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
   FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
   GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
@@ -41,6 +40,10 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24'
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_DEPLOY_SA_KEY }}
       - name: Install Project Dependencies
         run: |
           rm -rf ./node_modules; npm install
@@ -48,7 +51,7 @@ jobs:
       - name: Install Cloud Dependencies
         run: |
           cd functions; rm -rf ./node_modules/; npm install; cd ..; pwd
-          firebase use default --token $FIREBASE_TOKEN
+          firebase use default
       - name: Create .env
         run: touch ./functions/.env
       - name: Update .env
@@ -86,11 +89,9 @@ jobs:
           directory: functions
       - name: Build Production Project
         run: |
-          firebase functions:config:set runtime.env=production --token $FIREBASE_TOKEN
           npm run build
       - name: Migrate MongoDB Data
         run: |
-          firebase functions:config:set env.redis_status=true runtime.env=production --token $FIREBASE_TOKEN
           npm run migrate-up
       - name: Deploy Production Firebase Functions
         run: |
@@ -98,7 +99,5 @@ jobs:
       - name: Deploy Production Firebase Hosting
         run: |
           firebase deploy --project=igbo-api-bb22d --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Delete .env
         run: rm -rf ./functions/.env
