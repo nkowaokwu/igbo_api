@@ -15,7 +15,7 @@ describe('PredictionAPI', () => {
     const params = { dialects: true, examples: true };
     const useCallableSpy = jest.spyOn(useCallable, 'useCallable');
     getDictionaryEndpoint({ keyword, params });
-    expect(useCallableSpy).toHaveBeenCalledWith('demo', {
+    expect(useCallableSpy).toHaveBeenCalledWith('demo_2', {
       type: DemoOption.DICTIONARY,
       data: { keyword, params },
     });
@@ -25,7 +25,7 @@ describe('PredictionAPI', () => {
     const base64 = 'base64';
     const useCallableSpy = jest.spyOn(useCallable, 'useCallable');
     postSpeechToTextEndpoint({ base64 });
-    expect(useCallableSpy).toHaveBeenCalledWith('demo', {
+    expect(useCallableSpy).toHaveBeenCalledWith('demo_2', {
       type: DemoOption.SPEECH_TO_TEXT,
       data: { base64 },
     });
@@ -35,7 +35,7 @@ describe('PredictionAPI', () => {
     const text = 'text';
     const useCallableSpy = jest.spyOn(useCallable, 'useCallable');
     postTranslationEndpoint({ text });
-    expect(useCallableSpy).toHaveBeenCalledWith('demo', {
+    expect(useCallableSpy).toHaveBeenCalledWith('demo_2', {
       type: DemoOption.TRANSLATE,
       data: {
         text,
