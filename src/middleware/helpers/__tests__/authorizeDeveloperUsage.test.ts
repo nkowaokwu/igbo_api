@@ -94,4 +94,46 @@ describe('authorizeDeveloperUsage', () => {
       expect(err.message).toEqual('You have exceeded your limit for this API for the day.');
     });
   });
+
+  it('allows usage on a new day after reaching the limit the previous day', async () => {
+    const path = 'igbo_api';
+    const developer = developerFixture({});
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const developerUsage = developerUsageFixture({
+      usage: { date: yesterday, count: ApiUsageLimit[ApiType.DICTIONARY] },
+    });
+    const developerUsageDocument = {
+      ...developerUsage,
+      save: jest.fn(() => developerUsage),
+      markModified: jest.fn(),
+    };
+    // @ts-expect-error mockReturnValue
+    findDeveloperUsage.mockReturnValue(developerUsageDocument);
+
+    // @ts-expect-error developer
+    await authorizeDeveloperUsage({ path, developer });
+    expect(developerUsageDocument.usage.count).toEqual(1);
+    expect(developerUsageDocument.save).toHaveBeenCalled();
+  });
+
+  it('throws error when reaching the usage limit on the same day', async () => {
+    const path = 'igbo_api';
+    const developer = developerFixture({});
+    const developerUsage = developerUsageFixture({
+      usage: { date: new Date(), count: ApiUsageLimit[ApiType.DICTIONARY] },
+    });
+    const developerUsageDocument = {
+      ...developerUsage,
+      save: jest.fn(() => developerUsage),
+      markModified: jest.fn(),
+    };
+    // @ts-expect-error mockReturnValue
+    findDeveloperUsage.mockReturnValue(developerUsageDocument);
+
+    // @ts-expect-error developer
+    await expect(authorizeDeveloperUsage({ path, developer })).rejects.toThrow(
+      'You have exceeded your limit for this API for the day.'
+    );
+    expect(developerUsageDocument.save).not.toHaveBeenCalled();
+  });
 });

@@ -36,12 +36,13 @@ const handleDeveloperUsage = async ({
     throw new Error('No developer usage found');
   }
 
-  if (developerUsage.usage.count >= ApiUsageLimit[apiType]) {
+  const isNewDay = !isSameDate(developerUsage.usage.date, currentDate);
+
+  if (developerUsage.usage.count >= ApiUsageLimit[apiType] && !isNewDay) {
     throw new Error('You have exceeded your limit for this API for the day.');
   }
 
-  const isNewDay = !isSameDate(developerUsage.usage.date, currentDate);
-  developerUsage.usage.count = isNewDay ? 0 : developerUsage.usage.count + 1;
+  developerUsage.usage.count = isNewDay ? 1 : developerUsage.usage.count + 1;
   developerUsage.usage.date = currentDate;
 
   developerUsage.markModified('usage');
