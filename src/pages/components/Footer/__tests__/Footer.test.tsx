@@ -15,6 +15,7 @@ describe('Footer', () => {
     await findByText('Igbo API');
     await findByText('Nkọwa okwu');
     await findByText('Chrome Extension');
+    await findByText('Sabbi');
 
     await findByText('Resources');
     await findByText('Documentation');
