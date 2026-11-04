@@ -2,7 +2,7 @@
 
 **Status:** Phases 1 and 2 designed, not started; Phase 2 has open questions
 **Author:** Debs
-**Last updated:** 2026-11-01
+**Last updated:** 2026-11-04
 
 ## Summary
 
@@ -17,26 +17,26 @@ Record what people search for in the dictionary so we can see which words are mi
 
 A **term** is whatever someone typed into the search box. 
 
-1. **Record searches.** Store search terms, counts and whether they were found.
-2. **Candidates and review.** Select the missing terms worth reviewing (`isMissing` is true, searched often enough, not already sent or rejected) and send them into the editor platform's existing word-suggestion flow, where translators fill them in and approve them into `words`.
+1. **Record searches.** Store each search, when it happened and whether it found anything.
+2. **Candidates and review.** Select the missing terms worth reviewing (`noResultsFound` is true, searched often enough, not already sent or rejected) and send them into the editor platform's existing word-suggestion flow, where translators fill them in and approve them into `words`.
 
 ## Phase 1
 
 ### Where it lives
 
 - `src/models/Search.ts`: the `Search` model, stored in a new `searches` collection.
-- `src/controllers/utils/recordSearch.ts`: adds or updates a search row, following the connection pattern in `src/controllers/utils/buildDocs.ts`.
+- `src/controllers/utils/recordSearch.ts`: adds one row per search, following the connection pattern in `src/controllers/utils/buildDocs.ts`.
 - `src/controllers/words.ts`: `getWordsFromDatabase` calls `recordSearch` after the response is sent. It does not wait for the save, and errors are only logged, so searches are never slowed down or broken.
 
 ### What is recorded
 
 - Website searches (requests using the main key, `isUsingMainKey`) and developer searches.
 - Both English and Igbo searches, labelled by the path the API took.
-- Every search, not only ones that return nothing. `isMissing` marks which terms are gaps, and keeping found searches gives us popularity data that cannot be collected retroactively.
+- Every search, not only ones that return nothing. `noResultsFound` marks which terms are gaps, and keeping found searches gives us popularity data that cannot be collected retroactively.
 
 ### Fields
 
-One row per `normalizedTerm` + `language` + `source`, enforced by a unique index.
+One row per search. Indexed on `normalizedTerm` + `language`, and on `searchedAt`.
 
 | Field | Type | Example | Description |
 |---|---|---|---|
@@ -44,11 +44,9 @@ One row per `normalizedTerm` + `language` + `source`, enforced by a unique index
 | `normalizedTerm` | String | `mmiri` | Lowercased with consistent tone marks, used to group variants |
 | `language` | `LanguageEnum` (`eng` \| `ibo`) | `ibo` | Which search path the API took |
 | `source` | `SearchSourceEnum` (`igbo_api` \| `nkowaokwu`) | `nkowaokwu` | Nkọwa okwu (main key) or Igbo API developer key |
-| `count` | Number | `50` | Total times searched |
-| `isMissing` | Boolean | `true` | Whether the most recent search returned no results |
-| `developerIds` | String[] | `["a1f9…"]` | Hashed API keys of distinct developer apps; developer rows only |
-| `firstSearchedAt` | Date | `2026-10-27` | First time the term was searched |
-| `lastSearchedAt` | Date | `2026-11-02` | Most recent search |
+| `noResultsFound` | Boolean | `true` | Whether this search returned no results |
+| `developerId` | String | `a1f9…` | Hashed API key of the developer app; `igbo_api` rows only |
+| `searchedAt` | Date | `2026-11-02T15:32:10Z` | When the search happened |
 
 `SearchSourceEnum` is a new enum in `src/shared/constants/SearchSourceEnum.ts`:
 
@@ -71,8 +69,8 @@ enum SearchSourceEnum {
 
 - Responses can be served from an HTTP cache without reaching the server, so repeat searches may be undercounted.
 - `language` follows the API's English/Igbo guess. Igbo phrases with apostrophes can be wrongly sent down the English path, so some rows may be mislabelled until that is fixed (added this to my bug list so planning to work on this)
-- Counts are running totals. Searches per month cannot be recovered later unless monthly counts are added.
-- Search results, including empty ones, are cached in Redis for 7 days (`REDIS_CACHE_EXPIRATION`). After a word is added to the dictionary, `isMissing` can stay true for up to 7 days. This only applies if Redis is enabled in production.
+- Every search is stored as its own row, so the collection grows with traffic. Summary rows or an expiry (TTL index) can be added later if needed.
+- Search results, including empty ones, are cached in Redis for 7 days (`REDIS_CACHE_EXPIRATION`). After a word is added to the dictionary, searches for it can still be recorded as missing for up to 7 days. This only applies if Redis is enabled in production.
 
 ## Phase 2
 
@@ -82,9 +80,9 @@ A daily scheduled job (Firebase `onSchedule`, exported alongside `api_2` and `de
 
 One MongoDB aggregation on `searches`:
 
-1. Keep rows where `isMissing` is true, `language` is `ibo`, and the term has not already been labelled, sent or rejected.
-2. Group rows by `normalizedTerm`, adding up `count` across website and developer rows.
-3. Keep terms with a combined count of at least 3.
+1. Keep rows where `language` is `ibo`.
+2. Group rows by `normalizedTerm` across both sources, counting the missing searches and noting whether the latest search was missing.
+3. Keep terms whose latest search was missing, with at least 3 missing searches, and with no row already labelled, sent or rejected.
 4. Skip terms containing digits or with more than 4 words.
 
 Rows that are skipped are kept in `searches`, not deleted.
@@ -130,7 +128,7 @@ Terms are sent to an AI model in batches of about 50 per request, with a fixed r
 
 ### Step 4: saving results and sending
 
-The AI's result is saved on every `searches` row for the term (website and developer rows), using these new fields:
+The AI's result is saved on every existing `searches` row for the term (both sources), using these new fields. Later searches for the term are new rows without these fields; step 1 skips the term because its earlier rows have them.
 
 | Field | Type | Example | Description |
 |---|---|---|---|
@@ -138,7 +136,7 @@ The AI's result is saved on every `searches` row for the term (website and devel
 | `aiConfidence` | `low` \| `medium` \| `high` | `high` | Confidence from step 3 |
 | `aiReason` | String | `Looks like a real noun` | Reason from step 3 |
 | `typoOf` | String | `mmiri` | Matching dictionary word, only for `typo` |
-| `aiCheckedAt` | Date | `2026-11-02` | When the term was labelled; step 1 skips rows that have it |
+| `aiCheckedAt` | Date | `2026-11-02` | When the term was labelled; step 1 skips terms with any row that has it |
 | `suggestionStatus` | `pending` (other values to be confirmed) | `pending` | Empty if never sent; tracking approvals and rejections depends on the editor platform |
 | `suggestedAt` | Date | `2026-11-02` | When the term was sent to the editor platform |
 
