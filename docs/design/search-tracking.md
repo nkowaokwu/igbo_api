@@ -43,12 +43,21 @@ One row per `normalizedTerm` + `language` + `source`, enforced by a unique index
 | `term` | String | `Mmiri` | Cleaned search term as typed |
 | `normalizedTerm` | String | `mmiri` | Lowercased with consistent tone marks, used to group variants |
 | `language` | `LanguageEnum` (`eng` \| `ibo`) | `ibo` | Which search path the API took |
-| `source` | `official` \| `developer` | `official` | Website (main key) or developer key |
+| `source` | `SearchSourceEnum` (`igbo_api` \| `nkowaokwu`) | `nkowaokwu` | Nkọwa okwu (main key) or Igbo API developer key |
 | `count` | Number | `50` | Total times searched |
 | `isMissing` | Boolean | `true` | Whether the most recent search returned no results |
 | `developerIds` | String[] | `["a1f9…"]` | Hashed API keys of distinct developer apps; developer rows only |
 | `firstSearchedAt` | Date | `2026-10-27` | First time the term was searched |
 | `lastSearchedAt` | Date | `2026-11-02` | Most recent search |
+
+`SearchSourceEnum` is a new enum in `src/shared/constants/SearchSourceEnum.ts`:
+
+```ts
+enum SearchSourceEnum {
+  IGBO_API = 'igbo_api',
+  NKOWAOKWU = 'nkowaokwu',
+}
+```
 
 ### Not recorded
 
