@@ -60,7 +60,7 @@ enum SearchSourceEnum {
 
 - Requests for later pages of results (anything after the first page)
 - Local and test traffic (the fallback API key)
-- Empty terms, terms over 100 characters, and terms with no letters
+- Empty terms and terms with no letters
 - Links and email addresses
 - IP addresses or anything identifying website visitors
 
@@ -68,7 +68,6 @@ enum SearchSourceEnum {
 
 - Responses can be served from an HTTP cache without reaching the server, so repeat searches may be undercounted.
 - `language` follows the API's English/Igbo guess. Igbo phrases with apostrophes can be wrongly sent down the English path, so some rows may be mislabelled until that is fixed (added this to my bug list so planning to work on this)
-- Every search is stored as its own row, so the collection grows with traffic. Summary rows or an expiry (TTL index) can be added later if needed.
 - Search results, including empty ones, are cached in Redis for 7 days (`REDIS_CACHE_EXPIRATION`). After a word is added to the dictionary, searches for it can still be recorded as missing for up to 7 days. This only applies if Redis is enabled in production.
 
 ## Phase 2
