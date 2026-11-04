@@ -45,7 +45,6 @@ One row per search. Indexed on `normalizedTerm` + `language`, and on `searchedAt
 | `language` | `LanguageEnum` (`eng` \| `ibo`) | `ibo` | Which search path the API took |
 | `source` | `SearchSourceEnum` (`igbo_api` \| `nkowaokwu`) | `nkowaokwu` | Nkọwa okwu (main key) or Igbo API developer key |
 | `noResultsFound` | Boolean | `true` | Whether this search returned no results |
-| `developerId` | String | `a1f9…` | Hashed API key of the developer app; `igbo_api` rows only |
 | `searchedAt` | Date | `2026-11-02T15:32:10Z` | When the search happened |
 
 `SearchSourceEnum` is a new enum in `src/shared/constants/SearchSourceEnum.ts`:
@@ -63,7 +62,7 @@ enum SearchSourceEnum {
 - Local and test traffic (the fallback API key)
 - Empty terms, terms over 100 characters, and terms with no letters
 - Links and email addresses
-- API keys in plain text, IP addresses, or anything identifying website visitors
+- IP addresses or anything identifying website visitors
 
 ### Known limitations
 
