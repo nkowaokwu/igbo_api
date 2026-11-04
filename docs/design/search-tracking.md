@@ -42,7 +42,7 @@ One row per `normalizedTerm` + `language` + `source`, enforced by a unique index
 |---|---|---|---|
 | `term` | String | `Mmiri` | Cleaned search term as typed |
 | `normalizedTerm` | String | `mmiri` | Lowercased with consistent tone marks, used to group variants |
-| `language` | `english` \| `igbo` | `igbo` | Which search path the API took |
+| `language` | `LanguageEnum` (`eng` \| `ibo`) | `ibo` | Which search path the API took |
 | `source` | `official` \| `developer` | `official` | Website (main key) or developer key |
 | `count` | Number | `50` | Total times searched |
 | `isMissing` | Boolean | `true` | Whether the most recent search returned no results |
@@ -73,7 +73,7 @@ A daily scheduled job (Firebase `onSchedule`, exported alongside `api_2` and `de
 
 One MongoDB aggregation on `searches`:
 
-1. Keep rows where `isMissing` is true, `language` is `igbo`, and the term has not already been labelled, sent or rejected.
+1. Keep rows where `isMissing` is true, `language` is `ibo`, and the term has not already been labelled, sent or rejected.
 2. Group rows by `normalizedTerm`, adding up `count` across website and developer rows.
 3. Keep terms with a combined count of at least 3.
 4. Skip terms containing digits or with more than 4 words.
