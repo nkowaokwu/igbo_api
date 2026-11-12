@@ -86,7 +86,7 @@ The AI's result is saved on every existing `searches` row for the term (both sou
 | `suggestionStatus` | `pending` (other values to be confirmed) | `pending` | Empty if never sent; tracking approvals and rejections depends on the editor platform |
 | `suggestedAt` | Date | `2026-11-02` | When the term was sent to the editor platform |
 
-Terms sent to translators (see the step 3 table) are created as suggestions in the editor platform with a link back to their `searches` row, and marked `pending`.
+Terms sent to translators (see the step 3 table) are created as suggestions in the editor platform with a link back to the term in `searches` (its `normalizedTerm`), and marked `pending`.
 
 - Results are saved, and terms marked `pending`, before suggestions are created. If the job stops part way, a term can be marked but not sent, but it is never sent twice.
 - How approvals and rejections are tracked depends on the editor platform (see open questions).
@@ -107,6 +107,6 @@ Terms sent to translators (see the step 3 table) are created as suggestions in t
 
 - How should missing words be sent into the editor platform's word-suggestion flow? (Ijemma)
 - How does the editor platform record approved and rejected suggestions, and can this API read that to update `suggestionStatus`?
-- Does the editor platform's suggestion structure have room for step 3's hints (label, confidence, reason, search count, closest words)? If not, should we 1. add new fields there, 2. use an existing field, or 3. store a link back to the `searches` row?
-  - Preferred: store a link to the `searches` row on the suggestion, and add a "Context" button in the editor platform that shows the row's fields in a pop-up. This needs one new field on the suggestion and read access to `searches`.
+- Does the editor platform's suggestion structure have room for step 3's hints (label, confidence, reason, search count, closest words)? If not, should we 1. add new fields there, 2. use an existing field, or 3. store a link back to the term in `searches`?
+  - Preferred: store the term's `normalizedTerm` on the suggestion, and add a "Context" button in the editor platform that shows the term's search details and AI hints in a pop-up. This needs one new field on the suggestion and read access to `searches`.
 - Which AI provider should step 3 use, under whose account and budget? This repo has no LLM connection today; translation and speech-to-text call separate services by URL. Should step 3 call a provider directly or go through those existing services? (Ijemma)
