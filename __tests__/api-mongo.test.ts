@@ -485,11 +485,11 @@ describe('MongoDB Words', () => {
       expect(res.body.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('not return any words when wrapping an igbo word in quotes', async () => {
-      const keyword = '"nkanka"';
+    it('return igbo words when wrapping an igbo word in quotes', async () => {
+      const keyword = '"àdù"';
       const res = await getWords({ keyword }, {});
       expect(res.status).toEqual(200);
-      expect(res.body).toHaveLength(0);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
     });
 
     it('return words with no keyword as an application using MAIN_KEY', async () => {

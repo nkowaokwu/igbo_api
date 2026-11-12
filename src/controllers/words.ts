@@ -67,7 +67,6 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
       strict,
       flags,
       filters,
-      hasQuotes,
       isUsingMainKey,
       redisClient,
     } = await handleQueries(req);
@@ -84,7 +83,7 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
       Boolean(searchWord) &&
       !IGNORE_ENGLISH_WORDS.includes(searchWord);
 
-    if (hasQuotes || isSearchWordEnglish) {
+    if (isSearchWordEnglish) {
       responseData = await searchWordUsingEnglish({
         redisClient,
         version,
