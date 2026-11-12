@@ -89,5 +89,7 @@ export default {
   ụ: caseInsensitiveỤ,
   Ụ: caseInsensitiveỤ,
   ' ': '[\\s\u0027]',
+  "'": "['\u2019]",
+  '\u2019': "['\u2019]",
   '?': '\\?',
 };
