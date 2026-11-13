@@ -120,7 +120,6 @@ export const handleQueries = async ({
     resolve: resolveQuery,
   } = query;
   const { id } = params;
-  const hasQuotes = keywordQuery && keywordQuery.match(/["'].*["']/) !== null;
   const keyword = keywordQuery.replace(/["']/g, '');
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
   const filter = convertFilterToKeyword(filterQuery);
@@ -173,7 +172,6 @@ export const handleQueries = async ({
     strict,
     flags,
     filters,
-    hasQuotes,
     isUsingMainKey,
     redisClient,
   };
