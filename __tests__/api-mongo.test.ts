@@ -492,6 +492,27 @@ describe('MongoDB Words', () => {
       expect(res.body.length).toBeGreaterThanOrEqual(1);
     });
 
+    it('return igbo word with a straight apostrophe', async () => {
+      const keyword = "-gbana n'òsu";
+      const res = await getWords({ keyword }, {});
+      expect(res.status).toEqual(200);
+      expect(res.body.map(({ word }: { word: string }) => word)).toContain("-gbana n'òsu");
+    });
+
+    it('return igbo word with a curly apostrophe when searching with a straight apostrophe', async () => {
+      const keyword = "-bu n'isi";
+      const res = await getWords({ keyword }, {});
+      expect(res.status).toEqual(200);
+      expect(res.body.map(({ word }: { word: string }) => word)).toContain('-bu n’isi');
+    });
+
+    it('return igbo word when searching with two apostrophes', async () => {
+      const keyword = "n'ibe n'ibe";
+      const res = await getWords({ keyword }, {});
+      expect(res.status).toEqual(200);
+      expect(res.body.map(({ word }: { word: string }) => word)).toContain('n’ibe n’ibe');
+    });
+
     it('return words with no keyword as an application using MAIN_KEY', async () => {
       const res = await getWords({}, { apiKey: MAIN_KEY });
       expect(res.status).toEqual(200);
