@@ -120,7 +120,7 @@ export const handleQueries = async ({
     resolve: resolveQuery,
   } = query;
   const { id } = params;
-  const keyword = keywordQuery.replace(/["']/g, '');
+  const keyword = keywordQuery.replace(/^(["'])(.*)\1$/, '$2');
   const version = baseUrl.endsWith(Version.VERSION_2) ? Version.VERSION_2 : Version.VERSION_1;
   const filter = convertFilterToKeyword(filterQuery);
   const searchWord = removePrefix(keyword || filter || '').replace(/[Aa]na m /, 'm ');
