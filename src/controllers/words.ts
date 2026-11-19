@@ -5,6 +5,8 @@ import { handleWordFlags } from '../APIs/FlagsAPI';
 import { wordSchema } from '../models/Word';
 import { findSearchWord } from '../services/words';
 import { NO_PROVIDED_TERM } from '../shared/constants/errorMessages';
+import LanguageEnum from '../shared/constants/LanguageEnum';
+import SearchSourceEnum from '../shared/constants/SearchSourceEnum';
 import createRegExp from '../shared/utils/createRegExp';
 import { getDocumentsIds } from '../shared/utils/documentUtils';
 import removePrefix from '../shared/utils/removePrefix';
@@ -14,6 +16,7 @@ import { WordResponseData } from './types';
 import { handleQueries, packageResponse } from './utils';
 import { findWordsWithMatch } from './utils/buildDocs';
 import minimizeWords from './utils/minimizeWords';
+import recordSearch from './utils/recordSearch';
 import searchWordUsingEnglish from './utils/searchWordUsingEnglish';
 import searchWordUsingIgbo from './utils/searchWordUsingIgbo';
 
@@ -100,6 +103,18 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
         isUsingMainKey,
         ...searchQueries,
       });
+    }
+    if (skip === 0) {
+      try {
+        await recordSearch({
+          term: searchWord,
+          language: isSearchWordEnglish ? LanguageEnum.ENGLISH : LanguageEnum.IGBO,
+          source: isUsingMainKey ? SearchSourceEnum.NKOWAOKWU : SearchSourceEnum.IGBO_API,
+          noResultsFound: responseData.contentLength === 0,
+        });
+      } catch (err) {
+        console.log('Unable to record search', err);
+      }
     }
     return packageResponse({
       res,
