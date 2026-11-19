@@ -80,7 +80,7 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
       flags,
       filters,
     };
-    let responseData: WordResponseData = { words: [], contentLength: 0 };
+    let responseData: WordResponseData = { words: [], contentLength: 0, isCached: false };
     const isSearchWordEnglish =
       isEnglish.check(searchWord) &&
       Boolean(searchWord) &&
@@ -111,6 +111,7 @@ const getWordsFromDatabase: MiddleWare = async (req, res, next) => {
           language: isSearchWordEnglish ? LanguageEnum.ENGLISH : LanguageEnum.IGBO,
           source: isUsingMainKey ? SearchSourceEnum.NKOWAOKWU : SearchSourceEnum.IGBO_API,
           noResultsFound: responseData.contentLength === 0,
+          isCached: responseData.isCached,
         });
       } catch (err) {
         console.log('Unable to record search', err);

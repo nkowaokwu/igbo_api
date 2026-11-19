@@ -1,9 +1,10 @@
 import { searchSchema } from '../../models/Search';
+import CacheSourceEnum from '../../shared/constants/CacheSourceEnum';
 import { createDbConnection, handleCloseConnection } from '../../services/database';
 import removeAccents from '../../shared/utils/removeAccents';
 import { Search } from '../../types';
 
-type RecordSearchInput = Pick<Search, 'term' | 'language' | 'source' | 'noResultsFound'>;
+type RecordSearchInput = Omit<Search, 'normalizedTerm' | 'cacheSource' | 'searchedAt'>;
 
 const LETTER_REGEX = /\p{L}/u;
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
@@ -16,7 +17,13 @@ const normalizeTerm = (term: string) =>
   removeAccents.removeTones(term.toLowerCase()).normalize('NFC').replace(/'/g, '’');
 
 /* Saves a search unless the term is empty, has no letters, or is a link or email */
-const recordSearch = async ({ term, language, source, noResultsFound }: RecordSearchInput) => {
+const recordSearch = async ({
+  term,
+  language,
+  source,
+  noResultsFound,
+  isCached,
+}: RecordSearchInput) => {
   const cleanedTerm = term.trim().replace(/\s+/g, ' ');
   if (!isRecordableTerm(cleanedTerm)) {
     return;
@@ -31,6 +38,8 @@ const recordSearch = async ({ term, language, source, noResultsFound }: RecordSe
       language,
       source,
       noResultsFound,
+      isCached,
+      ...(isCached ? { cacheSource: CacheSourceEnum.REDIS } : {}),
     }).save();
   } finally {
     await handleCloseConnection(connection);

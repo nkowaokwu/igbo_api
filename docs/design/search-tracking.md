@@ -45,6 +45,8 @@ One row per search. Indexed on `normalizedTerm` + `language`, and on `searchedAt
 | `language` | `LanguageEnum` (`eng` \| `ibo`) | `ibo` | Which search path the API took |
 | `source` | `SearchSourceEnum` (`igbo_api` \| `nkowaokwu`) | `nkowaokwu` | Nkọwa okwu (main key) or Igbo API developer key |
 | `noResultsFound` | Boolean | `true` | Whether this search returned no results |
+| `isCached` | Boolean | `false` | Whether the results came from the Redis cache instead of MongoDB |
+| `cacheSource` | `CacheSourceEnum` (`redis`) | `redis` | Where cached results came from; only set when `isCached` is true |
 | `searchedAt` | Date | `2026-11-02T15:32:10Z` | When the search happened |
 
 `SearchSourceEnum` is a new enum in `src/shared/constants/SearchSourceEnum.ts`:
@@ -53,6 +55,14 @@ One row per search. Indexed on `normalizedTerm` + `language`, and on `searchedAt
 enum SearchSourceEnum {
   IGBO_API = 'igbo_api',
   NKOWAOKWU = 'nkowaokwu',
+}
+```
+
+`CacheSourceEnum` is a new enum in `src/shared/constants/CacheSourceEnum.ts`:
+
+```ts
+enum CacheSourceEnum {
+  REDIS = 'redis',
 }
 ```
 
@@ -68,4 +78,4 @@ enum SearchSourceEnum {
 - Responses can be served from an HTTP cache without reaching the server, so repeat searches may be undercounted.
 - `language` follows the API's English/Igbo guess, so a word the guess gets wrong is labelled with the wrong language.
 - Until #846 is merged, Igbo words typed with a straight apostrophe (`n'isi`) return no results, so those searches are recorded with `noResultsFound` true even when the word exists.
-- Search results, including empty ones, are cached in Redis for 7 days (`REDIS_CACHE_EXPIRATION`). After a word is added to the dictionary, searches for it can still be recorded as missing for up to 7 days.
+- Search results, including empty ones, are cached in Redis for 7 days (`REDIS_CACHE_EXPIRATION`). After a word is added to the dictionary, searches for it can still be recorded as missing for up to 7 days. These rows have `isCached` true, so they can be told apart from searches that checked MongoDB.

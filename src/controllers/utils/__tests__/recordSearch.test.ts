@@ -1,4 +1,5 @@
 import { Model, closeMock, modelMock } from '../../../../__mocks__/mongoose';
+import CacheSourceEnum from '../../../shared/constants/CacheSourceEnum';
 import LanguageEnum from '../../../shared/constants/LanguageEnum';
 import SearchSourceEnum from '../../../shared/constants/SearchSourceEnum';
 import { Search } from '../../../types';
@@ -13,10 +14,11 @@ class SearchModelMock extends Model {
   }
 }
 
-const baseSearch: Pick<Search, 'language' | 'source' | 'noResultsFound'> = {
+const baseSearch: Pick<Search, 'language' | 'source' | 'noResultsFound' | 'isCached'> = {
   language: LanguageEnum.IGBO,
   source: SearchSourceEnum.NKOWAOKWU,
   noResultsFound: true,
+  isCached: false,
 };
 
 describe('recordSearch', () => {
@@ -35,6 +37,19 @@ describe('recordSearch', () => {
       },
     ]);
     expect(closeMock).toHaveBeenCalled();
+  });
+
+  it('saves redis as the cache source for a cached search', async () => {
+    await recordSearch({ ...baseSearch, term: 'mmiri', isCached: true });
+    expect(savedRows).toEqual([
+      {
+        ...baseSearch,
+        term: 'mmiri',
+        normalizedTerm: 'mmiri',
+        isCached: true,
+        cacheSource: CacheSourceEnum.REDIS,
+      },
+    ]);
   });
 
   it.each(['', '   ', '123', '???', 'ada@gmail.com', 'https://igboapi.com', 'www.google.com'])(

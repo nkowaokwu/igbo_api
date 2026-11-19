@@ -95,10 +95,13 @@ const searchWordUsingIgbo = async ({
   let sortedWords = sortDocsBy(searchWord, responseData.words, 'word', version, regex);
   sortedWords = sortedWords.slice(skip, skip + limit);
 
-  return handleWordFlags({
-    data: { words: sortedWords, contentLength: responseData.contentLength },
-    flags,
-  });
+  return {
+    ...handleWordFlags({
+      data: { words: sortedWords, contentLength: responseData.contentLength },
+      flags,
+    }),
+    isCached: Boolean(cachedWords),
+  };
 };
 
 export default searchWordUsingIgbo;

@@ -11,6 +11,7 @@ export interface ExampleResponseData extends ResponseData {
 
 export interface WordResponseData extends ResponseData {
   words: Partial<OutgoingWord | Document<OutgoingWord> | Document<OutgoingLegacyWord>>[];
+  isCached: boolean;
 }
 
 export type Filters = {

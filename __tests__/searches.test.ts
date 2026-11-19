@@ -29,6 +29,7 @@ describe('Search tracking', () => {
       language: LanguageEnum.IGBO,
       source: SearchSourceEnum.IGBO_API,
       noResultsFound: false,
+      isCached: false,
     });
   });
 
