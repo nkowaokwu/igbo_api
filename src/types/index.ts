@@ -8,6 +8,7 @@ export type {
 } from './example';
 export type { DeveloperUsage, DeveloperUsageDocument } from './developerUsage';
 export type { Stat } from './stat';
+export type { Search } from './search';
 export type {
   IncomingWord,
   IncomingLegacyWord,
